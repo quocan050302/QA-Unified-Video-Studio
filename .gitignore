@@ -9,4 +9,7 @@ projects/*/anh/
 projects/*/timeline/voice.wav
 *.pyc
 .DS_Store
+audio/music/
+audio/sfx/
+
 
