@@ -1,0 +1,20 @@
+[   0.50 -    2.52] V001 NARRATOR  You've marched twenty miles today.
+[   2.82 -    9.16] V002 NARRATOR  Your feet are bleeding inside your sandals, the sun is going down, and all you want is to lie on the grass and sleep.
+[   9.46 -   10.89] V003 NARRATOR  But nobody lies down.
+[  11.19 -   13.59] V004 NARRATOR  Instead, your officer hands you a shovel.
+[  13.89 -   17.39] V005 NARRATOR  And so does every other officer, to every other man in the army.
+[  17.69 -   22.84] V006 NARRATOR  Because before anyone in this legion eats, before anyone sleeps, you are going to build a fort.
+[  23.14 -   24.16] V007 NARRATOR  From nothing.
+[  24.16 -   25.04] V007 NARRATOR  In a few hours.
+[  25.34 -   28.96] V008 NARRATOR  And tomorrow morning, you'll tear it down, and do it all again.
+[  29.27 -   34.42] V009 NARRATOR  So why would the most feared army in the world wear itself out like this, every single night?
+[  34.72 -   35.76] V010 NARRATOR  Was it fear?
+[  35.76 -   37.31] V010 NARRATOR  Was it discipline gone mad?
+[  37.61 -   40.89] V011 NARRATOR  The answer is hiding in what happened to the armies who didn't.
+[  41.19 -   43.47] V012 NARRATOR  But first, look at what's on your back.
+[  43.77 -   47.05] V013 NARRATOR  You're a Roman legionary, and you're carrying almost thirty kilos.
+[  47.35 -   53.52] V014 NARRATOR  Armour, weapons, food for days, a cooking pot, a saw, a basket, and two wooden stakes.
+[  53.82 -   57.67] V015 NARRATOR  The soldiers even had a nickname for themselves: Marius's mules.
+[  57.98 -   59.64] V016 NARRATOR  And that shovel isn't extra.
+[  59.94 -   60.97] V017 NARRATOR  It's a weapon.
+[  60.97 -   63.14] V017 NARRATOR  Maybe the most important one you own.

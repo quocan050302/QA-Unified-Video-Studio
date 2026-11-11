@@ -1,0 +1,23 @@
+{
+ "title": "Why Roman Soldiers Built a Fort Every Night",
+ "aspect": "16:9",
+ "resolution": "1080p",
+ "fps": 24,
+ "style": "flat",
+ "captions": false,
+ "bars": null,
+ "fadeIn": 0.4,
+ "fadeOut": 0.8,
+ "pack": "squire",
+ "lang": "en",
+ "music": {
+  "enabled": true,
+  "gainDb": -15
+ },
+ "sfx": {
+  "enabled": true,
+  "gainDb": -4
+ },
+ "loudness": -14,
+ "duration": 64.636
+}

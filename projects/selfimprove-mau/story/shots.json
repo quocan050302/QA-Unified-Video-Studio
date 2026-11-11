@@ -1,0 +1,1063 @@
+{
+ "duration": 82,
+ "shots": [
+  {
+   "id": "s001",
+   "start": 0,
+   "end": 3,
+   "tpl": "scene",
+   "args": {
+    "set": "void",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.08,
+      "pose": "stand",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "band",
+      "x": 0.185,
+      "pose": "slump",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hoodie",
+      "x": 0.29,
+      "pose": "phone",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": "phone"
+     },
+     {
+      "who": "hero",
+      "x": 0.395,
+      "pose": "reach",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "band",
+      "x": 0.5,
+      "pose": "point",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hoodie",
+      "x": 0.605,
+      "pose": "wave",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hero",
+      "x": 0.71,
+      "pose": "cheer",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "band",
+      "x": 0.815,
+      "pose": "fist",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hoodie",
+      "x": 0.9199999999999999,
+      "pose": "headhold",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "stand / slump / phone / reach / point / wave / cheer / fist / headhold",
+      "at": 0
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s002",
+   "start": 3,
+   "end": 6,
+   "tpl": "scene",
+   "args": {
+    "set": "void",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.08,
+      "pose": "facepalm",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "band",
+      "x": 0.185,
+      "pose": "arms",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hoodie",
+      "x": 0.29,
+      "pose": "shrug",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hero",
+      "x": 0.395,
+      "pose": "guard",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "band",
+      "x": 0.5,
+      "pose": "punch",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hoodie",
+      "x": 0.605,
+      "pose": "lift",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hero",
+      "x": 0.71,
+      "pose": "sit",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "band",
+      "x": 0.815,
+      "pose": "sitphone",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": "phone"
+     },
+     {
+      "who": "hoodie",
+      "x": 0.9199999999999999,
+      "pose": "sitdesk",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "facepalm / arms / shrug / guard / punch / lift / sit / sitphone / sitdesk",
+      "at": 0
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s003",
+   "start": 6,
+   "end": 9,
+   "tpl": "scene",
+   "args": {
+    "set": "void",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.08,
+      "pose": "sitsad",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "band",
+      "x": 0.185,
+      "pose": "knees",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hoodie",
+      "x": 0.29,
+      "pose": "kneel",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hero",
+      "x": 0.395,
+      "pose": "crouch",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "band",
+      "x": 0.5,
+      "pose": "climb",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hoodie",
+      "x": 0.605,
+      "pose": "open",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     },
+     {
+      "who": "hero",
+      "x": 0.71,
+      "pose": "umbrella",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": "umbrella"
+     },
+     {
+      "who": "band",
+      "x": 0.815,
+      "pose": "carry",
+      "face": "neutral",
+      "h": 0.3,
+      "hold": null
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "sitsad / knees / kneel / crouch / climb / open / umbrella / carry",
+      "at": 0
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s004",
+   "start": 9,
+   "end": 12,
+   "tpl": "scene",
+   "args": {
+    "set": "black",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.1,
+      "pose": "stand",
+      "face": "neutral",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.26,
+      "pose": "stand",
+      "face": "tired",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.42000000000000004,
+      "pose": "stand",
+      "face": "sleepy",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.58,
+      "pose": "stand",
+      "face": "sleep",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.74,
+      "pose": "stand",
+      "face": "sad",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.9,
+      "pose": "stand",
+      "face": "cry",
+      "h": 0.5,
+      "y": 0.9
+     }
+    ],
+    "cam": {
+     "from": [
+      0.5,
+      0.45,
+      1.0
+     ]
+    },
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "neutral / tired / sleepy / sleep / sad / cry",
+      "at": 0
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s005",
+   "start": 12,
+   "end": 15,
+   "tpl": "scene",
+   "args": {
+    "set": "black",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.1,
+      "pose": "stand",
+      "face": "worried",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.26,
+      "pose": "stand",
+      "face": "scared",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.42000000000000004,
+      "pose": "stand",
+      "face": "shock",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.58,
+      "pose": "stand",
+      "face": "angry",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.74,
+      "pose": "stand",
+      "face": "determined",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.9,
+      "pose": "stand",
+      "face": "effort",
+      "h": 0.5,
+      "y": 0.9
+     }
+    ],
+    "cam": {
+     "from": [
+      0.5,
+      0.45,
+      1.0
+     ]
+    },
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "worried / scared / shock / angry / determined / effort",
+      "at": 0
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s006",
+   "start": 15,
+   "end": 18,
+   "tpl": "scene",
+   "args": {
+    "set": "black",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.1,
+      "pose": "stand",
+      "face": "smile",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.26,
+      "pose": "stand",
+      "face": "happy",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.42000000000000004,
+      "pose": "stand",
+      "face": "smirk",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.58,
+      "pose": "stand",
+      "face": "empty",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.74,
+      "pose": "stand",
+      "face": "guilty",
+      "h": 0.5,
+      "y": 0.9
+     },
+     {
+      "who": "hero",
+      "x": 0.9,
+      "pose": "stand",
+      "face": "grin",
+      "h": 0.5,
+      "y": 0.9
+     }
+    ],
+    "cam": {
+     "from": [
+      0.5,
+      0.45,
+      1.0
+     ]
+    },
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "smile / happy / smirk / empty / guilty / grin",
+      "at": 0
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s007",
+   "start": 18,
+   "end": 21,
+   "tpl": "scene",
+   "args": {
+    "set": "bedroom",
+    "setArgs": {
+     "clock": "5:00",
+     "ring": true,
+     "calendar": {
+      "month": "OCT",
+      "fill": 12
+     }
+    },
+    "bed": {
+     "face": "sleepy",
+     "arm": {
+      "at": 0.5
+     }
+    },
+    "hud": {
+     "label": "DAY",
+     "n": 1
+    },
+    "texts": [
+     {
+      "kind": "tempt",
+      "t": "just 5 more minutes...",
+      "x": 0.42,
+      "y": 0.42
+     },
+     {
+      "kind": "narr",
+      "t": "Every day started the same."
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s008",
+   "start": 21,
+   "end": 24,
+   "tpl": "scene",
+   "args": {
+    "set": "bedroom",
+    "setArgs": {
+     "clock": "11:00",
+     "lamp": true,
+     "calendar": {
+      "month": "FEB",
+      "fill": 20,
+      "mode": "fill"
+     }
+    },
+    "actors": [
+     {
+      "who": "hoodie",
+      "x": "bed.sit",
+      "pose": "sitphone",
+      "hold": "phone",
+      "face": "tired",
+      "glowFace": "#9fb6ff"
+     },
+     {
+      "who": "voice",
+      "x": 0.52,
+      "pose": "reach",
+      "facing": -1,
+      "at": 0.5
+     }
+    ],
+    "hud": {
+     "label": "DAY",
+     "n": 412,
+     "reset": {
+      "at": 1.5,
+      "to": 0
+     }
+    },
+    "texts": [
+     {
+      "kind": "tempt",
+      "t": "one look won't hurt."
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s009",
+   "start": 24,
+   "end": 27,
+   "tpl": "scene",
+   "args": {
+    "set": "city",
+    "setArgs": {
+     "time": "dusk",
+     "birds": true
+    },
+    "actors": [
+     {
+      "who": "band",
+      "x": 0.2,
+      "run": {
+       "to": 0.8,
+       "speed": 1.6
+      }
+     }
+    ],
+    "hud": {
+     "label": "DAY",
+     "from": 3,
+     "to": 30
+    },
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "Day after day.",
+      "pos": "bottom"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s010",
+   "start": 27,
+   "end": 30,
+   "tpl": "scene",
+   "args": {
+    "set": "street",
+    "setArgs": {
+     "neonDoor": 0.25
+    },
+    "actors": [
+     {
+      "who": "hoodie",
+      "x": 0.45,
+      "pose": "stand",
+      "face": "worried"
+     },
+     {
+      "who": "girl",
+      "x": "bus.seat",
+      "pose": "umbrella",
+      "hold": "umbrella",
+      "face": "smile",
+      "facing": -1
+     }
+    ],
+    "hud": {
+     "rows": [
+      {
+       "label": "SEEN",
+       "n": 1512,
+       "accent": true
+      },
+      {
+       "label": "KNOWN",
+       "n": 0
+      }
+     ]
+    },
+    "texts": [
+     {
+      "kind": "say",
+      "t": "hi.",
+      "who": "girl"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s011",
+   "start": 30,
+   "end": 32,
+   "tpl": "scene",
+   "args": {
+    "set": "lockers",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "lockers"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s012",
+   "start": 32,
+   "end": 34,
+   "tpl": "scene",
+   "args": {
+    "set": "classroom",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "classroom"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s013",
+   "start": 34,
+   "end": 36,
+   "tpl": "scene",
+   "args": {
+    "set": "court",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "court"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s014",
+   "start": 36,
+   "end": 38,
+   "tpl": "scene",
+   "args": {
+    "set": "cafe",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "cafe"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s015",
+   "start": 38,
+   "end": 40,
+   "tpl": "scene",
+   "args": {
+    "set": "gym",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "gym"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s016",
+   "start": 40,
+   "end": 42,
+   "tpl": "scene",
+   "args": {
+    "set": "stairs",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "stairs"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s017",
+   "start": 42,
+   "end": 44,
+   "tpl": "scene",
+   "args": {
+    "set": "hill",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "hill"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s018",
+   "start": 44,
+   "end": 46,
+   "tpl": "scene",
+   "args": {
+    "set": "mirror",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "mirror"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s019",
+   "start": 46,
+   "end": 48,
+   "tpl": "scene",
+   "args": {
+    "set": "kitchen",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "kitchen"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s020",
+   "start": 48,
+   "end": 50,
+   "tpl": "scene",
+   "args": {
+    "set": "doorway",
+    "actors": [
+     {
+      "who": "hero",
+      "x": 0.4,
+      "pose": "stand",
+      "face": "neutral"
+     }
+    ],
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "doorway"
+     }
+    ]
+   },
+   "line": "scene"
+  },
+  {
+   "id": "s021",
+   "start": 50,
+   "end": 53,
+   "tpl": "phone",
+   "args": {
+    "screen": "chat",
+    "name": "jay",
+    "messages": [
+     {
+      "text": "day 150!! couldn't have done it without you bro",
+      "at": 0
+     },
+     {
+      "text": "i relapsed.",
+      "me": true,
+      "at": 1
+     }
+    ],
+    "seen": 2,
+    "keyboard": true,
+    "bg": "bedroom"
+   },
+   "line": "phone"
+  },
+  {
+   "id": "s022",
+   "start": 53,
+   "end": 56,
+   "tpl": "phone",
+   "args": {
+    "screen": "feed",
+    "bg": "bedroom",
+    "posts": [
+     "ramen",
+     "car",
+     "burger",
+     "pizza",
+     "sneakers",
+     "dog",
+     "cat",
+     "beach",
+     "mountain",
+     "sunset",
+     "gym",
+     "watch",
+     "money",
+     "game",
+     "coffee",
+     "city",
+     "party",
+     "selfie",
+     "girl",
+     "donut",
+     "cake"
+    ],
+    "hold": 0.1
+   },
+   "line": "phone"
+  },
+  {
+   "id": "s023",
+   "start": 56,
+   "end": 59,
+   "tpl": "phone",
+   "args": {
+    "screen": "reel",
+    "from": 2400,
+    "art": "party"
+   },
+   "line": "phone"
+  },
+  {
+   "id": "s024",
+   "start": 59,
+   "end": 62,
+   "tpl": "phone",
+   "args": {
+    "screen": "email"
+   },
+   "line": "phone"
+  },
+  {
+   "id": "s025",
+   "start": 62,
+   "end": 65,
+   "tpl": "clock",
+   "args": {
+    "time": "5:00",
+    "ring": true
+   },
+   "line": "clock"
+  },
+  {
+   "id": "s026",
+   "start": 65,
+   "end": 68,
+   "tpl": "calendar",
+   "args": {
+    "month": "MAR",
+    "from": 0,
+    "to": 20,
+    "mode": "fill"
+   },
+   "line": "calendar"
+  },
+  {
+   "id": "s027",
+   "start": 68,
+   "end": 71,
+   "tpl": "face",
+   "args": {
+    "who": "hero",
+    "face": "cry",
+    "bg": "bedroom",
+    "texts": [
+     {
+      "kind": "narr",
+      "t": "It never gave him anything.",
+      "pos": "top"
+     }
+    ]
+   },
+   "line": "face"
+  },
+  {
+   "id": "s028",
+   "start": 71,
+   "end": 74,
+   "tpl": "note",
+   "args": {
+    "text": "look up\nsometimes"
+   },
+   "line": "note"
+  },
+  {
+   "id": "s029",
+   "start": 74,
+   "end": 78,
+   "tpl": "card",
+   "args": {
+    "word": "TOMORROW.",
+    "sub": "Tomorrow is a place.",
+    "sub2": "Nobody lives there.",
+    "sub2At": 2.0
+   },
+   "line": "card"
+  },
+  {
+   "id": "s030",
+   "start": 78,
+   "end": 82,
+   "tpl": "cta",
+   "args": {},
+   "line": "cta"
+  }
+ ]
+}

@@ -1,0 +1,172 @@
+[
+ {
+  "id": "V001",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "You've marched twenty miles today.",
+  "start": 0.5,
+  "end": 2.518,
+  "file": "1.wav"
+ },
+ {
+  "id": "V002",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "Your feet are bleeding inside your sandals, the sun is going down, and all you want is to lie on the grass and sleep.",
+  "start": 2.818,
+  "end": 9.164,
+  "file": "2.wav"
+ },
+ {
+  "id": "V003",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "But nobody lies down.",
+  "start": 9.464,
+  "end": 10.887,
+  "file": "3.wav"
+ },
+ {
+  "id": "V004",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "Instead, your officer hands you a shovel.",
+  "start": 11.187,
+  "end": 13.592,
+  "file": "4.wav"
+ },
+ {
+  "id": "V005",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "And so does every other officer, to every other man in the army.",
+  "start": 13.892,
+  "end": 17.391,
+  "file": "5.wav"
+ },
+ {
+  "id": "V006",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "Because before anyone in this legion eats, before anyone sleeps, you are going to build a fort.",
+  "start": 17.691,
+  "end": 22.84,
+  "file": "6.wav"
+ },
+ {
+  "id": "V007",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "From nothing. In a few hours.",
+  "start": 23.14,
+  "end": 25.037,
+  "file": "7.wav"
+ },
+ {
+  "id": "V008",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "And tomorrow morning, you'll tear it down, and do it all again.",
+  "start": 25.337,
+  "end": 28.965,
+  "file": "8.wav"
+ },
+ {
+  "id": "V009",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "So why would the most feared army in the world wear itself out like this, every single night?",
+  "start": 29.265,
+  "end": 34.418,
+  "file": "9.wav"
+ },
+ {
+  "id": "V010",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "Was it fear? Was it discipline gone mad?",
+  "start": 34.718,
+  "end": 37.308,
+  "file": "10.wav"
+ },
+ {
+  "id": "V011",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "The answer is hiding in what happened to the armies who didn't.",
+  "start": 37.608,
+  "end": 40.894,
+  "file": "11.wav"
+ },
+ {
+  "id": "V012",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "But first, look at what's on your back.",
+  "start": 41.194,
+  "end": 43.466,
+  "file": "12.wav"
+ },
+ {
+  "id": "V013",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "You're a Roman legionary, and you're carrying almost thirty kilos.",
+  "start": 43.766,
+  "end": 47.048,
+  "file": "13.wav"
+ },
+ {
+  "id": "V014",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "Armour, weapons, food for days, a cooking pot, a saw, a basket, and two wooden stakes.",
+  "start": 47.348,
+  "end": 53.516,
+  "file": "14.wav"
+ },
+ {
+  "id": "V015",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "The soldiers even had a nickname for themselves: Marius's mules.",
+  "start": 53.816,
+  "end": 57.675,
+  "file": "15.wav"
+ },
+ {
+  "id": "V016",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "And that shovel isn't extra.",
+  "start": 57.975,
+  "end": 59.64,
+  "file": "16.wav"
+ },
+ {
+  "id": "V017",
+  "slot": "NARRATOR",
+  "char": "",
+  "drop": false,
+  "text": "It's a weapon. Maybe the most important one you own.",
+  "start": 59.94,
+  "end": 63.136,
+  "file": "17.wav"
+ }
+]

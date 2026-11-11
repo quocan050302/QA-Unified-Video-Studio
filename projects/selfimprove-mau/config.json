@@ -1,0 +1,12 @@
+{
+ "title": "Mau canh dem",
+ "aspect": "16:9",
+ "resolution": "1080p",
+ "fps": 24,
+ "pack": "dem",
+ "style": "flat",
+ "captions": false,
+ "lang": "en",
+ "accent": "red",
+ "bars": "scope"
+}

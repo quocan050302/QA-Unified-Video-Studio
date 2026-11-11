@@ -1,0 +1,1110 @@
+{
+ "title": "Why Roman Soldiers Built a Fort Every Night",
+ "duration": 64.636,
+ "shots": [
+  {
+   "id": "s001",
+   "start": 0.0,
+   "end": 2.668,
+   "line": "You've marched twenty miles today.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V001",
+   "set": "",
+   "in": {
+    "type": "fade"
+   },
+   "sfx": [
+    {
+     "name": "drum_march",
+     "at": 0.0,
+     "gain": -8
+    }
+   ],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "plain",
+    "time": "golden",
+    "back": [
+     {
+      "preset": "hastatus",
+      "rows": 3,
+      "cols": 18,
+      "x0": 0,
+      "x1": 1,
+      "yFront": 0.86,
+      "yBack": 0.72,
+      "hFront": 0.16,
+      "hBack": 0.08,
+      "march": null,
+      "flip": false,
+      "advance": 0.012
+     }
+    ],
+    "people": [
+     {
+      "preset": "hastatus",
+      "x": 0.5,
+      "h": 0.62,
+      "walk": true,
+      "face": "tired",
+      "weapon": "pilum",
+      "speed": 0.7
+     }
+    ],
+    "move": "still",
+    "fx": [],
+    "signs": [
+     {
+      "text": "YOU",
+      "x": 0.5,
+      "y": 0.12,
+      "at": "marched"
+     }
+    ]
+   }
+  },
+  {
+   "id": "s002",
+   "start": 2.668,
+   "end": 6.221,
+   "line": "Your feet are bleeding inside your sandals, the sun is going down,",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V002",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "close",
+   "args": {
+    "preset": "hastatus",
+    "face": "pain",
+    "bg": "plain",
+    "time": "sunset",
+    "R": 0.26,
+    "x": 0.45,
+    "fx": []
+   }
+  },
+  {
+   "id": "s003",
+   "start": 6.221,
+   "end": 9.314,
+   "line": "and all you want is to lie on the grass and sleep.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V002",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "plain",
+    "time": "sunset",
+    "people": [
+     {
+      "preset": "hastatus",
+      "x": 0.45,
+      "h": 0.58,
+      "pose": "shrug",
+      "face": "tired"
+     },
+     {
+      "preset": "princeps",
+      "x": 0.75,
+      "h": 0.56,
+      "pose": "stand",
+      "face": "bored",
+      "flip": true
+     }
+    ],
+    "move": "in"
+   }
+  },
+  {
+   "id": "s004",
+   "start": 9.314,
+   "end": 11.037,
+   "line": "But nobody lies down.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V003",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [
+    {
+     "name": "drum_hit",
+     "at": 0.3
+    }
+   ],
+   "notes": "",
+   "tpl": "close",
+   "args": {
+    "preset": "princeps",
+    "face": "angry",
+    "talk": true,
+    "bg": "plain",
+    "time": "sunset",
+    "x": 0.55,
+    "R": 0.27
+   }
+  },
+  {
+   "id": "s005",
+   "start": 11.037,
+   "end": 13.742,
+   "line": "Instead, your officer hands you a shovel.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V004",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [
+    {
+     "name": "armor_clank",
+     "at": 0.4
+    }
+   ],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "plain",
+    "time": "sunset",
+    "people": [
+     {
+      "preset": "princeps",
+      "x": 0.32,
+      "h": 0.58,
+      "pose": "hold",
+      "weapon": "shovel",
+      "face": "smug"
+     },
+     {
+      "preset": "hastatus",
+      "x": 0.66,
+      "h": 0.58,
+      "face": "shock",
+      "flip": true,
+      "weapon": null
+     }
+    ],
+    "marks": [
+     {
+      "kind": "!",
+      "x": 0.68,
+      "y": 0.2,
+      "r": 0.06,
+      "at": "shovel"
+     }
+    ]
+   }
+  },
+  {
+   "id": "s006",
+   "start": 13.742,
+   "end": 17.541,
+   "line": "And so does every other officer, to every other man in the army.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V005",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [
+    {
+     "name": "horn_roman",
+     "at": 0.2,
+     "gain": -4
+    }
+   ],
+   "notes": "",
+   "tpl": "army",
+   "args": {
+    "preset": "hastatus",
+    "rows": 4,
+    "cols": 9,
+    "flags": [
+     {
+      "col": 0.5,
+      "row": 0.8,
+      "kind": "eagle"
+     }
+    ],
+    "time": "sunset",
+    "bg": "plain",
+    "weapon": "shovel",
+    "face": "tired"
+   }
+  },
+  {
+   "id": "s007",
+   "start": 17.541,
+   "end": 19.839,
+   "line": "Because before anyone in this legion eats,",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V006",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "plain",
+    "time": "dusk",
+    "people": [
+     {
+      "preset": "hastatus",
+      "x": 0.3,
+      "h": 0.55,
+      "pose": "hold",
+      "weapon": "pot",
+      "face": "sad"
+     },
+     {
+      "preset": "velites",
+      "x": 0.7,
+      "h": 0.5,
+      "pose": "stand",
+      "face": "tired",
+      "flip": true
+     }
+    ],
+    "props": [
+     {
+      "kind": "campfire",
+      "x": 0.5,
+      "y": 0.88,
+      "s": 0.14
+     }
+    ],
+    "marks": [
+     {
+      "kind": "ban",
+      "x": 0.5,
+      "y": 0.4,
+      "r": 0.11,
+      "at": "eats"
+     }
+    ]
+   }
+  },
+  {
+   "id": "s008",
+   "start": 19.839,
+   "end": 22.99,
+   "line": "before anyone sleeps, you are going to build a fort.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V006",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "top",
+   "args": {
+    "ground": {
+     "color": "#bda873",
+     "grass": true
+    },
+    "zones": [
+     {
+      "x": 0.5,
+      "y": 0.5,
+      "w": 0.62,
+      "h": 0.74,
+      "color": "#6e4a2c",
+      "lw": 14,
+      "at": "fort",
+      "dur": 1.6
+     }
+    ],
+    "blocks": [
+     {
+      "x": 0.3,
+      "y": 0.35,
+      "w": 0.05,
+      "h": 0.12,
+      "cols": 3,
+      "rows": 6,
+      "side": "red"
+     },
+     {
+      "x": 0.7,
+      "y": 0.35,
+      "w": 0.05,
+      "h": 0.12,
+      "cols": 3,
+      "rows": 6,
+      "side": "red"
+     },
+     {
+      "x": 0.3,
+      "y": 0.65,
+      "w": 0.05,
+      "h": 0.12,
+      "cols": 3,
+      "rows": 6,
+      "side": "red"
+     },
+     {
+      "x": 0.7,
+      "y": 0.65,
+      "w": 0.05,
+      "h": 0.12,
+      "cols": 3,
+      "rows": 6,
+      "side": "red"
+     }
+    ],
+    "move": "in"
+   }
+  },
+  {
+   "id": "s009",
+   "start": 22.99,
+   "end": 25.187,
+   "line": "From nothing. In a few hours.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V007",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [
+    {
+     "name": "page_turn",
+     "at": 0.0
+    }
+   ],
+   "notes": "",
+   "tpl": "plan",
+   "args": {
+    "zones": [
+     {
+      "x": 0.5,
+      "y": 0.5,
+      "w": 0.6,
+      "h": 0.66,
+      "color": "#6e4a2c",
+      "lw": 12,
+      "dur": 0.8
+     },
+     {
+      "x": 0.5,
+      "y": 0.5,
+      "w": 0.66,
+      "h": 0.72,
+      "color": "#4f7ab0",
+      "lw": 8,
+      "dashed": true,
+      "at": 0.6
+     }
+    ],
+    "blocks": [
+     {
+      "x": 0.38,
+      "y": 0.4,
+      "w": 0.08,
+      "h": 0.1,
+      "side": "red",
+      "cols": 2,
+      "rows": 2,
+      "at": 1.0
+     },
+     {
+      "x": 0.62,
+      "y": 0.4,
+      "w": 0.08,
+      "h": 0.1,
+      "side": "red",
+      "cols": 2,
+      "rows": 2,
+      "at": 1.2
+     },
+     {
+      "x": 0.38,
+      "y": 0.6,
+      "w": 0.08,
+      "h": 0.1,
+      "side": "red",
+      "cols": 2,
+      "rows": 2,
+      "at": 1.4
+     },
+     {
+      "x": 0.62,
+      "y": 0.6,
+      "w": 0.08,
+      "h": 0.1,
+      "side": "red",
+      "cols": 2,
+      "rows": 2,
+      "at": 1.6
+     }
+    ]
+   }
+  },
+  {
+   "id": "s010",
+   "start": 25.187,
+   "end": 26.436,
+   "line": "And tomorrow morning,",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V008",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "plain",
+    "time": "dawn",
+    "people": [
+     {
+      "preset": "hastatus",
+      "x": 0.5,
+      "h": 0.6,
+      "pose": "armsUp",
+      "face": "shock",
+      "weapon": null
+     }
+    ],
+    "move": "out"
+   }
+  },
+  {
+   "id": "s011",
+   "start": 26.436,
+   "end": 29.115,
+   "line": "you'll tear it down, and do it all again.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V008",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "plain",
+    "time": "dawn",
+    "people": [
+     {
+      "preset": "hastatus",
+      "x": 0.35,
+      "h": 0.56,
+      "pose": "hold",
+      "weapon": "pickaxe",
+      "face": "bored"
+     },
+     {
+      "preset": "hastatus",
+      "x": 0.68,
+      "h": 0.54,
+      "pose": "carry",
+      "weapon": "stake",
+      "face": "tired",
+      "flip": true,
+      "walk": true
+     }
+    ],
+    "props": [
+     {
+      "kind": "stake",
+      "x": 0.86,
+      "y": 0.85,
+      "s": 0.2,
+      "rot": 0.4
+     },
+     {
+      "kind": "stake",
+      "x": 0.9,
+      "y": 0.86,
+      "s": 0.2,
+      "rot": 0.2
+     }
+    ]
+   }
+  },
+  {
+   "id": "s012",
+   "start": 29.115,
+   "end": 30.997,
+   "line": "So why would the most feared army",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V009",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "army",
+   "args": {
+    "preset": "legionary",
+    "rows": 5,
+    "cols": 10,
+    "bg": "plain",
+    "time": "golden",
+    "flags": [
+     {
+      "col": 0.3,
+      "row": 0.7,
+      "kind": "eagle"
+     },
+     {
+      "col": 0.75,
+      "row": 0.7,
+      "kind": "vexillum"
+     }
+    ],
+    "face": "determined",
+    "move": "right"
+   }
+  },
+  {
+   "id": "s013",
+   "start": 30.997,
+   "end": 33.156,
+   "line": "in the world wear itself out like this,",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V009",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "close",
+   "args": {
+    "preset": "hastatus",
+    "face": "tired",
+    "bg": "plain",
+    "time": "dusk",
+    "R": 0.24,
+    "x": 0.5,
+    "others": [
+     {
+      "preset": "princeps",
+      "x": 0.15,
+      "y": 0.62,
+      "R": 0.17,
+      "face": "sleep"
+     },
+     {
+      "preset": "velites",
+      "x": 0.85,
+      "y": 0.64,
+      "R": 0.16,
+      "face": "tired"
+     }
+    ]
+   }
+  },
+  {
+   "id": "s014",
+   "start": 33.156,
+   "end": 34.568,
+   "line": "every single night?",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V009",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "plain",
+    "time": "night",
+    "people": [
+     {
+      "preset": "hastatus",
+      "x": 0.5,
+      "h": 0.55,
+      "pose": "hold",
+      "weapon": "shovel",
+      "face": "sad"
+     }
+    ],
+    "move": "in",
+    "dark": 0.1
+   }
+  },
+  {
+   "id": "s015",
+   "start": 34.568,
+   "end": 37.458,
+   "line": "Was it fear? Was it discipline gone mad?",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V010",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [
+    {
+     "name": "whoosh_mid",
+     "at": 0.0
+    }
+   ],
+   "notes": "",
+   "tpl": "split",
+   "args": {
+    "left": {
+     "color": "#b94a3c",
+     "people": [
+      {
+       "preset": "princeps",
+       "x": 0.25,
+       "h": 0.62,
+       "face": "scared",
+       "pose": "cower",
+       "weapon": null
+      }
+     ]
+    },
+    "right": {
+     "color": "#8fa3b5",
+     "people": [
+      {
+       "preset": "princeps",
+       "x": 0.75,
+       "h": 0.62,
+       "face": "angry",
+       "pose": "fist",
+       "weapon": null
+      }
+     ]
+    },
+    "labels": [
+     {
+      "text": "FEAR?",
+      "x": 0.25,
+      "y": 0.18,
+      "at": "fear",
+      "size": 110
+     },
+     {
+      "text": "DISCIPLINE?",
+      "x": 0.74,
+      "y": 0.18,
+      "at": "discipline",
+      "size": 100
+     }
+    ]
+   }
+  },
+  {
+   "id": "s016",
+   "start": 37.458,
+   "end": 41.044,
+   "line": "The answer is hiding in what happened to the armies who didn't.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V011",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [
+    {
+     "name": "sting_low",
+     "at": 0.3
+    }
+   ],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "field",
+    "time": "night",
+    "people": [
+     {
+      "preset": "latin",
+      "x": 0.5,
+      "h": 0.55,
+      "face": "worried",
+      "pose": "stand"
+     }
+    ],
+    "marks": [
+     {
+      "kind": "q",
+      "x": 0.5,
+      "y": 0.18,
+      "r": 0.08,
+      "glow": true,
+      "at": "answer"
+     }
+    ],
+    "dark": 0.15
+   }
+  },
+  {
+   "id": "s017",
+   "start": 41.044,
+   "end": 43.616,
+   "line": "But first, look at what's on your back.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V012",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "close",
+   "args": {
+    "preset": "hastatus",
+    "face": "confused",
+    "bg": "plain",
+    "time": "golden",
+    "R": 0.25,
+    "x": 0.5,
+    "lookAt": [
+     [
+      0,
+      0
+     ],
+     [
+      1.0,
+      -0.9
+     ]
+    ]
+   }
+  },
+  {
+   "id": "s018",
+   "start": 43.616,
+   "end": 47.198,
+   "line": "You're a Roman legionary, and you're carrying almost thirty kilos.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V013",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "plain",
+    "time": "golden",
+    "people": [
+     {
+      "preset": "hastatus",
+      "x": 0.5,
+      "h": 0.6,
+      "face": "proud",
+      "pose": "hips",
+      "weapon": null
+     }
+    ],
+    "signs": [
+     {
+      "text": "ROMAN LEGIONARY",
+      "x": 0.5,
+      "y": 0.12
+     }
+    ],
+    "labels": [
+     {
+      "text": "30 KG",
+      "x": 0.82,
+      "y": 0.4,
+      "at": "thirty",
+      "size": 110
+     }
+    ]
+   }
+  },
+  {
+   "id": "s019",
+   "start": 47.198,
+   "end": 50.481,
+   "line": "Armour, weapons, food for days, a cooking pot,",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V014",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [
+    {
+     "name": "pop",
+     "at": 0.1
+    }
+   ],
+   "notes": "",
+   "tpl": "item",
+   "args": {
+    "bg": "plain",
+    "time": "golden",
+    "thing": {
+     "kind": "shield",
+     "type": "scutum",
+     "color": "#c9473a",
+     "charge": "wings",
+     "chargeColor": "#efc23f",
+     "x": 0.3,
+     "s": 0.5,
+     "anim": "pop"
+    },
+    "props": [
+     {
+      "kind": "pilum",
+      "x": 0.48,
+      "y": 0.5,
+      "s": 0.5,
+      "at": "weapons",
+      "anim": "pop"
+     },
+     {
+      "kind": "sack",
+      "x": 0.64,
+      "y": 0.55,
+      "s": 0.16,
+      "at": "food",
+      "anim": "pop"
+     },
+     {
+      "kind": "pot",
+      "x": 0.8,
+      "y": 0.56,
+      "s": 0.3,
+      "at": "pot",
+      "anim": "pop"
+     }
+    ]
+   }
+  },
+  {
+   "id": "s020",
+   "start": 50.481,
+   "end": 53.666,
+   "line": "a saw, a basket, and two wooden stakes.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V014",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "item",
+   "args": {
+    "bg": "plain",
+    "time": "golden",
+    "thing": {
+     "kind": "saw",
+     "x": 0.22,
+     "y": 0.5,
+     "s": 0.45,
+     "anim": "pop"
+    },
+    "props": [
+     {
+      "kind": "basket",
+      "x": 0.48,
+      "y": 0.52,
+      "s": 0.38,
+      "at": "basket",
+      "anim": "pop"
+     },
+     {
+      "kind": "stake",
+      "x": 0.72,
+      "y": 0.5,
+      "s": 0.5,
+      "at": "stakes",
+      "anim": "pop",
+      "rot": 0.2
+     },
+     {
+      "kind": "stake",
+      "x": 0.8,
+      "y": 0.5,
+      "s": 0.5,
+      "at": "stakes",
+      "anim": "pop",
+      "rot": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "id": "s021",
+   "start": 53.666,
+   "end": 55.137,
+   "line": "The soldiers even had a",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V015",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "scene",
+   "args": {
+    "bg": "plain",
+    "time": "golden",
+    "people": [
+     {
+      "preset": "hastatus",
+      "x": 0.3,
+      "h": 0.55,
+      "face": "laugh",
+      "pose": "point",
+      "weapon": null
+     },
+     {
+      "preset": "princeps",
+      "x": 0.68,
+      "h": 0.55,
+      "face": "happy",
+      "flip": true,
+      "pose": "cheer",
+      "weapon": null
+     }
+    ]
+   }
+  },
+  {
+   "id": "s022",
+   "start": 55.137,
+   "end": 57.825,
+   "line": "nickname for themselves: Marius's mules.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V015",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [
+    {
+     "name": "impact_light",
+     "at": 0.0
+    }
+   ],
+   "notes": "",
+   "tpl": "title",
+   "args": {
+    "bg": "plain",
+    "time": "golden",
+    "text": "MARIUS'S\nMULES",
+    "at": 0
+   }
+  },
+  {
+   "id": "s023",
+   "start": 57.825,
+   "end": 59.79,
+   "line": "And that shovel isn't extra.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V016",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [],
+   "notes": "",
+   "tpl": "item",
+   "args": {
+    "bg": "plain",
+    "time": "sunset",
+    "thing": {
+     "kind": "shovel",
+     "s": 0.6,
+     "rot": 0.3
+    },
+    "sway": true
+   }
+  },
+  {
+   "id": "s024",
+   "start": 59.79,
+   "end": 64.636,
+   "line": "It's a weapon. Maybe the most important one you own.",
+   "speaker": "NARRATOR",
+   "char": "",
+   "block": "V017",
+   "set": "",
+   "in": {
+    "type": "cut"
+   },
+   "sfx": [
+    {
+     "name": "sword_draw",
+     "at": 0.6
+    }
+   ],
+   "notes": "",
+   "tpl": "close",
+   "args": {
+    "preset": "hastatus",
+    "face": "determined",
+    "bg": "plain",
+    "time": "sunset",
+    "R": 0.25,
+    "x": 0.6,
+    "pose": "hold",
+    "weapon": "shovel",
+    "zoom": [
+     0.6,
+     0.45,
+     1.18,
+     0.6,
+     1.6
+    ]
+   }
+  }
+ ],
+ "music": [
+  {
+   "start": 0,
+   "end": 41,
+   "bed": "roman"
+  },
+  {
+   "start": 41,
+   "end": 64.636,
+   "bed": "medieval"
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "name": "h2-2d-studio-kit",
+ "version": "0.5.1",
+ "private": true,
+ "type": "module",
+ "description": "H2 2D Studio: bo dung video nguoi que ve bang code (canvas), xuat tung khung hinh bang Chromium",
+ "dependencies": {
+  "@fontsource/archivo-black": "5.2.8",
+  "@fontsource/baloo-2": "5.1.0",
+  "@fontsource/be-vietnam-pro": "5.1.0",
+  "@fontsource/caveat": "5.2.5",
+  "@fontsource/comic-neue": "5.2.5",
+  "@fontsource/courier-prime": "5.2.8",
+  "@fontsource/dela-gothic-one": "5.3.0",
+  "@fontsource/lora": "5.1.0",
+  "@fontsource/luckiest-guy": "5.2.5",
+  "@fontsource/noto-sans-jp": "5.3.1",
+  "@fontsource/patrick-hand": "5.2.8",
+  "@fontsource/zen-maru-gothic": "5.2.8",
+  "playwright": "1.56.0",
+  "three": "0.169.0",
+  "topojson-client": "3.1.0",
+  "world-atlas": "2.0.2"
+ }
+}

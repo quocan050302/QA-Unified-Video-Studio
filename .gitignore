@@ -1,0 +1,12 @@
+node_modules/
+.venv/
+__pycache__/
+.studio/
+projects/*/build/
+projects/*/out/
+projects/*/input/
+projects/*/anh/
+projects/*/timeline/voice.wav
+*.pyc
+.DS_Store
+

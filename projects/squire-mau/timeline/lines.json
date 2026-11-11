@@ -1,0 +1,202 @@
+[
+ {
+  "id": "L001",
+  "block": "V001",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "You've marched twenty miles today.",
+  "start": 0.5,
+  "end": 2.518,
+  "drop": false
+ },
+ {
+  "id": "L002",
+  "block": "V002",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "Your feet are bleeding inside your sandals, the sun is going down, and all you want is to lie on the grass and sleep.",
+  "start": 2.818,
+  "end": 9.164,
+  "drop": false
+ },
+ {
+  "id": "L003",
+  "block": "V003",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "But nobody lies down.",
+  "start": 9.464,
+  "end": 10.887,
+  "drop": false
+ },
+ {
+  "id": "L004",
+  "block": "V004",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "Instead, your officer hands you a shovel.",
+  "start": 11.187,
+  "end": 13.592,
+  "drop": false
+ },
+ {
+  "id": "L005",
+  "block": "V005",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "And so does every other officer, to every other man in the army.",
+  "start": 13.892,
+  "end": 17.391,
+  "drop": false
+ },
+ {
+  "id": "L006",
+  "block": "V006",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "Because before anyone in this legion eats, before anyone sleeps, you are going to build a fort.",
+  "start": 17.691,
+  "end": 22.84,
+  "drop": false
+ },
+ {
+  "id": "L007",
+  "block": "V007",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "From nothing.",
+  "start": 23.14,
+  "end": 24.16,
+  "drop": false
+ },
+ {
+  "id": "L008",
+  "block": "V007",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "In a few hours.",
+  "start": 24.16,
+  "end": 25.037,
+  "drop": false
+ },
+ {
+  "id": "L009",
+  "block": "V008",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "And tomorrow morning, you'll tear it down, and do it all again.",
+  "start": 25.337,
+  "end": 28.965,
+  "drop": false
+ },
+ {
+  "id": "L010",
+  "block": "V009",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "So why would the most feared army in the world wear itself out like this, every single night?",
+  "start": 29.265,
+  "end": 34.418,
+  "drop": false
+ },
+ {
+  "id": "L011",
+  "block": "V010",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "Was it fear?",
+  "start": 34.718,
+  "end": 35.758,
+  "drop": false
+ },
+ {
+  "id": "L012",
+  "block": "V010",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "Was it discipline gone mad?",
+  "start": 35.758,
+  "end": 37.308,
+  "drop": false
+ },
+ {
+  "id": "L013",
+  "block": "V011",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "The answer is hiding in what happened to the armies who didn't.",
+  "start": 37.608,
+  "end": 40.894,
+  "drop": false
+ },
+ {
+  "id": "L014",
+  "block": "V012",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "But first, look at what's on your back.",
+  "start": 41.194,
+  "end": 43.466,
+  "drop": false
+ },
+ {
+  "id": "L015",
+  "block": "V013",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "You're a Roman legionary, and you're carrying almost thirty kilos.",
+  "start": 43.766,
+  "end": 47.048,
+  "drop": false
+ },
+ {
+  "id": "L016",
+  "block": "V014",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "Armour, weapons, food for days, a cooking pot, a saw, a basket, and two wooden stakes.",
+  "start": 47.348,
+  "end": 53.516,
+  "drop": false
+ },
+ {
+  "id": "L017",
+  "block": "V015",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "The soldiers even had a nickname for themselves: Marius's mules.",
+  "start": 53.816,
+  "end": 57.675,
+  "drop": false
+ },
+ {
+  "id": "L018",
+  "block": "V016",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "And that shovel isn't extra.",
+  "start": 57.975,
+  "end": 59.64,
+  "drop": false
+ },
+ {
+  "id": "L019",
+  "block": "V017",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "It's a weapon.",
+  "start": 59.94,
+  "end": 60.97,
+  "drop": false
+ },
+ {
+  "id": "L020",
+  "block": "V017",
+  "slot": "NARRATOR",
+  "char": "",
+  "text": "Maybe the most important one you own.",
+  "start": 60.97,
+  "end": 63.136,
+  "drop": false
+ }
+]
