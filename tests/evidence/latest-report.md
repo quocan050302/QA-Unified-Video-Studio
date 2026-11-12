@@ -1,14 +1,14 @@
-# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Chất lượng (V2)
-- **Mã lượt chạy (Run ID)**: `20261112_221958`
-- **Thời gian chạy**: `2026-11-12T22:20:29.210463`
-- **Tổng thời gian thực thi**: `31.06s`
-- **Kết quả chung**: **RELEASE_HOLD** (16 PASS, 1 HOLD, 0 FAIL)
+# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Chất lượng (V3)
+- **Mã lượt chạy (Run ID)**: `20261112_225507`
+- **Thời gian chạy**: `2026-11-12T22:55:48.659646`
+- **Tổng thời gian thực thi**: `41.47s`
+- **Kết quả chung**: **RELEASE_HOLD** (17 PASS, 1 HOLD, 0 FAIL)
 
 > [!IMPORTANT]
 > **Đánh giá trung thực (Truthful Verdict):**
-> RELEASE_HOLD: 16/17 Cổng PASS; Cổng G5 đặt trạng thái HOLD do projects/why_knights_could_actually (12,209 frame gốc) không có trên host kiểm thử này.
+> RELEASE_HOLD: 17/18 Cổng PASS; Cổng G5 đặt trạng thái HOLD do projects/why_knights_could_actually (12,209 frame gốc) không có trên host kiểm thử này.
 
-## Bảng tổng hợp Ma trận 17 Cổng Kiểm thử (Gates G0 - G16)
+## Bảng tổng hợp Ma trận 18 Cổng Kiểm thử (Gates G0 - G17)
 
 | Cổng | Tên kiểm thử | Phân loại | Trạng thái | Ghi chú & Đo đạc thực tế |
 | :--- | :--- | :--- | :---: | :--- |
@@ -29,12 +29,13 @@
 | **G14** | Historical Replay Contrast Comparison | `COMPARATIVE_AUDIT` | ✅ PASS | Chi tiết trong summary JSON |
 | **G15** | Headless CI & CLI Exit Codes | `CI_CONFORMANCE` | ✅ PASS | Chi tiết trong summary JSON |
 | **G16** | Performance & Resource Audit | `TELEMETRY_AUDIT` | ✅ PASS | Chi tiết trong summary JSON |
+| **G17** | 2K QHD & 4K UHD Render Verification (1440p & 2160p) | `UHD_CAPABILITY` | ✅ PASS | Chi tiết trong summary JSON |
 
 ## Bằng chứng Trực quan Đã xác thực (Visual Proofs)
 
 - **proof_g2_squire.jpg**: `14 KB` (Trích xuất từ video render thực tế, 0 placeholder, >500 màu)
 
-- **proof_g3_shorts.jpg**: `23 KB` (Trích xuất từ video render thực tế, 0 placeholder, >500 màu)
+- **proof_g3_shorts.jpg**: `25 KB` (Trích xuất từ video render thực tế, 0 placeholder, >500 màu)
 
 - **proof_g4_dem.jpg**: `9 KB` (Trích xuất từ video render thực tế, 0 placeholder, >500 màu)
 
