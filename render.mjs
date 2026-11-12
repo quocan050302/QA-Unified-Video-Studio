@@ -5,8 +5,7 @@
 //   node render.mjs --project projects/<ten> --from 0 --to 30 [--scale 0.5] video xem truoc (build/preview.mp4, co voice)
 //   node render.mjs --project projects/<ten> [--workers N]                  ban cuoi (build/video_silent.mp4)
 //   node render.mjs --project projects/<ten> --thumb                        anh thumbnail tu canh 'thumb' -> out/thumbnail.png
-//   node render.mjs --project projects/<ten> --check --scale 0.25        quet loi toan video, khong xuat file
-// Tuy chon: --style <id> (thu style khac), --at 0.45 (vi tri lay khung trong shot cho --sheet), --crf 18, --gl swiftshader|auto
+//   node render.mjs --project projects/<ten> --check --scale 0.25           quet loi toan video, khong xuat file
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -33,10 +32,20 @@ function listScenes(dir) {
 }
 const server = http.createServer((req, res) => {
   const u = new URL(req.url, 'http://x');
+  if (u.pathname === '/favicon.ico') {
+    res.writeHead(204);
+    return res.end();
+  }
   if (u.pathname === '/__assets') { const d = path.join(PROJ, 'anh'); const list = fs.existsSync(d) ? fs.readdirSync(d).filter((f) => /\.(png|jpe?g|webp)$/i.test(f)).sort().map((f) => ({ id: path.parse(f).name, file: 'anh/' + f })) : []; res.writeHead(200, { 'content-type': 'application/json' }); return res.end(JSON.stringify(list)); }
   if (u.pathname === '/__manifest') { res.writeHead(200, { 'content-type': 'application/json' }); return res.end(JSON.stringify(listScenes(PROJ))); }
   let file = u.pathname.startsWith('/proj/') ? path.join(PROJ, decodeURIComponent(u.pathname.slice(6))) : path.join(ROOT, decodeURIComponent(u.pathname));
-  if (!fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); return res.end('not found'); }
+  if (!fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+    if (u.pathname.includes('/timeline/words.json') || u.pathname.includes('/timeline/lines.json')) {
+      res.writeHead(200, { 'content-type': 'application/json' });
+      return res.end('[]');
+    }
+    res.writeHead(404); return res.end('not found');
+  }
   res.writeHead(200, { 'content-type': MIME[path.extname(file)] || 'application/octet-stream', 'cache-control': 'no-store' });
   fs.createReadStream(file).pipe(res);
 });
@@ -44,13 +53,11 @@ await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const PORT = server.address().port;
 
 // ---------- trinh duyet
-// SwiftShader chi can cho canh 3D (nguoi que What If). Du an dung pack 2D (doodle, dem...) ve bang CPU nhanh hon nhieu lan.
 let _cfg = {}; try { _cfg = JSON.parse(fs.readFileSync(path.join(PROJ, 'config.json'), 'utf8')); } catch {}
 const gl = args.gl || _cfg.gl || (process.platform === 'linux' && !_cfg.pack ? 'swiftshader' : 'auto');
 const LAUNCH = { args: ['--disable-dev-shm-usage', '--font-render-hinting=none', ...(gl === 'swiftshader' ? ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] : [])] };
 async function launch() {
   if (process.platform === 'win32' && gl !== 'swiftshader') {
-    // Windows co card do hoa: dung Edge / Chrome co san tren may (khong can tai Chromium), ve 3D bang GPU (ANGLE D3D11)
     const gpu = [...LAUNCH.args, '--use-angle=d3d11', '--ignore-gpu-blocklist', '--enable-gpu-rasterization'];
     for (const channel of ['msedge', 'chrome', 'chromium']) {
       try { const b = await chromium.launch({ channel, args: gpu }); console.log('  Trinh ve: ' + channel + ' (GPU)'); return b; } catch (e) { console.log('  (khong mo duoc ' + channel + ')'); }
@@ -66,46 +73,119 @@ async function launch() {
 }
 async function openPlayer(browser, style) {
   const page = await browser.newPage();
-  page.on('console', (m) => { if (m.type() === 'error') console.log('  [trinh duyet]', m.text().slice(0, 300)); });
-  page.on('response', (r) => { if (r.status() >= 400 && !r.url().includes('/timeline/')) console.log('  [404]', r.url().slice(0, 200)); });
+  page.on('console', (m) => {
+    if (m.type() === 'error') {
+      const txt = m.text();
+      if (!txt.includes('404') && !txt.includes('/favicon.ico')) console.log('  [trinh duyet]', txt.slice(0, 300));
+    }
+  });
+  page.on('response', (r) => {
+    if (r.status() >= 400) {
+      const u = r.url();
+      if (!u.includes('/timeline/') && !u.includes('favicon.ico')) console.log('  [404 Required]', u.slice(0, 200));
+    }
+  });
   page.on('pageerror', (e) => console.log('  [loi trang]', String(e).slice(0, 300)));
   const qs = new URLSearchParams({ proj: '/proj', scale: String(SCALE) });
   await page.goto(`http://127.0.0.1:${PORT}/player.html?${qs}`);
   await page.waitForFunction(() => window.__ready || window.__bootError, null, { timeout: 120000 });
-  const err = await page.evaluate(() => window.__bootError); if (err) throw new Error('Khong khoi dong duoc player: ' + err);
+  const err = await page.evaluate(() => window.__bootError);
+  if (err) throw new Error('Khong khoi dong duoc player: ' + err);
   if (style) await page.evaluate((s) => { window.__setStyle && window.__setStyle(s); }, style);
   const info = await page.evaluate(() => window.__info);
-  if (!globalThis.__gpuShown) { globalThis.__gpuShown = 1; try { const r = await page.evaluate(() => { const c = document.createElement('canvas').getContext('webgl'); const e = c && c.getExtension('WEBGL_debug_renderer_info'); return e ? c.getParameter(e.UNMASKED_RENDERER_WEBGL) : 'khong ro'; }); console.log('  Card do hoa dang dung: ' + r); } catch {} }
+  if (!globalThis.__gpuShown) {
+    globalThis.__gpuShown = 1;
+    try {
+      const r = await page.evaluate(() => {
+        const c = document.createElement('canvas').getContext('webgl');
+        const e = c && c.getExtension('WEBGL_debug_renderer_info');
+        return e ? c.getParameter(e.UNMASKED_RENDERER_WEBGL) : 'khong ro';
+      });
+      console.log('  Card do hoa dang dung: ' + r);
+    } catch {}
+  }
   await page.setViewportSize({ width: Math.min(info.W, 4000), height: Math.min(info.H, 4000) });
   return { page, info };
 }
 const b64 = (d) => Buffer.from(d.slice(d.indexOf(',') + 1), 'base64');
-function report(info) {
-  const miss = info.shots.filter((s) => !s.has).map((s) => s.id);
-  if (miss.length) console.log(`  THIEU ${miss.length} shot: ${miss.slice(0, 30).join(', ')}${miss.length > 30 ? ' ...' : ''}`);
-  if (info.missingImages && info.missingImages.length) console.log(`  THIEU ${info.missingImages.length}/${info.images} anh AI (dat vao <du an>/anh/): ${info.missingImages.slice(0, 40).join(', ')}${info.missingImages.length > 40 ? ' ...' : ''}`);
-  if (info.importErrors.length) { console.log('  LOI NAP FILE CANH:'); info.importErrors.forEach((e) => console.log('   - ' + e)); }
+
+function validateInfo(info) {
+  const fatal = [];
+  if (!info.shots || info.shots.length === 0) {
+    fatal.push('Du an khong co shot nao (story/shots.json rong).');
+  }
+  const missShots = (info.shots || []).filter((s) => !s.has).map((s) => s.id);
+  if (missShots.length > 0) {
+    fatal.push(`THIEU ${missShots.length} shot chua co dinh nghia/template: ${missShots.slice(0, 30).join(', ')}${missShots.length > 30 ? ' ...' : ''}`);
+  }
+  if (info.missingImages && info.missingImages.length > 0) {
+    fatal.push(`THIEU ${info.missingImages.length}/${info.images} anh AI (dat vao <du an>/anh/): ${info.missingImages.slice(0, 30).join(', ')}${info.missingImages.length > 30 ? ' ...' : ''}`);
+  }
+  if (info.importErrors && info.importErrors.length > 0) {
+    fatal.push(`LOI NAP FILE CANH:\n${info.importErrors.map((e) => '   - ' + e).join('\n')}`);
+  }
+  return { ok: fatal.length === 0, fatal, missShots };
 }
+
+function report(info) {
+  const check = validateInfo(info);
+  if (!check.ok) {
+    console.error('\n[PREFLIGHT GATE: BLOCKED]');
+    check.fatal.forEach((e) => console.error('  ' + e));
+  }
+  return check;
+}
+
 const voicePath = () => { for (const f of ['build/mix.wav', 'timeline/voice.wav']) { const p = path.join(PROJ, f); if (fs.existsSync(p)) return p; } return null; };
-function ff(argv) { const r = spawnSync('ffmpeg', ['-v', 'error', '-y', ...argv], { stdio: 'inherit' }); if (r.status) throw new Error('ffmpeg loi'); }
+function ff(argv) { const r = spawnSync('ffmpeg', ['-v', 'error', '-y', ...argv], { stdio: 'inherit' }); if (r.status) throw new Error('ffmpeg loi: exit ' + r.status); }
 
 // ---------- che do
 const browser = await launch();
 try {
   if (args.thumb) {
-    const { page } = await openPlayer(browser, args.style);
+    const { page, info } = await openPlayer(browser, args.style);
     const d = await page.evaluate((t) => window.renderThumb(t), +(args.at || 1));
+    await page.close();
     if (!d) throw new Error("Chua co canh 'thumb' (registerShot('thumb', ...) trong scenes/shots/).");
-    fs.mkdirSync(path.join(PROJ, 'out'), { recursive: true }); const p = path.join(PROJ, 'out', 'thumbnail.png'); fs.writeFileSync(p, b64(d));
-    spawnSync('ffmpeg', ['-v', 'error', '-y', '-i', p, '-vf', 'scale=1280:-2', path.join(PROJ, 'out', 'thumbnail_1280.jpg')]); console.log('  ' + p);
+    fs.mkdirSync(path.join(PROJ, 'out'), { recursive: true });
+    const p = path.join(PROJ, 'out', 'thumbnail.png');
+    fs.writeFileSync(p, b64(d));
+    const r = spawnSync('ffmpeg', ['-v', 'error', '-y', '-i', p, '-vf', 'scale=1280:-2', path.join(PROJ, 'out', 'thumbnail_1280.jpg')]);
+    if (r.status !== 0) throw new Error('Khong tao duoc thumbnail_1280.jpg');
+    console.log('  ' + p);
   } else if (args.check) {
-    // quet nhanh toan video tim loi (khong xuat file): moi 3 khung ve 1 lan o kich thuoc nho
-    const { page, info } = await openPlayer(browser, args.style); report(info);
-    const errs = new Set(); page.on('console', (m) => { if (m.type() === 'error' && /SHOT|IMPORT/.test(m.text())) errs.add(m.text().slice(0, 200)); });
-    for (let f = 0; f < info.frames; f += 3) await page.evaluate((f) => window.renderFrame(f, { q: 0.3 }).then(() => 0), f);
-    console.log(errs.size ? 'LOI:\n' + [...errs].join('\n') : 'Khong co loi trong ' + info.frames + ' khung.');
+    // quet toan video tim loi (khong xuat file)
+    const { page, info } = await openPlayer(browser, args.style);
+    const check = report(info);
+    if (!check.ok) {
+      await page.close();
+      throw new Error(`PREFLIGHT THAT BAI: ${check.fatal.join('; ')}`);
+    }
+    const errs = new Set();
+    page.on('console', (m) => {
+      const txt = m.text();
+      if (m.type() === 'error' && /THIEU SHOT|LOI CANH|IMPORT|Uncaught/.test(txt)) errs.add(txt.slice(0, 200));
+    });
+    page.on('pageerror', (e) => errs.add(String(e).slice(0, 200)));
+
+    const step = Math.max(1, Math.min(4, Math.floor(info.frames / Math.max(1, info.shots.length * 2))));
+    for (let f = 0; f < info.frames; f += step) {
+      await page.evaluate((f) => window.renderFrame(f, { q: 0.3 }).then(() => 0), f);
+      if (errs.size > 0) break;
+    }
+    await page.close();
+    if (errs.size > 0) {
+      console.error('LOI:\n' + [...errs].join('\n'));
+      throw new Error(`Renderer phat hien ${errs.size} loi khi ve khung.`);
+    }
+    console.log(`PASS: 0 loi trong ${info.frames} khung (${info.shots.length} shots hop le).`);
   } else if (args.sheet || args.stills) {
-    const { page, info } = await openPlayer(browser, args.style); report(info);
+    const { page, info } = await openPlayer(browser, args.style);
+    const check = report(info);
+    if (!check.ok) {
+      await page.close();
+      throw new Error(`Khong the tao contact sheet: ${check.fatal.join('; ')}`);
+    }
     const items = [];
     if (args.sheet) {
       const at = +(args.at || 0.45), sel = args.ids ? String(args.ids).split(',') : null;
@@ -116,48 +196,98 @@ try {
         items.push({ src, label: `${s.id} ${s.start.toFixed(1)}s ${s.line}` });
       }
     } else {
-      for (const t of String(args.stills).split(',').map(Number)) { const f = Math.round(t * info.fps); const src = await page.evaluate((f) => window.renderFrame(f, { png: true }), f); fs.mkdirSync(path.join(BUILD, 'stills'), { recursive: true }); const p = path.join(BUILD, 'stills', `t_${t.toFixed(2)}.png`); fs.writeFileSync(p, b64(src)); console.log('  ' + p); items.push({ src, label: `${t}s` }); }
+      for (const t of String(args.stills).split(',').map(Number)) {
+        const f = Math.round(t * info.fps);
+        const src = await page.evaluate((f) => window.renderFrame(f, { png: true }), f);
+        fs.mkdirSync(path.join(BUILD, 'stills'), { recursive: true });
+        const p = path.join(BUILD, 'stills', `t_${t.toFixed(2)}.png`);
+        fs.writeFileSync(p, b64(src));
+        console.log('  ' + p);
+        items.push({ src, label: `${t}s` });
+      }
     }
     const dir = path.join(BUILD, 'sheets'); fs.mkdirSync(dir, { recursive: true });
     for (let k = 0, n = 1; k < items.length; k += 16, n++) {
       const sheet = await page.evaluate(([it]) => window.makeSheet(it, 4, 480), [items.slice(k, k + 16)]);
-      const p = path.join(dir, `${args.stills ? 'stills' : 'sheet'}${args.style ? '_' + args.style : ''}_${String(n).padStart(2, '0')}.jpg`); fs.writeFileSync(p, b64(sheet)); console.log('  ' + p);
+      const p = path.join(dir, `${args.stills ? 'stills' : 'sheet'}${args.style ? '_' + args.style : ''}_${String(n).padStart(2, '0')}.jpg`);
+      fs.writeFileSync(p, b64(sheet));
+      console.log('  ' + p);
     }
+    await page.close();
   } else {
     // video: xem truoc hoac ban cuoi
-    const { page: p0, info } = await openPlayer(browser, args.style); report(info); await p0.close();
+    const { page: p0, info } = await openPlayer(browser, args.style);
+    const check = report(info);
+    await p0.close();
+    if (!check.ok) {
+      throw new Error(`Khong the render video: ${check.fatal.join('; ')}`);
+    }
+
     const preview = args.from !== undefined || args.to !== undefined;
-    const f0 = Math.max(0, Math.round(+(args.from || 0) * info.fps)), f1 = Math.min(info.frames, Math.round((args.to !== undefined ? +args.to : info.duration) * info.fps));
+    const f0 = Math.max(0, Math.round(+(args.from || 0) * info.fps));
+    const f1 = Math.min(info.frames, Math.round((args.to !== undefined ? +args.to : info.duration) * info.fps));
     const total = f1 - f0;
+    if (total <= 0) throw new Error(`Khoang render khong hop le: ${f0} -> ${f1} (0 khung)`);
+
     const W = Math.max(1, Math.min(+(args.workers || Math.max(1, Math.min(6, Math.floor(os.cpus().length / 2)))), Math.ceil(total / 48)));
     console.log(`Render ${total} khung (${(total / info.fps).toFixed(1)} giay) ${info.W}x${info.H} @${info.fps}fps, ${W} luong`);
     const parts = []; let done = 0; const t0 = Date.now();
     const tick = setInterval(() => { const el = (Date.now() - t0) / 1000, fps = done / Math.max(el, 0.1); console.log(`  ${done}/${total} khung  ${fps.toFixed(2)} khung/giay  da chay ${Math.floor(el / 60)}p${Math.round(el % 60)}s  con lai ~${Math.round((total - done) / Math.max(fps, 0.01) / 60)} phut`); }, 15000);
     const chunk = Math.ceil(total / W);
-    await Promise.all(Array.from({ length: W }, async (_, k) => {
-      const a = f0 + k * chunk, b = Math.min(f1, a + chunk); if (a >= b) return;
-      const out = path.join(BUILD, `part_${String(k).padStart(2, '0')}.mp4`); parts[k] = out;
-      const br = k === 0 ? browser : await launch();
-      const { page } = await openPlayer(br, args.style);
-      const enc = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(info.fps), '-c:v', 'mjpeg', '-i', '-', '-c:v', 'libx264', '-preset', preview ? 'veryfast' : 'medium', '-crf', String(args.crf || 20), '-maxrate', '8M', '-bufsize', '16M', '-tune', 'animation', '-pix_fmt', 'yuv420p', '-r', String(info.fps), out], { stdio: ['pipe', 'inherit', 'inherit'] });
-      for (let f = a; f < b; f++) {
-        const d = await page.evaluate((f) => window.renderFrame(f, { q: 0.93 }), f);
-        if (!enc.stdin.write(b64(d))) await new Promise((r) => enc.stdin.once('drain', r));
-        done++;
-      }
-      enc.stdin.end(); await new Promise((r) => enc.on('close', r));
-      if (br !== browser) await br.close();
-    }));
-    clearInterval(tick);
-    const list = path.join(BUILD, 'parts.txt'); fs.writeFileSync(list, parts.filter(Boolean).map((p) => `file '${p.replace(/'/g, "'\\''")}'`).join('\n'));
-    const silent = path.join(BUILD, preview ? 'preview_silent.mp4' : 'video_silent.mp4');
-    ff(['-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', silent]);
-    parts.filter(Boolean).forEach((p) => fs.unlinkSync(p)); fs.unlinkSync(list);
+
+    try {
+      await Promise.all(Array.from({ length: W }, async (_, k) => {
+        const a = f0 + k * chunk, b = Math.min(f1, a + chunk); if (a >= b) return;
+        const out = path.join(BUILD, `part_${String(k).padStart(2, '0')}.mp4`); parts[k] = out;
+        const br = k === 0 ? browser : await launch();
+        const { page } = await openPlayer(br, args.style);
+        let encError = null;
+        const enc = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(info.fps), '-c:v', 'mjpeg', '-i', '-', '-c:v', 'libx264', '-preset', preview ? 'veryfast' : 'medium', '-crf', String(args.crf || 20), '-maxrate', '8M', '-bufsize', '16M', '-tune', 'animation', '-pix_fmt', 'yuv420p', '-r', String(info.fps), out], { stdio: ['pipe', 'inherit', 'inherit'] });
+        enc.on('error', (err) => { encError = err; });
+        enc.stdin.on('error', (err) => { if (!encError) encError = err; });
+
+        try {
+          for (let f = a; f < b; f++) {
+            if (encError) throw encError;
+            const d = await page.evaluate((f) => window.renderFrame(f, { q: 0.93 }), f);
+            if (!enc.stdin.write(b64(d))) await new Promise((r) => enc.stdin.once('drain', r));
+            done++;
+          }
+          enc.stdin.end();
+          const code = await new Promise((r) => enc.on('close', r));
+          if (code !== 0 || encError) throw new Error(`FFmpeg worker ${k} failed with code ${code}${encError ? ': ' + encError.message : ''}`);
+        } finally {
+          await page.close();
+          if (br !== browser) await br.close();
+        }
+      }));
+    } finally {
+      clearInterval(tick);
+    }
+
+    const list = path.join(BUILD, 'parts.txt');
+    fs.writeFileSync(list, parts.filter(Boolean).map((p) => `file '${p.replace(/'/g, "'\\''")}'`).join('\n'));
+    const silentPartial = path.join(BUILD, preview ? 'preview_silent.partial.mp4' : 'video_silent.partial.mp4');
+    const silentFinal = path.join(BUILD, preview ? 'preview_silent.mp4' : 'video_silent.mp4');
+    
+    // Concat vao file partial
+    ff(['-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', '-f', 'mp4', silentPartial]);
+    parts.filter(Boolean).forEach((p) => { try { fs.unlinkSync(p); } catch {} });
+    try { fs.unlinkSync(list); } catch {}
+
+    // Kiem tra file partial hop le truoc khi promote
+    if (!fs.existsSync(silentPartial) || fs.statSync(silentPartial).size < 100) {
+      throw new Error('File video_silent.partial.mp4 bi rong hoac khong ton tai');
+    }
+    fs.renameSync(silentPartial, silentFinal);
+
     if (preview) {
       const vp = voicePath(), outp = path.join(BUILD, 'preview.mp4');
-      if (vp) ff(['-i', silent, '-ss', String(f0 / info.fps), '-t', String(total / info.fps), '-i', vp, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', outp]);
-      else fs.copyFileSync(silent, outp);
+      if (vp) ff(['-i', silentFinal, '-ss', String(f0 / info.fps), '-t', String(total / info.fps), '-i', vp, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', outp]);
+      else fs.copyFileSync(silentFinal, outp);
       console.log(`\nXong: ${outp}`);
-    } else console.log(`\nXong: ${silent}  (${((Date.now() - t0) / 60000).toFixed(1)} phut). Buoc tiep: python tools/mix.py --project ${args.project}`);
+    } else {
+      console.log(`\nXong: ${silentFinal}  (${((Date.now() - t0) / 60000).toFixed(1)} phut). Buoc tiep: python tools/mix.py --project ${args.project}`);
+    }
   }
 } finally { await browser.close(); server.close(); }

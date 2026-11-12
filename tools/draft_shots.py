@@ -5,14 +5,24 @@ Claude sau do viet lai: them scene / tpl + args, chuyen canh, sfx, nhac.
   (What If nhanh: mac dinh --min 1.6 --max 4.5;  ngach ke chuyen cham kieu Ve Voi: --min 2.5 --max 7)
 Neu co input/anh-ai.json ({"A001": {"block": "V003", "text": "..."}}) thi gan san args.img cho shot khop cau.
 """
-import argparse, os, re, sys
+import argparse, os, re, shutil, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import read_json, write_json
-ap = argparse.ArgumentParser(); ap.add_argument("--project", required=True); ap.add_argument("--force", action="store_true")
+ap = argparse.ArgumentParser()
+ap.add_argument("project_pos", nargs="?", default=None, help="Thu muc du an (positional)")
+ap.add_argument("--project", default=None, help="Thu muc du an")
+ap.add_argument("--force", action="store_true")
+ap.add_argument("--visuals", action="store_true", help="Tu dong gan hinh anh (assign visuals) sau khi draft")
 ap.add_argument("--lead", type=float, default=0.15); ap.add_argument("--min", type=float, default=1.6); ap.add_argument("--max", type=float, default=4.5)
-a = ap.parse_args(); P = a.project
+a = ap.parse_args()
+P = a.project or a.project_pos
+if not P:
+    ap.error("the following arguments are required: --project or project")
 out = os.path.join(P, "story", "shots.json")
-if os.path.exists(out) and not a.force: sys.exit("Da co story/shots.json (them --force de ghi de).")
+if os.path.exists(out):
+    if not a.force: sys.exit("Da co story/shots.json (them --force de ghi de).")
+    try: shutil.copyfile(out, os.path.join(P, "story", "shots.backup.json"))
+    except Exception: pass
 lines = read_json(os.path.join(P, "timeline", "lines.json"), [])
 words = read_json(os.path.join(P, "timeline", "words.json"), [])
 if not lines: sys.exit("Chua co timeline/lines.json. Chay tools/prep_voice.py truoc.")
@@ -61,7 +71,10 @@ def phrase_time(text, t0, t1):
 # cat them canh tai cau neo cua anh AI (de moi anh co canh rieng, dung luc)
 anchors = {}
 blk = {}
-for l in lines: blk.setdefault(l["block"], [l["start"], l["end"]]); blk[l["block"]][1] = l["end"]
+for l in lines:
+    b_id = l.get("block", "B001")
+    blk.setdefault(b_id, [l["start"], l["end"]])
+    blk[b_id][1] = l["end"]
 for aid, info in sorted(imgs.items()):
     b = blk.get(info.get("block"))
     t = phrase_time(info.get("text", ""), b[0], b[1]) if b else None
@@ -87,8 +100,11 @@ shots = []
 for i, (st, txt, l, _en) in enumerate(merged):
     s = 0.0 if i == 0 else max(shots[-1]["start"] + 0.4, round(st - a.lead, 3))
     if shots: shots[-1]["end"] = s
-    sh = {"id": f"s{i+1:03d}", "start": s, "end": None, "line": txt, "speaker": l["slot"], "char": l["char"], "block": l["block"], "scene": "", "set": "", "in": {"type": "cut"}, "sfx": [], "notes": ""}
-    if l["slot"] != "NARRATOR": sh["talk"] = [l["start"], l["end"]]
+    speaker = l.get("slot", l.get("speaker", "NARRATOR"))
+    char = l.get("char", "")
+    block = l.get("block", "B001")
+    sh = {"id": f"s{i+1:03d}", "start": s, "end": None, "line": txt, "speaker": speaker, "char": char, "block": block, "scene": "", "set": "", "in": {"type": "cut"}, "sfx": [], "notes": ""}
+    if speaker != "NARRATOR" and "talk" not in sh and "start" in l and "end" in l: sh["talk"] = [l["start"], l["end"]]
     if l.get("drop"): sh["notes"] = "DROP"
     if re.match(r"(?i)^so what if", txt): sh["notes"] = (sh["notes"] + " TITLE").strip()
     shots.append(sh)
@@ -108,3 +124,6 @@ cfg = read_json(os.path.join(P, "config.json"), {}); cfg["duration"] = dur; writ
 ds = sorted(sh["end"] - sh["start"] for sh in shots)
 print(f"Xong: {len(shots)} shot nhap, dai {dur} giay, trung vi {ds[len(ds)//2]:.1f} giay/shot ({len(shots) / dur * 60:.0f} shot/phut) -> {out}")
 if imgs: print(f"Gan {len(used)}/{len(imgs)} anh AI." + (f" Chua gan duoc: {', '.join(miss[:20])}" if miss else ""))
+if a.visuals:
+    from assign_visuals import assign_visuals
+    assign_visuals(P, force=a.force)

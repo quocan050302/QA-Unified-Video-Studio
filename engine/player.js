@@ -14,6 +14,10 @@ async function boot() {
   const cfg = await getJSON(`${PROJ}/config.json`, {});
   const story = await getJSON(`${PROJ}/story/shots.json`, { shots: [] });
   E.cfg = cfg; E.shots = story.shots || []; E.story = story;
+  if (!E.shots || E.shots.length === 0) {
+    window.__bootError = 'Du an chua co shot nao (story/shots.json rong).';
+    return;
+  }
   E.words = await getJSON(`${PROJ}/timeline/words.json`, []);
   E.lines = await getJSON(`${PROJ}/timeline/lines.json`, []);
   E.fps = cfg.fps || 24; E.vertical = cfg.aspect === '9:16';
@@ -49,7 +53,10 @@ async function boot() {
 }
 
 function shotAt(t) {
-  const S = E.shots; for (let i = 0; i < S.length; i++) if (t < S[i].end || i === S.length - 1) return i; return S.length - 1;
+  const S = E.shots;
+  if (!S || S.length === 0) return -1;
+  for (let i = 0; i < S.length; i++) if (t < S[i].end || i === S.length - 1) return i;
+  return S.length - 1;
 }
 const BARS = { wide: 2.0, scope: 2.39, none: 0 };
 function barH(s) {
@@ -78,11 +85,19 @@ async function ensureImages(ids) {
 }
 
 function drawShot(ctx, i, t) {
+  if (i < 0 || !E.shots || i >= E.shots.length) {
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); ctx.setTransform(E.PX, 0, 0, E.PX, 0, 0);
+    ctx.fillStyle = '#1a0f14'; ctx.fillRect(0, 0, E.W, E.H);
+    text(ctx, 'KHONG CO SHOT', E.W / 2, E.H / 2, { size: 60, color: '#ff5a5a' });
+    ctx.restore();
+    return;
+  }
   const s = E.shots[i], def = defOf(s), lt = t - s.start, dur = s.end - s.start;
   ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); ctx.setTransform(E.PX, 0, 0, E.PX, 0, 0);
   ctx.fillStyle = '#0c0a10'; ctx.fillRect(0, 0, E.W, E.H);
   const info = { dur, globalT: t, p: clamp(lt / dur), line: s.line || '', shot: s, start: s.start, args: s.args || {}, ...(s.params || {}) };
   if (!def) {
+    console.error(`[THIEU SHOT] ${s.id} (tpl: ${s.tpl || 'chua gan'})`);
     ctx.fillStyle = '#1a0f14'; ctx.fillRect(0, 0, E.W, E.H);
     text(ctx, s.tpl ? `THIEU MAU ${s.tpl} (${s.id})` : `THIEU SHOT ${s.id}`, E.W / 2, E.H * 0.42, { size: 70, color: '#ff5a5a' });
     text(ctx, (s.scene || s.line || '').slice(0, 90), E.W / 2, E.H * 0.55, { size: 30, font: FONTS.body, weight: 600, color: '#f0d8d8' });
@@ -98,7 +113,12 @@ function drawShot(ctx, i, t) {
         if (def.overlay) def.overlay(ctx, lt, info, st);
       } else def.draw(ctx, lt, info);
     }
-    catch (e) { ctx.setTransform(E.PX, 0, 0, E.PX, 0, 0); text(ctx, `LOI ${s.id}: ${e.message}`.slice(0, 120), E.W / 2, E.H / 2, { size: 34, font: FONTS.body, weight: 700, color: '#ff4040' }); console.error('SHOT', s.id, e); }
+    catch (e) {
+      console.error(`[LOI CANH] ${s.id}: ${e.stack || e.message}`);
+      E.lastShotError = `[LOI CANH] ${s.id}: ${e.message}`;
+      ctx.setTransform(E.PX, 0, 0, E.PX, 0, 0);
+      text(ctx, `LOI ${s.id}: ${e.message}`.slice(0, 120), E.W / 2, E.H / 2, { size: 34, font: FONTS.body, weight: 700, color: '#ff4040' });
+    }
   }
   ctx.restore();
 }
@@ -167,9 +187,16 @@ function captions(t, i) {
 }
 
 window.renderFrame = async function (f, opts = {}) {
+  if (!E.shots || E.shots.length === 0) throw new Error('Khong co shot nao de ve');
   E.frame = f; const t = f / E.fps, i = shotAt(t);
+  if (i < 0) throw new Error(`Khong tim thay shot tai thoi diem t=${t.toFixed(3)}s`);
   await ensureImages([...imagesFor(i), ...(i > 0 ? imagesFor(i - 1) : [])]);
   drawShot(g, i, t);
+  if (E.lastShotError) {
+    const err = E.lastShotError;
+    delete E.lastShotError;
+    throw new Error(err);
+  }
   transition(i, t);
   grade(g);
   bars(i, t);

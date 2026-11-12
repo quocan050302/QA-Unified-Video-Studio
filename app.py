@@ -45,9 +45,29 @@ JOBS_DIR = ROOT / '.studio' / 'jobs'
 JOBS_DIR.mkdir(parents=True, exist_ok=True)
 PROJECTS.mkdir(parents=True, exist_ok=True)
 ALLOWED_MODES = {'dem': 'Self-Improvement', 'squire': 'Military History'}
+PACK_TEMPLATES = {
+    'squire': {'scene', 'army', 'close', 'top', 'map', 'plan', 'board', 'xray', 'frame', 'item', 'split', 'title', 'black'},
+    'dem': {'scene', 'phone', 'clock', 'calendar', 'note', 'face', 'black', 'card', 'cta', 'stats'},
+    'doodle': {'sketch', 'story', 'split', 'map', 'title', 'focus'}
+}
 NAME = re.compile(r'^[a-z0-9][a-z0-9_-]{1,49}$')
 JOBS: dict[str, dict] = {}
 MUTEX = threading.Lock()
+
+
+def invalidate_artifacts(p: Path):
+    """Xoa cac file render/mix cu khi kich ban hoac storyboard thay doi."""
+    for f in (p / 'build' / 'video_silent.mp4', p / 'build' / 'video_silent.mp4.partial',
+              p / 'build' / 'preview.mp4', p / 'build' / 'preview_silent.mp4',
+              p / 'build' / 'mix.wav', p / 'build' / 'mix_raw.wav', p / 'build' / 'mix_ln.wav'):
+        if f.exists():
+            try: f.unlink()
+            except OSError: pass
+    out_dir = p / 'out'
+    if out_dir.is_dir():
+        for mp4 in out_dir.glob('*.mp4'):
+            try: mp4.unlink()
+            except OSError: pass
 
 
 def project_path(name: str) -> Path:
@@ -85,10 +105,49 @@ def available_files(p: Path):
 def summarize_project(p: Path):
     cfg = load_json(p / 'config.json', {}) or {}
     story = load_json(p / 'story' / 'shots.json', {}) or {}
-    return {'id': p.name, 'title': cfg.get('title', p.name), 'mode': cfg.get('pack', ''),
+    shots = story.get('shots', [])
+    mode = cfg.get('pack', '')
+
+    known_tpls = PACK_TEMPLATES.get(mode, set())
+    custom_shots = set()
+    s_dir = p / 'scenes' / 'shots'
+    if s_dir.is_dir():
+        custom_shots = {f.stem for f in s_dir.glob('*.js')}
+
+    shots_ready = 0
+    missing_shots = []
+    for s in shots:
+        sid = s.get('id', '')
+        tpl = s.get('tpl', '')
+        if sid in custom_shots or (tpl and tpl in known_tpls):
+            shots_ready += 1
+        else:
+            missing_shots.append(sid)
+
+    visuals_ready = len(shots) > 0 and shots_ready == len(shots)
+
+    if len(shots) == 0:
+        if mode == 'squire':
+            has_voice = (p / 'timeline' / 'voice.wav').exists() or (p / 'input' / 'voice_source.wav').exists() or (p / 'input' / 'voice_source.mp3').exists()
+            stage = 'NEED_SHOTS' if has_voice else 'EMPTY'
+        else:
+            has_script = (p / 'input' / '01-PHIM.txt').exists()
+            stage = 'NEED_SHOTS' if has_script else 'EMPTY'
+    elif not visuals_ready:
+        stage = 'NEED_VISUALS'
+    elif list((p / 'out').glob('*.mp4')):
+        stage = 'OUTPUT_VERIFIED'
+    elif (p / 'build' / 'video_silent.mp4').exists():
+        stage = 'RENDER_DONE'
+    else:
+        stage = 'VISUALS_READY'
+
+    return {'id': p.name, 'title': cfg.get('title', p.name), 'mode': mode,
             'aspect': cfg.get('aspect', '16:9'), 'resolution': cfg.get('resolution', '1080p'),
             'duration': story.get('duration', cfg.get('duration', 0)),
-            'shots': len(story.get('shots', [])), 'files': available_files(p)}
+            'shots': len(shots), 'shots_ready': shots_ready,
+            'visuals_ready': visuals_ready, 'missing_shots': missing_shots,
+            'stage': stage, 'files': available_files(p)}
 
 
 def ensure_project(p: Path):
@@ -147,18 +206,28 @@ def task_commands(action, p: Path):
     proj = str(p)
     node = shutil.which('node') or 'node'
     py = sys.executable
+    story = load_json(p / 'story' / 'shots.json', {}) or {}
+    shots = story.get('shots', [])
+
     if action == 'check': return [[node, 'render.mjs', '--project', proj, '--check', '--scale', '0.25']]
-    if action == 'sheet': return [[node, 'render.mjs', '--project', proj, '--sheet', '--scale', '0.4']]
-    if action == 'preview': return [[node, 'render.mjs', '--project', proj, '--from', '0', '--to', '30', '--scale', '0.5', '--workers', '2']]
-    if action == 'render': return [[node, 'render.mjs', '--project', proj, '--workers', '2']]
+    if action in ('sheet', 'preview', 'render'):
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi render.')
+        if action == 'sheet': return [[node, 'render.mjs', '--project', proj, '--sheet', '--scale', '0.4']]
+        if action == 'preview': return [[node, 'render.mjs', '--project', proj, '--from', '0', '--to', '30', '--scale', '0.5', '--workers', '2']]
+        if action == 'render': return [[node, 'render.mjs', '--project', proj, '--workers', '2']]
     if action == 'thumb': return [[node, 'render.mjs', '--project', proj, '--thumb']]
-    if action == 'mix': return [[py, 'tools/mix.py', '--project', proj]]
+    if action == 'mix':
+        if not (p / 'build' / 'video_silent.mp4').exists():
+            raise ValueError('Chưa có build/video_silent.mp4. Hãy render video trước khi mix & export.')
+        return [[py, 'tools/mix.py', '--project', proj]]
     if action == 'doctor': return [[py, 'tools/doctor.py']]
     if action == 'audio-build': return [[py, 'audio/build_audio.py']]
     if action == 'compile-self':
         if ensure_project(p).get('pack') != 'dem': raise ValueError('Self-Improvement projects only')
         script = p / 'input' / '01-PHIM.txt'
         if not script.exists(): raise ValueError('Save a script before compiling it')
+        invalidate_artifacts(p)
         return [[py, 'tools/phim.py', '--project', proj, '--phim', str(script), '--force']]
     if action == 'voice-prepare':
         if ensure_project(p).get('pack') != 'squire': raise ValueError('Squire projects only')
@@ -166,15 +235,24 @@ def task_commands(action, p: Path):
         if not voice.exists(): voice = p / 'input' / 'voice_source.wav'
         script = p / 'input' / 'voice_script.txt'
         if not voice.exists() or not script.exists(): raise ValueError('Upload MP3/WAV and save transcript first')
+        invalidate_artifacts(p)
         return [[py, 'tools/prep_voice.py', '--project', proj, '--single', str(voice), '--script', str(script)]]
     if action == 'draft-shots':
         cfg = ensure_project(p)
         if cfg.get('pack') != 'squire': raise ValueError('Squire projects only')
         if not (p / 'timeline' / 'lines.json').exists():
             raise ValueError('Run Prepare voice timeline before drafting storyboard shots')
+        invalidate_artifacts(p)
         cmd = [py, 'tools/draft_shots.py', '--project', proj, '--force']
         if cfg.get('aspect') == '9:16': cmd.extend(['--min', '0.8', '--max', '2.6'])
         return [cmd]
+    if action == 'assign-visuals':
+        cfg = ensure_project(p)
+        if cfg.get('pack') != 'squire': raise ValueError('Squire projects only')
+        if not (p / 'story' / 'shots.json').exists() or not shots:
+            raise ValueError('Draft storyboard (shots) before assigning visuals')
+        invalidate_artifacts(p)
+        return [[py, 'tools/assign_visuals.py', '--project', proj, '--force']]
     raise ValueError('Unknown task')
 
 
@@ -184,7 +262,8 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
         return (not ('[THIEU]' in log_text or 'Chua du' in log_text), 'Missing prerequisites' if '[THIEU]' in log_text else '')
     if action == 'check':
         bad = ('THIEU ' in log_text or 'LOI NAP FILE' in log_text or
-               'LOI:' in log_text or '[loi trang]' in log_text or '[404]' in log_text)
+               'LOI:' in log_text or 'LOI CANH' in log_text or 'PREFLIGHT' in log_text or
+               '[loi trang]' in log_text or '[404 Required]' in log_text or 'Error:' in log_text)
         return (not bad, 'Renderer reported missing shots/assets or errors' if bad else '')
     if action == 'audio-build':
         healthy = status()
@@ -196,6 +275,7 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
         'compile-self': [p / 'story' / 'shots.json'],
         'voice-prepare': [p / 'timeline' / 'voice.wav'],
         'draft-shots': [p / 'story' / 'shots.json'],
+        'assign-visuals': [p / 'story' / 'shots.json'],
     }
     if action == 'sheet': matches = list((p / 'build' / 'sheets').glob('sheet_*.jpg'))
     elif action == 'mix': matches = list((p / 'out').glob('*.mp4'))
@@ -203,14 +283,27 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
     if not matches: return False, 'No expected output file was created'
     good = [f for f in matches if f.is_file() and f.stat().st_size > 100 and f.stat().st_mtime >= started - 2]
     if not good: return False, 'Output not created or is empty/stale'
+
+    # Check for fatal indicators in log for render/preview/sheet/thumb
+    if action in ('render', 'preview', 'sheet', 'thumb'):
+        if any(w in log_text for w in ('PREFLIGHT GATE: BLOCKED', 'THIEU SHOT', 'LOI CANH', 'Error:', 'Fatal:')):
+            return False, 'Log indicates renderer preflight or runtime errors'
+
     if action in ('preview', 'render', 'mix') and shutil.which('ffprobe'):
         for f in good:
-            r = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
-                                '-of', 'default=noprint_wrappers=1:nokey=1', str(f)],
+            r = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration:stream=codec_type',
+                                '-of', 'default=noprint_wrappers=1', str(f)],
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=30)
-            try: duration = float(r.stdout.strip())
+            out_str = r.stdout
+            dur_m = re.search(r'duration=([\d.]+)', out_str)
+            try: duration = float(dur_m.group(1)) if dur_m else 0
             except ValueError: duration = 0
-            if r.returncode == 0 and duration > 0: return True, ''
+            if r.returncode == 0 and duration > 0:
+                if action == 'mix':
+                    cfg = load_json(p / 'config.json', {}) or {}
+                    if cfg.get('pack') == 'squire' and 'codec_type=audio' not in out_str:
+                        return False, 'Mix output missing audio stream for Squire project'
+                return True, ''
         return False, 'FFprobe failed to validate rendered video duration'
     return True, ''
 
@@ -343,6 +436,7 @@ class Handler(BaseHTTPRequestHandler):
                         raise ValueError('Story must be JSON object containing a shots array')
                     if len(data['shots']) > 3000: raise ValueError('Too many shots')
                     put_json(p / 'story' / 'shots.json', data)
+                    invalidate_artifacts(p)
                     return self.send(200, {'saved': True})
                 if action == 'config':
                     data = self.data()
@@ -353,6 +447,7 @@ class Handler(BaseHTTPRequestHandler):
                     cfg['pack'] = ensure_project(p)['pack']
                     if cfg.get('aspect') not in ('16:9','9:16'): raise ValueError('Unsupported aspect')
                     put_json(p / 'config.json', cfg)
+                    invalidate_artifacts(p)
                     return self.send(200, {'saved': True})
                 if action in ('script', 'voice-script'):
                     data = self.data(); content = data.get('text', '')
@@ -360,6 +455,7 @@ class Handler(BaseHTTPRequestHandler):
                     file = ('01-PHIM.txt' if action == 'script' else 'voice_script.txt')
                     (p / 'input').mkdir(exist_ok=True)
                     (p / 'input' / file).write_text(content, encoding='utf-8')
+                    invalidate_artifacts(p)
                     return self.send(200, {'saved': True})
                 if action == 'voice-upload':
                     if cfg['pack'] != 'squire': raise ValueError('Squire projects only')
@@ -371,6 +467,7 @@ class Handler(BaseHTTPRequestHandler):
                     for old in (p / 'input' / 'voice_source.mp3', p / 'input' / 'voice_source.wav'):
                         if old.exists(): old.unlink()
                     (p / 'input' / ('voice_source.' + ext)).write_bytes(content)
+                    invalidate_artifacts(p)
                     return self.send(200, {'saved': True, 'bytes': len(content)})
             self.error(404, 'Unknown endpoint')
         except (ValueError, KeyError, OSError, json.JSONDecodeError) as exc:

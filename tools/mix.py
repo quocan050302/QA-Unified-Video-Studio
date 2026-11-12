@@ -12,13 +12,22 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import SR, load_audio, save_wav, read_json, run
 
 KIT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ap = argparse.ArgumentParser(); ap.add_argument("--project", required=True); ap.add_argument("--no-video", action="store_true")
-a = ap.parse_args(); P = a.project
+ap = argparse.ArgumentParser()
+ap.add_argument("project_pos", nargs="?", default=None, help="Duong dan du an (positional)")
+ap.add_argument("--project", default=None, help="Duong dan du an")
+ap.add_argument("--no-video", action="store_true")
+a = ap.parse_args()
+P = a.project or a.project_pos
+if not P:
+    ap.error("the following arguments are required: --project or project")
 cfg = read_json(os.path.join(P, "config.json"), {}); story = read_json(os.path.join(P, "story", "shots.json"), {})
 shots = story.get("shots", []); dur = story.get("duration") or (shots[-1]["end"] if shots else 0)
 N = int(dur * SR) + SR
 # phim khong loi doc (vd pack dem): khong co timeline/voice.wav -> chi tron nhac + SFX
 vpath = os.path.join(P, "timeline", "voice.wav")
+pack = cfg.get("pack", "")
+if pack == "squire" and not os.path.exists(vpath):
+    sys.exit("Pack squire can timeline/voice.wav de mix am thanh. Hay nap voice va chay Prepare voice timeline truoc.")
 voice = load_audio(vpath) if os.path.exists(vpath) else np.zeros(N); voice = np.pad(voice, (0, max(0, N - len(voice))))[:N]
 db = lambda x: 10 ** (x / 20)
 def loud(y):
@@ -89,8 +98,34 @@ m = re.findall(r"I:\s+(-?[\d.]+) LUFS", r); gain = (lufs - float(m[-1])) if m el
 run(["ffmpeg", "-y", "-v", "error", "-i", tmp, "-af", f"volume={gain:.2f}dB,alimiter=limit=0.89:level=false", "-ar", str(SR), out]); os.remove(tmp)
 print("Am thanh:", out, "|", "; ".join(sorted(set(log))) if log else "ok")
 video = os.path.join(P, "build", "video_silent.mp4")
-if os.path.exists(video) and not a.no_video:
-    title = re.sub(r'[\\/:*?"<>|]', "", cfg.get("title", "video")).strip() or "video"
-    os.makedirs(os.path.join(P, "out"), exist_ok=True); final = os.path.join(P, "out", title + ".mp4")
-    run(["ffmpeg", "-y", "-v", "error", "-i", video, "-i", out, "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", final])
-    print("Video hoan chinh:", final)
+shots_file = os.path.join(P, "story", "shots.json")
+
+if not a.no_video:
+    if not os.path.exists(video):
+        print("Chu y: Chua co build/video_silent.mp4 de ghep video. Chi xuat am thanh build/mix.wav.")
+    else:
+        # Kiem tra stale video
+        if os.path.exists(shots_file):
+            v_m = os.path.getmtime(video)
+            s_m = os.path.getmtime(shots_file)
+            if v_m < s_m - 2:
+                sys.exit("build/video_silent.mp4 cu hon story/shots.json (storyboard da bi thay doi sau khi render). Vui long render lai video truoc khi mix.")
+        # Kiem tra decode video
+        dec = subprocess.run(["ffmpeg", "-v", "error", "-i", video, "-f", "null", "-"], capture_output=True, text=True)
+        if dec.returncode != 0:
+            sys.exit(f"build/video_silent.mp4 bi loi decode: {dec.stderr[:300]}")
+
+        title = re.sub(r'[\\/:*?"<>|]', "", cfg.get("title", "video")).strip() or "video"
+        os.makedirs(os.path.join(P, "out"), exist_ok=True)
+        final = os.path.join(P, "out", title + ".mp4")
+        partial = os.path.join(P, "out", title + ".partial.mp4")
+        run(["ffmpeg", "-y", "-v", "error", "-i", video, "-i", out, "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", "-f", "mp4", partial])
+        
+        # Kiem tra partial hop le
+        chk = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", partial], capture_output=True, text=True)
+        if chk.returncode != 0 or not chk.stdout.strip() or float(chk.stdout.strip()) <= 0:
+            if os.path.exists(partial): os.remove(partial)
+            sys.exit("Loi tao video mix hoan chinh (ffprobe khong doc duoc thoi luong)")
+        
+        os.replace(partial, final)
+        print("Video hoan chinh:", final)

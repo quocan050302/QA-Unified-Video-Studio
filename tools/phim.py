@@ -17,14 +17,17 @@ HUD: "DAY 47" | "DAY 3..30" (dem dan) | "DAY 412 -> 0" (gach ve 0) | "SEEN 1,388
 NHẠC: sad | dark | rise | resolve | hope | tension | none. Khong ghi = giu nhac dang chay.
 Dau dong dac biet: "THẺ KẾT: WORD. / dong phu / dong phu mau nhan", "KÊU GỌI" -> mau card / cta.
 """
-import argparse, json, os, re, sys, unicodedata
+import argparse, json, os, re, shutil, sys, unicodedata
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import read_json, write_json
 
 ap = argparse.ArgumentParser(); ap.add_argument("--project", required=True); ap.add_argument("--phim", required=True); ap.add_argument("--force", action="store_true")
 a = ap.parse_args(); P = a.project
 out = os.path.join(P, "story", "shots.json")
-if os.path.exists(out) and not a.force: sys.exit("Da co story/shots.json (them --force de ghi de).")
+if os.path.exists(out):
+    if not a.force: sys.exit("Da co story/shots.json (them --force de ghi de).")
+    try: shutil.copyfile(out, os.path.join(P, "story", "shots.backup.json"))
+    except Exception: pass
 raw = open(a.phim, encoding="utf-8-sig").read()
 nfc = lambda s: unicodedata.normalize("NFC", s)
 low = lambda s: nfc(s).lower()
@@ -240,5 +243,17 @@ if meta.get("accent"): cfg["accent"] = meta["accent"].lower()
 if meta.get("title") and not cfg.get("title"): cfg["title"] = meta["title"]
 cfg["duration"] = dur; cfg.setdefault("pack", "dem"); write_json(cfg_p, cfg)
 write_json(out, {"title": cfg.get("title", meta.get("title", "")), "duration": dur, "shots": shots, "music": music})
+thumb_path = os.path.join(P, "scenes", "shots", "thumb.js")
+if not os.path.exists(thumb_path):
+    os.makedirs(os.path.dirname(thumb_path), exist_ok=True)
+    t_words = [w.strip().upper() for w in (meta.get("title") or cfg.get("title", "TITLE")).split() if w.strip()]
+    if len(t_words) > 2:
+        mid = len(t_words) // 2
+        lines_arr = [" ".join(t_words[:mid]), " ".join(t_words[mid:])]
+    else:
+        lines_arr = [" ".join(t_words)]
+    accent_word = lines_arr[-1].split()[-1] if lines_arr and lines_arr[-1] else ""
+    with open(thumb_path, "w", encoding="utf-8") as f:
+        f.write(f"import {{ thumb }} from '/packs/dem/pack.js';\nthumb({{ lines: {json.dumps(lines_arr)}, accent: {json.dumps([accent_word] if accent_word else [])} }});\n")
 print(f"Xong: {len(shots)} canh, dai {dur:.1f} giay ({dur/60:.1f} phut), {len(music)} doan nhac -> {out}")
 for w in warn: print("CANH BAO:", w)
