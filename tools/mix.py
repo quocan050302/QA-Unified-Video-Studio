@@ -6,10 +6,10 @@ shots.json:
   Khong co timeline/voice.wav (phim khong loi doc) thi chi tron nhac + SFX.
   shot "notes" co chu DROP -> tat nhac trong shot do.
 """
-import argparse, glob, os, re, subprocess, sys
+import argparse, glob, json, os, re, subprocess, sys
 import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import SR, load_audio, save_wav, read_json, run
+from common import SR, load_audio, save_wav, read_json, run, compute_source_hash
 
 KIT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ap = argparse.ArgumentParser()
@@ -139,16 +139,12 @@ if not a.no_video:
         # Ghi verification proof de app.py summarize_project xac thuc
         try:
             import hashlib, time
-            sh = hashlib.sha256()
-            for rel in ('config.json', 'story/shots.json', 'timeline/voice.wav'):
-                fpath = os.path.join(P, rel)
-                if os.path.exists(fpath):
-                    with open(fpath, 'rb') as fp: sh.update(fp.read())
+            src_hash = compute_source_hash(P)
             out_h = hashlib.sha256()
             with open(final, 'rb') as fp:
                 while chunk := fp.read(65536): out_h.update(chunk)
             proof = {
-                "source_hash": sh.hexdigest(),
+                "source_hash": src_hash,
                 "output_file": os.path.relpath(final, P),
                 "output_sha256": out_h.hexdigest(),
                 "duration": dur,

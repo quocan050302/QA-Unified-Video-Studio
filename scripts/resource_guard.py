@@ -40,15 +40,24 @@ def get_ram_info() -> dict:
         pass
 
     # Platform specific checks
-    if sys.platform == "darwin" and free_gb == 0.0:
+    if sys.platform == "darwin":
         try:
-            import subprocess
+            import subprocess, re
             out = subprocess.check_output(["vm_stat"], text=True)
+            page_size = 4096
+            m_ps = re.search(r"page size of (\d+) bytes", out)
+            if m_ps:
+                page_size = int(m_ps.group(1))
+            pages = {}
             for line in out.splitlines():
-                if "Pages free:" in line:
-                    free_pages = int(line.split(":")[1].strip().replace(".", ""))
-                    free_gb = round((free_pages * 4096) / (1024 ** 3), 2)
-                    break
+                if ":" in line:
+                    k, v = line.split(":", 1)
+                    v_str = v.strip().replace(".", "")
+                    if v_str.isdigit():
+                        pages[k.strip()] = int(v_str)
+            free_p = pages.get("Pages free", 0) + pages.get("Pages inactive", 0) + pages.get("Pages speculative", 0)
+            if free_p > 0:
+                free_gb = round((free_p * page_size) / (1024 ** 3), 2)
         except Exception:
             pass
 

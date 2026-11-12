@@ -72,3 +72,63 @@ def sentences(text):
             cur = (cur + " " + tok) if cur else tok
     if cur.strip(): parts.append(cur.strip())
     return parts
+
+def compute_source_hash(project_dir):
+    """Tinh SHA-256 fingerprint mang tinh deterministic cua toan bo source files anh huong toi video.
+    Bao gom: config, storyboard, timeline/voice, input scripts, custom scenes (*.js), va image assets (anh/*).
+    """
+    import hashlib
+    from pathlib import Path
+    p = Path(project_dir).resolve()
+    h = hashlib.sha256()
+
+    fixed_files = (
+        'config.json',
+        'story/shots.json',
+        'timeline/voice.wav',
+        'timeline/lines.json',
+        'timeline/words.json',
+        'input/01-PHIM.txt',
+        'input/voice_script.txt',
+        'input/voice_source.wav',
+    )
+    for rel in fixed_files:
+        f = p / rel
+        if f.is_file():
+            try:
+                sz = f.stat().st_size
+                h.update(f"{rel}:{sz}:".encode('utf-8'))
+                with f.open('rb') as fp:
+                    while chunk := fp.read(65536):
+                        h.update(chunk)
+            except OSError:
+                pass
+
+    scenes_dir = p / 'scenes'
+    if scenes_dir.is_dir():
+        for f in sorted(scenes_dir.rglob('*.js')):
+            if f.is_file():
+                rel = f.relative_to(p).as_posix()
+                try:
+                    sz = f.stat().st_size
+                    h.update(f"{rel}:{sz}:".encode('utf-8'))
+                    h.update(f.read_bytes())
+                except OSError:
+                    pass
+
+    anh_dir = p / 'anh'
+    if anh_dir.is_dir():
+        for f in sorted(anh_dir.iterdir()):
+            if f.is_file() and f.suffix.lower() in ('.png', '.jpg', '.jpeg', '.webp'):
+                rel = f.relative_to(p).as_posix()
+                try:
+                    sz = f.stat().st_size
+                    h.update(f"{rel}:{sz}:".encode('utf-8'))
+                    with f.open('rb') as fp:
+                        while chunk := fp.read(65536):
+                            h.update(chunk)
+                except OSError:
+                    pass
+
+    return h.hexdigest()
+

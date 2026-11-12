@@ -17,7 +17,7 @@ HUD: "DAY 47" | "DAY 3..30" (dem dan) | "DAY 412 -> 0" (gach ve 0) | "SEEN 1,388
 NHẠC: sad | dark | rise | resolve | hope | tension | none. Khong ghi = giu nhac dang chay.
 Dau dong dac biet: "THẺ KẾT: WORD. / dong phu / dong phu mau nhan", "KÊU GỌI" -> mau card / cta.
 """
-import argparse, json, os, re, shutil, sys, unicodedata
+import argparse, json, os, re, shutil, sys, time, unicodedata
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import read_json, write_json
 
@@ -25,8 +25,10 @@ ap = argparse.ArgumentParser(); ap.add_argument("--project", required=True); ap.
 a = ap.parse_args(); P = a.project
 out = os.path.join(P, "story", "shots.json")
 if os.path.exists(out):
-    if not a.force: sys.exit("Da co story/shots.json (them --force de ghi de).")
-    try: shutil.copyfile(out, os.path.join(P, "story", "shots.backup.json"))
+    if not a.force: sys.exit("Da co story/shots.json (them --force de ghi de sau khi da sao luu).")
+    try:
+        shutil.copyfile(out, os.path.join(P, "story", f"shots.backup_{int(time.time())}.json"))
+        shutil.copyfile(out, os.path.join(P, "story", "shots.backup.json"))
     except Exception: pass
 raw = open(a.phim, encoding="utf-8-sig").read()
 nfc = lambda s: unicodedata.normalize("NFC", s)

@@ -5,7 +5,7 @@ Claude sau do viet lai: them scene / tpl + args, chuyen canh, sfx, nhac.
   (What If nhanh: mac dinh --min 1.6 --max 4.5;  ngach ke chuyen cham kieu Ve Voi: --min 2.5 --max 7)
 Neu co input/anh-ai.json ({"A001": {"block": "V003", "text": "..."}}) thi gan san args.img cho shot khop cau.
 """
-import argparse, os, re, shutil, sys
+import argparse, os, re, shutil, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import read_json, write_json
 ap = argparse.ArgumentParser()
@@ -19,9 +19,14 @@ P = a.project or a.project_pos
 if not P:
     ap.error("the following arguments are required: --project or project")
 out = os.path.join(P, "story", "shots.json")
+manual_by_id = {}
 if os.path.exists(out):
-    if not a.force: sys.exit("Da co story/shots.json (them --force de ghi de).")
-    try: shutil.copyfile(out, os.path.join(P, "story", "shots.backup.json"))
+    if not a.force: sys.exit("Da co story/shots.json (them --force de ghi de sau khi sao luu).")
+    try:
+        shutil.copyfile(out, os.path.join(P, "story", f"shots.backup_{int(time.time())}.json"))
+        shutil.copyfile(out, os.path.join(P, "story", "shots.backup.json"))
+        old_shots = read_json(out, {}).get("shots", [])
+        manual_by_id = {s["id"]: s for s in old_shots if s.get("visual_source") == "manual"}
     except Exception: pass
 lines = read_json(os.path.join(P, "timeline", "lines.json"), [])
 words = read_json(os.path.join(P, "timeline", "words.json"), [])
@@ -107,6 +112,11 @@ for i, (st, txt, l, _en) in enumerate(merged):
     if speaker != "NARRATOR" and "talk" not in sh and "start" in l and "end" in l: sh["talk"] = [l["start"], l["end"]]
     if l.get("drop"): sh["notes"] = "DROP"
     if re.match(r"(?i)^so what if", txt): sh["notes"] = (sh["notes"] + " TITLE").strip()
+    if sh["id"] in manual_by_id:
+        old_s = manual_by_id[sh["id"]]
+        for k in ("tpl", "args", "scene", "visual_source", "visual_version", "visual_reason", "notes"):
+            if k in old_s and old_s[k]:
+                sh[k] = old_s[k]
     shots.append(sh)
 shots[-1]["end"] = dur
 # gan anh AI: theo thoi diem cau neo (chinh xac), khong tim thay thi theo khoi

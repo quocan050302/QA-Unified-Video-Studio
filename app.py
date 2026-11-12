@@ -53,18 +53,11 @@ PACK_TEMPLATES = {
 }
 NAME = re.compile(r'^[a-z0-9][a-z0-9_-]{1,49}$')
 JOBS: dict[str, dict] = {}
+PROJECT_LOCKS: set[str] = set()
 MUTEX = threading.Lock()
 
-
-def compute_source_hash(p: Path) -> str:
-    """Tinh sha256 ket hop cac file nguon: config.json, story/shots.json, timeline/voice.wav."""
-    h = hashlib.sha256()
-    for rel in ('config.json', 'story/shots.json', 'timeline/voice.wav'):
-        f = p / rel
-        if f.is_file():
-            try: h.update(f.read_bytes())
-            except OSError: pass
-    return h.hexdigest()
+sys.path.insert(0, str(ROOT / 'tools'))
+from common import compute_source_hash
 
 
 def invalidate_artifacts(p: Path):
@@ -101,7 +94,10 @@ def project_path(name: str) -> Path:
 
 def load_json(p: Path, default=None):
     if not p.is_file(): return default
-    with p.open(encoding='utf-8') as f: return json.load(f)
+    try:
+        with p.open(encoding='utf-8') as f: return json.load(f)
+    except Exception:
+        return default
 
 
 def put_json(p: Path, data):
@@ -160,10 +156,30 @@ def summarize_project(p: Path):
             stage = 'NEED_SHOTS' if has_script else 'EMPTY'
     elif not visuals_ready:
         stage = 'NEED_VISUALS'
-    elif proof and proof.get('source_hash') == current_src_hash and out_mp4s:
-        stage = 'OUTPUT_VERIFIED'
+    elif proof and out_mp4s:
+        proof_out_rel = proof.get('output_file')
+        proof_out_file = (p / proof_out_rel) if proof_out_rel else None
+
+        if proof.get('status') != 'VERIFIED':
+            stage = 'OUTPUT_STALE'
+        elif proof.get('source_hash') != current_src_hash:
+            stage = 'OUTPUT_STALE'
+        elif not proof_out_file or not proof_out_file.is_file():
+            stage = 'VERIFICATION_FAILED'
+        else:
+            try:
+                real_out_h = hashlib.sha256()
+                with proof_out_file.open('rb') as fp:
+                    while chunk := fp.read(65536):
+                        real_out_h.update(chunk)
+                if real_out_h.hexdigest() == proof.get('output_sha256'):
+                    stage = 'OUTPUT_VERIFIED'
+                else:
+                    stage = 'VERIFICATION_FAILED'
+            except Exception:
+                stage = 'VERIFICATION_FAILED'
     elif out_mp4s:
-        stage = 'OUTPUT_STALE' if proof else 'OUTPUT_UNVERIFIED'
+        stage = 'OUTPUT_UNVERIFIED'
     elif (p / 'build' / 'video_silent.mp4').exists():
         stage = 'RENDER_DONE'
     else:
@@ -250,12 +266,14 @@ def task_commands(action, p: Path):
         return [[py, 'tools/mix.py', '--project', proj]]
     if action == 'doctor': return [[py, 'tools/doctor.py']]
     if action == 'audio-build': return [[py, 'audio/build_audio.py']]
-    if action == 'compile-self':
+    if action in ('compile-self', 'compile-self-force'):
         if ensure_project(p).get('pack') != 'dem': raise ValueError('Self-Improvement projects only')
         script = p / 'input' / '01-PHIM.txt'
         if not script.exists(): raise ValueError('Save a script before compiling it')
         invalidate_artifacts(p)
-        return [[py, 'tools/phim.py', '--project', proj, '--phim', str(script), '--force']]
+        cmd = [py, 'tools/phim.py', '--project', proj, '--phim', str(script)]
+        if action == 'compile-self-force': cmd.append('--force')
+        return [cmd]
     if action == 'voice-prepare':
         if ensure_project(p).get('pack') != 'squire': raise ValueError('Squire projects only')
         voice = p / 'input' / 'voice_source.mp3'
@@ -264,13 +282,14 @@ def task_commands(action, p: Path):
         if not voice.exists() or not script.exists(): raise ValueError('Upload MP3/WAV and save transcript first')
         invalidate_artifacts(p)
         return [[py, 'tools/prep_voice.py', '--project', proj, '--single', str(voice), '--script', str(script)]]
-    if action == 'draft-shots':
+    if action in ('draft-shots', 'draft-shots-force'):
         cfg = ensure_project(p)
         if cfg.get('pack') != 'squire': raise ValueError('Squire projects only')
         if not (p / 'timeline' / 'lines.json').exists():
             raise ValueError('Run Prepare voice timeline before drafting storyboard shots')
         invalidate_artifacts(p)
-        cmd = [py, 'tools/draft_shots.py', '--project', proj, '--force']
+        cmd = [py, 'tools/draft_shots.py', '--project', proj]
+        if action == 'draft-shots-force': cmd.append('--force')
         if cfg.get('aspect') == '9:16': cmd.extend(['--min', '0.8', '--max', '2.6'])
         return [cmd]
     if action in ('assign-visuals', 'assign-visuals-force'):
@@ -342,8 +361,11 @@ def launch_task(action, project_id):
     ensure_project(p)
     cmds = task_commands(action, p)
     with MUTEX:
+        if project_id in PROJECT_LOCKS:
+            raise ValueError(f'Project "{project_id}" is currently running another task. Please wait.')
         if any(j['state'] == 'running' for j in JOBS.values()):
             raise ValueError('Another job is running. Please finish it before starting a new job.')
+        PROJECT_LOCKS.add(project_id)
         jid = uuid.uuid4().hex[:12]
         job = {'id': jid, 'action': action, 'project': project_id, 'state': 'running',
                'started': time.time(), 'exit_code': None, 'log': f'{jid}.log'}
@@ -374,6 +396,7 @@ def launch_task(action, project_id):
                 with log.open('a', encoding='utf-8') as f:
                     f.write('\nVERIFICATION ERROR: ' + repr(exc) + '\n')
         with MUTEX:
+            PROJECT_LOCKS.discard(project_id)
             job['exit_code'] = ret
             job['state'] = ('completed' if ret == 0 else 'needs_setup' if action == 'doctor' and ret == 2 else 'failed')
             job['ended'] = time.time()
