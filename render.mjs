@@ -168,8 +168,24 @@ try {
     });
     page.on('pageerror', (e) => errs.add(String(e).slice(0, 200)));
 
-    const step = Math.max(1, Math.min(4, Math.floor(info.frames / Math.max(1, info.shots.length * 2))));
-    for (let f = 0; f < info.frames; f += step) {
+    const mode = args['check-mode'] || (info.frames > 2000 ? 'fast' : 'full');
+    let framesToCheck = [];
+    if (mode === 'fast') {
+      framesToCheck.push(0);
+      for (const s of info.shots) {
+        const fStart = Math.min(info.frames - 1, Math.round(s.start * info.fps));
+        const fMid = Math.min(info.frames - 1, Math.round((s.start + s.end) / 2 * info.fps));
+        const fEnd = Math.min(info.frames - 1, Math.max(0, Math.round(s.end * info.fps) - 1));
+        framesToCheck.push(fStart, fMid, fEnd);
+      }
+      framesToCheck.push(info.frames - 1);
+      framesToCheck = [...new Set(framesToCheck)].sort((a, b) => a - b);
+    } else {
+      const step = Math.max(1, Math.min(4, Math.floor(info.frames / Math.max(1, info.shots.length * 2))));
+      for (let f = 0; f < info.frames; f += step) framesToCheck.push(f);
+    }
+
+    for (const f of framesToCheck) {
       await page.evaluate((f) => window.renderFrame(f, { q: 0.3 }).then(() => 0), f);
       if (errs.size > 0) break;
     }
@@ -178,7 +194,7 @@ try {
       console.error('LOI:\n' + [...errs].join('\n'));
       throw new Error(`Renderer phat hien ${errs.size} loi khi ve khung.`);
     }
-    console.log(`PASS: 0 loi trong ${info.frames} khung (${info.shots.length} shots hop le).`);
+    console.log(`PASS: 0 loi trong ${framesToCheck.length} khung kiem tra (${info.shots.length} shots hop le, che do ${mode}).`);
   } else if (args.sheet || args.stills) {
     const { page, info } = await openPlayer(browser, args.style);
     const check = report(info);

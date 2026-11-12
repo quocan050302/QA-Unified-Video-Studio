@@ -11,5 +11,7 @@ projects/*/timeline/voice.wav
 .DS_Store
 audio/music/
 audio/sfx/
+.test-runs/
+*.partial.mp4
 
 

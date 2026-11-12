@@ -391,3 +391,22 @@ registerTemplate('title', { draw(g, lt, info) {
   });
 } });
 registerTemplate('black', { draw(g, lt, info) { g.fillStyle = (info.args || {}).color || '#000'; g.fillRect(-E.W, -E.H, E.W * 3, E.H * 3); overlays(g, lt, info); } });
+registerTemplate('ai', { draw(g, lt, info) {
+  const a = info.args || {};
+  const im = img(a.img);
+  camera(g, lt, info, () => {
+    if (im) {
+      const z = a.crop ?? 1.08;
+      const fx = a.focus ? a.focus[0] : 0.5, fy = a.focus ? a.focus[1] : 0.5;
+      const sw = im.naturalWidth || im.width || E.W, sh = im.naturalHeight || im.height || E.H;
+      const s = Math.max(E.W / sw, E.H / sh) * z;
+      const dw = sw * s, dh = sh * s;
+      const dx = (E.W - dw) * fx, dy = (E.H - dh) * fy;
+      g.drawImage(im, dx, dy, dw, dh);
+    } else {
+      bg(g, 'field', { t: lt });
+      label(g, `THIẾU ẢNH ${a.img || '?'}`, E.W / 2, E.H * 0.45, { size: 60 * SC(), color: '#ff5a5a' });
+    }
+    overlays(g, lt, info);
+  });
+} });

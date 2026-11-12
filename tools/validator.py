@@ -10,14 +10,16 @@ from common import read_json
 PACK_TEMPLATES = {
     "squire": {
         "scene", "army", "close", "top", "map", "plan", "board",
-        "xray", "frame", "item", "split", "title", "black"
+        "xray", "frame", "item", "split", "title", "black", "ai"
     },
     "dem": {
         "scene", "phone", "clock", "calendar", "note", "face",
-        "black", "card", "cta", "stats"
+        "black", "card", "cta"
     },
     "doodle": {
-        "sketch", "story", "split", "map", "title", "focus"
+        "comp", "host", "bighead", "ai", "map", "compare", "scale",
+        "measure", "list", "note", "counter", "timeline", "chart",
+        "icons", "title", "branch", "endcard"
     }
 }
 

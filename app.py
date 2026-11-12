@@ -5,6 +5,7 @@ Bind only to loopback. Do not expose to the public Internet.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -46,27 +47,46 @@ JOBS_DIR.mkdir(parents=True, exist_ok=True)
 PROJECTS.mkdir(parents=True, exist_ok=True)
 ALLOWED_MODES = {'dem': 'Self-Improvement', 'squire': 'Military History'}
 PACK_TEMPLATES = {
-    'squire': {'scene', 'army', 'close', 'top', 'map', 'plan', 'board', 'xray', 'frame', 'item', 'split', 'title', 'black'},
-    'dem': {'scene', 'phone', 'clock', 'calendar', 'note', 'face', 'black', 'card', 'cta', 'stats'},
-    'doodle': {'sketch', 'story', 'split', 'map', 'title', 'focus'}
+    'squire': {'scene', 'army', 'close', 'top', 'map', 'plan', 'board', 'xray', 'frame', 'item', 'split', 'title', 'black', 'ai'},
+    'dem': {'scene', 'phone', 'clock', 'calendar', 'note', 'face', 'black', 'card', 'cta'},
+    'doodle': {'comp', 'host', 'bighead', 'ai', 'map', 'compare', 'scale', 'measure', 'list', 'note', 'counter', 'timeline', 'chart', 'icons', 'title', 'branch', 'endcard'}
 }
 NAME = re.compile(r'^[a-z0-9][a-z0-9_-]{1,49}$')
 JOBS: dict[str, dict] = {}
 MUTEX = threading.Lock()
 
 
+def compute_source_hash(p: Path) -> str:
+    """Tinh sha256 ket hop cac file nguon: config.json, story/shots.json, timeline/voice.wav."""
+    h = hashlib.sha256()
+    for rel in ('config.json', 'story/shots.json', 'timeline/voice.wav'):
+        f = p / rel
+        if f.is_file():
+            try: h.update(f.read_bytes())
+            except OSError: pass
+    return h.hexdigest()
+
+
 def invalidate_artifacts(p: Path):
-    """Xoa cac file render/mix cu khi kich ban hoac storyboard thay doi."""
-    for f in (p / 'build' / 'video_silent.mp4', p / 'build' / 'video_silent.mp4.partial',
+    """Xoa cac file build trung gian khi kich ban/storyboard thay doi.
+    Bao ve deliverables cua nguoi dung: giu nguyen out/*.mp4 va danh dau STALE.
+    """
+    for f in (p / 'build' / 'video_silent.mp4', p / 'build' / 'video_silent.partial.mp4',
               p / 'build' / 'preview.mp4', p / 'build' / 'preview_silent.mp4',
               p / 'build' / 'mix.wav', p / 'build' / 'mix_raw.wav', p / 'build' / 'mix_ln.wav'):
         if f.exists():
             try: f.unlink()
             except OSError: pass
-    out_dir = p / 'out'
-    if out_dir.is_dir():
-        for mp4 in out_dir.glob('*.mp4'):
-            try: mp4.unlink()
+
+    proof_file = p / 'build' / 'verification_proof.json'
+    if proof_file.exists():
+        try:
+            data = json.loads(proof_file.read_text('utf-8'))
+            data['status'] = 'STALE'
+            data['source_hash'] = 'STALE'
+            proof_file.write_text(json.dumps(data, indent=2), 'utf-8')
+        except Exception:
+            try: proof_file.unlink()
             except OSError: pass
 
 
@@ -126,6 +146,11 @@ def summarize_project(p: Path):
 
     visuals_ready = len(shots) > 0 and shots_ready == len(shots)
 
+    proof = load_json(p / 'build' / 'verification_proof.json', {})
+    current_src_hash = compute_source_hash(p)
+    out_dir = p / 'out'
+    out_mp4s = list(out_dir.glob('*.mp4')) if out_dir.is_dir() else []
+
     if len(shots) == 0:
         if mode == 'squire':
             has_voice = (p / 'timeline' / 'voice.wav').exists() or (p / 'input' / 'voice_source.wav').exists() or (p / 'input' / 'voice_source.mp3').exists()
@@ -135,8 +160,10 @@ def summarize_project(p: Path):
             stage = 'NEED_SHOTS' if has_script else 'EMPTY'
     elif not visuals_ready:
         stage = 'NEED_VISUALS'
-    elif list((p / 'out').glob('*.mp4')):
+    elif proof and proof.get('source_hash') == current_src_hash and out_mp4s:
         stage = 'OUTPUT_VERIFIED'
+    elif out_mp4s:
+        stage = 'OUTPUT_STALE' if proof else 'OUTPUT_UNVERIFIED'
     elif (p / 'build' / 'video_silent.mp4').exists():
         stage = 'RENDER_DONE'
     else:
@@ -246,13 +273,15 @@ def task_commands(action, p: Path):
         cmd = [py, 'tools/draft_shots.py', '--project', proj, '--force']
         if cfg.get('aspect') == '9:16': cmd.extend(['--min', '0.8', '--max', '2.6'])
         return [cmd]
-    if action == 'assign-visuals':
+    if action in ('assign-visuals', 'assign-visuals-force'):
         cfg = ensure_project(p)
         if cfg.get('pack') != 'squire': raise ValueError('Squire projects only')
         if not (p / 'story' / 'shots.json').exists() or not shots:
             raise ValueError('Draft storyboard (shots) before assigning visuals')
         invalidate_artifacts(p)
-        return [[py, 'tools/assign_visuals.py', '--project', proj, '--force']]
+        cmd = [py, 'tools/assign_visuals.py', '--project', proj]
+        if action == 'assign-visuals-force': cmd.append('--force')
+        return [cmd]
     raise ValueError('Unknown task')
 
 
@@ -413,7 +442,49 @@ class Handler(BaseHTTPRequestHandler):
                 if not target.is_file() or target.suffix.lower() not in ('.jpg', '.png', '.mp4', '.wav'):
                     return self.error(404, 'File not found')
                 types = {'.jpg': 'image/jpeg', '.png': 'image/png', '.mp4': 'video/mp4', '.wav': 'audio/wav'}
-                return self.send(200, target.read_bytes(), types[target.suffix.lower()])
+                mime = types[target.suffix.lower()]
+                size = target.stat().st_size
+                range_header = self.headers.get('Range')
+                if range_header and range_header.startswith('bytes=') and target.suffix.lower() in ('.mp4', '.wav'):
+                    try:
+                        rng = range_header[6:].split('-')
+                        start = int(rng[0]) if rng[0] else 0
+                        end = int(rng[1]) if len(rng) > 1 and rng[1] else size - 1
+                        if start >= size or end >= size or start > end:
+                            self.send_response(416)
+                            self.send_header('Content-Range', f'bytes */{size}')
+                            self.end_headers()
+                            return
+                        content_len = end - start + 1
+                        self.send_response(206)
+                        self.send_header('Content-Type', mime)
+                        self.send_header('Content-Range', f'bytes {start}-{end}/{size}')
+                        self.send_header('Content-Length', str(content_len))
+                        self.send_header('Accept-Ranges', 'bytes')
+                        self.end_headers()
+                        with target.open('rb') as f:
+                            f.seek(start)
+                            rem = content_len
+                            while rem > 0:
+                                chunk = f.read(min(65536, rem))
+                                if not chunk: break
+                                self.wfile.write(chunk)
+                                rem -= len(chunk)
+                        return
+                    except (ValueError, OSError):
+                        pass
+
+                self.send_response(200)
+                self.send_header('Content-Type', mime)
+                self.send_header('Content-Length', str(size))
+                self.send_header('Accept-Ranges', 'bytes')
+                self.end_headers()
+                with target.open('rb') as f:
+                    while True:
+                        chunk = f.read(65536)
+                        if not chunk: break
+                        self.wfile.write(chunk)
+                return
             self.error(404, 'Unknown endpoint')
         except (ValueError, KeyError, OSError, json.JSONDecodeError) as exc:
             self.error(400, exc)

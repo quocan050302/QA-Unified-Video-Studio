@@ -1,0 +1,272 @@
+{
+  "run_id": "20261112_213948",
+  "timestamp": "2026-11-12T21:40:12.979806",
+  "total_duration_sec": 24.78,
+  "gates_total": 17,
+  "gates_passed": 17,
+  "verdict": "RELEASE_CANDIDATE",
+  "results": [
+    {
+      "gate": "G0",
+      "name": "Baseline & Environment Check",
+      "status": "PASS",
+      "details": {
+        "resource_check": {
+          "ok": true,
+          "message": "OK",
+          "resources": {
+            "disk": {
+              "total_gb": 460.43,
+              "used_gb": 443.83,
+              "free_gb": 16.6
+            },
+            "ram": {
+              "total_gb": 16.0,
+              "available_gb": 4.0
+            },
+            "cpus": 8,
+            "workspace": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio"
+          }
+        },
+        "git_branch": "fix/Image-Shot",
+        "git_head": "65cdd21bc9a56df22fabec4537922d61a1789b9c",
+        "git_production_head": "e867c910b0ef0e43dcbaf7d7601fecd1c9a8ae53",
+        "node_version": "v22.22.3",
+        "ffmpeg_available": true
+      },
+      "duration_sec": 0.23
+    },
+    {
+      "gate": "G1",
+      "name": "Blank Squire Init (Blocked Render)",
+      "status": "PASS",
+      "details": {
+        "summary_stage": "EMPTY",
+        "validator_status": "BLOCKED",
+        "is_blocked_properly": true,
+        "fatal_errors_detected": [
+          "Thieu story/shots.json (chua tao storyboard)"
+        ],
+        "render_preflight_exit_code": 1
+      },
+      "duration_sec": 0.14
+    },
+    {
+      "gate": "G2",
+      "name": "Squire 16:9 E2E Pipeline",
+      "status": "PASS",
+      "details": {
+        "output_file": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/20261112_213948/g2_squire_16x9/out/Squire Medieval Knights.mp4",
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "resolution": "1920x1080",
+        "pixel_analysis": {
+          "ok": true,
+          "total_pixels": 2073600,
+          "unique_colors": 33778,
+          "red_ratio": 0.0012,
+          "dark_ratio": 0.0,
+          "is_placeholder": false
+        },
+        "proof_saved": "tests/evidence/proof_g2_squire.jpg"
+      },
+      "duration_sec": 13.16
+    },
+    {
+      "gate": "G3",
+      "name": "Squire 9:16 Shorts E2E",
+      "status": "PASS",
+      "details": {
+        "output_file": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/20261112_213948/g3_squire_9x16/out/Shorts Medieval.mp4",
+        "resolution": "540x960",
+        "aspect_ratio": "9:16 vertical",
+        "pixel_analysis": {
+          "ok": true,
+          "total_pixels": 518400,
+          "unique_colors": 25738,
+          "red_ratio": 0.0001,
+          "dark_ratio": 0.0,
+          "is_placeholder": false
+        },
+        "proof_saved": "tests/evidence/proof_g3_shorts.jpg"
+      },
+      "duration_sec": 3.98
+    },
+    {
+      "gate": "G4",
+      "name": "DEM 16:9 E2E Pipeline",
+      "status": "PASS",
+      "details": {
+        "phim_compiled_shots": 2,
+        "validator_status": "PASS",
+        "still_frame_rendered": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/20261112_213948/g4_dem_16x9/build/stills/t_1.00.png",
+        "pixel_analysis": {
+          "ok": true,
+          "total_pixels": 518400,
+          "unique_colors": 6045,
+          "red_ratio": 0.0002,
+          "dark_ratio": 0.6784,
+          "is_placeholder": false
+        },
+        "proof_saved": "tests/evidence/proof_g4_dem.jpg"
+      },
+      "duration_sec": 1.05
+    },
+    {
+      "gate": "G5",
+      "name": "180-Shot Replay Backtest (508.7s)",
+      "status": "PASS",
+      "details": {
+        "total_shots": 180,
+        "old_bug_detected_by_preflight": true,
+        "missing_ids_before_fix": 180,
+        "visuals_assigned_ok": true,
+        "validator_after_fix_status": "PASS",
+        "fast_check_duration_sec": 3.5,
+        "fast_check_stdout": "Card do hoa dang dung: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)\nPASS: 0 loi trong 541 khung kiem tra (180 shots hop le, che do fast).",
+        "proof_saved": "tests/evidence/proof_g5_replay.jpg"
+      },
+      "duration_sec": 4.39
+    },
+    {
+      "gate": "G6",
+      "name": "Negative Tests: Missing Asset & Unknown Template",
+      "status": "PASS",
+      "details": {
+        "unregistered_template_caught": true,
+        "missing_asset_caught": true
+      },
+      "duration_sec": 0.14
+    },
+    {
+      "gate": "G7",
+      "name": "Negative Tests: Corrupt Input & Overlap",
+      "status": "PASS",
+      "details": {
+        "corrupt_json_caught": true,
+        "temporal_anomaly_caught": true,
+        "invalid_dem_stats_caught": true
+      },
+      "duration_sec": 0.22
+    },
+    {
+      "gate": "G8",
+      "name": "Preserve Custom User Edits & Backups",
+      "status": "PASS",
+      "details": {
+        "manual_shot_preserved": true,
+        "custom_args_preserved": true,
+        "backup_files_created": [
+          "shots.backup.json",
+          "shots.backup_1794494411.json"
+        ]
+      },
+      "duration_sec": 0.08
+    },
+    {
+      "gate": "G9",
+      "name": "Stale Invalidation & Deliverable Protection",
+      "status": "PASS",
+      "details": {
+        "deliverable_preserved": true,
+        "proof_marked_stale": true,
+        "summary_stage": "OUTPUT_STALE"
+      },
+      "duration_sec": 0.0
+    },
+    {
+      "gate": "G10",
+      "name": "Failure Injection & Process Resilience",
+      "status": "PASS",
+      "details": {
+        "exit_code": 1,
+        "failure_caught_cleanly": true,
+        "no_fake_output_created": true
+      },
+      "duration_sec": 0.49
+    },
+    {
+      "gate": "G11",
+      "name": "Media Quality & Entropy Inspection",
+      "status": "PASS",
+      "details": {
+        "ok": true,
+        "total_pixels": 129600,
+        "unique_colors": 17180,
+        "red_ratio": 0.0018,
+        "dark_ratio": 0.0002,
+        "is_placeholder": false
+      },
+      "duration_sec": 0.09
+    },
+    {
+      "gate": "G12",
+      "name": "Legacy Samples Regression & HTTP Streaming",
+      "status": "PASS",
+      "details": {
+        "squire_mau_shots": 24,
+        "squire_mau_status": "PASS",
+        "selfimprove_mau_shots": 30,
+        "selfimprove_mau_status": "PASS",
+        "http_range_support_verified": true
+      },
+      "duration_sec": 0.68
+    },
+    {
+      "gate": "G13",
+      "name": "Concurrency & Workspace Isolation",
+      "status": "PASS",
+      "details": {
+        "concurrent_task_1_exit": 0,
+        "concurrent_task_2_exit": 0
+      },
+      "duration_sec": 0.08
+    },
+    {
+      "gate": "G14",
+      "name": "Historical Replay Contrast Comparison",
+      "status": "PASS",
+      "details": {
+        "historical_bug_state": {
+          "project": "why_knights_could_actually (180 shots, 508.7s)",
+          "pipeline": "draft_shots -> raw template-less shots -> render",
+          "preflight_guard": "MISSING (allowed render to proceed blindly)",
+          "render_behavior": "Browser drew dark screen with '#f04444' 'THIEU SHOT s001...'",
+          "process_exit": "Exit code 0 (FAKE PASS)",
+          "output_mp4": "4.09 MB silent video with 100% defective visual content"
+        },
+        "post_fix_verified_state": {
+          "pipeline": "draft_shots -> assign_visuals -> validator preflight -> render -> mix",
+          "preflight_guard": "ACTIVE: blocks render if templates or assets are missing",
+          "visual_assignment": "Contextual templates (scene, close, map, split, board, item, army) assigned with provenance metadata",
+          "fast_check_mode": "Validates 180 shots across boundaries in ~4s with 0 errors",
+          "verification_proof": "Cryptographic SHA256 source hash saved and verified",
+          "deliverable_protection": "User videos in out/ never overwritten or deleted on rebuild (marked STALE instead)"
+        }
+      },
+      "duration_sec": 0.0
+    },
+    {
+      "gate": "G15",
+      "name": "Headless CI & CLI Exit Codes",
+      "status": "PASS",
+      "details": {
+        "validator_exit_code": 0,
+        "json_output_valid": true
+      },
+      "duration_sec": 0.07
+    },
+    {
+      "gate": "G16",
+      "name": "Performance & Resource Audit",
+      "status": "PASS",
+      "details": {
+        "disk_free_gb": 15.59,
+        "ram_available_gb": 4.0,
+        "cpu_cores": 8,
+        "benchmark_fast_check_180_shots_sec": "< 5.0s"
+      },
+      "duration_sec": 0.0
+    }
+  ]
+}

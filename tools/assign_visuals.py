@@ -91,10 +91,15 @@ def assign_visuals(proj_dir: str, force: bool = False, target_ids: list = None):
     if not shots:
         raise ValueError(f"story/shots.json khong co shot nao (0 shots).")
     
-    # Tao backup an toan truoc khi sua
+    # Tao backup an toan truoc khi sua (co timestamp)
+    import time
+    ts_backup = os.path.join(P, "story", f"shots.backup_{int(time.time())}.json")
     backup_file = os.path.join(P, "story", "shots.backup.json")
-    if not os.path.exists(backup_file):
+    try:
+        shutil.copyfile(shots_file, ts_backup)
         shutil.copyfile(shots_file, backup_file)
+    except Exception:
+        pass
     
     # Thu thap toan bo van ban de xac dinh chu de
     full_text = " ".join(s.get("line", "") for s in shots)
@@ -126,6 +131,7 @@ def assign_visuals(proj_dir: str, force: bool = False, target_ids: list = None):
         if not force and existing_tpl in SQUIRE_TEMPLATES and existing_args and isinstance(existing_args, dict):
             preserved_count += 1
             recent_tpls.append(existing_tpl)
+            sh.setdefault("visual_source", "manual")
             continue
         
         line = (sh.get("line") or "").strip()
@@ -242,11 +248,38 @@ def assign_visuals(proj_dir: str, force: bool = False, target_ids: list = None):
             })
             
         elif chosen_tpl == "map":
+            # Xac dinh toa do theo ngu canh, khong gan Rome mac dinh cho noi khac
+            if theme["name"] == "roman" or re.search(r"\b(rome|roman|caesar|legion|italy)\b", l_low):
+                view_box = [5, 36, 24, 47]
+                place_name = "ROMA"
+                p_lon, p_lat = 12.5, 41.9
+                r_pts = [[10.0, 43.5], [12.5, 41.9]]
+            elif re.search(r"\b(hastings|england|britain|english|saxons?|william|norman)\b", l_low):
+                view_box = [-6, 49, 3, 56]
+                place_name = "HASTINGS"
+                p_lon, p_lat = 0.5, 50.9
+                r_pts = [[0.1, 49.5], [0.5, 50.9]]
+            elif theme["name"] == "greek" or re.search(r"\b(greece|greek|sparta|athens|thermopylae)\b", l_low):
+                view_box = [19, 35, 29, 42]
+                place_name = "HELLAS"
+                p_lon, p_lat = 22.5, 38.8
+                r_pts = [[21.5, 39.5], [22.5, 38.8]]
+            elif theme["name"] == "samurai" or re.search(r"\b(japan|samurai|kyoto|edo|sekigahara)\b", l_low):
+                view_box = [130, 31, 142, 38]
+                place_name = "HONSHU"
+                p_lon, p_lat = 136.5, 35.3
+                r_pts = [[135.5, 34.8], [136.5, 35.3]]
+            else:
+                view_box = [-5, 43, 15, 55]
+                place_name = "TERRITORY"
+                p_lon, p_lat = 2.3, 48.8
+                r_pts = [[1.0, 47.0], [2.3, 48.8]]
+
             args.update({
-                "view": [5, 36, 24, 47] if theme["name"] == "roman" else [-5, 42, 10, 52],
-                "places": [{"text": "FIELD", "lon": 12.5, "lat": 41.9, "at": 0.3}],
-                "routes": [{"pts": [[10.0, 43.5], [12.5, 41.9]], "at": 0.5, "dur": 1.0}],
-                "troops": [{"lon": 12.5, "lat": 41.9, "side": "red", "at": 0.8}],
+                "view": view_box,
+                "places": [{"text": place_name, "lon": p_lon, "lat": p_lat, "at": 0.3}],
+                "routes": [{"pts": r_pts, "at": 0.5, "dur": 1.0}],
+                "troops": [{"lon": p_lon, "lat": p_lat, "side": "red", "at": 0.8}],
                 "compass": True
             })
             
@@ -377,6 +410,8 @@ def assign_visuals(proj_dir: str, force: bool = False, target_ids: list = None):
         sh["tpl"] = chosen_tpl
         sh["args"] = args
         sh["scene"] = f"Visual {chosen_tpl}: {line[:40]}"
+        sh["visual_source"] = "template_assigned"
+        sh["visual_version"] = 1
         assigned_count += 1
 
     # Luu ket qua vao shots.json

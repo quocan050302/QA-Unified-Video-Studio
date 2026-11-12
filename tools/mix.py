@@ -127,5 +127,35 @@ if not a.no_video:
             if os.path.exists(partial): os.remove(partial)
             sys.exit("Loi tao video mix hoan chinh (ffprobe khong doc duoc thoi luong)")
         
+        # Kiem tra audio khong phai toan bo silence
+        rms = np.sqrt(np.mean(mix ** 2)) if len(mix) > 0 else 0
+        if pack == "squire" and rms < 1e-4:
+            if os.path.exists(partial): os.remove(partial)
+            sys.exit("Am thanh mix bi im lang hoan toan (RMS < 1e-4).")
+
         os.replace(partial, final)
         print("Video hoan chinh:", final)
+
+        # Ghi verification proof de app.py summarize_project xac thuc
+        try:
+            import hashlib, time
+            sh = hashlib.sha256()
+            for rel in ('config.json', 'story/shots.json', 'timeline/voice.wav'):
+                fpath = os.path.join(P, rel)
+                if os.path.exists(fpath):
+                    with open(fpath, 'rb') as fp: sh.update(fp.read())
+            out_h = hashlib.sha256()
+            with open(final, 'rb') as fp:
+                while chunk := fp.read(65536): out_h.update(chunk)
+            proof = {
+                "source_hash": sh.hexdigest(),
+                "output_file": os.path.relpath(final, P),
+                "output_sha256": out_h.hexdigest(),
+                "duration": dur,
+                "verified_at": time.time(),
+                "status": "VERIFIED"
+            }
+            with open(os.path.join(P, "build", "verification_proof.json"), "w", encoding="utf-8") as fp:
+                json.dump(proof, fp, indent=2)
+        except Exception:
+            pass
