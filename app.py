@@ -19,6 +19,25 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlsplit
 
+if os.name == 'nt' and not shutil.which('ffmpeg'):
+    try:
+        import winreg
+        _extra = []
+        for _root, _sub in ((winreg.HKEY_LOCAL_MACHINE, r'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'),
+                            (winreg.HKEY_CURRENT_USER, r'Environment')):
+            try:
+                with winreg.OpenKey(_root, _sub) as _k:
+                    _val, _ = winreg.QueryValueEx(_k, 'Path')
+                    _extra.extend(os.path.expandvars(p) for p in _val.split(os.pathsep) if p)
+            except OSError:
+                pass
+        _cur = os.environ.get('PATH', '').split(os.pathsep)
+        _add = [p for p in _extra if p and p not in _cur]
+        if _add:
+            os.environ['PATH'] = os.pathsep.join(_add + _cur)
+    except Exception:
+        pass
+
 ROOT = Path(__file__).resolve().parent
 PROJECTS = ROOT / 'projects'
 WEB = ROOT / 'web'
@@ -148,6 +167,14 @@ def task_commands(action, p: Path):
         script = p / 'input' / 'voice_script.txt'
         if not voice.exists() or not script.exists(): raise ValueError('Upload MP3/WAV and save transcript first')
         return [[py, 'tools/prep_voice.py', '--project', proj, '--single', str(voice), '--script', str(script)]]
+    if action == 'draft-shots':
+        cfg = ensure_project(p)
+        if cfg.get('pack') != 'squire': raise ValueError('Squire projects only')
+        if not (p / 'timeline' / 'lines.json').exists():
+            raise ValueError('Run Prepare voice timeline before drafting storyboard shots')
+        cmd = [py, 'tools/draft_shots.py', '--project', proj, '--force']
+        if cfg.get('aspect') == '9:16': cmd.extend(['--min', '0.8', '--max', '2.6'])
+        return [cmd]
     raise ValueError('Unknown task')
 
 
@@ -168,6 +195,7 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
         'thumb': [p / 'out' / 'thumbnail.png'],
         'compile-self': [p / 'story' / 'shots.json'],
         'voice-prepare': [p / 'timeline' / 'voice.wav'],
+        'draft-shots': [p / 'story' / 'shots.json'],
     }
     if action == 'sheet': matches = list((p / 'build' / 'sheets').glob('sheet_*.jpg'))
     elif action == 'mix': matches = list((p / 'out').glob('*.mp4'))
