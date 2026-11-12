@@ -9,6 +9,10 @@ import sys
 import os
 import shutil
 import json
+import threading
+import time
+import signal
+import subprocess
 from pathlib import Path
 
 DEFAULT_MIN_DISK_GB = 4.0  # Safe reserve for tests
@@ -99,6 +103,108 @@ def clean_old_runs(test_runs_dir: str = ".test-runs", max_age_dirs: int = 1):
                 shutil.rmtree(old)
             except Exception as e:
                 print(f"[ResourceGuard] Warning: could not delete {old}: {e}", file=sys.stderr)
+
+def get_process_children(parent_pid: int) -> list[int]:
+    """Return list of child PIDs for given parent PID."""
+    children = []
+    try:
+        if sys.platform == "darwin" or sys.platform.startswith("linux"):
+            res = subprocess.run(["pgrep", "-P", str(parent_pid)], capture_output=True, text=True)
+            if res.returncode == 0:
+                for line in res.stdout.strip().splitlines():
+                    p = line.strip()
+                    if p.isdigit():
+                        children.append(int(p))
+    except Exception:
+        pass
+    return children
+
+def kill_process_tree(pid: int, sig=signal.SIGTERM, timeout: float = 3.0):
+    """Safely terminate a process and all its children."""
+    if pid <= 0:
+        return
+    try:
+        children = get_process_children(pid)
+        for c in children:
+            kill_process_tree(c, sig=sig, timeout=timeout)
+        try:
+            os.kill(pid, sig)
+        except ProcessLookupError:
+            return
+        t0 = time.time()
+        while time.time() - t0 < timeout:
+            try:
+                os.kill(pid, 0)
+                time.sleep(0.1)
+            except ProcessLookupError:
+                return
+        try:
+            os.kill(pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    except Exception:
+        pass
+
+class ResourceMonitor:
+    """Continuous background resource monitor for CPU, RAM, and Disk."""
+    def __init__(self, workspace: str = ".", min_disk_gb: float = DEFAULT_MIN_DISK_GB, interval_sec: float = 1.0):
+        self.workspace = workspace
+        self.min_disk_gb = min_disk_gb
+        self.interval_sec = interval_sec
+        self.stop_event = threading.Event()
+        self.thread = None
+        self.min_free_disk_gb = float("inf")
+        self.min_avail_ram_gb = float("inf")
+        self.samples = 0
+        self.breached = False
+        self.breach_message = ""
+
+    def _monitor_loop(self):
+        while not self.stop_event.is_set():
+            try:
+                disk = get_disk_info(self.workspace)
+                ram = get_ram_info()
+                self.samples += 1
+                free_disk = disk["free_gb"]
+                avail_ram = ram["available_gb"]
+                if free_disk < self.min_free_disk_gb:
+                    self.min_free_disk_gb = free_disk
+                if avail_ram < self.min_avail_ram_gb:
+                    self.min_avail_ram_gb = avail_ram
+
+                if free_disk < self.min_disk_gb:
+                    self.breached = True
+                    self.breach_message = f"Disk dropped to {free_disk} GB (< {self.min_disk_gb} GB threshold)"
+            except Exception:
+                pass
+            self.stop_event.wait(self.interval_sec)
+
+    def start(self):
+        self.stop_event.clear()
+        self.thread = threading.Thread(target=self._monitor_loop, daemon=True)
+        self.thread.start()
+        return self
+
+    def stop(self):
+        if self.thread and self.thread.is_alive():
+            self.stop_event.set()
+            self.thread.join(timeout=2.0)
+
+    def __enter__(self):
+        self.start()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.stop()
+
+    def get_stats(self) -> dict:
+        return {
+            "samples": self.samples,
+            "min_free_disk_gb": round(self.min_free_disk_gb, 2) if self.min_free_disk_gb != float("inf") else None,
+            "min_avail_ram_gb": round(self.min_avail_ram_gb, 2) if self.min_avail_ram_gb != float("inf") else None,
+            "breached": self.breached,
+            "breach_message": self.breach_message,
+        }
 
 if __name__ == "__main__":
     ok, msg, info = check_resources()

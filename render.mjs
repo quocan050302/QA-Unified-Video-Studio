@@ -104,7 +104,7 @@ async function openPlayer(browser, style) {
       console.log('  Card do hoa dang dung: ' + r);
     } catch {}
   }
-  await page.setViewportSize({ width: Math.min(info.W, 4000), height: Math.min(info.H, 4000) });
+  await page.setViewportSize({ width: Math.min(info.W, 4096), height: Math.min(info.H, 4096) });
   return { page, info };
 }
 const b64 = (d) => Buffer.from(d.slice(d.indexOf(',') + 1), 'base64');
@@ -181,8 +181,7 @@ try {
       framesToCheck.push(info.frames - 1);
       framesToCheck = [...new Set(framesToCheck)].sort((a, b) => a - b);
     } else {
-      const step = Math.max(1, Math.min(4, Math.floor(info.frames / Math.max(1, info.shots.length * 2))));
-      for (let f = 0; f < info.frames; f += step) framesToCheck.push(f);
+      for (let f = 0; f < info.frames; f++) framesToCheck.push(f);
     }
 
     for (const f of framesToCheck) {
@@ -245,7 +244,13 @@ try {
     const total = f1 - f0;
     if (total <= 0) throw new Error(`Khoang render khong hop le: ${f0} -> ${f1} (0 khung)`);
 
-    const W = Math.max(1, Math.min(+(args.workers || Math.max(1, Math.min(6, Math.floor(os.cpus().length / 2)))), Math.ceil(total / 48)));
+    let maxAutoWorkers = Math.max(1, Math.min(6, Math.floor(os.cpus().length / 2)));
+    if ((info.W >= 3840 || info.H >= 3840 || _cfg.resolution === '2160p') && !args.workers) {
+      maxAutoWorkers = 1;
+    } else if ((info.W >= 2560 || info.H >= 2560 || _cfg.resolution === '1440p') && !args.workers) {
+      maxAutoWorkers = Math.min(2, maxAutoWorkers);
+    }
+    const W = Math.max(1, Math.min(+(args.workers || maxAutoWorkers), Math.ceil(total / 48)));
     console.log(`Render ${total} khung (${(total / info.fps).toFixed(1)} giay) ${info.W}x${info.H} @${info.fps}fps, ${W} luong`);
     const parts = []; let done = 0; const t0 = Date.now();
     const tick = setInterval(() => { const el = (Date.now() - t0) / 1000, fps = done / Math.max(el, 0.1); console.log(`  ${done}/${total} khung  ${fps.toFixed(2)} khung/giay  da chay ${Math.floor(el / 60)}p${Math.round(el % 60)}s  con lai ~${Math.round((total - done) / Math.max(fps, 0.01) / 60)} phut`); }, 15000);

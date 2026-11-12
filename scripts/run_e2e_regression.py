@@ -35,7 +35,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(REPO_ROOT / "tools"))
 
-from resource_guard import check_resources, clean_old_runs, get_disk_info, get_ram_info
+from resource_guard import check_resources, clean_old_runs, get_disk_info, get_ram_info, ResourceMonitor, kill_process_tree
 from common import compute_source_hash
 from app import Handler, create_project, invalidate_artifacts, summarize_project
 
@@ -51,16 +51,21 @@ CONCURRENCY_SEMAPHORE = asyncio.Semaphore(2)
 def run_sync(cmd: list[str], cwd: Path = REPO_ROOT, timeout: float = 120) -> tuple[int, str, str, float]:
     t0 = time.time()
     try:
-        proc = subprocess.run(
+        proc = subprocess.Popen(
             cmd,
             cwd=str(cwd),
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
-            timeout=timeout,
         )
-        return proc.returncode, proc.stdout, proc.stderr, time.time() - t0
-    except subprocess.TimeoutExpired as exc:
-        return -1, "", f"TIMEOUT ({timeout}s expired): {exc}", time.time() - t0
+        try:
+            stdout, stderr = proc.communicate(timeout=timeout)
+            return proc.returncode, stdout, stderr, time.time() - t0
+        except subprocess.TimeoutExpired:
+            kill_process_tree(proc.pid)
+            proc.kill()
+            stdout, stderr = proc.communicate()
+            return -1, stdout or "", f"TIMEOUT ({timeout}s expired)", time.time() - t0
     except Exception as exc:
         return -2, "", str(exc), time.time() - t0
 
@@ -270,14 +275,15 @@ async def g02_squire_16x9_real_e2e() -> dict:
 
     # Use REAL spoken human speech fixture from why-knights-stopped-using-shields (4.0s slice)
     real_speech_source = REPO_ROOT / "projects" / "why-knights-stopped-using-shields" / "input" / "voice_source.wav"
-    voice_wav = proj_dir / "timeline" / "voice.wav"
+    input_wav = proj_dir / "input" / "voice_source.wav"
+    input_script = proj_dir / "input" / "voice_script.txt"
     if real_speech_source.exists():
         extract_cmd = [
             "ffmpeg", "-y", "-v", "quiet",
             "-ss", "0", "-t", "4.0",
             "-i", str(real_speech_source),
             "-ar", "48000", "-ac", "1",
-            str(voice_wav),
+            str(input_wav),
         ]
         run_sync(extract_cmd)
         speech_kind = "REAL_HUMAN_RECORDING"
@@ -285,16 +291,24 @@ async def g02_squire_16x9_real_e2e() -> dict:
         # Fallback to macOS say spoken synthesis
         say_cmd = ["say", "-o", str(proj_dir / "build" / "speech.aiff"), "Knights fought across medieval battlefields with heavy armor."]
         run_sync(say_cmd)
-        run_sync(["ffmpeg", "-y", "-v", "quiet", "-i", str(proj_dir / "build" / "speech.aiff"), "-ar", "48000", "-ac", "1", str(voice_wav)])
+        run_sync(["ffmpeg", "-y", "-v", "quiet", "-i", str(proj_dir / "build" / "speech.aiff"), "-ar", "48000", "-ac", "1", str(input_wav)])
         speech_kind = "REAL_SPOKEN_SYNTHESIS"
 
-    # Corresponding transcript matching speech
-    lines = [
-        {"id": "L001", "block": "V001", "slot": "NARRATOR", "char": "knight", "text": "Your brain burns roughly a hundred and twenty grams of sugar every single day.", "start": 0.0, "end": 2.2, "drop": False},
-        {"id": "L002", "block": "V002", "slot": "NARRATOR", "char": "king", "text": "In London and Rome they defended their realms with steel.", "start": 2.2, "end": 4.0, "drop": False},
-    ]
-    (proj_dir / "timeline" / "lines.json").write_text(json.dumps(lines, indent=2), encoding="utf-8")
-    (proj_dir / "timeline" / "words.json").write_text(json.dumps([], indent=2), encoding="utf-8")
+    transcript_text = (
+        "Your brain burns roughly a hundred and twenty grams of sugar every single day.\n"
+        "In London and Rome they defended their realms with steel.\n"
+    )
+    input_script.write_text(transcript_text, encoding="utf-8")
+
+    # Run prep_voice directly to build timeline/voice.wav, timeline/lines.json, timeline/words.json
+    prep_code, prep_out, prep_err, _ = await run_async_cmd([
+        "python3", "tools/prep_voice.py",
+        "--project", str(proj_dir),
+        "--single", str(input_wav),
+        "--script", str(input_script)
+    ])
+    if prep_code != 0:
+        return {"gate": "G2", "name": "Squire 16:9 Real E2E", "status": "FAIL", "error": f"prep_voice failed: {prep_err or prep_out}"}
 
     # Pipeline execution: draft shots -> assign visuals
     code, out, err, _ = await run_async_cmd(["python3", "tools/draft_shots.py", "--project", str(proj_dir), "--force", "--visuals"])
@@ -390,18 +404,28 @@ async def g03_squire_9x16_shorts_full_res() -> dict:
 
     # Real speech slice
     real_speech_source = REPO_ROOT / "projects" / "why-knights-stopped-using-shields" / "input" / "voice_source.wav"
-    voice_wav = proj_dir / "timeline" / "voice.wav"
+    input_wav = proj_dir / "input" / "voice_source.wav"
+    input_script = proj_dir / "input" / "voice_script.txt"
     if real_speech_source.exists():
-        run_sync(["ffmpeg", "-y", "-v", "quiet", "-ss", "4.0", "-t", "3.0", "-i", str(real_speech_source), "-ar", "48000", "-ac", "1", str(voice_wav)])
+        run_sync(["ffmpeg", "-y", "-v", "quiet", "-ss", "4.0", "-t", "3.0", "-i", str(real_speech_source), "-ar", "48000", "-ac", "1", str(input_wav)])
     else:
-        run_sync(["ffmpeg", "-y", "-v", "quiet", "-f", "lavfi", "-i", "sine=frequency=520:duration=3", "-c:a", "pcm_s16le", "-ar", "48000", "-ac", "1", str(voice_wav)])
+        run_sync(["say", "-o", str(proj_dir / "build" / "speech_g3.aiff"), "Shorts format vertical animation optimized for mobile."])
+        run_sync(["ffmpeg", "-y", "-v", "quiet", "-i", str(proj_dir / "build" / "speech_g3.aiff"), "-ar", "48000", "-ac", "1", str(input_wav)])
 
-    lines = [
-        {"id": "L001", "block": "V001", "slot": "NARRATOR", "char": "guard", "text": "Shorts format vertical animation.", "start": 0.0, "end": 1.5, "drop": False},
-        {"id": "L002", "block": "V002", "slot": "NARRATOR", "char": "guard", "text": "Optimized for mobile platforms.", "start": 1.5, "end": 3.0, "drop": False},
-    ]
-    (proj_dir / "timeline" / "lines.json").write_text(json.dumps(lines, indent=2), encoding="utf-8")
-    (proj_dir / "timeline" / "words.json").write_text(json.dumps([], indent=2), encoding="utf-8")
+    transcript_text = (
+        "Shorts format vertical animation.\n"
+        "Optimized for mobile platforms.\n"
+    )
+    input_script.write_text(transcript_text, encoding="utf-8")
+
+    prep_code, prep_out, prep_err, _ = await run_async_cmd([
+        "python3", "tools/prep_voice.py",
+        "--project", str(proj_dir),
+        "--single", str(input_wav),
+        "--script", str(input_script)
+    ])
+    if prep_code != 0:
+        return {"gate": "G3", "name": "Squire 9:16 Shorts Full Resolution", "status": "FAIL", "error": f"prep_voice failed: {prep_err or prep_out}"}
 
     await run_async_cmd(["python3", "tools/draft_shots.py", "--project", str(proj_dir), "--force", "--visuals", "--min", "0.8", "--max", "2.6"])
     # Render FULL RESOLUTION (scale 1.0 = 1080x1920)
@@ -1045,11 +1069,12 @@ async def g15_headless_ci() -> dict:
     }
 
 
-async def g16_performance_telemetry(durations: dict) -> dict:
+async def g16_performance_telemetry(durations: dict, monitor_stats: dict = None) -> dict:
     """Records actual measured telemetry instead of hardcoded strings."""
     d_info = get_disk_info(REPO_ROOT)
     r_info = get_ram_info()
     fast_check_sec = durations.get("g05_180_shot_replay_backtest", 0.0)
+    mon = monitor_stats or {}
 
     return {
         "gate": "G16",
@@ -1059,9 +1084,77 @@ async def g16_performance_telemetry(durations: dict) -> dict:
         "details": {
             "disk_free_gb": d_info.get("free_gb"),
             "ram_available_gb": r_info.get("available_gb"),
+            "min_disk_headroom_gb": mon.get("min_free_disk_gb", d_info.get("free_gb")),
+            "min_ram_headroom_gb": mon.get("min_avail_ram_gb", r_info.get("available_gb")),
+            "continuous_monitor_samples": mon.get("samples", 0),
             "measured_180_shot_check_sec": fast_check_sec,
             "measured_render_fps": round(541 / max(fast_check_sec, 0.1), 1) if fast_check_sec > 0 else 0,
         },
+    }
+
+
+async def g17_uhd_resolutions() -> dict:
+    """Verifies 1440p (2K QHD) and 2160p (4K UHD) renders in both 16:9 and 9:16 formats with ffprobe stream validation."""
+    proj_dir = CURRENT_RUN_DIR / "g17_uhd_renders"
+    proj_dir.mkdir(parents=True, exist_ok=True)
+
+    tests = [
+        {"name": "2K_16x9", "aspect": "16:9", "resolution": "1440p", "expected_w": 2560, "expected_h": 1440},
+        {"name": "4K_16x9", "aspect": "16:9", "resolution": "2160p", "expected_w": 3840, "expected_h": 2160},
+        {"name": "2K_9x16", "aspect": "9:16", "resolution": "1440p", "expected_w": 1440, "expected_h": 2560},
+        {"name": "4K_9x16", "aspect": "9:16", "resolution": "2160p", "expected_w": 2160, "expected_h": 3840},
+    ]
+
+    details = {}
+    all_passed = True
+
+    for t in tests:
+        sub_dir = proj_dir / t["name"]
+        sub_dir.mkdir(parents=True, exist_ok=True)
+        for d in ("input", "timeline", "story", "anh", "build", "out"):
+            (sub_dir / d).mkdir(parents=True, exist_ok=True)
+        cfg = {
+            "title": f"UHD {t['name']}",
+            "pack": "dem",
+            "aspect": t["aspect"],
+            "resolution": t["resolution"],
+            "fps": 24,
+        }
+        (sub_dir / "config.json").write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+        # 0.5-second render (12 frames)
+        shots = {
+            "aspect": t["aspect"],
+            "shots": [{"id": "s001", "start": 0.0, "end": 0.5, "tpl": "scene", "args": {}}]
+        }
+        (sub_dir / "story" / "shots.json").write_text(json.dumps(shots, indent=2), encoding="utf-8")
+
+        r_code, r_out, r_err, duration = await run_async_cmd(["node", "render.mjs", "--project", str(sub_dir), "--workers", "1"])
+        silent_mp4 = sub_dir / "build" / "video_silent.mp4"
+        probe = get_ffprobe_streams(silent_mp4) if silent_mp4.exists() else {}
+        v_stream = next((s for s in probe.get("streams", []) if s.get("codec_type") == "video"), {})
+
+        w = v_stream.get("width", 0)
+        h = v_stream.get("height", 0)
+        match_ok = (r_code == 0 and w == t["expected_w"] and h == t["expected_h"])
+        if not match_ok:
+            all_passed = False
+
+        details[t["name"]] = {
+            "resolution_preset": t["resolution"],
+            "aspect": t["aspect"],
+            "expected": f"{t['expected_w']}x{t['expected_h']}",
+            "actual": f"{w}x{h}",
+            "render_sec": round(duration, 2),
+            "exit_code": r_code,
+            "pass": match_ok,
+        }
+
+    return {
+        "gate": "G17",
+        "name": "2K QHD & 4K UHD Render Verification (1440p & 2160p)",
+        "status": "PASS" if all_passed else "FAIL",
+        "kind": "UHD_CAPABILITY",
+        "details": details,
     }
 
 
@@ -1085,57 +1178,64 @@ async def main():
     CURRENT_RUN_DIR.mkdir(parents=True, exist_ok=True)
     EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
 
+    monitor = ResourceMonitor(str(REPO_ROOT), min_disk_gb=4.0, interval_sec=1.0)
+    monitor.start()
+
     results = []
     durations = {}
     start_time = time.time()
 
-    # Step 1: Baseline & Blank Inits
-    print("--> Executing Phase 1: Baseline & Blank Project Inits...")
-    r0 = await g00_baseline()
-    r1 = await g01_blank_init_both_packs()
-    results.extend([r0, r1])
+    try:
+        # Step 1: Baseline & Blank Inits
+        print("--> Executing Phase 1: Baseline & Blank Project Inits...")
+        r0 = await g00_baseline()
+        r1 = await g01_blank_init_both_packs()
+        results.extend([r0, r1])
 
-    # Step 2: Core Real E2E Pipelines (Squire 16:9, Squire 9:16 Shorts, DEM 16:9)
-    print("--> Executing Phase 2: Core E2E Render Pipelines (Bounded Concurrency)...")
-    t_g2 = g02_squire_16x9_real_e2e()
-    t_g3 = g03_squire_9x16_shorts_full_res()
-    t_g4 = g04_dem_16x9_full_mp4()
-    r2, r3, r4 = await asyncio.gather(t_g2, t_g3, t_g4)
-    results.extend([r2, r3, r4])
+        # Step 2: Core Real E2E Pipelines (Squire 16:9, Squire 9:16 Shorts, DEM 16:9)
+        print("--> Executing Phase 2: Core E2E Render Pipelines (Bounded Concurrency)...")
+        t_g2 = g02_squire_16x9_real_e2e()
+        t_g3 = g03_squire_9x16_shorts_full_res()
+        t_g4 = g04_dem_16x9_full_mp4()
+        r2, r3, r4 = await asyncio.gather(t_g2, t_g3, t_g4)
+        results.extend([r2, r3, r4])
 
-    # Step 3: Historical 180-Shot Backtest
-    print("--> Executing Phase 3: Historical 180-Shot Replay Backtest...")
-    t0_g5 = time.time()
-    r5 = await g05_180_shot_replay_backtest()
-    durations["g05_180_shot_replay_backtest"] = round(time.time() - t0_g5, 2)
-    results.append(r5)
+        # Step 3: Historical 180-Shot Backtest
+        print("--> Executing Phase 3: Historical 180-Shot Replay Backtest...")
+        t0_g5 = time.time()
+        r5 = await g05_180_shot_replay_backtest()
+        durations["g05_180_shot_replay_backtest"] = round(time.time() - t0_g5, 2)
+        results.append(r5)
 
-    # Step 4: Negative, Security & Invalidation Tests
-    print("--> Executing Phase 4: Negative, Tamper & Security Tests...")
-    t_g6 = g06_negative_missing()
-    t_g7 = g07_negative_input()
-    t_g8 = g08_preserve_custom()
-    t_g9 = g09_stale_invalidation_and_tamper()
-    t_g10 = g10_failure_injection()
-    r6, r7, r8, r9, r10 = await asyncio.gather(t_g6, t_g7, t_g8, t_g9, t_g10)
-    results.extend([r6, r7, r8, r9, r10])
+        # Step 4: Negative, Security & Invalidation Tests
+        print("--> Executing Phase 4: Negative, Tamper & Security Tests...")
+        t_g6 = g06_negative_missing()
+        t_g7 = g07_negative_input()
+        t_g8 = g08_preserve_custom()
+        t_g9 = g09_stale_invalidation_and_tamper()
+        t_g10 = g10_failure_injection()
+        r6, r7, r8, r9, r10 = await asyncio.gather(t_g6, t_g7, t_g8, t_g9, t_g10)
+        results.extend([r6, r7, r8, r9, r10])
 
-    # Step 5: Media Quality, Legacy, Concurrency & CI Verification
-    print("--> Executing Phase 5: Media Quality, Concurrency & Telemetry...")
-    t_g11 = g11_media_quality(r2)
-    t_g12 = g12_legacy_samples_regression()
-    t_g13 = g13_real_concurrent_render()
-    t_g14 = g14_historical_replay_contrast(r5)
-    t_g15 = g15_headless_ci()
-    r11, r12, r13, r14, r15 = await asyncio.gather(t_g11, t_g12, t_g13, t_g14, t_g15)
-    results.extend([r11, r12, r13, r14, r15])
+        # Step 5: Media Quality, Legacy, Concurrency, UHD & CI Verification
+        print("--> Executing Phase 5: Media Quality, Concurrency, UHD & Telemetry...")
+        t_g11 = g11_media_quality(r2)
+        t_g12 = g12_legacy_samples_regression()
+        t_g13 = g13_real_concurrent_render()
+        t_g14 = g14_historical_replay_contrast(r5)
+        t_g15 = g15_headless_ci()
+        t_g17 = g17_uhd_resolutions()
+        r11, r12, r13, r14, r15, r17 = await asyncio.gather(t_g11, t_g12, t_g13, t_g14, t_g15, t_g17)
+        results.extend([r11, r12, r13, r14, r15, r17])
+    finally:
+        monitor.stop()
 
     # Step 6: Measured Telemetry
-    r16 = await g16_performance_telemetry(durations)
+    r16 = await g16_performance_telemetry(durations, monitor.get_stats())
     results.append(r16)
 
-    # Order results by Gate ID G0 to G16
-    gate_order = {f"G{i}": i for i in range(17)}
+    # Order results by Gate ID G0 to G17
+    gate_order = {f"G{i}": i for i in range(18)}
     results.sort(key=lambda r: gate_order.get(r.get("gate", ""), 99))
 
     total_duration = round(time.time() - start_time, 2)
@@ -1173,13 +1273,13 @@ async def main():
     # Write latest-report.md
     report_md_path = EVIDENCE_DIR / "latest-report.md"
     report_lines = [
-        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Chất lượng (V2)",
+        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Chất lượng (V3)",
         f"- **Mã lượt chạy (Run ID)**: `{RUN_ID}`",
         f"- **Thời gian chạy**: `{summary_data['timestamp']}`",
         f"- **Tổng thời gian thực thi**: `{total_duration}s`",
         f"- **Kết quả chung**: **{overall_verdict}** ({pass_count} PASS, {hold_count} HOLD, {fail_count} FAIL)\n",
         f"> [!IMPORTANT]\n> **Đánh giá trung thực (Truthful Verdict):**\n> {summary_data['verdict_reason']}\n",
-        f"## Bảng tổng hợp Ma trận 17 Cổng Kiểm thử (Gates G0 - G16)\n",
+        f"## Bảng tổng hợp Ma trận 18 Cổng Kiểm thử (Gates G0 - G17)\n",
         f"| Cổng | Tên kiểm thử | Phân loại | Trạng thái | Ghi chú & Đo đạc thực tế |",
         f"| :--- | :--- | :--- | :---: | :--- |",
     ]
@@ -1209,5 +1309,9 @@ async def main():
 
 if __name__ == "__main__":
     verdict = asyncio.run(main())
-    # Exit 0 if all tests completed honestly, allowing auto-commit of genuine reports
-    sys.exit(0)
+    if verdict == "RELEASE_CANDIDATE":
+        sys.exit(0)
+    elif verdict == "RELEASE_HOLD":
+        sys.exit(2)
+    else:
+        sys.exit(1)

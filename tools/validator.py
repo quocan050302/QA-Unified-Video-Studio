@@ -66,6 +66,18 @@ def validate_project(project_dir: str, stage: str = "preflight") -> dict:
         report["fatal_errors"].append("config.json thieu truong 'pack'")
         report["status"] = "BLOCKED"
         return report
+
+    aspect = cfg.get("aspect", "16:9")
+    if aspect not in ("16:9", "9:16"):
+        report["fatal_errors"].append(f"config.json aspect khong hop le: {aspect}")
+        report["status"] = "BLOCKED"
+        return report
+
+    resolution = cfg.get("resolution", "1080p")
+    if resolution not in ("720p", "1080p", "1440p", "2160p"):
+        report["fatal_errors"].append(f"config.json resolution khong hop le: {resolution}")
+        report["status"] = "BLOCKED"
+        return report
     
     known_templates = PACK_TEMPLATES.get(pack, set())
 

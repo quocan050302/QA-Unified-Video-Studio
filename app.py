@@ -540,6 +540,7 @@ class Handler(BaseHTTPRequestHandler):
                         if key in data: cfg[key] = data[key]
                     cfg['pack'] = ensure_project(p)['pack']
                     if cfg.get('aspect') not in ('16:9','9:16'): raise ValueError('Unsupported aspect')
+                    if cfg.get('resolution') not in ('720p', '1080p', '1440p', '2160p'): raise ValueError('Unsupported resolution')
                     put_json(p / 'config.json', cfg)
                     invalidate_artifacts(p)
                     return self.send(200, {'saved': True})
