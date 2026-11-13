@@ -84,7 +84,7 @@ def detect_actions_and_context(line: str, prev_line: str = "", next_line: str = 
     combined = f"{prev_line} {line} {next_line}".lower()
 
     # Kiem tra phu dinh
-    negation_pat = r"\b(could\s+not|can\s*not|never|nobody|no\s+one|did\s+not|without|refused\s+to|hardly|scarcely)\s+([a-z\s]{1,20})\b"
+    negation_pat = r"\b(could\s+not|can\s*not|never|nobody|no\s+one|did\s+not|without|refused\s+to|hardly|scarcely|couldn't|can't|didn't|won't|unable\s+to|failed\s+to|impossible\s+to)\s+([a-z\s]{1,20})\b"
     negated_phrases = [m.group(0) for m in re.finditer(negation_pat, l_low)]
 
     def is_verb_negated(v_pat: str) -> bool:
@@ -233,7 +233,25 @@ def plan_visual_intent(
     camera_moves = ["in", "right", "out", "left", "in", "still"]
     move_choice = camera_moves[idx % len(camera_moves)]
 
+    # Xac dinh vai tro/muc dich ke chuyen (shot purpose for retention & pacing)
+    purpose = "narrative"
+    if idx == 0:
+        purpose = "hook"
+    elif actions["is_sequence"] or actions["has_lie"]:
+        purpose = "hook" if idx < 2 else "demonstration"
+    elif actions["has_lab"] and (actions["has_run"] or "treadmill" in l_low):
+        purpose = "evidence"
+    elif facts:
+        purpose = "metric"
+    elif re.search(r"\b(comment|tell\s+me|pick\s+one|question|what\s+do\s+you)\b", l_low):
+        purpose = "cta"
+    elif re.search(r"\b(joke|exhaustion|real|price|cost|centuries|trade)\b", l_low):
+        purpose = "resolution"
+
     return {
+        "idx": idx,
+        "total": total,
+        "purpose": purpose,
         "tpl": chosen_tpl,
         "line": line,
         "dur": dur,
@@ -324,8 +342,10 @@ def compile_visual_plan(plan: Dict[str, Any], is_vertical: bool) -> Tuple[str, D
                 "h": 0.52 if not is_vertical else 0.40,
                 "pose": "run",
                 "face": "determined",
+                "moveMode": "in_place",
+                "in_place": True,
                 "walk": True,
-                "walkMode": "front",
+                "walkMode": "side",
                 "speed": 1.5,
                 "weapon": None
             }
@@ -355,7 +375,7 @@ def compile_visual_plan(plan: Dict[str, Any], is_vertical: bool) -> Tuple[str, D
             hero_lying = {
                 "preset": theme["hero"],
                 "x": 0.50,
-                "y": 0.88,
+                "y": 0.85,
                 "h": 0.54 if not is_vertical else 0.42,
                 "pose": "lying",
                 "face": "tired",
@@ -375,6 +395,7 @@ def compile_visual_plan(plan: Dict[str, Any], is_vertical: bool) -> Tuple[str, D
                     run_time = round(dur * 0.68, 2)
                     hero_lying["poseAt"] = [[rise_time, "kneel"], [run_time, "run"]]
                     hero_lying["walk"] = True
+                    hero_lying["moveMode"] = "travel"
                     hero_lying["moveAt"] = run_time
                     hero_lying["to"] = 0.85
                     hero_lying["dur"] = round(dur - run_time, 2)
@@ -388,13 +409,15 @@ def compile_visual_plan(plan: Dict[str, Any], is_vertical: bool) -> Tuple[str, D
         elif actions["has_run"]:
             hero_run = {
                 "preset": theme["hero"],
-                "x": 0.30,
+                "x": 0.25,
+                "y": 0.88,
                 "h": 0.56 if not is_vertical else 0.42,
                 "pose": "run",
                 "face": "determined",
+                "moveMode": "travel",
                 "walk": True,
                 "speed": 1.4,
-                "to": 0.75,
+                "to": 0.80,
                 "dur": round(dur * 0.85, 2),
                 "weapon": theme["weapon"]
             }
@@ -638,15 +661,17 @@ def assign_visuals(
         tpl, args, scene_desc = compile_visual_plan(plan, is_vertical)
 
         # Kiem tra xem co su thay doi that su so voi du lieu cu khong
-        if sh.get("tpl") != tpl or sh.get("args") != args:
+        if sh.get("tpl") != tpl or sh.get("args") != args or sh.get("purpose") != plan.get("purpose"):
             modified = True
 
         sh["tpl"] = tpl
         sh["args"] = args
+        sh["purpose"] = plan.get("purpose", "narrative")
         sh["scene"] = scene_desc
         sh["visual_source"] = "template_assigned" if not upgrade_generated else "auto_planned"
         sh["visual_version"] = 2
         sh["visual_plan"] = {
+            "purpose": plan.get("purpose", "narrative"),
             "confidence": plan["confidence"],
             "detected_actions": [k for k, v in plan["actions"].items() if v and isinstance(v, bool)],
             "has_quantity_facts": len(plan["facts"]) > 0,

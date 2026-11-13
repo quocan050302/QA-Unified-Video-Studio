@@ -1,14 +1,14 @@
 {
-  "run_id": "20261113_100216",
-  "timestamp": "2026-11-13T10:04:25.195637",
-  "total_duration_sec": 128.24,
-  "gates_total": 26,
-  "required_gates_total": 25,
-  "required_gates_passed": 25,
+  "run_id": "20261113_111600",
+  "timestamp": "2026-11-13T11:18:59.112849",
+  "total_duration_sec": 178.62,
+  "gates_total": 38,
+  "required_gates_total": 37,
+  "required_gates_passed": 37,
   "required_gates_failed": 0,
   "optional_gates_total": 1,
   "verdict": "FLOW_READY",
-  "verdict_reason": "Tất cả 25/25 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).",
+  "verdict_reason": "Tất cả 37/37 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).",
   "results": [
     {
       "gate": "G0",
@@ -22,19 +22,19 @@
           "resources": {
             "disk": {
               "total_gb": 144.02,
-              "used_gb": 85.34,
-              "free_gb": 58.68
+              "used_gb": 85.28,
+              "free_gb": 58.74
             },
             "ram": {
               "total_gb": 31.75,
-              "available_gb": 12.66
+              "available_gb": 7.45
             },
             "cpus": 12,
             "workspace": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio"
           }
         },
         "git_branch": "fix/Image-Shot",
-        "git_head": "fc9f52eaabf959d8a65de0b347fc5f2ae9b7ff84",
+        "git_head": "6ea22a1c1f7b12fd6bb22516cf368cab1f68dee6",
         "git_production_head": "e867c910b0ef0e43dcbaf7d7601fecd1c9a8ae53",
         "git_working_tree_clean": false,
         "node_version": "v26.13.1",
@@ -61,8 +61,8 @@
       "kind": "REAL_E2E",
       "details": {
         "speech_fixture": "REAL_SPOKEN_SYNTHESIS",
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g2_squire_16x9\\out\\Squire Medieval Realm.mp4",
-        "output_sha256": "3be1c835613a2878b097650d529570eedcf5e685b78a5304ca22b22b77f06ee8",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_111600\\g2_squire_16x9\\out\\Squire Medieval Realm.mp4",
+        "output_sha256": "5f4ea0d7aa736f7934988c8bd707bdd38963507c316dcb4bf23da9f8ba0e6df3",
         "resolution": "1920x1080",
         "video_codec": "h264",
         "audio_codec": "aac",
@@ -85,8 +85,8 @@
       "status": "PASS",
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g3_squire_9x16\\out\\Shorts Medieval.mp4",
-        "output_sha256": "c5337150332da4419ae855f54cedeb206e0bc7e2ac9c519674c59f33afe919aa",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_111600\\g3_squire_9x16\\out\\Shorts Medieval.mp4",
+        "output_sha256": "c47ace0342cda2747631d417aaef5b0f3652679a1aa2aaa87b92137ecf7554f8",
         "resolution": "1080x1920",
         "aspect_ratio": "9:16 vertical (Full Resolution)",
         "pixel_analysis": {
@@ -106,17 +106,17 @@
       "status": "PASS",
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g4_dem_16x9\\out\\DEM Self Improvement.mp4",
-        "output_sha256": "e4e717c61916340dbc3f53213a24b0a2f848aa04d75ff8ad8d14a0bbb5b956ef",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_111600\\g4_dem_16x9\\out\\DEM Self Improvement.mp4",
+        "output_sha256": "d4153e8c6ce15cbbd23e4074e45411d7fbe961714adf37101fd5a814019cfd5c",
         "resolution": "1920x1080",
         "full_decode_verified": true,
         "phim_compiled_shots": 2,
         "pixel_analysis": {
           "ok": true,
           "total_pixels": 2073600,
-          "unique_colors": 12413,
+          "unique_colors": 12431,
           "red_ratio": 0.0002,
-          "dark_ratio": 0.6742,
+          "dark_ratio": 0.6735,
           "is_placeholder": false
         },
         "proof_saved": "tests\\evidence\\proof_g4_dem.jpg"
@@ -129,7 +129,7 @@
       "required": true,
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g4b_dem_9x16\\out\\DEM Shorts Vertical.mp4",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_111600\\g4b_dem_9x16\\out\\DEM Shorts Vertical.mp4",
         "output_sha256": "79a31c6c6a3e1fa82734c9377bc9be02516c6a94d85736f88631d663c6b0d1f9",
         "resolution": "1080x1920",
         "full_decode_verified": true,
@@ -157,7 +157,7 @@
         "missing_ids_before_fix": 180,
         "visuals_assigned_ok": true,
         "validator_after_fix_status": "PASS",
-        "fast_check_duration_sec": 7.86,
+        "fast_check_duration_sec": 8.29,
         "fast_check_stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\nPASS: 0 loi trong 541 khung kiem tra (180 shots hop le, che do fast).",
         "proof_saved": "tests\\evidence\\proof_g5_replay.jpg"
       }
@@ -169,12 +169,12 @@
       "required": true,
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g5b_medium_continuity\\out\\Medieval Chronicle Medium E2E.mp4",
-        "output_sha256": "bb80e913fc56a0c3010b6b4735b85f9db0cb419ece7c2682acd9e4257bcd9d06",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_111600\\g5b_medium_continuity\\out\\Medieval Chronicle Medium E2E.mp4",
+        "output_sha256": "ff28ece4403e759eb487723e6695591e03f72a057420092aa5406c346198447d",
         "shots_count": 30,
         "duration_sec": 92.12,
         "resolution": "1280x720",
-        "render_wall_sec": 59.06,
+        "render_wall_sec": 59.38,
         "full_decode_verified": true,
         "proof_saved": "tests\\evidence\\proof_g5b_medium_continuity.jpg"
       }
@@ -223,7 +223,8 @@
         "custom_args_preserved": true,
         "backup_files_created": [
           "shots.backup.json",
-          "shots.backup_1794539044.json"
+          "shots.backup_1794543476.json",
+          "shots.backup_1794543477.json"
         ]
       }
     },
@@ -333,15 +334,15 @@
       "required": true,
       "kind": "TELEMETRY_AUDIT",
       "details": {
-        "disk_free_gb": 58.6,
-        "ram_available_gb": 11.66,
-        "min_disk_headroom_gb": 58.6,
-        "min_ram_headroom_gb": 9.35,
+        "disk_free_gb": 58.63,
+        "ram_available_gb": 8.22,
+        "min_disk_headroom_gb": 58.63,
+        "min_ram_headroom_gb": 1.62,
         "resource_breached": false,
-        "continuous_monitor_samples": 124,
-        "measured_180_shot_check_sec": 9.9,
-        "fast_check_samples_per_sec": 54.6,
-        "medium_20_shot_e2e_sec": 68.87
+        "continuous_monitor_samples": 173,
+        "measured_180_shot_check_sec": 10.46,
+        "fast_check_samples_per_sec": 51.7,
+        "medium_20_shot_e2e_sec": 69.87
       }
     },
     {
@@ -357,7 +358,7 @@
           "expected": "2560x1440",
           "actual": "2560x1440",
           "full_decode_verified": true,
-          "render_sec": 2.6,
+          "render_sec": 2.62,
           "exit_code": 0,
           "pass": true
         },
@@ -367,7 +368,7 @@
           "expected": "3840x2160",
           "actual": "3840x2160",
           "full_decode_verified": true,
-          "render_sec": 3.36,
+          "render_sec": 3.21,
           "exit_code": 0,
           "pass": true
         },
@@ -377,7 +378,7 @@
           "expected": "1440x2560",
           "actual": "1440x2560",
           "full_decode_verified": true,
-          "render_sec": 2.28,
+          "render_sec": 2.12,
           "exit_code": 0,
           "pass": true
         },
@@ -387,7 +388,7 @@
           "expected": "2160x3840",
           "actual": "2160x3840",
           "full_decode_verified": true,
-          "render_sec": 3.27,
+          "render_sec": 3.05,
           "exit_code": 0,
           "pass": true
         }
@@ -401,11 +402,12 @@
       "required": true,
       "details": {
         "orphans_found": [
+          "test_orphan_20261113_111600",
           "why_knights_could_actually",
           "why_knights_could_actually_315"
         ],
         "conflict_409_raised": true,
-        "suggested_id": "why_knights_could_actually_2",
+        "suggested_id": "test_orphan_20261113_111600_2",
         "safe_recovery_verified": true,
         "assets_protected_intact": true
       }
@@ -467,9 +469,163 @@
       "kind": "UI_REVIEW_RANGE",
       "required": true,
       "details": {
-        "preview_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g_v6_narrative_cases\\build\\preview.mp4",
+        "preview_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_111600\\g_v6_narrative_cases\\build\\preview.mp4",
         "measured_duration": 5.0,
         "full_decode_verified": true
+      }
+    },
+    {
+      "gate": "N1",
+      "name": "SFX Catalog & Canonical Name Resolution",
+      "status": "PASS",
+      "kind": "AUDIO_CATALOG",
+      "required": true,
+      "details": {
+        "total_sfx_found": 79,
+        "core_sounds_verified": true,
+        "alias_mapping_verified": true,
+        "unknown_safely_caught": true
+      }
+    },
+    {
+      "gate": "N2",
+      "name": "Narrative Action-to-Sound Planner Mapping",
+      "status": "PASS",
+      "kind": "AUDIO_PLANNER",
+      "required": true,
+      "details": {
+        "mud_fall_cues": true,
+        "armor_rise_cue": true,
+        "treadmill_cadence": true,
+        "metric_reveal_cue": true,
+        "negation_zero_footsteps": true
+      }
+    },
+    {
+      "gate": "N3",
+      "name": "Cue Alignment & Phase Precision Timing",
+      "status": "PASS",
+      "kind": "CUE_TIMING",
+      "required": true,
+      "details": {
+        "chainmail_scheduled_at": 3.6,
+        "expected_at": 3.6,
+        "phase_alignment_ok": true
+      }
+    },
+    {
+      "gate": "N4",
+      "name": "Deterministic Idempotent Audio Planning",
+      "status": "PASS",
+      "kind": "DETERMINISM",
+      "required": true,
+      "details": {
+        "first_run_hash": "08a7fe64818ad57fa664f979602d652579ea5f72014969ff292a00458a3e5d7f",
+        "second_run_hash": "08a7fe64818ad57fa664f979602d652579ea5f72014969ff292a00458a3e5d7f",
+        "second_run_modified": false,
+        "idempotent": true
+      }
+    },
+    {
+      "gate": "N5",
+      "name": "Manual Audio Cues Lock & Preservation",
+      "status": "PASS",
+      "kind": "MANUAL_LOCK",
+      "required": true,
+      "details": {
+        "manual_cue_found": true,
+        "cues_in_shot": 1
+      }
+    },
+    {
+      "gate": "N6",
+      "name": "Multi-Frame Visuals (Safe Lying + Treadmill In-Place + Active Run)",
+      "status": "PASS",
+      "kind": "VISUAL_FRAMING",
+      "required": true,
+      "details": {
+        "proof_lying_safe_frame": "tests\\evidence\\v7\\proof_lying_safe_frame.jpg",
+        "proof_treadmill_in_place": "tests\\evidence\\v7\\proof_treadmill_in_place.jpg",
+        "proof_recovery_run_active": "tests\\evidence\\v7\\proof_recovery_run_active.jpg",
+        "proof_contact_sheet_v7": "tests\\evidence\\v7\\proof_contact_sheet_v7.jpg"
+      }
+    },
+    {
+      "gate": "N7",
+      "name": "Full Squire 1080p Showcase MP4 with Spoken Narration, Music & SFX",
+      "status": "PASS",
+      "kind": "FULL_SHOWCASE_E2E",
+      "required": true,
+      "details": {
+        "output_file": ".test-runs\\20261113_111600\\n07_squire_showcase_1080p\\out\\Why Knights Could Actually Run 1080p.mp4",
+        "duration": 26.58,
+        "video_1080p": true,
+        "audio_aac": true,
+        "full_decode_exit": 0,
+        "sha256": "c2ea8477d1fadabdbf63a8e230fc6ba68f16c94c48cb183e904eeff13718ced7",
+        "proj_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_111600\\n07_squire_showcase_1080p"
+      }
+    },
+    {
+      "gate": "N8",
+      "name": "Audio Mix Fidelity, True Peak & Measured LUFS",
+      "status": "PASS",
+      "kind": "AUDIO_FIDELITY",
+      "required": true,
+      "details": {
+        "measured_integrated_lufs": -16.2,
+        "true_peak_dbtp": -1.5,
+        "cues_rendered_count": 11,
+        "lufs_in_broadcast_window": true,
+        "peak_guard_met": true,
+        "evidence_saved": "tests\\evidence\\v7\\v7_audio_mix_report.json"
+      }
+    },
+    {
+      "gate": "N9",
+      "name": "Non-Zero Range Preview with Synchronized Audio",
+      "status": "PASS",
+      "kind": "PREVIEW_AUDIO",
+      "required": true,
+      "details": {
+        "preview_duration": 10.0,
+        "audio_present": true,
+        "range": "6.0s -> 16.0s (10s duration)"
+      }
+    },
+    {
+      "gate": "N10",
+      "name": "9:16 Shorts Vertical Video & Audio Delivery",
+      "status": "PASS",
+      "kind": "SHORTS_VERTICAL",
+      "required": true,
+      "details": {
+        "resolution_1080x1920": true,
+        "audio_present": true,
+        "output_file": ".test-runs\\20261113_111600\\n10_shorts_vertical\\out\\Knights Agility Short.mp4"
+      }
+    },
+    {
+      "gate": "N11",
+      "name": "Resource Guard Threshold Breach Detection",
+      "status": "PASS",
+      "kind": "RESOURCE_SAFETY",
+      "required": true,
+      "details": {
+        "breach_caught": true,
+        "guard_message": "DISK SPACE LOW: 58.63 GB free is below safety reserve 999999.0 GB"
+      }
+    },
+    {
+      "gate": "N12",
+      "name": "Previous Both-Pack Full Regression Check",
+      "status": "PASS",
+      "kind": "REGRESSION_GUARD",
+      "required": true,
+      "details": {
+        "total_legacy_gates": 24,
+        "passed_legacy_gates": 24,
+        "failed_legacy_gates": []
       }
     }
   ]

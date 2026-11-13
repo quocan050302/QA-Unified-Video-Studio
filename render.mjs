@@ -313,6 +313,18 @@ try {
     }
     fs.renameSync(silentPartial, silentFinal);
 
+    // Ghi visual hash de mix.py khong bat render lai neu chi thay doi am thanh/SFX
+    try {
+      const storyPath = path.join(PROJ, 'story', 'shots.json');
+      if (fs.existsSync(storyPath)) {
+        const storyData = JSON.parse(fs.readFileSync(storyPath, 'utf8'));
+        const vis = (storyData.shots || []).map(s => ({ id: s.id, start: s.start, end: s.end, tpl: s.tpl, args: s.args, scene: s.scene }));
+        const crypto = await import('node:crypto');
+        const vHash = crypto.createHash('sha256').update(JSON.stringify(vis)).digest('hex');
+        fs.writeFileSync(path.join(BUILD, 'visual_hash.txt'), vHash, 'utf8');
+      }
+    } catch {}
+
     if (preview) {
       const vp = voicePath(), outp = path.join(BUILD, 'preview.mp4');
       if (vp) ff(['-i', silentFinal, '-ss', String(f0 / info.fps), '-t', String(total / info.fps), '-i', vp, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', outp]);

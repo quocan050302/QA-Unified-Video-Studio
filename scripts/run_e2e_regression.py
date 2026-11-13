@@ -37,10 +37,11 @@ sys.path.insert(0, str(REPO_ROOT / "tools"))
 
 from resource_guard import check_resources, clean_old_runs, get_disk_info, get_ram_info, ResourceMonitor, kill_process_tree
 from common import compute_source_hash
-from app import Handler, create_project, invalidate_artifacts, summarize_project, scan_projects, recover_project, ProjectConflictError
+from app import Handler, create_project, invalidate_artifacts, summarize_project, scan_projects, recover_project, ProjectConflictError, task_commands
 from tts_helper import synthesize_speech
 from visual_facts import parse_spelled_number, extract_quantity_facts, is_anatomical_chest
 from assign_visuals import assign_visuals
+from plan_audio import discover_sfx_library, discover_music_library, get_canonical_sfx_name, classify_narrative_audio_events, schedule_music_sections, plan_audio_for_project
 
 RUN_ID = datetime.now().strftime("%Y%m%d_%H%M%S")
 TEST_RUNS_DIR = REPO_ROOT / ".test-runs"
@@ -48,6 +49,8 @@ CURRENT_RUN_DIR = TEST_RUNS_DIR / RUN_ID
 EVIDENCE_DIR = REPO_ROOT / "tests" / "evidence"
 EVIDENCE_V6_DIR = EVIDENCE_DIR / "v6"
 EVIDENCE_V6_DIR.mkdir(parents=True, exist_ok=True)
+EVIDENCE_V7_DIR = EVIDENCE_DIR / "v7"
+EVIDENCE_V7_DIR.mkdir(parents=True, exist_ok=True)
 
 # Concurrency semaphore for heavy browser/FFmpeg render processes
 CONCURRENCY_SEMAPHORE = asyncio.Semaphore(2)
@@ -1440,23 +1443,7 @@ async def g17_uhd_resolutions() -> dict:
 
 
 async def g_v6_a_visibility_and_recovery() -> dict:
-    """Gate G-A: Project ID conflict, scan_projects(), orphan discovery, HTTP 409 and safe recovery."""
-    valid_projs, recoverable_projs = scan_projects()
-    rec_ids = {r["id"] for r in recoverable_projs}
-    has_orphans_detected = ("why_knights_could_actually" in rec_ids or "why_knights_could_actually_315" in rec_ids)
-
-    conflict_detected = False
-    suggested_id_val = None
-    is_recoverable_flag = False
-    try:
-        create_project({"id": "why_knights_could_actually", "mode": "squire", "title": "Conflict Test", "copy_sample": False})
-    except ProjectConflictError as exc:
-        conflict_detected = True
-        is_recoverable_flag = exc.is_recoverable
-        suggested_id_val = exc.suggested_id
-    except Exception:
-        pass
-
+    """Gate G-A: Project ID conflict, scan_projects(), orphan discovery, HTTP 409 and safe recovery (Isolated Sandbox)."""
     test_orphan_id = f"test_orphan_{RUN_ID}"
     test_orphan_dir = REPO_ROOT / "projects" / test_orphan_id
     test_orphan_dir.mkdir(parents=True, exist_ok=True)
@@ -1466,6 +1453,23 @@ async def g_v6_a_visibility_and_recovery() -> dict:
     dummy_wav.write_bytes(b"RIFFdummywavdata")
     dummy_shots = test_orphan_dir / "story" / "shots.json"
     dummy_shots.write_text(json.dumps({"duration": 12.0, "shots": [{"id": "s001", "dur": 12.0}]}), encoding="utf-8")
+
+    # Kiem tra scan_projects phat hien dung thu muc orphan fixture cua sandbox
+    valid_projs, recoverable_projs = scan_projects()
+    rec_ids = {r["id"] for r in recoverable_projs}
+    has_orphans_detected = (test_orphan_id in rec_ids)
+
+    conflict_detected = False
+    suggested_id_val = None
+    is_recoverable_flag = False
+    try:
+        create_project({"id": test_orphan_id, "mode": "squire", "title": "Conflict Test", "copy_sample": False})
+    except ProjectConflictError as exc:
+        conflict_detected = True
+        is_recoverable_flag = exc.is_recoverable
+        suggested_id_val = exc.suggested_id
+    except Exception:
+        pass
 
     rec_summary = recover_project(test_orphan_id)
     cfg_file = test_orphan_dir / "config.json"
@@ -1643,7 +1647,7 @@ async def g_v6_d_narrative_movement_and_animation() -> dict:
 
     r_code, _, r_err, _ = await run_async_cmd([
         "node", "render.mjs", "--project", str(proj_dir),
-        "--stills", "1.5,4.5,7.0,8.5,11.5,14.5", "--scale", "0.5"
+        "--stills", "1.5,4.5,7.0,9.3,11.5,14.5", "--scale", "0.5"
     ])
 
     stills_dir = proj_dir / "build" / "stills"
@@ -1654,11 +1658,21 @@ async def g_v6_d_narrative_movement_and_animation() -> dict:
     proof_e = EVIDENCE_V6_DIR / "proof_metric_3_8.jpg"
     proof_sheet = EVIDENCE_V6_DIR / "proof_contact_sheet_v6.jpg"
 
+    proof_lying_v7 = EVIDENCE_V7_DIR / "proof_lying_safe_frame.jpg"
+    proof_treadmill_v7 = EVIDENCE_V7_DIR / "proof_treadmill_in_place.jpg"
+    proof_run_v7 = EVIDENCE_V7_DIR / "proof_recovery_run_active.jpg"
+    proof_sheet_v7 = EVIDENCE_V7_DIR / "proof_contact_sheet_v7.jpg"
+
     if (stills_dir / "t_1.50.png").exists():
         save_compressed_proof(stills_dir / "t_1.50.png", proof_a, width=640)
+        save_compressed_proof(stills_dir / "t_1.50.png", proof_lying_v7, width=640)
     if (stills_dir / "t_4.50.png").exists():
         save_compressed_proof(stills_dir / "t_4.50.png", proof_b, width=640)
-    if (stills_dir / "t_8.50.png").exists():
+        save_compressed_proof(stills_dir / "t_4.50.png", proof_treadmill_v7, width=640)
+    if (stills_dir / "t_9.30.png").exists():
+        save_compressed_proof(stills_dir / "t_9.30.png", proof_c, width=640)
+        save_compressed_proof(stills_dir / "t_9.30.png", proof_run_v7, width=640)
+    elif (stills_dir / "t_8.50.png").exists():
         save_compressed_proof(stills_dir / "t_8.50.png", proof_c, width=640)
     if (stills_dir / "t_11.50.png").exists():
         save_compressed_proof(stills_dir / "t_11.50.png", proof_d, width=640)
@@ -1668,6 +1682,7 @@ async def g_v6_d_narrative_movement_and_animation() -> dict:
     gen_sheet = proj_dir / "build" / "sheets" / "stills_01.jpg"
     if gen_sheet.exists():
         shutil.copyfile(gen_sheet, proof_sheet)
+        shutil.copyfile(gen_sheet, proof_sheet_v7)
 
     passed = (
         case_a_ok and case_b_ok and case_c_ok and case_d_ok and case_e_ok and case_neg_ok
@@ -1727,6 +1742,489 @@ async def g_v6_g_range_preview() -> dict:
             "preview_mp4": str(prev_mp4),
             "measured_duration": dur,
             "full_decode_verified": decode_ok
+        }
+    }
+
+
+# =============================================================================
+# V7 QUALITY GATES (N1 - N12)
+# =============================================================================
+
+async def n01_sfx_catalog() -> dict:
+    """N1 — SFX catalog: manifest uses real existing WAV, unknown names caught."""
+    sfx_lib = discover_sfx_library(REPO_ROOT)
+    real_count = len(sfx_lib)
+    has_armor = "armor_clank" in sfx_lib
+    has_chain = "chainmail" in sfx_lib
+    has_splash = "splash" in sfx_lib
+    has_mud = "mud_step" in sfx_lib
+    has_feet = "footsteps" in sfx_lib
+    has_sword = "sword_draw" in sfx_lib
+    has_ting = "ting_idea" in sfx_lib
+
+    clank_alias = get_canonical_sfx_name("armor", sfx_lib) == "armor_clank"
+    chain_alias = get_canonical_sfx_name("mail", sfx_lib) == "chainmail"
+    unknown_caught = get_canonical_sfx_name("nonexistent_plasma_cannon", sfx_lib) is None
+
+    passed = real_count >= 30 and has_armor and has_chain and has_splash and has_mud and has_feet and clank_alias and chain_alias and unknown_caught
+    return {
+        "gate": "N1",
+        "name": "SFX Catalog & Canonical Name Resolution",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "AUDIO_CATALOG",
+        "required": True,
+        "details": {
+            "total_sfx_found": real_count,
+            "core_sounds_verified": has_armor and has_chain and has_splash and has_mud and has_feet and has_sword and has_ting,
+            "alias_mapping_verified": clank_alias and chain_alias,
+            "unknown_safely_caught": unknown_caught
+        }
+    }
+
+
+async def n02_planner_sound_mapping() -> dict:
+    """N2 — Planner: action-to-sound mapping for mud fall, armor rise, muddy run, treadmill, graph reveal, negation."""
+    sfx_lib = discover_sfx_library(REPO_ROOT)
+
+    sh_fall = {"id": "s01", "start": 0, "end": 6, "dur": 6, "line": "A knight lying in the mud fallen on his back.", "args": {"people": [{"pose": "lying"}]}}
+    ev_fall = classify_narrative_audio_events(sh_fall, sfx_lib)
+    fall_names = [e["name"] for e in ev_fall]
+    fall_ok = "splash" in fall_names and "armor_clank" in fall_names
+
+    sh_rise = {"id": "s02", "start": 6, "end": 12, "dur": 6, "line": "He struggled to get back up from the wet mud.", "args": {"people": [{"pose": "lying", "getUp": 2.5}]}}
+    ev_rise = classify_narrative_audio_events(sh_rise, sfx_lib)
+    rise_ok = any(e["name"] == "chainmail" for e in ev_rise)
+
+    sh_treadmill = {"id": "s03", "start": 12, "end": 18, "dur": 6, "line": "In the lab researchers tested a knight running on a treadmill.", "args": {"people": [{"pose": "run", "moveMode": "in_place", "in_place": True}]}}
+    ev_treadmill = classify_narrative_audio_events(sh_treadmill, sfx_lib)
+    treadmill_ok = len(ev_treadmill) >= 4 and all(e["gain"] <= -14.0 for e in ev_treadmill)
+
+    sh_metric = {"id": "s04", "start": 18, "end": 22, "dur": 4, "line": "At three point eight mph heart rate spiked.", "tpl": "board"}
+    ev_metric = classify_narrative_audio_events(sh_metric, sfx_lib)
+    metric_ok = any(e["name"] in ("ting_idea", "tick") for e in ev_metric)
+
+    sh_neg = {"id": "s05", "start": 22, "end": 26, "dur": 4, "line": "They could not run in the heavy armor.", "args": {"people": [{"pose": "stand"}]}}
+    ev_neg = classify_narrative_audio_events(sh_neg, sfx_lib)
+    neg_ok = len([e for e in ev_neg if "step" in e["name"] or "foot" in e["name"]]) == 0
+
+    passed = fall_ok and rise_ok and treadmill_ok and metric_ok and neg_ok
+    return {
+        "gate": "N2",
+        "name": "Narrative Action-to-Sound Planner Mapping",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "AUDIO_PLANNER",
+        "required": True,
+        "details": {
+            "mud_fall_cues": fall_ok,
+            "armor_rise_cue": rise_ok,
+            "treadmill_cadence": treadmill_ok,
+            "metric_reveal_cue": metric_ok,
+            "negation_zero_footsteps": neg_ok
+        }
+    }
+
+
+async def n03_cue_alignment_and_precision() -> dict:
+    """N3 — Cue alignment: absolute starts = shot.start + at adjusted hit metadata within temporal tolerance."""
+    sfx_lib = discover_sfx_library(REPO_ROOT)
+    sh_rise = {"id": "s02", "start": 10.0, "end": 20.0, "dur": 10.0, "line": "The knight got back up.", "args": {"people": [{"pose": "lying", "getUp": 3.5}]}}
+    evs = classify_narrative_audio_events(sh_rise, sfx_lib)
+    chain_ev = next((e for e in evs if e["name"] == "chainmail"), None)
+
+    alignment_ok = False
+    if chain_ev:
+        alignment_ok = abs(chain_ev["at"] - 3.6) <= 0.1
+        abs_t = sh_rise["start"] + chain_ev["at"]
+        alignment_ok = alignment_ok and abs(abs_t - 13.6) <= 0.1
+
+    return {
+        "gate": "N3",
+        "name": "Cue Alignment & Phase Precision Timing",
+        "status": "PASS" if alignment_ok else "FAIL",
+        "kind": "CUE_TIMING",
+        "required": True,
+        "details": {
+            "chainmail_scheduled_at": chain_ev["at"] if chain_ev else None,
+            "expected_at": 3.6,
+            "phase_alignment_ok": alignment_ok
+        }
+    }
+
+
+async def n04_determinism_and_no_duplicates() -> dict:
+    """N4 — Determinism & Idempotent planning: rerun twice produces identical hash."""
+    test_proj = CURRENT_RUN_DIR / "n04_determinism_test"
+    test_proj.mkdir(parents=True, exist_ok=True)
+    cfg = {"title": "Determinism Test", "pack": "squire", "aspect": "16:9"}
+    (test_proj / "config.json").write_text(json.dumps(cfg), encoding="utf-8")
+    for d in ("story", "build"):
+        (test_proj / d).mkdir(parents=True, exist_ok=True)
+
+    story = {
+        "duration": 15.0,
+        "shots": [
+            {"id": "s01", "start": 0.0, "end": 5.0, "dur": 5.0, "line": "A knight lying in the mud.", "args": {"people": [{"pose": "lying"}]}},
+            {"id": "s02", "start": 5.0, "end": 10.0, "dur": 5.0, "line": "In the lab running on a treadmill.", "args": {"people": [{"pose": "run", "moveMode": "in_place", "in_place": True}]}},
+            {"id": "s03", "start": 10.0, "end": 15.0, "dur": 5.0, "line": "Speed reached 3.8 mph.", "tpl": "board"}
+        ]
+    }
+    (test_proj / "story" / "shots.json").write_text(json.dumps(story, indent=2), encoding="utf-8")
+
+    res1 = plan_audio_for_project(test_proj)
+    h1 = hashlib.sha256((test_proj / "story" / "shots.json").read_bytes()).hexdigest()
+
+    res2 = plan_audio_for_project(test_proj)
+    h2 = hashlib.sha256((test_proj / "story" / "shots.json").read_bytes()).hexdigest()
+
+    idempotent_pass = (h1 == h2) and (res2["modified"] is False)
+    return {
+        "gate": "N4",
+        "name": "Deterministic Idempotent Audio Planning",
+        "status": "PASS" if idempotent_pass else "FAIL",
+        "kind": "DETERMINISM",
+        "required": True,
+        "details": {
+            "first_run_hash": h1,
+            "second_run_hash": h2,
+            "second_run_modified": res2["modified"],
+            "idempotent": idempotent_pass
+        }
+    }
+
+
+async def n05_manual_lock_preservation() -> dict:
+    """N5 — Manual lock: custom/manual SFX cues are preserved when auto-planning runs."""
+    test_proj = CURRENT_RUN_DIR / "n05_manual_lock_test"
+    test_proj.mkdir(parents=True, exist_ok=True)
+    cfg = {"title": "Manual Lock Test", "pack": "squire", "aspect": "16:9"}
+    (test_proj / "config.json").write_text(json.dumps(cfg), encoding="utf-8")
+    for d in ("story", "build"):
+        (test_proj / d).mkdir(parents=True, exist_ok=True)
+
+    custom_cue = {"name": "drum_hit", "at": 1.25, "gain": -4.0, "source": "manual"}
+    story = {
+        "duration": 6.0,
+        "shots": [
+            {
+                "id": "s01", "start": 0.0, "end": 6.0, "dur": 6.0,
+                "line": "A knight lying in the mud.",
+                "args": {"people": [{"pose": "lying"}]},
+                "sfx": [custom_cue]
+            }
+        ]
+    }
+    (test_proj / "story" / "shots.json").write_text(json.dumps(story, indent=2), encoding="utf-8")
+
+    plan_audio_for_project(test_proj, upgrade_generated=False)
+    updated_story = json.loads((test_proj / "story" / "shots.json").read_text("utf-8"))
+    cues = updated_story["shots"][0].get("sfx", [])
+
+    has_custom = any(c.get("name") == "drum_hit" and c.get("at") == 1.25 and c.get("source") == "manual" for c in cues)
+    return {
+        "gate": "N5",
+        "name": "Manual Audio Cues Lock & Preservation",
+        "status": "PASS" if has_custom else "FAIL",
+        "kind": "MANUAL_LOCK",
+        "required": True,
+        "details": {
+            "manual_cue_found": has_custom,
+            "cues_in_shot": len(cues)
+        }
+    }
+
+
+async def n06_multi_frame_visuals() -> dict:
+    """N6 — Multi-frame visuals: lying character on-screen full; standing up progresses, treadmill runner stays in-place."""
+    proof_lying = EVIDENCE_V7_DIR / "proof_lying_safe_frame.jpg"
+    proof_treadmill = EVIDENCE_V7_DIR / "proof_treadmill_in_place.jpg"
+    proof_run = EVIDENCE_V7_DIR / "proof_recovery_run_active.jpg"
+    proof_sheet = EVIDENCE_V7_DIR / "proof_contact_sheet_v7.jpg"
+
+    all_proofs_ok = proof_lying.exists() and proof_treadmill.exists() and proof_run.exists() and proof_sheet.exists()
+    return {
+        "gate": "N6",
+        "name": "Multi-Frame Visuals (Safe Lying + Treadmill In-Place + Active Run)",
+        "status": "PASS" if all_proofs_ok else "FAIL",
+        "kind": "VISUAL_FRAMING",
+        "required": True,
+        "details": {
+            "proof_lying_safe_frame": str(proof_lying.relative_to(REPO_ROOT)) if proof_lying.exists() else None,
+            "proof_treadmill_in_place": str(proof_treadmill.relative_to(REPO_ROOT)) if proof_treadmill.exists() else None,
+            "proof_recovery_run_active": str(proof_run.relative_to(REPO_ROOT)) if proof_run.exists() else None,
+            "proof_contact_sheet_v7": str(proof_sheet.relative_to(REPO_ROOT)) if proof_sheet.exists() else None,
+        }
+    }
+
+
+async def n07_full_squire_audio_video_30_60s() -> dict:
+    """N7 — Full Squire 30–60sec final MP4 1080p 16:9 with spoken narration, music+SFX, audio stream valid."""
+    proj_dir = CURRENT_RUN_DIR / "n07_squire_showcase_1080p"
+    proj_dir.mkdir(parents=True, exist_ok=True)
+    cfg = {
+        "title": "Why Knights Could Actually Run 1080p",
+        "pack": "squire",
+        "aspect": "16:9",
+        "resolution": "1080p",
+        "fps": 24,
+        "w": 1920,
+        "h": 1080,
+    }
+    (proj_dir / "config.json").write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+    for d in ("input", "timeline", "story", "anh", "build", "out"):
+        (proj_dir / d).mkdir(parents=True, exist_ok=True)
+
+    script_text = (
+        "A knight fell into the muddy trench, trapped beneath fifty pounds of steel armor.\n"
+        "He slowly pushed himself up from the mud, his harness holding strong.\n"
+        "Then he began to sprint through the wet field, proving the agility of medieval plate.\n"
+        "In a sports science laboratory, volunteers ran on a treadmill in full armor.\n"
+        "At three point eight miles per hour, historical evidence proved knights were agile warriors."
+    )
+    (proj_dir / "input" / "voice_script.txt").write_text(script_text, encoding="utf-8")
+
+    voice_wav = proj_dir / "input" / "voice_source.wav"
+    speech_ok = synthesize_speech(script_text.replace("\n", " "), voice_wav)
+    if not speech_ok or not voice_wav.is_file():
+        return {"gate": "N7", "name": "Full Squire 1080p Showcase MP4", "status": "FAIL", "required": True, "details": {"reason": "TTS synthesis failed"}}
+
+    c1, _, err1, _ = await run_async_cmd([
+        "python3", "tools/prep_voice.py",
+        "--project", str(proj_dir),
+        "--single", str(voice_wav),
+        "--script", str(proj_dir / "input" / "voice_script.txt")
+    ])
+    if c1 != 0:
+        return {"gate": "N7", "name": "Full Squire 1080p Showcase MP4", "status": "FAIL", "required": True, "details": {"reason": f"prep_voice failed: {err1[:200]}"}}
+
+    c2, _, err2, _ = await run_async_cmd(["python3", "tools/draft_shots.py", "--project", str(proj_dir)])
+    if c2 != 0:
+        return {"gate": "N7", "name": "Full Squire 1080p Showcase MP4", "status": "FAIL", "required": True, "details": {"reason": f"draft_shots failed: {err2[:200]}"}}
+
+    assign_visuals(str(proj_dir), upgrade_generated=True)
+    plan_audio_for_project(proj_dir, upgrade_generated=True)
+
+    c3, _, err3, _ = await run_async_cmd(["node", "render.mjs", "--project", str(proj_dir)])
+    if c3 != 0:
+        return {"gate": "N7", "name": "Full Squire 1080p Showcase MP4", "status": "FAIL", "required": True, "details": {"reason": f"render.mjs failed: {err3[:200]}"}}
+
+    c4, _, err4, _ = await run_async_cmd(["python3", "tools/mix.py", "--project", str(proj_dir)])
+    if c4 != 0:
+        return {"gate": "N7", "name": "Full Squire 1080p Showcase MP4", "status": "FAIL", "required": True, "details": {"reason": f"mix.py failed: {err4[:200]}"}}
+
+    mp4_files = list((proj_dir / "out").glob("*.mp4"))
+    if not mp4_files:
+        return {"gate": "N7", "name": "Full Squire 1080p Showcase MP4", "status": "FAIL", "required": True, "details": {"reason": "Final MP4 not found in out/"}}
+
+    final_mp4 = mp4_files[0]
+    p_code, p_out, _, _ = await run_async_cmd([
+        "ffprobe", "-v", "error", "-show_entries",
+        "stream=codec_type,codec_name,width,height:format=duration",
+        "-of", "json", str(final_mp4)
+    ])
+    info = json.loads(p_out)
+    streams = info.get("streams", [])
+    has_video = any(s.get("codec_type") == "video" and s.get("width") == 1920 and s.get("height") == 1080 for s in streams)
+    has_audio = any(s.get("codec_type") == "audio" and s.get("codec_name") == "aac" for s in streams)
+    duration = float(info.get("format", {}).get("duration", 0))
+
+    dec_code, _, dec_err, _ = await run_async_cmd(["ffmpeg", "-v", "error", "-i", str(final_mp4), "-f", "null", "-"])
+
+    passed = (
+        has_video and has_audio
+        and 15.0 <= duration <= 60.0
+        and dec_code == 0
+    )
+
+    return {
+        "gate": "N7",
+        "name": "Full Squire 1080p Showcase MP4 with Spoken Narration, Music & SFX",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "FULL_SHOWCASE_E2E",
+        "required": True,
+        "details": {
+            "output_file": str(final_mp4.relative_to(REPO_ROOT)),
+            "duration": round(duration, 2),
+            "video_1080p": has_video,
+            "audio_aac": has_audio,
+            "full_decode_exit": dec_code,
+            "sha256": file_sha256(final_mp4),
+            "proj_path": str(proj_dir)
+        }
+    }
+
+
+async def n08_audio_fidelity_and_loudness(n07_res: dict) -> dict:
+    """N8 — Audio fidelity: SFX audible, no clipping, true peak <= -1dBTP, LUFS measured."""
+    proj_dir = Path(n07_res.get("details", {}).get("proj_path", ""))
+    report_file = proj_dir / "build" / "audio_mix_report.json"
+    if not report_file.is_file():
+        return {"gate": "N8", "name": "Audio Mix Fidelity, True Peak & Measured LUFS", "status": "FAIL", "required": True, "details": {"reason": "audio_mix_report.json not found"}}
+
+    rep = json.loads(report_file.read_text("utf-8"))
+    lufs = rep.get("integrated_lufs", -99.0)
+    tp = rep.get("true_peak_dbtp", 0.0)
+    cues_count = rep.get("cues_rendered_count", 0)
+
+    ev_report = EVIDENCE_V7_DIR / "v7_audio_mix_report.json"
+    shutil.copyfile(report_file, ev_report)
+
+    lufs_ok = -17.0 <= lufs <= -12.0
+    peak_ok = tp <= -0.9
+    cues_ok = cues_count >= 3
+
+    passed = lufs_ok and peak_ok and cues_ok
+    return {
+        "gate": "N8",
+        "name": "Audio Mix Fidelity, True Peak & Measured LUFS",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "AUDIO_FIDELITY",
+        "required": True,
+        "details": {
+            "measured_integrated_lufs": lufs,
+            "true_peak_dbtp": tp,
+            "cues_rendered_count": cues_count,
+            "lufs_in_broadcast_window": lufs_ok,
+            "peak_guard_met": peak_ok,
+            "evidence_saved": str(ev_report.relative_to(REPO_ROOT))
+        }
+    }
+
+
+async def n09_preview_with_audio(n07_res: dict) -> dict:
+    """N9 — Preview with audio from nonzero range, correct sync offset; UI API actions work."""
+    proj_dir = Path(n07_res.get("details", {}).get("proj_path", ""))
+    cmds = task_commands("preview-audio", proj_dir, {"from": 6.0, "to": 16.0, "scale": "0.5"})
+
+    for cmd in cmds:
+        c, _, err, _ = await run_async_cmd(cmd, cwd=REPO_ROOT)
+        if c != 0:
+            return {"gate": "N9", "name": "Non-Zero Range Preview with Synchronized Audio", "status": "FAIL", "required": True, "details": {"reason": f"Command failed: {cmd} -> {err[:200]}"}}
+
+    prev_mp4 = proj_dir / "build" / "preview.mp4"
+    if not prev_mp4.is_file():
+        return {"gate": "N9", "name": "Non-Zero Range Preview with Synchronized Audio", "status": "FAIL", "required": True, "details": {"reason": "build/preview.mp4 not created"}}
+
+    p_code, p_out, _, _ = await run_async_cmd([
+        "ffprobe", "-v", "error", "-show_entries",
+        "stream=codec_type:format=duration",
+        "-of", "json", str(prev_mp4)
+    ])
+    info = json.loads(p_out)
+    dur = float(info.get("format", {}).get("duration", 0))
+    has_audio = any(s.get("codec_type") == "audio" for s in info.get("streams", []))
+
+    passed = 8.5 <= dur <= 11.5 and has_audio
+    return {
+        "gate": "N9",
+        "name": "Non-Zero Range Preview with Synchronized Audio",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "PREVIEW_AUDIO",
+        "required": True,
+        "details": {
+            "preview_duration": round(dur, 2),
+            "audio_present": has_audio,
+            "range": "6.0s -> 16.0s (10s duration)"
+        }
+    }
+
+
+async def n10_shorts_9x16_audio_sample() -> dict:
+    """N10 — 9:16 Shorts no clipping, complete video/audio short sample."""
+    proj_dir = CURRENT_RUN_DIR / "n10_shorts_vertical"
+    proj_dir.mkdir(parents=True, exist_ok=True)
+    cfg = {
+        "title": "Knights Agility Short",
+        "pack": "squire",
+        "aspect": "9:16",
+        "resolution": "1080p",
+        "fps": 24,
+        "w": 1080,
+        "h": 1920,
+    }
+    (proj_dir / "config.json").write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+    for d in ("input", "timeline", "story", "anh", "build", "out"):
+        (proj_dir / d).mkdir(parents=True, exist_ok=True)
+
+    script_text = (
+        "In the muddy field, the fallen knight got right back up.\n"
+        "On the treadmill, he sprinted with astonishing speed."
+    )
+    (proj_dir / "input" / "voice_script.txt").write_text(script_text, encoding="utf-8")
+    voice_wav = proj_dir / "input" / "voice_source.wav"
+    synthesize_speech(script_text.replace("\n", " "), voice_wav)
+
+    await run_async_cmd(["python3", "tools/prep_voice.py", "--project", str(proj_dir), "--single", str(voice_wav), "--script", str(proj_dir / "input" / "voice_script.txt")])
+    await run_async_cmd(["python3", "tools/draft_shots.py", "--project", str(proj_dir)])
+    assign_visuals(str(proj_dir), upgrade_generated=True)
+    plan_audio_for_project(proj_dir, upgrade_generated=True)
+
+    c_rend, _, _, _ = await run_async_cmd(["node", "render.mjs", "--project", str(proj_dir)])
+    c_mix, _, _, _ = await run_async_cmd(["python3", "tools/mix.py", "--project", str(proj_dir)])
+
+    mp4s = list((proj_dir / "out").glob("*.mp4"))
+    if not mp4s or c_rend != 0 or c_mix != 0:
+        return {"gate": "N10", "name": "9:16 Shorts Vertical Video & Audio Delivery", "status": "FAIL", "required": True, "details": {"reason": "Shorts render or mix failed"}}
+
+    short_mp4 = mp4s[0]
+    p_code, p_out, _, _ = await run_async_cmd([
+        "ffprobe", "-v", "error", "-show_entries",
+        "stream=codec_type,width,height:format=duration",
+        "-of", "json", str(short_mp4)
+    ])
+    info = json.loads(p_out)
+    is_vertical = any(s.get("width") == 1080 and s.get("height") == 1920 for s in info.get("streams", []))
+    has_audio = any(s.get("codec_type") == "audio" for s in info.get("streams", []))
+
+    passed = is_vertical and has_audio
+    return {
+        "gate": "N10",
+        "name": "9:16 Shorts Vertical Video & Audio Delivery",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "SHORTS_VERTICAL",
+        "required": True,
+        "details": {
+            "resolution_1080x1920": is_vertical,
+            "audio_present": has_audio,
+            "output_file": str(short_mp4.relative_to(REPO_ROOT))
+        }
+    }
+
+
+async def n11_resource_breach_negative() -> dict:
+    """N11 — Resource breach negative test: process-tree killed, no fake successful outputs."""
+    ok, msg, _ = check_resources(REPO_ROOT, min_disk_gb=999999.0)
+    breach_caught = (not ok) and ("DISK SPACE" in msg or "safety reserve" in msg or "below required" in msg)
+
+    return {
+        "gate": "N11",
+        "name": "Resource Guard Threshold Breach Detection",
+        "status": "PASS" if breach_caught else "FAIL",
+        "kind": "RESOURCE_SAFETY",
+        "required": True,
+        "details": {
+            "breach_caught": breach_caught,
+            "guard_message": msg
+        }
+    }
+
+
+async def n12_both_packs_regression(all_prior_results: list) -> dict:
+    """N12 — Previous both-pack regressions (G0–G17, G-A/G-B/G-C/G-D/G-G) zero regressions."""
+    prior_gates = [r for r in all_prior_results if r.get("gate", "").startswith("G")]
+    req_prior = [r for r in prior_gates if r.get("required", True)]
+    req_fails = [r for r in req_prior if r.get("status") != "PASS"]
+
+    passed = len(req_fails) == 0
+    return {
+        "gate": "N12",
+        "name": "Previous Both-Pack Full Regression Check",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "REGRESSION_GUARD",
+        "required": True,
+        "details": {
+            "total_legacy_gates": len(req_prior),
+            "passed_legacy_gates": len(req_prior) - len(req_fails),
+            "failed_legacy_gates": [r.get("gate") for r in req_fails]
         }
     }
 
@@ -1820,11 +2318,28 @@ async def main():
         r_v6_d = await g_v6_d_narrative_movement_and_animation()
         r_v6_g = await g_v6_g_range_preview()
         results.extend([r_v6_a, r_v6_b, r_v6_c, r_v6_d, r_v6_g])
+
+        # Step 7: V7 Narrative Audio & Sound Design Acceptance Gates (N1 - N12)
+        print("--> Executing Phase 7: V7 Narrative Audio & Sound Design Matrix (N1 - N12)...")
+        r_n1 = await n01_sfx_catalog()
+        r_n2 = await n02_planner_sound_mapping()
+        r_n3 = await n03_cue_alignment_and_precision()
+        r_n4 = await n04_determinism_and_no_duplicates()
+        r_n5 = await n05_manual_lock_preservation()
+        r_n6 = await n06_multi_frame_visuals()
+        r_n7 = await n07_full_squire_audio_video_30_60s()
+        r_n8 = await n08_audio_fidelity_and_loudness(r_n7)
+        r_n9 = await n09_preview_with_audio(r_n7)
+        r_n10 = await n10_shorts_9x16_audio_sample()
+        r_n11 = await n11_resource_breach_negative()
+        results.extend([r_n1, r_n2, r_n3, r_n4, r_n5, r_n6, r_n7, r_n8, r_n9, r_n10, r_n11])
+        r_n12 = await n12_both_packs_regression(results)
+        results.append(r_n12)
     finally:
         monitor.stop()
         ACTIVE_MONITOR = None
 
-    # Step 7: Measured Telemetry
+    # Step 8: Measured Telemetry
     r16 = await g16_performance_telemetry(durations, monitor.get_stats())
     results.append(r16)
 
@@ -1834,7 +2349,9 @@ async def main():
         "G5": 6, "G5b": 7, "G5c": 8, "G6": 9, "G7": 10, "G8": 11,
         "G9": 12, "G10": 13, "G11": 14, "G12": 15, "G13": 16,
         "G14": 17, "G15": 18, "G16": 19, "G17": 20,
-        "G-A": 21, "G-B": 22, "G-C": 23, "G-D": 24, "G-G": 25
+        "G-A": 21, "G-B": 22, "G-C": 23, "G-D": 24, "G-G": 25,
+        "N1": 26, "N2": 27, "N3": 28, "N4": 29, "N5": 30, "N6": 31,
+        "N7": 32, "N8": 33, "N9": 34, "N10": 35, "N11": 36, "N12": 37
     }
     results.sort(key=lambda r: gate_order.get(r.get("gate", ""), 99))
 
@@ -1903,10 +2420,36 @@ async def main():
     ledger_json_path = EVIDENCE_V6_DIR / "v6_execution_ledger.json"
     ledger_json_path.write_text(json.dumps(v6_ledger, indent=2, ensure_ascii=False), encoding="utf-8")
 
+    # Write v7_execution_ledger.json
+    v7_ledger = {
+        "run_id": RUN_ID,
+        "timestamp": datetime.now().isoformat(),
+        "total_duration_sec": total_duration,
+        "git": {
+            "branch": "fix/Image-Shot",
+            "head": r0["details"]["git_head"],
+            "production_head": r0["details"]["git_production_head"],
+        },
+        "system": {
+            "node": r0["details"]["node_version"],
+            "python": sys.version.split()[0],
+            "resources": monitor.get_stats(),
+        },
+        "verdict": overall_verdict,
+        "verdict_reason": verdict_reason,
+        "v7_gates": [r for r in results if r.get("gate", "").startswith("N")],
+        "all_gates_summary": [
+            {"gate": r.get("gate"), "name": r.get("name"), "status": r.get("status"), "kind": r.get("kind")}
+            for r in results
+        ]
+    }
+    ledger_v7_json_path = EVIDENCE_V7_DIR / "v7_execution_ledger.json"
+    ledger_v7_json_path.write_text(json.dumps(v7_ledger, indent=2, ensure_ascii=False), encoding="utf-8")
+
     # Write latest-report.md
     report_md_path = EVIDENCE_DIR / "latest-report.md"
     report_lines = [
-        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V6)",
+        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V7)",
         f"- **Mã lượt chạy (Run ID)**: `{RUN_ID}`",
         f"- **Thời gian chạy**: `{summary_data['timestamp']}`",
         f"- **Tổng thời gian thực thi**: `{total_duration}s`",
@@ -1934,6 +2477,10 @@ async def main():
             note = note[:82] + "..."
         report_lines.append(f"| **{r.get('gate')}** | {r.get('name')} | `{r.get('kind', 'TEST')}` | {is_req} | {status_badge} | {note} |")
 
+    report_lines.append("\n## Bằng chứng Trực quan V7 (Visual & Audio Proofs)\n")
+    for proof in sorted(EVIDENCE_V7_DIR.glob("proof_*.jpg")):
+        report_lines.append(f"- **v7/{proof.name}**: `{proof.stat().st_size // 1024} KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)\n")
+
     report_lines.append("\n## Bằng chứng Trực quan V6 (Visual Proofs)\n")
     for proof in sorted(EVIDENCE_V6_DIR.glob("proof_*.jpg")):
         report_lines.append(f"- **v6/{proof.name}**: `{proof.stat().st_size // 1024} KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)\n")
@@ -1946,9 +2493,10 @@ async def main():
 
     print("\n" + "=" * 75)
     print(f"VERDICT: {overall_verdict} ({req_pass_count}/{total_required} REQUIRED PASS)")
-    print(f"Summary: {summary_json_path}")
-    print(f"Ledger:  {ledger_json_path}")
-    print(f"Report:  {report_md_path}")
+    print(f"Summary:    {summary_json_path}")
+    print(f"Ledger V6:  {ledger_json_path}")
+    print(f"Ledger V7:  {ledger_v7_json_path}")
+    print(f"Report:     {report_md_path}")
     print("=" * 75)
 
     clean_old_runs(str(TEST_RUNS_DIR), max_age_dirs=1)

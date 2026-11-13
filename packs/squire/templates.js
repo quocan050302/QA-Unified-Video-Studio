@@ -41,14 +41,28 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
   const pose0 = listAt(info, lt, p.poseAt, p.pose || 'stand'), run = pose0 === 'run';
   let walkMode = null, walkPhase, flip = p.flip, travel = 0;
   const hu = (p.horse ? h * (p.horse.h ?? 0.85) : h * (p.kid ? 0.78 : 1)) / 100;
+  const sp = p.speed ?? 1;
+  const v = p.horse ? (p.horse.gait === 'gallop' ? 2.2 * 105 : 0.85 * 35.5) * hu * sp : 2 * STEP * (run ? 1.5 : 1) * hu * (run ? 1.6 : 0.95) * sp;
+
+  // movement modes: in_place (treadmill), travel (across ground), stationary, to (point-to-point)
+  const isInPlace = p.moveMode === 'in_place' || p.in_place === true || p.walk === 'in_place' || p.walkMode === 'in_place';
+  const isFront = p.walk === 'front' || p.walkMode === 'front' || pose0 === 'march';
+
   if (p.to !== undefined) {
     const t0 = at(info, p.moveAt, a0), x0 = fx(p.from ?? p.x), x1 = fx(p.to), k = ease.inOut(clamp((lt - t0) / (p.dur || Math.max(0.3, info.dur - t0))));
     x = lerp(x0, x1, k); travel = Math.abs(x - x0); if (p.flip === undefined) flip = x1 < x0; walkMode = Math.abs(x1 - x0) > 2 ? 'side' : null;
-  } else if (p.walk === true || ((pose0 === 'walk' || pose0 === 'run') && p.walk !== 'front' && p.walk !== false) || (p.horse && ['walk', 'gallop'].includes(p.horse.gait) && p.horse.travel !== false)) {
-    const dir = (p.dir ?? (p.flip ? -1 : 1)), sp = p.speed ?? 1;
-    const v = p.horse ? (p.horse.gait === 'gallop' ? 2.2 * 105 : 0.85 * 35.5) * hu * sp : 2 * STEP * (run ? 1.5 : 1) * hu * (run ? 1.6 : 0.95) * sp;
+  } else if (isInPlace) {
+    // Chay/di bo tai cho (treadmill): giu x co dinh tai vi tri goc (khong troi ngang), van animate buoc chan
+    travel = v * lt;
+    walkMode = isFront ? 'front' : (p.walkMode || 'side');
+  } else if (isFront) {
+    walkMode = 'front';
+  } else if (p.moveMode === 'stationary' || p.walk === false) {
+    walkMode = null;
+  } else if (p.walk === true || ((pose0 === 'walk' || pose0 === 'run') && p.walk !== false) || (p.horse && ['walk', 'gallop'].includes(p.horse.gait) && p.horse.travel !== false)) {
+    const dir = (p.dir ?? (p.flip ? -1 : 1));
     travel = v * lt; x += dir * (travel - v * info.dur / 2); flip = dir < 0; walkMode = 'side';
-  } else if (p.walk === 'front' || pose0 === 'march') walkMode = 'front';
+  }
   if (walkMode === 'side') walkPhase = travel / (2 * STEP * (run ? 1.5 : 1) * hu * 100 / 100 * 1);
   if (p.enter) { const k = ease.out(clamp((lt - a0) / 0.5)); x += (1 - k) * (p.enter === 'left' ? -1 : 1) * E.W * 0.5; }
   if (p.exit !== undefined) { const k = ease.in(clamp((lt - at(info, p.exit, 1e9)) / 0.4)); x += k * E.W * 0.6 * (p.exitDir === 'left' ? -1 : 1); }
@@ -61,10 +75,10 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
   if (p.rise !== undefined || p.getUp !== undefined) {
     const t0 = at(info, p.rise ?? p.getUp, 0), dur = p.riseDur || 1.1, k = ease.inOut(clamp((lt - t0) / Math.max(0.2, dur)));
     const ang = lerp(p.flip ? 1.45 : -1.45, 0, k);
-    const dy = lerp(h * 0.42, 0, k);
-    g.translate(x, y + dy); g.rotate(ang); g.translate(-x, -y);
+    const dy = lerp(h * 0.35, 0, k);
+    g.translate(x, y - 0.45 * h + dy); g.rotate(ang); g.translate(-x, -(y - 0.45 * h));
   } else if (pose0 === 'lying' || pose0 === 'prone') {
-    g.translate(x, y + h * 0.42); g.rotate(p.flip ? 1.45 : -1.45); g.translate(-x, -y);
+    g.translate(x, y - 0.45 * h + h * 0.35); g.rotate(p.flip ? 1.45 : -1.45); g.translate(-x, -(y - 0.45 * h));
   }
   const lk = listAt(info, lt, p.lookAt, p.look);
   const o = { ...p, t: lt + (p.seed || 0) * 0.37, pose: pose0, face: listAt(info, lt, p.faceAt, p.face || 'neutral'), look: lk === undefined ? (walkMode === 'side' ? 0.75 : 0) : lk, talk, flip, walkMode: p.horse ? null : walkMode, walkPhase: p.horse ? undefined : walkPhase, walk: p.horse ? false : !!walkMode, lw: p.lw };

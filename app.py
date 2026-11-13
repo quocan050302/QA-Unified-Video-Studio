@@ -193,11 +193,15 @@ def summarize_project(p: Path):
     else:
         stage = 'VISUALS_READY'
 
+    audio_planned = (p / 'build' / 'audio_plan.json').exists() or any(bool(s.get('sfx')) for s in shots)
+    audio_mixed = (p / 'build' / 'mix.wav').exists()
+
     return {'id': p.name, 'title': cfg.get('title', p.name), 'mode': mode,
             'aspect': cfg.get('aspect', '16:9'), 'resolution': cfg.get('resolution', '1080p'),
             'duration': story.get('duration', cfg.get('duration', 0)),
             'shots': len(shots), 'shots_ready': shots_ready,
             'visuals_ready': visuals_ready, 'missing_shots': missing_shots,
+            'audio_planned': audio_planned, 'audio_mixed': audio_mixed,
             'stage': stage, 'files': available_files(p)}
 
 
@@ -380,16 +384,45 @@ def task_commands(action, p: Path, params: dict = None):
             return [[node, 'render.mjs', '--project', proj, '--from', from_sec, '--to', to_sec, '--scale', scale]]
         if action == 'render': return [[node, 'render.mjs', '--project', proj]]
     if action == 'thumb': return [[node, 'render.mjs', '--project', proj, '--thumb']]
+    if action == 'plan-audio':
+        return [[py, 'tools/plan_audio.py', '--project', proj]]
+    if action == 'upgrade-generated-audio':
+        return [[py, 'tools/plan_audio.py', '--project', proj, '--upgrade-generated']]
+    if action == 'preview-audio':
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi render.')
+        from_sec = str(params.get('from', 0))
+        to_sec = str(params.get('to', 30))
+        scale = str(params.get('scale', '0.5'))
+        return [
+            [node, 'render.mjs', '--project', proj, '--from', from_sec, '--to', to_sec, '--scale', scale],
+            [py, 'tools/mix.py', '--project', proj, '--preview', '--from-sec', from_sec, '--to-sec', to_sec]
+        ]
     if action == 'mix':
         silent_file = p / 'build' / 'video_silent.mp4'
         if not silent_file.exists():
             raise ValueError('Chưa có build/video_silent.mp4. Hãy render video trước khi mix & export.')
         shots_file = p / 'story' / 'shots.json'
         cfg_file = p / 'config.json'
+        hash_file = p / 'build' / 'visual_hash.txt'
         silent_mtime = silent_file.stat().st_mtime
-        if (shots_file.exists() and shots_file.stat().st_mtime > silent_mtime + 2) or \
-           (cfg_file.exists() and cfg_file.stat().st_mtime > silent_mtime + 2):
-            raise ValueError('STALE_OUTPUT: build/video_silent.mp4 cũ hơn storyboard hoặc config hiện tại. Vui lòng render video lại trước khi mix & export.')
+        
+        visual_matches = False
+        if hash_file.exists() and shots_file.exists():
+            try:
+                story_data = load_json(shots_file, {})
+                vis = [{"id": s.get("id"), "start": s.get("start"), "end": s.get("end"), "tpl": s.get("tpl"), "args": s.get("args"), "scene": s.get("scene")} for s in story_data.get("shots", [])]
+                import hashlib
+                current_vhash = hashlib.sha256(json.dumps(vis, sort_keys=True).encode("utf-8")).hexdigest()
+                stored_vhash = hash_file.read_text(encoding="utf-8").strip()
+                visual_matches = (current_vhash == stored_vhash)
+            except Exception:
+                pass
+
+        if not visual_matches:
+            if (shots_file.exists() and shots_file.stat().st_mtime > silent_mtime + 2) or \
+               (cfg_file.exists() and cfg_file.stat().st_mtime > silent_mtime + 2):
+                raise ValueError('STALE_OUTPUT: build/video_silent.mp4 cũ hơn storyboard hoặc config hiện tại. Vui lòng render video lại trước khi mix & export.')
         return [[py, 'tools/mix.py', '--project', proj]]
     if action == 'doctor': return [[py, 'tools/doctor.py']]
     if action == 'audio-build': return [[py, 'audio/build_audio.py']]

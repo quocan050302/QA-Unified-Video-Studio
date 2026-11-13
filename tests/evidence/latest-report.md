@@ -1,12 +1,12 @@
-# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V6)
-- **Mã lượt chạy (Run ID)**: `20261113_100216`
-- **Thời gian chạy**: `2026-11-13T10:04:25.195637`
-- **Tổng thời gian thực thi**: `128.24s`
-- **Kết quả chung**: **FLOW_READY** (25/25 REQUIRED GATES PASS)
+# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V7)
+- **Mã lượt chạy (Run ID)**: `20261113_111600`
+- **Thời gian chạy**: `2026-11-13T11:18:59.112849`
+- **Tổng thời gian thực thi**: `178.62s`
+- **Kết quả chung**: **FLOW_READY** (37/37 REQUIRED GATES PASS)
 
 > [!IMPORTANT]
 > **Đánh giá nghiệm thu (Truthful Verdict):**
-> Tất cả 25/25 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).
+> Tất cả 37/37 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).
 
 ## Bảng tổng hợp Ma trận Kiểm thử Toàn diện
 
@@ -38,20 +38,43 @@
 | **G-C** | Fact Extraction, Spelled Numbers & Anatomy Disambiguation | `SEMANTIC_FACTS` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **G-D** | Narrative-Aligned 2D Animation & Visual Proofs | `NARRATIVE_ANIMATION` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **G-G** | Range Preview (--from, --to) Verification | `UI_REVIEW_RANGE` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N1** | SFX Catalog & Canonical Name Resolution | `AUDIO_CATALOG` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N2** | Narrative Action-to-Sound Planner Mapping | `AUDIO_PLANNER` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N3** | Cue Alignment & Phase Precision Timing | `CUE_TIMING` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N4** | Deterministic Idempotent Audio Planning | `DETERMINISM` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N5** | Manual Audio Cues Lock & Preservation | `MANUAL_LOCK` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N6** | Multi-Frame Visuals (Safe Lying + Treadmill In-Place + Active Run) | `VISUAL_FRAMING` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N7** | Full Squire 1080p Showcase MP4 with Spoken Narration, Music & SFX | `FULL_SHOWCASE_E2E` | Bắt buộc | ✅ PASS | .test-runs\20261113_111600\n07_squire_showcase_1080p\out\Why Knights Could Actuall... |
+| **N8** | Audio Mix Fidelity, True Peak & Measured LUFS | `AUDIO_FIDELITY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N9** | Non-Zero Range Preview with Synchronized Audio | `PREVIEW_AUDIO` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N10** | 9:16 Shorts Vertical Video & Audio Delivery | `SHORTS_VERTICAL` | Bắt buộc | ✅ PASS | .test-runs\20261113_111600\n10_shorts_vertical\out\Knights Agility Short.mp4 |
+| **N11** | Resource Guard Threshold Breach Detection | `RESOURCE_SAFETY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **N12** | Previous Both-Pack Full Regression Check | `REGRESSION_GUARD` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+
+## Bằng chứng Trực quan V7 (Visual & Audio Proofs)
+
+- **v7/proof_contact_sheet_v7.jpg**: `112 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
+
+- **v7/proof_lying_safe_frame.jpg**: `19 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
+
+- **v7/proof_recovery_run_active.jpg**: `19 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
+
+- **v7/proof_treadmill_in_place.jpg**: `24 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
+
 
 ## Bằng chứng Trực quan V6 (Visual Proofs)
 
 - **v6/proof_anatomy_torso.jpg**: `30 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
 
-- **v6/proof_contact_sheet_v6.jpg**: `104 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
+- **v6/proof_contact_sheet_v6.jpg**: `112 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
 
 - **v6/proof_lab_treadmill.jpg**: `24 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
 
 - **v6/proof_metric_3_8.jpg**: `25 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
 
-- **v6/proof_opening_mud.jpg**: `13 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
+- **v6/proof_opening_mud.jpg**: `19 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
 
-- **v6/proof_recovery_run.jpg**: `18 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
+- **v6/proof_recovery_run.jpg**: `19 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
 
 
 ## Bằng chứng Trực quan Các Cổng Core E2E
