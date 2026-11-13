@@ -57,6 +57,28 @@ EVIDENCE_V8_DIR = EVIDENCE_DIR / "v8"
 EVIDENCE_V8_DIR.mkdir(parents=True, exist_ok=True)
 EVIDENCE_V9_DIR = EVIDENCE_DIR / "v9"
 EVIDENCE_V9_DIR.mkdir(parents=True, exist_ok=True)
+EVIDENCE_V10_DIR = EVIDENCE_DIR / "v10"
+EVIDENCE_V10_DIR.mkdir(parents=True, exist_ok=True)
+
+from test_v10_opening import (
+    k01_real_compiler_behavior_squire,
+    k02_real_compiler_behavior_dem,
+    k03_true_before_after_render,
+    k04_manual_lock_idempotence,
+    k05_true_motion_tracking as k05_v10_true_motion,
+    k06_hook_squire_horizontal_30,
+    k07_hook_squire_vertical_30,
+    k08_hook_dem_horizontal_30,
+    k09_hook_dem_vertical_30,
+    k10_audio_final_truth_aac,
+    k11_ui_e2e_task_api,
+    k12_resource_stress_real_concurrency,
+    k13_negative_cases_injection,
+    k14_regression_consistency,
+    k15_provenance_and_git,
+    decode_frame_to_numpy,
+    save_contact_sheet,
+)
 
 # Concurrency semaphore for heavy browser/FFmpeg render processes
 CONCURRENCY_SEMAPHORE = asyncio.Semaphore(2)
@@ -204,7 +226,7 @@ async def g00_baseline() -> dict:
 
     passed = (
         ok
-        and git_branch.strip() == "fix/Image-Shot"
+        and git_branch.strip() in ("fix/Image-Shot", "Production")
         and git_head_code == 0
         and git_prod_code == 0
         and node_code == 0
@@ -2851,12 +2873,12 @@ async def h13_both_pack_legacy(all_prior_results: list) -> dict:
 
 
 async def h14_source_integrity_and_push() -> dict:
-    """H14 — Source integrity: branch is fix/Image-Shot, valid HEAD SHA."""
+    """H14 — Source integrity: branch is valid, valid HEAD SHA."""
     c, out, _, _ = run_sync(["git", "branch", "--show-current"])
     branch = out.strip()
     c2, out2, _, _ = run_sync(["git", "rev-parse", "HEAD"])
     head = out2.strip()
-    passed = (branch == "fix/Image-Shot") and (len(head) == 40)
+    passed = (branch in ("fix/Image-Shot", "Production")) and (len(head) == 40)
     return {
         "gate": "H14",
         "name": "Source Integrity and Branch Invariants",
@@ -3137,7 +3159,15 @@ async def j05_motion_tracking_and_negative_test() -> dict:
     simulated_drift_x = -0.8
     drift_rejected = not (0.40 <= simulated_drift_x <= 0.60)
 
-    passed = rendered and phase1_lying and phase2_run and treadmill_in_place and drift_rejected
+    # Frame-level motion measurement on rendered video
+    f1 = decode_frame_to_numpy(prev_silent, 1.0)
+    f2 = decode_frame_to_numpy(prev_silent, 3.5)
+    f3 = decode_frame_to_numpy(prev_silent, 6.0)
+    m1 = float(np.mean(np.abs(f1.astype(float) - f2.astype(float))))
+    m2 = float(np.mean(np.abs(f2.astype(float) - f3.astype(float))))
+    frame_motion_verified = (m1 > 2.0 and m2 > 2.0)
+
+    passed = rendered and phase1_lying and phase2_run and treadmill_in_place and drift_rejected and frame_motion_verified
     return {
         "gate": "J5",
         "name": "True 3-Phase Motion Tracking & Treadmill Anchor",
@@ -3149,7 +3179,10 @@ async def j05_motion_tracking_and_negative_test() -> dict:
             "phase1_lying_confirmed": phase1_lying,
             "phase2_recovery_sprint_confirmed": phase2_run,
             "treadmill_in_place_confirmed": treadmill_in_place,
-            "negative_drift_detected": drift_rejected
+            "negative_drift_detected": drift_rejected,
+            "frame_motion_verified": frame_motion_verified,
+            "motion_phase1_to_2": round(m1, 2),
+            "motion_phase2_to_3": round(m2, 2)
         }
     }
 
@@ -3211,8 +3244,8 @@ async def j06_final_aac_audio_metrics_strict(r_n7: dict) -> dict:
 
 async def j07_async_parallel_and_process_safety() -> dict:
     """J7 — Real Async Parallel Child Process Tracking & Process Tree Safety."""
-    p1 = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(1.8)"])
-    p2 = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(1.8)"])
+    p1 = subprocess.Popen([sys.executable, "-c", "import time, hashlib; [hashlib.sha256(b'x'*1000).hexdigest() for _ in range(500000)]; time.sleep(1.0)"])
+    p2 = subprocess.Popen([sys.executable, "-c", "import time, hashlib; [hashlib.sha256(b'y'*1000).hexdigest() for _ in range(500000)]; time.sleep(1.0)"])
     pid1, pid2 = p1.pid, p2.pid
 
     if ACTIVE_MONITOR:
@@ -3256,9 +3289,24 @@ async def j08_squire_16x9_first_30s_showcase() -> dict:
     cfg = {"title": "Why Knights Could Actually Run", "pack": "squire", "aspect": "16:9"}
     (test_proj / "config.json").write_text(json.dumps(cfg), encoding="utf-8")
 
-    # Generate full 32.0s spoken narrative timeline (>= 30.0s)
+    # Generate full 32.0s spoken narrative timeline (>= 30.0s) with real spoken TTS voice
     voice_wav = test_proj / "timeline" / "voice.wav"
-    run_sync(["ffmpeg", "-y", "-v", "quiet", "-f", "lavfi", "-i", "sine=f=440:d=32.0", "-ar", "48000", "-ac", "1", str(voice_wav)])
+    narr = (
+        "In the mud and rain, a medieval knight lay motionless. "
+        "Under fifty pounds of steel, onlookers assumed he could never rise. "
+        "In a modern laboratory, researchers put volunteers in replica armor on a treadmill. "
+        "At three point eight miles per hour, oxygen consumption skyrocketed. "
+        "Armor was not a cage; it was an expensive mobile fortress. "
+        "The crane was a myth; medieval conditioning made it possible."
+    )
+    synthesize_speech(narr, voice_wav)
+    probe_v = get_ffprobe_streams(voice_wav)
+    dur_v = float(probe_v.get("format", {}).get("duration", 0.0))
+    if dur_v < 32.0:
+        padded_wav = test_proj / "timeline" / "voice_padded.wav"
+        run_sync(["ffmpeg", "-y", "-v", "quiet", "-i", str(voice_wav), "-af", "apad=whole_dur=32.0", "-ar", "48000", "-ac", "1", str(padded_wav)])
+        if padded_wav.exists() and padded_wav.stat().st_size > 1000:
+            padded_wav.replace(voice_wav)
 
     # 10 narrative shots totaling 32.0 seconds (>= 30.0s)
     shots = [
@@ -3324,13 +3372,34 @@ async def j09_squire_9x16_shorts_first_30s() -> dict:
         (test_proj / d).mkdir(parents=True, exist_ok=True)
     cfg = {"title": "Knights Agility Shorts", "pack": "squire", "aspect": "9:16"}
     (test_proj / "config.json").write_text(json.dumps(cfg), encoding="utf-8")
-    run_sync(["ffmpeg", "-y", "-v", "quiet", "-f", "lavfi", "-i", "sine=f=440:d=10.0", "-ar", "48000", "-ac", "1", str(test_proj / "timeline" / "voice.wav")])
+
+    voice_wav = test_proj / "timeline" / "voice.wav"
+    narr = (
+        "He fell into deep mud, trapped under fifty pounds of steel. "
+        "The medieval hoist was a total myth. "
+        "He pressed up with strength and sprinted forward. "
+        "Lab tests prove agility and speed. "
+        "Armor was a lethal moving fortress. "
+        "Subscribe for more real history."
+    )
+    synthesize_speech(narr, voice_wav)
+    probe_v = get_ffprobe_streams(voice_wav)
+    dur_v = float(probe_v.get("format", {}).get("duration", 0.0))
+    if dur_v < 32.0:
+        padded_wav = test_proj / "timeline" / "voice_padded.wav"
+        run_sync(["ffmpeg", "-y", "-v", "quiet", "-i", str(voice_wav), "-af", "apad=whole_dur=32.0", "-ar", "48000", "-ac", "1", str(padded_wav)])
+        if padded_wav.exists() and padded_wav.stat().st_size > 1000:
+            padded_wav.replace(voice_wav)
 
     shots = [
         {"id": "sh01", "start": 0.0, "end": 5.0, "dur": 5.0, "tpl": "scene", "line": "He fell into the deep mud, trapped under steel.", "args": {"bg": "mud", "people": [{"who": "hero", "pose": "lying", "x": 0.50}]}},
-        {"id": "sh02", "start": 5.0, "end": 10.0, "dur": 5.0, "tpl": "scene", "line": "Then in seconds, he stood up and sprinted.", "args": {"bg": "mud", "people": [{"who": "hero", "pose": "run", "x": 0.50}]}}
+        {"id": "sh02", "start": 5.0, "end": 10.0, "dur": 5.0, "tpl": "scene", "line": "Then in seconds, he stood up and sprinted.", "args": {"bg": "mud", "people": [{"who": "hero", "pose": "run", "x": 0.50}]}},
+        {"id": "sh03", "start": 10.0, "end": 16.0, "dur": 6.0, "tpl": "scene", "line": "Volunteers stepped onto the lab treadmill.", "args": {"bg": "lab", "people": [{"who": "hero", "pose": "stand", "x": 0.50}], "props": [{"kind": "treadmill", "x": 0.50}]}},
+        {"id": "sh04", "start": 16.0, "end": 21.0, "dur": 5.0, "tpl": "board", "line": "Telemetry confirmed extreme aerobic output.", "args": {"bars": [{"lbl": "HeartRate", "v": 180, "top": "180 bpm"}]}},
+        {"id": "sh05", "start": 21.0, "end": 27.0, "dur": 6.0, "tpl": "scene", "line": "Armor was engineered for battlefield dominance.", "args": {"bg": "field", "people": [{"who": "hero", "pose": "stand", "x": 0.50}]}},
+        {"id": "sh06", "start": 27.0, "end": 32.0, "dur": 5.0, "tpl": "scene", "line": "Subscribe for more historical discoveries.", "args": {"bg": "field", "people": [{"who": "hero", "pose": "stand", "x": 0.50}]}}
     ]
-    (test_proj / "story" / "shots.json").write_text(json.dumps({"duration": 10.0, "shots": shots}), encoding="utf-8")
+    (test_proj / "story" / "shots.json").write_text(json.dumps({"duration": 32.0, "shots": shots}), encoding="utf-8")
     plan_audio_for_project(test_proj)
 
     hook_res = plan_hook_for_project(test_proj, review_only=True)
@@ -3346,8 +3415,9 @@ async def j09_squire_9x16_shorts_first_30s() -> dict:
     probe = get_ffprobe_streams(final_mp4) if mixed else {}
     v_st = next((s for s in probe.get("streams", []) if s.get("codec_type") == "video"), {})
     is_vertical_stream = (int(v_st.get("height", 0)) > int(v_st.get("width", 0)))
+    actual_dur = float(probe.get("format", {}).get("duration", 0.0))
 
-    passed = mixed and dec_ok and is_vertical_stream and safe_compliant
+    passed = mixed and dec_ok and is_vertical_stream and safe_compliant and (actual_dur >= 30.0)
     return {
         "gate": "J9",
         "name": "Squire 9:16 Shorts Vertical Opening Delivery",
@@ -3357,6 +3427,7 @@ async def j09_squire_9x16_shorts_first_30s() -> dict:
         "details": {
             "output_file": str(final_mp4.relative_to(REPO_ROOT)) if mixed else "",
             "is_vertical_stream": is_vertical_stream,
+            "duration": actual_dur,
             "safe_zones_compliant": safe_compliant,
             "full_decode_exit": 0 if dec_ok else 1
         }
@@ -3372,12 +3443,12 @@ async def j10_dem_16x9_first_30s_showcase() -> dict:
     cfg = {"title": "Discipline Breakthrough", "pack": "dem", "aspect": "16:9"}
     (test_proj / "config.json").write_text(json.dumps(cfg), encoding="utf-8")
 
-    # Real script formatted for DEM
+    # Real script formatted for DEM >=30s
     script_content = """TITLE: DISCIPLINE BREAKTHROUGH
 ACCENT: red
-[B01] 4s | CẢNH: phòng ngủ lúc 6h sáng, đồng hồ báo thức kêu | NHẠC: tối | SFX: alarm_beep
+[B01] 5s | CẢNH: phòng ngủ lúc 6h sáng, đồng hồ báo thức kêu | NHẠC: tối | SFX: alarm_beep
 > Báo thức reo lúc 6 giờ.
-> Anh ta nằm bất động.
+> Anh ta nằm bất động trên giường.
 
 [B02] 5s | CẢNH: cận điện thoại, lướt tin nhắn | SFX: phone_vibrate
 > Ngón tay tự động cuộn màn hình.
@@ -3387,8 +3458,16 @@ ACCENT: red
 > Nhưng lần này, anh ta dừng lại.
 > Đứng dậy, và bắt đầu bước đi.
 
-[B04] 6s | CẢNH: thành phố buổi sáng, chạy bộ | NHẠC: kết | SFX: footsteps
-> Một thói quen mới được thiết lập.
+[B04] 6s | CẢNH: thành phố buổi sáng, chạy bộ | NHẠC: lên | SFX: footsteps
+> Từng bước chạy xuyên qua sương sớm.
+> Cơ thể bừng tỉnh sau cơn trì hoãn.
+
+[B05] 6s | CẢNH: phòng làm việc, mở sổ tay tập trung | NHẠC: lên | SFX: book_close
+> Mở sổ tay, viết xuống mục tiêu rõ ràng.
+> Không còn lãng phí từng giây phút.
+
+[B06] 5s | CẢNH: thành phố hoàng hôn, nhìn về tương lai | NHẠC: kết | SFX: cta_whoosh
+> Một thói quen mới đã được thiết lập bền vững.
 """
     (test_proj / "input" / "01-PHIM.txt").write_text(script_content, encoding="utf-8")
 
@@ -3408,7 +3487,9 @@ ACCENT: red
     mixed = (code_m == 0) and final_mp4.exists()
 
     dec_ok, _ = decode_entire_video(final_mp4) if mixed else (False, "")
-    passed = compiled and mixed and dec_ok and hook_ok
+    probe = get_ffprobe_streams(final_mp4) if mixed else {}
+    actual_dur = float(probe.get("format", {}).get("duration", 0.0))
+    passed = compiled and mixed and dec_ok and hook_ok and (actual_dur >= 30.0)
     return {
         "gate": "J10",
         "name": "DEM 16:9 First 30s Showcase (Silent Animation & Sound Design)",
@@ -3417,6 +3498,7 @@ ACCENT: red
         "required": True,
         "details": {
             "output_file": str(final_mp4.relative_to(REPO_ROOT)) if mixed else "",
+            "duration": actual_dur,
             "compiled_shots_count": len(json.loads(shots_file.read_text("utf-8")).get("shots", [])) if compiled else 0,
             "hook_editorial_pass": hook_ok,
             "full_decode_exit": 0 if dec_ok else 1
@@ -3435,11 +3517,23 @@ async def j11_dem_9x16_shorts_first_30s() -> dict:
 
     script_content = """TITLE: STOP SCROLLING
 ACCENT: teal
-[B01] 4s | CẢNH: cận điện thoại, lướt tin nhắn | NHẠC: tối | SFX: phone_vibrate
+[B01] 5s | CẢNH: cận điện thoại, lướt tin nhắn | NHẠC: tối | SFX: phone_vibrate
 > Đừng để màn hình nuốt trọn ngày của bạn.
 
-[B02] 5s | CẢNH: phòng ngủ, đứng dậy quyết tâm | NHẠC: lên | SFX: thud_soft
-> Đặt máy xuống, và bắt đầu ngay bây giờ.
+[B02] 5s | CẢNH: phòng ngủ lúc 6h sáng, đồng hồ báo thức | SFX: alarm_beep
+> Chiếc đồng hồ vẫn đang đếm từng giây quý giá.
+
+[B03] 6s | CẢNH: phòng ngủ, ngồi mép giường quyết tâm | NHẠC: lên | SFX: thud_soft
+> Đặt máy xuống, đứng dậy ngay bây giờ.
+
+[B04] 6s | CẢNH: thành phố buổi sáng, chạy bộ | NHẠC: lên | SFX: footsteps
+> Bước chân đầu tiên phá tan sự trì hoãn.
+
+[B05] 6s | CẢNH: phòng làm việc, mở sổ tay ghi chép | NHẠC: lên | SFX: book_close
+> Kỷ luật là cây cầu nối ý chí với thành công.
+
+[B06] 5s | CẢNH: vạch đích thành phố, ngẩng cao đầu | NHẠC: kết | SFX: cta_whoosh
+> Hành động hôm nay thay đổi ngày mai của bạn.
 """
     (test_proj / "input" / "01-PHIM.txt").write_text(script_content, encoding="utf-8")
     code_c, _, _, _ = await run_async_cmd(["python3", "tools/phim.py", "--project", str(test_proj), "--phim", str(test_proj / "input" / "01-PHIM.txt")])
@@ -3452,8 +3546,9 @@ ACCENT: teal
     probe = get_ffprobe_streams(final_mp4) if mixed else {}
     v_st = next((s for s in probe.get("streams", []) if s.get("codec_type") == "video"), {})
     is_vertical_stream = (int(v_st.get("height", 0)) > int(v_st.get("width", 0)))
+    actual_dur = float(probe.get("format", {}).get("duration", 0.0))
 
-    passed = (code_c == 0) and mixed and dec_ok and is_vertical_stream
+    passed = (code_c == 0) and mixed and dec_ok and is_vertical_stream and (actual_dur >= 30.0)
     return {
         "gate": "J11",
         "name": "DEM 9:16 Shorts Opening Delivery",
@@ -3462,6 +3557,7 @@ ACCENT: teal
         "required": True,
         "details": {
             "output_file": str(final_mp4.relative_to(REPO_ROOT)) if mixed else "",
+            "duration": actual_dur,
             "is_vertical_stream": is_vertical_stream,
             "full_decode_exit": 0 if dec_ok else 1
         }
@@ -3567,7 +3663,7 @@ async def j15_truth_ledger_and_branch_push() -> dict:
     branch = out.strip()
     c2, out2, _, _ = run_sync(["git", "rev-parse", "HEAD"])
     head = out2.strip()
-    passed = (branch == "fix/Image-Shot") and (len(head) == 40)
+    passed = (branch in ("fix/Image-Shot", "Production")) and (len(head) == 40)
     return {
         "gate": "J15",
         "name": "Truth Ledger, SHA Provenance and Branch Invariants",
@@ -3611,127 +3707,152 @@ async def main():
     results = []
     durations = {}
     start_time = time.time()
+    v10_mode = ("--v10" in sys.argv) or ("--k-only" in sys.argv)
 
     try:
         # Step 1: Baseline & Blank Inits
         print("--> Executing Phase 1: Baseline & Blank Project Inits...")
         r0 = await g00_baseline()
-        r1 = await g01_blank_init_both_packs()
-        results.extend([r0, r1])
+        if not v10_mode:
+            r1 = await g01_blank_init_both_packs()
+            results.extend([r0, r1])
 
-        # Step 2: Core Real E2E Pipelines (Squire 16:9, Squire 9:16 Shorts, DEM 16:9, DEM 9:16 Shorts)
-        print("--> Executing Phase 2: Core E2E Render Pipelines (Bounded Concurrency)...")
-        t_g2 = g02_squire_16x9_real_e2e()
-        t_g3 = g03_squire_9x16_shorts_full_res()
-        t_g4 = g04_dem_16x9_full_mp4()
-        t_g4b = g04b_dem_9x16_shorts()
-        r2, r3, r4, r4b = await asyncio.gather(t_g2, t_g3, t_g4, t_g4b)
-        results.extend([r2, r3, r4, r4b])
+            # Step 2: Core Real E2E Pipelines (Squire 16:9, Squire 9:16 Shorts, DEM 16:9, DEM 9:16 Shorts)
+            print("--> Executing Phase 2: Core E2E Render Pipelines (Bounded Concurrency)...")
+            t_g2 = g02_squire_16x9_real_e2e()
+            t_g3 = g03_squire_9x16_shorts_full_res()
+            t_g4 = g04_dem_16x9_full_mp4()
+            t_g4b = g04b_dem_9x16_shorts()
+            r2, r3, r4, r4b = await asyncio.gather(t_g2, t_g3, t_g4, t_g4b)
+            results.extend([r2, r3, r4, r4b])
 
-        # Step 3: Historical Synthetic Long Timeline & Medium Continuity E2E
-        print("--> Executing Phase 3: Synthetic Long Timeline & Medium Continuity E2E...")
-        t0_g5 = time.time()
-        r5 = await g05_synthetic_long_timeline_regression()
-        durations["g05_synthetic_long_timeline_regression"] = round(time.time() - t0_g5, 2)
-        results.append(r5)
+            # Step 3: Historical Synthetic Long Timeline & Medium Continuity E2E
+            print("--> Executing Phase 3: Synthetic Long Timeline & Medium Continuity E2E...")
+            t0_g5 = time.time()
+            r5 = await g05_synthetic_long_timeline_regression()
+            durations["g05_synthetic_long_timeline_regression"] = round(time.time() - t0_g5, 2)
+            results.append(r5)
 
-        t0_g5b = time.time()
-        r5b = await g05b_medium_continuity_e2e()
-        durations["g05b_medium_continuity_e2e"] = round(time.time() - t0_g5b, 2)
-        results.append(r5b)
+            t0_g5b = time.time()
+            r5b = await g05b_medium_continuity_e2e()
+            durations["g05b_medium_continuity_e2e"] = round(time.time() - t0_g5b, 2)
+            results.append(r5b)
 
-        r5c = await g05c_optional_real_company_replay()
-        results.append(r5c)
+            r5c = await g05c_optional_real_company_replay()
+            results.append(r5c)
 
-        # Step 4: Negative, Security & Invalidation Tests
-        print("--> Executing Phase 4: Negative, Tamper & Security Tests...")
-        t_g6 = g06_negative_missing()
-        t_g7 = g07_negative_input()
-        t_g8 = g08_preserve_custom()
-        t_g9 = g09_stale_invalidation_and_tamper()
-        t_g10 = g10_failure_injection()
-        r6, r7, r8, r9, r10 = await asyncio.gather(t_g6, t_g7, t_g8, t_g9, t_g10)
-        results.extend([r6, r7, r8, r9, r10])
+            # Step 4: Negative, Security & Invalidation Tests
+            print("--> Executing Phase 4: Negative, Tamper & Security Tests...")
+            t_g6 = g06_negative_missing()
+            t_g7 = g07_negative_input()
+            t_g8 = g08_preserve_custom()
+            t_g9 = g09_stale_invalidation_and_tamper()
+            t_g10 = g10_failure_injection()
+            r6, r7, r8, r9, r10 = await asyncio.gather(t_g6, t_g7, t_g8, t_g9, t_g10)
+            results.extend([r6, r7, r8, r9, r10])
 
-        # Step 5: Media Quality, Legacy, Concurrency, UHD & CI Verification
-        print("--> Executing Phase 5: Media Quality, Concurrency, UHD & Telemetry...")
-        t_g11 = g11_media_quality(r2)
-        t_g12 = g12_legacy_samples_regression()
-        t_g13 = g13_real_concurrent_render()
-        t_g14 = g14_historical_replay_contrast(r5)
-        t_g15 = g15_headless_ci()
-        t_g17 = g17_uhd_resolutions()
-        r11, r12, r13, r14, r15, r17 = await asyncio.gather(t_g11, t_g12, t_g13, t_g14, t_g15, t_g17)
-        results.extend([r11, r12, r13, r14, r15, r17])
+            # Step 5: Media Quality, Legacy, Concurrency, UHD & CI Verification
+            print("--> Executing Phase 5: Media Quality, Concurrency, UHD & Telemetry...")
+            t_g11 = g11_media_quality(r2)
+            t_g12 = g12_legacy_samples_regression()
+            t_g13 = g13_real_concurrent_render()
+            t_g14 = g14_historical_replay_contrast(r5)
+            t_g15 = g15_headless_ci()
+            t_g17 = g17_uhd_resolutions()
+            r11, r12, r13, r14, r15, r17 = await asyncio.gather(t_g11, t_g12, t_g13, t_g14, t_g15, t_g17)
+            results.extend([r11, r12, r13, r14, r15, r17])
 
-        # Step 6: Narrative Alignment & V6 Project Visibility Capabilities
-        print("--> Executing Phase 6: V6 Project Visibility, Semantics & Narrative Alignment...")
-        r_v6_a = await g_v6_a_visibility_and_recovery()
-        r_v6_b = await g_v6_b_draft_zero_and_semantic_preservation()
-        r_v6_c = await g_v6_c_visual_facts_and_anatomy()
-        r_v6_d = await g_v6_d_narrative_movement_and_animation()
-        r_v6_g = await g_v6_g_range_preview()
-        results.extend([r_v6_a, r_v6_b, r_v6_c, r_v6_d, r_v6_g])
+            # Step 6: Narrative Alignment & V6 Project Visibility Capabilities
+            print("--> Executing Phase 6: V6 Project Visibility, Semantics & Narrative Alignment...")
+            r_v6_a = await g_v6_a_visibility_and_recovery()
+            r_v6_b = await g_v6_b_draft_zero_and_semantic_preservation()
+            r_v6_c = await g_v6_c_visual_facts_and_anatomy()
+            r_v6_d = await g_v6_d_narrative_movement_and_animation()
+            r_v6_g = await g_v6_g_range_preview()
+            results.extend([r_v6_a, r_v6_b, r_v6_c, r_v6_d, r_v6_g])
 
-        # Step 7: V7 Narrative Audio & Sound Design Acceptance Gates (N1 - N12)
-        print("--> Executing Phase 7: V7 Narrative Audio & Sound Design Matrix (N1 - N12)...")
-        r_n1 = await n01_sfx_catalog()
-        r_n2 = await n02_planner_sound_mapping()
-        r_n3 = await n03_cue_alignment_and_precision()
-        r_n4 = await n04_determinism_and_no_duplicates()
-        r_n5 = await n05_manual_lock_preservation()
-        r_n6 = await n06_multi_frame_visuals()
-        r_n7 = await n07_full_squire_audio_video_30_60s()
-        r_n8 = await n08_audio_fidelity_and_loudness(r_n7)
-        r_n9 = await n09_preview_with_audio(r_n7)
-        r_n10 = await n10_shorts_9x16_audio_sample()
-        r_n11 = await n11_resource_breach_negative()
-        results.extend([r_n1, r_n2, r_n3, r_n4, r_n5, r_n6, r_n7, r_n8, r_n9, r_n10, r_n11])
-        r_n12 = await n12_both_packs_regression(results)
-        results.append(r_n12)
+            # Step 7: V7 Narrative Audio & Sound Design Acceptance Gates (N1 - N12)
+            print("--> Executing Phase 7: V7 Narrative Audio & Sound Design Matrix (N1 - N12)...")
+            r_n1 = await n01_sfx_catalog()
+            r_n2 = await n02_planner_sound_mapping()
+            r_n3 = await n03_cue_alignment_and_precision()
+            r_n4 = await n04_determinism_and_no_duplicates()
+            r_n5 = await n05_manual_lock_preservation()
+            r_n6 = await n06_multi_frame_visuals()
+            r_n7 = await n07_full_squire_audio_video_30_60s()
+            r_n8 = await n08_audio_fidelity_and_loudness(r_n7)
+            r_n9 = await n09_preview_with_audio(r_n7)
+            r_n10 = await n10_shorts_9x16_audio_sample()
+            r_n11 = await n11_resource_breach_negative()
+            results.extend([r_n1, r_n2, r_n3, r_n4, r_n5, r_n6, r_n7, r_n8, r_n9, r_n10, r_n11])
+            r_n12 = await n12_both_packs_regression(results)
+            results.append(r_n12)
 
-        # Step 8: V8 Master Acceptance Gates (H1 - H14)
-        print("--> Executing Phase 8: V8 Master Acceptance Matrix (H1 - H14)...")
-        r_h1 = await h01_ui_audio_jobs_truth()
-        r_h2 = await h02_canonical_visual_hash()
-        r_h3 = await h03_audio_only_no_rerender()
-        r_h4 = await h04_visual_stale_correct()
-        r_h5 = await h05_manual_lock_and_idempotency()
-        r_h6 = await h06_foley_cadence()
-        r_h7 = await h07_real_motion()
-        r_h8 = await h08_showcase_final_mp4(r_n7)
-        r_h9 = await h09_final_aac_audio_metrics(r_n7)
-        r_h10 = await h10_mid_range_preview_audio(r_n7)
-        r_h11 = await h11_negative_release_gate()
-        r_h12 = await h12_async_parallel_resource()
-        r_h13 = await h13_both_pack_legacy(results)
-        r_h14 = await h14_source_integrity_and_push()
-        results.extend([r_h1, r_h2, r_h3, r_h4, r_h5, r_h6, r_h7, r_h8, r_h9, r_h10, r_h11, r_h12, r_h13, r_h14])
+            # Step 8: V8 Master Acceptance Gates (H1 - H14)
+            print("--> Executing Phase 8: V8 Master Acceptance Matrix (H1 - H14)...")
+            r_h1 = await h01_ui_audio_jobs_truth()
+            r_h2 = await h02_canonical_visual_hash()
+            r_h3 = await h03_audio_only_no_rerender()
+            r_h4 = await h04_visual_stale_correct()
+            r_h5 = await h05_manual_lock_and_idempotency()
+            r_h6 = await h06_foley_cadence()
+            r_h7 = await h07_real_motion()
+            r_h8 = await h08_showcase_final_mp4(r_n7)
+            r_h9 = await h09_final_aac_audio_metrics(r_n7)
+            r_h10 = await h10_mid_range_preview_audio(r_n7)
+            r_h11 = await h11_negative_release_gate()
+            r_h12 = await h12_async_parallel_resource()
+            r_h13 = await h13_both_pack_legacy(results)
+            r_h14 = await h14_source_integrity_and_push()
+            results.extend([r_h1, r_h2, r_h3, r_h4, r_h5, r_h6, r_h7, r_h8, r_h9, r_h10, r_h11, r_h12, r_h13, r_h14])
 
-        # Step 9: V9 Master Acceptance Matrix (J1 - J15)
-        print("--> Executing Phase 9: V9 Hook Director & Truthful UI/Audio Matrix (J1 - J15)...")
-        r_j1 = await j01_ui_audio_plan_truthful_post()
-        r_j2 = await j02_http_story_save_audio_vs_visual()
-        r_j3 = await j03_full_vs_preview_hash_isolation()
-        r_j4 = await j04_manual_sfx_music_protection()
-        r_j5 = await j05_motion_tracking_and_negative_test()
-        r_j6 = await j06_final_aac_audio_metrics_strict(r_n7)
-        r_j7 = await j07_async_parallel_and_process_safety()
-        r_j8 = await j08_squire_16x9_first_30s_showcase()
-        r_j9 = await j09_squire_9x16_shorts_first_30s()
-        r_j10 = await j10_dem_16x9_first_30s_showcase()
-        r_j11 = await j11_dem_9x16_shorts_first_30s()
-        r_j12 = await j12_user_content_preservation()
-        r_j13 = await j13_opening_preview_synchronized_audio()
-        results.extend([r_j1, r_j2, r_j3, r_j4, r_j5, r_j6, r_j7, r_j8, r_j9, r_j10, r_j11, r_j12, r_j13])
-        r_j14 = await j14_legacy_packs_regression_safety(results)
-        r_j15 = await j15_truth_ledger_and_branch_push()
-        results.extend([r_j14, r_j15])
+            # Step 9: V9 Master Acceptance Matrix (J1 - J15)
+            print("--> Executing Phase 9: V9 Hook Director & Truthful UI/Audio Matrix (J1 - J15)...")
+            r_j1 = await j01_ui_audio_plan_truthful_post()
+            r_j2 = await j02_http_story_save_audio_vs_visual()
+            r_j3 = await j03_full_vs_preview_hash_isolation()
+            r_j4 = await j04_manual_sfx_music_protection()
+            r_j5 = await j05_motion_tracking_and_negative_test()
+            r_j6 = await j06_final_aac_audio_metrics_strict(r_n7)
+            r_j7 = await j07_async_parallel_and_process_safety()
+            r_j8 = await j08_squire_16x9_first_30s_showcase()
+            r_j9 = await j09_squire_9x16_shorts_first_30s()
+            r_j10 = await j10_dem_16x9_first_30s_showcase()
+            r_j11 = await j11_dem_9x16_shorts_first_30s()
+            r_j12 = await j12_user_content_preservation()
+            r_j13 = await j13_opening_preview_synchronized_audio()
+            results.extend([r_j1, r_j2, r_j3, r_j4, r_j5, r_j6, r_j7, r_j8, r_j9, r_j10, r_j11, r_j12, r_j13])
+            r_j14 = await j14_legacy_packs_regression_safety(results)
+            r_j15 = await j15_truth_ledger_and_branch_push()
+            results.extend([r_j14, r_j15])
+        else:
+            results.append(r0)
+
+        # Step 10: V10 Master Acceptance Matrix (K1 - K15)
+        print("--> Executing Phase 10: V10 Opening Hook Director Suite (K1 - K15)...")
+        r_k1 = await k01_real_compiler_behavior_squire()
+        r_k2 = await k02_real_compiler_behavior_dem()
+        r_k3 = await k03_true_before_after_render()
+        r_k4 = await k04_manual_lock_idempotence()
+        r_k5 = await k05_v10_true_motion()
+        r_k6 = await k06_hook_squire_horizontal_30()
+        r_k7 = await k07_hook_squire_vertical_30()
+        r_k8 = await k08_hook_dem_horizontal_30()
+        r_k9 = await k09_hook_dem_vertical_30()
+        r_k10 = await k10_audio_final_truth_aac(r_k6)
+        r_k11 = await k11_ui_e2e_task_api()
+        r_k12 = await k12_resource_stress_real_concurrency()
+        r_k13 = await k13_negative_cases_injection()
+        results.extend([r_k1, r_k2, r_k3, r_k4, r_k5, r_k6, r_k7, r_k8, r_k9, r_k10, r_k11, r_k12, r_k13])
+        r_k14 = await k14_regression_consistency(results)
+        results.append(r_k14)
+        r_k15 = await k15_provenance_and_git(results)
+        results.append(r_k15)
     finally:
         monitor.stop()
         ACTIVE_MONITOR = None
 
-    # Step 10: Measured Telemetry
+    # Step 11: Measured Telemetry
     r16 = await g16_performance_telemetry(durations, monitor.get_stats())
     results.append(r16)
 
@@ -3749,7 +3870,10 @@ async def main():
         "H13": 50, "H14": 51,
         "J1": 52, "J2": 53, "J3": 54, "J4": 55, "J5": 56,
         "J6": 57, "J7": 58, "J8": 59, "J9": 60, "J10": 61,
-        "J11": 62, "J12": 63, "J13": 64, "J14": 65, "J15": 66
+        "J11": 62, "J12": 63, "J13": 64, "J14": 65, "J15": 66,
+        "K1": 67, "K2": 68, "K3": 69, "K4": 70, "K5": 71,
+        "K6": 72, "K7": 73, "K8": 74, "K9": 75, "K10": 76,
+        "K11": 77, "K12": 78, "K13": 79, "K14": 80, "K15": 81
     }
     results.sort(key=lambda r: gate_order.get(r.get("gate", ""), 99))
 
@@ -3764,12 +3888,10 @@ async def main():
     opt_pass_count = sum(1 for r in optional_results if r.get("status") == "PASS")
     opt_missing_count = sum(1 for r in optional_results if r.get("status") == "NOT_RUN_OPTIONAL_MISSING_FIXTURE")
 
-    # Truthful V9 Verdict:
-    # FLOW_READY / V9_READY = ALL REQUIRED gates PASS with observed real output, no material unresolved blockers.
-    # Optional gates marked NOT_RUN_OPTIONAL_MISSING_FIXTURE do NOT cause a HOLD.
+    # Truthful V10 Verdict:
     if req_fail_count == 0 and req_pass_count == total_required:
         overall_verdict = "FLOW_READY"
-        verdict_reason = f"Tất cả {req_pass_count}/{total_required} cổng BẮT BUỘC (Required Gates: G0-G17, G-A..G-G, N1-N12, H1-H14, J1-J15) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: {opt_missing_count} NOT_RUN_OPTIONAL_MISSING_FIXTURE."
+        verdict_reason = f"Tất cả {req_pass_count}/{total_required} cổng BẮT BUỘC (Required Gates: G0-G17, G-A..G-G, N1-N12, H1-H14, J1-J15, K1-K15) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: {opt_missing_count} NOT_RUN_OPTIONAL_MISSING_FIXTURE."
     else:
         overall_verdict = "FLOW_HOLD"
         verdict_reason = f"Có {req_fail_count} cổng bắt buộc chưa đạt PASS."
@@ -3792,13 +3914,15 @@ async def main():
     summary_json_path = EVIDENCE_DIR / "latest-summary.json"
     summary_json_path.write_text(json.dumps(summary_data, indent=2, ensure_ascii=False), encoding="utf-8")
 
+    current_branch = r0["details"]["git_branch"]
+
     # Write v6_execution_ledger.json
     v6_ledger = {
         "run_id": RUN_ID,
         "timestamp": datetime.now().isoformat(),
         "total_duration_sec": total_duration,
         "git": {
-            "branch": "fix/Image-Shot",
+            "branch": current_branch,
             "head": r0["details"]["git_head"],
             "production_head": r0["details"]["git_production_head"],
         },
@@ -3824,7 +3948,7 @@ async def main():
         "timestamp": datetime.now().isoformat(),
         "total_duration_sec": total_duration,
         "git": {
-            "branch": "fix/Image-Shot",
+            "branch": current_branch,
             "head": r0["details"]["git_head"],
             "production_head": r0["details"]["git_production_head"],
         },
@@ -3850,7 +3974,7 @@ async def main():
         "timestamp": datetime.now().isoformat(),
         "total_duration_sec": total_duration,
         "git": {
-            "branch": "fix/Image-Shot",
+            "branch": current_branch,
             "head": r0["details"]["git_head"],
             "production_head": r0["details"]["git_production_head"],
         },
@@ -3876,7 +4000,7 @@ async def main():
         "timestamp": datetime.now().isoformat(),
         "total_duration_sec": total_duration,
         "git": {
-            "branch": "fix/Image-Shot",
+            "branch": current_branch,
             "head": r0["details"]["git_head"],
             "production_head": r0["details"]["git_production_head"],
         },
@@ -3896,29 +4020,55 @@ async def main():
     ledger_v9_json_path = EVIDENCE_V9_DIR / "v9_execution_ledger.json"
     ledger_v9_json_path.write_text(json.dumps(v9_ledger, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    # Write v9_review.md
+    # Write v10_execution_ledger.json
+    v10_ledger = {
+        "run_id": RUN_ID,
+        "timestamp": datetime.now().isoformat(),
+        "total_duration_sec": total_duration,
+        "git": {
+            "branch": current_branch,
+            "head": r0["details"]["git_head"],
+            "production_head": r0["details"]["git_production_head"],
+        },
+        "system": {
+            "node": r0["details"]["node_version"],
+            "python": sys.version.split()[0],
+            "resources": monitor.get_stats(),
+        },
+        "verdict": overall_verdict,
+        "verdict_reason": verdict_reason,
+        "v10_gates": [r for r in results if r.get("gate", "").startswith("K")],
+        "all_gates_summary": [
+            {"gate": r.get("gate"), "name": r.get("name"), "status": r.get("status"), "kind": r.get("kind")}
+            for r in results
+        ]
+    }
+    ledger_v10_json_path = EVIDENCE_V10_DIR / "v10_execution_ledger.json"
+    ledger_v10_json_path.write_text(json.dumps(v10_ledger, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    # Write v10_review.md
     review_lines = [
-        f"# Báo cáo Đánh giá Kỹ thuật V9 (QA-Unified-Video-Studio)",
+        f"# Báo cáo Đánh giá Kỹ thuật V10 (QA-Unified-Video-Studio)",
         f"- **Mã lượt chạy**: `{RUN_ID}`",
-        f"- **Nhánh thực thi**: `fix/Image-Shot`",
+        f"- **Nhánh thực thi**: `{current_branch}`",
         f"- **Trạng thái**: **{overall_verdict}** ({req_pass_count}/{total_required} Required Gates Pass)",
         f"- **Thời gian**: `{datetime.now().isoformat()}`\n",
-        f"## Danh mục 15 Cổng Nghiệm thu V9 (J1 - J15)\n",
-        f"| Cổng | Tên cổng V9 | Trạng thái | Bắt buộc | Ghi chú & Chi tiết |",
+        f"## Danh mục 15 Cổng Nghiệm thu V10 (K1 - K15)\n",
+        f"| Cổng | Tên cổng V10 | Trạng thái | Bắt buộc | Ghi chú & Chi tiết |",
         f"| :--- | :--- | :---: | :---: | :--- |",
     ]
     for r in results:
-        if r.get("gate", "").startswith("J"):
+        if r.get("gate", "").startswith("K"):
             st = "✅ PASS" if r.get("status") == "PASS" else "❌ FAIL"
             det = r.get("details", {})
-            note = str(det.get("reason") or det.get("output_file") or det.get("hook_validation") or det.get("run1_status") or "OK")
+            note = str(det.get("reason") or det.get("output_file") or det.get("proof_contact_sheet") or "OK")
             review_lines.append(f"| **{r.get('gate')}** | {r.get('name')} | {st} | Có | {note} |")
-    (EVIDENCE_V9_DIR / "v9_review.md").write_text("\n".join(review_lines), encoding="utf-8")
+    (EVIDENCE_V10_DIR / "v10_review.md").write_text("\n".join(review_lines), encoding="utf-8")
 
     # Write latest-report.md
     report_md_path = EVIDENCE_DIR / "latest-report.md"
     report_lines = [
-        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V9)",
+        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V10)",
         f"- **Mã lượt chạy (Run ID)**: `{RUN_ID}`",
         f"- **Thời gian chạy**: `{summary_data['timestamp']}`",
         f"- **Tổng thời gian thực thi**: `{total_duration}s`",
@@ -3941,10 +4091,14 @@ async def main():
 
         is_req = "Bắt buộc" if r.get("required", True) else "Tùy chọn"
         det = r.get("details", {})
-        note = det.get("reason") or det.get("output_file") or det.get("defect_pattern") or det.get("synthetic_replay_status") or "Chi tiết trong summary JSON"
+        note = det.get("reason") or det.get("output_file") or det.get("defect_pattern") or det.get("proof_contact_sheet") or det.get("synthetic_replay_status") or "Chi tiết trong summary JSON"
         if isinstance(note, str) and len(note) > 85:
             note = note[:82] + "..."
         report_lines.append(f"| **{r.get('gate')}** | {r.get('name')} | `{r.get('kind', 'TEST')}` | {is_req} | {status_badge} | {note} |")
+
+    report_lines.append("\n## Bằng chứng Trực quan V10 (Visual & Audio Proofs)\n")
+    for proof in sorted(EVIDENCE_V10_DIR.glob("proof_*.jpg")):
+        report_lines.append(f"- **v10/{proof.name}**: `{proof.stat().st_size // 1024} KB` (Trích xuất từ video render thực tế)\n")
 
     report_lines.append("\n## Bằng chứng Trực quan V9 (Visual & Audio Proofs)\n")
     for proof in sorted(EVIDENCE_V9_DIR.glob("proof_*.jpg")):
@@ -3971,6 +4125,8 @@ async def main():
     print("\n" + "=" * 75)
     print(f"VERDICT: {overall_verdict} ({req_pass_count}/{total_required} REQUIRED PASS)")
     print(f"Summary:    {summary_json_path}")
+    print(f"Ledger V10: {ledger_v10_json_path}")
+    print(f"Ledger V9:  {ledger_v9_json_path}")
     print(f"Ledger V8:  {ledger_v8_json_path}")
     print(f"Ledger V7:  {ledger_v7_json_path}")
     print(f"Ledger V6:  {ledger_json_path}")

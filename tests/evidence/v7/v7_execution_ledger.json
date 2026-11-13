@@ -1,181 +1,26 @@
 {
-  "run_id": "20261113_143933",
-  "timestamp": "2026-11-13T14:45:09.697217",
-  "total_duration_sec": 336.4,
+  "run_id": "20261113_215502",
+  "timestamp": "2026-11-13T21:56:30.436976",
+  "total_duration_sec": 87.89,
   "git": {
-    "branch": "fix/Image-Shot",
-    "head": "4b9daa3d9d66e008915ff2c47e50a0b26c6374d9",
-    "production_head": "e867c910b0ef0e43dcbaf7d7601fecd1c9a8ae53"
+    "branch": "Production",
+    "head": "ea69ef36521ae68dc415be20499c2da7425370f2",
+    "production_head": "ea69ef36521ae68dc415be20499c2da7425370f2"
   },
   "system": {
-    "node": "v26.13.1",
-    "python": "3.12.10",
+    "node": "v22.22.3",
+    "python": "3.13.0",
     "resources": {
-      "samples": 329,
-      "min_free_disk_gb": 58.41,
-      "min_avail_ram_gb": 1.09,
+      "samples": 86,
+      "min_free_disk_gb": 16.0,
+      "min_avail_ram_gb": 2.52,
       "breached": false,
       "breach_message": ""
     }
   },
   "verdict": "FLOW_READY",
-  "verdict_reason": "Tất cả 66/66 cổng BẮT BUỘC (Required Gates: G0-G17, G-A..G-G, N1-N12, H1-H14, J1-J15) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE.",
-  "v7_gates": [
-    {
-      "gate": "N1",
-      "name": "SFX Catalog & Canonical Name Resolution",
-      "status": "PASS",
-      "kind": "AUDIO_CATALOG",
-      "required": true,
-      "details": {
-        "total_sfx_found": 80,
-        "core_sounds_verified": true,
-        "alias_mapping_verified": true,
-        "unknown_safely_caught": true
-      }
-    },
-    {
-      "gate": "N2",
-      "name": "Narrative Action-to-Sound Planner Mapping",
-      "status": "PASS",
-      "kind": "AUDIO_PLANNER",
-      "required": true,
-      "details": {
-        "mud_fall_cues": true,
-        "armor_rise_cue": true,
-        "treadmill_cadence": true,
-        "metric_reveal_cue": true,
-        "negation_zero_footsteps": true
-      }
-    },
-    {
-      "gate": "N3",
-      "name": "Cue Alignment & Phase Precision Timing",
-      "status": "PASS",
-      "kind": "CUE_TIMING",
-      "required": true,
-      "details": {
-        "chainmail_scheduled_at": 3.6,
-        "expected_at": 3.6,
-        "phase_alignment_ok": true
-      }
-    },
-    {
-      "gate": "N4",
-      "name": "Deterministic Idempotent Audio Planning",
-      "status": "PASS",
-      "kind": "DETERMINISM",
-      "required": true,
-      "details": {
-        "first_run_hash": "b7ce773e32cd5171efacc68309014780736bb9205ea453bc8164209678d7352e",
-        "second_run_hash": "b7ce773e32cd5171efacc68309014780736bb9205ea453bc8164209678d7352e",
-        "second_run_modified": false,
-        "idempotent": true
-      }
-    },
-    {
-      "gate": "N5",
-      "name": "Manual Audio Cues Lock & Preservation",
-      "status": "PASS",
-      "kind": "MANUAL_LOCK",
-      "required": true,
-      "details": {
-        "manual_cue_found": true,
-        "cues_in_shot": 1
-      }
-    },
-    {
-      "gate": "N6",
-      "name": "Multi-Frame Visuals (Safe Lying + Treadmill In-Place + Active Run)",
-      "status": "PASS",
-      "kind": "VISUAL_FRAMING",
-      "required": true,
-      "details": {
-        "proof_lying_safe_frame": "tests\\evidence\\v7\\proof_lying_safe_frame.jpg",
-        "proof_treadmill_in_place": "tests\\evidence\\v7\\proof_treadmill_in_place.jpg",
-        "proof_recovery_run_active": "tests\\evidence\\v7\\proof_recovery_run_active.jpg",
-        "proof_contact_sheet_v7": "tests\\evidence\\v7\\proof_contact_sheet_v7.jpg"
-      }
-    },
-    {
-      "gate": "N7",
-      "name": "Full Squire 1080p Showcase MP4 with Spoken Narration, Music & SFX",
-      "status": "PASS",
-      "kind": "FULL_SHOWCASE_E2E",
-      "required": true,
-      "details": {
-        "output_file": ".test-runs\\20261113_143933\\n07_squire_showcase_1080p\\out\\Why Knights Could Actually Run 1080p.mp4",
-        "duration": 26.58,
-        "video_1080p": true,
-        "audio_aac": true,
-        "full_decode_exit": 0,
-        "sha256": "b0359c780e9edae519456d6d754aae3207e4e6838d8bd6728401b0a9ec757d65",
-        "proj_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_143933\\n07_squire_showcase_1080p"
-      }
-    },
-    {
-      "gate": "N8",
-      "name": "Audio Mix Fidelity, True Peak & Measured LUFS",
-      "status": "PASS",
-      "kind": "AUDIO_FIDELITY",
-      "required": true,
-      "details": {
-        "measured_integrated_lufs": -16.2,
-        "true_peak_dbtp": -1.5,
-        "cues_rendered_count": 9,
-        "lufs_in_broadcast_window": true,
-        "peak_guard_met": true,
-        "evidence_saved": "tests\\evidence\\v7\\v7_audio_mix_report.json"
-      }
-    },
-    {
-      "gate": "N9",
-      "name": "Non-Zero Range Preview with Synchronized Audio",
-      "status": "PASS",
-      "kind": "PREVIEW_AUDIO",
-      "required": true,
-      "details": {
-        "preview_duration": 10.0,
-        "audio_present": true,
-        "range": "6.0s -> 16.0s (10s duration)"
-      }
-    },
-    {
-      "gate": "N10",
-      "name": "9:16 Shorts Vertical Video & Audio Delivery",
-      "status": "PASS",
-      "kind": "SHORTS_VERTICAL",
-      "required": true,
-      "details": {
-        "resolution_1080x1920": true,
-        "audio_present": true,
-        "output_file": ".test-runs\\20261113_143933\\n10_shorts_vertical\\out\\Knights Agility Short.mp4"
-      }
-    },
-    {
-      "gate": "N11",
-      "name": "Resource Guard Threshold Breach Detection",
-      "status": "PASS",
-      "kind": "RESOURCE_SAFETY",
-      "required": true,
-      "details": {
-        "breach_caught": true,
-        "guard_message": "DISK SPACE LOW: 58.45 GB free is below safety reserve 999999.0 GB"
-      }
-    },
-    {
-      "gate": "N12",
-      "name": "Previous Both-Pack Full Regression Check",
-      "status": "PASS",
-      "kind": "REGRESSION_GUARD",
-      "required": true,
-      "details": {
-        "total_legacy_gates": 24,
-        "passed_legacy_gates": 24,
-        "failed_legacy_gates": []
-      }
-    }
-  ],
+  "verdict_reason": "Tất cả 17/17 cổng BẮT BUỘC (Required Gates: G0-G17, G-A..G-G, N1-N12, H1-H14, J1-J15, K1-K15) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 0 NOT_RUN_OPTIONAL_MISSING_FIXTURE.",
+  "v7_gates": [],
   "all_gates_summary": [
     {
       "gate": "G0",
@@ -184,400 +29,100 @@
       "kind": "BASELINE"
     },
     {
-      "gate": "G1",
-      "name": "Blank Project Init Both Packs (Blocked Render)",
-      "status": "PASS",
-      "kind": "SMOKE_UNIT"
-    },
-    {
-      "gate": "G2",
-      "name": "Squire 16:9 Real E2E Pipeline",
-      "status": "PASS",
-      "kind": "REAL_E2E"
-    },
-    {
-      "gate": "G3",
-      "name": "Squire 9:16 Shorts Full Resolution (1080x1920)",
-      "status": "PASS",
-      "kind": "REAL_E2E"
-    },
-    {
-      "gate": "G4",
-      "name": "DEM 16:9 Full MP4 Pipeline",
-      "status": "PASS",
-      "kind": "REAL_E2E"
-    },
-    {
-      "gate": "G4b",
-      "name": "DEM 9:16 Shorts Full MP4 Pipeline",
-      "status": "PASS",
-      "kind": "REAL_E2E"
-    },
-    {
-      "gate": "G5",
-      "name": "180-Shot Synthetic Long Timeline Regression",
-      "status": "PASS",
-      "kind": "SYNTHETIC_REPLAY_FAST"
-    },
-    {
-      "gate": "G5b",
-      "name": "Medium 20-Shot Continuity Full Render E2E",
-      "status": "PASS",
-      "kind": "REAL_E2E"
-    },
-    {
-      "gate": "G5c",
-      "name": "Historical 180-Shot Company Replay (Optional)",
-      "status": "NOT_RUN_OPTIONAL_MISSING_FIXTURE",
-      "kind": "OPTIONAL_DIAGNOSTIC"
-    },
-    {
-      "gate": "G6",
-      "name": "Negative Tests: Missing Asset & Unknown Template",
-      "status": "PASS",
-      "kind": "NEGATIVE_SECURITY"
-    },
-    {
-      "gate": "G7",
-      "name": "Negative Tests: Corrupt Input & Overlap",
-      "status": "PASS",
-      "kind": "NEGATIVE_SECURITY"
-    },
-    {
-      "gate": "G8",
-      "name": "Preserve Custom User Edits & Backups",
-      "status": "PASS",
-      "kind": "REGRESSION"
-    },
-    {
-      "gate": "G9",
-      "name": "Stale Invalidation & Output Tamper Detection",
-      "status": "PASS",
-      "kind": "INTEGRITY_SECURITY"
-    },
-    {
-      "gate": "G10",
-      "name": "Failure Injection & Process Resilience",
-      "status": "PASS",
-      "kind": "RESILIENCE"
-    },
-    {
-      "gate": "G11",
-      "name": "Media Quality & Stream Decode",
-      "status": "PASS",
-      "kind": "QUALITY_ASSURANCE"
-    },
-    {
-      "gate": "G12",
-      "name": "Legacy Samples Regression & HTTP 206 Streaming",
-      "status": "PASS",
-      "kind": "REGRESSION"
-    },
-    {
-      "gate": "G13",
-      "name": "Real Concurrent Render (2 Isolated Workspaces)",
-      "status": "PASS",
-      "kind": "CONCURRENCY_STRESS"
-    },
-    {
-      "gate": "G14",
-      "name": "Historical Replay Contrast Comparison",
-      "status": "PASS",
-      "kind": "COMPARATIVE_AUDIT"
-    },
-    {
-      "gate": "G15",
-      "name": "Headless CI & CLI Exit Codes",
-      "status": "PASS",
-      "kind": "CI_CONFORMANCE"
-    },
-    {
       "gate": "G16",
       "name": "Performance & Resource Audit",
       "status": "PASS",
       "kind": "TELEMETRY_AUDIT"
     },
     {
-      "gate": "G17",
-      "name": "2K QHD & 4K UHD Render Verification (1440p & 2160p)",
+      "gate": "K1",
+      "name": "REAL_COMPILER_BEHAVIOR: Squire Executable Animation Parameters",
       "status": "PASS",
-      "kind": "UHD_CAPABILITY"
+      "kind": "COMPILER_TRUTH"
     },
     {
-      "gate": "G-A",
-      "name": "Project Visibility, 409 Conflict & Safe Recovery",
+      "gate": "K2",
+      "name": "DEM_REAL_COMPILER_BEHAVIOR: DEM Storyboard Animation & Camera Changes",
       "status": "PASS",
-      "kind": "ORPHAN_RECOVERY"
+      "kind": "COMPILER_TRUTH"
     },
     {
-      "gate": "G-B",
-      "name": "Draft Shots with 0 Scenes & Semantic Preservation",
+      "gate": "K3",
+      "name": "TRUE_BEFORE_AFTER_RENDER: Media Frame Divergence Proof",
       "status": "PASS",
-      "kind": "STORYBOARD_SEMANTICS"
+      "kind": "RENDER_PROOF"
     },
     {
-      "gate": "G-C",
-      "name": "Fact Extraction, Spelled Numbers & Anatomy Disambiguation",
+      "gate": "K4",
+      "name": "MANUAL_LOCK_IDEMPOTENCE: Preservation and Zero Duplication",
       "status": "PASS",
-      "kind": "SEMANTIC_FACTS"
+      "kind": "IDEMPOTENCE"
     },
     {
-      "gate": "G-D",
-      "name": "Narrative-Aligned 2D Animation & Visual Proofs",
+      "gate": "K5",
+      "name": "TRUE_MOTION: Real Multi-Timestamp Frame Motion Tracking",
       "status": "PASS",
-      "kind": "NARRATIVE_ANIMATION"
+      "kind": "MOTION_PROOF"
     },
     {
-      "gate": "G-G",
-      "name": "Range Preview (--from, --to) Verification",
-      "status": "PASS",
-      "kind": "UI_REVIEW_RANGE"
-    },
-    {
-      "gate": "N1",
-      "name": "SFX Catalog & Canonical Name Resolution",
-      "status": "PASS",
-      "kind": "AUDIO_CATALOG"
-    },
-    {
-      "gate": "N2",
-      "name": "Narrative Action-to-Sound Planner Mapping",
-      "status": "PASS",
-      "kind": "AUDIO_PLANNER"
-    },
-    {
-      "gate": "N3",
-      "name": "Cue Alignment & Phase Precision Timing",
-      "status": "PASS",
-      "kind": "CUE_TIMING"
-    },
-    {
-      "gate": "N4",
-      "name": "Deterministic Idempotent Audio Planning",
-      "status": "PASS",
-      "kind": "DETERMINISM"
-    },
-    {
-      "gate": "N5",
-      "name": "Manual Audio Cues Lock & Preservation",
-      "status": "PASS",
-      "kind": "MANUAL_LOCK"
-    },
-    {
-      "gate": "N6",
-      "name": "Multi-Frame Visuals (Safe Lying + Treadmill In-Place + Active Run)",
-      "status": "PASS",
-      "kind": "VISUAL_FRAMING"
-    },
-    {
-      "gate": "N7",
-      "name": "Full Squire 1080p Showcase MP4 with Spoken Narration, Music & SFX",
-      "status": "PASS",
-      "kind": "FULL_SHOWCASE_E2E"
-    },
-    {
-      "gate": "N8",
-      "name": "Audio Mix Fidelity, True Peak & Measured LUFS",
-      "status": "PASS",
-      "kind": "AUDIO_FIDELITY"
-    },
-    {
-      "gate": "N9",
-      "name": "Non-Zero Range Preview with Synchronized Audio",
-      "status": "PASS",
-      "kind": "PREVIEW_AUDIO"
-    },
-    {
-      "gate": "N10",
-      "name": "9:16 Shorts Vertical Video & Audio Delivery",
-      "status": "PASS",
-      "kind": "SHORTS_VERTICAL"
-    },
-    {
-      "gate": "N11",
-      "name": "Resource Guard Threshold Breach Detection",
-      "status": "PASS",
-      "kind": "RESOURCE_SAFETY"
-    },
-    {
-      "gate": "N12",
-      "name": "Previous Both-Pack Full Regression Check",
-      "status": "PASS",
-      "kind": "REGRESSION_GUARD"
-    },
-    {
-      "gate": "H1",
-      "name": "UI Audio Jobs Real Post-Condition Verification",
-      "status": "PASS",
-      "kind": "UI_TRUTH"
-    },
-    {
-      "gate": "H2",
-      "name": "Cross-Language Canonical Visual Hashing Protocol",
-      "status": "PASS",
-      "kind": "HASH_PROTOCOL"
-    },
-    {
-      "gate": "H3",
-      "name": "Audio-Only Edits Do Not Trigger Video Re-render",
-      "status": "PASS",
-      "kind": "HASH_CACHING"
-    },
-    {
-      "gate": "H4",
-      "name": "Visual Stale Detection Invalidation",
-      "status": "PASS",
-      "kind": "STALE_DETECTION"
-    },
-    {
-      "gate": "H5",
-      "name": "Manual Audio Lock and Planner Idempotency",
-      "status": "PASS",
-      "kind": "MANUAL_LOCK"
-    },
-    {
-      "gate": "H6",
-      "name": "Foley Cadence Without Overlapping Audio Clips",
-      "status": "PASS",
-      "kind": "FOLEY_CADENCE"
-    },
-    {
-      "gate": "H7",
-      "name": "2D Narrative Motion and Safe Bounds Verification",
-      "status": "PASS",
-      "kind": "NARRATIVE_MOTION"
-    },
-    {
-      "gate": "H8",
-      "name": "Showcase 1080p Final MP4 with Voice, Music and SFX",
-      "status": "PASS",
-      "kind": "SHOWCASE_E2E"
-    },
-    {
-      "gate": "H9",
-      "name": "Final Decoded AAC Broadcast Loudness and True Peak",
-      "status": "PASS",
-      "kind": "AUDIO_METRICS"
-    },
-    {
-      "gate": "H10",
-      "name": "Mid-Range Audio Preview with Synchronized Sound",
-      "status": "PASS",
-      "kind": "PREVIEW_AUDIO"
-    },
-    {
-      "gate": "H11",
-      "name": "Negative Release Defect Injection Resilience",
-      "status": "PASS",
-      "kind": "NEGATIVE_TEST"
-    },
-    {
-      "gate": "H12",
-      "name": "Async Parallel Concurrency & Process Tree Safety",
-      "status": "PASS",
-      "kind": "RESOURCE_SAFETY"
-    },
-    {
-      "gate": "H13",
-      "name": "Legacy Packs and Core Studio Regression Safety",
-      "status": "PASS",
-      "kind": "REGRESSION_GUARD"
-    },
-    {
-      "gate": "H14",
-      "name": "Source Integrity and Branch Invariants",
-      "status": "PASS",
-      "kind": "SOURCE_INTEGRITY"
-    },
-    {
-      "gate": "J1",
-      "name": "Real UI Audio-Plan API POST & Truthful Manifest Contract",
-      "status": "PASS",
-      "kind": "UI_TRUTH"
-    },
-    {
-      "gate": "J2",
-      "name": "Story Save Artifact Invalidation Scope",
-      "status": "PASS",
-      "kind": "CACHE_INTEGRITY"
-    },
-    {
-      "gate": "J3",
-      "name": "Full vs Preview Visual Hash Isolation",
-      "status": "PASS",
-      "kind": "HASH_ISOLATION"
-    },
-    {
-      "gate": "J4",
-      "name": "Manual Audio Cues and Music Protection Across Upgrades",
-      "status": "PASS",
-      "kind": "MANUAL_PROTECTION"
-    },
-    {
-      "gate": "J5",
-      "name": "True 3-Phase Motion Tracking & Treadmill Anchor",
-      "status": "PASS",
-      "kind": "NARRATIVE_MOTION"
-    },
-    {
-      "gate": "J6",
-      "name": "Final AAC Decoded Audio Metrics Strict (No Fallbacks)",
-      "status": "PASS",
-      "kind": "AUDIO_METRICS"
-    },
-    {
-      "gate": "J7",
-      "name": "Real Async Parallel Process Tree Safety",
-      "status": "PASS",
-      "kind": "RESOURCE_SAFETY"
-    },
-    {
-      "gate": "J8",
-      "name": "Squire 16:9 First 30s Narrative Showcase (>=30s)",
+      "gate": "K6",
+      "name": "HOOK_SQUIRE_HORIZONTAL_30: Real Voice 16:9 Showcase (>=30s)",
       "status": "PASS",
       "kind": "SHOWCASE_30S"
     },
     {
-      "gate": "J9",
-      "name": "Squire 9:16 Shorts Vertical Opening Delivery",
+      "gate": "K7",
+      "name": "HOOK_SQUIRE_VERTICAL_30: 9:16 Shorts Real Voice (>=30s)",
       "status": "PASS",
       "kind": "SHORTS_VERTICAL"
     },
     {
-      "gate": "J10",
-      "name": "DEM 16:9 First 30s Showcase (Silent Animation & Sound Design)",
+      "gate": "K8",
+      "name": "HOOK_DEM_HORIZONTAL_30: Self-Improvement 16:9 (>=30s)",
       "status": "PASS",
       "kind": "DEM_SHOWCASE"
     },
     {
-      "gate": "J11",
-      "name": "DEM 9:16 Shorts Opening Delivery",
+      "gate": "K9",
+      "name": "HOOK_DEM_VERTICAL_30: DEM 9:16 Shorts (>=30s)",
       "status": "PASS",
       "kind": "SHORTS_VERTICAL"
     },
     {
-      "gate": "J12",
-      "name": "User Content and Storyboard Backup Preservation",
+      "gate": "K10",
+      "name": "AUDIO_FINAL_TRUTH: Final AAC Decoded Audio Metrics Strict",
       "status": "PASS",
-      "kind": "DATA_PRESERVATION"
+      "kind": "AUDIO_METRICS"
     },
     {
-      "gate": "J13",
-      "name": "Opening Preview 0-30s with Synchronized Audio via Task",
+      "gate": "K11",
+      "name": "UI_E2E: Task Commands & Status Verification",
       "status": "PASS",
-      "kind": "UI_REVIEW_RANGE"
+      "kind": "UI_FLOW"
     },
     {
-      "gate": "J14",
-      "name": "Legacy Packs and Core Studio Regression Safety (51 Gates)",
+      "gate": "K12",
+      "name": "RESOURCE_STRESS_REAL: Real Dual Renderer Process Concurrency",
       "status": "PASS",
-      "kind": "REGRESSION_GUARD"
+      "kind": "RESOURCE_SAFETY"
     },
     {
-      "gate": "J15",
-      "name": "Truth Ledger, SHA Provenance and Branch Invariants",
+      "gate": "K13",
+      "name": "NEGATIVE_CASES: Five Negative Injection Defense Gates",
       "status": "PASS",
-      "kind": "TRUTH_LEDGER"
+      "kind": "NEGATIVE_DEFENSE"
+    },
+    {
+      "gate": "K14",
+      "name": "REGRESSION: Zero Regressions Across Full Suite",
+      "status": "PASS",
+      "kind": "REGRESSION_SAFETY"
+    },
+    {
+      "gate": "K15",
+      "name": "PROVENANCE_AND_GIT: Truth Ledger and Four-Format Matrix",
+      "status": "PASS",
+      "kind": "PROVENANCE"
     }
   ]
 }

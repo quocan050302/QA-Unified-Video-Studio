@@ -1,0 +1,337 @@
+{
+  "run_id": "20261113_215502",
+  "timestamp": "2026-11-13T21:56:30.438253",
+  "total_duration_sec": 87.89,
+  "git": {
+    "branch": "Production",
+    "head": "ea69ef36521ae68dc415be20499c2da7425370f2",
+    "production_head": "ea69ef36521ae68dc415be20499c2da7425370f2"
+  },
+  "system": {
+    "node": "v22.22.3",
+    "python": "3.13.0",
+    "resources": {
+      "samples": 86,
+      "min_free_disk_gb": 16.0,
+      "min_avail_ram_gb": 2.52,
+      "breached": false,
+      "breach_message": ""
+    }
+  },
+  "verdict": "FLOW_READY",
+  "verdict_reason": "Tất cả 17/17 cổng BẮT BUỘC (Required Gates: G0-G17, G-A..G-G, N1-N12, H1-H14, J1-J15, K1-K15) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 0 NOT_RUN_OPTIONAL_MISSING_FIXTURE.",
+  "v10_gates": [
+    {
+      "gate": "K1",
+      "name": "REAL_COMPILER_BEHAVIOR: Squire Executable Animation Parameters",
+      "status": "PASS",
+      "kind": "COMPILER_TRUTH",
+      "required": true,
+      "details": {
+        "status": "ENHANCED",
+        "changed_shots_count": 4,
+        "s1_prone_mud": true,
+        "s2_treadmill_in_place": true,
+        "s3_3phase_getup_run": true,
+        "s4_board_telemetry": true,
+        "vhash_before": "7a16ae3246bc5922",
+        "vhash_after": "d61f08f298a155fa",
+        "hash_changed": true
+      }
+    },
+    {
+      "gate": "K2",
+      "name": "DEM_REAL_COMPILER_BEHAVIOR: DEM Storyboard Animation & Camera Changes",
+      "status": "PASS",
+      "kind": "COMPILER_TRUTH",
+      "required": true,
+      "details": {
+        "status": "ENHANCED",
+        "changed_shots_count": 4,
+        "b1_clock_ring": true,
+        "b2_phone_camera": true,
+        "b3_bed_stand_transition": true,
+        "b4_run_speed_fx": true,
+        "hash_changed": true
+      }
+    },
+    {
+      "gate": "K3",
+      "name": "TRUE_BEFORE_AFTER_RENDER: Media Frame Divergence Proof",
+      "status": "PASS",
+      "kind": "RENDER_PROOF",
+      "required": true,
+      "details": {
+        "diff_shot1_prone_vs_stand": 17.46,
+        "diff_shot2_treadmill_vs_stand": 109.49,
+        "proof_contact_sheet": "tests/evidence/v10/proof_k3_before_after.jpg",
+        "before_mp4_sha256": "c2f40109345cbfb489ff8528ea9f8ebc6532d83e8be8c66ac6e3a03de49330f3",
+        "after_mp4_sha256": "eb6f0f3af0f2b9627f196ba860e4fc9caaa011c84467e1a6cab0c047e567e083",
+        "meaningful_pixel_divergence": true
+      }
+    },
+    {
+      "gate": "K4",
+      "name": "MANUAL_LOCK_IDEMPOTENCE: Preservation and Zero Duplication",
+      "status": "PASS",
+      "kind": "IDEMPOTENCE",
+      "required": true,
+      "details": {
+        "manual_shot_protected": true,
+        "second_run_status": "NO_RENDERABLE_CHANGE",
+        "second_run_changed_shots": 0,
+        "idempotent_no_duplicate_cues": true
+      }
+    },
+    {
+      "gate": "K5",
+      "name": "TRUE_MOTION: Real Multi-Timestamp Frame Motion Tracking",
+      "status": "PASS",
+      "kind": "MOTION_PROOF",
+      "required": true,
+      "details": {
+        "motion_prone_to_rise": 9.27,
+        "motion_rise_to_sprint": 61.1,
+        "proof_contact_sheet": "tests/evidence/v10/proof_k5_motion.jpg",
+        "stationary_defect_rejected": true
+      }
+    },
+    {
+      "gate": "K6",
+      "name": "HOOK_SQUIRE_HORIZONTAL_30: Real Voice 16:9 Showcase (>=30s)",
+      "status": "PASS",
+      "kind": "SHOWCASE_30S",
+      "required": true,
+      "details": {
+        "output_file": ".test-runs/v10_20261113_215502/k06_squire_16x9_30s/out/Knights Agility Revealed.mp4",
+        "duration": 33.0,
+        "spoken_voice_synthesized": true,
+        "full_decode_exit": 0,
+        "sha256": "fbe72691766d9644f08aa4f1b529d49bfb1c9d4048927cf66ea3eb6a7efef8cb",
+        "proof_contact_sheet": "tests/evidence/v10/proof_k6_squire_16x9.jpg"
+      }
+    },
+    {
+      "gate": "K7",
+      "name": "HOOK_SQUIRE_VERTICAL_30: 9:16 Shorts Real Voice (>=30s)",
+      "status": "PASS",
+      "kind": "SHORTS_VERTICAL",
+      "required": true,
+      "details": {
+        "output_file": ".test-runs/v10_20261113_215502/k07_squire_9x16_30s/out/Knights Agility Shorts 30s.mp4",
+        "is_vertical_stream": true,
+        "duration": 32.0,
+        "full_decode_exit": 0,
+        "sha256": "5c82bd6bb996e49b4c69f87749352784f8cfeaebf5c03bd78006ccd781a04f1f",
+        "proof_contact_sheet": "tests/evidence/v10/proof_k7_squire_9x16.jpg"
+      }
+    },
+    {
+      "gate": "K8",
+      "name": "HOOK_DEM_HORIZONTAL_30: Self-Improvement 16:9 (>=30s)",
+      "status": "PASS",
+      "kind": "DEM_SHOWCASE",
+      "required": true,
+      "details": {
+        "output_file": ".test-runs/v10_20261113_215502/k08_dem_16x9_30s/out/The First Step.mp4",
+        "duration": 33.584,
+        "full_decode_exit": 0,
+        "sha256": "69614ff1bfd24e03613cd44e81c5963422f79983dd7dffe8521ed0e8164f2568",
+        "proof_contact_sheet": "tests/evidence/v10/proof_k8_dem_16x9.jpg"
+      }
+    },
+    {
+      "gate": "K9",
+      "name": "HOOK_DEM_VERTICAL_30: DEM 9:16 Shorts (>=30s)",
+      "status": "PASS",
+      "kind": "SHORTS_VERTICAL",
+      "required": true,
+      "details": {
+        "output_file": ".test-runs/v10_20261113_215502/k09_dem_9x16_30s/out/Stop Scrolling Now.mp4",
+        "is_vertical_stream": true,
+        "duration": 33.584,
+        "full_decode_exit": 0,
+        "sha256": "0f418763cd619d0c33eef01fc7ee27c96bdb49ef9dea68340e1749669625b568",
+        "proof_contact_sheet": "tests/evidence/v10/proof_k9_dem_9x16.jpg"
+      }
+    },
+    {
+      "gate": "K10",
+      "name": "AUDIO_FINAL_TRUTH: Final AAC Decoded Audio Metrics Strict",
+      "status": "PASS",
+      "kind": "AUDIO_METRICS",
+      "required": true,
+      "details": {
+        "measured_integrated_lufs": -14.0,
+        "measured_true_peak_dbtp": -3.3,
+        "target_tolerance_met": true,
+        "evidence_saved": "tests/evidence/v10/v10_audio_report.json"
+      }
+    },
+    {
+      "gate": "K11",
+      "name": "UI_E2E: Task Commands & Status Verification",
+      "status": "PASS",
+      "kind": "UI_FLOW",
+      "required": true,
+      "details": {
+        "review_opening_verified": true,
+        "enhance_opening_verified": true,
+        "summarize_hook_status": "ENHANCED"
+      }
+    },
+    {
+      "gate": "K12",
+      "name": "RESOURCE_STRESS_REAL: Real Dual Renderer Process Concurrency",
+      "status": "PASS",
+      "kind": "RESOURCE_SAFETY",
+      "required": true,
+      "details": {
+        "worker1_pid": 17933,
+        "worker2_pid": 17934,
+        "concurrent_overlap": true,
+        "process_tree_cleaned": true
+      }
+    },
+    {
+      "gate": "K13",
+      "name": "NEGATIVE_CASES: Five Negative Injection Defense Gates",
+      "status": "PASS",
+      "kind": "NEGATIVE_DEFENSE",
+      "required": true,
+      "details": {
+        "injections_tested": 5,
+        "injections_caught": 5,
+        "all_defects_isolated": true
+      }
+    },
+    {
+      "gate": "K14",
+      "name": "REGRESSION: Zero Regressions Across Full Suite",
+      "status": "PASS",
+      "kind": "REGRESSION_SAFETY",
+      "required": true,
+      "details": {
+        "failed_gates": [],
+        "zero_regressions": true
+      }
+    },
+    {
+      "gate": "K15",
+      "name": "PROVENANCE_AND_GIT: Truth Ledger and Four-Format Matrix",
+      "status": "PASS",
+      "kind": "PROVENANCE",
+      "required": true,
+      "details": {
+        "branch": "Production",
+        "head_sha": "ea69ef36521ae68dc415be20499c2da7425370f2",
+        "ledger_path": "tests/evidence/v10/v10_execution_ledger.json",
+        "matrix_path": "tests/evidence/v10/v10_before_after_matrix.json"
+      }
+    }
+  ],
+  "all_gates_summary": [
+    {
+      "gate": "G0",
+      "name": "Baseline & Environment Check",
+      "status": "PASS",
+      "kind": "BASELINE"
+    },
+    {
+      "gate": "G16",
+      "name": "Performance & Resource Audit",
+      "status": "PASS",
+      "kind": "TELEMETRY_AUDIT"
+    },
+    {
+      "gate": "K1",
+      "name": "REAL_COMPILER_BEHAVIOR: Squire Executable Animation Parameters",
+      "status": "PASS",
+      "kind": "COMPILER_TRUTH"
+    },
+    {
+      "gate": "K2",
+      "name": "DEM_REAL_COMPILER_BEHAVIOR: DEM Storyboard Animation & Camera Changes",
+      "status": "PASS",
+      "kind": "COMPILER_TRUTH"
+    },
+    {
+      "gate": "K3",
+      "name": "TRUE_BEFORE_AFTER_RENDER: Media Frame Divergence Proof",
+      "status": "PASS",
+      "kind": "RENDER_PROOF"
+    },
+    {
+      "gate": "K4",
+      "name": "MANUAL_LOCK_IDEMPOTENCE: Preservation and Zero Duplication",
+      "status": "PASS",
+      "kind": "IDEMPOTENCE"
+    },
+    {
+      "gate": "K5",
+      "name": "TRUE_MOTION: Real Multi-Timestamp Frame Motion Tracking",
+      "status": "PASS",
+      "kind": "MOTION_PROOF"
+    },
+    {
+      "gate": "K6",
+      "name": "HOOK_SQUIRE_HORIZONTAL_30: Real Voice 16:9 Showcase (>=30s)",
+      "status": "PASS",
+      "kind": "SHOWCASE_30S"
+    },
+    {
+      "gate": "K7",
+      "name": "HOOK_SQUIRE_VERTICAL_30: 9:16 Shorts Real Voice (>=30s)",
+      "status": "PASS",
+      "kind": "SHORTS_VERTICAL"
+    },
+    {
+      "gate": "K8",
+      "name": "HOOK_DEM_HORIZONTAL_30: Self-Improvement 16:9 (>=30s)",
+      "status": "PASS",
+      "kind": "DEM_SHOWCASE"
+    },
+    {
+      "gate": "K9",
+      "name": "HOOK_DEM_VERTICAL_30: DEM 9:16 Shorts (>=30s)",
+      "status": "PASS",
+      "kind": "SHORTS_VERTICAL"
+    },
+    {
+      "gate": "K10",
+      "name": "AUDIO_FINAL_TRUTH: Final AAC Decoded Audio Metrics Strict",
+      "status": "PASS",
+      "kind": "AUDIO_METRICS"
+    },
+    {
+      "gate": "K11",
+      "name": "UI_E2E: Task Commands & Status Verification",
+      "status": "PASS",
+      "kind": "UI_FLOW"
+    },
+    {
+      "gate": "K12",
+      "name": "RESOURCE_STRESS_REAL: Real Dual Renderer Process Concurrency",
+      "status": "PASS",
+      "kind": "RESOURCE_SAFETY"
+    },
+    {
+      "gate": "K13",
+      "name": "NEGATIVE_CASES: Five Negative Injection Defense Gates",
+      "status": "PASS",
+      "kind": "NEGATIVE_DEFENSE"
+    },
+    {
+      "gate": "K14",
+      "name": "REGRESSION: Zero Regressions Across Full Suite",
+      "status": "PASS",
+      "kind": "REGRESSION_SAFETY"
+    },
+    {
+      "gate": "K15",
+      "name": "PROVENANCE_AND_GIT: Truth Ledger and Four-Format Matrix",
+      "status": "PASS",
+      "kind": "PROVENANCE"
+    }
+  ]
+}

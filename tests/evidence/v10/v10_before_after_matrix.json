@@ -1,0 +1,38 @@
+{
+  "format_A_squire_16x9": {
+    "description": "Military History / Squire, Horizontal 16:9 1080p",
+    "duration": 33.0,
+    "speech_voice": "REAL_SPOKEN_TTS",
+    "animation_compiled": "prone_lying_in_mud -> lab_treadmill_in_place -> 3phase_rise_run -> board_telemetry",
+    "audio_design": "mud_step, armor_clank, footsteps, battle_roar",
+    "aspect": "16:9",
+    "resolution": "1920x1080"
+  },
+  "format_B_squire_9x16": {
+    "description": "Military History / Squire, Vertical 9:16 Shorts (1080x1920)",
+    "duration": 32.0,
+    "speech_voice": "REAL_SPOKEN_TTS",
+    "animation_compiled": "vertical_safe_zones, mobile_scale_1.25, character_centered",
+    "audio_design": "mud_step, armor_clank, footsteps",
+    "aspect": "9:16",
+    "resolution": "1080x1920"
+  },
+  "format_C_dem_16x9": {
+    "description": "Self-Improvement / DEM, Horizontal 16:9 1080p (Silent Animation)",
+    "duration": 33.0,
+    "speech_voice": "NONE_ORIGINAL_SILENT",
+    "animation_compiled": "clock_ring -> phone_feed_scroll -> bed_sit_to_stand -> city_sprint_speed_fx",
+    "audio_design": "alarm_beep, phone_vibrate, thud_soft, footsteps, music_bed",
+    "aspect": "16:9",
+    "resolution": "1920x1080"
+  },
+  "format_D_dem_9x16": {
+    "description": "Self-Improvement / DEM, Vertical 9:16 Shorts (1080x1920)",
+    "duration": 33.0,
+    "speech_voice": "NONE_ORIGINAL_SILENT",
+    "animation_compiled": "vertical_safe_margins, high_contrast_narr_text, phone_focal_push",
+    "audio_design": "phone_vibrate, alarm_beep, thud_soft, footsteps, cta_whoosh",
+    "aspect": "9:16",
+    "resolution": "1080x1920"
+  }
+}

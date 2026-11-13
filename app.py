@@ -265,6 +265,16 @@ def summarize_project(p: Path):
     elif audio_planned:
         audio_status = 'AUDIO_PLANNED'
 
+    hook_diff_file = p / 'build' / 'opening_diff.json'
+    hook_rev_file = p / 'build' / 'opening_review.json'
+    hook_status = None
+    if hook_diff_file.is_file():
+        hdata = load_json(hook_diff_file, {}) or {}
+        hook_status = hdata.get('status')
+    elif hook_rev_file.is_file():
+        hdata = load_json(hook_rev_file, {}) or {}
+        hook_status = hdata.get('validation', {}).get('editorial_state')
+
     return {'id': p.name, 'title': cfg.get('title', p.name), 'mode': mode,
             'aspect': cfg.get('aspect', '16:9'), 'resolution': cfg.get('resolution', '1080p'),
             'duration': story.get('duration', cfg.get('duration', 0)),
@@ -272,6 +282,7 @@ def summarize_project(p: Path):
             'visuals_ready': visuals_ready, 'missing_shots': missing_shots,
             'audio_planned': audio_planned, 'audio_mixed': audio_mixed,
             'audio_status': audio_status,
+            'hook_status': hook_status,
             'stage': stage, 'files': available_files(p)}
 
 
@@ -467,6 +478,8 @@ def task_commands(action, p: Path, params: dict = None):
             [py, 'tools/mix.py', '--project', proj, '--preview', '--from-sec', '0', '--to-sec', op_to]
         ]
     if action == 'enhance-opening':
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi enhance opening.')
         return [[py, 'tools/plan_hook.py', '--project', proj, '--apply-hook']]
     if action == 'plan-audio':
         return [[py, 'tools/plan_audio.py', '--project', proj]]
@@ -583,17 +596,39 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
     if action == 'review-opening':
         rev_file = p / 'build' / 'opening_review.json'
         prev_file = p / 'build' / 'preview.mp4'
-        if not rev_file.is_file():
-            return False, 'build/opening_review.json was not created'
-        if not prev_file.is_file() or prev_file.stat().st_size < 1000:
-            return False, 'build/preview.mp4 for opening was not created or is empty'
+        if not rev_file.is_file() or rev_file.stat().st_mtime < started - 2:
+            return False, 'build/opening_review.json was not created or is stale'
+        if not prev_file.is_file() or prev_file.stat().st_size < 1000 or prev_file.stat().st_mtime < started - 2:
+            return False, 'build/preview.mp4 for opening was not created or is empty/stale'
+        if shutil.which('ffprobe'):
+            r = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration:stream=codec_type',
+                                '-of', 'default=noprint_wrappers=1', str(prev_file)],
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=30)
+            if r.returncode != 0 or 'codec_type=video' not in r.stdout:
+                return False, 'Preview output missing video stream'
+            dur_m = re.search(r'duration=([\d.]+)', r.stdout)
+            dur_val = float(dur_m.group(1)) if dur_m else 0
+            if dur_val <= 0:
+                return False, 'Preview video has invalid zero duration'
         return True, ''
 
     if action == 'enhance-opening':
         rev_file = p / 'build' / 'opening_review.json'
-        if not rev_file.is_file():
-            return False, 'Opening review metadata was not generated'
-        return True, ''
+        diff_file = p / 'build' / 'opening_diff.json'
+        shots_file = p / 'story' / 'shots.json'
+        if not rev_file.is_file() and not diff_file.is_file():
+            return False, 'Opening review or diff metadata was not generated'
+        diff_data = load_json(diff_file, {}) or {}
+        status_val = diff_data.get('status', '')
+        if status_val == 'ENHANCED':
+            if diff_data.get('changed_shots_count', 0) <= 0:
+                return False, 'Enhance reported status ENHANCED but changed_shots_count is 0'
+            if shots_file.is_file() and shots_file.stat().st_mtime < started - 2:
+                return False, 'shots.json was not updated with compiled hook parameters'
+            return True, ''
+        elif status_val in ('NO_RENDERABLE_CHANGE', 'MANUAL_PROTECTED', 'HOOK_QA_PASS'):
+            return True, ''
+        return False, f'Opening enhance reported unrecognized status: {status_val}'
 
     if action == 'preview-audio':
         prev_file = p / 'build' / 'preview.mp4'

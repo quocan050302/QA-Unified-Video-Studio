@@ -1,0 +1,9 @@
+{
+  "status": "DERIVED_FROM_FINAL_AAC_MP4",
+  "output_file": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/v10_20261113_215502/k06_squire_16x9_30s/out/Knights Agility Revealed.mp4",
+  "sha256": "fbe72691766d9644f08aa4f1b529d49bfb1c9d4048927cf66ea3eb6a7efef8cb",
+  "integrated_lufs": -14.0,
+  "true_peak_dbtp": -3.3,
+  "target_met": true,
+  "timestamp": 1794581779.2417889
+}
