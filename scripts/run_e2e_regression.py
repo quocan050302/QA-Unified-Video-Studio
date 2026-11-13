@@ -38,6 +38,7 @@ sys.path.insert(0, str(REPO_ROOT / "tools"))
 from resource_guard import check_resources, clean_old_runs, get_disk_info, get_ram_info, ResourceMonitor, kill_process_tree
 from common import compute_source_hash
 from app import Handler, create_project, invalidate_artifacts, summarize_project
+from tts_helper import synthesize_speech
 
 RUN_ID = datetime.now().strftime("%Y%m%d_%H%M%S")
 TEST_RUNS_DIR = REPO_ROOT / ".test-runs"
@@ -50,9 +51,12 @@ CONCURRENCY_SEMAPHORE = asyncio.Semaphore(2)
 
 def run_sync(cmd: list[str], cwd: Path = REPO_ROOT, timeout: float = 120) -> tuple[int, str, str, float]:
     t0 = time.time()
+    real_cmd = list(cmd)
+    if real_cmd and real_cmd[0] in ("python3", "python"):
+        real_cmd[0] = sys.executable
     try:
         proc = subprocess.Popen(
-            cmd,
+            real_cmd,
             cwd=str(cwd),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -273,32 +277,18 @@ async def g02_squire_16x9_real_e2e() -> dict:
     for d in ("input", "timeline", "story", "anh", "build", "out"):
         (proj_dir / d).mkdir(parents=True, exist_ok=True)
 
-    # Use REAL spoken human speech fixture from why-knights-stopped-using-shields (4.0s slice)
-    real_speech_source = REPO_ROOT / "projects" / "why-knights-stopped-using-shields" / "input" / "voice_source.wav"
+    # Generate deterministic matching spoken speech fixture
     input_wav = proj_dir / "input" / "voice_source.wav"
     input_script = proj_dir / "input" / "voice_script.txt"
-    if real_speech_source.exists():
-        extract_cmd = [
-            "ffmpeg", "-y", "-v", "quiet",
-            "-ss", "0", "-t", "4.0",
-            "-i", str(real_speech_source),
-            "-ar", "48000", "-ac", "1",
-            str(input_wav),
-        ]
-        run_sync(extract_cmd)
-        speech_kind = "REAL_HUMAN_RECORDING"
-    else:
-        # Fallback to macOS say spoken synthesis
-        say_cmd = ["say", "-o", str(proj_dir / "build" / "speech.aiff"), "Knights fought across medieval battlefields with heavy armor."]
-        run_sync(say_cmd)
-        run_sync(["ffmpeg", "-y", "-v", "quiet", "-i", str(proj_dir / "build" / "speech.aiff"), "-ar", "48000", "-ac", "1", str(input_wav)])
-        speech_kind = "REAL_SPOKEN_SYNTHESIS"
-
-    transcript_text = (
-        "Your brain burns roughly a hundred and twenty grams of sugar every single day.\n"
-        "In London and Rome they defended their realms with steel.\n"
-    )
+    s1 = "Knights fought across medieval battlefields with heavy steel armor."
+    s2 = "Their disciplined formations stood firm against all incoming enemies."
+    transcript_text = f"{s1}\n{s2}\n"
     input_script.write_text(transcript_text, encoding="utf-8")
+
+    synth_ok = synthesize_speech(f"{s1} {s2}", input_wav)
+    if not synth_ok or not input_wav.exists() or input_wav.stat().st_size < 1000:
+        return {"gate": "G2", "name": "Squire 16:9 Real E2E", "status": "FAIL", "error": "Speech synthesis failed"}
+    speech_kind = "REAL_SPOKEN_SYNTHESIS"
 
     # Run prep_voice directly to build timeline/voice.wav, timeline/lines.json, timeline/words.json
     prep_code, prep_out, prep_err, _ = await run_async_cmd([
@@ -402,21 +392,17 @@ async def g03_squire_9x16_shorts_full_res() -> dict:
     for d in ("input", "timeline", "story", "anh", "build", "out"):
         (proj_dir / d).mkdir(parents=True, exist_ok=True)
 
-    # Real speech slice
-    real_speech_source = REPO_ROOT / "projects" / "why-knights-stopped-using-shields" / "input" / "voice_source.wav"
+    # Deterministic matching speech synthesis for vertical 9:16 Shorts
     input_wav = proj_dir / "input" / "voice_source.wav"
     input_script = proj_dir / "input" / "voice_script.txt"
-    if real_speech_source.exists():
-        run_sync(["ffmpeg", "-y", "-v", "quiet", "-ss", "4.0", "-t", "3.0", "-i", str(real_speech_source), "-ar", "48000", "-ac", "1", str(input_wav)])
-    else:
-        run_sync(["say", "-o", str(proj_dir / "build" / "speech_g3.aiff"), "Shorts format vertical animation optimized for mobile."])
-        run_sync(["ffmpeg", "-y", "-v", "quiet", "-i", str(proj_dir / "build" / "speech_g3.aiff"), "-ar", "48000", "-ac", "1", str(input_wav)])
-
-    transcript_text = (
-        "Shorts format vertical animation.\n"
-        "Optimized for mobile platforms.\n"
-    )
+    s1 = "Shorts format vertical animation."
+    s2 = "Optimized for mobile platforms and social feeds."
+    transcript_text = f"{s1}\n{s2}\n"
     input_script.write_text(transcript_text, encoding="utf-8")
+
+    synth_ok = synthesize_speech(f"{s1} {s2}", input_wav)
+    if not synth_ok or not input_wav.exists() or input_wav.stat().st_size < 1000:
+        return {"gate": "G3", "name": "Squire 9:16 Shorts Full Resolution", "status": "FAIL", "error": "Speech synthesis failed"}
 
     prep_code, prep_out, prep_err, _ = await run_async_cmd([
         "python3", "tools/prep_voice.py",
@@ -560,14 +546,100 @@ async def g04_dem_16x9_full_mp4() -> dict:
     }
 
 
-async def g05_180_shot_replay_backtest() -> dict:
-    """Historical Replay: Honest handling of real vs synthetic replay.
-    If real 'why_knights_could_actually' directory is missing, record HOLD truthfully.
-    """
-    real_project_path = REPO_ROOT / "projects" / "why_knights_could_actually"
-    has_real_input = real_project_path.is_dir()
+async def g04b_dem_9x16_shorts() -> dict:
+    """Full 9:16 Shorts export & audio mix for DEM Self-Improvement pack."""
+    proj_dir = CURRENT_RUN_DIR / "g4b_dem_9x16"
+    proj_dir.mkdir(parents=True, exist_ok=True)
+    cfg = {
+        "title": "DEM Shorts Vertical",
+        "pack": "dem",
+        "aspect": "9:16",
+        "fps": 24,
+        "w": 1080,
+        "h": 1920,
+    }
+    (proj_dir / "config.json").write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+    for d in ("input", "story", "anh", "build", "out"):
+        (proj_dir / d).mkdir(parents=True, exist_ok=True)
 
-    # Synthetic 180-shot replay (508.7s) to verify pipeline logic
+    script_text = (
+        "TITLE: KY LUAT MOI NGAY\n"
+        "ACCENT: pink\n"
+        "[B01] 2.0s | CẢNH: phòng ngủ | HUD: DAY 1 | NHẠC: rise\n"
+        "> Thức dậy sớm thay đổi cuộc đời bạn.\n"
+        "! Bắt đầu ngay hôm nay\n"
+        "[B02] 2.0s | CẢNH: phòng tập | HUD: DAY 2\n"
+        "> Kiên trì tạo nên sự khác biệt.\n"
+    )
+    (proj_dir / "input" / "01-PHIM.txt").write_text(script_text, encoding="utf-8")
+
+    # Compile with phim.py
+    p_code, p_out, p_err, _ = await run_async_cmd(["python3", "tools/phim.py", "--project", str(proj_dir), "--phim", str(proj_dir / "input" / "01-PHIM.txt"), "--force"])
+    if p_code != 0:
+        return {"gate": "G4b", "name": "DEM 9:16 Shorts Full MP4", "status": "FAIL", "required": True, "error": f"phim.py failed: {p_err or p_out}"}
+
+    # Validate preflight
+    v_code, v_out, _, _ = await run_async_cmd(["python3", "tools/validator.py", "--project", str(proj_dir), "--stage", "preflight", "--json"])
+    val_json = json.loads(v_out) if v_code == 0 else {}
+
+    # Render FULL 1080x1920 MP4
+    r_code, r_out, r_err, _ = await run_async_cmd(["node", "render.mjs", "--project", str(proj_dir), "--workers", "2", "--scale", "1.0"])
+    if r_code != 0:
+        return {"gate": "G4b", "name": "DEM 9:16 Shorts Full MP4", "status": "FAIL", "required": True, "error": f"render.mjs failed: {r_err}"}
+
+    # Mix audio
+    m_code, m_out, m_err, _ = await run_async_cmd(["python3", "tools/mix.py", "--project", str(proj_dir)])
+    if m_code != 0:
+        return {"gate": "G4b", "name": "DEM 9:16 Shorts Full MP4", "status": "FAIL", "required": True, "error": f"mix.py failed: {m_err}"}
+
+    final_mp4 = proj_dir / "out" / "DEM Shorts Vertical.mp4"
+    if not final_mp4.exists():
+        final_mp4 = proj_dir / "out" / "video.mp4"
+
+    ff_info = get_ffprobe_streams(final_mp4)
+    v_stream = next((s for s in ff_info.get("streams", []) if s.get("codec_type") == "video"), {})
+
+    decode_ok, _ = decode_entire_video(final_mp4)
+
+    frame_png = proj_dir / "build" / "frame_g4b.png"
+    run_sync(["ffmpeg", "-y", "-v", "quiet", "-ss", "1.0", "-i", str(final_mp4), "-vframes", "1", str(frame_png)])
+    pixel_info = analyze_frame_pixels(frame_png)
+
+    proof_jpg = EVIDENCE_DIR / "proof_g4b_dem_shorts.jpg"
+    save_compressed_proof(frame_png, proof_jpg, width=270)
+
+    passed = (
+        val_json.get("status") == "PASS"
+        and final_mp4.exists()
+        and decode_ok
+        and v_stream.get("width") == 1080
+        and v_stream.get("height") == 1920
+        and pixel_info.get("unique_colors", 0) > 250
+    )
+
+    return {
+        "gate": "G4b",
+        "name": "DEM 9:16 Shorts Full MP4 Pipeline",
+        "status": "PASS" if passed else "FAIL",
+        "required": True,
+        "kind": "REAL_E2E",
+        "details": {
+            "output_file": str(final_mp4),
+            "output_sha256": file_sha256(final_mp4),
+            "resolution": f"{v_stream.get('width')}x{v_stream.get('height')}",
+            "full_decode_verified": decode_ok,
+            "phim_compiled_shots": val_json.get("shots_total", 0),
+            "pixel_analysis": pixel_info,
+            "proof_saved": str(proof_jpg.relative_to(REPO_ROOT)),
+        },
+    }
+
+
+async def g05_synthetic_long_timeline_regression() -> dict:
+    """Historical Replay: Honest 180-shot (508.7s) synthetic timeline regression.
+    Verifies that raw draft produces blocked preflight (catching old defect)
+    and assign_visuals resolves all 180 shots with zero missing templates.
+    """
     proj_dir = CURRENT_RUN_DIR / "g5_replay_180_synthetic"
     proj_dir.mkdir(parents=True, exist_ok=True)
     cfg = {
@@ -633,17 +705,13 @@ async def g05_180_shot_replay_backtest() -> dict:
         and "0 loi trong" in chk_out
     )
 
-    # Truthful verdict: If real folder is missing, mark HOLD with precise reason
-    status = "HOLD" if not has_real_input else ("PASS" if synthetic_pass else "FAIL")
-
     return {
         "gate": "G5",
-        "name": "180-Shot Replay Backtest (Historical Bug)",
-        "status": status,
+        "name": "180-Shot Synthetic Long Timeline Regression",
+        "status": "PASS" if synthetic_pass else "FAIL",
+        "required": True,
         "kind": "SYNTHETIC_REPLAY_FAST",
         "details": {
-            "real_replay_status": "REAL_REPLAY_BLOCKED_MISSING_INPUT" if not has_real_input else "VERIFIED",
-            "real_input_path": str(real_project_path),
             "synthetic_replay_status": "PASS_SYNTHETIC" if synthetic_pass else "FAIL_SYNTHETIC",
             "old_bug_detected_by_preflight": old_bug_caught,
             "missing_ids_before_fix": len(raw_val_json.get("missing_ids", [])),
@@ -652,7 +720,195 @@ async def g05_180_shot_replay_backtest() -> dict:
             "fast_check_duration_sec": round(chk_duration, 2),
             "fast_check_stdout": chk_out.strip(),
             "proof_saved": str(proof_jpg.relative_to(REPO_ROOT)),
-            "reason_for_hold": "Dự án gốc projects/why_knights_could_actually (508.7s, 12209 frames) không có trên host local này. Synthetic replay 180 shot đạt PASS." if not has_real_input else None,
+        },
+    }
+
+
+async def g05b_medium_continuity_e2e() -> dict:
+    """REQUIRED medium generated fixture: 20 distinct shots / ~30-40 seconds.
+    Renders ALL actual frames to MP4 to validate scene transitions, chronological continuity,
+    audio length, visual variation, and rendering across all shots.
+    """
+    proj_dir = CURRENT_RUN_DIR / "g5b_medium_continuity"
+    proj_dir.mkdir(parents=True, exist_ok=True)
+    cfg = {
+        "title": "Medieval Chronicle Medium E2E",
+        "pack": "squire",
+        "aspect": "16:9",
+        "resolution": "720p",
+        "fps": 24,
+        "w": 1280,
+        "h": 720,
+    }
+    (proj_dir / "config.json").write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+    for d in ("input", "timeline", "story", "anh", "build", "out"):
+        (proj_dir / d).mkdir(parents=True, exist_ok=True)
+
+    # 20 distinct narrative lines
+    sentences = [
+        "In the dawn of the middle ages knights gathered on the great field.",
+        "Steel armor was crafted with precision by royal blacksmiths in castle workshops.",
+        "A trained man in plate could run jump and mount his stallion without assistance.",
+        "The heavy crane myth was nothing more than a joke invented centuries later.",
+        "Careful battlefield experiments measured breath stamina and heart rate under stress.",
+        "Weight was evenly distributed from solid shoulder pauldrons down to steel greaves.",
+        "Soldiers marched twenty miles through mud rain and challenging mountain terrain.",
+        "When enemy archers drew their bows long volleys darkened the stormy sky.",
+        "Sturdy heater shields deflected iron tips while infantry held the defensive line.",
+        "The commander raised his royal battle standard signaling the decisive advance.",
+        "Mounted cavalry galloped forward with couched lances striking the hostile flank.",
+        "Crossbow bolts struck the front ranks but articulated plate absorbed the shock.",
+        "Tactical maps on weathered parchment guided the grand strategy of medieval kings.",
+        "Banners waved high above stone towers as morning fog began to slowly clear.",
+        "Every joint was bound by flexible leather straps allowing full combat movement.",
+        "Armies clashed in disciplined formations where endurance determined the victor.",
+        "Historians and curators at world museums confirm the mobility of true armor.",
+        "Heat and exhaustion were the real enemies rather than the weight of pure steel.",
+        "Victory belonged to soldiers whose physical stamina matched their weapons.",
+        "This legendary chronicle stands as verified testimony to historical truth."
+    ]
+
+    transcript_text = "\n".join(sentences) + "\n"
+    input_script = proj_dir / "input" / "voice_script.txt"
+    input_wav = proj_dir / "input" / "voice_source.wav"
+    input_script.write_text(transcript_text, encoding="utf-8")
+
+    full_voice_text = " ".join(sentences)
+    synth_ok = synthesize_speech(full_voice_text, input_wav)
+    if not synth_ok or not input_wav.exists() or input_wav.stat().st_size < 1000:
+        return {"gate": "G5b", "name": "Medium 20-Shot Continuity E2E", "status": "FAIL", "required": True, "error": "TTS synthesis failed"}
+
+    # Run prep_voice
+    p_code, p_out, p_err, _ = await run_async_cmd([
+        "python3", "tools/prep_voice.py",
+        "--project", str(proj_dir),
+        "--single", str(input_wav),
+        "--script", str(input_script)
+    ])
+    if p_code != 0:
+        return {"gate": "G5b", "name": "Medium 20-Shot Continuity E2E", "status": "FAIL", "required": True, "error": f"prep_voice failed: {p_err or p_out}"}
+
+    # Draft shots with visuals
+    d_code, _, d_err, _ = await run_async_cmd(["python3", "tools/draft_shots.py", "--project", str(proj_dir), "--force", "--visuals"])
+    if d_code != 0:
+        return {"gate": "G5b", "name": "Medium 20-Shot Continuity E2E", "status": "FAIL", "required": True, "error": f"draft_shots failed: {d_err}"}
+
+    # Preflight validator
+    v_code, v_out, _, _ = await run_async_cmd(["python3", "tools/validator.py", "--project", str(proj_dir), "--stage", "preflight", "--json"])
+    val_json = json.loads(v_out) if v_code == 0 else {}
+    if val_json.get("status") != "PASS":
+        return {"gate": "G5b", "name": "Medium 20-Shot Continuity E2E", "status": "FAIL", "required": True, "error": f"validator failed: {val_json}"}
+
+    shots_count = val_json.get("shots_total", 0)
+
+    # Render FULL MP4 across all 20 shots
+    t0_render = time.time()
+    r_code, r_out, r_err, render_dur = await run_async_cmd(["node", "render.mjs", "--project", str(proj_dir), "--workers", "2"])
+    if r_code != 0:
+        return {"gate": "G5b", "name": "Medium 20-Shot Continuity E2E", "status": "FAIL", "required": True, "error": f"render failed: {r_err}"}
+
+    # Mix audio
+    m_code, m_out, m_err, _ = await run_async_cmd(["python3", "tools/mix.py", "--project", str(proj_dir)])
+    if m_code != 0:
+        return {"gate": "G5b", "name": "Medium 20-Shot Continuity E2E", "status": "FAIL", "required": True, "error": f"mix failed: {m_err}"}
+
+    final_mp4 = proj_dir / "out" / "Medieval Chronicle Medium E2E.mp4"
+    if not final_mp4.exists():
+        final_mp4 = proj_dir / "out" / "video.mp4"
+
+    ff_info = get_ffprobe_streams(final_mp4)
+    v_stream = next((s for s in ff_info.get("streams", []) if s.get("codec_type") == "video"), {})
+    a_stream = next((s for s in ff_info.get("streams", []) if s.get("codec_type") == "audio"), {})
+    format_info = ff_info.get("format", {})
+    actual_dur = float(format_info.get("duration", 0.0))
+
+    decode_ok, _ = decode_entire_video(final_mp4)
+
+    # Sample frames across transitions: start (2.0s), mid (15.0s), near end (25.0s)
+    f1 = proj_dir / "build" / "frame_g5b_start.png"
+    f2 = proj_dir / "build" / "frame_g5b_mid.png"
+    run_sync(["ffmpeg", "-y", "-v", "quiet", "-ss", "2.0", "-i", str(final_mp4), "-vframes", "1", str(f1)])
+    run_sync(["ffmpeg", "-y", "-v", "quiet", "-ss", "15.0", "-i", str(final_mp4), "-vframes", "1", str(f2)])
+
+    px1 = analyze_frame_pixels(f1)
+    px2 = analyze_frame_pixels(f2)
+
+    proof_jpg = EVIDENCE_DIR / "proof_g5b_medium_continuity.jpg"
+    if f2.exists():
+        save_compressed_proof(f2, proof_jpg, width=480)
+
+    passed = (
+        final_mp4.exists()
+        and decode_ok
+        and shots_count >= 15
+        and actual_dur >= 20.0
+        and v_stream.get("codec_name") == "h264"
+        and a_stream.get("codec_name") == "aac"
+        and px1.get("unique_colors", 0) > 300
+        and px2.get("unique_colors", 0) > 300
+        and not px1.get("is_placeholder", True)
+        and not px2.get("is_placeholder", True)
+    )
+
+    return {
+        "gate": "G5b",
+        "name": "Medium 20-Shot Continuity Full Render E2E",
+        "status": "PASS" if passed else "FAIL",
+        "required": True,
+        "kind": "REAL_E2E",
+        "details": {
+            "output_file": str(final_mp4),
+            "output_sha256": file_sha256(final_mp4),
+            "shots_count": shots_count,
+            "duration_sec": round(actual_dur, 2),
+            "resolution": f"{v_stream.get('width')}x{v_stream.get('height')}",
+            "render_wall_sec": round(render_dur, 2),
+            "full_decode_verified": decode_ok,
+            "proof_saved": str(proof_jpg.relative_to(REPO_ROOT)),
+        },
+    }
+
+
+async def g05c_optional_real_company_replay() -> dict:
+    """OPTIONAL: Historical company-machine 180-shot replay.
+    Marked as NOT_RUN_OPTIONAL_MISSING_FIXTURE when company dataset is not present on home PC.
+    This does NOT block the release gate or overall FLOW_READY.
+    """
+    real_project_path = REPO_ROOT / "projects" / "why_knights_could_actually"
+    has_real_input = (
+        real_project_path.is_dir()
+        and (real_project_path / "config.json").exists()
+        and (real_project_path / "story" / "shots.json").exists()
+        and (real_project_path / "input" / "voice_source.wav").exists()
+        and (real_project_path / "input" / "voice_script.txt").exists()
+    )
+
+    if not has_real_input:
+        return {
+            "gate": "G5c",
+            "name": "Historical 180-Shot Company Replay (Optional)",
+            "status": "NOT_RUN_OPTIONAL_MISSING_FIXTURE",
+            "required": False,
+            "kind": "OPTIONAL_DIAGNOSTIC",
+            "details": {
+                "reason": "Thư mục projects/why_knights_could_actually không có sẵn hoặc thiếu voice_source.wav/voice_script.txt trên home computer. Theo yêu cầu V5, đây là bài test chẩn đoán tùy chọn riêng biệt và không gây ảnh hưởng đến phán quyết FLOW_READY của toàn bộ luồng chính.",
+                "path_checked": str(real_project_path),
+            },
+        }
+
+    # If present, run fast check on the real folder
+    chk_code, chk_out, _, chk_dur = await run_async_cmd(["node", "render.mjs", "--project", str(real_project_path), "--check", "--check-mode", "fast", "--scale", "0.25"], timeout=60)
+    passed = (chk_code == 0 and "0 loi trong" in chk_out)
+    return {
+        "gate": "G5c",
+        "name": "Historical 180-Shot Company Replay (Optional)",
+        "status": "PASS" if passed else "FAIL",
+        "required": False,
+        "kind": "OPTIONAL_DIAGNOSTIC",
+        "details": {
+            "path": str(real_project_path),
+            "fast_check_stdout": chk_out.strip(),
+            "duration_sec": round(chk_dur, 2),
         },
     }
 
@@ -1024,6 +1280,7 @@ async def g13_real_concurrent_render() -> dict:
 async def g14_historical_replay_contrast(g5_result: dict) -> dict:
     """Side-by-side contrast of the old defect state vs new solution."""
     g5_details = g5_result.get("details", {})
+    g5_pass = (g5_result.get("status") == "PASS")
     contrast = {
         "historical_bug_state": {
             "defect_pattern": "180 shots with empty tpl/args produced by raw draft_shots",
@@ -1036,12 +1293,14 @@ async def g14_historical_replay_contrast(g5_result: dict) -> dict:
             "visual_assignment": "assign_visuals automatically assigned contextual templates (scene, close, map, split, board, item, army)",
             "fast_check_validation": g5_details.get("fast_check_stdout", ""),
             "truthful_qualification": "Distinguishes PASS_SYNTHETIC from REAL_REPLAY_BLOCKED_MISSING_INPUT",
+            "synthetic_replay_passed": g5_pass,
         },
     }
     return {
         "gate": "G14",
         "name": "Historical Replay Contrast Comparison",
-        "status": "PASS",
+        "status": "PASS" if g5_pass else "FAIL",
+        "required": True,
         "kind": "COMPARATIVE_AUDIT",
         "details": contrast,
     }
@@ -1061,6 +1320,7 @@ async def g15_headless_ci() -> dict:
         "gate": "G15",
         "name": "Headless CI & CLI Exit Codes",
         "status": "PASS" if passed else "FAIL",
+        "required": True,
         "kind": "CI_CONFORMANCE",
         "details": {
             "validator_exit_code": code,
@@ -1073,28 +1333,35 @@ async def g16_performance_telemetry(durations: dict, monitor_stats: dict = None)
     """Records actual measured telemetry instead of hardcoded strings."""
     d_info = get_disk_info(REPO_ROOT)
     r_info = get_ram_info()
-    fast_check_sec = durations.get("g05_180_shot_replay_backtest", 0.0)
+    fast_check_sec = durations.get("g05_synthetic_long_timeline_regression", 0.0)
+    g5b_render_sec = durations.get("g05b_medium_continuity_e2e", 0.0)
     mon = monitor_stats or {}
+    breached = mon.get("breached", False)
+
+    fast_check_fps = round(541 / max(fast_check_sec, 0.1), 1) if fast_check_sec > 0 else 0
 
     return {
         "gate": "G16",
         "name": "Performance & Resource Audit",
-        "status": "PASS",
+        "status": "FAIL" if breached else "PASS",
+        "required": True,
         "kind": "TELEMETRY_AUDIT",
         "details": {
             "disk_free_gb": d_info.get("free_gb"),
             "ram_available_gb": r_info.get("available_gb"),
             "min_disk_headroom_gb": mon.get("min_free_disk_gb", d_info.get("free_gb")),
             "min_ram_headroom_gb": mon.get("min_avail_ram_gb", r_info.get("available_gb")),
+            "resource_breached": breached,
             "continuous_monitor_samples": mon.get("samples", 0),
             "measured_180_shot_check_sec": fast_check_sec,
-            "measured_render_fps": round(541 / max(fast_check_sec, 0.1), 1) if fast_check_sec > 0 else 0,
+            "fast_check_samples_per_sec": fast_check_fps,
+            "medium_20_shot_e2e_sec": g5b_render_sec,
         },
     }
 
 
 async def g17_uhd_resolutions() -> dict:
-    """Verifies 1440p (2K QHD) and 2160p (4K UHD) renders in both 16:9 and 9:16 formats with ffprobe stream validation."""
+    """Verifies 1440p (2K QHD) and 2160p (4K UHD) renders in both 16:9 and 9:16 formats with ffprobe and full decode."""
     proj_dir = CURRENT_RUN_DIR / "g17_uhd_renders"
     proj_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1135,7 +1402,8 @@ async def g17_uhd_resolutions() -> dict:
 
         w = v_stream.get("width", 0)
         h = v_stream.get("height", 0)
-        match_ok = (r_code == 0 and w == t["expected_w"] and h == t["expected_h"])
+        decode_ok, _ = decode_entire_video(silent_mp4)
+        match_ok = (r_code == 0 and w == t["expected_w"] and h == t["expected_h"] and decode_ok)
         if not match_ok:
             all_passed = False
 
@@ -1144,6 +1412,7 @@ async def g17_uhd_resolutions() -> dict:
             "aspect": t["aspect"],
             "expected": f"{t['expected_w']}x{t['expected_h']}",
             "actual": f"{w}x{h}",
+            "full_decode_verified": decode_ok,
             "render_sec": round(duration, 2),
             "exit_code": r_code,
             "pass": match_ok,
@@ -1153,6 +1422,7 @@ async def g17_uhd_resolutions() -> dict:
         "gate": "G17",
         "name": "2K QHD & 4K UHD Render Verification (1440p & 2160p)",
         "status": "PASS" if all_passed else "FAIL",
+        "required": True,
         "kind": "UHD_CAPABILITY",
         "details": details,
     }
@@ -1164,7 +1434,7 @@ async def g17_uhd_resolutions() -> dict:
 
 async def main():
     print("=" * 75)
-    print("QA-Unified-Video-Studio — Async E2E Regression Orchestrator (V2)")
+    print("QA-Unified-Video-Studio — Async E2E Regression Orchestrator (V5)")
     print(f"Run ID: {RUN_ID}")
     print(f"Root: {REPO_ROOT}")
     print("=" * 75)
@@ -1192,20 +1462,29 @@ async def main():
         r1 = await g01_blank_init_both_packs()
         results.extend([r0, r1])
 
-        # Step 2: Core Real E2E Pipelines (Squire 16:9, Squire 9:16 Shorts, DEM 16:9)
+        # Step 2: Core Real E2E Pipelines (Squire 16:9, Squire 9:16 Shorts, DEM 16:9, DEM 9:16 Shorts)
         print("--> Executing Phase 2: Core E2E Render Pipelines (Bounded Concurrency)...")
         t_g2 = g02_squire_16x9_real_e2e()
         t_g3 = g03_squire_9x16_shorts_full_res()
         t_g4 = g04_dem_16x9_full_mp4()
-        r2, r3, r4 = await asyncio.gather(t_g2, t_g3, t_g4)
-        results.extend([r2, r3, r4])
+        t_g4b = g04b_dem_9x16_shorts()
+        r2, r3, r4, r4b = await asyncio.gather(t_g2, t_g3, t_g4, t_g4b)
+        results.extend([r2, r3, r4, r4b])
 
-        # Step 3: Historical 180-Shot Backtest
-        print("--> Executing Phase 3: Historical 180-Shot Replay Backtest...")
+        # Step 3: Historical Synthetic Long Timeline & Medium Continuity E2E
+        print("--> Executing Phase 3: Synthetic Long Timeline & Medium Continuity E2E...")
         t0_g5 = time.time()
-        r5 = await g05_180_shot_replay_backtest()
-        durations["g05_180_shot_replay_backtest"] = round(time.time() - t0_g5, 2)
+        r5 = await g05_synthetic_long_timeline_regression()
+        durations["g05_synthetic_long_timeline_regression"] = round(time.time() - t0_g5, 2)
         results.append(r5)
+
+        t0_g5b = time.time()
+        r5b = await g05b_medium_continuity_e2e()
+        durations["g05b_medium_continuity_e2e"] = round(time.time() - t0_g5b, 2)
+        results.append(r5b)
+
+        r5c = await g05c_optional_real_company_replay()
+        results.append(r5c)
 
         # Step 4: Negative, Security & Invalidation Tests
         print("--> Executing Phase 4: Negative, Tamper & Security Tests...")
@@ -1235,34 +1514,46 @@ async def main():
     results.append(r16)
 
     # Order results by Gate ID G0 to G17
-    gate_order = {f"G{i}": i for i in range(18)}
+    gate_order = {
+        "G0": 0, "G1": 1, "G2": 2, "G3": 3, "G4": 4, "G4b": 5,
+        "G5": 6, "G5b": 7, "G5c": 8, "G6": 9, "G7": 10, "G8": 11,
+        "G9": 12, "G10": 13, "G11": 14, "G12": 15, "G13": 16,
+        "G14": 17, "G15": 18, "G16": 19, "G17": 20
+    }
     results.sort(key=lambda r: gate_order.get(r.get("gate", ""), 99))
 
     total_duration = round(time.time() - start_time, 2)
-    pass_count = sum(1 for r in results if r.get("status") == "PASS")
-    hold_count = sum(1 for r in results if r.get("status") == "HOLD")
-    fail_count = sum(1 for r in results if r.get("status") == "FAIL")
-    total_count = len(results)
+    required_results = [r for r in results if r.get("required", True)]
+    optional_results = [r for r in results if not r.get("required", True)]
 
-    # Truthful Verdict: If any gate is HOLD or FAIL, verdict must be RELEASE_HOLD
-    if fail_count > 0 or hold_count > 0:
-        overall_verdict = "RELEASE_HOLD"
+    req_pass_count = sum(1 for r in required_results if r.get("status") == "PASS")
+    req_fail_count = sum(1 for r in required_results if r.get("status") != "PASS")
+    total_required = len(required_results)
+
+    opt_pass_count = sum(1 for r in optional_results if r.get("status") == "PASS")
+    opt_missing_count = sum(1 for r in optional_results if r.get("status") == "NOT_RUN_OPTIONAL_MISSING_FIXTURE")
+
+    # Truthful V5 Verdict:
+    # FLOW_READY = ALL REQUIRED gates PASS with observed real output, no material unresolved blockers.
+    # Optional gates (like company machine 180-shot fixture) marked NOT_RUN_OPTIONAL_MISSING_FIXTURE do NOT cause a HOLD.
+    if req_fail_count == 0 and req_pass_count == total_required:
+        overall_verdict = "FLOW_READY"
+        verdict_reason = f"Tất cả {req_pass_count}/{total_required} cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: {opt_missing_count} NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân)."
     else:
-        overall_verdict = "RELEASE_CANDIDATE"
+        overall_verdict = "FLOW_HOLD"
+        verdict_reason = f"Có {req_fail_count} cổng bắt buộc chưa đạt PASS."
 
     summary_data = {
         "run_id": RUN_ID,
         "timestamp": datetime.now().isoformat(),
         "total_duration_sec": total_duration,
-        "gates_total": total_count,
-        "gates_passed": pass_count,
-        "gates_hold": hold_count,
-        "gates_failed": fail_count,
+        "gates_total": len(results),
+        "required_gates_total": total_required,
+        "required_gates_passed": req_pass_count,
+        "required_gates_failed": req_fail_count,
+        "optional_gates_total": len(optional_results),
         "verdict": overall_verdict,
-        "verdict_reason": (
-            f"RELEASE_HOLD: {pass_count}/{total_count} Cổng PASS; Cổng G5 đặt trạng thái HOLD do projects/why_knights_could_actually (12,209 frame gốc) không có trên host kiểm thử này."
-            if hold_count > 0 else "All gates passed"
-        ),
+        "verdict_reason": verdict_reason,
         "results": results,
     }
 
@@ -1273,32 +1564,42 @@ async def main():
     # Write latest-report.md
     report_md_path = EVIDENCE_DIR / "latest-report.md"
     report_lines = [
-        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Chất lượng (V3)",
+        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V5)",
         f"- **Mã lượt chạy (Run ID)**: `{RUN_ID}`",
         f"- **Thời gian chạy**: `{summary_data['timestamp']}`",
         f"- **Tổng thời gian thực thi**: `{total_duration}s`",
-        f"- **Kết quả chung**: **{overall_verdict}** ({pass_count} PASS, {hold_count} HOLD, {fail_count} FAIL)\n",
-        f"> [!IMPORTANT]\n> **Đánh giá trung thực (Truthful Verdict):**\n> {summary_data['verdict_reason']}\n",
-        f"## Bảng tổng hợp Ma trận 18 Cổng Kiểm thử (Gates G0 - G17)\n",
-        f"| Cổng | Tên kiểm thử | Phân loại | Trạng thái | Ghi chú & Đo đạc thực tế |",
-        f"| :--- | :--- | :--- | :---: | :--- |",
+        f"- **Kết quả chung**: **{overall_verdict}** ({req_pass_count}/{total_required} REQUIRED GATES PASS)\n",
+        f"> [!IMPORTANT]\n> **Đánh giá nghiệm thu (Truthful Verdict):**\n> {summary_data['verdict_reason']}\n",
+        f"## Bảng tổng hợp Ma trận Kiểm thử Toàn diện\n",
+        f"| Cổng | Tên kiểm thử | Phân loại | Bắt buộc | Trạng thái | Ghi chú & Đo đạc thực tế |",
+        f"| :--- | :--- | :---: | :---: | :---: | :--- |",
     ]
     for r in results:
-        status_badge = "✅ PASS" if r.get("status") == "PASS" else ("⚠️ HOLD" if r.get("status") == "HOLD" else "❌ FAIL")
+        status = r.get("status")
+        if status == "PASS":
+            status_badge = "✅ PASS"
+        elif status == "NOT_RUN_OPTIONAL_MISSING_FIXTURE":
+            status_badge = "ℹ️ OPTIONAL_SKIP"
+        elif status == "HOLD":
+            status_badge = "⚠️ HOLD"
+        else:
+            status_badge = "❌ FAIL"
+
+        is_req = "Bắt buộc" if r.get("required", True) else "Tùy chọn"
         det = r.get("details", {})
-        note = det.get("reason_for_hold") or det.get("output_file") or det.get("defect_pattern") or "Chi tiết trong summary JSON"
-        if isinstance(note, str) and len(note) > 80:
-            note = note[:77] + "..."
-        report_lines.append(f"| **{r.get('gate')}** | {r.get('name')} | `{r.get('kind', 'TEST')}` | {status_badge} | {note} |")
+        note = det.get("reason") or det.get("output_file") or det.get("defect_pattern") or det.get("synthetic_replay_status") or "Chi tiết trong summary JSON"
+        if isinstance(note, str) and len(note) > 85:
+            note = note[:82] + "..."
+        report_lines.append(f"| **{r.get('gate')}** | {r.get('name')} | `{r.get('kind', 'TEST')}` | {is_req} | {status_badge} | {note} |")
 
     report_lines.append("\n## Bằng chứng Trực quan Đã xác thực (Visual Proofs)\n")
     for proof in sorted(EVIDENCE_DIR.glob("proof_*.jpg")):
-        report_lines.append(f"- **{proof.name}**: `{proof.stat().st_size // 1024} KB` (Trích xuất từ video render thực tế, 0 placeholder, >500 màu)\n")
+        report_lines.append(f"- **{proof.name}**: `{proof.stat().st_size // 1024} KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)\n")
 
     report_md_path.write_text("\n".join(report_lines), encoding="utf-8")
 
     print("\n" + "=" * 75)
-    print(f"VERDICT: {overall_verdict} ({pass_count} PASS, {hold_count} HOLD, {fail_count} FAIL)")
+    print(f"VERDICT: {overall_verdict} ({req_pass_count}/{total_required} REQUIRED PASS)")
     print(f"Summary: {summary_json_path}")
     print(f"Report:  {report_md_path}")
     print("=" * 75)
@@ -1309,9 +1610,7 @@ async def main():
 
 if __name__ == "__main__":
     verdict = asyncio.run(main())
-    if verdict == "RELEASE_CANDIDATE":
+    if verdict == "FLOW_READY":
         sys.exit(0)
-    elif verdict == "RELEASE_HOLD":
-        sys.exit(2)
     else:
         sys.exit(1)

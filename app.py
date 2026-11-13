@@ -257,12 +257,19 @@ def task_commands(action, p: Path):
         if not shots:
             raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi render.')
         if action == 'sheet': return [[node, 'render.mjs', '--project', proj, '--sheet', '--scale', '0.4']]
-        if action == 'preview': return [[node, 'render.mjs', '--project', proj, '--from', '0', '--to', '30', '--scale', '0.5', '--workers', '2']]
-        if action == 'render': return [[node, 'render.mjs', '--project', proj, '--workers', '2']]
+        if action == 'preview': return [[node, 'render.mjs', '--project', proj, '--from', '0', '--to', '30', '--scale', '0.5']]
+        if action == 'render': return [[node, 'render.mjs', '--project', proj]]
     if action == 'thumb': return [[node, 'render.mjs', '--project', proj, '--thumb']]
     if action == 'mix':
-        if not (p / 'build' / 'video_silent.mp4').exists():
+        silent_file = p / 'build' / 'video_silent.mp4'
+        if not silent_file.exists():
             raise ValueError('Chưa có build/video_silent.mp4. Hãy render video trước khi mix & export.')
+        shots_file = p / 'story' / 'shots.json'
+        cfg_file = p / 'config.json'
+        silent_mtime = silent_file.stat().st_mtime
+        if (shots_file.exists() and shots_file.stat().st_mtime > silent_mtime + 2) or \
+           (cfg_file.exists() and cfg_file.stat().st_mtime > silent_mtime + 2):
+            raise ValueError('STALE_OUTPUT: build/video_silent.mp4 cũ hơn storyboard hoặc config hiện tại. Vui lòng render video lại trước khi mix & export.')
         return [[py, 'tools/mix.py', '--project', proj]]
     if action == 'doctor': return [[py, 'tools/doctor.py']]
     if action == 'audio-build': return [[py, 'audio/build_audio.py']]

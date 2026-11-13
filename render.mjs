@@ -244,14 +244,25 @@ try {
     const total = f1 - f0;
     if (total <= 0) throw new Error(`Khoang render khong hop le: ${f0} -> ${f1} (0 khung)`);
 
-    let maxAutoWorkers = Math.max(1, Math.min(6, Math.floor(os.cpus().length / 2)));
-    if ((info.W >= 3840 || info.H >= 3840 || _cfg.resolution === '2160p') && !args.workers) {
-      maxAutoWorkers = 1;
-    } else if ((info.W >= 2560 || info.H >= 2560 || _cfg.resolution === '1440p') && !args.workers) {
-      maxAutoWorkers = Math.min(2, maxAutoWorkers);
+    const is4K = info.W >= 3840 || info.H >= 3840 || _cfg.resolution === '2160p';
+    const is2K = info.W >= 2560 || info.H >= 2560 || _cfg.resolution === '1440p';
+    const is720p = (info.W <= 1280 && info.H <= 720) || _cfg.resolution === '720p';
+
+    // Enforce hard memory-safety limits even if caller passes excessive --workers
+    let maxAllowedWorkers = Math.max(1, Math.min(6, Math.floor(os.cpus().length / 2)));
+    if (is4K) {
+      maxAllowedWorkers = 1;
+    } else if (is2K) {
+      maxAllowedWorkers = Math.min(2, maxAllowedWorkers);
     }
-    const W = Math.max(1, Math.min(+(args.workers || maxAutoWorkers), Math.ceil(total / 48)));
-    console.log(`Render ${total} khung (${(total / info.fps).toFixed(1)} giay) ${info.W}x${info.H} @${info.fps}fps, ${W} luong`);
+    const requestedWorkers = args.workers ? +args.workers : maxAllowedWorkers;
+    const W = Math.max(1, Math.min(requestedWorkers, maxAllowedWorkers, Math.ceil(total / 48)));
+
+    const maxrate = is4K ? '32M' : is2K ? '16M' : is720p ? '5M' : '8M';
+    const bufsize = is4K ? '64M' : is2K ? '32M' : is720p ? '10M' : '16M';
+    const crf = String(args.crf || (is4K ? 18 : is2K ? 19 : is720p ? 22 : 20));
+
+    console.log(`Render ${total} khung (${(total / info.fps).toFixed(1)} giay) ${info.W}x${info.H} @${info.fps}fps, ${W} luong (CRF ${crf}, maxrate ${maxrate})`);
     const parts = []; let done = 0; const t0 = Date.now();
     const tick = setInterval(() => { const el = (Date.now() - t0) / 1000, fps = done / Math.max(el, 0.1); console.log(`  ${done}/${total} khung  ${fps.toFixed(2)} khung/giay  da chay ${Math.floor(el / 60)}p${Math.round(el % 60)}s  con lai ~${Math.round((total - done) / Math.max(fps, 0.01) / 60)} phut`); }, 15000);
     const chunk = Math.ceil(total / W);
@@ -263,7 +274,7 @@ try {
         const br = k === 0 ? browser : await launch();
         const { page } = await openPlayer(br, args.style);
         let encError = null;
-        const enc = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(info.fps), '-c:v', 'mjpeg', '-i', '-', '-c:v', 'libx264', '-preset', preview ? 'veryfast' : 'medium', '-crf', String(args.crf || 20), '-maxrate', '8M', '-bufsize', '16M', '-tune', 'animation', '-pix_fmt', 'yuv420p', '-r', String(info.fps), out], { stdio: ['pipe', 'inherit', 'inherit'] });
+        const enc = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(info.fps), '-c:v', 'mjpeg', '-i', '-', '-c:v', 'libx264', '-preset', preview ? 'veryfast' : 'medium', '-crf', crf, '-maxrate', maxrate, '-bufsize', bufsize, '-tune', 'animation', '-pix_fmt', 'yuv420p', '-r', String(info.fps), out], { stdio: ['pipe', 'inherit', 'inherit'] });
         enc.on('error', (err) => { encError = err; });
         enc.stdin.on('error', (err) => { if (!encError) encError = err; });
 

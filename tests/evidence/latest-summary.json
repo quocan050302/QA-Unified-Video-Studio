@@ -1,13 +1,14 @@
 {
-  "run_id": "20261112_225507",
-  "timestamp": "2026-11-12T22:55:48.659646",
-  "total_duration_sec": 41.47,
-  "gates_total": 18,
-  "gates_passed": 17,
-  "gates_hold": 1,
-  "gates_failed": 0,
-  "verdict": "RELEASE_HOLD",
-  "verdict_reason": "RELEASE_HOLD: 17/18 Cổng PASS; Cổng G5 đặt trạng thái HOLD do projects/why_knights_could_actually (12,209 frame gốc) không có trên host kiểm thử này.",
+  "run_id": "20261113_082944",
+  "timestamp": "2026-11-13T08:31:59.093821",
+  "total_duration_sec": 134.45,
+  "gates_total": 21,
+  "required_gates_total": 20,
+  "required_gates_passed": 20,
+  "required_gates_failed": 0,
+  "optional_gates_total": 1,
+  "verdict": "FLOW_READY",
+  "verdict_reason": "Tất cả 20/20 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).",
   "results": [
     {
       "gate": "G0",
@@ -20,23 +21,23 @@
           "message": "OK",
           "resources": {
             "disk": {
-              "total_gb": 460.43,
-              "used_gb": 446.12,
-              "free_gb": 14.31
+              "total_gb": 144.02,
+              "used_gb": 84.95,
+              "free_gb": 59.07
             },
             "ram": {
-              "total_gb": 16.0,
-              "available_gb": 3.06
+              "total_gb": 31.75,
+              "available_gb": 13.98
             },
-            "cpus": 8,
-            "workspace": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio"
+            "cpus": 12,
+            "workspace": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio"
           }
         },
         "git_branch": "fix/Image-Shot",
-        "git_head": "9f08929c24d05956f3428ff126567eee70912562",
+        "git_head": "f44558a40794ddf60724a57e21bfa6117d06da59",
         "git_production_head": "e867c910b0ef0e43dcbaf7d7601fecd1c9a8ae53",
         "git_working_tree_clean": false,
-        "node_version": "v22.22.3",
+        "node_version": "v26.13.1",
         "ffmpeg_available": true
       }
     },
@@ -59,9 +60,9 @@
       "status": "PASS",
       "kind": "REAL_E2E",
       "details": {
-        "speech_fixture": "REAL_HUMAN_RECORDING",
-        "output_file": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/20261112_225507/g2_squire_16x9/out/Squire Medieval Realm.mp4",
-        "output_sha256": "fb2675c03ab7f57af8ef371581dd1f965244b0cd4179a7347d99742f2f55def4",
+        "speech_fixture": "REAL_SPOKEN_SYNTHESIS",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g2_squire_16x9\\out\\Squire Medieval Realm.mp4",
+        "output_sha256": "d4a1d1bf640bd878fc709598829a4e9987ff1b4a284ca56ae7ee45d26588e7c6",
         "resolution": "1920x1080",
         "video_codec": "h264",
         "audio_codec": "aac",
@@ -70,12 +71,12 @@
         "pixel_analysis": {
           "ok": true,
           "total_pixels": 2073600,
-          "unique_colors": 4587,
-          "red_ratio": 0.0,
+          "unique_colors": 63049,
+          "red_ratio": 0.0015,
           "dark_ratio": 0.0,
           "is_placeholder": false
         },
-        "proof_saved": "tests/evidence/proof_g2_squire.jpg"
+        "proof_saved": "tests\\evidence\\proof_g2_squire.jpg"
       }
     },
     {
@@ -84,19 +85,19 @@
       "status": "PASS",
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/20261112_225507/g3_squire_9x16/out/Shorts Medieval.mp4",
-        "output_sha256": "506db4f8ad55d4c304267c39acfae6ba9decd4a2747970f4d45440a42466a12b",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g3_squire_9x16\\out\\Shorts Medieval.mp4",
+        "output_sha256": "2a5a220d4239b5376857d5b4fa629d364f4f4b56f56cedee40c9593987504cb7",
         "resolution": "1080x1920",
         "aspect_ratio": "9:16 vertical (Full Resolution)",
         "pixel_analysis": {
           "ok": true,
           "total_pixels": 2073600,
-          "unique_colors": 39260,
-          "red_ratio": 0.0001,
-          "dark_ratio": 0.0083,
+          "unique_colors": 73617,
+          "red_ratio": 0.0004,
+          "dark_ratio": 0.0088,
           "is_placeholder": false
         },
-        "proof_saved": "tests/evidence/proof_g3_shorts.jpg"
+        "proof_saved": "tests\\evidence\\proof_g3_shorts.jpg"
       }
     },
     {
@@ -105,39 +106,88 @@
       "status": "PASS",
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/20261112_225507/g4_dem_16x9/out/DEM Self Improvement.mp4",
-        "output_sha256": "363fd1dc05050fb9cc166149577baecb4bd798159dcfc0e16760ad7e3f5cfa21",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g4_dem_16x9\\out\\DEM Self Improvement.mp4",
+        "output_sha256": "e4e717c61916340dbc3f53213a24b0a2f848aa04d75ff8ad8d14a0bbb5b956ef",
         "resolution": "1920x1080",
         "full_decode_verified": true,
         "phim_compiled_shots": 2,
         "pixel_analysis": {
           "ok": true,
           "total_pixels": 2073600,
-          "unique_colors": 10667,
+          "unique_colors": 12413,
           "red_ratio": 0.0002,
-          "dark_ratio": 0.7211,
+          "dark_ratio": 0.6742,
           "is_placeholder": false
         },
-        "proof_saved": "tests/evidence/proof_g4_dem.jpg"
+        "proof_saved": "tests\\evidence\\proof_g4_dem.jpg"
+      }
+    },
+    {
+      "gate": "G4b",
+      "name": "DEM 9:16 Shorts Full MP4 Pipeline",
+      "status": "PASS",
+      "required": true,
+      "kind": "REAL_E2E",
+      "details": {
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g4b_dem_9x16\\out\\DEM Shorts Vertical.mp4",
+        "output_sha256": "79a31c6c6a3e1fa82734c9377bc9be02516c6a94d85736f88631d663c6b0d1f9",
+        "resolution": "1080x1920",
+        "full_decode_verified": true,
+        "phim_compiled_shots": 2,
+        "pixel_analysis": {
+          "ok": true,
+          "total_pixels": 2073600,
+          "unique_colors": 8140,
+          "red_ratio": 0.0002,
+          "dark_ratio": 0.6338,
+          "is_placeholder": false
+        },
+        "proof_saved": "tests\\evidence\\proof_g4b_dem_shorts.jpg"
       }
     },
     {
       "gate": "G5",
-      "name": "180-Shot Replay Backtest (Historical Bug)",
-      "status": "HOLD",
+      "name": "180-Shot Synthetic Long Timeline Regression",
+      "status": "PASS",
+      "required": true,
       "kind": "SYNTHETIC_REPLAY_FAST",
       "details": {
-        "real_replay_status": "REAL_REPLAY_BLOCKED_MISSING_INPUT",
-        "real_input_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/why_knights_could_actually",
         "synthetic_replay_status": "PASS_SYNTHETIC",
         "old_bug_detected_by_preflight": true,
         "missing_ids_before_fix": 180,
         "visuals_assigned_ok": true,
         "validator_after_fix_status": "PASS",
-        "fast_check_duration_sec": 4.15,
-        "fast_check_stdout": "Card do hoa dang dung: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)\nPASS: 0 loi trong 541 khung kiem tra (180 shots hop le, che do fast).",
-        "proof_saved": "tests/evidence/proof_g5_replay.jpg",
-        "reason_for_hold": "Dự án gốc projects/why_knights_could_actually (508.7s, 12209 frames) không có trên host local này. Synthetic replay 180 shot đạt PASS."
+        "fast_check_duration_sec": 8.33,
+        "fast_check_stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\nPASS: 0 loi trong 541 khung kiem tra (180 shots hop le, che do fast).",
+        "proof_saved": "tests\\evidence\\proof_g5_replay.jpg"
+      }
+    },
+    {
+      "gate": "G5b",
+      "name": "Medium 20-Shot Continuity Full Render E2E",
+      "status": "PASS",
+      "required": true,
+      "kind": "REAL_E2E",
+      "details": {
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g5b_medium_continuity\\out\\Medieval Chronicle Medium E2E.mp4",
+        "output_sha256": "12c424afddf35e7ac015c7ec494dd6b6a8cc3d7bbdf73f6694515ac478a5d6af",
+        "shots_count": 30,
+        "duration_sec": 92.12,
+        "resolution": "1280x720",
+        "render_wall_sec": 65.02,
+        "full_decode_verified": true,
+        "proof_saved": "tests\\evidence\\proof_g5b_medium_continuity.jpg"
+      }
+    },
+    {
+      "gate": "G5c",
+      "name": "Historical 180-Shot Company Replay (Optional)",
+      "status": "NOT_RUN_OPTIONAL_MISSING_FIXTURE",
+      "required": false,
+      "kind": "OPTIONAL_DIAGNOSTIC",
+      "details": {
+        "reason": "Thư mục projects/why_knights_could_actually không có sẵn hoặc thiếu voice_source.wav/voice_script.txt trên home computer. Theo yêu cầu V5, đây là bài test chẩn đoán tùy chọn riêng biệt và không gây ảnh hưởng đến phán quyết FLOW_READY của toàn bộ luồng chính.",
+        "path_checked": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\why_knights_could_actually"
       }
     },
     {
@@ -172,8 +222,9 @@
         "draft_shots_preserved_manual": true,
         "custom_args_preserved": true,
         "backup_files_created": [
-          "shots.backup_1794498935.json",
-          "shots.backup.json"
+          "shots.backup.json",
+          "shots.backup_1794533503.json",
+          "shots.backup_1794533504.json"
         ]
       }
     },
@@ -211,9 +262,9 @@
         "pixel_analysis": {
           "ok": true,
           "total_pixels": 129600,
-          "unique_colors": 3672,
-          "red_ratio": 0.0,
-          "dark_ratio": 0.0,
+          "unique_colors": 19829,
+          "red_ratio": 0.0014,
+          "dark_ratio": 0.0001,
           "is_placeholder": false
         }
       }
@@ -238,15 +289,16 @@
       "kind": "CONCURRENCY_STRESS",
       "details": {
         "project_1_exit": 0,
-        "project_1_video_size": 14078,
+        "project_1_video_size": 12260,
         "project_2_exit": 0,
-        "project_2_video_size": 14078
+        "project_2_video_size": 12260
       }
     },
     {
       "gate": "G14",
       "name": "Historical Replay Contrast Comparison",
       "status": "PASS",
+      "required": true,
       "kind": "COMPARATIVE_AUDIT",
       "details": {
         "historical_bug_state": {
@@ -258,8 +310,9 @@
         "post_fix_verified_state": {
           "preflight_guard": "Preflight validator caught 180 missing shots before rendering",
           "visual_assignment": "assign_visuals automatically assigned contextual templates (scene, close, map, split, board, item, army)",
-          "fast_check_validation": "Card do hoa dang dung: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)\nPASS: 0 loi trong 541 khung kiem tra (180 shots hop le, che do fast).",
-          "truthful_qualification": "Distinguishes PASS_SYNTHETIC from REAL_REPLAY_BLOCKED_MISSING_INPUT"
+          "fast_check_validation": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\nPASS: 0 loi trong 541 khung kiem tra (180 shots hop le, che do fast).",
+          "truthful_qualification": "Distinguishes PASS_SYNTHETIC from REAL_REPLAY_BLOCKED_MISSING_INPUT",
+          "synthetic_replay_passed": true
         }
       }
     },
@@ -267,6 +320,7 @@
       "gate": "G15",
       "name": "Headless CI & CLI Exit Codes",
       "status": "PASS",
+      "required": true,
       "kind": "CI_CONFORMANCE",
       "details": {
         "validator_exit_code": 0,
@@ -277,21 +331,25 @@
       "gate": "G16",
       "name": "Performance & Resource Audit",
       "status": "PASS",
+      "required": true,
       "kind": "TELEMETRY_AUDIT",
       "details": {
-        "disk_free_gb": 14.33,
-        "ram_available_gb": 3.17,
-        "min_disk_headroom_gb": 14.28,
-        "min_ram_headroom_gb": 2.27,
-        "continuous_monitor_samples": 38,
-        "measured_180_shot_check_sec": 5.52,
-        "measured_render_fps": 98.0
+        "disk_free_gb": 58.97,
+        "ram_available_gb": 14.26,
+        "min_disk_headroom_gb": 58.97,
+        "min_ram_headroom_gb": 10.92,
+        "resource_breached": false,
+        "continuous_monitor_samples": 128,
+        "measured_180_shot_check_sec": 10.58,
+        "fast_check_samples_per_sec": 51.1,
+        "medium_20_shot_e2e_sec": 75.38
       }
     },
     {
       "gate": "G17",
       "name": "2K QHD & 4K UHD Render Verification (1440p & 2160p)",
       "status": "PASS",
+      "required": true,
       "kind": "UHD_CAPABILITY",
       "details": {
         "2K_16x9": {
@@ -299,7 +357,8 @@
           "aspect": "16:9",
           "expected": "2560x1440",
           "actual": "2560x1440",
-          "render_sec": 2.1,
+          "full_decode_verified": true,
+          "render_sec": 2.57,
           "exit_code": 0,
           "pass": true
         },
@@ -308,7 +367,8 @@
           "aspect": "16:9",
           "expected": "3840x2160",
           "actual": "3840x2160",
-          "render_sec": 3.24,
+          "full_decode_verified": true,
+          "render_sec": 3.33,
           "exit_code": 0,
           "pass": true
         },
@@ -317,7 +377,8 @@
           "aspect": "9:16",
           "expected": "1440x2560",
           "actual": "1440x2560",
-          "render_sec": 2.36,
+          "full_decode_verified": true,
+          "render_sec": 2.33,
           "exit_code": 0,
           "pass": true
         },
@@ -326,7 +387,8 @@
           "aspect": "9:16",
           "expected": "2160x3840",
           "actual": "2160x3840",
-          "render_sec": 3.22,
+          "full_decode_verified": true,
+          "render_sec": 3.23,
           "exit_code": 0,
           "pass": true
         }

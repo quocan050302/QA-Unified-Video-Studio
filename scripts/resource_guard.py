@@ -29,21 +29,31 @@ def get_disk_info(path: str = ".") -> dict:
 def get_ram_info() -> dict:
     total_gb = 0.0
     free_gb = 0.0
-    try:
-        # Standard POSIX sysconf
-        if hasattr(os, "sysconf"):
-            pagesize = os.sysconf("SC_PAGE_SIZE")
-            phys_pages = os.sysconf("SC_PHYS_PAGES")
-            total_gb = round((phys_pages * pagesize) / (1024 ** 3), 2)
-            if hasattr(os, "sysconf_names") and "SC_AVPHYS_PAGES" in os.sysconf_names:
-                avail_pages = os.sysconf("SC_AVPHYS_PAGES")
-                free_gb = round((avail_pages * pagesize) / (1024 ** 3), 2)
-            else:
-                free_gb = total_gb * 0.25  # conservative estimate
-    except Exception:
-        pass
 
     # Platform specific checks
+    if sys.platform == "win32":
+        try:
+            import ctypes
+            class MEMORYSTATUSEX(ctypes.Structure):
+                _fields_ = [
+                    ("dwLength", ctypes.c_ulong),
+                    ("dwMemoryLoad", ctypes.c_ulong),
+                    ("ullTotalPhys", ctypes.c_ulonglong),
+                    ("ullAvailPhys", ctypes.c_ulonglong),
+                    ("ullTotalPageFile", ctypes.c_ulonglong),
+                    ("ullAvailPageFile", ctypes.c_ulonglong),
+                    ("ullTotalVirtual", ctypes.c_ulonglong),
+                    ("ullAvailVirtual", ctypes.c_ulonglong),
+                    ("sullAvailExtendedVirtual", ctypes.c_ulonglong),
+                ]
+            stat = MEMORYSTATUSEX()
+            stat.dwLength = ctypes.sizeof(MEMORYSTATUSEX)
+            if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(stat)):
+                total_gb = round(stat.ullTotalPhys / (1024 ** 3), 2)
+                free_gb = round(stat.ullAvailPhys / (1024 ** 3), 2)
+        except Exception:
+            pass
+
     if sys.platform == "darwin":
         try:
             import subprocess, re
@@ -62,6 +72,24 @@ def get_ram_info() -> dict:
             free_p = pages.get("Pages free", 0) + pages.get("Pages inactive", 0) + pages.get("Pages speculative", 0)
             if free_p > 0:
                 free_gb = round((free_p * page_size) / (1024 ** 3), 2)
+            # Total RAM on darwin
+            hw_mem = subprocess.check_output(["sysctl", "-n", "hw.memsize"], text=True).strip()
+            if hw_mem.isdigit():
+                total_gb = round(int(hw_mem) / (1024 ** 3), 2)
+        except Exception:
+            pass
+
+    if free_gb == 0.0:
+        try:
+            if hasattr(os, "sysconf"):
+                pagesize = os.sysconf("SC_PAGE_SIZE")
+                phys_pages = os.sysconf("SC_PHYS_PAGES")
+                total_gb = round((phys_pages * pagesize) / (1024 ** 3), 2)
+                if hasattr(os, "sysconf_names") and "SC_AVPHYS_PAGES" in os.sysconf_names:
+                    avail_pages = os.sysconf("SC_AVPHYS_PAGES")
+                    free_gb = round((avail_pages * pagesize) / (1024 ** 3), 2)
+                else:
+                    free_gb = round(total_gb * 0.25, 2)
         except Exception:
             pass
 
@@ -120,9 +148,16 @@ def get_process_children(parent_pid: int) -> list[int]:
     return children
 
 def kill_process_tree(pid: int, sig=signal.SIGTERM, timeout: float = 3.0):
-    """Safely terminate a process and all its children."""
+    """Safely terminate a process and all its children across Windows/macOS/Linux."""
     if pid <= 0:
         return
+    if sys.platform == "win32":
+        try:
+            subprocess.run(["taskkill", "/F", "/T", "/PID", str(pid)], capture_output=True, timeout=timeout)
+        except Exception:
+            pass
+        return
+
     try:
         children = get_process_children(pid)
         for c in children:
@@ -145,11 +180,13 @@ def kill_process_tree(pid: int, sig=signal.SIGTERM, timeout: float = 3.0):
     except Exception:
         pass
 
+
 class ResourceMonitor:
     """Continuous background resource monitor for CPU, RAM, and Disk."""
-    def __init__(self, workspace: str = ".", min_disk_gb: float = DEFAULT_MIN_DISK_GB, interval_sec: float = 1.0):
+    def __init__(self, workspace: str = ".", min_disk_gb: float = DEFAULT_MIN_DISK_GB, min_ram_gb: float = DEFAULT_MIN_RAM_GB, interval_sec: float = 1.0):
         self.workspace = workspace
         self.min_disk_gb = min_disk_gb
+        self.min_ram_gb = min_ram_gb
         self.interval_sec = interval_sec
         self.stop_event = threading.Event()
         self.thread = None
@@ -158,6 +195,26 @@ class ResourceMonitor:
         self.samples = 0
         self.breached = False
         self.breach_message = ""
+        self._registered_pids = set()
+        self._lock = threading.Lock()
+
+    def register_pid(self, pid: int):
+        if pid and pid > 0:
+            with self._lock:
+                self._registered_pids.add(pid)
+
+    def unregister_pid(self, pid: int):
+        with self._lock:
+            self._registered_pids.discard(pid)
+
+    def _terminate_registered(self):
+        with self._lock:
+            pids = list(self._registered_pids)
+        for p in pids:
+            try:
+                kill_process_tree(p, timeout=2.0)
+            except Exception:
+                pass
 
     def _monitor_loop(self):
         while not self.stop_event.is_set():
@@ -175,6 +232,12 @@ class ResourceMonitor:
                 if free_disk < self.min_disk_gb:
                     self.breached = True
                     self.breach_message = f"Disk dropped to {free_disk} GB (< {self.min_disk_gb} GB threshold)"
+                    self._terminate_registered()
+
+                if avail_ram > 0 and avail_ram < self.min_ram_gb:
+                    self.breached = True
+                    self.breach_message = f"Available RAM dropped to {avail_ram} GB (< {self.min_ram_gb} GB threshold)"
+                    self._terminate_registered()
             except Exception:
                 pass
             self.stop_event.wait(self.interval_sec)

@@ -63,7 +63,17 @@ if mcfg.get("enabled", True):
         f = min(int(1.2 * SR), L // 3); seg[:f] *= np.linspace(0, 1, f); seg[-f:] *= np.linspace(1, 0, f)
         music[a0:a1] += seg
     # tat / mo nhac em (0.25 s)
-    k = int(0.25 * SR); sm = np.convolve(gate, np.ones(k) / k, "same"); music *= sm
+    if np.any(gate == 0):
+        try:
+            from scipy.signal import fftconvolve
+            k = int(0.25 * SR)
+            sm = fftconvolve(gate, np.ones(k) / k, "same")
+            music *= np.clip(sm, 0.0, 1.0)
+        except Exception:
+            k = int(0.25 * SR)
+            cs = np.cumsum(np.pad(gate, (k // 2, k // 2), mode="edge"))
+            sm = (cs[k:] - cs[:-k]) / k
+            music *= np.clip(sm[:len(music)], 0.0, 1.0)
 
 # ---------- hieu ung am thanh
 sfx = np.zeros(N); scfg = cfg.get("sfx", {"enabled": True})
