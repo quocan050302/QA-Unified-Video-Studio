@@ -484,23 +484,24 @@ def _compile_squire_hook_action(
         effects.append("treadmill animation compiled (in_place run anchor, belt prop at x=0.48)")
 
     elif directive == "stat_metric_telemetry":
-        tpl = "board"
         line = rec.get("source_line", "")
         facts = extract_quantity_facts(line)
-        bars = []
         if facts:
+            tpl = "board"
             f0 = facts[0]
             val = f0["value"]
             unit = f0["unit"] or "mph"
-            bars.append({"label": "SPEED", "v": val, "at": 0.3, "top": f"{val:g} {unit}".strip()})
+            bars = [{"label": "SPEED", "v": val, "at": 0.3, "top": f"{val:g} {unit}".strip()}]
             max_v = max(val * 1.3, 5.0)
+            args["title"] = "EXPERIMENT TELEMETRY"
+            args["bars"] = bars
+            args["max"] = round(max_v, 2)
+            effects.append(f"board telemetry compiled with real source metric: {bars[0]['top']}")
         else:
-            bars.append({"label": "MEASURED", "v": 3.8, "at": 0.3, "top": "3.8 mph"})
-            max_v = 5.0
-        args["title"] = "EXPERIMENT TELEMETRY"
-        args["bars"] = bars
-        args["max"] = round(max_v, 2)
-        effects.append(f"board telemetry compiled with real source metric: {bars[0]['top']}")
+            # V11: Strictly no fabricated 3.8 mph metric when facts absent from source
+            tpl = "scene"
+            args["bg"] = "field"
+            effects.append("no numeric facts in source: omitted fabricated board, preserved narrative scene")
 
     elif directive == "hero_active_sprint":
         tpl = "scene"

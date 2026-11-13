@@ -299,7 +299,18 @@ registerTemplate('top', { draw(g, lt, info) {
   const a = info.args || {};
   camera(g, lt, info, () => {
     topGround(g, a.ground || {});
-    for (const b of a.blocks || []) { const a0 = at(info, b.at, 0); if (lt < a0) continue; const bb = { ...b, path: b.path ? b.path.map(([tt, x, y]) => [at(info, tt, 0), x, y]) : null, fade: b.fade ? b.fade.map((v) => at(info, v, 0)) : null }; topBlock(g, bb, lt); }
+    for (const b of a.blocks || []) {
+      const a0 = at(info, b.at, 0); if (lt < a0) continue;
+      const bb = {
+        ...b,
+        path: b.path ? b.path.map(([tt, x, y]) => [at(info, tt, 0), x, y]) : null,
+        fade: b.fade ? b.fade.map((v) => at(info, v, 0)) : null,
+        tiltAt: b.tiltAt ? b.tiltAt.map(([tt, ang]) => [at(info, tt, 0), ang]) : null,
+        gap: b.gap ? { ...b.gap, at: at(info, b.gap.at, 0) } : null,
+        impactAt: b.impactAt !== undefined ? at(info, b.impactAt, 0) : undefined
+      };
+      topBlock(g, bb, lt);
+    }
     zones(g, lt, info, a.zones);
     for (const d of a.dust || []) { const a0 = at(info, d.at, 0); if (lt < a0) continue; dustPuff(g, fx(d.x), fy(d.y), fs(d.s, 0.12), (d.a ?? 0.7) * clamp((lt - a0) / 0.5), lt); }
     if (a.fog) { const [x0, x1] = a.fog; g.save(); const gr = g.createLinearGradient(fx(x0), 0, fx(x1), 0); gr.addColorStop(0, 'rgba(225,206,160,0)'); gr.addColorStop(0.3, 'rgba(225,206,160,0.92)'); gr.addColorStop(0.7, 'rgba(225,206,160,0.92)'); gr.addColorStop(1, 'rgba(225,206,160,0)'); g.fillStyle = gr; g.fillRect(fx(x0), -10, fx(x1) - fx(x0), E.H + 20); g.restore(); }
@@ -349,7 +360,19 @@ registerTemplate('plan', { draw(g, lt, info) {
     const X = E.W * 0.06, Y = E.H * (vert() ? 0.2 : 0.07), Wd = E.W * 0.88, Hd = E.H * (vert() ? 0.6 : 0.86);
     parchment(g, X, Y, Wd, Hd, { color: a.paper === 'notebook' ? '#f3ecd8' : PAL.parchment, inner: (c) => { if (a.paper === 'notebook') { c.save(); c.strokeStyle = 'rgba(120,150,190,0.4)'; c.lineWidth = 2; for (let y = Y + 30; y < Y + Hd; y += 30 * SC()) { c.beginPath(); c.moveTo(X, y); c.lineTo(X + Wd, y); c.stroke(); } c.restore(); } } });
     zones(g, lt, info, a.zones);
-    for (const b of a.blocks || []) { const a0 = at(info, b.at, 0); if (lt < a0) continue; const bb = { style: 'rect', ...b, path: b.path ? b.path.map(([tt, x, y]) => [at(info, tt, 0), x, y]) : null, fade: b.fade ? b.fade.map((v) => at(info, v, 0)) : null }; topBlock(g, bb, lt); }
+    for (const b of a.blocks || []) {
+      const a0 = at(info, b.at, 0); if (lt < a0) continue;
+      const bb = {
+        style: 'rect',
+        ...b,
+        path: b.path ? b.path.map(([tt, x, y]) => [at(info, tt, 0), x, y]) : null,
+        fade: b.fade ? b.fade.map((v) => at(info, v, 0)) : null,
+        tiltAt: b.tiltAt ? b.tiltAt.map(([tt, ang]) => [at(info, tt, 0), ang]) : null,
+        gap: b.gap ? { ...b.gap, at: at(info, b.gap.at, 0) } : null,
+        impactAt: b.impactAt !== undefined ? at(info, b.impactAt, 0) : undefined
+      };
+      topBlock(g, bb, lt);
+    }
     overlays(g, lt, info);
   });
   vignette(g, 0.25);

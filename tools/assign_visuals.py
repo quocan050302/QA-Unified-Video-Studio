@@ -573,14 +573,47 @@ def compile_visual_plan(plan: Dict[str, Any], is_vertical: bool) -> Tuple[str, D
             "compass": True
         })
     elif tpl == "top":
-        args.update({
-            "ground": {"color": "#c9ad7a", "grass": True},
-            "blocks": [
-                {"x": 0.32, "y": 0.5, "w": 0.08, "h": 0.14, "side": "blue", "face": 1, "path": [[0.8, 0.45, 0.5]], "spears": True},
-                {"x": 0.68, "y": 0.5, "w": 0.08, "h": 0.14, "side": "red", "face": -1}
-            ],
-            "arrows": [{"from": [0.32, 0.5], "to": [0.55, 0.5], "at": 0.4}]
-        })
+        l_low = line.lower()
+        if re.search(r"\b(breakthrough|broke|breach|penetrate|chọc thủng|xé toang)\b", l_low) and not re.search(r"\b(could not|not|never|không|chưa)\b", l_low):
+            args.update({
+                "ground": {"color": "#c9ad7a", "grass": True, "rocks": True},
+                "blocks": [
+                    {"label": "Hastati (Left)", "side": "blue", "face": 1, "x": 0.38, "y": 0.38, "w": 0.08, "h": 0.08, "path": [[0.0, 0.40, 0.42], [1.8, 0.35, 0.33]], "spears": True, "gap": {"at": 0.8, "dur": 0.6, "w": 0.45}, "impactAt": 1.2},
+                    {"label": "Hastati (Right)", "side": "blue", "face": 1, "x": 0.38, "y": 0.62, "w": 0.08, "h": 0.08, "path": [[0.0, 0.40, 0.58], [1.8, 0.35, 0.67]], "spears": True, "gap": {"at": 0.8, "dur": 0.6, "w": 0.45}, "impactAt": 1.2},
+                    {"label": "Enemy Vanguard", "side": "red", "face": -1, "x": 0.65, "y": 0.50, "w": 0.10, "h": 0.14, "path": [[0.0, 0.65, 0.50], [0.8, 0.55, 0.50], [2.2, 0.42, 0.50]], "spears": True, "impactAt": 1.2}
+                ],
+                "arrows": [{"from": [0.65, 0.5], "to": [0.42, 0.5], "at": 0.5}]
+            })
+        elif re.search(r"\b(relief|relieve|rotate|rotation|second line|reserve|principes|triarii|hàng hai|tiếp ứng|thay hàng)\b", l_low):
+            args.update({
+                "ground": {"color": "#c9ad7a", "grass": True, "rocks": True},
+                "blocks": [
+                    {"label": "Principes (2nd Line)", "side": "blue", "face": 1, "x": 0.20, "y": 0.50, "w": 0.08, "h": 0.16, "path": [[0.0, 0.20, 0.50], [2.2, 0.40, 0.50]], "spears": True, "impactAt": 2.0},
+                    {"label": "Hastati (Rotating)", "side": "blue", "face": -1, "x": 0.38, "y": 0.50, "w": 0.07, "h": 0.14, "path": [[0.5, 0.38, 0.50], [2.4, 0.18, 0.50]], "fade": [2.0, 3.0]},
+                    {"label": "Enemy Vanguard", "side": "red", "face": -1, "x": 0.52, "y": 0.50, "w": 0.10, "h": 0.14, "path": [[0.0, 0.52, 0.50], [2.0, 0.46, 0.50]], "impactAt": 2.0}
+                ],
+                "arrows": [{"from": [0.20, 0.5], "to": [0.40, 0.5], "at": 0.3}]
+            })
+        elif re.search(r"\b(flank|encircle|surround|pincer|wings|bọc sườn|bao vây|gọng kìm)\b", l_low) and not re.search(r"\b(could not|not|never|không|chưa)\b", l_low):
+            args.update({
+                "ground": {"color": "#c9ad7a", "grass": True, "rocks": True},
+                "blocks": [
+                    {"label": "Roman Center", "side": "blue", "face": 1, "x": 0.38, "y": 0.50, "w": 0.08, "h": 0.16, "spears": True, "impactAt": 1.0},
+                    {"label": "Enemy Vanguard", "side": "red", "face": -1, "x": 0.50, "y": 0.50, "w": 0.10, "h": 0.14, "impactAt": 1.0},
+                    {"label": "Left Pincer", "side": "blue", "face": 1, "x": 0.36, "y": 0.24, "w": 0.06, "h": 0.08, "path": [[0.0, 0.36, 0.24], [1.5, 0.52, 0.26], [2.6, 0.60, 0.40]], "tilt": 0.2, "tiltAt": [[0.0, 0.2], [1.5, 0.45], [2.6, 0.85]]},
+                    {"label": "Right Pincer", "side": "blue", "face": 1, "x": 0.36, "y": 0.76, "w": 0.06, "h": 0.08, "path": [[0.0, 0.36, 0.76], [1.5, 0.52, 0.74], [2.6, 0.60, 0.60]], "tilt": -0.2, "tiltAt": [[0.0, -0.2], [1.5, -0.45], [2.6, -0.85]]}
+                ],
+                "arrows": [{"from": [0.36, 0.24], "to": [0.60, 0.40], "at": 0.4}, {"from": [0.36, 0.76], "to": [0.60, 0.60], "at": 0.4}]
+            })
+        else:
+            args.update({
+                "ground": {"color": "#c9ad7a", "grass": True, "rocks": True},
+                "blocks": [
+                    {"label": "Hastati Legion", "x": 0.32, "y": 0.5, "w": 0.08, "h": 0.14, "side": "blue", "face": 1, "path": [[0.0, 0.28, 0.5], [2.0, 0.44, 0.5]], "spears": True, "impactAt": 1.5},
+                    {"label": "Enemy Vanguard", "x": 0.68, "y": 0.5, "w": 0.08, "h": 0.14, "side": "red", "face": -1, "path": [[0.0, 0.72, 0.5], [2.0, 0.56, 0.5]], "impactAt": 1.5}
+                ],
+                "arrows": [{"from": [0.32, 0.5], "to": [0.50, 0.5], "at": 0.4}]
+            })
     elif tpl == "split":
         args.update({
             "left": {

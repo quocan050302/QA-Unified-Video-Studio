@@ -54,21 +54,62 @@ function posAt(b, lt) {
   for (let i = 1; i < P.length; i++) { const [t0, x0, y0] = P[i - 1], [t1, x1, y1] = P[i]; if (lt <= t0) break; const k = ease.inOut(clamp((lt - t0) / Math.max(0.01, t1 - t0))); p = [lerp(x0, x1, k), lerp(y0, y1, k)]; }
   return p;
 }
+function tiltAt(b, lt) {
+  if (b.tiltAt && b.tiltAt.length) {
+    let tlt = b.tilt || 0;
+    const T = [[0, b.tilt || 0], ...b.tiltAt];
+    for (let i = 1; i < T.length; i++) {
+      const [t0, a0] = T[i - 1], [t1, a1] = T[i];
+      if (lt <= t0) break;
+      const k = ease.inOut(clamp((lt - t0) / Math.max(0.01, t1 - t0)));
+      tlt = lerp(a0, a1, k);
+    }
+    return tlt;
+  }
+  return b.tilt || 0;
+}
 export function topBlock(g, b, lt) {
   const [x, y] = posAt(b, lt), W = (b.w || 0.06) * E.W, H = (b.h || 0.1) * E.H, cell = Math.min(E.W, E.H) * (b.cell || 0.024), cols = b.cols || Math.max(2, Math.round(W / cell)), rows = b.rows || Math.max(2, Math.round(H / cell));
   const [col, light] = SIDE[b.side || 'blue'] || SIDE.blue, a = b.fade ? 1 - clamp((lt - b.fade[0]) / Math.max(0.05, b.fade[1] - b.fade[0])) : 1;
   if (a <= 0) return;
-  g.save(); g.globalAlpha *= a; g.translate(x * E.W, y * E.H); g.rotate(b.tilt || 0);
+  const currentTilt = tiltAt(b, lt);
+  g.save(); g.globalAlpha *= a; g.translate(x * E.W, y * E.H); g.rotate(currentTilt);
   const dx = W / cols, dy = H / rows, r = Math.min(dx, dy) * 0.5, lw = Math.max(1, r * 0.2);
-  if (b.style === 'rect') { rect(g, -W / 2, -H / 2, W, H, { fill: col, lw: lw * 2, r: 4, inner: (c) => { for (let i = 1; i < cols; i++) line(c, [[-W / 2 + i * dx, -H / 2], [-W / 2 + i * dx, H / 2]], { lw: lw * 0.6, a: 0.4 }); for (let j = 1; j < rows; j++) line(c, [[-W / 2, -H / 2 + j * dy], [W / 2, -H / 2 + j * dy]], { lw: lw * 0.6, a: 0.4 }); } }); g.restore(); return; }
-  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
-    const jx = noise(i * 3.1 + j * 7.7 + (b.seed || 0)) * dx * 0.12 + (b.tired ? Math.sin(lt * 3 + i + j) * dx * 0.05 : 0), jy = noise(i * 5.3 + j * 2.1 + (b.seed || 0)) * dy * 0.12;
-    const cx = -W / 2 + (i + 0.5) * dx + jx, cy = -H / 2 + (j + 0.5) * dy + jy, face = b.face ?? 1;
-    // khien (phia truoc theo huong mat) + mu
-    ellipse(g, cx + face * r * 0.2, cy + r * 0.25, r * 0.95, r * 0.55, { fill: alpha('#000', 0.18), lw: 0 });
-    ellipse(g, cx + face * r * 0.62, cy, r * 0.42, r * 1.05, { fill: col, lw, inner: (c) => circ(c, cx + face * r * 0.7, cy, r * 0.16, { fill: light, lw: 0 }) });
-    circ(g, cx - face * r * 0.12, cy, r * 0.66, { fill: b.helmet || PAL.bronze, lw, inner: (c) => circ(c, cx - face * r * 0.3, cy - r * 0.2, r * 0.22, { fill: alpha('#fff', 0.45), lw: 0 }) });
-    if (b.spears) line(g, [[cx, cy + r * 0.2], [cx + face * r * 2.4, cy - r * 0.2]], { lw: lw * 0.9, ink: PAL.woodDark });
+
+  // Dynamic gap opening for breakthrough visualization
+  const gapK = b.gap ? clamp((lt - (b.gap.at ?? 0)) / Math.max(0.05, b.gap.dur || 0.6)) : 0;
+  const gapShiftY = gapK * (b.gap ? (b.gap.w ?? 0.35) * H : 0);
+
+  // Impact impulse on shield clash
+  const impactK = b.impactAt ? Math.max(0, 1 - Math.abs(lt - b.impactAt) / 0.5) : 0;
+  const impactShake = impactK > 0 ? Math.sin((lt - b.impactAt) * 25) * r * 0.35 : 0;
+
+  if (b.style === 'rect') {
+    rect(g, -W / 2, -H / 2, W, H, { fill: col, lw: lw * 2, r: 4, inner: (c) => { for (let i = 1; i < cols; i++) line(c, [[-W / 2 + i * dx, -H / 2], [-W / 2 + i * dx, H / 2]], { lw: lw * 0.6, a: 0.4 }); for (let j = 1; j < rows; j++) line(c, [[-W / 2, -H / 2 + j * dy], [W / 2, -H / 2 + j * dy]], { lw: lw * 0.6, a: 0.4 }); } });
+  } else {
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      const jx = noise(i * 3.1 + j * 7.7 + (b.seed || 0)) * dx * 0.12 + (b.tired ? Math.sin(lt * 3 + i + j) * dx * 0.05 : 0) + impactShake, jy = noise(i * 5.3 + j * 2.1 + (b.seed || 0)) * dy * 0.12;
+      // Breach gap parts the rows
+      const rowGap = gapShiftY > 0 ? (j < rows / 2 ? -gapShiftY * 0.5 : gapShiftY * 0.5) : 0;
+      const cx = -W / 2 + (i + 0.5) * dx + jx, cy = -H / 2 + (j + 0.5) * dy + jy + rowGap, face = b.face ?? 1;
+      // khien (phia truoc theo huong mat) + mu
+      ellipse(g, cx + face * r * 0.2, cy + r * 0.25, r * 0.95, r * 0.55, { fill: alpha('#000', 0.18), lw: 0 });
+      ellipse(g, cx + face * r * 0.62, cy, r * 0.42, r * 1.05, { fill: col, lw, inner: (c) => circ(c, cx + face * r * 0.7, cy, r * 0.16, { fill: light, lw: 0 }) });
+      circ(g, cx - face * r * 0.12, cy, r * 0.66, { fill: b.helmet || PAL.bronze, lw, inner: (c) => circ(c, cx - face * r * 0.3, cy - r * 0.2, r * 0.22, { fill: alpha('#fff', 0.45), lw: 0 }) });
+      if (b.spears) line(g, [[cx, cy + r * 0.2], [cx + face * r * 2.4, cy - r * 0.2]], { lw: lw * 0.9, ink: PAL.woodDark });
+    }
+  }
+
+  // Tactical unit label
+  if (b.label) {
+    g.save();
+    g.font = `bold ${Math.max(12, Math.round(18 * (E.W / 1920)))}px sans-serif`;
+    g.textAlign = 'center';
+    g.fillStyle = '#ffffff';
+    g.shadowColor = '#000000';
+    g.shadowBlur = 4;
+    g.fillText(String(b.label), 0, -H / 2 - 8);
+    g.restore();
   }
   g.restore();
 }

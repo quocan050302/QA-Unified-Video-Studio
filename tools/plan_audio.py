@@ -106,6 +106,20 @@ def get_canonical_sfx_name(raw_name: str, sfx_lib: Dict[str, Any]) -> Optional[s
         "breath": "breath_in",
         "heart": "heartbeat",
         "horn": "war_horn",
+        "horn_roman": "horn_roman",
+        "roman_horn": "horn_roman",
+        "drum_march": "drum_march",
+        "battle_roar": "battle_roar",
+        "battle_far": "battle_far",
+        "javelin_throw": "javelin_throw",
+        "javelin": "javelin_throw",
+        "pilum": "javelin_throw",
+        "arrow_volley": "arrow_volley",
+        "arrow": "arrow_volley",
+        "sword_clash": "sword_clash",
+        "clash": "sword_clash",
+        "shield_bash": "shield_bash",
+        "spear_hit": "spear_hit",
     }
     alias = aliases.get(raw_name.lower())
     if alias and alias in sfx_lib:
@@ -286,6 +300,69 @@ def classify_narrative_audio_events(
                 "reason": "sword_drawn",
                 "confidence": 0.89,
             })
+
+    # Cue 6: Battle choreography & tactical events
+    is_battle = (
+        tpl in ("top", "army")
+        or bool(re.search(r"\b(battle|clash|legion|roman|hastati|principes|triarii|flank|encircle|breakthrough|corridor|relief|rotation|ranks?|phalanx)\b", l_low))
+    )
+    if is_battle:
+        # Horn signal / command
+        if bool(re.search(r"\b(horn|signal|command|order|tù và|hiệu lệnh)\b", l_low)) and not is_negated("horn"):
+            hn = get_canonical_sfx_name("horn_roman", sfx_lib) or get_canonical_sfx_name("war_horn", sfx_lib)
+            if hn:
+                events.append({"name": hn, "at": 0.2, "gain": -9.0, "kind": "battle_signal", "reason": "battle_horn_command", "confidence": 0.95})
+
+        # March / Approach
+        if bool(re.search(r"\b(march|advance|approach|tiến quân|hành quân|tiến lên)\b", l_low)) and not is_negated("march"):
+            dm = get_canonical_sfx_name("drum_march", sfx_lib)
+            if dm:
+                events.append({"name": dm, "at": 0.35, "gain": -13.0, "kind": "battle_march", "reason": "disciplined_march", "confidence": 0.92})
+
+        # Shield clash / Impact
+        if bool(re.search(r"\b(clash|impact|collide|shield|charge|xung phong|chạm trán|va chạm)\b", l_low)) and not is_negated("clash"):
+            sb = get_canonical_sfx_name("shield_bash", sfx_lib)
+            if sb:
+                events.append({"name": sb, "at": round(min(dur * 0.45, 1.2), 2), "gain": -9.0, "kind": "battle_impact", "reason": "shield_wall_clash", "confidence": 0.96})
+            sc = get_canonical_sfx_name("sword_clash", sfx_lib)
+            if sc:
+                events.append({"name": sc, "at": round(min(dur * 0.65, 1.8), 2), "gain": -11.0, "kind": "battle_melee", "reason": "melee_weapon_clash", "confidence": 0.93})
+
+        # Breakthrough / Roar
+        if bool(re.search(r"\b(breakthrough|broke|breach|penetrate|collapse|shatter|chọc thủng|xé toang)\b", l_low)) and not is_negated(r"\b(break|breach|broke)\b"):
+            br = get_canonical_sfx_name("battle_roar", sfx_lib)
+            if br:
+                events.append({"name": br, "at": 0.3, "gain": -10.0, "kind": "battle_roar", "reason": "breakthrough_battle_cry", "confidence": 0.95})
+            sc = get_canonical_sfx_name("sword_clash", sfx_lib)
+            if sc:
+                events.append({"name": sc, "at": round(min(dur * 0.55, 1.5), 2), "gain": -11.0, "kind": "battle_melee", "reason": "breakthrough_melee", "confidence": 0.91})
+
+        # Relief / Rotation
+        if bool(re.search(r"\b(relief|relieve|rotate|rotation|second line|reserve|hàng hai|tiếp ứng|thay hàng|rút lui)\b", l_low)) and not is_negated("relief"):
+            hn = get_canonical_sfx_name("horn_roman", sfx_lib) or get_canonical_sfx_name("war_horn", sfx_lib)
+            if hn:
+                events.append({"name": hn, "at": 0.25, "gain": -11.0, "kind": "battle_signal", "reason": "rotation_signal", "confidence": 0.94})
+            dm = get_canonical_sfx_name("drum_march", sfx_lib)
+            if dm:
+                events.append({"name": dm, "at": 0.6, "gain": -14.0, "kind": "battle_march", "reason": "reserve_stepping_up", "confidence": 0.90})
+
+        # Flank & Encirclement
+        if bool(re.search(r"\b(flank|encircle|surround|pincer|wings|bọc sườn|bao vây|gọng kìm)\b", l_low)) and not is_negated(r"\b(flank|encircle|surround)\b"):
+            bf = get_canonical_sfx_name("battle_far", sfx_lib)
+            if bf:
+                events.append({"name": bf, "at": 0.3, "gain": -12.0, "kind": "battle_ambient", "reason": "flank_envelopment", "confidence": 0.92})
+            sc = get_canonical_sfx_name("sword_clash", sfx_lib)
+            if sc:
+                events.append({"name": sc, "at": round(min(dur * 0.6, 1.8), 2), "gain": -10.0, "kind": "battle_melee", "reason": "flank_clash", "confidence": 0.92})
+
+        # Javelin / Pilum / Arrow Volley
+        if bool(re.search(r"\b(pilum|javelin|arrow|volley|phóng lao|bắn tên|lao)\b", l_low)) and not is_negated(r"\b(throw|shoot|volley|pilum|javelin)\b"):
+            jt = get_canonical_sfx_name("javelin_throw", sfx_lib) or get_canonical_sfx_name("arrow_volley", sfx_lib)
+            if jt:
+                events.append({"name": jt, "at": 0.2, "gain": -10.0, "kind": "battle_missile", "reason": "javelin_pilum_volley", "confidence": 0.95})
+            sb = get_canonical_sfx_name("shield_bash", sfx_lib)
+            if sb:
+                events.append({"name": sb, "at": round(min(dur * 0.7, 1.8), 2), "gain": -11.0, "kind": "battle_impact", "reason": "javelin_shield_impact", "confidence": 0.93})
 
     # Apply Cooldown & Density Limits:
     # Max 2 salient impact cues per 3 seconds, min gap 0.25s between any two cues
