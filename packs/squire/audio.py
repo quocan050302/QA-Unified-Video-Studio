@@ -130,10 +130,12 @@ def footsteps(n=6):
     out = np.zeros(int((n * 0.5 + 0.5) * SR))
     for k in range(n): at(out, lp(rng.standard_normal(int(0.12 * SR)), 1200) * np.exp(-t(0.12) * 35) * rng.uniform(0.6, 1.0), k * 0.5)
     return out
+def single_step():
+    return lp(rng.standard_normal(int(0.12 * SR)), 1200) * np.exp(-t(0.12) * 35)
 def door():
     x = lp(rng.standard_normal(int(1.2 * SR)), 900) * np.exp(-t(1.2) * 3) * 0.3; f = np.linspace(300, 180, len(x)); x += np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.15 * np.exp(-t(1.2) * 2); return mixp(x, np.pad(drum_hit() * 0.5, (int(1.0 * SR), 0)))
 def build_sfx():
-    S = [('sting_low', sting_low(), 0.85, (2.5, 0.35, 2500)), ('footsteps', footsteps(), 0.6, (0.6, 0.1, 5000)), ('door_open', door(), 0.7, (1.2, 0.2, 4000)),
+    S = [('sting_low', sting_low(), 0.85, (2.5, 0.35, 2500)), ('footsteps', footsteps(), 0.6, (0.6, 0.1, 5000)), ('single_footstep', single_step(), 0.65, (0.4, 0.08, 5000)), ('door_open', door(), 0.7, (1.2, 0.2, 4000)),
         ('horse_neigh', neigh(), 0.85, (1.4, 0.2, 5000)), ('horse_snort', snort(), 0.7, None),
         ('hooves_walk', hooves(4.0, False), 0.7, (0.8, 0.12, 5000)), ('hooves_gallop', hooves(4.0, True), 0.8, (0.8, 0.12, 5000)),
         ('sword_clash', clash(), 0.85, (1.2, 0.2, 7000)), ('sword_draw', draw(), 0.7, (0.8, 0.15, 8000)), ('shield_bash', bash(), 0.85, (0.9, 0.15, 4000)),

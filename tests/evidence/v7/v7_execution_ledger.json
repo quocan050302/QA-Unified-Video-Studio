@@ -1,25 +1,25 @@
 {
-  "run_id": "20261113_111600",
-  "timestamp": "2026-11-13T11:18:59.113849",
-  "total_duration_sec": 178.62,
+  "run_id": "20261113_121331",
+  "timestamp": "2026-11-13T12:17:28.616439",
+  "total_duration_sec": 237.47,
   "git": {
     "branch": "fix/Image-Shot",
-    "head": "6ea22a1c1f7b12fd6bb22516cf368cab1f68dee6",
+    "head": "c962a37f62cb9e4bb17845ab89866776f2c57c72",
     "production_head": "e867c910b0ef0e43dcbaf7d7601fecd1c9a8ae53"
   },
   "system": {
     "node": "v26.13.1",
     "python": "3.12.10",
     "resources": {
-      "samples": 173,
-      "min_free_disk_gb": 58.63,
-      "min_avail_ram_gb": 1.62,
+      "samples": 229,
+      "min_free_disk_gb": 58.61,
+      "min_avail_ram_gb": 1.4,
       "breached": false,
       "breach_message": ""
     }
   },
   "verdict": "FLOW_READY",
-  "verdict_reason": "Tất cả 37/37 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).",
+  "verdict_reason": "Tất cả 51/51 cổng BẮT BUỘC (Required Gates: G0-G17, G-A..G-G, N1-N12, H1-H14) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE.",
   "v7_gates": [
     {
       "gate": "N1",
@@ -28,7 +28,7 @@
       "kind": "AUDIO_CATALOG",
       "required": true,
       "details": {
-        "total_sfx_found": 79,
+        "total_sfx_found": 80,
         "core_sounds_verified": true,
         "alias_mapping_verified": true,
         "unknown_safely_caught": true
@@ -67,8 +67,8 @@
       "kind": "DETERMINISM",
       "required": true,
       "details": {
-        "first_run_hash": "08a7fe64818ad57fa664f979602d652579ea5f72014969ff292a00458a3e5d7f",
-        "second_run_hash": "08a7fe64818ad57fa664f979602d652579ea5f72014969ff292a00458a3e5d7f",
+        "first_run_hash": "52fa840b90b535f2f320b2388b7e5ea205d01166ef4a2d44c14886c7c8ec3f8b",
+        "second_run_hash": "52fa840b90b535f2f320b2388b7e5ea205d01166ef4a2d44c14886c7c8ec3f8b",
         "second_run_modified": false,
         "idempotent": true
       }
@@ -104,13 +104,13 @@
       "kind": "FULL_SHOWCASE_E2E",
       "required": true,
       "details": {
-        "output_file": ".test-runs\\20261113_111600\\n07_squire_showcase_1080p\\out\\Why Knights Could Actually Run 1080p.mp4",
+        "output_file": ".test-runs\\20261113_121331\\n07_squire_showcase_1080p\\out\\Why Knights Could Actually Run 1080p.mp4",
         "duration": 26.58,
         "video_1080p": true,
         "audio_aac": true,
         "full_decode_exit": 0,
-        "sha256": "c2ea8477d1fadabdbf63a8e230fc6ba68f16c94c48cb183e904eeff13718ced7",
-        "proj_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_111600\\n07_squire_showcase_1080p"
+        "sha256": "7fb7f9313ca60e5aff38ce7e3aa38fe8fb286627834ecef0d93453054f116449",
+        "proj_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_121331\\n07_squire_showcase_1080p"
       }
     },
     {
@@ -122,7 +122,7 @@
       "details": {
         "measured_integrated_lufs": -16.2,
         "true_peak_dbtp": -1.5,
-        "cues_rendered_count": 11,
+        "cues_rendered_count": 9,
         "lufs_in_broadcast_window": true,
         "peak_guard_met": true,
         "evidence_saved": "tests\\evidence\\v7\\v7_audio_mix_report.json"
@@ -149,7 +149,7 @@
       "details": {
         "resolution_1080x1920": true,
         "audio_present": true,
-        "output_file": ".test-runs\\20261113_111600\\n10_shorts_vertical\\out\\Knights Agility Short.mp4"
+        "output_file": ".test-runs\\20261113_121331\\n10_shorts_vertical\\out\\Knights Agility Short.mp4"
       }
     },
     {
@@ -160,7 +160,7 @@
       "required": true,
       "details": {
         "breach_caught": true,
-        "guard_message": "DISK SPACE LOW: 58.63 GB free is below safety reserve 999999.0 GB"
+        "guard_message": "DISK SPACE LOW: 58.61 GB free is below safety reserve 999999.0 GB"
       }
     },
     {
@@ -404,6 +404,90 @@
       "name": "Previous Both-Pack Full Regression Check",
       "status": "PASS",
       "kind": "REGRESSION_GUARD"
+    },
+    {
+      "gate": "H1",
+      "name": "UI Audio Jobs Real Post-Condition Verification",
+      "status": "PASS",
+      "kind": "UI_TRUTH"
+    },
+    {
+      "gate": "H2",
+      "name": "Cross-Language Canonical Visual Hashing Protocol",
+      "status": "PASS",
+      "kind": "HASH_PROTOCOL"
+    },
+    {
+      "gate": "H3",
+      "name": "Audio-Only Edits Do Not Trigger Video Re-render",
+      "status": "PASS",
+      "kind": "HASH_CACHING"
+    },
+    {
+      "gate": "H4",
+      "name": "Visual Stale Detection Invalidation",
+      "status": "PASS",
+      "kind": "STALE_DETECTION"
+    },
+    {
+      "gate": "H5",
+      "name": "Manual Audio Lock and Planner Idempotency",
+      "status": "PASS",
+      "kind": "MANUAL_LOCK"
+    },
+    {
+      "gate": "H6",
+      "name": "Foley Cadence Without Overlapping Audio Clips",
+      "status": "PASS",
+      "kind": "FOLEY_CADENCE"
+    },
+    {
+      "gate": "H7",
+      "name": "2D Narrative Motion and Safe Bounds Verification",
+      "status": "PASS",
+      "kind": "NARRATIVE_MOTION"
+    },
+    {
+      "gate": "H8",
+      "name": "Showcase 1080p Final MP4 with Voice, Music and SFX",
+      "status": "PASS",
+      "kind": "SHOWCASE_E2E"
+    },
+    {
+      "gate": "H9",
+      "name": "Final Decoded AAC Broadcast Loudness and True Peak",
+      "status": "PASS",
+      "kind": "AUDIO_METRICS"
+    },
+    {
+      "gate": "H10",
+      "name": "Mid-Range Audio Preview with Synchronized Sound",
+      "status": "PASS",
+      "kind": "PREVIEW_AUDIO"
+    },
+    {
+      "gate": "H11",
+      "name": "Negative Release Defect Injection Resilience",
+      "status": "PASS",
+      "kind": "NEGATIVE_TEST"
+    },
+    {
+      "gate": "H12",
+      "name": "Async Parallel Concurrency & Process Tree Safety",
+      "status": "PASS",
+      "kind": "RESOURCE_SAFETY"
+    },
+    {
+      "gate": "H13",
+      "name": "Legacy Packs and Core Studio Regression Safety",
+      "status": "PASS",
+      "kind": "REGRESSION_GUARD"
+    },
+    {
+      "gate": "H14",
+      "name": "Source Integrity and Branch Invariants",
+      "status": "PASS",
+      "kind": "SOURCE_INTEGRITY"
     }
   ]
 }

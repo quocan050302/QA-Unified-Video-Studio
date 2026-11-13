@@ -313,17 +313,14 @@ try {
     }
     fs.renameSync(silentPartial, silentFinal);
 
-    // Ghi visual hash de mix.py khong bat render lai neu chi thay doi am thanh/SFX
+    // Ghi visual hash theo chuẩn V8 canonical để mix.py và app.py kiểm tra đồng bộ cross-language
     try {
-      const storyPath = path.join(PROJ, 'story', 'shots.json');
-      if (fs.existsSync(storyPath)) {
-        const storyData = JSON.parse(fs.readFileSync(storyPath, 'utf8'));
-        const vis = (storyData.shots || []).map(s => ({ id: s.id, start: s.start, end: s.end, tpl: s.tpl, args: s.args, scene: s.scene }));
-        const crypto = await import('node:crypto');
-        const vHash = crypto.createHash('sha256').update(JSON.stringify(vis)).digest('hex');
-        fs.writeFileSync(path.join(BUILD, 'visual_hash.txt'), vHash, 'utf8');
-      }
-    } catch {}
+      const { computeCanonicalVisualHash } = await import('./engine/canonical_hash.js');
+      const vHash = computeCanonicalVisualHash(PROJ);
+      fs.writeFileSync(path.join(BUILD, 'visual_hash.txt'), vHash, 'utf8');
+    } catch (e) {
+      console.warn('Khong ghi duoc canonical visual_hash:', e.message);
+    }
 
     if (preview) {
       const vp = voicePath(), outp = path.join(BUILD, 'preview.mp4');

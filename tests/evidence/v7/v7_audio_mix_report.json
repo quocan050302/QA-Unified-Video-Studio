@@ -1,6 +1,6 @@
 {
   "project": "n07_squire_showcase_1080p",
-  "mixed_at": 1794543517.9050536,
+  "mixed_at": 1794547002.0723062,
   "status": "AUDIO_MIX_PASS",
   "integrated_lufs": -16.2,
   "true_peak_dbtp": -1.5,
@@ -8,8 +8,8 @@
   "duration_sec": 26.592,
   "voice_rms": 0.15138742327690125,
   "music_rms": 0.014529683555922403,
-  "sfx_rms": 0.008900898310337881,
-  "cues_rendered_count": 11,
+  "sfx_rms": 0.007942899798374443,
+  "cues_rendered_count": 9,
   "cues": [
     {
       "time": 10.27,
@@ -18,58 +18,46 @@
       "gain": -13.0
     },
     {
-      "time": 10.709999999999999,
+      "time": 10.719999999999999,
       "name": "mud_step",
       "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\mud_step.wav",
       "gain": -13.0
     },
     {
-      "time": 11.149999999999999,
+      "time": 11.17,
       "name": "mud_step",
       "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\mud_step.wav",
       "gain": -13.0
     },
     {
-      "time": 11.59,
-      "name": "mud_step",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\mud_step.wav",
-      "gain": -13.0
-    },
-    {
-      "time": 12.03,
+      "time": 11.62,
       "name": "mud_step",
       "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\mud_step.wav",
       "gain": -13.0
     },
     {
       "time": 17.197,
-      "name": "footsteps",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\footsteps.wav",
-      "gain": -16.0
+      "name": "single_footstep",
+      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\single_footstep.wav",
+      "gain": -15.0
     },
     {
-      "time": 17.677,
-      "name": "footsteps",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\footsteps.wav",
-      "gain": -16.0
+      "time": 17.697,
+      "name": "single_footstep",
+      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\single_footstep.wav",
+      "gain": -15.0
     },
     {
-      "time": 18.157,
-      "name": "footsteps",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\footsteps.wav",
-      "gain": -16.0
+      "time": 18.197,
+      "name": "single_footstep",
+      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\single_footstep.wav",
+      "gain": -15.0
     },
     {
-      "time": 18.637,
-      "name": "footsteps",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\footsteps.wav",
-      "gain": -16.0
-    },
-    {
-      "time": 19.116999999999997,
-      "name": "footsteps",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\footsteps.wav",
-      "gain": -16.0
+      "time": 18.697,
+      "name": "single_footstep",
+      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\single_footstep.wav",
+      "gain": -15.0
     },
     {
       "time": 20.060000000000002,
@@ -77,5 +65,14 @@
       "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\ting_idea.wav",
       "gain": -13.0
     }
-  ]
+  ],
+  "measured_after_final_decode": {
+    "integrated_lufs": -14.1,
+    "true_peak_dbtp": -2.1,
+    "stream_format": "aac",
+    "sample_rate": 48000,
+    "channels": 2,
+    "target_lufs": -14,
+    "tolerance_met": true
+  }
 }

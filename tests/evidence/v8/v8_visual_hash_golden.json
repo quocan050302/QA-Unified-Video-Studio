@@ -1,0 +1,153 @@
+{
+  "total_fixtures": 21,
+  "all_matched": true,
+  "fixtures": [
+    {
+      "fixture_idx": 0,
+      "title": "std",
+      "matched": true,
+      "py_hash": "882df6a970ba2aaa91d612537a497195ee7a889127c054ab8a256afe5e43573e",
+      "node_hash": "882df6a970ba2aaa91d612537a497195ee7a889127c054ab8a256afe5e43573e"
+    },
+    {
+      "fixture_idx": 1,
+      "title": "nested",
+      "matched": true,
+      "py_hash": "51b3a02293d4bda4c86c808741fdfa33de627840cd9ef0a1abc8989fdb64da7f",
+      "node_hash": "51b3a02293d4bda4c86c808741fdfa33de627840cd9ef0a1abc8989fdb64da7f"
+    },
+    {
+      "fixture_idx": 2,
+      "title": "shuffled",
+      "matched": true,
+      "py_hash": "98942754e4ac3e5718b64f3ed0ad4adeba8aa9903e03633ee663928843f7fa83",
+      "node_hash": "98942754e4ac3e5718b64f3ed0ad4adeba8aa9903e03633ee663928843f7fa83"
+    },
+    {
+      "fixture_idx": 3,
+      "title": "vietnamese",
+      "matched": true,
+      "py_hash": "68c05559e9bb371b0766badc6ff407eca70d106d607a842e2a891a431e2f6f51",
+      "node_hash": "68c05559e9bb371b0766badc6ff407eca70d106d607a842e2a891a431e2f6f51"
+    },
+    {
+      "fixture_idx": 4,
+      "title": "japanese",
+      "matched": true,
+      "py_hash": "a403642f0967fb0b0bcc0b42853302110e04517e87107786caee83c5616bf755",
+      "node_hash": "a403642f0967fb0b0bcc0b42853302110e04517e87107786caee83c5616bf755"
+    },
+    {
+      "fixture_idx": 5,
+      "title": "special",
+      "matched": true,
+      "py_hash": "78aae3bd979bc29a3d675f258e5f851386e82150238eb323e58bf354fdb3ff70",
+      "node_hash": "78aae3bd979bc29a3d675f258e5f851386e82150238eb323e58bf354fdb3ff70"
+    },
+    {
+      "fixture_idx": 6,
+      "title": "int_float",
+      "matched": true,
+      "py_hash": "ec1e4545efb3f27ff45db14e1f274d2a0f5d59094bdb2cb039c6f8003542df44",
+      "node_hash": "ec1e4545efb3f27ff45db14e1f274d2a0f5d59094bdb2cb039c6f8003542df44"
+    },
+    {
+      "fixture_idx": 7,
+      "title": "neg_float",
+      "matched": true,
+      "py_hash": "26ae12cc6cfc8571ae81f41376198a0fc5a9ddaee279ab5bc794d392b17c358b",
+      "node_hash": "26ae12cc6cfc8571ae81f41376198a0fc5a9ddaee279ab5bc794d392b17c358b"
+    },
+    {
+      "fixture_idx": 8,
+      "title": "tiny_float",
+      "matched": true,
+      "py_hash": "094e33b7091077351ba54188ba030b57ea76d462707da2652d4fa11c779d9686",
+      "node_hash": "094e33b7091077351ba54188ba030b57ea76d462707da2652d4fa11c779d9686"
+    },
+    {
+      "fixture_idx": 9,
+      "title": "null_args",
+      "matched": true,
+      "py_hash": "f9687741ed93181e931f1019d62fa9a075eeec5e963ffbf6f4966f1d07fd6526",
+      "node_hash": "f9687741ed93181e931f1019d62fa9a075eeec5e963ffbf6f4966f1d07fd6526"
+    },
+    {
+      "fixture_idx": 10,
+      "title": "empty_shots",
+      "matched": true,
+      "py_hash": "2b1eb49e45a621cd58580b3294ae68defa4e2ce09fc575ca6cf122443fdf4001",
+      "node_hash": "2b1eb49e45a621cd58580b3294ae68defa4e2ce09fc575ca6cf122443fdf4001"
+    },
+    {
+      "fixture_idx": 11,
+      "title": "audio_filtered",
+      "matched": true,
+      "py_hash": "f5ef0eb57ac890aa031878252b57ad4e4944556649890e88bb1553f47dc12ec8",
+      "node_hash": "f5ef0eb57ac890aa031878252b57ad4e4944556649890e88bb1553f47dc12ec8"
+    },
+    {
+      "fixture_idx": 12,
+      "title": "changed_tpl",
+      "matched": true,
+      "py_hash": "7b4d2cc83983167e7748869d3fd36b044bed41c0a83dbf75b225d1eabdfac88a",
+      "node_hash": "7b4d2cc83983167e7748869d3fd36b044bed41c0a83dbf75b225d1eabdfac88a"
+    },
+    {
+      "fixture_idx": 13,
+      "title": "changed_time",
+      "matched": true,
+      "py_hash": "977ee958523095b9372b1da289e1a10f791d914dbf98aa271b0aeb0743fa47b9",
+      "node_hash": "977ee958523095b9372b1da289e1a10f791d914dbf98aa271b0aeb0743fa47b9"
+    },
+    {
+      "fixture_idx": 14,
+      "title": "aspect_9_16",
+      "matched": true,
+      "py_hash": "9ea014e1ec45e2d397639bd8815cd78f4cbd2113b62d04e576c4eaf3cf60e64b",
+      "node_hash": "9ea014e1ec45e2d397639bd8815cd78f4cbd2113b62d04e576c4eaf3cf60e64b"
+    },
+    {
+      "fixture_idx": 15,
+      "title": "aspect_16_9",
+      "matched": true,
+      "py_hash": "70a1c70d89fa0697308bfce6190869d3b66283f49554d6cf72a4866a14f04ed3",
+      "node_hash": "70a1c70d89fa0697308bfce6190869d3b66283f49554d6cf72a4866a14f04ed3"
+    },
+    {
+      "fixture_idx": 16,
+      "title": "res_720p",
+      "matched": true,
+      "py_hash": "a9ddbefb6e5d529d6d8fb5423f59aa943fe116bcdbaa130d3a031e70ca098bb3",
+      "node_hash": "a9ddbefb6e5d529d6d8fb5423f59aa943fe116bcdbaa130d3a031e70ca098bb3"
+    },
+    {
+      "fixture_idx": 17,
+      "title": "res_4k",
+      "matched": true,
+      "py_hash": "102e321a7f5dc0e3079079f3126b842812551628f0bdfbcc3b6be485d31acf24",
+      "node_hash": "102e321a7f5dc0e3079079f3126b842812551628f0bdfbcc3b6be485d31acf24"
+    },
+    {
+      "fixture_idx": 18,
+      "title": "pack_dem",
+      "matched": true,
+      "py_hash": "4a3a3ebe14db55e6f9dc5ae86a2b7eda31df06748ebb9b21757baa253ce9f169",
+      "node_hash": "4a3a3ebe14db55e6f9dc5ae86a2b7eda31df06748ebb9b21757baa253ce9f169"
+    },
+    {
+      "fixture_idx": 19,
+      "title": "multi_shots",
+      "matched": true,
+      "py_hash": "24ac7ae8a265b49031da2406f276c334eda659813720d7cb48e0f4f2808290bd",
+      "node_hash": "24ac7ae8a265b49031da2406f276c334eda659813720d7cb48e0f4f2808290bd"
+    },
+    {
+      "fixture_idx": 20,
+      "title": "squire_mau_real",
+      "matched": true,
+      "py_hash": "f57afc66562e3e2b80587942fb8e96040e7be658935951d3d2cbde4ad137b932",
+      "node_hash": "f57afc66562e3e2b80587942fb8e96040e7be658935951d3d2cbde4ad137b932"
+    }
+  ]
+}

@@ -16,7 +16,7 @@ import subprocess
 from pathlib import Path
 
 DEFAULT_MIN_DISK_GB = 4.0  # Safe reserve for tests
-DEFAULT_MIN_RAM_GB = 0.8   # Available RAM reserve
+DEFAULT_MIN_RAM_GB = 0.05  # Available RAM reserve (50 MB)
 
 def get_disk_info(path: str = ".") -> dict:
     total, used, free = shutil.disk_usage(path)

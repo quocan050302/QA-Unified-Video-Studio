@@ -1,5 +1,6 @@
 """common.py — doc/ghi am thanh qua ffmpeg, doc file du an. Chi can numpy + ffmpeg."""
 import json, os, re, subprocess, sys, wave
+from typing import Any, Dict, List, Optional
 import numpy as np
 
 SR = 48000
@@ -131,4 +132,187 @@ def compute_source_hash(project_dir):
                     pass
 
     return h.hexdigest()
+
+
+# =========================================================================
+# CANONICAL HASHING & MANIFEST SPECIFICATION (V8)
+# Python and Node.js cross-language byte-for-byte identical SHA256 hashes
+# =========================================================================
+
+NON_VISUAL_ARG_KEYS = {
+    "sfx", "music", "audio_gain", "voice_gain", "notes", "cue", "cues",
+    "audio_plan", "audio_report", "comment", "audio"
+}
+
+def canonical_json_serialize(obj) -> str:
+    """Deterministic, cross-language serialization for canonical hashing.
+    Produces identical byte sequences in Python and Node.js.
+    """
+    if obj is None:
+        return "null"
+    if isinstance(obj, bool):
+        return "true" if obj else "false"
+    if isinstance(obj, (int, np.integer)):
+        return str(int(obj))
+    if isinstance(obj, (float, np.floating)):
+        r = round(float(obj), 4)
+        if r == 0.0:
+            return "0"
+        if r.is_integer():
+            return str(int(r))
+        return f"{r:.4f}".rstrip("0").rstrip(".")
+    if isinstance(obj, str):
+        return json.dumps(obj, ensure_ascii=False, separators=(',', ':'))
+    if isinstance(obj, (list, tuple)):
+        return "[" + ",".join(canonical_json_serialize(x) for x in obj) + "]"
+    if isinstance(obj, dict):
+        # Sort keys lexicographically and skip None/undefined
+        items = []
+        for k in sorted(obj.keys()):
+            v = obj[k]
+            if v is not None:
+                items.append(f"{json.dumps(str(k), ensure_ascii=False, separators=(',', ':'))}:{canonical_json_serialize(v)}")
+        return "{" + ",".join(items) + "}"
+    return json.dumps(obj, ensure_ascii=False, separators=(',', ':'))
+
+
+def filter_visual_args(args: Any) -> Any:
+    """Filter out audio and non-visual fields from template args."""
+    if not isinstance(args, dict):
+        return args
+    res = {}
+    for k, v in args.items():
+        if k in NON_VISUAL_ARG_KEYS:
+            continue
+        if isinstance(v, dict):
+            res[k] = filter_visual_args(v)
+        elif isinstance(v, list):
+            res[k] = [filter_visual_args(x) if isinstance(x, dict) else x for x in v]
+        else:
+            res[k] = v
+    return res
+
+
+def get_canonical_visual_manifest(project_dir: str, story_data: dict = None, config_data: dict = None) -> dict:
+    """Build the versioned canonical visual manifest for a project.
+    Contains ONLY visual-impacting attributes (layout, shots, templates, args, custom scenes, visual assets).
+    Excludes all audio cues, SFX, music beds, and non-visual notes.
+    """
+    from pathlib import Path
+    p = Path(project_dir).resolve()
+    
+    cfg = config_data if config_data is not None else read_json(p / "config.json", {}) or {}
+    story = story_data if story_data is not None else read_json(p / "story" / "shots.json", {}) or {}
+
+    manifest = {
+        "manifest_version": "v8_visual_v1",
+        "config": {
+            "pack": str(cfg.get("pack", "squire")),
+            "aspect": str(cfg.get("aspect", "16:9")),
+            "resolution": str(cfg.get("resolution", "1080p")),
+            "fps": int(cfg.get("fps", 24)),
+            "style": str(cfg.get("style", "flat")),
+        },
+        "shots": [],
+        "visual_assets": {}
+    }
+
+    for s in story.get("shots", []):
+        sh_entry = {
+            "id": str(s.get("id", "")),
+            "start": round(float(s.get("start", 0.0)), 4),
+            "end": round(float(s.get("end", 0.0)), 4),
+            "tpl": str(s.get("tpl", "scene")),
+            "scene": str(s.get("scene", "")) if s.get("scene") else None,
+            "args": filter_visual_args(s.get("args", {}))
+        }
+        manifest["shots"].append(sh_entry)
+
+    # Collect custom scenes and anh/* assets
+    scenes_dir = p / "scenes"
+    if scenes_dir.is_dir():
+        import hashlib
+        for f in sorted(scenes_dir.rglob("*.js")):
+            if f.is_file():
+                rel = f.relative_to(p).as_posix()
+                try:
+                    manifest["visual_assets"][rel] = hashlib.sha256(f.read_bytes()).hexdigest()[:16]
+                except OSError:
+                    pass
+
+    anh_dir = p / "anh"
+    if anh_dir.is_dir():
+        import hashlib
+        for f in sorted(anh_dir.iterdir()):
+            if f.is_file() and f.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
+                rel = f.relative_to(p).as_posix()
+                try:
+                    manifest["visual_assets"][rel] = hashlib.sha256(f.read_bytes()).hexdigest()[:16]
+                except OSError:
+                    pass
+
+    return manifest
+
+
+def compute_canonical_visual_hash(project_dir: str, story_data: dict = None, config_data: dict = None) -> str:
+    """Compute the 64-char SHA256 of the canonical visual manifest."""
+    import hashlib
+    manifest = get_canonical_visual_manifest(project_dir, story_data, config_data)
+    serialized = canonical_json_serialize(manifest)
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+
+def get_canonical_audio_manifest(project_dir: str, story_data: dict = None, config_data: dict = None) -> dict:
+    """Build the versioned canonical audio manifest for a project.
+    Contains voice hash, music/sfx config, audio cues, and loudness target.
+    """
+    from pathlib import Path
+    import hashlib
+    p = Path(project_dir).resolve()
+    
+    cfg = config_data if config_data is not None else read_json(p / "config.json", {}) or {}
+    story = story_data if story_data is not None else read_json(p / "story" / "shots.json", {}) or {}
+
+    voice_file = p / "timeline" / "voice.wav"
+    voice_sha = ""
+    if voice_file.is_file():
+        try:
+            h = hashlib.sha256()
+            with voice_file.open("rb") as fp:
+                while chunk := fp.read(65536):
+                    h.update(chunk)
+            voice_sha = h.hexdigest()
+        except OSError:
+            pass
+
+    manifest = {
+        "manifest_version": "v8_audio_v1",
+        "voice_sha256": voice_sha,
+        "config": {
+            "music": cfg.get("music", {"enabled": True, "gainDb": -15}),
+            "sfx": cfg.get("sfx", {"enabled": True, "gainDb": -4}),
+            "loudness": float(cfg.get("loudness", -14)),
+        },
+        "shots_audio": [],
+        "story_sfx": story.get("sfx", []),
+        "story_music": story.get("music", []),
+    }
+
+    for s in story.get("shots", []):
+        manifest["shots_audio"].append({
+            "id": str(s.get("id", "")),
+            "sfx": s.get("sfx", []),
+            "music": s.get("music")
+        })
+
+    return manifest
+
+
+def compute_canonical_audio_hash(project_dir: str, story_data: dict = None, config_data: dict = None) -> str:
+    """Compute the 64-char SHA256 of the canonical audio manifest."""
+    import hashlib
+    manifest = get_canonical_audio_manifest(project_dir, story_data, config_data)
+    serialized = canonical_json_serialize(manifest)
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
 

@@ -20,6 +20,13 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlsplit
 
+sys.path.insert(0, str((Path(__file__).resolve().parent / 'tools')))
+try:
+    from common import compute_canonical_visual_hash, compute_canonical_audio_hash
+except Exception:
+    compute_canonical_visual_hash = None
+    compute_canonical_audio_hash = None
+
 if os.name == 'nt' and not shutil.which('ffmpeg'):
     try:
         import winreg
@@ -193,8 +200,28 @@ def summarize_project(p: Path):
     else:
         stage = 'VISUALS_READY'
 
-    audio_planned = (p / 'build' / 'audio_plan.json').exists() or any(bool(s.get('sfx')) for s in shots)
-    audio_mixed = (p / 'build' / 'mix.wav').exists()
+    audio_plan_file = p / 'build' / 'audio_plan.json'
+    audio_planned = audio_plan_file.exists() or any(bool(s.get('sfx') or s.get('music')) for s in shots)
+    mix_wav = p / 'build' / 'mix.wav'
+    audio_mixed = mix_wav.exists()
+
+    audio_status = 'AUDIO_NOT_PLANNED'
+    if audio_mixed:
+        is_audio_stale = False
+        audio_hash_file = p / 'build' / 'audio_hash.txt'
+        if audio_hash_file.exists() and compute_canonical_audio_hash:
+            try:
+                cur_ah = compute_canonical_audio_hash(p, story_data=story, config_data=cfg)
+                stored_ah = audio_hash_file.read_text('utf-8').strip()
+                if cur_ah != stored_ah:
+                    is_audio_stale = True
+            except Exception:
+                pass
+        elif (p / 'story' / 'shots.json').exists() and (p / 'story' / 'shots.json').stat().st_mtime > mix_wav.stat().st_mtime + 2:
+            is_audio_stale = True
+        audio_status = 'AUDIO_STALE' if is_audio_stale else 'AUDIO_MIXED'
+    elif audio_planned:
+        audio_status = 'AUDIO_PLANNED'
 
     return {'id': p.name, 'title': cfg.get('title', p.name), 'mode': mode,
             'aspect': cfg.get('aspect', '16:9'), 'resolution': cfg.get('resolution', '1080p'),
@@ -202,6 +229,7 @@ def summarize_project(p: Path):
             'shots': len(shots), 'shots_ready': shots_ready,
             'visuals_ready': visuals_ready, 'missing_shots': missing_shots,
             'audio_planned': audio_planned, 'audio_mixed': audio_mixed,
+            'audio_status': audio_status,
             'stage': stage, 'files': available_files(p)}
 
 
@@ -408,12 +436,9 @@ def task_commands(action, p: Path, params: dict = None):
         silent_mtime = silent_file.stat().st_mtime
         
         visual_matches = False
-        if hash_file.exists() and shots_file.exists():
+        if hash_file.exists() and shots_file.exists() and compute_canonical_visual_hash:
             try:
-                story_data = load_json(shots_file, {})
-                vis = [{"id": s.get("id"), "start": s.get("start"), "end": s.get("end"), "tpl": s.get("tpl"), "args": s.get("args"), "scene": s.get("scene")} for s in story_data.get("shots", [])]
-                import hashlib
-                current_vhash = hashlib.sha256(json.dumps(vis, sort_keys=True).encode("utf-8")).hexdigest()
+                current_vhash = compute_canonical_visual_hash(p)
                 stored_vhash = hash_file.read_text(encoding="utf-8").strip()
                 visual_matches = (current_vhash == stored_vhash)
             except Exception:
@@ -480,6 +505,38 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
     if action == 'audio-build':
         healthy = status()
         return (healthy['music_ready'] and healthy['sfx_ready'], 'Expected music or sound effects missing')
+    if action in ('plan-audio', 'upgrade-generated-audio'):
+        plan_file = p / 'build' / 'audio_plan.json'
+        shots_file = p / 'story' / 'shots.json'
+        if not shots_file.is_file() or not plan_file.is_file():
+            return False, 'Audio plan or shots.json was not created'
+        try:
+            plan_data = load_json(plan_file, {})
+            if not isinstance(plan_data, dict):
+                return False, 'Invalid audio_plan.json schema'
+            status_val = plan_data.get('status', '')
+            if status_val not in ('AUDIO_PLAN_PASS', 'NO_CHANGE'):
+                return False, f'Audio planner reported non-pass status: {status_val}'
+            return True, ''
+        except Exception as exc:
+            return False, f'Failed to parse audio_plan.json: {exc}'
+
+    if action == 'preview-audio':
+        prev_file = p / 'build' / 'preview.mp4'
+        if not prev_file.is_file() or prev_file.stat().st_size < 1000 or prev_file.stat().st_mtime < started - 2:
+            return False, 'build/preview.mp4 with audio was not created or is empty/stale'
+        if shutil.which('ffprobe'):
+            r = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration:stream=codec_type',
+                                '-of', 'default=noprint_wrappers=1', str(prev_file)],
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=30)
+            if r.returncode != 0 or 'codec_type=audio' not in r.stdout or 'codec_type=video' not in r.stdout:
+                return False, 'Preview output missing video or audio stream'
+            dur_m = re.search(r'duration=([\d.]+)', r.stdout)
+            dur_val = float(dur_m.group(1)) if dur_m else 0
+            if dur_val <= 0:
+                return False, 'Preview video has invalid zero duration'
+        return True, ''
+
     expected = {
         'preview': [p / 'build' / 'preview.mp4'],
         'render': [p / 'build' / 'video_silent.mp4'],
@@ -490,9 +547,18 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
         'assign-visuals': [p / 'story' / 'shots.json'],
         'upgrade-visuals': [p / 'story' / 'shots.json'],
     }
-    if action == 'sheet': matches = list((p / 'build' / 'sheets').glob('sheet_*.jpg'))
-    elif action == 'mix': matches = list((p / 'out').glob('*.mp4'))
-    else: matches = expected.get(action, [])
+    if action == 'sheet':
+        matches = list((p / 'build' / 'sheets').glob('sheet_*.jpg'))
+    elif action == 'mix':
+        cfg = load_json(p / 'config.json', {}) or {}
+        title = re.sub(r'[\\/:*?"<>|]', '', cfg.get('title', 'video')).strip() or 'video'
+        exact_mp4 = p / 'out' / f'{title}.mp4'
+        if exact_mp4.is_file():
+            matches = [exact_mp4]
+        else:
+            matches = list((p / 'out').glob('*.mp4'))
+    else:
+        matches = expected.get(action, [])
     if not matches: return False, 'No expected output file was created'
     good = [f for f in matches if f.is_file() and f.stat().st_size > 100 and f.stat().st_mtime >= started - 2]
     if not good: return False, 'Output not created or is empty/stale'
@@ -516,6 +582,15 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
                     cfg = load_json(p / 'config.json', {}) or {}
                     if cfg.get('pack') == 'squire' and 'codec_type=audio' not in out_str:
                         return False, 'Mix output missing audio stream for Squire project'
+                    report_file = p / 'build' / 'audio_mix_report.json'
+                    if not report_file.exists():
+                        return False, 'Missing build/audio_mix_report.json'
+                    try:
+                        rep = load_json(report_file, {})
+                        if rep.get('status') != 'AUDIO_MIX_PASS':
+                            return False, f'Audio mix report status is not pass: {rep.get("status")}'
+                    except Exception:
+                        pass
                 return True, ''
         return False, 'FFprobe failed to validate rendered video duration'
     return True, ''

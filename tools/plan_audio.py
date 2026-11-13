@@ -78,9 +78,12 @@ def get_canonical_sfx_name(raw_name: str, sfx_lib: Dict[str, Any]) -> Optional[s
         "mail": "chainmail",
         "chain": "chainmail",
         "mud": "mud_step",
-        "step": "footsteps",
-        "steps": "footsteps",
-        "run": "footsteps",
+        "step": "single_footstep",
+        "steps": "single_footstep",
+        "footstep": "single_footstep",
+        "single_step": "single_footstep",
+        "run": "single_footstep",
+        "footsteps_loop": "footsteps",
         "sword": "sword_draw",
         "shield": "shield_bash",
         "bash": "shield_bash",
@@ -186,34 +189,47 @@ def classify_narrative_audio_events(
     # Cue 3: Running in mud vs running on treadmill
     if has_run:
         if is_in_place or has_lab or "treadmill" in l_low:
-            # Treadmill: steady, subdued footsteps on belt
-            step_name = get_canonical_sfx_name("footsteps", sfx_lib)
+            # Treadmill: discrete single steps or single one-shot loop (no overlapping 3s clips)
+            step_name = get_canonical_sfx_name("single_footstep", sfx_lib)
             if step_name:
-                cadence = 0.48
+                cadence = 0.50
                 t_start = 0.5
                 step_idx = 0
-                while t_start < dur - 0.5 and step_idx < 6:
+                max_steps = min(6, int((dur - 1.0) / cadence))
+                while t_start < dur - 0.4 and step_idx < max_steps:
                     events.append({
                         "name": step_name,
                         "at": round(t_start, 2),
-                        "gain": -16.0,
+                        "gain": -15.0,
                         "kind": "foley_cadence",
                         "reason": "treadmill_belt_cadence",
                         "confidence": 0.88,
                     })
                     t_start += cadence
                     step_idx += 1
+            else:
+                loop_name = get_canonical_sfx_name("footsteps_loop", sfx_lib) or get_canonical_sfx_name("footsteps", sfx_lib)
+                if loop_name:
+                    events.append({
+                        "name": loop_name,
+                        "at": 0.5,
+                        "gain": -16.0,
+                        "kind": "foley_cadence",
+                        "reason": "treadmill_run_loop",
+                        "confidence": 0.85,
+                    })
         else:
             # Running across ground / mud
             run_start = float(hero.get("moveAt", 0.0))
             if run_start == 0.0 and has_get_up:
                 run_start = round(dur * 0.68, 2)
-            step_name = get_canonical_sfx_name("mud_step", sfx_lib) or get_canonical_sfx_name("footsteps", sfx_lib)
+            step_name = get_canonical_sfx_name("mud_step", sfx_lib) or get_canonical_sfx_name("single_footstep", sfx_lib)
             if step_name:
-                cadence = 0.44
+                cadence = 0.45
                 t_step = max(0.4, run_start)
                 step_idx = 0
-                while t_step < dur - 0.4 and step_idx < 6:
+                max_steps = min(6, int((dur - t_step) / cadence))
+                while t_step < dur - 0.35 and step_idx < max_steps:
                     events.append({
                         "name": step_name,
                         "at": round(t_step, 2),
@@ -224,6 +240,17 @@ def classify_narrative_audio_events(
                     })
                     t_step += cadence
                     step_idx += 1
+            else:
+                loop_name = get_canonical_sfx_name("footsteps_loop", sfx_lib) or get_canonical_sfx_name("footsteps", sfx_lib)
+                if loop_name:
+                    events.append({
+                        "name": loop_name,
+                        "at": round(max(0.4, run_start), 2),
+                        "gain": -14.0,
+                        "kind": "foley_cadence",
+                        "reason": "mud_sprint_loop",
+                        "confidence": 0.85,
+                    })
 
     # Cue 4: Graphic / Metric reveal
     if has_facts and not has_run and not has_lie:
@@ -320,7 +347,10 @@ def merge_preserving_manual(
     upgrade_generated: bool = False,
 ) -> Tuple[List[Dict[str, Any]], bool]:
     """Merge newly generated audio cues with existing cues while protecting manual edits."""
-    manual_cues = [c for c in existing_cues if c.get("source") == "manual" or c.get("audio_source") == "manual"]
+    manual_cues = [
+        c for c in existing_cues
+        if c.get("source") == "manual" or c.get("audio_source") == "manual" or c.get("manual") is True or c.get("manual") == "true"
+    ]
     if manual_cues and not upgrade_generated:
         # Manual edits lock the shot completely unless explicit upgrade requested
         return existing_cues, False

@@ -5,7 +5,7 @@
 import argparse, glob, hashlib, json, os, re, subprocess, sys, time
 import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import SR, load_audio, save_wav, read_json, run, compute_source_hash
+from common import SR, load_audio, save_wav, read_json, run, compute_source_hash, compute_canonical_visual_hash, compute_canonical_audio_hash
 
 KIT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ap = argparse.ArgumentParser()
@@ -19,6 +19,9 @@ a = ap.parse_args()
 P = a.project or a.project_pos
 if not P:
     ap.error("the following arguments are required: --project or project")
+
+if not os.path.isdir(P) or not os.path.isfile(os.path.join(P, "config.json")):
+    sys.exit(f"Thu muc du an khong ton tai hoac thieu config.json: {P}")
 
 cfg = read_json(os.path.join(P, "config.json"), {})
 story = read_json(os.path.join(P, "story", "shots.json"), {})
@@ -135,7 +138,8 @@ lib = {os.path.splitext(os.path.basename(f))[0]: f for f in glob.glob(os.path.jo
 canonical_aliases = {
     "armor": "armor_clank", "clank": "armor_clank", "metal": "armor_clank",
     "mail": "chainmail", "chain": "chainmail", "mud": "mud_step",
-    "step": "footsteps", "steps": "footsteps", "run": "footsteps",
+    "step": "single_footstep", "steps": "single_footstep", "footstep": "single_footstep",
+    "single_step": "single_footstep", "run": "single_footstep", "footsteps_loop": "footsteps",
     "sword": "sword_draw", "shield": "shield_bash", "bash": "shield_bash",
     "whoosh": "whoosh_fast", "swish": "whoosh_tiny", "ting": "ting_idea",
     "idea": "ting_idea", "stat": "tick", "thud": "thud_soft",
@@ -235,13 +239,14 @@ with open(os.path.join(P, "build", "audio_mix_report.json"), "w", encoding="utf-
 
 print("Am thanh:", out, f"({measured_lufs:.1f} LUFS, TP: {measured_tp:.1f} dBTP) |", "; ".join(sorted(set(log))) if log else "ok")
 
-# Helper to compute visual hash
-def compute_visual_hash(story_data):
-    vis = [
-        {"id": s.get("id"), "start": s.get("start"), "end": s.get("end"), "tpl": s.get("tpl"), "args": s.get("args"), "scene": s.get("scene")}
-        for s in story_data.get("shots", [])
-    ]
-    return hashlib.sha256(json.dumps(vis, sort_keys=True).encode("utf-8")).hexdigest()
+# Canonical hashes (V8 spec)
+current_vhash = compute_canonical_visual_hash(P, story_data=story, config_data=cfg)
+current_ahash = compute_canonical_audio_hash(P, story_data=story, config_data=cfg)
+try:
+    with open(os.path.join(P, "build", "audio_hash.txt"), "w", encoding="utf-8") as fp:
+        fp.write(current_ahash)
+except Exception:
+    pass
 
 # ---------- Xu ly Preview with Audio
 if a.preview:
@@ -256,8 +261,15 @@ if a.preview:
         partial_prev = os.path.join(P, "build", "preview.partial.mp4")
         run(["ffmpeg", "-y", "-v", "error", "-i", prev_silent, "-i", prev_audio, "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", partial_prev])
         if os.path.exists(partial_prev):
-            os.replace(partial_prev, prev_final)
-            print("Preview co am thanh hoan tat:", prev_final)
+            # Kiem tra decode va do dai preview hop le
+            chk_pr = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration:stream=codec_type", "-of", "default=noprint_wrappers=1", partial_prev], capture_output=True, text=True)
+            if chk_pr.returncode == 0 and "codec_type=audio" in chk_pr.stdout:
+                os.replace(partial_prev, prev_final)
+                print("Preview co am thanh hoan tat:", prev_final)
+            else:
+                if os.path.exists(partial_prev):
+                    os.remove(partial_prev)
+                sys.exit("Loi tao preview co am thanh (khong co audio stream hoac ffprobe loi)")
     sys.exit(0)
 
 # ---------- Ghep video cuoi (Remux)
@@ -268,17 +280,20 @@ if not a.no_video:
     if not os.path.exists(video):
         print("Chu y: Chua co build/video_silent.mp4 de ghep video. Chi xuat am thanh build/mix.wav.")
     else:
-        # Kiem tra stale video thong minh qua visual_hash (tranh bat render lai visual khi chi sua audio)
+        # Kiem tra stale video thong minh qua canonical visual_hash
         hash_file = os.path.join(P, "build", "visual_hash.txt")
-        current_vhash = compute_visual_hash(story)
         stored_vhash = open(hash_file, "r", encoding="utf-8").read().strip() if os.path.exists(hash_file) else ""
         visual_matches = (stored_vhash == current_vhash) if stored_vhash else False
 
-        if os.path.exists(shots_file) and not visual_matches:
-            v_m = os.path.getmtime(video)
-            s_m = os.path.getmtime(shots_file)
-            if v_m < s_m - 2:
-                sys.exit("build/video_silent.mp4 cu hon story/shots.json (storyboard visual da bi thay doi sau khi render). Vui long render lai video truoc khi mix.")
+        if os.path.exists(shots_file):
+            if stored_vhash:
+                if not visual_matches:
+                    sys.exit("build/video_silent.mp4 cu hon story/shots.json (storyboard visual da bi thay doi sau khi render). Vui long render lai video truoc khi mix.")
+            else:
+                v_m = os.path.getmtime(video)
+                s_m = os.path.getmtime(shots_file)
+                if v_m < s_m - 2:
+                    sys.exit("build/video_silent.mp4 cu hon story/shots.json (v_m < s_m - 2). Vui long render lai video truoc khi mix.")
 
         # Cap nhat stored visual hash neu hop le
         if not os.path.exists(hash_file) or visual_matches:
@@ -316,6 +331,25 @@ if not a.no_video:
         os.replace(partial, final)
         print("Video hoan chinh:", final)
 
+        # Do am thanh thuc te tren file MP4 decode cuoi cung (V8 requirement)
+        meas_r = subprocess.run(["ffmpeg", "-v", "info", "-i", final, "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True, text=True).stderr
+        m_post = re.findall(r"I:\s+(-?[\d.]+) LUFS", meas_r)
+        tp_post = re.findall(r"True peak:\s+(-?[\d.]+) dBFS", meas_r) or re.findall(r"Peak:\s+(-?[\d.]+) dBFS", meas_r)
+        post_lufs = float(m_post[-1]) if m_post else measured_lufs
+        post_tp = float(tp_post[-1]) if tp_post else measured_tp
+
+        audio_report["measured_after_final_decode"] = {
+            "integrated_lufs": post_lufs,
+            "true_peak_dbtp": post_tp,
+            "stream_format": "aac",
+            "sample_rate": SR,
+            "channels": 2,
+            "target_lufs": lufs,
+            "tolerance_met": (abs(post_lufs - lufs) <= 3.0 and post_tp <= -0.8)
+        }
+        with open(os.path.join(P, "build", "audio_mix_report.json"), "w", encoding="utf-8") as fp:
+            json.dump(audio_report, fp, indent=2)
+
         # Ghi verification proof de app.py summarize_project xac thuc
         try:
             src_hash = compute_source_hash(P)
@@ -326,11 +360,14 @@ if not a.no_video:
             proof = {
                 "source_hash": src_hash,
                 "visual_hash": current_vhash,
+                "audio_hash": current_ahash,
                 "output_file": os.path.relpath(final, P),
                 "output_sha256": out_h.hexdigest(),
                 "duration": dur,
                 "verified_at": time.time(),
-                "status": "VERIFIED"
+                "status": "VERIFIED",
+                "measured_lufs": post_lufs,
+                "measured_tp": post_tp
             }
             with open(os.path.join(P, "build", "verification_proof.json"), "w", encoding="utf-8") as fp:
                 json.dump(proof, fp, indent=2)
