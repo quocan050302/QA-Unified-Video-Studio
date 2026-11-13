@@ -313,21 +313,39 @@ try {
     }
     fs.renameSync(silentPartial, silentFinal);
 
-    // Ghi visual hash theo chuẩn V8 canonical để mix.py và app.py kiểm tra đồng bộ cross-language
-    try {
-      const { computeCanonicalVisualHash } = await import('./engine/canonical_hash.js');
-      const vHash = computeCanonicalVisualHash(PROJ);
-      fs.writeFileSync(path.join(BUILD, 'visual_hash.txt'), vHash, 'utf8');
-    } catch (e) {
-      console.warn('Khong ghi duoc canonical visual_hash:', e.message);
-    }
-
     if (preview) {
+      // Preview chi ghi preview_visual_hash.txt va preview_manifest.json. TUYET DOI khong ghi de visual_hash.txt cua full video!
+      try {
+        const { computeCanonicalVisualHash } = await import('./engine/canonical_hash.js');
+        const vHash = computeCanonicalVisualHash(PROJ);
+        fs.writeFileSync(path.join(BUILD, 'preview_visual_hash.txt'), vHash, 'utf8');
+        const prevManifest = {
+          from_sec: f0 / info.fps,
+          to_sec: f1 / info.fps,
+          duration: total / info.fps,
+          fps: info.fps,
+          width: info.W,
+          height: info.H,
+          visual_hash: vHash,
+          created_at: Date.now()
+        };
+        fs.writeFileSync(path.join(BUILD, 'preview_manifest.json'), JSON.stringify(prevManifest, null, 2), 'utf8');
+      } catch (e) {
+        console.warn('Khong ghi duoc preview visual hash:', e.message);
+      }
       const vp = voicePath(), outp = path.join(BUILD, 'preview.mp4');
       if (vp) ff(['-i', silentFinal, '-ss', String(f0 / info.fps), '-t', String(total / info.fps), '-i', vp, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', outp]);
       else fs.copyFileSync(silentFinal, outp);
       console.log(`\nXong: ${outp}`);
     } else {
+      // Chi ghi canonical visual_hash.txt khi FULL video_silent.mp4 duoc render hoan tat
+      try {
+        const { computeCanonicalVisualHash } = await import('./engine/canonical_hash.js');
+        const vHash = computeCanonicalVisualHash(PROJ);
+        fs.writeFileSync(path.join(BUILD, 'visual_hash.txt'), vHash, 'utf8');
+      } catch (e) {
+        console.warn('Khong ghi duoc canonical visual_hash:', e.message);
+      }
       console.log(`\nXong: ${silentFinal}  (${((Date.now() - t0) / 60000).toFixed(1)} phut). Buoc tiep: python tools/mix.py --project ${args.project}`);
     }
   }

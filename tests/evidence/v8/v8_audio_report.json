@@ -1,69 +1,8 @@
 {
-  "project": "n07_squire_showcase_1080p",
-  "mixed_at": 1794547014.6646483,
-  "status": "AUDIO_MIX_PASS",
-  "integrated_lufs": -16.2,
-  "true_peak_dbtp": -1.5,
-  "target_lufs": -14,
-  "duration_sec": 26.592,
-  "voice_rms": 0.15138742327690125,
-  "music_rms": 0.014529683555922403,
-  "sfx_rms": 0.007942899798374443,
-  "cues_rendered_count": 9,
-  "cues": [
-    {
-      "time": 10.27,
-      "name": "mud_step",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\mud_step.wav",
-      "gain": -13.0
-    },
-    {
-      "time": 10.719999999999999,
-      "name": "mud_step",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\mud_step.wav",
-      "gain": -13.0
-    },
-    {
-      "time": 11.17,
-      "name": "mud_step",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\mud_step.wav",
-      "gain": -13.0
-    },
-    {
-      "time": 11.62,
-      "name": "mud_step",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\mud_step.wav",
-      "gain": -13.0
-    },
-    {
-      "time": 17.197,
-      "name": "single_footstep",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\single_footstep.wav",
-      "gain": -15.0
-    },
-    {
-      "time": 17.697,
-      "name": "single_footstep",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\single_footstep.wav",
-      "gain": -15.0
-    },
-    {
-      "time": 18.197,
-      "name": "single_footstep",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\single_footstep.wav",
-      "gain": -15.0
-    },
-    {
-      "time": 18.697,
-      "name": "single_footstep",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\single_footstep.wav",
-      "gain": -15.0
-    },
-    {
-      "time": 20.060000000000002,
-      "name": "ting_idea",
-      "file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\audio\\sfx\\ting_idea.wav",
-      "gain": -13.0
-    }
-  ]
+  "status": "DERIVED_FROM_FINAL_MP4",
+  "output_file": ".test-runs\\20261113_143933\\n07_squire_showcase_1080p\\out\\Why Knights Could Actually Run 1080p.mp4",
+  "measured_integrated_lufs": -14.0,
+  "measured_true_peak_dbtp": -2.0,
+  "tolerance_met": true,
+  "measured_at": 1794555810.3971984
 }

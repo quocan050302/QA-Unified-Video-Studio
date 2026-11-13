@@ -18,6 +18,15 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+try:
+    from tools.common import compute_canonical_visual_hash, compute_canonical_audio_hash
+except ImportError:
+    try:
+        from common import compute_canonical_visual_hash, compute_canonical_audio_hash
+    except ImportError:
+        compute_canonical_visual_hash = None
+        compute_canonical_audio_hash = None
+
 
 def discover_sfx_library(root: Path) -> Dict[str, Dict[str, Any]]:
     """Scan existing audio/sfx directory for real canonical WAV assets."""
@@ -345,6 +354,7 @@ def merge_preserving_manual(
     existing_cues: List[Dict[str, Any]],
     generated_cues: List[Dict[str, Any]],
     upgrade_generated: bool = False,
+    sfx_lib: Optional[Dict[str, Any]] = None,
 ) -> Tuple[List[Dict[str, Any]], bool]:
     """Merge newly generated audio cues with existing cues while protecting manual edits."""
     manual_cues = [
@@ -356,12 +366,18 @@ def merge_preserving_manual(
         return existing_cues, False
 
     out: List[Dict[str, Any]] = list(manual_cues)
-    seen_times = {round(float(c.get("at", 0)), 2) for c in manual_cues}
+    manual_times = [float(c.get("at", 0)) for c in manual_cues]
+    seen_times = {round(t, 2) for t in manual_times}
 
     for gc in generated_cues:
-        at_round = round(float(gc.get("at", 0)), 2)
-        if at_round in seen_times:
+        g_at = float(gc.get("at", 0))
+        at_round = round(g_at, 2)
+        # Avoid duplicate timing and avoid collision within 0.15s of any manual cue
+        if at_round in seen_times or any(abs(g_at - mt) < 0.15 for mt in manual_times):
             continue
+        c_name = gc.get("name", "")
+        if sfx_lib is not None and c_name and c_name not in sfx_lib:
+            print(f"[AudioPlanner] Chu y: SFX '{c_name}' khong co trong thu vien, giu cue danh dau.")
         out.append(gc)
         seen_times.add(at_round)
 
@@ -407,36 +423,52 @@ def plan_audio_for_project(
         generated_cues = classify_narrative_audio_events(sh, sfx_lib, prev_sh, next_sh)
         existing_cues = sh.get("sfx", [])
 
-        merged_cues, changed = merge_preserving_manual(existing_cues, generated_cues, upgrade_generated)
+        merged_cues, changed = merge_preserving_manual(existing_cues, generated_cues, upgrade_generated, sfx_lib)
         if changed:
             modified = True
 
         sh["sfx"] = merged_cues
-        sh["audio_source"] = "manual" if any(c.get("source") == "manual" for c in merged_cues) else "auto_planned"
+        sh["audio_source"] = "manual" if any(c.get("source") == "manual" or c.get("manual") is True for c in merged_cues) else "auto_planned"
         sh["audio_plan"] = {
-            "status": "AUDIO_PLANNED",
-            "version": "v7",
+            "status": "AUDIO_PLAN_PASS",
+            "version": "v9",
             "cues_count": len(merged_cues),
             "timing_source": "action_phase",
-            "confidence": 0.92,
+            "confidence": 0.95,
         }
         total_cues += len(merged_cues)
 
     # Plan music beds if story doesn't already have manual locked music
+    # P1-D: Has manual music -> NEVER overwrite manual music sections, even with --upgrade-generated
     existing_music = story.get("music", [])
-    has_manual_music = any(m.get("source") == "manual" for m in existing_music)
-    if not has_manual_music or upgrade_generated:
+    has_manual_music = any(
+        (m.get("source") == "manual" or m.get("manual") is True or m.get("manual") == "true")
+        for m in existing_music
+    )
+    shot_manual_music = any(
+        bool(sh.get("music") or sh.get("music_bed")) and (sh.get("manual") is True or sh.get("audio_source") == "manual")
+        for sh in shots
+    )
+    if not (has_manual_music or shot_manual_music):
         planned_music = schedule_music_sections(shots, music_lib)
         if planned_music != existing_music:
             story["music"] = planned_music
             modified = True
 
+    status_contract = "AUDIO_PLAN_PASS" if modified else "NO_CHANGE"
+    input_vhash = compute_canonical_visual_hash(str(project_dir), story) if compute_canonical_visual_hash else ""
+    output_ahash = compute_canonical_audio_hash(str(project_dir), story) if compute_canonical_audio_hash else ""
+
     # Output audio plan audit manifest
     audio_plan_manifest = {
         "project": project_dir.name,
         "planned_at": time.time(),
-        "version": "v7",
-        "status": "AUDIO_PLANNED",
+        "run_id": f"plan_{int(time.time() * 1000)}",
+        "version": "v9",
+        "status": status_contract,
+        "modified": modified,
+        "input_visual_hash": input_vhash,
+        "audio_hash": output_ahash,
         "total_cues": total_cues,
         "music_sections": len(story.get("music", [])),
         "available_sfx_count": len(sfx_lib),
@@ -451,28 +483,35 @@ def plan_audio_for_project(
         ],
     }
 
-    if not dry_run and modified:
+    if not dry_run:
         build_dir = project_dir / "build"
         build_dir.mkdir(parents=True, exist_ok=True)
         manifest_file = build_dir / "audio_plan.json"
-        with manifest_file.open("w", encoding="utf-8") as f:
+        tmp_manifest = build_dir / "audio_plan.json.tmp"
+        with tmp_manifest.open("w", encoding="utf-8") as f:
             json.dump(audio_plan_manifest, f, indent=2)
+        os.replace(tmp_manifest, manifest_file)
 
-        # Atomic backup and write
-        backup_file = project_dir / "story" / "shots.backup.json"
-        try:
-            shutil.copyfile(shots_file, backup_file)
-        except Exception:
-            pass
+        if modified:
+            # Atomic backup and write
+            backup_file = project_dir / "story" / "shots.backup.json"
+            try:
+                shutil.copyfile(shots_file, backup_file)
+            except Exception:
+                pass
 
-        with shots_file.open("w", encoding="utf-8") as f:
-            json.dump(story, f, indent=2)
+            tmp_shots = shots_file.with_suffix(".json.tmp")
+            with tmp_shots.open("w", encoding="utf-8") as f:
+                json.dump(story, f, indent=2)
+            os.replace(tmp_shots, shots_file)
 
     return {
-        "status": "AUDIO_PLANNED",
+        "status": status_contract,
         "modified": modified,
         "total_cues": total_cues,
         "music_sections": len(story.get("music", [])),
+        "audio_hash": output_ahash,
+        "manifest": audio_plan_manifest,
     }
 
 

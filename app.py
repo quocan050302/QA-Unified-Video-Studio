@@ -22,29 +22,14 @@ from urllib.parse import parse_qs, unquote, urlsplit
 
 sys.path.insert(0, str((Path(__file__).resolve().parent / 'tools')))
 try:
-    from common import compute_canonical_visual_hash, compute_canonical_audio_hash
+    from common import compute_canonical_visual_hash, compute_canonical_audio_hash, ensure_ffmpeg
 except Exception:
     compute_canonical_visual_hash = None
     compute_canonical_audio_hash = None
+    ensure_ffmpeg = lambda: None
 
-if os.name == 'nt' and not shutil.which('ffmpeg'):
-    try:
-        import winreg
-        _extra = []
-        for _root, _sub in ((winreg.HKEY_LOCAL_MACHINE, r'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'),
-                            (winreg.HKEY_CURRENT_USER, r'Environment')):
-            try:
-                with winreg.OpenKey(_root, _sub) as _k:
-                    _val, _ = winreg.QueryValueEx(_k, 'Path')
-                    _extra.extend(os.path.expandvars(p) for p in _val.split(os.pathsep) if p)
-            except OSError:
-                pass
-        _cur = os.environ.get('PATH', '').split(os.pathsep)
-        _add = [p for p in _extra if p and p not in _cur]
-        if _add:
-            os.environ['PATH'] = os.pathsep.join(_add + _cur)
-    except Exception:
-        pass
+if ensure_ffmpeg:
+    ensure_ffmpeg()
 
 ROOT = Path(__file__).resolve().parent
 PROJECTS = ROOT / 'projects'
@@ -75,17 +60,69 @@ class ProjectConflictError(Exception):
         self.suggested_id = suggested_id
 
 
-def invalidate_artifacts(p: Path):
-    """Xoa cac file build trung gian khi kich ban/storyboard thay doi.
-    Bao ve deliverables cua nguoi dung: giu nguyen out/*.mp4 va danh dau STALE.
+def invalidate_by_change(p: Path, change_type: str, old_data=None, new_data=None):
+    """Xoa cac file build trung gian co chon loc theo loai thay doi (P0-B):
+    - NO_CHANGE: khong xoa gi.
+    - AUDIO_ONLY: xoa build/mix.wav, build/mix.m4a, build/preview.mp4.
+      TUYET DOI GIU NGUYEN build/video_silent.mp4 va build/visual_hash.txt!
+    - VISUAL_CHANGED: xoa ca video_silent.mp4, visual_hash.txt, preview.mp4, mix.wav.
+    - INPUT_CHANGED: xoa ca video va audio vi kich ban/giong doc thay doi toan bo timing.
+    Luon giu out/*.mp4 va danh dau STALE trong verification_proof.json.
     """
-    for f in (p / 'build' / 'video_silent.mp4', p / 'build' / 'video_silent.partial.mp4',
-              p / 'build' / 'preview.mp4', p / 'build' / 'preview_silent.mp4',
-              p / 'build' / 'mix.wav', p / 'build' / 'mix_raw.wav', p / 'build' / 'mix_ln.wav'):
+    scope = 'INPUT_CHANGED'
+    if change_type == 'story':
+        old_story = old_data or {}
+        new_story = new_data or {}
+        old_vhash = compute_canonical_visual_hash(str(p), story_data=old_story) if compute_canonical_visual_hash else None
+        new_vhash = compute_canonical_visual_hash(str(p), story_data=new_story) if compute_canonical_visual_hash else None
+        old_ahash = compute_canonical_audio_hash(str(p), story_data=old_story) if compute_canonical_audio_hash else None
+        new_ahash = compute_canonical_audio_hash(str(p), story_data=new_story) if compute_canonical_audio_hash else None
+
+        if old_vhash and new_vhash and old_vhash == new_vhash:
+            if old_ahash == new_ahash:
+                scope = 'NO_CHANGE'
+            else:
+                scope = 'AUDIO_ONLY'
+        else:
+            scope = 'VISUAL_CHANGED'
+    elif change_type == 'config':
+        old_cfg = old_data or {}
+        new_cfg = new_data or {}
+        vis_keys = ('resolution', 'aspect', 'fps', 'title')
+        aud_keys = ('music', 'sfx', 'loudness')
+        vis_changed = any(old_cfg.get(k) != new_cfg.get(k) for k in vis_keys)
+        aud_changed = any(old_cfg.get(k) != new_cfg.get(k) for k in aud_keys)
+        if vis_changed:
+            scope = 'VISUAL_CHANGED'
+        elif aud_changed:
+            scope = 'AUDIO_ONLY'
+        else:
+            scope = 'NO_CHANGE'
+    else:
+        scope = 'INPUT_CHANGED'
+
+    if scope == 'NO_CHANGE':
+        return
+
+    # Invalidate audio artifacts always on AUDIO_ONLY, VISUAL_CHANGED, or INPUT_CHANGED
+    for f in (p / 'build' / 'mix.wav', p / 'build' / 'mix_raw.wav', p / 'build' / 'mix_ln.wav',
+              p / 'build' / 'mix.m4a', p / 'build' / 'preview.mp4', p / 'build' / 'preview.partial.mp4',
+              p / 'build' / 'preview_audio.wav', p / 'build' / 'audio_hash.txt'):
         if f.exists():
             try: f.unlink()
             except OSError: pass
 
+    # Invalidate visual artifacts ONLY when visual actually changed or input changed
+    if scope in ('VISUAL_CHANGED', 'INPUT_CHANGED'):
+        for f in (p / 'build' / 'video_silent.mp4', p / 'build' / 'video_silent.partial.mp4',
+                  p / 'build' / 'preview_silent.mp4', p / 'build' / 'preview_silent.partial.mp4',
+                  p / 'build' / 'visual_hash.txt', p / 'build' / 'preview_visual_hash.txt',
+                  p / 'build' / 'preview_manifest.json'):
+            if f.exists():
+                try: f.unlink()
+                except OSError: pass
+
+    # Luon danh dau proof stale khi co bat ky thay doi nao tren project
     proof_file = p / 'build' / 'verification_proof.json'
     if proof_file.exists():
         try:
@@ -96,6 +133,11 @@ def invalidate_artifacts(p: Path):
         except Exception:
             try: proof_file.unlink()
             except OSError: pass
+
+
+def invalidate_artifacts(p: Path):
+    """Backwards compatible alias for full invalidation."""
+    invalidate_by_change(p, 'all')
 
 
 def project_path(name: str) -> Path:
@@ -378,6 +420,8 @@ def create_project(body):
 
 
 def status():
+    if ensure_ffmpeg:
+        ensure_ffmpeg()
     def exists(cmd): return bool(shutil.which(cmd))
     try:
         import importlib.util
@@ -412,6 +456,18 @@ def task_commands(action, p: Path, params: dict = None):
             return [[node, 'render.mjs', '--project', proj, '--from', from_sec, '--to', to_sec, '--scale', scale]]
         if action == 'render': return [[node, 'render.mjs', '--project', proj]]
     if action == 'thumb': return [[node, 'render.mjs', '--project', proj, '--thumb']]
+    if action == 'review-opening':
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi review opening.')
+        dur = float(story.get('duration', 30.0))
+        op_to = str(min(30.0, dur) if dur > 0 else 30.0)
+        return [
+            [py, 'tools/plan_hook.py', '--project', proj, '--review'],
+            [node, 'render.mjs', '--project', proj, '--from', '0', '--to', op_to, '--scale', '0.5'],
+            [py, 'tools/mix.py', '--project', proj, '--preview', '--from-sec', '0', '--to-sec', op_to]
+        ]
+    if action == 'enhance-opening':
+        return [[py, 'tools/plan_hook.py', '--project', proj, '--apply-hook']]
     if action == 'plan-audio':
         return [[py, 'tools/plan_audio.py', '--project', proj]]
     if action == 'upgrade-generated-audio':
@@ -515,11 +571,29 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
             if not isinstance(plan_data, dict):
                 return False, 'Invalid audio_plan.json schema'
             status_val = plan_data.get('status', '')
-            if status_val not in ('AUDIO_PLAN_PASS', 'NO_CHANGE'):
+            if status_val not in ('AUDIO_PLAN_PASS', 'NO_CHANGE', 'AUDIO_PLANNED'):
                 return False, f'Audio planner reported non-pass status: {status_val}'
+            planned_at = float(plan_data.get('planned_at', 0))
+            if planned_at > 0 and planned_at < started - 2:
+                return False, f'audio_plan.json is stale (planned_at: {planned_at} < started: {started})'
             return True, ''
         except Exception as exc:
             return False, f'Failed to parse audio_plan.json: {exc}'
+
+    if action == 'review-opening':
+        rev_file = p / 'build' / 'opening_review.json'
+        prev_file = p / 'build' / 'preview.mp4'
+        if not rev_file.is_file():
+            return False, 'build/opening_review.json was not created'
+        if not prev_file.is_file() or prev_file.stat().st_size < 1000:
+            return False, 'build/preview.mp4 for opening was not created or is empty'
+        return True, ''
+
+    if action == 'enhance-opening':
+        rev_file = p / 'build' / 'opening_review.json'
+        if not rev_file.is_file():
+            return False, 'Opening review metadata was not generated'
+        return True, ''
 
     if action == 'preview-audio':
         prev_file = p / 'build' / 'preview.mp4'
@@ -783,12 +857,14 @@ class Handler(BaseHTTPRequestHandler):
                     if not isinstance(data, dict) or not isinstance(data.get('shots'), list):
                         raise ValueError('Story must be JSON object containing a shots array')
                     if len(data['shots']) > 3000: raise ValueError('Too many shots')
+                    old_story = load_json(p / 'story' / 'shots.json', {})
                     put_json(p / 'story' / 'shots.json', data)
-                    invalidate_artifacts(p)
+                    invalidate_by_change(p, 'story', old_data=old_story, new_data=data)
                     return self.send(200, {'saved': True})
                 if action == 'config':
                     data = self.data()
                     if not isinstance(data, dict): raise ValueError('Config must be object')
+                    old_cfg = dict(cfg)
                     allowed = ('title','aspect','resolution','fps','captions','accent','music','sfx','loudness')
                     for key in allowed:
                         if key in data: cfg[key] = data[key]
@@ -796,7 +872,7 @@ class Handler(BaseHTTPRequestHandler):
                     if cfg.get('aspect') not in ('16:9','9:16'): raise ValueError('Unsupported aspect')
                     if cfg.get('resolution') not in ('720p', '1080p', '1440p', '2160p'): raise ValueError('Unsupported resolution')
                     put_json(p / 'config.json', cfg)
-                    invalidate_artifacts(p)
+                    invalidate_by_change(p, 'config', old_data=old_cfg, new_data=cfg)
                     return self.send(200, {'saved': True})
                 if action in ('script', 'voice-script'):
                     data = self.data(); content = data.get('text', '')
@@ -804,7 +880,7 @@ class Handler(BaseHTTPRequestHandler):
                     file = ('01-PHIM.txt' if action == 'script' else 'voice_script.txt')
                     (p / 'input').mkdir(exist_ok=True)
                     (p / 'input' / file).write_text(content, encoding='utf-8')
-                    invalidate_artifacts(p)
+                    invalidate_by_change(p, 'script')
                     return self.send(200, {'saved': True})
                 if action == 'voice-upload':
                     if cfg['pack'] != 'squire': raise ValueError('Squire projects only')
@@ -816,7 +892,7 @@ class Handler(BaseHTTPRequestHandler):
                     for old in (p / 'input' / 'voice_source.mp3', p / 'input' / 'voice_source.wav'):
                         if old.exists(): old.unlink()
                     (p / 'input' / ('voice_source.' + ext)).write_bytes(content)
-                    invalidate_artifacts(p)
+                    invalidate_by_change(p, 'voice-upload')
                     return self.send(200, {'saved': True, 'bytes': len(content)})
             self.error(404, 'Unknown endpoint')
         except ProjectConflictError as exc:

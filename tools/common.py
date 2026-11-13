@@ -1,18 +1,83 @@
 """common.py — doc/ghi am thanh qua ffmpeg, doc file du an. Chi can numpy + ffmpeg."""
-import json, os, re, subprocess, sys, wave
+import json, os, re, shutil, subprocess, sys, wave
 from typing import Any, Dict, List, Optional
 import numpy as np
 
 SR = 48000
 
+def ensure_ffmpeg() -> str:
+    """Ensure ffmpeg is in PATH or find it from registry / well-known Windows directories."""
+    found = shutil.which("ffmpeg")
+    if found:
+        return found
+    if os.name == "nt":
+        extra_dirs = []
+        try:
+            import winreg
+            for root, sub in ((winreg.HKEY_LOCAL_MACHINE, r'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'),
+                              (winreg.HKEY_CURRENT_USER, r'Environment')):
+                try:
+                    with winreg.OpenKey(root, sub) as k:
+                        val, _ = winreg.QueryValueEx(k, 'Path')
+                        extra_dirs.extend(os.path.expandvars(p) for p in val.split(os.pathsep) if p)
+                except OSError:
+                    pass
+        except Exception:
+            pass
+
+        local_app = os.environ.get("LOCALAPPDATA", "")
+        user_prof = os.environ.get("USERPROFILE", "")
+        candidates = [
+            os.path.join(local_app, "Microsoft", "WinGet", "Links"),
+            os.path.join(user_prof, "scoop", "shims"),
+            r"C:\ProgramData\chocolatey\bin",
+            r"C:\ffmpeg\bin",
+            r"C:\Program Files\ffmpeg\bin",
+        ]
+        winget_pkgs = os.path.join(local_app, "Microsoft", "WinGet", "Packages")
+        if os.path.isdir(winget_pkgs):
+            try:
+                for entry in os.scandir(winget_pkgs):
+                    if entry.is_dir() and "ffmpeg" in entry.name.lower():
+                        for sub_root, dirs, files in os.walk(entry.path):
+                            if any(f.lower() == "ffmpeg.exe" for f in files):
+                                candidates.append(sub_root)
+            except Exception:
+                pass
+
+        extra_dirs.extend(candidates)
+        cur_path = os.environ.get("PATH", "").split(os.pathsep)
+        to_add = [d for d in extra_dirs if d and os.path.isdir(d) and d not in cur_path]
+        if to_add:
+            os.environ["PATH"] = os.pathsep.join(to_add + cur_path)
+            found = shutil.which("ffmpeg")
+            if found:
+                return found
+    return "ffmpeg"
+
+def get_ffmpeg_bin() -> str:
+    bin_path = ensure_ffmpeg()
+    return bin_path if bin_path and os.path.isabs(bin_path) else "ffmpeg"
+
+def get_ffprobe_bin() -> str:
+    ensure_ffmpeg()
+    p = shutil.which("ffprobe")
+    return p if p else "ffprobe"
+
+# Run once on import to guarantee PATH readiness
+ensure_ffmpeg()
+
 def run(cmd):
+    if cmd and cmd[0] in ("ffmpeg", "ffprobe"):
+        ensure_ffmpeg()
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode:
-        sys.exit(f"Loi khi chay: {' '.join(cmd[:4])}...\n{r.stderr[-800:]}")
+        sys.exit(f"Loi khi chay: {' '.join(str(c) for c in cmd[:4])}...\n{r.stderr[-800:]}")
     return r.stdout
 
 def load_audio(path, sr=SR, ch=1):
-    p = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-f", "f32le", "-acodec", "pcm_f32le", "-ac", str(ch), "-ar", str(sr), "-"], capture_output=True)
+    ensure_ffmpeg()
+    p = subprocess.run([get_ffmpeg_bin(), "-v", "error", "-i", path, "-f", "f32le", "-acodec", "pcm_f32le", "-ac", str(ch), "-ar", str(sr), "-"], capture_output=True)
     if p.returncode:
         sys.exit(f"Khong doc duoc am thanh: {path}\n{p.stderr.decode()[-500:]}")
     y = np.frombuffer(p.stdout, dtype=np.float32).copy()
@@ -27,7 +92,7 @@ def save_wav(path, y, sr=SR):
         w.setnchannels(y.shape[1]); w.setsampwidth(2); w.setframerate(sr); w.writeframes(pcm.tobytes())
 
 def duration(path):
-    out = run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path]).strip()
+    out = run([get_ffprobe_bin(), "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path]).strip()
     return float(out or 0)
 
 def read_json(path, default=None):

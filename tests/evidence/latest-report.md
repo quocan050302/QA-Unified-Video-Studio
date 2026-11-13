@@ -1,12 +1,12 @@
-# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V8)
-- **Mã lượt chạy (Run ID)**: `20261113_121331`
-- **Thời gian chạy**: `2026-11-13T12:17:28.614936`
-- **Tổng thời gian thực thi**: `237.47s`
-- **Kết quả chung**: **FLOW_READY** (51/51 REQUIRED GATES PASS)
+# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V9)
+- **Mã lượt chạy (Run ID)**: `20261113_143933`
+- **Thời gian chạy**: `2026-11-13T14:45:09.695215`
+- **Tổng thời gian thực thi**: `336.4s`
+- **Kết quả chung**: **FLOW_READY** (66/66 REQUIRED GATES PASS)
 
 > [!IMPORTANT]
 > **Đánh giá nghiệm thu (Truthful Verdict):**
-> Tất cả 51/51 cổng BẮT BUỘC (Required Gates: G0-G17, G-A..G-G, N1-N12, H1-H14) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE.
+> Tất cả 66/66 cổng BẮT BUỘC (Required Gates: G0-G17, G-A..G-G, N1-N12, H1-H14, J1-J15) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE.
 
 ## Bảng tổng hợp Ma trận Kiểm thử Toàn diện
 
@@ -44,10 +44,10 @@
 | **N4** | Deterministic Idempotent Audio Planning | `DETERMINISM` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **N5** | Manual Audio Cues Lock & Preservation | `MANUAL_LOCK` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **N6** | Multi-Frame Visuals (Safe Lying + Treadmill In-Place + Active Run) | `VISUAL_FRAMING` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
-| **N7** | Full Squire 1080p Showcase MP4 with Spoken Narration, Music & SFX | `FULL_SHOWCASE_E2E` | Bắt buộc | ✅ PASS | .test-runs\20261113_121331\n07_squire_showcase_1080p\out\Why Knights Could Actuall... |
+| **N7** | Full Squire 1080p Showcase MP4 with Spoken Narration, Music & SFX | `FULL_SHOWCASE_E2E` | Bắt buộc | ✅ PASS | .test-runs\20261113_143933\n07_squire_showcase_1080p\out\Why Knights Could Actuall... |
 | **N8** | Audio Mix Fidelity, True Peak & Measured LUFS | `AUDIO_FIDELITY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **N9** | Non-Zero Range Preview with Synchronized Audio | `PREVIEW_AUDIO` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
-| **N10** | 9:16 Shorts Vertical Video & Audio Delivery | `SHORTS_VERTICAL` | Bắt buộc | ✅ PASS | .test-runs\20261113_121331\n10_shorts_vertical\out\Knights Agility Short.mp4 |
+| **N10** | 9:16 Shorts Vertical Video & Audio Delivery | `SHORTS_VERTICAL` | Bắt buộc | ✅ PASS | .test-runs\20261113_143933\n10_shorts_vertical\out\Knights Agility Short.mp4 |
 | **N11** | Resource Guard Threshold Breach Detection | `RESOURCE_SAFETY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **N12** | Previous Both-Pack Full Regression Check | `REGRESSION_GUARD` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **H1** | UI Audio Jobs Real Post-Condition Verification | `UI_TRUTH` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
@@ -57,23 +57,41 @@
 | **H5** | Manual Audio Lock and Planner Idempotency | `MANUAL_LOCK` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **H6** | Foley Cadence Without Overlapping Audio Clips | `FOLEY_CADENCE` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **H7** | 2D Narrative Motion and Safe Bounds Verification | `NARRATIVE_MOTION` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
-| **H8** | Showcase 1080p Final MP4 with Voice, Music and SFX | `SHOWCASE_E2E` | Bắt buộc | ✅ PASS | .test-runs\20261113_121331\n07_squire_showcase_1080p\out\Why Knights Could Actuall... |
+| **H8** | Showcase 1080p Final MP4 with Voice, Music and SFX | `SHOWCASE_E2E` | Bắt buộc | ✅ PASS | .test-runs\20261113_143933\n07_squire_showcase_1080p\out\Why Knights Could Actuall... |
 | **H9** | Final Decoded AAC Broadcast Loudness and True Peak | `AUDIO_METRICS` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **H10** | Mid-Range Audio Preview with Synchronized Sound | `PREVIEW_AUDIO` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **H11** | Negative Release Defect Injection Resilience | `NEGATIVE_TEST` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **H12** | Async Parallel Concurrency & Process Tree Safety | `RESOURCE_SAFETY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **H13** | Legacy Packs and Core Studio Regression Safety | `REGRESSION_GUARD` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **H14** | Source Integrity and Branch Invariants | `SOURCE_INTEGRITY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J1** | Real UI Audio-Plan API POST & Truthful Manifest Contract | `UI_TRUTH` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J2** | Story Save Artifact Invalidation Scope | `CACHE_INTEGRITY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J3** | Full vs Preview Visual Hash Isolation | `HASH_ISOLATION` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J4** | Manual Audio Cues and Music Protection Across Upgrades | `MANUAL_PROTECTION` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J5** | True 3-Phase Motion Tracking & Treadmill Anchor | `NARRATIVE_MOTION` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J6** | Final AAC Decoded Audio Metrics Strict (No Fallbacks) | `AUDIO_METRICS` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J7** | Real Async Parallel Process Tree Safety | `RESOURCE_SAFETY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J8** | Squire 16:9 First 30s Narrative Showcase (>=30s) | `SHOWCASE_30S` | Bắt buộc | ✅ PASS | .test-runs\20261113_143933\j08_squire_30s_showcase\out\Why Knights Could Actually ... |
+| **J9** | Squire 9:16 Shorts Vertical Opening Delivery | `SHORTS_VERTICAL` | Bắt buộc | ✅ PASS | .test-runs\20261113_143933\j09_squire_shorts_30s\out\Knights Agility Shorts.mp4 |
+| **J10** | DEM 16:9 First 30s Showcase (Silent Animation & Sound Design) | `DEM_SHOWCASE` | Bắt buộc | ✅ PASS | .test-runs\20261113_143933\j10_dem_16x9_30s\out\Discipline Breakthrough.mp4 |
+| **J11** | DEM 9:16 Shorts Opening Delivery | `SHORTS_VERTICAL` | Bắt buộc | ✅ PASS | .test-runs\20261113_143933\j11_dem_shorts_30s\out\Stop Scrolling Short.mp4 |
+| **J12** | User Content and Storyboard Backup Preservation | `DATA_PRESERVATION` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J13** | Opening Preview 0-30s with Synchronized Audio via Task | `UI_REVIEW_RANGE` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J14** | Legacy Packs and Core Studio Regression Safety (51 Gates) | `REGRESSION_GUARD` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **J15** | Truth Ledger, SHA Provenance and Branch Invariants | `TRUTH_LEDGER` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+
+## Bằng chứng Trực quan V9 (Visual & Audio Proofs)
+
 
 ## Bằng chứng Trực quan V8 (Visual & Audio Proofs)
 
-- **v8/proof_contact_sheet_v8.jpg**: `112 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
+- **v8/proof_contact_sheet_v8.jpg**: `15 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
 
-- **v8/proof_lying_safe_frame.jpg**: `19 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
+- **v8/proof_lying_safe_frame.jpg**: `24 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
 
-- **v8/proof_recovery_run_active.jpg**: `19 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
+- **v8/proof_recovery_run_active.jpg**: `18 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
 
-- **v8/proof_treadmill_in_place.jpg**: `24 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
+- **v8/proof_treadmill_in_place.jpg**: `19 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative framing & cadence)
 
 
 ## Bằng chứng Trực quan V7 (Visual & Audio Proofs)
