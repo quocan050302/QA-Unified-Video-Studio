@@ -19,15 +19,20 @@ P = a.project or a.project_pos
 if not P:
     ap.error("the following arguments are required: --project or project")
 out = os.path.join(P, "story", "shots.json")
-manual_by_id = {}
-if os.path.exists(out):
-    if not a.force: sys.exit("Da co story/shots.json (them --force de ghi de sau khi sao luu).")
+old_data = read_json(out, None) if os.path.exists(out) else None
+old_shots = (old_data.get("shots", []) if old_data else [])
+has_existing_shots = len(old_shots) > 0
+manual_list = [s for s in old_shots if s.get("visual_source") == "manual"]
+
+if has_existing_shots and not a.force:
+    sys.exit("Da co story/shots.json voi noi dung canh cu. Them --force de ghi de sau khi sao luu.")
+
+if old_data is not None and has_existing_shots:
     try:
         shutil.copyfile(out, os.path.join(P, "story", f"shots.backup_{int(time.time())}.json"))
         shutil.copyfile(out, os.path.join(P, "story", "shots.backup.json"))
-        old_shots = read_json(out, {}).get("shots", [])
-        manual_by_id = {s["id"]: s for s in old_shots if s.get("visual_source") == "manual"}
-    except Exception: pass
+    except Exception:
+        pass
 lines = read_json(os.path.join(P, "timeline", "lines.json"), [])
 words = read_json(os.path.join(P, "timeline", "words.json"), [])
 if not lines: sys.exit("Chua co timeline/lines.json. Chay tools/prep_voice.py truoc.")
@@ -112,11 +117,28 @@ for i, (st, txt, l, _en) in enumerate(merged):
     if speaker != "NARRATOR" and "talk" not in sh and "start" in l and "end" in l: sh["talk"] = [l["start"], l["end"]]
     if l.get("drop"): sh["notes"] = "DROP"
     if re.match(r"(?i)^so what if", txt): sh["notes"] = (sh["notes"] + " TITLE").strip()
-    if sh["id"] in manual_by_id:
-        old_s = manual_by_id[sh["id"]]
+    # Semantic matching cho manual visual edits de bao toan tuyet doi cong suc nguoi dung
+    def norm_txt(t):
+        return re.sub(r"[^\w\s]", "", (t or "").lower()).strip()
+    s_txt = norm_txt(txt)
+    matched_manual = None
+    for cand in manual_list:
+        c_txt = norm_txt(cand.get("line", ""))
+        if s_txt and c_txt and (s_txt == c_txt or s_txt in c_txt or c_txt in s_txt):
+            matched_manual = cand
+            break
+    if not matched_manual and manual_list:
+        for cand in manual_list:
+            c_st = cand.get("start", 0.0)
+            c_en = cand.get("end", c_st + 3.0)
+            overlap = max(0.0, min(_en, c_en) - max(st, c_st))
+            if overlap / max(0.1, _en - st) > 0.5:
+                matched_manual = cand
+                break
+    if matched_manual:
         for k in ("tpl", "args", "scene", "visual_source", "visual_version", "visual_reason", "notes"):
-            if k in old_s and old_s[k]:
-                sh[k] = old_s[k]
+            if k in matched_manual and matched_manual[k]:
+                sh[k] = matched_manual[k]
     shots.append(sh)
 shots[-1]["end"] = dur
 # gan anh AI: theo thoi diem cau neo (chinh xac), khong tim thay thi theo khoi

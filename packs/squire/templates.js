@@ -58,6 +58,14 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
   const pk = p.pop ? pop(lt, a0, 0.4) : 1;
   g.save(); if (pk < 1) { g.translate(x, y); g.scale(pk, pk); g.translate(-x, -y); }
   if (p.fall !== undefined) { const t0 = at(info, p.fall, 0), k = ease.inOut(clamp((lt - t0) / 0.5)); if (lt >= t0) { g.translate(x, y); g.rotate(k * (p.flip ? -1 : 1) * 1.45); g.translate(-x, -y); } }
+  if (p.rise !== undefined || p.getUp !== undefined) {
+    const t0 = at(info, p.rise ?? p.getUp, 0), dur = p.riseDur || 1.1, k = ease.inOut(clamp((lt - t0) / Math.max(0.2, dur)));
+    const ang = lerp(p.flip ? 1.45 : -1.45, 0, k);
+    const dy = lerp(h * 0.42, 0, k);
+    g.translate(x, y + dy); g.rotate(ang); g.translate(-x, -y);
+  } else if (pose0 === 'lying' || pose0 === 'prone') {
+    g.translate(x, y + h * 0.42); g.rotate(p.flip ? 1.45 : -1.45); g.translate(-x, -y);
+  }
   const lk = listAt(info, lt, p.lookAt, p.look);
   const o = { ...p, t: lt + (p.seed || 0) * 0.37, pose: pose0, face: listAt(info, lt, p.faceAt, p.face || 'neutral'), look: lk === undefined ? (walkMode === 'side' ? 0.75 : 0) : lk, talk, flip, walkMode: p.horse ? null : walkMode, walkPhase: p.horse ? undefined : walkPhase, walk: p.horse ? false : !!walkMode, lw: p.lw };
   if (p.horse) horse(g, x, y, h * (p.horse.h ?? 0.85), { ...p.horse, t: lt, flip, travel: walkMode === 'side' ? travel : undefined, rider: { ...o, x: undefined, y: undefined, h: undefined, flip: false, look: lk ?? 0.5 }, riderH: p.horse.riderH });
@@ -102,6 +110,45 @@ export function drawThing(g, kind, x, y, s, o = {}) {
     case 'barrel': rect(g, x - s * 0.3, y - s * 0.45, s * 0.6, s * 0.9, { fill: PAL.wood, lw, r: s * 0.18, inner: (c) => { for (const k of [-0.25, 0.25]) rect(c, x - s * 0.4, y + k * s, s * 0.8, s * 0.07, { fill: PAL.steelDark, lw: lw * 0.6, r: 0 }); } }); break;
     case 'rock': blob(g, [[x - s * 0.5, y + s * 0.2], [x - s * 0.35, y - s * 0.2], [x, y - s * 0.3], [x + s * 0.4, y - s * 0.15], [x + s * 0.5, y + s * 0.2]], { fill: PAL.stoneDark, lw }); break;
     case 'campfire': { for (const k of [-1, 1]) tube(g, [[x - k * s * 0.3, y + s * 0.15], [x + k * s * 0.3, y - s * 0.02]], s * 0.08, PAL.woodDark, lw); const f = 1 + Math.sin((o.t || 0) * 12) * 0.08; shape(g, (c) => { c.moveTo(x - s * 0.22, y + s * 0.05); c.quadraticCurveTo(x - s * 0.3, y - s * 0.3 * f, x, y - s * 0.55 * f); c.quadraticCurveTo(x + s * 0.3, y - s * 0.3 * f, x + s * 0.22, y + s * 0.05); c.closePath(); }, { fill: '#f6a43a', lw, inner: (c) => ellipse(c, x, y - s * 0.08, s * 0.08, s * 0.16, { fill: '#ffe38a', lw: 0 }) }); break; }
+    case 'armor': case 'cuirass': case 'breastplate': {
+      const lw2 = o.lw ?? Math.max(2, s * 0.025);
+      g.save(); g.translate(x, y);
+      polyS(g, [
+        [-s * 0.22, -s * 0.4],
+        [s * 0.22, -s * 0.4],
+        [s * 0.38, -s * 0.25],
+        [s * 0.34, -s * 0.05],
+        [s * 0.38, s * 0.2],
+        [s * 0.28, s * 0.4],
+        [-s * 0.28, s * 0.4],
+        [-s * 0.38, s * 0.2],
+        [-s * 0.34, -s * 0.05],
+        [-s * 0.38, -s * 0.25]
+      ], {
+        fill: PAL.steelLight,
+        lw: lw2,
+        inner: (c) => {
+          line(c, [[0, -s * 0.38], [0, s * 0.38]], { lw: lw2 * 1.2, ink: '#ffffff' });
+          line(c, [[-s * 0.28, -s * 0.08], [0, -s * 0.02]], { lw: lw2 * 0.8, ink: PAL.steelDark });
+          line(c, [[s * 0.28, -s * 0.08], [0, -s * 0.02]], { lw: lw2 * 0.8, ink: PAL.steelDark });
+          for (const yy of [0.18, 0.28, 0.38]) {
+            line(c, [[-s * 0.3, s * yy], [s * 0.3, s * yy]], { lw: lw2 * 0.7, ink: PAL.steelDark });
+          }
+          for (const k of [-0.18, 0.18]) {
+            circ(c, s * k, -s * 0.34, s * 0.02, { fill: PAL.gold, lw: 0 });
+          }
+        }
+      });
+      g.beginPath();
+      g.ellipse(0, -s * 0.4, s * 0.16, s * 0.08, 0, 0, Math.PI);
+      g.fillStyle = '#22252a';
+      g.fill();
+      g.lineWidth = lw2 * 0.8;
+      g.strokeStyle = OUT;
+      g.stroke();
+      g.restore();
+      break;
+    }
     case 'chest': rect(g, x - s * 0.4, y - s * 0.25, s * 0.8, s * 0.5, { fill: PAL.wood, lw, r: s * 0.05, inner: (c) => { line(c, [[x - s * 0.4, y - s * 0.05], [x + s * 0.4, y - s * 0.05]], { lw }); rect(c, x - s * 0.05, y - s * 0.1, s * 0.1, s * 0.12, { fill: PAL.gold, lw: lw * 0.6, r: 2 }); } }); break;
     case 'coin': circ(g, x, y, s * 0.4, { fill: PAL.gold, lw, inner: (c) => { circ(c, x, y, s * 0.3, { fill: null, lw: lw * 0.6, ink: PAL.goldDark }); } }); break;
     case 'seal': circ(g, x, y, s * 0.42, { fill: '#c64b3a', lw, inner: (c) => charge(c, o.charge || 'lion', x, y, s * 0.5, '#8a2a20') }); break;
@@ -114,6 +161,24 @@ export function drawThing(g, kind, x, y, s, o = {}) {
     case 'skull': circ(g, x, y, s * 0.3, { fill: '#efe7d6', lw }); circ(g, x - s * 0.1, y, s * 0.07, { fill: OUT, lw: 0 }); circ(g, x + s * 0.1, y, s * 0.07, { fill: OUT, lw: 0 }); break;
     case 'soldier': soldier(g, x, y + s * 0.5, s, { ...o, t: o.t }); break;
     case 'horse': horse(g, x, y + s * 0.5, s, o); break;
+    case 'treadmill': {
+      const lw2 = o.lw ?? Math.max(2, s * 0.025);
+      g.save(); g.translate(x, y);
+      rect(g, -s * 0.6, s * 0.1, s * 1.2, s * 0.12, { fill: PAL.steelDark, lw: lw2, r: s * 0.02 });
+      rect(g, -s * 0.55, s * 0.06, s * 1.1, s * 0.06, { fill: '#1e2124', lw: lw2 * 0.8, r: 2 });
+      const beltT = (o.t || 0) * 14;
+      for (let i = 0; i < 7; i++) {
+        const bx = -s * 0.5 + ((i * s * 0.18 + beltT) % (s * 1.0));
+        line(g, [[bx, s * 0.06], [bx, s * 0.12]], { lw: lw2 * 0.5, ink: '#3f444a' });
+      }
+      tube(g, [[s * 0.45, s * 0.1], [s * 0.42, -s * 0.42]], s * 0.045, PAL.steel, lw2);
+      tube(g, [[-s * 0.35, s * 0.08], [s * 0.4, -s * 0.36]], s * 0.035, PAL.steelLight, lw2 * 0.9);
+      rect(g, s * 0.33, -s * 0.58, s * 0.22, s * 0.16, { fill: '#14181c', lw: lw2, r: 3 });
+      rect(g, s * 0.35, -s * 0.56, s * 0.18, s * 0.12, { fill: '#0a2e22', lw: 0, r: 2 });
+      line(g, [[s * 0.37, -s * 0.5], [s * 0.51, -s * 0.5]], { lw: lw2 * 0.6, ink: '#3ddc97' });
+      g.restore();
+      break;
+    }
   }
 }
 // ---------- lop phu chung
@@ -289,7 +354,9 @@ registerTemplate('board', { draw(g, lt, info) {
     const bars = a.bars || [], max = a.max || Math.max(1, ...bars.map((b) => b.v));
     bars.forEach((b, i) => {
       const a0 = at(info, b.at, 0); if (lt < a0) return; const k = ease.out(clamp((lt - a0) / 0.8));
-      const bw = Wd * 0.14, x = X + Wd * (0.2 + i * (0.62 / Math.max(1, bars.length - 1 || 1))) - bw / 2, hh = Hd * 0.58 * (b.v / max) * k;
+      const bw = bars.length === 1 ? Wd * 0.22 : Wd * 0.14;
+      const x = bars.length === 1 ? X + Wd * 0.5 - bw / 2 : X + Wd * (0.2 + i * (0.62 / Math.max(1, bars.length - 1))) - bw / 2;
+      const hh = Hd * 0.58 * (b.v / max) * k;
       g.save(); g.strokeStyle = PAL.chalkLine; g.lineWidth = 5 * SC(); g.strokeRect(x, base - hh, bw, hh); g.beginPath(); g.rect(x, base - hh, bw, hh); g.clip(); g.lineWidth = 3 * SC(); for (let s = -Hd; s < Hd; s += 22 * SC()) { g.beginPath(); g.moveTo(x + s, base); g.lineTo(x + s + hh, base - hh); g.stroke(); } g.restore();
       label(g, b.label, x + bw / 2, base + 44 * SC(), { size: 40 * SC(), color: PAL.chalkLine });
       if (b.top) label(g, b.top, x + bw / 2, base - hh - 40 * SC(), { size: 44 * SC(), color: PAL.chalkLine });

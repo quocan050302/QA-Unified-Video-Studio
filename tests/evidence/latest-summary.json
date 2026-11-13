@@ -1,14 +1,14 @@
 {
-  "run_id": "20261113_082944",
-  "timestamp": "2026-11-13T08:31:59.093821",
-  "total_duration_sec": 134.45,
-  "gates_total": 21,
-  "required_gates_total": 20,
-  "required_gates_passed": 20,
+  "run_id": "20261113_100216",
+  "timestamp": "2026-11-13T10:04:25.195637",
+  "total_duration_sec": 128.24,
+  "gates_total": 26,
+  "required_gates_total": 25,
+  "required_gates_passed": 25,
   "required_gates_failed": 0,
   "optional_gates_total": 1,
   "verdict": "FLOW_READY",
-  "verdict_reason": "Tất cả 20/20 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).",
+  "verdict_reason": "Tất cả 25/25 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).",
   "results": [
     {
       "gate": "G0",
@@ -22,19 +22,19 @@
           "resources": {
             "disk": {
               "total_gb": 144.02,
-              "used_gb": 84.95,
-              "free_gb": 59.07
+              "used_gb": 85.34,
+              "free_gb": 58.68
             },
             "ram": {
               "total_gb": 31.75,
-              "available_gb": 13.98
+              "available_gb": 12.66
             },
             "cpus": 12,
             "workspace": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio"
           }
         },
         "git_branch": "fix/Image-Shot",
-        "git_head": "f44558a40794ddf60724a57e21bfa6117d06da59",
+        "git_head": "fc9f52eaabf959d8a65de0b347fc5f2ae9b7ff84",
         "git_production_head": "e867c910b0ef0e43dcbaf7d7601fecd1c9a8ae53",
         "git_working_tree_clean": false,
         "node_version": "v26.13.1",
@@ -61,8 +61,8 @@
       "kind": "REAL_E2E",
       "details": {
         "speech_fixture": "REAL_SPOKEN_SYNTHESIS",
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g2_squire_16x9\\out\\Squire Medieval Realm.mp4",
-        "output_sha256": "d4a1d1bf640bd878fc709598829a4e9987ff1b4a284ca56ae7ee45d26588e7c6",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g2_squire_16x9\\out\\Squire Medieval Realm.mp4",
+        "output_sha256": "3be1c835613a2878b097650d529570eedcf5e685b78a5304ca22b22b77f06ee8",
         "resolution": "1920x1080",
         "video_codec": "h264",
         "audio_codec": "aac",
@@ -71,8 +71,8 @@
         "pixel_analysis": {
           "ok": true,
           "total_pixels": 2073600,
-          "unique_colors": 63049,
-          "red_ratio": 0.0015,
+          "unique_colors": 49252,
+          "red_ratio": 0.0013,
           "dark_ratio": 0.0,
           "is_placeholder": false
         },
@@ -85,16 +85,16 @@
       "status": "PASS",
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g3_squire_9x16\\out\\Shorts Medieval.mp4",
-        "output_sha256": "2a5a220d4239b5376857d5b4fa629d364f4f4b56f56cedee40c9593987504cb7",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g3_squire_9x16\\out\\Shorts Medieval.mp4",
+        "output_sha256": "c5337150332da4419ae855f54cedeb206e0bc7e2ac9c519674c59f33afe919aa",
         "resolution": "1080x1920",
         "aspect_ratio": "9:16 vertical (Full Resolution)",
         "pixel_analysis": {
           "ok": true,
           "total_pixels": 2073600,
-          "unique_colors": 73617,
+          "unique_colors": 61783,
           "red_ratio": 0.0004,
-          "dark_ratio": 0.0088,
+          "dark_ratio": 0.0087,
           "is_placeholder": false
         },
         "proof_saved": "tests\\evidence\\proof_g3_shorts.jpg"
@@ -106,7 +106,7 @@
       "status": "PASS",
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g4_dem_16x9\\out\\DEM Self Improvement.mp4",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g4_dem_16x9\\out\\DEM Self Improvement.mp4",
         "output_sha256": "e4e717c61916340dbc3f53213a24b0a2f848aa04d75ff8ad8d14a0bbb5b956ef",
         "resolution": "1920x1080",
         "full_decode_verified": true,
@@ -129,7 +129,7 @@
       "required": true,
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g4b_dem_9x16\\out\\DEM Shorts Vertical.mp4",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g4b_dem_9x16\\out\\DEM Shorts Vertical.mp4",
         "output_sha256": "79a31c6c6a3e1fa82734c9377bc9be02516c6a94d85736f88631d663c6b0d1f9",
         "resolution": "1080x1920",
         "full_decode_verified": true,
@@ -157,7 +157,7 @@
         "missing_ids_before_fix": 180,
         "visuals_assigned_ok": true,
         "validator_after_fix_status": "PASS",
-        "fast_check_duration_sec": 8.33,
+        "fast_check_duration_sec": 7.86,
         "fast_check_stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\nPASS: 0 loi trong 541 khung kiem tra (180 shots hop le, che do fast).",
         "proof_saved": "tests\\evidence\\proof_g5_replay.jpg"
       }
@@ -169,12 +169,12 @@
       "required": true,
       "kind": "REAL_E2E",
       "details": {
-        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_082944\\g5b_medium_continuity\\out\\Medieval Chronicle Medium E2E.mp4",
-        "output_sha256": "12c424afddf35e7ac015c7ec494dd6b6a8cc3d7bbdf73f6694515ac478a5d6af",
+        "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g5b_medium_continuity\\out\\Medieval Chronicle Medium E2E.mp4",
+        "output_sha256": "bb80e913fc56a0c3010b6b4735b85f9db0cb419ece7c2682acd9e4257bcd9d06",
         "shots_count": 30,
         "duration_sec": 92.12,
         "resolution": "1280x720",
-        "render_wall_sec": 65.02,
+        "render_wall_sec": 59.06,
         "full_decode_verified": true,
         "proof_saved": "tests\\evidence\\proof_g5b_medium_continuity.jpg"
       }
@@ -223,8 +223,7 @@
         "custom_args_preserved": true,
         "backup_files_created": [
           "shots.backup.json",
-          "shots.backup_1794533503.json",
-          "shots.backup_1794533504.json"
+          "shots.backup_1794539044.json"
         ]
       }
     },
@@ -262,7 +261,7 @@
         "pixel_analysis": {
           "ok": true,
           "total_pixels": 129600,
-          "unique_colors": 19829,
+          "unique_colors": 17011,
           "red_ratio": 0.0014,
           "dark_ratio": 0.0001,
           "is_placeholder": false
@@ -334,15 +333,15 @@
       "required": true,
       "kind": "TELEMETRY_AUDIT",
       "details": {
-        "disk_free_gb": 58.97,
-        "ram_available_gb": 14.26,
-        "min_disk_headroom_gb": 58.97,
-        "min_ram_headroom_gb": 10.92,
+        "disk_free_gb": 58.6,
+        "ram_available_gb": 11.66,
+        "min_disk_headroom_gb": 58.6,
+        "min_ram_headroom_gb": 9.35,
         "resource_breached": false,
-        "continuous_monitor_samples": 128,
-        "measured_180_shot_check_sec": 10.58,
-        "fast_check_samples_per_sec": 51.1,
-        "medium_20_shot_e2e_sec": 75.38
+        "continuous_monitor_samples": 124,
+        "measured_180_shot_check_sec": 9.9,
+        "fast_check_samples_per_sec": 54.6,
+        "medium_20_shot_e2e_sec": 68.87
       }
     },
     {
@@ -358,7 +357,7 @@
           "expected": "2560x1440",
           "actual": "2560x1440",
           "full_decode_verified": true,
-          "render_sec": 2.57,
+          "render_sec": 2.6,
           "exit_code": 0,
           "pass": true
         },
@@ -368,7 +367,7 @@
           "expected": "3840x2160",
           "actual": "3840x2160",
           "full_decode_verified": true,
-          "render_sec": 3.33,
+          "render_sec": 3.36,
           "exit_code": 0,
           "pass": true
         },
@@ -378,7 +377,7 @@
           "expected": "1440x2560",
           "actual": "1440x2560",
           "full_decode_verified": true,
-          "render_sec": 2.33,
+          "render_sec": 2.28,
           "exit_code": 0,
           "pass": true
         },
@@ -388,10 +387,89 @@
           "expected": "2160x3840",
           "actual": "2160x3840",
           "full_decode_verified": true,
-          "render_sec": 3.23,
+          "render_sec": 3.27,
           "exit_code": 0,
           "pass": true
         }
+      }
+    },
+    {
+      "gate": "G-A",
+      "name": "Project Visibility, 409 Conflict & Safe Recovery",
+      "status": "PASS",
+      "kind": "ORPHAN_RECOVERY",
+      "required": true,
+      "details": {
+        "orphans_found": [
+          "why_knights_could_actually",
+          "why_knights_could_actually_315"
+        ],
+        "conflict_409_raised": true,
+        "suggested_id": "why_knights_could_actually_2",
+        "safe_recovery_verified": true,
+        "assets_protected_intact": true
+      }
+    },
+    {
+      "gate": "G-B",
+      "name": "Draft Shots with 0 Scenes & Semantic Preservation",
+      "status": "PASS",
+      "kind": "STORYBOARD_SEMANTICS",
+      "required": true,
+      "details": {
+        "draft_zero_exit_code": 0,
+        "drafted_shots_count": 2,
+        "re_draft_exit_code": 0,
+        "preserved_manual_tpl": "custom_scene_preserved"
+      }
+    },
+    {
+      "gate": "G-C",
+      "name": "Fact Extraction, Spelled Numbers & Anatomy Disambiguation",
+      "status": "PASS",
+      "kind": "SEMANTIC_FACTS",
+      "required": true,
+      "details": {
+        "parsed_speed_3_8": 3.8,
+        "parsed_weight_120_unclipped": 120.0,
+        "generic_no_hallucination": true,
+        "anatomical_chest_detected": true,
+        "wooden_chest_detected": true
+      }
+    },
+    {
+      "gate": "G-D",
+      "name": "Narrative-Aligned 2D Animation & Visual Proofs",
+      "status": "PASS",
+      "kind": "NARRATIVE_ANIMATION",
+      "required": true,
+      "details": {
+        "case_a_mud_lying": true,
+        "case_b_lab_treadmill": true,
+        "case_c_3phase_action": true,
+        "case_d_armor_anatomy": true,
+        "case_e_metric_3_8": true,
+        "case_negation_handled": true,
+        "proofs_generated": [
+          "tests\\evidence\\v6\\proof_opening_mud.jpg",
+          "tests\\evidence\\v6\\proof_lab_treadmill.jpg",
+          "tests\\evidence\\v6\\proof_recovery_run.jpg",
+          "tests\\evidence\\v6\\proof_anatomy_torso.jpg",
+          "tests\\evidence\\v6\\proof_metric_3_8.jpg",
+          "tests\\evidence\\v6\\proof_contact_sheet_v6.jpg"
+        ]
+      }
+    },
+    {
+      "gate": "G-G",
+      "name": "Range Preview (--from, --to) Verification",
+      "status": "PASS",
+      "kind": "UI_REVIEW_RANGE",
+      "required": true,
+      "details": {
+        "preview_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\20261113_100216\\g_v6_narrative_cases\\build\\preview.mp4",
+        "measured_duration": 5.0,
+        "full_decode_verified": true
       }
     }
   ]

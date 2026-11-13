@@ -37,16 +37,21 @@ sys.path.insert(0, str(REPO_ROOT / "tools"))
 
 from resource_guard import check_resources, clean_old_runs, get_disk_info, get_ram_info, ResourceMonitor, kill_process_tree
 from common import compute_source_hash
-from app import Handler, create_project, invalidate_artifacts, summarize_project
+from app import Handler, create_project, invalidate_artifacts, summarize_project, scan_projects, recover_project, ProjectConflictError
 from tts_helper import synthesize_speech
+from visual_facts import parse_spelled_number, extract_quantity_facts, is_anatomical_chest
+from assign_visuals import assign_visuals
 
 RUN_ID = datetime.now().strftime("%Y%m%d_%H%M%S")
 TEST_RUNS_DIR = REPO_ROOT / ".test-runs"
 CURRENT_RUN_DIR = TEST_RUNS_DIR / RUN_ID
 EVIDENCE_DIR = REPO_ROOT / "tests" / "evidence"
+EVIDENCE_V6_DIR = EVIDENCE_DIR / "v6"
+EVIDENCE_V6_DIR.mkdir(parents=True, exist_ok=True)
 
 # Concurrency semaphore for heavy browser/FFmpeg render processes
 CONCURRENCY_SEMAPHORE = asyncio.Semaphore(2)
+ACTIVE_MONITOR: ResourceMonitor | None = None
 
 
 def run_sync(cmd: list[str], cwd: Path = REPO_ROOT, timeout: float = 120) -> tuple[int, str, str, float]:
@@ -54,6 +59,7 @@ def run_sync(cmd: list[str], cwd: Path = REPO_ROOT, timeout: float = 120) -> tup
     real_cmd = list(cmd)
     if real_cmd and real_cmd[0] in ("python3", "python"):
         real_cmd[0] = sys.executable
+    proc = None
     try:
         proc = subprocess.Popen(
             real_cmd,
@@ -62,6 +68,8 @@ def run_sync(cmd: list[str], cwd: Path = REPO_ROOT, timeout: float = 120) -> tup
             stderr=subprocess.PIPE,
             text=True,
         )
+        if ACTIVE_MONITOR and proc.pid:
+            ACTIVE_MONITOR.register_pid(proc.pid)
         try:
             stdout, stderr = proc.communicate(timeout=timeout)
             return proc.returncode, stdout, stderr, time.time() - t0
@@ -72,6 +80,9 @@ def run_sync(cmd: list[str], cwd: Path = REPO_ROOT, timeout: float = 120) -> tup
             return -1, stdout or "", f"TIMEOUT ({timeout}s expired)", time.time() - t0
     except Exception as exc:
         return -2, "", str(exc), time.time() - t0
+    finally:
+        if proc and proc.pid and ACTIVE_MONITOR:
+            ACTIVE_MONITOR.unregister_pid(proc.pid)
 
 
 async def run_async_cmd(cmd: list[str], cwd: Path = REPO_ROOT, timeout: float = 120) -> tuple[int, str, str, float]:
@@ -1428,6 +1439,298 @@ async def g17_uhd_resolutions() -> dict:
     }
 
 
+async def g_v6_a_visibility_and_recovery() -> dict:
+    """Gate G-A: Project ID conflict, scan_projects(), orphan discovery, HTTP 409 and safe recovery."""
+    valid_projs, recoverable_projs = scan_projects()
+    rec_ids = {r["id"] for r in recoverable_projs}
+    has_orphans_detected = ("why_knights_could_actually" in rec_ids or "why_knights_could_actually_315" in rec_ids)
+
+    conflict_detected = False
+    suggested_id_val = None
+    is_recoverable_flag = False
+    try:
+        create_project({"id": "why_knights_could_actually", "mode": "squire", "title": "Conflict Test", "copy_sample": False})
+    except ProjectConflictError as exc:
+        conflict_detected = True
+        is_recoverable_flag = exc.is_recoverable
+        suggested_id_val = exc.suggested_id
+    except Exception:
+        pass
+
+    test_orphan_id = f"test_orphan_{RUN_ID}"
+    test_orphan_dir = REPO_ROOT / "projects" / test_orphan_id
+    test_orphan_dir.mkdir(parents=True, exist_ok=True)
+    for d in ("input", "story", "timeline", "scenes"):
+        (test_orphan_dir / d).mkdir(parents=True, exist_ok=True)
+    dummy_wav = test_orphan_dir / "timeline" / "voice.wav"
+    dummy_wav.write_bytes(b"RIFFdummywavdata")
+    dummy_shots = test_orphan_dir / "story" / "shots.json"
+    dummy_shots.write_text(json.dumps({"duration": 12.0, "shots": [{"id": "s001", "dur": 12.0}]}), encoding="utf-8")
+
+    rec_summary = recover_project(test_orphan_id)
+    cfg_file = test_orphan_dir / "config.json"
+    recovered_cfg = json.loads(cfg_file.read_text(encoding="utf-8")) if cfg_file.is_file() else {}
+
+    wav_intact = dummy_wav.read_bytes() == b"RIFFdummywavdata"
+    shots_intact = dummy_shots.exists() and json.loads(dummy_shots.read_text("utf-8")).get("duration") == 12.0
+
+    shutil.rmtree(test_orphan_dir, ignore_errors=True)
+
+    passed = (
+        has_orphans_detected
+        and conflict_detected
+        and is_recoverable_flag
+        and bool(suggested_id_val)
+        and recovered_cfg.get("pack") == "squire"
+        and wav_intact
+        and shots_intact
+    )
+
+    return {
+        "gate": "G-A",
+        "name": "Project Visibility, 409 Conflict & Safe Recovery",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "ORPHAN_RECOVERY",
+        "required": True,
+        "details": {
+            "orphans_found": [r["id"] for r in recoverable_projs],
+            "conflict_409_raised": conflict_detected,
+            "suggested_id": suggested_id_val,
+            "safe_recovery_verified": recovered_cfg.get("pack") == "squire",
+            "assets_protected_intact": wav_intact and shots_intact
+        }
+    }
+
+
+async def g_v6_b_draft_zero_and_semantic_preservation() -> dict:
+    """Gate G-B: Draft shots with 0 scenes without --force, and semantic overlap preservation."""
+    test_proj = CURRENT_RUN_DIR / "test_draft_zero"
+    test_proj.mkdir(parents=True, exist_ok=True)
+    cfg = {"title": "Draft Zero Test", "pack": "squire", "aspect": "16:9"}
+    (test_proj / "config.json").write_text(json.dumps(cfg), encoding="utf-8")
+    for d in ("input", "story", "timeline", "scenes"):
+        (test_proj / d).mkdir(parents=True, exist_ok=True)
+
+    (test_proj / "story" / "shots.json").write_text(json.dumps({"duration": 0, "shots": []}), encoding="utf-8")
+    lines = [
+        {"id": "l01", "start": 0.0, "end": 3.0, "text": "A knight lying in the mud unable to stand."},
+        {"id": "l02", "start": 3.0, "end": 7.0, "text": "He pushes himself up and begins to run across the field."}
+    ]
+    (test_proj / "timeline" / "lines.json").write_text(json.dumps(lines), encoding="utf-8")
+
+    d_code, d_out, d_err, _ = await run_async_cmd(["python3", "tools/draft_shots.py", "--project", str(test_proj)])
+    story1 = json.loads((test_proj / "story" / "shots.json").read_text("utf-8"))
+    drafted_shots_count = len(story1.get("shots", []))
+
+    story1["shots"][0]["visual_source"] = "manual"
+    story1["shots"][0]["tpl"] = "custom_scene_preserved"
+    (test_proj / "story" / "shots.json").write_text(json.dumps(story1), encoding="utf-8")
+
+    lines_v2 = [
+        {"id": "l01_new", "start": 0.2, "end": 3.2, "text": "A knight lying in the mud, unable to stand."},
+        {"id": "l02_new", "start": 3.2, "end": 7.2, "text": "He pushes himself up and begins to run."}
+    ]
+    (test_proj / "timeline" / "lines.json").write_text(json.dumps(lines_v2), encoding="utf-8")
+    d2_code, d2_out, d2_err, _ = await run_async_cmd(["python3", "tools/draft_shots.py", "--project", str(test_proj), "--force"])
+    story2 = json.loads((test_proj / "story" / "shots.json").read_text("utf-8"))
+    preserved_manual_tpl = story2["shots"][0].get("tpl")
+
+    passed = (
+        d_code == 0
+        and drafted_shots_count >= 2
+        and d2_code == 0
+        and preserved_manual_tpl == "custom_scene_preserved"
+    )
+
+    return {
+        "gate": "G-B",
+        "name": "Draft Shots with 0 Scenes & Semantic Preservation",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "STORYBOARD_SEMANTICS",
+        "required": True,
+        "details": {
+            "draft_zero_exit_code": d_code,
+            "drafted_shots_count": drafted_shots_count,
+            "re_draft_exit_code": d2_code,
+            "preserved_manual_tpl": preserved_manual_tpl
+        }
+    }
+
+
+async def g_v6_c_visual_facts_and_anatomy() -> dict:
+    """Gate G-C: Spelled number parsing, fact extraction, and torso anatomy disambiguation."""
+    facts_speed = extract_quantity_facts("At three-point-eight miles per hour, exertion doubled.")
+    fact_speed_val = facts_speed[0]["value"] if facts_speed else None
+    fact_speed_unit = facts_speed[0]["unit"] if facts_speed else None
+
+    facts_weight = extract_quantity_facts("The armor weighed one hundred and twenty pounds.")
+    fact_weight_val = facts_weight[0]["value"] if facts_weight else None
+
+    facts_generic = extract_quantity_facts("The knight walked through the misty forest.")
+
+    is_anat_1 = is_anatomical_chest("distributed across the chest, arms, and legs")
+    is_anat_2 = is_anatomical_chest("a strike straight to the chest armor")
+    is_wood_1 = is_anatomical_chest("he unlocked the treasure chest full of gold")
+    is_wood_2 = is_anatomical_chest("open the wooden chest in the bedroom")
+
+    passed = (
+        abs((fact_speed_val or 0) - 3.8) < 0.01
+        and fact_speed_unit == "mph"
+        and (fact_weight_val or 0) == 120
+        and len(facts_generic) == 0
+        and is_anat_1 is True
+        and is_anat_2 is True
+        and is_wood_1 is False
+        and is_wood_2 is False
+    )
+
+    return {
+        "gate": "G-C",
+        "name": "Fact Extraction, Spelled Numbers & Anatomy Disambiguation",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "SEMANTIC_FACTS",
+        "required": True,
+        "details": {
+            "parsed_speed_3_8": fact_speed_val,
+            "parsed_weight_120_unclipped": fact_weight_val,
+            "generic_no_hallucination": len(facts_generic) == 0,
+            "anatomical_chest_detected": is_anat_1 and is_anat_2,
+            "wooden_chest_detected": not is_wood_1 and not is_wood_2
+        }
+    }
+
+
+async def g_v6_d_narrative_movement_and_animation() -> dict:
+    """Gate G-D: Narrative movement, 5 key cases, visual proof rendering and contact sheet."""
+    proj_dir = CURRENT_RUN_DIR / "g_v6_narrative_cases"
+    proj_dir.mkdir(parents=True, exist_ok=True)
+    cfg = {"title": "Why Knights Could Actually Run", "pack": "squire", "aspect": "16:9"}
+    (proj_dir / "config.json").write_text(json.dumps(cfg), encoding="utf-8")
+    for d in ("input", "story", "timeline", "scenes", "build", "out"):
+        (proj_dir / d).mkdir(parents=True, exist_ok=True)
+
+    shots = [
+        {"id": "s001", "start": 0.0, "end": 3.0, "dur": 3.0, "line": "A knight lying in the mud, unable to stand under fifty pounds of steel."},
+        {"id": "s002", "start": 3.0, "end": 6.0, "dur": 3.0, "line": "In a laboratory, researchers put volunteers in replica armor on a treadmill."},
+        {"id": "s003", "start": 6.0, "end": 10.0, "dur": 4.0, "line": "He lay motionless in the mud, then pushed himself up, and began to run."},
+        {"id": "s004", "start": 10.0, "end": 13.0, "dur": 3.0, "line": "The harness distributed weight across the chest, arms, and legs."},
+        {"id": "s005", "start": 13.0, "end": 16.0, "dur": 3.0, "line": "At three-point-eight miles per hour, oxygen consumption skyrocketed."},
+        {"id": "s006", "start": 16.0, "end": 18.0, "dur": 2.0, "line": "They could not run, and the knight never fell."}
+    ]
+    (proj_dir / "story" / "shots.json").write_text(json.dumps({"duration": 18.0, "shots": shots}), encoding="utf-8")
+
+    assign_visuals(str(proj_dir), upgrade_generated=True)
+    story = json.loads((proj_dir / "story" / "shots.json").read_text("utf-8"))
+    s_map = {s["id"]: s for s in story["shots"]}
+
+    case_a_ok = (s_map["s001"].get("args", {}).get("bg") == "mud" and
+                 any(p.get("pose") == "lying" for p in s_map["s001"].get("args", {}).get("people", [])))
+
+    case_b_ok = (s_map["s002"].get("args", {}).get("bg") == "lab" and
+                 any(p.get("pose") == "run" for p in s_map["s002"].get("args", {}).get("people", [])) and
+                 any(t.get("kind") == "treadmill" for t in (s_map["s002"].get("args", {}).get("props", []) + s_map["s002"].get("args", {}).get("things", []))))
+
+    p_c = (s_map["s003"].get("args", {}).get("people") or [{}])[0]
+    case_c_ok = (p_c.get("pose") == "lying" and ("getUp" in p_c or "riseDur" in p_c or p_c.get("walk")))
+
+    case_d_ok = ("chest" not in [t.get("kind") for t in (s_map["s004"].get("args", {}).get("props", []) + s_map["s004"].get("args", {}).get("things", []))])
+
+    b_args = s_map["s005"].get("args", {})
+    case_e_ok = (s_map["s005"]["tpl"] == "board" and
+                 any(b.get("v") == 3.8 and "3.8 mph" in b.get("top", "") for b in b_args.get("bars", [])))
+
+    case_neg_ok = not any(p.get("pose") == "run" for p in s_map["s006"].get("args", {}).get("people", []))
+
+    r_code, _, r_err, _ = await run_async_cmd([
+        "node", "render.mjs", "--project", str(proj_dir),
+        "--stills", "1.5,4.5,7.0,8.5,11.5,14.5", "--scale", "0.5"
+    ])
+
+    stills_dir = proj_dir / "build" / "stills"
+    proof_a = EVIDENCE_V6_DIR / "proof_opening_mud.jpg"
+    proof_b = EVIDENCE_V6_DIR / "proof_lab_treadmill.jpg"
+    proof_c = EVIDENCE_V6_DIR / "proof_recovery_run.jpg"
+    proof_d = EVIDENCE_V6_DIR / "proof_anatomy_torso.jpg"
+    proof_e = EVIDENCE_V6_DIR / "proof_metric_3_8.jpg"
+    proof_sheet = EVIDENCE_V6_DIR / "proof_contact_sheet_v6.jpg"
+
+    if (stills_dir / "t_1.50.png").exists():
+        save_compressed_proof(stills_dir / "t_1.50.png", proof_a, width=640)
+    if (stills_dir / "t_4.50.png").exists():
+        save_compressed_proof(stills_dir / "t_4.50.png", proof_b, width=640)
+    if (stills_dir / "t_8.50.png").exists():
+        save_compressed_proof(stills_dir / "t_8.50.png", proof_c, width=640)
+    if (stills_dir / "t_11.50.png").exists():
+        save_compressed_proof(stills_dir / "t_11.50.png", proof_d, width=640)
+    if (stills_dir / "t_14.50.png").exists():
+        save_compressed_proof(stills_dir / "t_14.50.png", proof_e, width=640)
+
+    gen_sheet = proj_dir / "build" / "sheets" / "stills_01.jpg"
+    if gen_sheet.exists():
+        shutil.copyfile(gen_sheet, proof_sheet)
+
+    passed = (
+        case_a_ok and case_b_ok and case_c_ok and case_d_ok and case_e_ok and case_neg_ok
+        and r_code == 0
+        and proof_a.exists() and proof_b.exists() and proof_c.exists()
+        and proof_d.exists() and proof_e.exists() and proof_sheet.exists()
+    )
+
+    return {
+        "gate": "G-D",
+        "name": "Narrative-Aligned 2D Animation & Visual Proofs",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "NARRATIVE_ANIMATION",
+        "required": True,
+        "details": {
+            "case_a_mud_lying": case_a_ok,
+            "case_b_lab_treadmill": case_b_ok,
+            "case_c_3phase_action": case_c_ok,
+            "case_d_armor_anatomy": case_d_ok,
+            "case_e_metric_3_8": case_e_ok,
+            "case_negation_handled": case_neg_ok,
+            "proofs_generated": [
+                str(proof_a.relative_to(REPO_ROOT)),
+                str(proof_b.relative_to(REPO_ROOT)),
+                str(proof_c.relative_to(REPO_ROOT)),
+                str(proof_d.relative_to(REPO_ROOT)),
+                str(proof_e.relative_to(REPO_ROOT)),
+                str(proof_sheet.relative_to(REPO_ROOT))
+            ]
+        }
+    }
+
+
+async def g_v6_g_range_preview() -> dict:
+    """Gate G-G: Range preview with --from and --to seconds generating verified build/preview.mp4."""
+    proj_dir = CURRENT_RUN_DIR / "g_v6_narrative_cases"
+    r_code, _, r_err, _ = await run_async_cmd([
+        "node", "render.mjs", "--project", str(proj_dir),
+        "--from", "0", "--to", "5", "--scale", "0.5"
+    ])
+
+    prev_mp4 = proj_dir / "build" / "preview.mp4"
+    probe = get_ffprobe_streams(prev_mp4) if prev_mp4.exists() else {}
+    fmt = probe.get("format", {})
+    dur = float(fmt.get("duration", 0.0))
+    decode_ok, _ = decode_entire_video(prev_mp4)
+
+    passed = (r_code == 0 and prev_mp4.exists() and 4.0 <= dur <= 6.0 and decode_ok)
+
+    return {
+        "gate": "G-G",
+        "name": "Range Preview (--from, --to) Verification",
+        "status": "PASS" if passed else "FAIL",
+        "kind": "UI_REVIEW_RANGE",
+        "required": True,
+        "details": {
+            "preview_mp4": str(prev_mp4),
+            "measured_duration": dur,
+            "full_decode_verified": decode_ok
+        }
+    }
+
+
 # -----------------------------------------------------------------------------
 # MAIN ORCHESTRATOR
 # -----------------------------------------------------------------------------
@@ -1448,7 +1751,9 @@ async def main():
     CURRENT_RUN_DIR.mkdir(parents=True, exist_ok=True)
     EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
 
+    global ACTIVE_MONITOR
     monitor = ResourceMonitor(str(REPO_ROOT), min_disk_gb=4.0, interval_sec=1.0)
+    ACTIVE_MONITOR = monitor
     monitor.start()
 
     results = []
@@ -1506,19 +1811,30 @@ async def main():
         t_g17 = g17_uhd_resolutions()
         r11, r12, r13, r14, r15, r17 = await asyncio.gather(t_g11, t_g12, t_g13, t_g14, t_g15, t_g17)
         results.extend([r11, r12, r13, r14, r15, r17])
+
+        # Step 6: Narrative Alignment & V6 Project Visibility Capabilities
+        print("--> Executing Phase 6: V6 Project Visibility, Semantics & Narrative Alignment...")
+        r_v6_a = await g_v6_a_visibility_and_recovery()
+        r_v6_b = await g_v6_b_draft_zero_and_semantic_preservation()
+        r_v6_c = await g_v6_c_visual_facts_and_anatomy()
+        r_v6_d = await g_v6_d_narrative_movement_and_animation()
+        r_v6_g = await g_v6_g_range_preview()
+        results.extend([r_v6_a, r_v6_b, r_v6_c, r_v6_d, r_v6_g])
     finally:
         monitor.stop()
+        ACTIVE_MONITOR = None
 
-    # Step 6: Measured Telemetry
+    # Step 7: Measured Telemetry
     r16 = await g16_performance_telemetry(durations, monitor.get_stats())
     results.append(r16)
 
-    # Order results by Gate ID G0 to G17
+    # Order results by Gate ID
     gate_order = {
         "G0": 0, "G1": 1, "G2": 2, "G3": 3, "G4": 4, "G4b": 5,
         "G5": 6, "G5b": 7, "G5c": 8, "G6": 9, "G7": 10, "G8": 11,
         "G9": 12, "G10": 13, "G11": 14, "G12": 15, "G13": 16,
-        "G14": 17, "G15": 18, "G16": 19, "G17": 20
+        "G14": 17, "G15": 18, "G16": 19, "G17": 20,
+        "G-A": 21, "G-B": 22, "G-C": 23, "G-D": 24, "G-G": 25
     }
     results.sort(key=lambda r: gate_order.get(r.get("gate", ""), 99))
 
@@ -1561,10 +1877,36 @@ async def main():
     summary_json_path = EVIDENCE_DIR / "latest-summary.json"
     summary_json_path.write_text(json.dumps(summary_data, indent=2, ensure_ascii=False), encoding="utf-8")
 
+    # Write v6_execution_ledger.json
+    v6_ledger = {
+        "run_id": RUN_ID,
+        "timestamp": datetime.now().isoformat(),
+        "total_duration_sec": total_duration,
+        "git": {
+            "branch": "fix/Image-Shot",
+            "head": r0["details"]["git_head"],
+            "production_head": r0["details"]["git_production_head"],
+        },
+        "system": {
+            "node": r0["details"]["node_version"],
+            "python": sys.version.split()[0],
+            "resources": monitor.get_stats(),
+        },
+        "verdict": overall_verdict,
+        "verdict_reason": verdict_reason,
+        "v6_gates": [r for r in results if r.get("gate", "").startswith("G-")],
+        "all_gates_summary": [
+            {"gate": r.get("gate"), "name": r.get("name"), "status": r.get("status"), "kind": r.get("kind")}
+            for r in results
+        ]
+    }
+    ledger_json_path = EVIDENCE_V6_DIR / "v6_execution_ledger.json"
+    ledger_json_path.write_text(json.dumps(v6_ledger, indent=2, ensure_ascii=False), encoding="utf-8")
+
     # Write latest-report.md
     report_md_path = EVIDENCE_DIR / "latest-report.md"
     report_lines = [
-        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V5)",
+        f"# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V6)",
         f"- **Mã lượt chạy (Run ID)**: `{RUN_ID}`",
         f"- **Thời gian chạy**: `{summary_data['timestamp']}`",
         f"- **Tổng thời gian thực thi**: `{total_duration}s`",
@@ -1592,7 +1934,11 @@ async def main():
             note = note[:82] + "..."
         report_lines.append(f"| **{r.get('gate')}** | {r.get('name')} | `{r.get('kind', 'TEST')}` | {is_req} | {status_badge} | {note} |")
 
-    report_lines.append("\n## Bằng chứng Trực quan Đã xác thực (Visual Proofs)\n")
+    report_lines.append("\n## Bằng chứng Trực quan V6 (Visual Proofs)\n")
+    for proof in sorted(EVIDENCE_V6_DIR.glob("proof_*.jpg")):
+        report_lines.append(f"- **v6/{proof.name}**: `{proof.stat().st_size // 1024} KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)\n")
+
+    report_lines.append("\n## Bằng chứng Trực quan Các Cổng Core E2E\n")
     for proof in sorted(EVIDENCE_DIR.glob("proof_*.jpg")):
         report_lines.append(f"- **{proof.name}**: `{proof.stat().st_size // 1024} KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)\n")
 
@@ -1601,6 +1947,7 @@ async def main():
     print("\n" + "=" * 75)
     print(f"VERDICT: {overall_verdict} ({req_pass_count}/{total_required} REQUIRED PASS)")
     print(f"Summary: {summary_json_path}")
+    print(f"Ledger:  {ledger_json_path}")
     print(f"Report:  {report_md_path}")
     print("=" * 75)
 

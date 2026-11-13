@@ -218,6 +218,36 @@ export function bg(g, kind = 'field', o = {}) {
       rect(g, -40, gy2, W() + 80, H(), { fill: '#5c5f66', lw: 5, r: 0 });
       break;
     }
+    case 'lab': case 'laboratory': {
+      g.fillStyle = '#32353b'; g.fillRect(-W(), -H(), W() * 3, H() * 3);
+      const bw = H() * 0.14, bh = H() * 0.07, r = rng(s);
+      g.save(); g.strokeStyle = alpha(OUT, 0.6); g.lineWidth = Math.max(2, H() * 0.003);
+      for (let j = 0, y = 0; y < H() * 0.8; j++, y += bh) {
+        for (let x = -(j % 2) * bw * 0.5; x < W(); x += bw) {
+          const k = r();
+          g.fillStyle = k < 0.3 ? '#282b30' : k < 0.6 ? '#3c4046' : '#33373d';
+          g.beginPath(); g.roundRect(x + 2, y + 2, bw - 4, bh - 4, 3); g.fill(); g.stroke();
+        }
+      }
+      g.restore();
+      const fy = H() * (o.floorY ?? 0.85);
+      rect(g, -40, fy, W() + 80, H(), { fill: '#22252a', lw: 4, r: 0, inner: (cc) => {
+        for (let i = 0; i < 5; i++) line(cc, [[-40, fy + i * H() * 0.035], [W() + 40, fy + i * H() * 0.035]], { lw: 2, a: 0.4 });
+      }});
+      rect(g, W() * 0.12, H() * 0.18, H() * 0.18, H() * 0.24, { fill: '#efe6d0', lw: 3, r: 2, inner: (cc) => {
+        line(cc, [[W() * 0.13, H() * 0.22], [W() * 0.13 + H() * 0.14, H() * 0.22]], { lw: 2, ink: '#888' });
+        const cpts = [[W() * 0.14, H() * 0.36], [W() * 0.16, H() * 0.3], [W() * 0.18, H() * 0.33], [W() * 0.2, H() * 0.26]];
+        for (let k = 1; k < cpts.length; k++) line(cc, [cpts[k - 1], cpts[k]], { lw: 2.5, ink: '#b23b3b' });
+      }});
+      const tw = W() * 0.28, tx = W() * 0.76, ty = fy - H() * 0.12;
+      rect(g, tx - tw * 0.5, ty, tw, H() * 0.035, { fill: PAL.woodDark, lw: 3, r: 2 });
+      line(g, [[tx - tw * 0.4, ty + H() * 0.035], [tx - tw * 0.4, fy]], { lw: 4, ink: PAL.woodDark });
+      line(g, [[tx + tw * 0.4, ty + H() * 0.035], [tx + tw * 0.4, fy]], { lw: 4, ink: PAL.woodDark });
+      rect(g, tx - tw * 0.2, ty - H() * 0.06, H() * 0.035, H() * 0.06, { fill: '#72b0c9', lw: 2, r: 2 });
+      circ(g, tx + tw * 0.15, ty - H() * 0.035, H() * 0.035, { fill: '#c98a52', lw: 2 });
+      haze(g, '#1a1f26', 0.1);
+      break;
+    }
     case 'night': return bg(g, 'field', { ...o, time: 'night' });
     default: return bg(g, 'field', o);
   }

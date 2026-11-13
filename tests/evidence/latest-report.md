@@ -1,12 +1,12 @@
-# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V5)
-- **Mã lượt chạy (Run ID)**: `20261113_082944`
-- **Thời gian chạy**: `2026-11-13T08:31:59.093821`
-- **Tổng thời gian thực thi**: `134.45s`
-- **Kết quả chung**: **FLOW_READY** (20/20 REQUIRED GATES PASS)
+# Báo cáo Kiểm thử Hồi quy E2E & Nghiệm thu Luồng Hoàn chỉnh (V6)
+- **Mã lượt chạy (Run ID)**: `20261113_100216`
+- **Thời gian chạy**: `2026-11-13T10:04:25.195637`
+- **Tổng thời gian thực thi**: `128.24s`
+- **Kết quả chung**: **FLOW_READY** (25/25 REQUIRED GATES PASS)
 
 > [!IMPORTANT]
 > **Đánh giá nghiệm thu (Truthful Verdict):**
-> Tất cả 20/20 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).
+> Tất cả 25/25 cổng BẮT BUỘC (Required Gates) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 1 NOT_RUN_OPTIONAL_MISSING_FIXTURE (không ảnh hưởng nghiệm thu luồng sản xuất trên máy cá nhân).
 
 ## Bảng tổng hợp Ma trận Kiểm thử Toàn diện
 
@@ -33,17 +33,37 @@
 | **G15** | Headless CI & CLI Exit Codes | `CI_CONFORMANCE` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **G16** | Performance & Resource Audit | `TELEMETRY_AUDIT` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 | **G17** | 2K QHD & 4K UHD Render Verification (1440p & 2160p) | `UHD_CAPABILITY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **G-A** | Project Visibility, 409 Conflict & Safe Recovery | `ORPHAN_RECOVERY` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **G-B** | Draft Shots with 0 Scenes & Semantic Preservation | `STORYBOARD_SEMANTICS` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **G-C** | Fact Extraction, Spelled Numbers & Anatomy Disambiguation | `SEMANTIC_FACTS` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **G-D** | Narrative-Aligned 2D Animation & Visual Proofs | `NARRATIVE_ANIMATION` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
+| **G-G** | Range Preview (--from, --to) Verification | `UI_REVIEW_RANGE` | Bắt buộc | ✅ PASS | Chi tiết trong summary JSON |
 
-## Bằng chứng Trực quan Đã xác thực (Visual Proofs)
+## Bằng chứng Trực quan V6 (Visual Proofs)
 
-- **proof_g2_squire.jpg**: `17 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)
+- **v6/proof_anatomy_torso.jpg**: `30 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
 
-- **proof_g3_shorts.jpg**: `22 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)
+- **v6/proof_contact_sheet_v6.jpg**: `104 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
+
+- **v6/proof_lab_treadmill.jpg**: `24 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
+
+- **v6/proof_metric_3_8.jpg**: `25 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
+
+- **v6/proof_opening_mud.jpg**: `13 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
+
+- **v6/proof_recovery_run.jpg**: `18 KB` (Trích xuất từ video render thực tế, 0 placeholder, narrative-aligned)
+
+
+## Bằng chứng Trực quan Các Cổng Core E2E
+
+- **proof_g2_squire.jpg**: `16 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)
+
+- **proof_g3_shorts.jpg**: `21 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)
 
 - **proof_g4_dem.jpg**: `9 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)
 
 - **proof_g4b_dem_shorts.jpg**: `8 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)
 
-- **proof_g5_replay.jpg**: `15 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)
+- **proof_g5_replay.jpg**: `17 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)
 
-- **proof_g5b_medium_continuity.jpg**: `16 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)
+- **proof_g5b_medium_continuity.jpg**: `14 KB` (Trích xuất từ video render thực tế, 0 placeholder, đa dạng màu sắc)

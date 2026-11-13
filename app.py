@@ -60,6 +60,14 @@ sys.path.insert(0, str(ROOT / 'tools'))
 from common import compute_source_hash
 
 
+class ProjectConflictError(Exception):
+    def __init__(self, message, project_id, is_recoverable=False, suggested_id=None):
+        super().__init__(message)
+        self.project_id = project_id
+        self.is_recoverable = is_recoverable
+        self.suggested_id = suggested_id
+
+
 def invalidate_artifacts(p: Path):
     """Xoa cac file build trung gian khi kich ban/storyboard thay doi.
     Bao ve deliverables cua nguoi dung: giu nguyen out/*.mp4 va danh dau STALE.
@@ -202,12 +210,119 @@ def ensure_project(p: Path):
     return cfg
 
 
+def scan_projects():
+    valid = []
+    recoverable = []
+    for p in sorted(PROJECTS.iterdir()):
+        if not p.is_dir() or p.name.startswith('.'):
+            continue
+        cfg_file = p / 'config.json'
+        if cfg_file.is_file():
+            cfg = load_json(cfg_file, {})
+            if isinstance(cfg, dict) and cfg.get('pack') in ALLOWED_MODES:
+                try:
+                    valid.append(summarize_project(p))
+                    continue
+                except Exception:
+                    pass
+
+        has_voice = (p / 'timeline' / 'voice.wav').exists() or (p / 'input' / 'voice_source.wav').exists() or (p / 'input' / 'voice_source.mp3').exists() or (p / 'input' / 'voice_script.txt').exists()
+        has_script = (p / 'input' / '01-PHIM.txt').exists()
+        has_story = (p / 'story' / 'shots.json').exists()
+        pack_hint = 'squire' if has_voice else ('dem' if has_script else 'squire')
+
+        file_count = 0
+        try:
+            for sub in p.rglob('*'):
+                if sub.is_file():
+                    file_count += 1
+        except Exception:
+            pass
+
+        recoverable.append({
+            'id': p.name,
+            'title': p.name.replace('_', ' ').replace('-', ' ').title(),
+            'pack_hint': pack_hint,
+            'has_voice': has_voice,
+            'has_script': has_script,
+            'has_story': has_story,
+            'file_count': file_count,
+            'status': 'RECOVERABLE' if file_count > 0 else 'EMPTY_ORPHAN'
+        })
+    return valid, recoverable
+
+
+def recover_project(name: str, pack: str = None, title: str = None, aspect: str = '16:9'):
+    p = project_path(name)
+    if not p.is_dir():
+        raise ValueError(f'Thư mục dự án "{name}" không tồn tại trên đĩa.')
+
+    cfg_file = p / 'config.json'
+    cfg = load_json(cfg_file, {}) or {}
+
+    if not pack:
+        if cfg.get('pack') in ALLOWED_MODES:
+            pack = cfg['pack']
+        elif (p / 'timeline' / 'voice.wav').exists() or (p / 'input' / 'voice_source.wav').exists() or (p / 'input' / 'voice_source.mp3').exists() or (p / 'input' / 'voice_script.txt').exists():
+            pack = 'squire'
+        elif (p / 'input' / '01-PHIM.txt').exists():
+            pack = 'dem'
+        else:
+            pack = 'squire'
+
+    if pack not in ALLOWED_MODES:
+        raise ValueError('Invalid studio pack for recovery')
+
+    if aspect not in ('16:9', '9:16'):
+        aspect = cfg.get('aspect', '16:9')
+
+    if not title:
+        title = cfg.get('title') or name.replace('_', ' ').replace('-', ' ').title()
+
+    cfg.update({
+        'title': title,
+        'pack': pack,
+        'aspect': aspect,
+        'resolution': cfg.get('resolution', '1080p'),
+        'fps': cfg.get('fps', 24),
+        'lang': cfg.get('lang', 'en'),
+        'captions': cfg.get('captions', (pack == 'squire' and aspect == '9:16'))
+    })
+    cfg.setdefault('style', 'flat')
+    cfg.setdefault('music', {'enabled': True, 'gainDb': -15})
+    cfg.setdefault('sfx', {'enabled': True, 'gainDb': -4})
+    cfg.setdefault('loudness', -14)
+
+    for d in ['input', 'anh', 'timeline', 'story', 'scenes/sets', 'scenes/shots', 'build', 'out']:
+        (p / d).mkdir(parents=True, exist_ok=True)
+
+    put_json(cfg_file, cfg)
+
+    story_file = p / 'story' / 'shots.json'
+    if not story_file.is_file():
+        put_json(story_file, {'duration': 0, 'shots': []})
+
+    return summarize_project(p)
+
+
 def create_project(body):
     name = str(body.get('id', '')).strip().lower()
     mode = str(body.get('mode', ''))
     if mode not in ALLOWED_MODES: raise ValueError('Choose self-improvement or military history')
     p = project_path(name)
-    if p.exists(): raise ValueError('Project ID already exists')
+    if p.exists():
+        is_rec = not (p / 'config.json').is_file()
+        counter = 2
+        suggested_id = f"{name}_{counter}"
+        while (PROJECTS / suggested_id).exists():
+            counter += 1
+            suggested_id = f"{name}_{counter}"
+        raise ProjectConflictError(
+            f'Thư mục dự án "{name}" đã tồn tại trên đĩa.',
+            project_id=name,
+            is_recoverable=is_rec,
+            suggested_id=suggested_id
+        )
     aspect = body.get('aspect', '16:9')
     if aspect not in ('16:9', '9:16'): raise ValueError('Invalid aspect ratio')
     copy_sample = bool(body.get('copy_sample', True))
@@ -245,7 +360,8 @@ def status():
             'host': '127.0.0.1'}
 
 
-def task_commands(action, p: Path):
+def task_commands(action, p: Path, params: dict = None):
+    params = params or {}
     proj = str(p)
     node = shutil.which('node') or 'node'
     py = sys.executable
@@ -257,7 +373,11 @@ def task_commands(action, p: Path):
         if not shots:
             raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi render.')
         if action == 'sheet': return [[node, 'render.mjs', '--project', proj, '--sheet', '--scale', '0.4']]
-        if action == 'preview': return [[node, 'render.mjs', '--project', proj, '--from', '0', '--to', '30', '--scale', '0.5']]
+        if action == 'preview':
+            from_sec = str(params.get('from', 0))
+            to_sec = str(params.get('to', 30))
+            scale = str(params.get('scale', '0.5'))
+            return [[node, 'render.mjs', '--project', proj, '--from', from_sec, '--to', to_sec, '--scale', scale]]
         if action == 'render': return [[node, 'render.mjs', '--project', proj]]
     if action == 'thumb': return [[node, 'render.mjs', '--project', proj, '--thumb']]
     if action == 'mix':
@@ -277,7 +397,6 @@ def task_commands(action, p: Path):
         if ensure_project(p).get('pack') != 'dem': raise ValueError('Self-Improvement projects only')
         script = p / 'input' / '01-PHIM.txt'
         if not script.exists(): raise ValueError('Save a script before compiling it')
-        invalidate_artifacts(p)
         cmd = [py, 'tools/phim.py', '--project', proj, '--phim', str(script)]
         if action == 'compile-self-force': cmd.append('--force')
         return [cmd]
@@ -287,14 +406,12 @@ def task_commands(action, p: Path):
         if not voice.exists(): voice = p / 'input' / 'voice_source.wav'
         script = p / 'input' / 'voice_script.txt'
         if not voice.exists() or not script.exists(): raise ValueError('Upload MP3/WAV and save transcript first')
-        invalidate_artifacts(p)
         return [[py, 'tools/prep_voice.py', '--project', proj, '--single', str(voice), '--script', str(script)]]
     if action in ('draft-shots', 'draft-shots-force'):
         cfg = ensure_project(p)
         if cfg.get('pack') != 'squire': raise ValueError('Squire projects only')
         if not (p / 'timeline' / 'lines.json').exists():
             raise ValueError('Run Prepare voice timeline before drafting storyboard shots')
-        invalidate_artifacts(p)
         cmd = [py, 'tools/draft_shots.py', '--project', proj]
         if action == 'draft-shots-force': cmd.append('--force')
         if cfg.get('aspect') == '9:16': cmd.extend(['--min', '0.8', '--max', '2.6'])
@@ -304,9 +421,16 @@ def task_commands(action, p: Path):
         if cfg.get('pack') != 'squire': raise ValueError('Squire projects only')
         if not (p / 'story' / 'shots.json').exists() or not shots:
             raise ValueError('Draft storyboard (shots) before assigning visuals')
-        invalidate_artifacts(p)
         cmd = [py, 'tools/assign_visuals.py', '--project', proj]
         if action == 'assign-visuals-force': cmd.append('--force')
+        return [cmd]
+    if action in ('upgrade-visuals', 'upgrade-visuals-force'):
+        cfg = ensure_project(p)
+        if cfg.get('pack') != 'squire': raise ValueError('Squire projects only')
+        if not (p / 'story' / 'shots.json').exists() or not shots:
+            raise ValueError('Draft storyboard (shots) before upgrading visuals')
+        cmd = [py, 'tools/assign_visuals.py', '--project', proj, '--upgrade-generated']
+        if action == 'upgrade-visuals-force': cmd.append('--force')
         return [cmd]
     raise ValueError('Unknown task')
 
@@ -331,6 +455,7 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
         'voice-prepare': [p / 'timeline' / 'voice.wav'],
         'draft-shots': [p / 'story' / 'shots.json'],
         'assign-visuals': [p / 'story' / 'shots.json'],
+        'upgrade-visuals': [p / 'story' / 'shots.json'],
     }
     if action == 'sheet': matches = list((p / 'build' / 'sheets').glob('sheet_*.jpg'))
     elif action == 'mix': matches = list((p / 'out').glob('*.mp4'))
@@ -363,10 +488,10 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
     return True, ''
 
 
-def launch_task(action, project_id):
+def launch_task(action, project_id, params: dict = None):
     p = project_path(project_id)
     ensure_project(p)
-    cmds = task_commands(action, p)
+    cmds = task_commands(action, p, params=params)
     with MUTEX:
         if project_id in PROJECT_LOCKS:
             raise ValueError(f'Project "{project_id}" is currently running another task. Please wait.')
@@ -447,8 +572,8 @@ class Handler(BaseHTTPRequestHandler):
             if parts == ['api', 'status']:
                 return self.send(200, status())
             if parts == ['api', 'projects']:
-                return self.send(200, {'projects': [summarize_project(p) for p in sorted(PROJECTS.iterdir())
-                                                      if p.is_dir() and (p / 'config.json').exists()]})
+                valid, rec = scan_projects()
+                return self.send(200, {'projects': valid, 'recoverable': rec})
             if len(parts) == 3 and parts[:2] == ['api', 'projects']:
                 p = project_path(parts[2]); ensure_project(p)
                 script = p / 'input' / '01-PHIM.txt'; voice_script = p / 'input' / 'voice_script.txt'
@@ -516,6 +641,14 @@ class Handler(BaseHTTPRequestHandler):
                         self.wfile.write(chunk)
                 return
             self.error(404, 'Unknown endpoint')
+        except ProjectConflictError as exc:
+            self.send(409, {
+                'error': str(exc),
+                'conflict': True,
+                'project_id': exc.project_id,
+                'is_recoverable': exc.is_recoverable,
+                'suggested_id': exc.suggested_id
+            })
         except (ValueError, KeyError, OSError, json.JSONDecodeError) as exc:
             self.error(400, exc)
 
@@ -527,10 +660,16 @@ class Handler(BaseHTTPRequestHandler):
             parts = self.parse_parts()
             if parts == ['api', 'projects']:
                 return self.send(201, {'project': create_project(self.data())})
+            if parts == ['api', 'projects', 'recover']:
+                d = self.data()
+                proj = recover_project(d.get('id', ''), pack=d.get('pack'), title=d.get('title'), aspect=d.get('aspect', '16:9'))
+                return self.send(200, {'project': proj, 'recovered': True})
             if len(parts) == 4 and parts[:2] == ['api', 'projects']:
                 p = project_path(parts[2]); cfg = ensure_project(p); action = parts[3]
                 if action == 'task':
-                    job = launch_task(self.data().get('action'), parts[2]); return self.send(202, job)
+                    data = self.data()
+                    job = launch_task(data.get('action'), parts[2], params=data)
+                    return self.send(202, job)
                 if action == 'story':
                     data = self.data()
                     if not isinstance(data, dict) or not isinstance(data.get('shots'), list):
@@ -572,6 +711,14 @@ class Handler(BaseHTTPRequestHandler):
                     invalidate_artifacts(p)
                     return self.send(200, {'saved': True, 'bytes': len(content)})
             self.error(404, 'Unknown endpoint')
+        except ProjectConflictError as exc:
+            self.send(409, {
+                'error': str(exc),
+                'conflict': True,
+                'project_id': exc.project_id,
+                'is_recoverable': exc.is_recoverable,
+                'suggested_id': exc.suggested_id
+            })
         except (ValueError, KeyError, OSError, json.JSONDecodeError) as exc:
             self.error(400, exc)
 
