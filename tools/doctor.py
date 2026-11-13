@@ -1,6 +1,12 @@
 """doctor.py — kiem tra may co du cong cu de dung video. Them --install de tu cai phan con thieu."""
 import importlib.util, json, os, platform, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); OS = platform.system()
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from common import ensure_ffmpeg
+    ensure_ffmpeg()
+except Exception:
+    pass
 fix_cmds, ok_all = [], True
 def ok(name, cond, detail="", fix=None):
     global ok_all

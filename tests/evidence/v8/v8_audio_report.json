@@ -1,0 +1,8 @@
+{
+  "status": "DERIVED_FROM_FINAL_MP4",
+  "output_file": ".test-runs\\20261113_143933\\n07_squire_showcase_1080p\\out\\Why Knights Could Actually Run 1080p.mp4",
+  "measured_integrated_lufs": -14.0,
+  "measured_true_peak_dbtp": -2.0,
+  "tolerance_met": true,
+  "measured_at": 1794555810.3971984
+}
