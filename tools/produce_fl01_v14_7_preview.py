@@ -776,15 +776,18 @@ def build_mixed_soundtrack(preview_dir: Path, total_dur: float) -> Path:
     return mixed_wav
 
 
-def produce_preview(force_rebuild: bool = True) -> Dict[str, Any]:
+def produce_preview(project_dir: Union[str, Path] = PREVIEW_DIR, force_rebuild: bool = True) -> Dict[str, Any]:
     """Execute complete end-to-end production of the FL-01 V14.7 Fresh Acceptance Preview."""
     t0 = time.time()
-    PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
-    (PREVIEW_DIR / "story").mkdir(parents=True, exist_ok=True)
-    (PREVIEW_DIR / "timeline").mkdir(parents=True, exist_ok=True)
-    (PREVIEW_DIR / "scenes" / "shots").mkdir(parents=True, exist_ok=True)
-    (PREVIEW_DIR / "build").mkdir(parents=True, exist_ok=True)
-    (PREVIEW_DIR / "out").mkdir(parents=True, exist_ok=True)
+    p_dir = Path(project_dir).resolve()
+    p_dir.mkdir(parents=True, exist_ok=True)
+    (p_dir / "story").mkdir(parents=True, exist_ok=True)
+    (p_dir / "timeline").mkdir(parents=True, exist_ok=True)
+    (p_dir / "scenes" / "shots").mkdir(parents=True, exist_ok=True)
+    (p_dir / "build").mkdir(parents=True, exist_ok=True)
+    (p_dir / "out").mkdir(parents=True, exist_ok=True)
+
+    out_mp4 = p_dir / "out" / "FL01_V14_7_FRESH_PREVIEW_1080P.mp4"
 
     # 1. Project Config
     config = {
@@ -800,23 +803,23 @@ def produce_preview(force_rebuild: bool = True) -> Dict[str, Any]:
         "enable_universal_storytelling": True,
         "ai_director_mode": "OFFLINE_ONLY",  # Honest offline grounded fallback when no live key is passed
     }
-    with open(PREVIEW_DIR / "config.json", "w", encoding="utf-8") as f:
+    with open(p_dir / "config.json", "w", encoding="utf-8") as f:
         json.dump(config, f, indent=2)
 
     # 2. Thumbnail stub
-    thumb_js = PREVIEW_DIR / "scenes" / "shots" / "thumb.js"
+    thumb_js = p_dir / "scenes" / "shots" / "thumb.js"
     thumb_js.write_text("export function draw(g, lt, info) { /* FL-01 V14.7 Preview */ }\n")
 
     # 3. Real Spoken Voice Synthesis
-    timed_lines = synthesize_spoken_voice(PREVIEW_DIR)
+    timed_lines = synthesize_spoken_voice(p_dir)
 
     # 4. Storyboard Assembly
     storyboard, shots = build_storyboard_fl01()
     total_dur = storyboard["duration"]
 
     # 5. Character Bible
-    bible = build_character_bible(PREVIEW_DIR)
-    with open(PREVIEW_DIR / "story" / "character_bible.json", "w", encoding="utf-8") as f:
+    bible = build_character_bible(p_dir)
+    with open(p_dir / "story" / "character_bible.json", "w", encoding="utf-8") as f:
         json.dump(bible.model_dump(), f, indent=2)
 
     # 6. Claims Manifest (Illustrative Reconstruction of Polybius & Vegetius)
@@ -845,7 +848,7 @@ def produce_preview(force_rebuild: bool = True) -> Dict[str, Any]:
             for s in shots
         ],
     }
-    with open(PREVIEW_DIR / "story" / "claims_manifest.json", "w", encoding="utf-8") as f:
+    with open(p_dir / "story" / "claims_manifest.json", "w", encoding="utf-8") as f:
         json.dump(claims, f, indent=2)
 
     # 7. Cinematic Camera & Composition Integration
@@ -885,24 +888,25 @@ def produce_preview(force_rebuild: bool = True) -> Dict[str, Any]:
                         p["performanceRig"] = compiled_rig["performanceRig"]
 
     # Save finalized storyboard
-    with open(PREVIEW_DIR / "story" / "shots.json", "w", encoding="utf-8") as f:
+    with open(p_dir / "story" / "shots.json", "w", encoding="utf-8") as f:
         json.dump(storyboard, f, indent=2)
 
     # 9. Multi-Layer Audio Mix & Loudness Normalization (-14.0 LUFS)
-    mixed_audio = build_mixed_soundtrack(PREVIEW_DIR, total_dur)
+    mixed_audio = build_mixed_soundtrack(p_dir, total_dur)
 
     # 10. Frame Rendering via Playwright / Canvas
-    video_silent = PREVIEW_DIR / "build" / "video_silent.mp4"
+    video_silent = p_dir / "build" / "video_silent.mp4"
     if force_rebuild or not video_silent.is_file() or video_silent.stat().st_size < 1000:
         cmd_render = [
             "node", str(ROOT_DIR / "render.mjs"),
-            "--project", str(PREVIEW_DIR),
+            "--project", str(p_dir),
         ]
         res_render = subprocess.run(cmd_render, cwd=ROOT_DIR, capture_output=True, text=True)
         if res_render.returncode != 0:
             raise RuntimeError(f"render.mjs failed:\n{res_render.stderr[-800:]}")
 
-    # 11. Final Mux with Normalized AAC Audio
+    # 11. Final Mux with Normalized AAC Audio (Atomic write via .partial.mp4)
+    partial_mp4 = out_mp4.with_suffix(".partial.mp4")
     cmd_mux = [
         "ffmpeg", "-y",
         "-i", str(video_silent),
@@ -910,14 +914,23 @@ def produce_preview(force_rebuild: bool = True) -> Dict[str, Any]:
         "-c:v", "copy",
         "-c:a", "aac", "-b:a", "192k",
         "-shortest",
-        str(PREVIEW_MP4),
+        str(partial_mp4),
     ]
     subprocess.run(cmd_mux, check=True, capture_output=True)
 
+    # Validate partial output before atomic rename
+    partial_info = inspect_media_file(partial_mp4)
+    if not partial_info.get("valid", True) and not (partial_info.get("duration", 0) > 0):
+        if partial_mp4.is_file():
+            partial_mp4.unlink()
+        raise RuntimeError("Muxed partial MP4 failed media inspection")
+
+    partial_mp4.replace(out_mp4)
+
     # 12. Media Inspection and Cryptographic Provenance
-    media_info = inspect_media_file(PREVIEW_MP4)
+    media_info = inspect_media_file(out_mp4)
     render_inputs = collect_render_inputs(
-        project_path=PREVIEW_DIR,
+        project_path=p_dir,
         render_options={
             "pack": "squire",
             "genre": "roman",
@@ -929,8 +942,8 @@ def produce_preview(force_rebuild: bool = True) -> Dict[str, Any]:
     )
     fingerprint = compute_render_fingerprint(render_inputs)
     write_render_receipt_atomic(
-        project_path=PREVIEW_DIR,
-        output_path=PREVIEW_MP4,
+        project_path=p_dir,
+        output_path=out_mp4,
         manifest=render_inputs,
         metadata={"fingerprint": fingerprint, "status": "VERIFIED"},
     )
@@ -938,26 +951,78 @@ def produce_preview(force_rebuild: bool = True) -> Dict[str, Any]:
     elapsed = round(time.time() - t0, 2)
     return {
         "status": "PRODUCED",
-        "output_path": str(PREVIEW_MP4),
+        "output_path": str(out_mp4),
         "duration": media_info.get("duration"),
         "width": media_info.get("width"),
         "height": media_info.get("height"),
         "fps": media_info.get("fps"),
-        "size_bytes": PREVIEW_MP4.stat().st_size,
+        "size_bytes": out_mp4.stat().st_size,
         "sha256": media_info.get("sha256"),
         "fingerprint": fingerprint,
         "elapsed_sec": elapsed,
     }
 
 
+def verify_preview(project_dir: Union[str, Path] = PREVIEW_DIR) -> Dict[str, Any]:
+    """Strictly READ-ONLY inspection of the existing preview media and render receipt."""
+    p_dir = Path(project_dir).resolve()
+    mp4_path = p_dir / "out" / "FL01_V14_7_FRESH_PREVIEW_1080P.mp4"
+    if not mp4_path.is_file():
+        return {
+            "status": "MISSING",
+            "output_path": str(mp4_path),
+            "error": "Preview MP4 does not exist on disk",
+        }
+
+    # 1. Media inspection
+    media_info = inspect_media_file(mp4_path)
+
+    # 2. Full decode check
+    cmd_decode = ["ffmpeg", "-v", "error", "-i", str(mp4_path), "-f", "null", "-"]
+    res_decode = subprocess.run(cmd_decode, capture_output=True, text=True)
+    decode_ok = (res_decode.returncode == 0 and len(res_decode.stderr.strip()) == 0)
+
+    # 3. Receipt inspection
+    receipt_file = p_dir / "build" / "render_receipt.json"
+    receipt_valid = False
+    cached_fingerprint = None
+    if receipt_file.is_file():
+        try:
+            rc = json.loads(receipt_file.read_text(encoding="utf-8"))
+            cached_fingerprint = rc.get("input_fingerprint")
+            receipt_valid = bool(cached_fingerprint and rc.get("output_sha256") == media_info.get("sha256"))
+        except Exception:
+            receipt_valid = False
+
+    return {
+        "status": "VERIFIED" if (decode_ok and receipt_valid) else "UNVERIFIED",
+        "output_path": str(mp4_path),
+        "duration": media_info.get("duration"),
+        "width": media_info.get("width"),
+        "height": media_info.get("height"),
+        "fps": media_info.get("fps"),
+        "video_codec": media_info.get("video_codec"),
+        "audio_codec": media_info.get("audio_codec"),
+        "size_bytes": mp4_path.stat().st_size,
+        "sha256": media_info.get("sha256"),
+        "decode_clean": decode_ok,
+        "receipt_valid": receipt_valid,
+        "fingerprint": cached_fingerprint,
+    }
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Produce FL-01 V14.7 Fresh Acceptance Preview")
+    parser = argparse.ArgumentParser(description="Produce or verify FL-01 V14.7 Fresh Acceptance Preview")
     parser.add_argument("--project", default=str(PREVIEW_DIR), help="Path to project directory")
-    parser.add_argument("--verify", action="store_true", help="Inspect and verify generated preview")
+    parser.add_argument("--verify", action="store_true", help="Inspect and verify generated preview without building")
     parser.add_argument("--force-rebuild", action="store_true", help="Force rebuild from source")
     args = parser.parse_args()
 
-    res = produce_preview(force_rebuild=args.force_rebuild)
+    target_proj = Path(args.project).resolve()
+    if args.verify:
+        res = verify_preview(project_dir=target_proj)
+    else:
+        res = produce_preview(project_dir=target_proj, force_rebuild=args.force_rebuild)
     print(json.dumps(res, indent=2))
 
 

@@ -1,0 +1,87 @@
+{
+  "title": "The Bridge They Built Before the Enemy Arrived",
+  "genre": "roman",
+  "methodology": "ILLUSTRATIVE_RECONSTRUCTION",
+  "primary_sources": [
+    "Julius Caesar, Commentarii de Bello Gallico, Book IV (Caesar's Rhine Bridge Construction)",
+    "Vitruvius, De Architectura, Book V (Timber Marine Piles & Trestle Engineering)"
+  ],
+  "scholarly_references": [
+    "Adrian Goldsworthy, Caesar: Life of a Colossus (2006)",
+    "Colin O'Connor, Roman Bridges (Cambridge University Press, 1993)"
+  ],
+  "total_claims": 10,
+  "reconstruction_disclaimer": "This video depicts an illustrative reconstruction of Roman timber trestle bridge engineering across an unfordable river based on Caesar's Gallic War commentaries.",
+  "claims": [
+    {
+      "shot_id": "s01",
+      "claim": "A swollen river in front of you. A hostile army marching behind. Most commanders would stop.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s02",
+      "claim": "The current is fierce, deep enough to drown horses, with no existing stone bridge for twenty leagues.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s03",
+      "claim": "Chief Engineer Servius sights the crossing line with his groma. Marcus gives the order: build the bridge.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s04",
+      "claim": "On the survey map, the plan is bold: angled trestle piers driven directly into the riverbed against the flow.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s05",
+      "claim": "Oak piles are driven into the muddy bottom. Heavy wooden rammers slam down in rhythmic cadence.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s06",
+      "claim": "A massive timber beam slips on the slick riverbank! Two legionaries struggle under the shifting weight.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s07",
+      "claim": "Titus secures a tension rope while Servius braces the beam. Disasters on Roman construction lines are solved in seconds.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s08",
+      "claim": "Horizontal beams lock across the piers. Thick deck planks are hauled into place and pinned tight.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s09",
+      "claim": "As enemy horsemen crest the distant ridge, the final plank drops home. The impassable river is now a Roman highway.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s10",
+      "claim": "Four centuries march in disciplined lockstep across the water. Where nature placed an obstacle, Rome built a road.",
+      "citation": "Caesar BG IV.17 & Vitruvius V.12",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    }
+  ]
+}

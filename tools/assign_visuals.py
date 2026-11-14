@@ -742,10 +742,19 @@ def assign_visuals(
                     story = read_json(shots_file, {})
                     shots = story.get("shots", [])
             elif dir_res.get("status") == "BLOCKED_LIVE_REQUIRED":
-                print(f"[assign_visuals] WARNING: AI Director BLOCKED in LIVE_REQUIRED mode: {dir_res.get('error')}", file=sys.stderr)
+                err_msg = dir_res.get("error", "Gemini API key or connection unavailable")
+                print(f"[assign_visuals] ERROR: AI Director BLOCKED in LIVE_REQUIRED mode: {err_msg}", file=sys.stderr)
+                if modified and 'backup_file' in locals() and os.path.exists(backup_file):
+                    try:
+                        shutil.copyfile(backup_file, shots_file)
+                    except Exception:
+                        pass
+                raise RuntimeError(f"AI_DIRECTOR_BLOCKED_LIVE_REQUIRED: {err_msg}")
             elif dir_res.get("status") == "DISABLED":
                 print("[assign_visuals] AI Director disabled by policy; skipping AI director phase.")
         except Exception as dir_exc:
+            if "AI_DIRECTOR_BLOCKED_LIVE_REQUIRED" in str(dir_exc):
+                raise
             print(f"[assign_visuals] AI Director warning: {dir_exc}")
     elif not ai_policy.get("enabled", True):
         print(f"[assign_visuals] AI Director disabled via {ai_policy.get('enabled_source', 'policy')}; skipping AI Director phase.")
@@ -809,4 +818,8 @@ if __name__ == "__main__":
         ap.error("the following arguments are required: --project or project")
 
     targets = [s.strip() for s in args.shots.split(",") if s.strip()] if args.shots else None
-    assign_visuals(proj, force=args.force, upgrade_generated=args.upgrade_generated, target_ids=targets)
+    try:
+        assign_visuals(proj, force=args.force, upgrade_generated=args.upgrade_generated, target_ids=targets)
+    except Exception as exc:
+        print(f"[assign_visuals] FAILED: {exc}", file=sys.stderr)
+        sys.exit(1)

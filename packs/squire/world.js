@@ -211,6 +211,24 @@ export function bg(g, kind = 'field', o = {}) {
       if (c.tint) haze(g, c.tint[0], c.tint[1]);
       break;
     }
+    case 'river': case 'riverbank': {
+      skyGrad(g, c.sky); if (c.sun) sunDisc(g, W() * 0.75, H() * 0.28, H() * 0.06, c.sun, 0.8);
+      const gy = H() * (o.groundY ?? 0.65);
+      // Bo song xa phia doi dien
+      rect(g, -40, gy - H() * 0.18, W() + 80, H() * 0.22, { fill: darker(c.grass, 0.15), lw: 0, r: 0 });
+      // Dong song o giua voi lan song chay
+      const ry = gy - H() * 0.08, rw = H() * 0.26;
+      rect(g, -40, ry, W() + 80, rw, { fill: o.waterColor || '#3b6f8a', lw: 0, r: 0 });
+      for (let i = 0; i < 8; i++) {
+        const wy = ry + (i + 1) * (rw / 9);
+        const wx = (W() * ((i * 0.23 + (o.t || 0) * 0.15) % 1)) - 60;
+        line(g, [[wx, wy], [wx + 100, wy]], { lw: 2.5, ink: alpha('#ffffff', 0.35) });
+      }
+      // Bo song gan
+      rect(g, -40, gy + H() * 0.12, W() + 80, H(), { fill: c.grass, lw: 4, r: 0 });
+      if (c.tint) haze(g, c.tint[0], c.tint[1]);
+      break;
+    }
     case 'sky': { skyGrad(g, c.sky); const rr = rng(s); for (let i = 0; i < 5; i++) cloud(g, W() * rr(), H() * (0.1 + rr() * 0.8), H() * (0.08 + rr() * 0.07), { color: c.cloud, shade: c.cloudSh }); break; }
     case 'city': {
       skyGrad(g, TIMES.dusk.sky); const r = rng(s), gy2 = H() * 0.72;

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "s01",
+    "text": "A swollen river in front of you. A hostile army marching behind. Most commanders would stop.",
+    "start": 0.0,
+    "dur": 4.5,
+    "spoken_dur": 5.87
+  },
+  {
+    "id": "s02",
+    "text": "The current is fierce, deep enough to drown horses, with no existing stone bridge for twenty leagues.",
+    "start": 4.5,
+    "dur": 4.5,
+    "spoken_dur": 6.27
+  },
+  {
+    "id": "s03",
+    "text": "Chief Engineer Servius sights the crossing line with his groma. Marcus gives the order: build the bridge.",
+    "start": 9.0,
+    "dur": 5.0,
+    "spoken_dur": 5.83
+  },
+  {
+    "id": "s04",
+    "text": "On the survey map, the plan is bold: angled trestle piers driven directly into the riverbed against the flow.",
+    "start": 14.0,
+    "dur": 5.0,
+    "spoken_dur": 6.32
+  },
+  {
+    "id": "s05",
+    "text": "Oak piles are driven into the muddy bottom. Heavy wooden rammers slam down in rhythmic cadence.",
+    "start": 19.0,
+    "dur": 5.5,
+    "spoken_dur": 5.39
+  },
+  {
+    "id": "s06",
+    "text": "A massive timber beam slips on the slick riverbank! Two legionaries struggle under the shifting weight.",
+    "start": 24.5,
+    "dur": 5.5,
+    "spoken_dur": 5.71
+  },
+  {
+    "id": "s07",
+    "text": "Titus secures a tension rope while Servius braces the beam. Disasters on Roman construction lines are solved in seconds.",
+    "start": 30.0,
+    "dur": 5.5,
+    "spoken_dur": 7.66
+  },
+  {
+    "id": "s08",
+    "text": "Horizontal beams lock across the piers. Thick deck planks are hauled into place and pinned tight.",
+    "start": 35.5,
+    "dur": 5.5,
+    "spoken_dur": 5.57
+  },
+  {
+    "id": "s09",
+    "text": "As enemy horsemen crest the distant ridge, the final plank drops home. The impassable river is now a Roman highway.",
+    "start": 41.0,
+    "dur": 5.5,
+    "spoken_dur": 6.9
+  },
+  {
+    "id": "s10",
+    "text": "Four centuries march in disciplined lockstep across the water. Where nature placed an obstacle, Rome built a road.",
+    "start": 46.5,
+    "dur": 5.5,
+    "spoken_dur": 6.8
+  }
+]

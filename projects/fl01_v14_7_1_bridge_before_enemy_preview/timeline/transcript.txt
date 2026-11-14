@@ -1,0 +1,10 @@
+s01: A swollen river in front of you. A hostile army marching behind. Most commanders would stop.
+s02: The current is fierce, deep enough to drown horses, with no existing stone bridge for twenty leagues.
+s03: Chief Engineer Servius sights the crossing line with his groma. Marcus gives the order: build the bridge.
+s04: On the survey map, the plan is bold: angled trestle piers driven directly into the riverbed against the flow.
+s05: Oak piles are driven into the muddy bottom. Heavy wooden rammers slam down in rhythmic cadence.
+s06: A massive timber beam slips on the slick riverbank! Two legionaries struggle under the shifting weight.
+s07: Titus secures a tension rope while Servius braces the beam. Disasters on Roman construction lines are solved in seconds.
+s08: Horizontal beams lock across the piers. Thick deck planks are hauled into place and pinned tight.
+s09: As enemy horsemen crest the distant ridge, the final plank drops home. The impassable river is now a Roman highway.
+s10: Four centuries march in disciplined lockstep across the water. Where nature placed an obstacle, Rome built a road.

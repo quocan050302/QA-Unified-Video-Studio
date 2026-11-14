@@ -517,6 +517,14 @@ export function weapon(g, kind, hx, hy, L, ang, o = {}) {
     case 'scroll': { rect(g, -L * 0.18, 0, L * 0.36, L * 0.45, { fill: PAL.parchment, lw, r: 4, inner: (c) => { for (let i = 0; i < 4; i++) line(c, [[-L * 0.12, L * (0.1 + i * 0.08)], [L * 0.12, L * (0.1 + i * 0.08)]], { lw: lw * 0.4, a: 0.5 }); } }); break; }
     case 'pouch': { blob(g, [[-L * 0.14, 0], [L * 0.14, 0], [L * 0.2, L * 0.24], [0, L * 0.32], [-L * 0.2, L * 0.24]], { fill: PAL.leather, lw }); break; }
     case 'grenade': { ellipse(g, 0, L * 0.12, L * 0.1, L * 0.13, { fill: PAL.olive, lw, inner: (c) => { for (let i = -1; i <= 1; i++) line(c, [[-L, L * 0.12 + i * L * 0.06], [L, L * 0.12 + i * L * 0.06]], { lw: lw * 0.5, a: 0.5 }); } }); break; }
+    case 'beam': case 'timber': case 'plank': {
+      rect(g, -L * 0.12, -L * 0.45, L * 0.24, L * 1.5, { fill: PAL.wood, lw: lw * 0.9, r: 2, inner: (c) => line(c, [[-L * 0.04, -L * 0.35], [-L * 0.04, L * 0.9]], { lw: lw * 0.4, ink: '#3a2012', a: 0.5 }) });
+      break;
+    }
+    case 'rope': {
+      shape(g, (c) => { c.moveTo(-L * 0.1, -L * 0.3); c.quadraticCurveTo(L * 0.15, 0, -L * 0.1, L * 0.5); }, { fill: null, lw: lw * 2.2, ink: PAL.rope });
+      break;
+    }
   }
   g.restore();
 }
@@ -534,6 +542,8 @@ export const POSES = {
   march:   [12, 6, 12, 6], walk: [12, 6, 12, 6], lunge: [70, 40, 60, 50], push: [75, 55, 70, 55], brace: [60, 70, 40, 80], wide: [20, 10, 20, 10], run: [40, 70, 40, 70], kneel: [12, 6, 12, 6], sit: [30, 60, 30, 60], ride: [30, 55, 30, 55], fall: [120, 20, 100, 30], lying: [25, 20, 25, 20], prone: [40, 50, 40, 50],
   recoil:  [85, 95, 20, 110], fatigue: [15, 25, 8, 12], signal: [45, 65, 160, 20], parry: [75, 90, 120, 60], contact: [75, 55, 70, 55],
   scratch: [12, 6, 140, 150], hug: [70, 60, 70, 60], hand: [12, 6, 50, 30],
+  pass_object: [30, 45, 75, 40], receive_object: [45, 60, 45, 60], equip: [55, 75, 45, 80],
+  raise_shield: [60, 85, 30, 40], react: [25, 30, 85, 45], turn_head: [15, 10, 15, 10], hammer: [30, 60, 120, 80],
 };
 const D2R = Math.PI / 180;
 function armPts(sx, sy, s, sh, el, u, L) {

@@ -1,7 +1,7 @@
 {
   "version": "14.6",
-  "timestamp": 1794663339.477612,
-  "elapsed_sec": 15.22,
+  "timestamp": 1794671565.8471382,
+  "elapsed_sec": 15.3,
   "gates_count": 35,
   "passed_count": 34,
   "failed_count": 0,
@@ -113,16 +113,16 @@
       "details": {
         "distinct_actions_count": 10,
         "distinct_actions": [
+          "BRACE",
+          "SHIELD_CLOSE",
+          "OBSERVE",
+          "CONTACT",
           "FATIGUE",
           "SIGNAL",
-          "STAND",
-          "CONTACT",
-          "OBSERVE",
-          "APPROACH",
-          "RESERVE_ADVANCE",
           "FRONT_WITHDRAW",
-          "SHIELD_CLOSE",
-          "BRACE"
+          "STAND",
+          "APPROACH",
+          "RESERVE_ADVANCE"
         ],
         "valid": true
       },
@@ -144,11 +144,11 @@
       "status": "PASS",
       "details": {
         "distinct_locations_in_scene": [
-          "relief_corridor",
-          "resolute_line",
-          "contact_line",
+          "camp_plain",
           "attrition_line",
-          "camp_plain"
+          "contact_line",
+          "relief_corridor",
+          "resolute_line"
         ],
         "total_shots": 11
       },
@@ -427,8 +427,8 @@
       "name": "System resource preflight and memory monitoring",
       "status": "PASS",
       "details": {
-        "available_ram_mb": 3555.7,
-        "free_disk_gb": 19.48,
+        "available_ram_mb": 3082.8,
+        "free_disk_gb": 18.8,
         "resource_sufficient": true
       },
       "error": null

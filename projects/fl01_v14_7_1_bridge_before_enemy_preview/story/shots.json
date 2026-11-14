@@ -1,0 +1,865 @@
+{
+  "version": "14.7.1",
+  "title": "FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P",
+  "duration": 52.0,
+  "pack": "squire",
+  "genre": "roman",
+  "shots": [
+    {
+      "id": "s01",
+      "tpl": "scene",
+      "start": 0.0,
+      "end": 4.5,
+      "dur": 4.5,
+      "line": "A swollen river in front of you. A hostile army marching behind. Most commanders would stop.",
+      "action": "STAND",
+      "action_kind": "STAND",
+      "purpose": "hook_threat_approach",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "riverbank",
+        "time": "day",
+        "seed": 201,
+        "bgOpts": {
+          "sky": "#3a6080",
+          "waterColor": "#2b5672",
+          "haze": 0.2
+        },
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.42,
+            "y": 0.82,
+            "h": 0.45,
+            "pose": "stand",
+            "facing": 1,
+            "look": 0.85
+          }
+        ],
+        "props": [
+          {
+            "kind": "bridge",
+            "x": 0.85,
+            "y": 0.78,
+            "s": 0.4,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "profile_left",
+          "scale": "wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 4.5,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "wind_loop",
+          "at": 0.2,
+          "vol": 0.5
+        },
+        {
+          "kind": "rain_loop",
+          "at": 0.5,
+          "vol": 0.4
+        }
+      ]
+    },
+    {
+      "id": "s02",
+      "tpl": "scene",
+      "start": 4.5,
+      "end": 9.0,
+      "dur": 4.5,
+      "line": "The current is fierce, deep enough to drown horses, with no existing stone bridge for twenty leagues.",
+      "action": "EXPLAIN",
+      "action_kind": "EXPLAIN",
+      "purpose": "obstacle_dilemma",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "river",
+        "time": "day",
+        "seed": 202,
+        "bgOpts": {
+          "waterColor": "#244a62"
+        },
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.38,
+            "y": 0.82,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1
+          },
+          {
+            "id": "servius",
+            "preset": "optio",
+            "x": 0.58,
+            "y": 0.82,
+            "h": 0.45,
+            "pose": "talk",
+            "facing": -1
+          }
+        ],
+        "props": [
+          {
+            "kind": "timber",
+            "x": 0.24,
+            "y": 0.85,
+            "s": 0.35,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "rear",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 4.5,
+              "x": 0.5,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "rain_loop",
+          "at": 0.2,
+          "vol": 0.55
+        },
+        {
+          "kind": "armor_clank",
+          "at": 1.2,
+          "vol": 0.45
+        }
+      ]
+    },
+    {
+      "id": "s03",
+      "tpl": "scene",
+      "start": 9.0,
+      "end": 14.0,
+      "dur": 5.0,
+      "line": "Chief Engineer Servius sights the crossing line with his groma. Marcus gives the order: build the bridge.",
+      "action": "ORDER",
+      "action_kind": "ORDER",
+      "purpose": "command_decision",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "riverbank",
+        "time": "day",
+        "seed": 203,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.35,
+            "y": 0.82,
+            "h": 0.46,
+            "pose": "salute",
+            "facing": 1
+          },
+          {
+            "id": "servius",
+            "preset": "optio",
+            "x": 0.58,
+            "y": 0.82,
+            "h": 0.45,
+            "pose": "turn_head",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "plank",
+            "x": 0.22,
+            "y": 0.84,
+            "s": 0.32,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "rear_three_quarter_right",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.45,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.42,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "horn_roman",
+          "at": 1.5,
+          "vol": 0.6
+        },
+        {
+          "kind": "armor_clank",
+          "at": 2.2,
+          "vol": 0.4
+        }
+      ]
+    },
+    {
+      "id": "s04",
+      "tpl": "scene",
+      "start": 14.0,
+      "end": 19.0,
+      "dur": 5.0,
+      "line": "On the survey map, the plan is bold: angled trestle piers driven directly into the riverbed against the flow.",
+      "action": "EXPLAIN",
+      "action_kind": "EXPLAIN",
+      "purpose": "engineering_schematic",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "map",
+        "time": "day",
+        "seed": 204,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.5,
+            "y": 0.76,
+            "h": 0.42,
+            "pose": "stand",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "beam",
+            "x": 0.35,
+            "y": 0.74,
+            "s": 0.35,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "profile_right",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "page_turn",
+          "at": 0.5,
+          "vol": 0.5
+        },
+        {
+          "kind": "wind_loop",
+          "at": 1.0,
+          "vol": 0.3
+        }
+      ]
+    },
+    {
+      "id": "s05",
+      "tpl": "scene",
+      "start": 19.0,
+      "end": 24.5,
+      "dur": 5.5,
+      "line": "Oak piles are driven into the muddy bottom. Heavy wooden rammers slam down in rhythmic cadence.",
+      "action": "HAMMER",
+      "action_kind": "HAMMER",
+      "purpose": "pile_driving",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "river",
+        "time": "day",
+        "seed": 205,
+        "bgOpts": {
+          "waterColor": "#244a62"
+        },
+        "people": [
+          {
+            "id": "titus",
+            "preset": "hastatus",
+            "x": 0.42,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "hammer",
+            "facing": 1
+          },
+          {
+            "id": "lucius",
+            "preset": "principes",
+            "x": 0.6,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "brace",
+            "facing": -1
+          }
+        ],
+        "props": [
+          {
+            "kind": "timber",
+            "x": 0.51,
+            "y": 0.8,
+            "s": 0.45,
+            "anim": "none"
+          },
+          {
+            "kind": "rope",
+            "x": 0.51,
+            "y": 0.76,
+            "s": 0.35,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "front_three_quarter_right",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.5,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "drum_hit",
+          "at": 0.8,
+          "vol": 0.6
+        },
+        {
+          "kind": "drum_hit",
+          "at": 2.2,
+          "vol": 0.65
+        },
+        {
+          "kind": "splash",
+          "at": 3.4,
+          "vol": 0.5
+        }
+      ]
+    },
+    {
+      "id": "s06",
+      "tpl": "scene",
+      "start": 24.5,
+      "end": 30.0,
+      "dur": 5.5,
+      "line": "A massive timber beam slips on the slick riverbank! Two legionaries struggle under the shifting weight.",
+      "action": "REACT",
+      "action_kind": "REACT",
+      "purpose": "mud_slip_danger",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "riverbank",
+        "time": "day",
+        "seed": 206,
+        "people": [
+          {
+            "id": "titus",
+            "preset": "hastatus",
+            "x": 0.39,
+            "y": 0.84,
+            "h": 0.45,
+            "pose": "react",
+            "facing": 1,
+            "lean": 14
+          },
+          {
+            "id": "lucius",
+            "preset": "principes",
+            "x": 0.61,
+            "y": 0.82,
+            "h": 0.46,
+            "pose": "pass_object",
+            "facing": -1,
+            "lean": -8
+          }
+        ],
+        "props": [
+          {
+            "kind": "beam",
+            "x": 0.49,
+            "y": 0.81,
+            "s": 0.42,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "rear_three_quarter_left",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.55,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.5,
+              "x": 0.58,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "mud_step",
+          "at": 0.6,
+          "vol": 0.6
+        },
+        {
+          "kind": "thud_soft",
+          "at": 1.5,
+          "vol": 0.55
+        },
+        {
+          "kind": "splash",
+          "at": 2.8,
+          "vol": 0.5
+        }
+      ]
+    },
+    {
+      "id": "s07",
+      "tpl": "scene",
+      "start": 30.0,
+      "end": 35.5,
+      "dur": 5.5,
+      "line": "Titus secures a tension rope while Servius braces the beam. Disasters on Roman construction lines are solved in seconds.",
+      "action": "RECEIVE_OBJECT",
+      "action_kind": "RECEIVE_OBJECT",
+      "purpose": "rope_catch_recovery",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "riverbank",
+        "time": "day",
+        "seed": 207,
+        "people": [
+          {
+            "id": "titus",
+            "preset": "hastatus",
+            "x": 0.35,
+            "y": 0.82,
+            "h": 0.46,
+            "pose": "pass_object",
+            "facing": 1
+          },
+          {
+            "id": "servius",
+            "preset": "optio",
+            "x": 0.52,
+            "y": 0.82,
+            "h": 0.45,
+            "pose": "receive_object",
+            "facing": -1
+          },
+          {
+            "id": "lucius",
+            "preset": "principes",
+            "x": 0.68,
+            "y": 0.82,
+            "h": 0.46,
+            "pose": "brace",
+            "facing": -1
+          }
+        ],
+        "props": [
+          {
+            "kind": "rope",
+            "x": 0.43,
+            "y": 0.78,
+            "s": 0.38,
+            "anim": "none"
+          },
+          {
+            "kind": "beam",
+            "x": 0.52,
+            "y": 0.82,
+            "s": 0.42,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "low_angle",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.5,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "chainmail",
+          "at": 0.5,
+          "vol": 0.55
+        },
+        {
+          "kind": "armor_clank",
+          "at": 1.8,
+          "vol": 0.5
+        },
+        {
+          "kind": "thud_soft",
+          "at": 3.0,
+          "vol": 0.45
+        }
+      ]
+    },
+    {
+      "id": "s08",
+      "tpl": "scene",
+      "start": 35.5,
+      "end": 41.0,
+      "dur": 5.5,
+      "line": "Horizontal beams lock across the piers. Thick deck planks are hauled into place and pinned tight.",
+      "action": "EQUIP",
+      "action_kind": "EQUIP",
+      "purpose": "deck_plank_assembly",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "river",
+        "time": "day",
+        "seed": 208,
+        "bgOpts": {
+          "waterColor": "#244a62"
+        },
+        "people": [
+          {
+            "id": "titus",
+            "preset": "hastatus",
+            "x": 0.42,
+            "y": 0.79,
+            "h": 0.45,
+            "pose": "hammer",
+            "facing": 1
+          },
+          {
+            "id": "lucius",
+            "preset": "principes",
+            "x": 0.62,
+            "y": 0.79,
+            "h": 0.45,
+            "pose": "equip",
+            "facing": -1
+          }
+        ],
+        "props": [
+          {
+            "kind": "bridge",
+            "x": 0.5,
+            "y": 0.82,
+            "s": 0.62,
+            "anim": "none"
+          },
+          {
+            "kind": "plank",
+            "x": 0.36,
+            "y": 0.78,
+            "s": 0.35,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "profile_left",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.5,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "drum_hit",
+          "at": 0.6,
+          "vol": 0.65
+        },
+        {
+          "kind": "drum_hit",
+          "at": 2.0,
+          "vol": 0.65
+        },
+        {
+          "kind": "drum_hit",
+          "at": 3.5,
+          "vol": 0.7
+        }
+      ]
+    },
+    {
+      "id": "s09",
+      "tpl": "scene",
+      "start": 41.0,
+      "end": 46.5,
+      "dur": 5.5,
+      "line": "As enemy horsemen crest the distant ridge, the final plank drops home. The impassable river is now a Roman highway.",
+      "action": "RAISE_SHIELD",
+      "action_kind": "RAISE_SHIELD",
+      "purpose": "bridge_completed_enemy_spotted",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "riverbank",
+        "time": "day",
+        "seed": 209,
+        "people": [
+          {
+            "id": "servius",
+            "preset": "optio",
+            "x": 0.35,
+            "y": 0.82,
+            "h": 0.45,
+            "pose": "stand",
+            "facing": 1
+          },
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.52,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "raise_shield",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "bridge",
+            "x": 0.68,
+            "y": 0.8,
+            "s": 0.65,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "rear_three_quarter_right",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.45,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.5,
+              "x": 0.42,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "war_horn",
+          "at": 1.2,
+          "vol": 0.65
+        },
+        {
+          "kind": "shield_bash",
+          "at": 2.8,
+          "vol": 0.6
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "tpl": "scene",
+      "start": 46.5,
+      "end": 52.0,
+      "dur": 5.5,
+      "line": "Four centuries march in disciplined lockstep across the water. Where nature placed an obstacle, Rome built a road.",
+      "action": "MARCH",
+      "action_kind": "MARCH",
+      "purpose": "triumphant_river_crossing",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "river",
+        "time": "day",
+        "seed": 210,
+        "bgOpts": {
+          "waterColor": "#244a62"
+        },
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.3,
+            "y": 0.79,
+            "h": 0.46,
+            "pose": "march",
+            "facing": 1
+          },
+          {
+            "id": "lucius",
+            "preset": "principes",
+            "x": 0.48,
+            "y": 0.79,
+            "h": 0.45,
+            "pose": "march",
+            "facing": 1
+          },
+          {
+            "id": "titus",
+            "preset": "hastatus",
+            "x": 0.65,
+            "y": 0.79,
+            "h": 0.45,
+            "pose": "march",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "bridge",
+            "x": 0.5,
+            "y": 0.82,
+            "s": 0.72,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "profile_right",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.5,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "drum_march",
+          "at": 0.5,
+          "vol": 0.6
+        },
+        {
+          "kind": "armor_clank",
+          "at": 2.0,
+          "vol": 0.5
+        },
+        {
+          "kind": "battle_roar",
+          "at": 3.8,
+          "vol": 0.45
+        }
+      ]
+    }
+  ]
+}

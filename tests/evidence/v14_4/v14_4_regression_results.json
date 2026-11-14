@@ -1,7 +1,7 @@
 {
   "version": "14.4",
-  "timestamp": 1794663339.368242,
-  "elapsed_sec": 2.34,
+  "timestamp": 1794671565.743222,
+  "elapsed_sec": 2.58,
   "total_gates": 28,
   "passed": 27,
   "editorial_pending": 1,
@@ -19,7 +19,7 @@
         "current_branch": "fix/Image-Shot",
         "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
       },
-      "elapsed_sec": 0.656
+      "elapsed_sec": 0.887
     },
     {
       "gate_id": "N02",
@@ -30,8 +30,8 @@
       "assertions_total": 2,
       "error_message": null,
       "details": {
-        "disk_free_gb": 19.48,
-        "ram_available_gb": 3.44
+        "disk_free_gb": 18.8,
+        "ram_available_gb": 3.03
       },
       "elapsed_sec": 0.0
     },
@@ -64,7 +64,7 @@
           "AFFIRMED"
         ]
       },
-      "elapsed_sec": 0.0
+      "elapsed_sec": 0.001
     },
     {
       "gate_id": "N05",
@@ -177,7 +177,7 @@
           "sha256": "8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2"
         }
       },
-      "elapsed_sec": 0.034
+      "elapsed_sec": 0.032
     },
     {
       "gate_id": "N12",
@@ -203,7 +203,7 @@
       "details": {
         "integrated_lufs": -14.1
       },
-      "elapsed_sec": 0.856
+      "elapsed_sec": 0.81
     },
     {
       "gate_id": "N14",
@@ -216,7 +216,7 @@
       "details": {
         "decode_errors": 0
       },
-      "elapsed_sec": 0.619
+      "elapsed_sec": 0.665
     },
     {
       "gate_id": "N15",
@@ -250,9 +250,9 @@
       "error_message": null,
       "details": {
         "persistent_characters": [
-          "legionary_titus",
+          "centurion_marcus",
           "chieftain_brennos",
-          "centurion_marcus"
+          "legionary_titus"
         ]
       },
       "elapsed_sec": 0.0
@@ -281,7 +281,7 @@
       "details": {
         "receipt_sha256": "8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2"
       },
-      "elapsed_sec": 0.029
+      "elapsed_sec": 0.032
     },
     {
       "gate_id": "N19",
@@ -294,7 +294,7 @@
       "details": {
         "total_trace_events": 11
       },
-      "elapsed_sec": 0.001
+      "elapsed_sec": 0.0
     },
     {
       "gate_id": "N20",
@@ -307,7 +307,7 @@
       "details": {
         "knight_duration": 9.0
       },
-      "elapsed_sec": 0.03
+      "elapsed_sec": 0.034
     },
     {
       "gate_id": "N21",
@@ -320,7 +320,7 @@
       "details": {
         "samurai_duration": 9.0
       },
-      "elapsed_sec": 0.031
+      "elapsed_sec": 0.034
     },
     {
       "gate_id": "N22",
@@ -333,7 +333,7 @@
       "details": {
         "dem_duration": 10.0
       },
-      "elapsed_sec": 0.028
+      "elapsed_sec": 0.032
     },
     {
       "gate_id": "N23",
@@ -346,7 +346,7 @@
       "details": {
         "director_compiled_count": 11
       },
-      "elapsed_sec": 0.012
+      "elapsed_sec": 0.013
     },
     {
       "gate_id": "N24",

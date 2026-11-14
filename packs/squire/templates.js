@@ -262,6 +262,23 @@ export function drawThing(g, kind, x, y, s, o = {}) {
     case 'car': { blob(g, [[x - s * 0.5, y + s * 0.1], [x - s * 0.45, y - s * 0.12], [x - s * 0.2, y - s * 0.32], [x + s * 0.25, y - s * 0.32], [x + s * 0.45, y - s * 0.1], [x + s * 0.5, y + s * 0.12]], { fill: o.color || PAL.red, lw }); rect(g, x - s * 0.14, y - s * 0.28, s * 0.32, s * 0.15, { fill: '#cfe5f0', lw: lw * 0.8, r: 4 }); for (const k of [-0.3, 0.3]) circ(g, x + k * s, y + s * 0.12, s * 0.12, { fill: PAL.black, lw }); if (o.badge) charge(g, 'quarter', x, y, s * 0.05, PAL.black); break; }
     case 'cauldron': ellipse(g, x, y, s * 0.4, s * 0.32, { fill: PAL.black, lw }); break;
     case 'skull': circ(g, x, y, s * 0.3, { fill: '#efe7d6', lw }); circ(g, x - s * 0.1, y, s * 0.07, { fill: OUT, lw: 0 }); circ(g, x + s * 0.1, y, s * 0.07, { fill: OUT, lw: 0 }); break;
+    case 'beam': case 'timber': case 'plank': {
+      rect(g, x - s * 0.5, y - s * 0.12, s, s * 0.24, { fill: PAL.wood, lw, r: 2, inner: (c) => line(c, [[x - s * 0.45, y], [x + s * 0.45, y]], { lw: lw * 0.5, ink: '#3a2012', a: 0.5 }) });
+      break;
+    }
+    case 'rope': {
+      shape(g, (c) => { c.moveTo(x - s * 0.4, y); c.quadraticCurveTo(x, y + s * 0.25, x + s * 0.4, y); }, { fill: null, lw: lw * 2.2, ink: PAL.rope });
+      break;
+    }
+    case 'bridge': {
+      const bw = s * 2.2, bh = s * 0.22;
+      rect(g, x - bw * 0.5, y - bh, bw, bh, { fill: PAL.woodDark, lw, r: 2 });
+      for (let i = 0; i < 5; i++) {
+        const px = x - bw * 0.4 + i * (bw * 0.8 / 4);
+        tube(g, [[px, y - bh], [px, y + s * 0.35]], s * 0.06, PAL.wood, lw * 0.8);
+      }
+      break;
+    }
     case 'soldier': soldier(g, x, y + s * 0.5, s, { ...o, t: o.t }); break;
     case 'horse': horse(g, x, y + s * 0.5, s, o); break;
     case 'treadmill': {
