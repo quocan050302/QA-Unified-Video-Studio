@@ -21,5 +21,6 @@ audio/licenses/*.json
 projects/v13_*/
 projects/test_*/
 temp_*.txt
+pnpm-lock.yaml
 
 
