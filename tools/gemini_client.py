@@ -155,7 +155,39 @@ class CircuitBreakerRegistry:
 
 
 GLOBAL_CIRCUIT_REGISTRY = CircuitBreakerRegistry()
-_GLOBAL_SEMAPHORE = threading.BoundedSemaphore(4)
+
+
+class DynamicConcurrencyLimiter:
+    """Thread-safe concurrency limiter that dynamically enforces max_concurrent_calls."""
+
+    def __init__(self, default_limit: int = 2):
+        self._lock = threading.Lock()
+        self._cond = threading.Condition(self._lock)
+        self._active = 0
+        self._limit = default_limit
+
+    def acquire(self, limit: Optional[int] = None) -> None:
+        with self._cond:
+            if limit is not None:
+                self._limit = max(1, limit)
+            while self._active >= self._limit:
+                self._cond.wait()
+            self._active += 1
+
+    def release(self) -> None:
+        with self._cond:
+            self._active = max(0, self._active - 1)
+            self._cond.notify_all()
+
+    def __enter__(self):
+        self.acquire()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.release()
+
+
+_DYNAMIC_CONCURRENCY_LIMITER = DynamicConcurrencyLimiter(default_limit=2)
 _CACHED_MODELS_LIST: Optional[List[Dict[str, Any]]] = None
 _CACHED_MODELS_TIMESTAMP: float = 0.0
 _MODELS_CACHE_TTL: float = 300.0  # 5 minutes
@@ -179,9 +211,9 @@ def classify_gemini_failure(exc: Exception) -> Tuple[FailureCategory, str, bool]
         # Else transient RPM/TPM rate limit -> Retryable and fallback-eligible
         return FailureCategory.TEMP_RATE_LIMIT, "Transient rate limit per minute reached (429 Rate Limit)", True
 
-    # 3. 503 Service Unavailable / Overload -> Retryable and fallback-eligible
-    if "503" in msg or "unavailable" in msg or "overloaded" in msg or "backend error" in msg:
-        return FailureCategory.TRANSIENT_OVERLOAD, "Gemini service temporarily overloaded (503 Overload)", True
+    # 3. 503 Service Unavailable / Overload & 504 Gateway / Deadline -> Retryable and fallback-eligible
+    if any(k in msg for k in ("503", "504", "unavailable", "overloaded", "backend error", "deadline_exceeded", "deadline expired")):
+        return FailureCategory.TRANSIENT_OVERLOAD, "Gemini service temporarily overloaded or deadline expired (503/504)", True
     
     # 4. Network timeout -> Retryable and fallback-eligible
     if any(k in msg for k in ("timeout", "timed out", "connecterror", "connection reset")):
@@ -213,7 +245,10 @@ def list_supported_director_models(force_refresh: bool = False) -> List[Dict[str
     if not force_refresh and _CACHED_MODELS_LIST is not None and (now - _CACHED_MODELS_TIMESTAMP) < _MODELS_CACHE_TTL:
         return _CACHED_MODELS_LIST
 
-    key = get_api_key_securely()
+    try:
+        key = get_api_key_securely()
+    except Exception:
+        key = None
     base_allowlist = [
         {"id": "gemini-3.8-flash", "display_name": "Gemini 3.8 Flash (Primary)", "structured_output": True, "status": "ALLOWLIST"},
         {"id": "gemini-3.7-flash", "display_name": "Gemini 3.7 Flash (Fallback Tier 1)", "structured_output": True, "status": "ALLOWLIST"},
@@ -257,7 +292,10 @@ def list_supported_director_models(force_refresh: bool = False) -> List[Dict[str
 
 def test_gemini_connection(api_key: Optional[str] = None, model: Optional[str] = None) -> Dict[str, Any]:
     """Test live Gemini API connection with probe call and model fallback."""
-    key = api_key or get_api_key_securely()
+    try:
+        key = api_key or get_api_key_securely()
+    except Exception:
+        key = api_key
     if not key:
         return {
             "ok": False,
@@ -343,6 +381,7 @@ def request_structured_with_fallback(
     schema: Union[Type[BaseModel], Dict[str, Any]],
     ctx: Optional[Dict[str, Any]] = None,
     mock_provider: Optional[Callable[[str, str, Any, int], Dict[str, Any]]] = None,
+    timeout_seconds: Optional[float] = None,
 ) -> Dict[str, Any]:
     """
     Execute structured output request with 3-strike transient failure retry and dynamic model fallback.
@@ -384,7 +423,10 @@ def request_structured_with_fallback(
     prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16]
     req_id = f"req_{int(time.time())}_{prompt_hash[:8]}"
     
-    key = get_api_key_securely()
+    try:
+        key = get_api_key_securely()
+    except Exception:
+        key = None
     if not key and mock_provider is None:
         return {
             "status": "FAILED",
@@ -407,8 +449,9 @@ def request_structured_with_fallback(
     total_attempts = 0
     total_retries = 0
 
-    # Acquire concurrency guard
-    with _GLOBAL_SEMAPHORE:
+    # Acquire dynamic concurrency guard
+    _DYNAMIC_CONCURRENCY_LIMITER.acquire(limit=max_concurrency)
+    try:
         for model_idx, model_id in enumerate(candidates):
             circuit = GLOBAL_CIRCUIT_REGISTRY.get_circuit(model_id)
             can_run, reason_circuit = circuit.can_attempt(cooldown_secs)
@@ -431,6 +474,7 @@ def request_structured_with_fallback(
 
                 try:
                     # Execute call via mock provider if provided, else real Gemini API
+                    response = None
                     if mock_provider is not None:
                         result_dict = mock_provider(model_id, prompt, schema, model_attempts)
                     else:
@@ -459,6 +503,33 @@ def request_structured_with_fallback(
                         final_plan = result_dict
 
                     circuit.record_success()
+
+                    # Usage metadata accounting: ONLY from API response metadata
+                    usage_actual = None
+                    if response is not None and hasattr(response, "usage_metadata") and response.usage_metadata:
+                        um = response.usage_metadata
+                        usage_actual = {
+                            "prompt_tokens": getattr(um, "prompt_token_count", 0),
+                            "completion_tokens": getattr(um, "candidates_token_count", 0),
+                            "total_tokens": getattr(um, "total_token_count", 0),
+                            "source": "API",
+                        }
+                    elif mock_provider is not None and isinstance(result_dict, dict) and "usage_metadata" in result_dict:
+                        um = result_dict["usage_metadata"]
+                        usage_actual = {
+                            "prompt_tokens": um.get("prompt_token_count", 0),
+                            "completion_tokens": um.get("candidates_token_count", 0),
+                            "total_tokens": um.get("total_token_count", 0),
+                            "source": "API",
+                        }
+
+                    usage_estimate = {
+                        "prompt_tokens": max(1, len(prompt) // 4),
+                        "completion_tokens": max(1, len(json.dumps(final_plan)) // 4),
+                        "total_tokens": max(2, (len(prompt) + len(json.dumps(final_plan))) // 4),
+                        "source": "HEURISTIC",
+                    }
+
                     return {
                         "status": "SUCCESS",
                         "requested_model": primary_model,
@@ -468,8 +539,10 @@ def request_structured_with_fallback(
                         "retries": total_retries,
                         "reason_codes": reason_codes + [f"{model_id}:SUCCESS"],
                         "prompt_hash": prompt_hash,
-                        "schema_version": "13.0",
-                        "usage_actual": {"prompt_tokens": len(prompt)//4, "completion_tokens": len(json.dumps(final_plan))//4, "total_tokens": (len(prompt)+len(json.dumps(final_plan)))//4},
+                        "schema_version": "14.0",
+                        "usage_actual": usage_actual,
+                        "usage_estimate": usage_estimate,
+                        "usage_source": usage_actual["source"] if usage_actual else "HEURISTIC",
                         "plan": final_plan,
                         "request_id": req_id,
                         "error": None,
@@ -491,8 +564,9 @@ def request_structured_with_fallback(
                             "retries": total_retries,
                             "reason_codes": reason_codes,
                             "prompt_hash": prompt_hash,
-                            "schema_version": "13.0",
-                            "usage_actual": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
+                            "schema_version": "14.0",
+                            "usage_actual": None,
+                            "usage_estimate": {"prompt_tokens": len(prompt) // 4, "completion_tokens": 0, "total_tokens": len(prompt) // 4, "source": "HEURISTIC"},
                             "plan": None,
                             "request_id": req_id,
                             "error": redact_secrets(safe_msg),
@@ -505,6 +579,8 @@ def request_structured_with_fallback(
                     if model_attempts >= retry_limit:
                         reason_codes.append(f"{model_id}:3_STRIKES_FALLBACK_TRIGGERED")
                         break
+    finally:
+        _DYNAMIC_CONCURRENCY_LIMITER.release()
 
     return {
         "status": "FAILED",

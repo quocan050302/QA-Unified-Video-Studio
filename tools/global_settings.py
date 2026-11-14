@@ -11,6 +11,7 @@ QA-Unified-Video-Studio V13
 
 from __future__ import annotations
 
+import abc
 import json
 import os
 import re
@@ -28,6 +29,206 @@ SERVICE_NAME = "QAUnifiedVideoStudio"
 KEY_USERNAME = "gemini_api_key"
 
 _SETTINGS_LOCK = threading.RLock()
+
+
+# ===============================================================================
+# SecretStore Protocol & Concrete Implementations (V14 Test Isolation)
+# ===============================================================================
+
+class SecretStore(abc.ABC):
+    """Abstract protocol for secure credential storage."""
+
+    @abc.abstractmethod
+    def get_key(self) -> Optional[str]:
+        """Retrieve stored secret key."""
+        pass
+
+    @abc.abstractmethod
+    def set_key(self, key: str) -> str:
+        """
+        Store secret key.
+        Returns 'DURABLE_STORED' on verified persistence, or 'STORE_FAILED'.
+        """
+        pass
+
+    @abc.abstractmethod
+    def delete_key(self) -> bool:
+        """Delete stored secret key. Returns True if deleted."""
+        pass
+
+    @abc.abstractmethod
+    def probe(self) -> bool:
+        """Check if credential is configured and accessible."""
+        pass
+
+    @abc.abstractmethod
+    def describe_source(self) -> str:
+        """Describe storage backend: 'keyring', 'in_memory', 'env', 'none'."""
+        pass
+
+
+class OSKeyringSecretStore(SecretStore):
+    """Production secret store backed by OS Credential Manager / Keyring."""
+
+    def __init__(self, service_name: str = SERVICE_NAME, username: str = KEY_USERNAME):
+        self.service_name = service_name
+        self.username = username
+
+    def _check_test_mode_guard(self) -> None:
+        """Prevent tests from accidentally touching production credentials."""
+        if os.environ.get("QA_STUDIO_TEST_MODE") == "1" and self.service_name == SERVICE_NAME:
+            raise RuntimeError(
+                "LIVE_CREDENTIAL_ACCESS_FORBIDDEN: Attempted to access production credentials in test mode! "
+                "Use InMemorySecretStore or an isolated service name in tests."
+            )
+
+    def get_key(self) -> Optional[str]:
+        self._check_test_mode_guard()
+        try:
+            import keyring
+            val = keyring.get_password(self.service_name, self.username)
+            if val and val.strip():
+                return val.strip()
+        except Exception:
+            pass
+
+        # Ephemeral env fallback (read-only external configuration, never mutated by store)
+        env_val = os.environ.get("GEMINI_API_KEY", "").strip()
+        if env_val:
+            return env_val
+        return None
+
+    def set_key(self, key: str) -> str:
+        self._check_test_mode_guard()
+        if not isinstance(key, str) or not key.strip():
+            raise ValueError("API key must be a non-empty string.")
+
+        clean_key = key.strip()
+        try:
+            import keyring
+            keyring.set_password(self.service_name, self.username, clean_key)
+            # Verify readback persistence immediately
+            probe_val = keyring.get_password(self.service_name, self.username)
+            if probe_val == clean_key:
+                return "DURABLE_STORED"
+            return "STORE_FAILED"
+        except Exception as exc:
+            print(f"[WARN] OS keyring store failed: {exc}.", file=sys.stderr)
+            # V14 P0-A requirement: DO NOT silently write key into os.environ while claiming success!
+            return "STORE_FAILED"
+
+    def delete_key(self) -> bool:
+        self._check_test_mode_guard()
+        deleted = False
+        try:
+            import keyring
+            try:
+                keyring.delete_password(self.service_name, self.username)
+                deleted = True
+            except Exception:
+                pass
+        except Exception:
+            pass
+
+        if "GEMINI_API_KEY" in os.environ:
+            del os.environ["GEMINI_API_KEY"]
+            deleted = True
+        return deleted
+
+    def probe(self) -> bool:
+        k = self.get_key()
+        return bool(k and len(k) >= 10)
+
+    def describe_source(self) -> str:
+        self._check_test_mode_guard()
+        try:
+            import keyring
+            val = keyring.get_password(self.service_name, self.username)
+            if val and val.strip():
+                return "keyring"
+        except Exception:
+            pass
+        if os.environ.get("GEMINI_API_KEY", "").strip():
+            return "env"
+        return "none"
+
+
+class InMemorySecretStore(SecretStore):
+    """Completely isolated in-memory secret store for testing."""
+
+    def __init__(self, initial_key: Optional[str] = None):
+        self._key: Optional[str] = initial_key.strip() if initial_key else None
+
+    def get_key(self) -> Optional[str]:
+        return self._key
+
+    def set_key(self, key: str) -> str:
+        if not isinstance(key, str) or not key.strip():
+            raise ValueError("API key must be a non-empty string.")
+        self._key = key.strip()
+        return "DURABLE_STORED"
+
+    def delete_key(self) -> bool:
+        if self._key is not None:
+            self._key = None
+            return True
+        return False
+
+    def probe(self) -> bool:
+        return bool(self._key and len(self._key) >= 10)
+
+    def describe_source(self) -> str:
+        return "in_memory" if self._key else "none"
+
+
+class TestKeyringSecretStore(OSKeyringSecretStore):
+    """Temporary OS keyring secret store with unique namespaced service name for integration tests."""
+
+    def __init__(self, test_service_name: str, test_username: str = "test_key"):
+        if test_service_name == SERVICE_NAME:
+            raise ValueError("Test service name cannot equal production SERVICE_NAME!")
+        super().__init__(service_name=test_service_name, username=test_username)
+
+    def _check_test_mode_guard(self) -> None:
+        # Isolated test service name is permitted in test mode
+        pass
+
+
+# Active secret store instance (delegated by module functions)
+_ACTIVE_SECRET_STORE: SecretStore = OSKeyringSecretStore()
+_STORE_LOCK = threading.RLock()
+
+
+def get_active_secret_store() -> SecretStore:
+    """Retrieve currently active SecretStore backend."""
+    with _STORE_LOCK:
+        return _ACTIVE_SECRET_STORE
+
+
+def set_active_secret_store(store: SecretStore) -> None:
+    """Inject SecretStore backend (used for test isolation)."""
+    with _STORE_LOCK:
+        global _ACTIVE_SECRET_STORE
+        _ACTIVE_SECRET_STORE = store
+
+
+class isolated_secret_store:
+    """Context manager to run code within an isolated SecretStore backend."""
+
+    def __init__(self, store: Optional[SecretStore] = None):
+        self.new_store = store or InMemorySecretStore()
+        self.old_store = None
+
+    def __enter__(self) -> SecretStore:
+        with _STORE_LOCK:
+            self.old_store = get_active_secret_store()
+            set_active_secret_store(self.new_store)
+            return self.new_store
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        with _STORE_LOCK:
+            if self.old_store is not None:
+                set_active_secret_store(self.old_store)
 
 SUPPORTED_MODELS = [
     "gemini-3.8-flash",
@@ -224,60 +425,31 @@ def save_global_settings(config: Dict[str, Any]) -> bool:
 
 
 def store_api_key_securely(key: str) -> bool:
-    """Store Gemini API key in OS credential manager (Keyring). Never write to disk."""
-    if not isinstance(key, str) or not key.strip():
-        raise ValueError("API key must be a non-empty string.")
-    
-    clean_key = key.strip()
-    try:
-        import keyring
-        keyring.set_password(SERVICE_NAME, KEY_USERNAME, clean_key)
-        return True
-    except Exception as exc:
-        # Fallback to in-process env if keyring fails
-        print(f"[WARN] OS keyring store failed: {exc}. Storing in process environment.", file=sys.stderr)
-        os.environ["GEMINI_API_KEY"] = clean_key
-        return True
+    """Store Gemini API key in active SecretStore. Returns True ONLY on durable storage."""
+    store = get_active_secret_store()
+    res = store.set_key(key)
+    return res == "DURABLE_STORED"
+
+
+def store_api_key_with_status(key: str) -> Dict[str, Any]:
+    """Store Gemini API key, returning status code and backend description."""
+    store = get_active_secret_store()
+    status = store.set_key(key)
+    return {
+        "status": status,
+        "durable": (status == "DURABLE_STORED"),
+        "backend": store.describe_source(),
+    }
 
 
 def get_api_key_securely() -> Optional[str]:
-    """
-    Retrieve Gemini API key with precedence:
-    1. OS Credential Manager (Keyring)
-    2. GEMINI_API_KEY environment variable
-    """
-    try:
-        import keyring
-        val = keyring.get_password(SERVICE_NAME, KEY_USERNAME)
-        if val and val.strip():
-            return val.strip()
-    except Exception:
-        pass
-    
-    env_val = os.environ.get("GEMINI_API_KEY", "").strip()
-    if env_val:
-        return env_val
-    return None
+    """Retrieve Gemini API key from active SecretStore."""
+    return get_active_secret_store().get_key()
 
 
 def delete_api_key_securely() -> bool:
-    """Delete Gemini API key from OS credential manager."""
-    deleted = False
-    try:
-        import keyring
-        try:
-            keyring.delete_password(SERVICE_NAME, KEY_USERNAME)
-            deleted = True
-        except Exception:
-            # Not found or error in keyring
-            pass
-    except Exception:
-        pass
-    
-    if "GEMINI_API_KEY" in os.environ:
-        del os.environ["GEMINI_API_KEY"]
-        deleted = True
-    return deleted
+    """Delete Gemini API key from active SecretStore."""
+    return get_active_secret_store().delete_key()
 
 
 def get_global_settings_public() -> Dict[str, Any]:
@@ -286,8 +458,9 @@ def get_global_settings_public() -> Dict[str, Any]:
     NEVER returns the raw API key.
     """
     cfg = load_global_settings()
-    key = get_api_key_securely()
-    has_key = bool(key and len(key) >= 10)
+    store = get_active_secret_store()
+    has_key = store.probe()
+    key_source = store.describe_source()
     
     # Count real SFX assets and licenses
     sfx_dir = ROOT_DIR / "audio" / "real_sfx"
@@ -298,7 +471,7 @@ def get_global_settings_public() -> Dict[str, Any]:
     return {
         "has_key": has_key,
         "key_configured": has_key,
-        "key_source": "keyring" if key and key != os.environ.get("GEMINI_API_KEY") else ("env" if has_key else "none"),
+        "key_source": key_source,
         "provider": cfg.get("provider", "gemini"),
         "primary_model": cfg.get("primary_model", "gemini-3.8-flash"),
         "fallback_models": cfg.get("fallback_models", ["gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash"]),

@@ -1012,12 +1012,14 @@ class Handler(BaseHTTPRequestHandler):
                 save_global_settings(self.data())
                 return self.send(200, {'saved': True})
             if parts == ['api', 'global-settings', 'key']:
-                from tools.global_settings import store_api_key_securely
+                from tools.global_settings import store_api_key_with_status
                 data = self.data()
                 key = data.get('key', '')
                 if not key: raise ValueError('Key is required')
-                store_api_key_securely(key)
-                return self.send(200, {'saved': True})
+                res = store_api_key_with_status(key)
+                if not res.get('durable'):
+                    return self.error(500, f'Không thể lưu khóa vào OS credential store ({res.get("status")})')
+                return self.send(200, {'saved': True, 'backend': res.get('backend')})
             if parts == ['api', 'global-settings', 'key', 'delete']:
                 from tools.global_settings import delete_api_key_securely
                 deleted = delete_api_key_securely()

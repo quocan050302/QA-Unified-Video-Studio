@@ -1,0 +1,30 @@
+{
+  "suite": "V14_HISTORICAL_BACKTEST",
+  "generated_at": 1794628553.9791148,
+  "n41_replay": {
+    "replayed_projects": [
+      {
+        "project": "squire-mau",
+        "shots_count": 24
+      },
+      {
+        "project": "selfimprove-mau",
+        "shots_count": 30
+      },
+      {
+        "project": "why_knights_could_actually",
+        "has_render": true,
+        "size_bytes": 4291513
+      },
+      {
+        "project": "why_knights_could_actually_315",
+        "has_render": true,
+        "size_bytes": 92687726
+      }
+    ]
+  },
+  "n42_variance": {
+    "unexplained_variance_count": 0,
+    "regression_status": "CLEAN"
+  }
+}

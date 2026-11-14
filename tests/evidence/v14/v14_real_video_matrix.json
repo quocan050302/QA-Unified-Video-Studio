@@ -1,0 +1,72 @@
+{
+  "suite": "V14_REAL_VIDEO_MATRIX",
+  "generated_at": 1794628553.9781148,
+  "videos": [
+    {
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_squire_16x9\\build\\preview.mp4",
+      "size_bytes": 9865741,
+      "width": 1920,
+      "height": 1080,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "render_wall_sec": 39.26,
+      "duration_sec": 30,
+      "gate_id": "N32",
+      "title": "Squire Battle True 1080p 16:9 MP4 (1920x1080) with Voice",
+      "sha256": "2b74f425551208346abc9c6c450aef3b16257dec9501e56cd5751844ea6f9e3d"
+    },
+    {
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_squire_9x16\\build\\preview.mp4",
+      "size_bytes": 9144849,
+      "width": 1080,
+      "height": 1920,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "render_wall_sec": 30.73,
+      "duration_sec": 30,
+      "gate_id": "N33",
+      "title": "Squire Battle 1080x1920 9:16 Shorts MP4 with Voice & Safe Margins",
+      "sha256": "4f97242da02393ce0713c028ce3ca65528e22adf1a739459b7caed0383c983d8"
+    },
+    {
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_dem_16x9\\build\\preview.mp4",
+      "size_bytes": 3014432,
+      "width": 1920,
+      "height": 1080,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "render_wall_sec": 32.72,
+      "duration_sec": 30,
+      "gate_id": "N34",
+      "title": "DEM Self-Improvement 1080p 16:9 MP4 (Music/SFX, No Narration)",
+      "sha256": "0245034200642097fe892cf5707ffc0f65ac03a6e20d435e0a2ecf36c8f8a447"
+    },
+    {
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_dem_9x16\\build\\preview.mp4",
+      "size_bytes": 3067084,
+      "width": 1080,
+      "height": 1920,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "render_wall_sec": 13.77,
+      "duration_sec": 30,
+      "gate_id": "N35",
+      "title": "DEM Self-Improvement 1080x1920 9:16 Shorts MP4 (Mobile Safe Zone)",
+      "sha256": "ce167e60dd80fddf02d1dedf3667d5d53b5aa77596885cc3311b415d1b90f9e8"
+    },
+    {
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_roman_film\\build\\preview.mp4",
+      "size_bytes": 22296804,
+      "width": 1920,
+      "height": 1080,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "render_wall_sec": 52.74,
+      "duration_sec": 70.0,
+      "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v14\\v14_roman_film_contact_sheet.png",
+      "gate_id": "N36",
+      "title": "Squire Roman Tactical Narrative 60-90s Film with Spoken Voice & Contact Sheet",
+      "sha256": "a22645ff2573560ed886ec5a1107553c9dce5dda68b0385654dc30c79766e4ed"
+    }
+  ]
+}

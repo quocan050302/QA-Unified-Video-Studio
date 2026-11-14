@@ -1,13 +1,13 @@
 {
  "final_media_60_90s": {
-  "final_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\v12_20261114_084203\\l15_battle_60_90s\\out\\Why Breaking The Roman Front Line Was A Death Trap.mp4",
+  "final_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\v12_20261114_105234\\l15_battle_60_90s\\out\\Why Breaking The Roman Front Line Was A Death Trap.mp4",
   "final_duration": 75.458333,
   "video_codec": "h264",
   "audio_codec": "aac",
   "resolution": "1920x1080",
   "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v12\\contact_sheet_60_90s.jpg",
-  "render_time_sec": 87.32,
-  "mix_time_sec": 9.692
+  "render_time_sec": 101.387,
+  "mix_time_sec": 11.557
  },
  "opening_first_30s": {
   "mean_divergence": 0.6188,
@@ -23,14 +23,14 @@
    0.1305,
    0.987,
    0.0,
-   0.9888
+   0.989
   ],
   "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v12\\contact_sheet_before_after_30s.jpg"
  },
  "shorts_9x16": {
   "aspect": "9:16",
   "preview_exists": true,
-  "preview_size_bytes": 5000154,
+  "preview_size_bytes": 4981301,
   "safe_margins_configured": true,
   "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v12\\contact_sheet_shorts_9x16.jpg"
  }

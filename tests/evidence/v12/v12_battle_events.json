@@ -5,8 +5,8 @@
    "event_id": "evt_001",
    "owner_shot_id": "s001",
    "event_type": "ADVANCE",
-   "actor_side": "roman",
-   "target_side": "opponent",
+   "actor_side": "opponent",
+   "target_side": "roman",
    "polarity": "AFFIRMED",
    "source_span": "The warlord looks at the thin red line of Roman shields and orders the full charge across the open field.",
    "is_negated": false,
@@ -16,8 +16,8 @@
    "global_start": 0.0,
    "global_end": 5.0,
    "note": "Units advance and make frontline contact",
-   "actor": "roman",
-   "target": "opponent"
+   "actor": "opponent",
+   "target": "roman"
   },
   {
    "event_id": "evt_002",
@@ -41,8 +41,8 @@
    "event_id": "evt_003",
    "owner_shot_id": "s002",
    "event_type": "ADVANCE",
-   "actor_side": "roman",
-   "target_side": "opponent",
+   "actor_side": "opponent",
+   "target_side": "roman",
    "polarity": "AFFIRMED",
    "source_span": "Before the lines collide, a deadly volley of heavy javelins arches through the sky, crushing enemy ranks.",
    "is_negated": false,
@@ -52,8 +52,8 @@
    "global_start": 5.0,
    "global_end": 10.0,
    "note": "Units advance and make frontline contact",
-   "actor": "roman",
-   "target": "opponent"
+   "actor": "opponent",
+   "target": "roman"
   },
   {
    "event_id": "evt_004",
@@ -79,7 +79,7 @@
    "event_type": "BREAKTHROUGH",
    "actor_side": "opponent",
    "target_side": "roman",
-   "polarity": "AFFIRMED",
+   "polarity": "PERCEIVED",
    "source_span": "They thought they had broken the line, but the tired hastati calmly rotate back through the gaps.",
    "is_negated": false,
    "is_hypothetical": false,
@@ -87,7 +87,7 @@
    "local_t": 2.0,
    "global_start": 25.0,
    "global_end": 30.0,
-   "note": "Enemy creates a breach in the Roman frontline",
+   "note": "Perceived breakthrough: Enemy mistakenly believed the line was broken",
    "actor": "opponent",
    "target": "roman"
   },
@@ -169,7 +169,7 @@
    "event_type": "BREAKTHROUGH",
    "actor_side": "opponent",
    "target_side": "roman",
-   "polarity": "AFFIRMED",
+   "polarity": "PERCEIVED",
    "source_span": "What seemed like a breakthrough was precisely what the Roman commanders planned from the very start.",
    "is_negated": false,
    "is_hypothetical": false,
@@ -177,7 +177,7 @@
    "local_t": 2.0,
    "global_start": 50.0,
    "global_end": 55.0,
-   "note": "Enemy creates a breach in the Roman frontline",
+   "note": "Perceived breakthrough: Enemy mistakenly believed the line was broken",
    "actor": "opponent",
    "target": "roman"
   }

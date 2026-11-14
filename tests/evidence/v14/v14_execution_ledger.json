@@ -1,0 +1,964 @@
+{
+  "suite": "V14_GEMINI_DIRECTOR_FULL_MATRIX",
+  "verdict": "V14_PRODUCTION_CANDIDATE_VERIFIED",
+  "run_timestamp": 1794628553.9337206,
+  "total_elapsed_sec": 355.64,
+  "run_start_sha": "0d97139b718deb0e0c704d3b07e650d44d1ac0ec",
+  "branch": "fix/Image-Shot",
+  "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "mode": "full",
+  "telemetry": {
+    "initial": {
+      "free_disk_gb": 54.09,
+      "total_disk_gb": 144.02,
+      "available_ram_mb": 11467.9,
+      "total_ram_mb": 32509.4,
+      "ram_percent": 64.7,
+      "cpu_count": 12
+    },
+    "final": {
+      "free_disk_gb": 53.8,
+      "total_disk_gb": 144.02,
+      "available_ram_mb": 12163.2,
+      "total_ram_mb": 32509.4,
+      "ram_percent": 62.6,
+      "cpu_count": 12
+    },
+    "min_disk_free_gb": 53.8,
+    "peak_ram_percent": 64.7
+  },
+  "gates_summary": {
+    "total": 46,
+    "passed": 46,
+    "failed": 0,
+    "skipped": 0
+  },
+  "gates": [
+    {
+      "gate_id": "N01",
+      "title": "Branch Correct & Production Remote Unchanged Guard",
+      "category": "BRANCH",
+      "status": "PASS",
+      "started_at": 1794628198.3472018,
+      "finished_at": 1794628199.1324055,
+      "wall_sec": 0.785,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "current_branch": "fix/Image-Shot",
+        "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N02",
+      "title": "Real Credential Untouched Guard & Test Mode Lockdown",
+      "category": "SECURITY",
+      "status": "PASS",
+      "started_at": 1794628199.1324055,
+      "finished_at": 1794628199.3194208,
+      "wall_sec": 0.187,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "details": {
+        "live_key_present": true,
+        "live_key_length": 53,
+        "write_blocked": true,
+        "read_blocked": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N03",
+      "title": "Isolated Test Key Store In-Memory & Zero Keyring Touch",
+      "category": "SECURITY",
+      "status": "PASS",
+      "started_at": 1794628199.3194208,
+      "finished_at": 1794628199.3194208,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 4,
+      "assertions_total": 4,
+      "details": {
+        "backend": "InMemorySecretStore",
+        "test_key_stored_and_deleted": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N04",
+      "title": "Durable OS Key Save Readback via Isolated Test Service",
+      "category": "SECURITY",
+      "status": "PASS",
+      "started_at": 1794628199.3194208,
+      "finished_at": 1794628199.329254,
+      "wall_sec": 0.01,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "details": {
+        "test_service": "QAStudio_Test_Service_N04",
+        "persistence_verified": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N05",
+      "title": "Storage Failure Negative Case & No Silent Env Fallback",
+      "category": "SECURITY",
+      "status": "PASS",
+      "started_at": 1794628199.329254,
+      "finished_at": 1794628199.329254,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "fail_status": "STORE_FAILED",
+        "env_unaltered": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N06",
+      "title": "API Public Config Redaction & Log Masking",
+      "category": "SECURITY",
+      "status": "PASS",
+      "started_at": 1794628199.329254,
+      "finished_at": 1794628199.329254,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "redaction_tested": true,
+        "public_keys": [
+          "has_key",
+          "key_configured",
+          "key_source",
+          "provider",
+          "primary_model",
+          "fallback_models",
+          "fallback_enabled",
+          "retry_limit",
+          "cooldown_secs",
+          "max_concurrent_calls",
+          "ai_director_enabled",
+          "budgets",
+          "sfx_sources_status"
+        ]
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N07",
+      "title": "Gemini Connection Probe Respects Chosen Model & Single-Attempt Timeout",
+      "category": "CIRCUIT",
+      "status": "PASS",
+      "started_at": 1794628199.329254,
+      "finished_at": 1794628199.9187331,
+      "wall_sec": 0.589,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "absent_status": "NEEDS_SETUP",
+        "probe_duration_sec": 0.59,
+        "invalid_status": "AUTH_INVALID"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N08",
+      "title": "Live Model Discovery Statuses & Allowlist Separation",
+      "category": "AI_CORE",
+      "status": "PASS",
+      "started_at": 1794628199.9187331,
+      "finished_at": 1794628199.9187331,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "details": {
+        "models": [
+          "gemini-3.8-flash",
+          "gemini-3.7-flash",
+          "gemini-3.6-flash",
+          "gemini-3.5-flash"
+        ],
+        "cached_lookup_dur_sec": 0.0
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N09",
+      "title": "Typed Failure Classification (429 Temp vs Quota Hard, 503, 401/403, 400)",
+      "category": "CIRCUIT",
+      "status": "PASS",
+      "started_at": 1794628199.9187331,
+      "finished_at": 1794628199.9187331,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 5,
+      "assertions_total": 5,
+      "details": {
+        "quota_hard": "DAILY_OR_SPEND_QUOTA_EXHAUSTED",
+        "rpm_transient": "TEMP_RATE_LIMIT",
+        "503_transient": "TRANSIENT_OVERLOAD",
+        "auth_terminal": "AUTH_INVALID",
+        "bad_req_terminal": "SCHEMA_INVALID"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N10",
+      "title": "3-Strike Model Fallback, Circuit Cooldown & Half-Open Recovery",
+      "category": "CIRCUIT",
+      "status": "PASS",
+      "started_at": 1794628199.9187331,
+      "finished_at": 1794628200.8885314,
+      "wall_sec": 0.97,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 5,
+      "assertions_total": 5,
+      "details": {
+        "calls": {
+          "gemini-3.8-flash": 3,
+          "gemini-3.7-flash": 1
+        },
+        "primary_tripped_and_recovered": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N11",
+      "title": "Configured Max Concurrency Enforced Under 4+ Concurrent Workers",
+      "category": "CONCURRENCY",
+      "status": "PASS",
+      "started_at": 1794628200.8885314,
+      "finished_at": 1794628201.04021,
+      "wall_sec": 0.152,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "configured_limit": 2,
+        "max_observed": 2
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N12",
+      "title": "Request Cancellation & Strict Global Deadline",
+      "category": "CIRCUIT",
+      "status": "PASS",
+      "started_at": 1794628201.04021,
+      "finished_at": 1794628201.3418734,
+      "wall_sec": 0.302,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "duration_sec": 0.301,
+        "status": "SUCCESS"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N13",
+      "title": "Real Usage Metadata vs Estimated Tokens Labeled Correctly",
+      "category": "AI_CORE",
+      "status": "PASS",
+      "started_at": 1794628201.3418734,
+      "finished_at": 1794628201.3428805,
+      "wall_sec": 0.001,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "case1_source": "API",
+        "case2_source": "HEURISTIC"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N14",
+      "title": "Structured Schema Validation & Negative Injection Fail-Closed",
+      "category": "SCHEMA",
+      "status": "PASS",
+      "started_at": 1794628201.3428805,
+      "finished_at": 1794628201.3428805,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "details": {
+        "positive_valid": true,
+        "bad_polarity_rejected": true,
+        "bad_actor_rejected": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N15",
+      "title": "Story Grounding: Warlord is Opponent & Perceived != Actual Breakthrough",
+      "category": "GROUNDING",
+      "status": "PASS",
+      "started_at": 1794628201.3428805,
+      "finished_at": 1794628201.3428805,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "details": {
+        "s001_actor": "opponent",
+        "s002_polarity": "PERCEIVED",
+        "s003_actor": "roman"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N16",
+      "title": "Negation & Hypothetical Polarity Tagging & Alignment Truth",
+      "category": "GROUNDING",
+      "status": "PASS",
+      "started_at": 1794628201.3428805,
+      "finished_at": 1794628201.3428805,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "negated_polarity": "NEGATED",
+        "hypothetical_polarity": "HYPOTHETICAL"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N17",
+      "title": "Squire Compiled CHARGE Yields Kinematics Path & Sampled Motion",
+      "category": "COMPILER",
+      "status": "PASS",
+      "started_at": 1794628201.3428805,
+      "finished_at": 1794628201.3594677,
+      "wall_sec": 0.017,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "template": "top",
+        "has_kinematics_path": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N18",
+      "title": "Squire JAVELIN / Shield IMPACT Produces Timed FX & Motion",
+      "category": "COMPILER",
+      "status": "PASS",
+      "started_at": 1794628201.3594677,
+      "finished_at": 1794628201.3634481,
+      "wall_sec": 0.004,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "fx_kinds": [
+          "javelins"
+        ]
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N19",
+      "title": "Gap & Relief Reserve Formation Paths are Causal and Continuous",
+      "category": "PHYSICS",
+      "status": "PASS",
+      "started_at": 1794628201.3634481,
+      "finished_at": 1794628201.3677058,
+      "wall_sec": 0.004,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "continuity_verified": true,
+        "units_checked": 3
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N20",
+      "title": "Flank / Encircle / Counterattack Paths Animate Without Teleportation",
+      "category": "PHYSICS",
+      "status": "PASS",
+      "started_at": 1794628201.3677058,
+      "finished_at": 1794628201.3677058,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "flank_y_start": 0.22,
+        "flank_y_end": 0.38,
+        "boundary_diff": 0.0
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N21",
+      "title": "DEM Director Uses Silent Self-Improvement Renderer & Action Motion (Zero Roman Units)",
+      "category": "PACK_SAFETY",
+      "status": "PASS",
+      "started_at": 1794628201.3677058,
+      "finished_at": 1794628201.391342,
+      "wall_sec": 0.024,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "dem_pack_isolated": true,
+        "shots_compiled": 2
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N22",
+      "title": "Manual Shot Byte-for-Byte Protection (visual_source == 'manual')",
+      "category": "SAFETY",
+      "status": "PASS",
+      "started_at": 1794628201.391342,
+      "finished_at": 1794628201.4181583,
+      "wall_sec": 0.027,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "manual_shot_untouched": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N23",
+      "title": "Idempotent Plan / Apply & Invalidation Truth",
+      "category": "SAFETY",
+      "status": "PASS",
+      "started_at": 1794628201.4181583,
+      "finished_at": 1794628201.463549,
+      "wall_sec": 0.045,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "vhash1": "b581e90c1c6e1810d7b19b3ceed6a66cf4434eb1a433178d9701b8aeb901df5c",
+        "vhash2": "b581e90c1c6e1810d7b19b3ceed6a66cf4434eb1a433178d9701b8aeb901df5c",
+        "idempotent": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N24",
+      "title": "Normal Automatic Flow from Initial Story to Director Plan to Compiled Visuals",
+      "category": "PIPELINE",
+      "status": "PASS",
+      "started_at": 1794628201.463549,
+      "finished_at": 1794628201.4855335,
+      "wall_sec": 0.022,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "flow_successful": true,
+        "generation_source": "offline_grounded_rule_fallback"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N25",
+      "title": "Injected Model Unavailable -> Offline Fallback Clearly Named (No Fake GEMINI_LIVE)",
+      "category": "TRUTH",
+      "status": "PASS",
+      "started_at": 1794628201.4855335,
+      "finished_at": 1794628201.4952636,
+      "wall_sec": 0.01,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "reported_source": "offline_grounded_rule_fallback"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N26",
+      "title": "First 30s Scene Grammar (0-3 Action, 20-30 Reveal Proxies, Not Retention %)",
+      "category": "VISUAL_QA",
+      "status": "PASS",
+      "started_at": 1794628201.4952636,
+      "finished_at": 1794628201.4952636,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "early_frame_count": 3,
+        "twist_frame_count": 2
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N27",
+      "title": "Subject Motion Rejects Frozen/Black & Missing Pillow Fails-Closed",
+      "category": "VISUAL_QA",
+      "status": "PASS",
+      "started_at": 1794628201.4952636,
+      "finished_at": 1794628201.4952636,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "empty_motion_false": true,
+        "black_motion_false": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N28",
+      "title": "Secure Real SFX Ingestion, Path Traversal Rejection & License Audit",
+      "category": "AUDIO",
+      "status": "PASS",
+      "started_at": 1794628201.4952636,
+      "finished_at": 1794628201.496313,
+      "wall_sec": 0.001,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "path_traversal_rejected": true,
+        "audit_status": null
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N29",
+      "title": "Real-Procedural Lookup Truthful Tagging & Manual SFX Preserved",
+      "category": "AUDIO",
+      "status": "PASS",
+      "started_at": 1794628201.496313,
+      "finished_at": 1794628201.4968338,
+      "wall_sec": 0.001,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "shield_bash_source": "PROCEDURAL",
+        "nonexistent_handled": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N30",
+      "title": "Audio Mix Decibel Truth, LUFS Compliance & Clip Guard",
+      "category": "AUDIO",
+      "status": "PASS",
+      "started_at": 1794628201.4968338,
+      "finished_at": 1794628201.4968338,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "target_lufs": -14.0,
+        "max_true_peak_dbtp": -1.0
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N31",
+      "title": "Local HTTP Loopback Endpoints (Settings GET/POST & Diagnostic Probe)",
+      "category": "UI_E2E",
+      "status": "PASS",
+      "started_at": 1794628201.4968338,
+      "finished_at": 1794628201.6314251,
+      "wall_sec": 0.135,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "http_port": 53488,
+        "get_settings_ok": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N38",
+      "title": "Multi-Renderer Concurrency Stress & Overlapping Wall-Time",
+      "category": "STRESS",
+      "status": "PASS",
+      "started_at": 1794628201.7526069,
+      "finished_at": 1794628243.9999645,
+      "wall_sec": 42.247,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "concurrent_duration_sec": 42.25,
+        "worker_a": {
+          "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_squire_16x9\\build\\preview.mp4",
+          "size_bytes": 9865741,
+          "width": 1920,
+          "height": 1080,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "render_wall_sec": 39.26,
+          "duration_sec": 30
+        },
+        "worker_b": {
+          "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_dem_16x9\\build\\preview.mp4",
+          "size_bytes": 3014432,
+          "width": 1920,
+          "height": 1080,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "render_wall_sec": 32.72,
+          "duration_sec": 30
+        }
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N32",
+      "title": "Squire Battle True 1080p 16:9 MP4 (1920x1080) with Voice",
+      "category": "MEDIA",
+      "status": "PASS",
+      "started_at": 0.0,
+      "finished_at": 0.0,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_squire_16x9\\build\\preview.mp4",
+        "size_bytes": 9865741,
+        "width": 1920,
+        "height": 1080,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "render_wall_sec": 39.26,
+        "duration_sec": 30
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N33",
+      "title": "Squire Battle 1080x1920 9:16 Shorts MP4 with Voice & Safe Margins",
+      "category": "MEDIA",
+      "status": "PASS",
+      "started_at": 0.0,
+      "finished_at": 0.0,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_squire_9x16\\build\\preview.mp4",
+        "size_bytes": 9144849,
+        "width": 1080,
+        "height": 1920,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "render_wall_sec": 30.73,
+        "duration_sec": 30
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N34",
+      "title": "DEM Self-Improvement 1080p 16:9 MP4 (Music/SFX, No Narration)",
+      "category": "MEDIA",
+      "status": "PASS",
+      "started_at": 0.0,
+      "finished_at": 0.0,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_dem_16x9\\build\\preview.mp4",
+        "size_bytes": 3014432,
+        "width": 1920,
+        "height": 1080,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "render_wall_sec": 32.72,
+        "duration_sec": 30
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N35",
+      "title": "DEM Self-Improvement 1080x1920 9:16 Shorts MP4 (Mobile Safe Zone)",
+      "category": "MEDIA",
+      "status": "PASS",
+      "started_at": 0.0,
+      "finished_at": 0.0,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_dem_9x16\\build\\preview.mp4",
+        "size_bytes": 3067084,
+        "width": 1080,
+        "height": 1920,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "render_wall_sec": 13.77,
+        "duration_sec": 30
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N36",
+      "title": "Squire Roman Tactical Narrative 60-90s Film with Spoken Voice & Contact Sheet",
+      "category": "MEDIA",
+      "status": "PASS",
+      "started_at": 0.0,
+      "finished_at": 0.0,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_roman_film\\build\\preview.mp4",
+        "size_bytes": 22296804,
+        "width": 1920,
+        "height": 1080,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "render_wall_sec": 52.74,
+        "duration_sec": 70.0,
+        "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v14\\v14_roman_film_contact_sheet.png"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N37",
+      "title": "Image/Shot Actor Trajectory Proof & State Cut Consistency",
+      "category": "VISUAL_QA",
+      "status": "PASS",
+      "started_at": 1794628353.760441,
+      "finished_at": 1794628353.760441,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "cuts_analyzed": 7,
+        "contact_sheet_verified": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N39",
+      "title": "Resource Breach Kill/Cancel & Clean Process Tree Termination",
+      "category": "STRESS",
+      "status": "PASS",
+      "started_at": 1794628353.760441,
+      "finished_at": 1794628353.775329,
+      "wall_sec": 0.015,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "pid_killed": 25116,
+        "clean_exit": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N40",
+      "title": "Full Legacy Regression Suites Execution (V12 Battle & V10 Opening)",
+      "category": "REGRESSION",
+      "status": "PASS",
+      "started_at": 1794628353.775329,
+      "finished_at": 1794628552.9962022,
+      "wall_sec": 199.221,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "v12_battle_returncode": 0,
+        "v12_verified": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N41",
+      "title": "Historical Replay & Fixture Backtest from Preserved Copies",
+      "category": "BACKTEST",
+      "status": "PASS",
+      "started_at": 1794628552.9962022,
+      "finished_at": 1794628552.9984949,
+      "wall_sec": 0.002,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "replayed_projects": [
+          {
+            "project": "squire-mau",
+            "shots_count": 24
+          },
+          {
+            "project": "selfimprove-mau",
+            "shots_count": 30
+          },
+          {
+            "project": "why_knights_could_actually",
+            "has_render": true,
+            "size_bytes": 4291513
+          },
+          {
+            "project": "why_knights_could_actually_315",
+            "has_render": true,
+            "size_bytes": 92687726
+          }
+        ]
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N42",
+      "title": "Backtest Baseline Comparison & Variance Classification",
+      "category": "BACKTEST",
+      "status": "PASS",
+      "started_at": 1794628552.9984949,
+      "finished_at": 1794628552.9984949,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "details": {
+        "unexplained_variance_count": 0,
+        "regression_status": "CLEAN"
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N43",
+      "title": "Negative Injection Matrix (Tamper, Bad Key, Invalid Schema Fail-Closed)",
+      "category": "NEGATIVE",
+      "status": "PASS",
+      "started_at": 1794628552.9984949,
+      "finished_at": 1794628552.9984949,
+      "wall_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "details": {
+        "all_negatives_rejected": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N44",
+      "title": "Truth Audit & Zero Secret Leak Scanner Across Artifacts",
+      "category": "AUDIT",
+      "status": "PASS",
+      "started_at": 1794628552.9984949,
+      "finished_at": 1794628553.0422802,
+      "wall_sec": 0.044,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 8,
+      "assertions_total": 8,
+      "details": {
+        "scanned_gates_count": 43,
+        "secrets_found": 0
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N45",
+      "title": "Pre-Push Git Branch, Diff Scope & Safety Preflight",
+      "category": "RELEASE",
+      "status": "PASS",
+      "started_at": 1794628553.0422802,
+      "finished_at": 1794628553.119956,
+      "wall_sec": 0.078,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "branch": "fix/Image-Shot",
+        "ready_for_commit": true
+      },
+      "error_message": null
+    },
+    {
+      "gate_id": "N46",
+      "title": "Post-Push Remote Attestation Preflight & Production Isolation",
+      "category": "RELEASE",
+      "status": "PASS",
+      "started_at": 1794628553.119956,
+      "finished_at": 1794628553.9337206,
+      "wall_sec": 0.814,
+      "command": "",
+      "exit_code": 0,
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "details": {
+        "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+        "work_remote_ref": "0d97139b718deb0e0c704d3b07e650d44d1ac0ec"
+      },
+      "error_message": null
+    }
+  ]
+}

@@ -116,10 +116,14 @@ export function blockArrow(g, x0, y0, x1, y1, o = {}) {
 }
 // mui ten cong (duong cong + dau tam giac), kieu ban do giay
 export function curveArrow(g, pts, o = {}) {
-  const { lw = 14, p = 1, color = PAL.red, outline = true } = o; if (p <= 0 || pts.length < 2) return;
+  const { lw = 14, p = 1, color = PAL.red, outline = true } = o;
+  if (!Number.isFinite(p) || p <= 0 || !Array.isArray(pts) || pts.length < 2) return;
   const n = pts.length - 1, f = clamp(p) * n, i = Math.min(n - 1, Math.floor(f)), k = f - i;
+  if (!pts[i] || !pts[i + 1]) return;
   const sub = pts.slice(0, i + 1).concat([[lerp(pts[i][0], pts[i + 1][0], k), lerp(pts[i][1], pts[i + 1][1], k)]]);
-  const tip = sub[sub.length - 1], prev = sub[sub.length - 2], ang = Math.atan2(tip[1] - prev[1], tip[0] - prev[0]);
+  const tip = sub[sub.length - 1], prev = sub[sub.length - 2];
+  if (!tip || !prev) return;
+  const ang = Math.atan2(tip[1] - prev[1], tip[0] - prev[0]);
   if (outline) tube(g, sub, lw, color, Math.max(3, lw * 0.3)); else line(g, sub, { lw, ink: color });
   g.save(); g.translate(tip[0], tip[1]); g.rotate(ang);
   polyS(g, [[lw * 1.6, 0], [-lw * 0.6, -lw * 1.6], [-lw * 0.6, lw * 1.6]], { fill: color, lw: outline ? Math.max(3, lw * 0.3) : 0 });

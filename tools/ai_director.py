@@ -143,6 +143,7 @@ def extract_grounded_story_facts(shots: List[Dict[str, Any]], script_text: str) 
         start_char = text_clean.find(quote.lower()[:30]) if quote else -1
         end_char = start_char + len(quote) if start_char != -1 else -1
 
+        is_bt_claim = bool(re.search(r"\b(break|broke|broken|breakthrough|gap)\b", combined_lower))
         facts.append({
             "shot_id": sid,
             "script_span": quote,
@@ -151,6 +152,8 @@ def extract_grounded_story_facts(shots: List[Dict[str, Any]], script_text: str) 
             "quote": quote,
             "start_char": max(0, start_char),
             "end_char": max(0, end_char),
+            "is_breakthrough_claim": is_bt_claim,
+            "is_literal_fact": (polarity == "AFFIRMED"),
         })
     return facts
 
@@ -373,7 +376,7 @@ def validate_director_plan(plan: Union[Dict[str, Any], DirectorPlan], project_pa
 
 def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Union[str, Path]) -> Tuple[List[Dict[str, Any]], int]:
     """
-    Compile DirectorPlan into storyboard shot parameters.
+    Compile DirectorPlan into storyboard shot parameters with real executable motion args.
     CRITICAL: Preserves manual shots (visual_source == 'manual') byte-for-byte!
     Returns: (compiled_shots, changed_count)
     """
@@ -401,6 +404,7 @@ def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Un
             cam = ps.get("camera_intent", "medium")
             pol = ps.get("polarity", "AFFIRMED")
             act = ps.get("actor", "unknown")
+            dur = float(s.get("dur", 3.0))
             
             # Map camera intent to template based on pack
             if pack == "squire":
@@ -421,15 +425,173 @@ def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Un
                 
             s["tpl"] = chosen_tpl
             s["template"] = chosen_tpl
-            if not s.get("args"):
-                s["args"] = {"bg": "plain", "time": "golden"} if pack == "squire" else {"set": "void"}
+            
+            # Build real executable animation args
+            args = copy.deepcopy(s.get("args") or {})
+            if pack == "squire":
+                args["bg"] = args.get("bg", "plain")
+                args["time"] = args.get("time", "golden")
                 
+                if chosen_tpl == "top":
+                    # Tactical bird's-eye blocks with paths and continuous kinematics
+                    blocks = []
+                    # Roman legion block
+                    blocks.append({
+                        "side": "blue",
+                        "label": "LEGIO",
+                        "w": 0.32,
+                        "h": 0.10,
+                        "path": [[0.0, 0.48, 0.62], [dur, 0.48, 0.58]],
+                        "gap": {"at": round(0.35 * dur, 2), "w": 0.08} if pol == "PERCEIVED" else None,
+                    })
+                    # Opposing warlord block
+                    opp_path = [[0.0, 0.52, 0.28], [dur, 0.52, 0.45]] if bm in ("charge", "advance") else [[0.0, 0.52, 0.35], [dur, 0.52, 0.38]]
+                    blocks.append({
+                        "side": "red",
+                        "label": "WARLORD" if act == "opponent" else "ENEMY",
+                        "w": 0.35,
+                        "h": 0.12,
+                        "path": opp_path,
+                        "impactAt": round(0.4 * dur, 2) if bm in ("collision", "charge") else None,
+                    })
+                    args["blocks"] = blocks
+                    
+                    if bm in ("flank", "encircle"):
+                        args["arrows"] = [{
+                            "kind": "curve",
+                            "pts": [[0.22, 0.62], [0.12, 0.45], [0.32, 0.36]],
+                            "color": "#e63c32",
+                            "dur": round(0.7 * dur, 2),
+                        }]
+                    if bm == "collision":
+                        args["dust"] = [{"x": 0.50, "y": 0.48, "s": 0.14, "at": round(0.38 * dur, 2)}]
+                        
+                elif chosen_tpl == "army":
+                    # Moving army formations with front/side marching
+                    march_mode = "front" if bm in ("advance", "charge") else ("side" if cam in ("wide", "right") else True)
+                    args["mid"] = [{
+                        "preset": "hastatus" if act != "opponent" else "warlord",
+                        "rows": 4,
+                        "cols": 10,
+                        "x0": 0.04,
+                        "x1": 0.96,
+                        "yFront": 0.96,
+                        "yBack": 0.74,
+                        "hFront": 0.38,
+                        "hBack": 0.18,
+                        "march": march_mode,
+                        "flip": False if act != "opponent" else True,
+                        "face": "fierce" if bm in ("charge", "collision") else "neutral",
+                    }]
+                    args["back"] = [{
+                        "preset": "warlord" if act == "roman" else "latin",
+                        "rows": 3,
+                        "cols": 20,
+                        "x0": 0.0,
+                        "x1": 1.0,
+                        "yFront": 0.72,
+                        "yBack": 0.64,
+                        "hFront": 0.08,
+                        "hBack": 0.05,
+                        "flip": True if act != "opponent" else False,
+                    }]
+                    if bm in ("throw", "advance"):
+                        args["fx"] = [{"kind": "javelins", "at": round(0.3 * dur, 2)}]
+                    elif bm == "collision":
+                        args["fx"] = [{"kind": "dust", "at": round(0.35 * dur, 2)}]
+                    args["move"] = "right" if cam == "pan" else "in"
+                    
+                elif chosen_tpl == "close":
+                    # Close hero / centurion / warlord bust
+                    args["preset"] = "centurion" if act == "roman" else ("warlord" if act == "opponent" else "hastatus")
+                    args["face"] = "fierce" if bm in ("charge", "collision") else ("shock" if pol == "PERCEIVED" else "neutral")
+                    args["pose"] = "attack" if bm == "collision" else ("defend" if bm == "shield_wall" else "stand")
+                    args["talk"] = bool(len(s.get("line", "")) > 18)
+                    if bm == "collision":
+                        args["fx"] = [{"kind": "sparks", "at": round(0.3 * dur, 2)}]
+                    args["move"] = "in"
+                    
+                else:
+                    # Scene: foreground moving character + depth formations
+                    move_pose = "march" if bm in ("advance", "march") else ("run" if bm == "charge" else ("attack" if bm == "collision" else "stand"))
+                    from_x = 0.30 if act != "opponent" else 0.70
+                    to_x = 0.55 if act != "opponent" else 0.45
+                    args["people"] = [{
+                        "preset": "hastatus" if act != "opponent" else "warlord",
+                        "x": from_x,
+                        "y": 0.88,
+                        "h": 0.58,
+                        "pose": move_pose,
+                        "walk": True if bm in ("advance", "charge", "march") else None,
+                        "from": from_x,
+                        "to": to_x,
+                        "moveAt": round(0.15 * dur, 2),
+                        "dur": round(0.65 * dur, 2),
+                        "face": "fierce" if bm in ("charge", "collision") else "neutral",
+                        "weapon": "pilum" if bm == "throw" else "gladius",
+                        "flip": bool(act == "opponent"),
+                    }]
+                    args["back"] = [{
+                        "preset": "hastatus",
+                        "rows": 3,
+                        "cols": 16,
+                        "x0": 0.0,
+                        "x1": 1.0,
+                        "yFront": 0.75,
+                        "yBack": 0.65,
+                        "hFront": 0.12,
+                        "hBack": 0.06,
+                        "march": True,
+                    }]
+                    if bm == "collision":
+                        args["fx"] = [{"kind": "dust", "at": round(0.35 * dur, 2)}]
+                    elif bm == "throw":
+                        args["fx"] = [{"kind": "javelins", "at": round(0.25 * dur, 2)}]
+            else:
+                # DEM pack
+                args["set"] = args.get("set", "void")
+                dem_pose = "stand" if bm == "stand" else ("phone" if bm == "phone" else ("slump" if bm == "slump" else "walk"))
+                actor_obj = {
+                    "who": "hero",
+                    "x": 0.35,
+                    "y": 0.76,
+                    "h": 0.42,
+                    "pose": dem_pose,
+                    "face": "neutral" if pol == "AFFIRMED" else "tired",
+                }
+                if bm in ("walk", "advance", "charge"):
+                    actor_obj["walk"] = {
+                        "to": 0.65,
+                        "at": round(0.15 * dur, 2),
+                        "dur": round(0.65 * dur, 2),
+                        "speed": 1.0,
+                    }
+                args["actors"] = [actor_obj]
+                args["cam"] = {
+                    "from": [0.5, 0.5, 1.0],
+                    "to": [0.5, 0.5, 1.06],
+                    "at": 0,
+                    "dur": dur,
+                }
+                beat_text = ps.get("action_beat") or s.get("line", "")[:45]
+                args["texts"] = [{"kind": "narr", "t": beat_text, "at": round(0.2 * dur, 2)}]
+                
+            s["args"] = args
             s["action"] = bm
             s["polarity"] = pol
             s["actor"] = act
-            s["visual_source"] = "gemini_director_v13"
+            s["visual_source"] = "gemini_director_v14"
             s["ai_plan_hash"] = plan_hash
             s["director_beat"] = ps.get("action_beat", "")
+            s["execution_trace"] = {
+                "source_quote": ps.get("source_quote", s.get("line", "")),
+                "shot_id": sid,
+                "actor": act,
+                "polarity": pol,
+                "action": bm,
+                "template": chosen_tpl,
+                "has_motion_args": True,
+            }
             
             # If SFX intents present, attach metadata
             if ps.get("sfx_intents"):

@@ -727,6 +727,21 @@ def assign_visuals(
         story["shots"] = shots
         write_json(shots_file, story)
 
+    # AI Director integration (V14: grounded camera, executable animation, polarity, SFX intents)
+    if cfg.get("ai_director_enabled", True) and not target_ids:
+        try:
+            from ai_director import generate_director_plan, apply_director_plan_generated_only
+            dir_res = generate_director_plan(P)
+            if dir_res.get("plan"):
+                apply_res = apply_director_plan_generated_only(dir_res["plan"], P)
+                if apply_res.get("status") == "APPLIED":
+                    print(f"[assign_visuals] AI Director applied plan: {apply_res.get('changed_shots_count')} shots updated ({dir_res.get('source')}).")
+                    modified = True
+                    story = read_json(shots_file, {})
+                    shots = story.get("shots", [])
+        except Exception as dir_exc:
+            print(f"[assign_visuals] AI Director warning: {dir_exc}")
+
     # Battle auto-director integration (V13: structured status, confidence checks, pack safety)
     is_squire = (pack == "squire")
     battle_kw = bool(re.search(r"\b(battle|war|legion|army|soldiers?|shields?|spears?|swords?|front\s+line|formation|centurions?|cohorts?|warlords?|enemies|enemy|phalanx|infantry|cavalry|chiến\s+trận|quân\s+đoàn|lính)\b", full_text, re.IGNORECASE))

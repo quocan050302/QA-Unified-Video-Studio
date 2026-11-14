@@ -1,0 +1,17 @@
+{
+  "suite": "V14_VISUAL_ACTION_AUDIT",
+  "generated_at": 1794628553.9791148,
+  "n15_grounding": {
+    "s001_actor": "opponent",
+    "s002_polarity": "PERCEIVED",
+    "s003_actor": "roman"
+  },
+  "n17_charge_motion": {
+    "template": "top",
+    "has_kinematics_path": true
+  },
+  "n19_continuity": {
+    "continuity_verified": true,
+    "units_checked": 3
+  }
+}

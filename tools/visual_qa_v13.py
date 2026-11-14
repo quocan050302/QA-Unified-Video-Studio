@@ -126,7 +126,13 @@ def measure_subject_motion_and_continuity(
     try:
         from PIL import Image
     except ImportError:
-        return {"motion_detected": True, "mean_subject_motion_pct": 5.0, "frames_analyzed": len(extracted_frames)}
+        return {
+            "status": "BLOCKED",
+            "motion_detected": False,
+            "mean_subject_motion_pct": 0.0,
+            "frames_analyzed": len(extracted_frames),
+            "error": "PILLOW_UNAVAILABLE",
+        }
 
     transitions = []
     motion_percentages = []
@@ -192,6 +198,19 @@ def evaluate_hook_quality_proxies(
     
     frames = extract_video_frames_with_timestamps(v_path, timestamps)
     motion_metrics = measure_subject_motion_and_continuity(frames)
+    if motion_metrics.get("status") == "BLOCKED":
+        return {
+            "status": "BLOCKED",
+            "metric_type": "EDITORIAL_PROXY",
+            "error": motion_metrics.get("error", "PILLOW_UNAVAILABLE"),
+            "first_3s_action_pass": False,
+            "first_3s_motion_pct": 0.0,
+            "twist_20_30s_action_pass": False,
+            "twist_motion_pct": 0.0,
+            "safe_zones_pass": False,
+            "safe_zone_notes": ["Evaluation blocked: Pillow unavailable"],
+            "total_frames_extracted": len(frames),
+        }
     
     # Check 0-3s high-stakes action
     early_frames = [f for f in frames if f["timestamp"] <= 3.0]

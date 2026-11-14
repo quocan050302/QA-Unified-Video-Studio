@@ -19,6 +19,7 @@ audio/licenses/*.json
 .test-runs/
 *.partial.mp4
 projects/v13_*/
+projects/v14_*/
 projects/test_*/
 temp_*.txt
 pnpm-lock.yaml

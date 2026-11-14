@@ -18,6 +18,12 @@ async function boot() {
     window.__bootError = 'Du an chua co shot nao (story/shots.json rong).';
     return;
   }
+  let curT = 0;
+  for (const s of E.shots) {
+    if (typeof s.start !== 'number') s.start = curT;
+    if (typeof s.end !== 'number') s.end = s.start + (typeof s.dur === 'number' ? s.dur : 3);
+    curT = s.end;
+  }
   E.words = await getJSON(`${PROJ}/timeline/words.json`, []);
   E.lines = await getJSON(`${PROJ}/timeline/lines.json`, []);
   E.fps = cfg.fps || 24; E.vertical = cfg.aspect === '9:16';

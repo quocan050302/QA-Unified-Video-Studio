@@ -1,0 +1,24 @@
+{
+  "suite": "V14_RESOURCE_TELEMETRY",
+  "generated_at": 1794628553.9791148,
+  "telemetry": {
+    "initial": {
+      "free_disk_gb": 54.09,
+      "total_disk_gb": 144.02,
+      "available_ram_mb": 11467.9,
+      "total_ram_mb": 32509.4,
+      "ram_percent": 64.7,
+      "cpu_count": 12
+    },
+    "final": {
+      "free_disk_gb": 53.8,
+      "total_disk_gb": 144.02,
+      "available_ram_mb": 12163.2,
+      "total_ram_mb": 32509.4,
+      "ram_percent": 62.6,
+      "cpu_count": 12
+    },
+    "min_disk_free_gb": 53.8,
+    "peak_ram_percent": 64.7
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "suite": "V14_GEMINI_FALLBACK_AND_USAGE_TRACE",
+  "generated_at": 1794628553.9791148,
+  "n10_fallback_trace": {
+    "calls": {
+      "gemini-3.8-flash": 3,
+      "gemini-3.7-flash": 1
+    },
+    "primary_tripped_and_recovered": true
+  },
+  "n13_usage_metadata": {
+    "case1_source": "API",
+    "case2_source": "HEURISTIC"
+  }
+}

@@ -837,10 +837,14 @@ def compile_battle_timeline_to_shots(
         ev_type = primary_evt.get("event_type", "ADVANCE")
         cam = choose_battle_camera_and_scale(ev_type, aspect, idx)
 
-        new_s["visual_source"] = "battle_choreo_v12"
+        new_s["visual_source"] = "battle_choreo_v12" if s.get("visual_source") != "gemini_director_v14" else "gemini_director_v14+battle_choreo"
         new_s["battle_plan_version"] = BATTLE_PLAN_VERSION
         new_s["source_span"] = primary_evt.get("source_span", s.get("line", ""))
         new_s["confidence"] = primary_evt.get("confidence", 0.90)
+        if s.get("execution_trace"):
+            new_s["execution_trace"] = s["execution_trace"]
+        if s.get("director_beat"):
+            new_s["director_beat"] = s["director_beat"]
 
         tpl = cam["template"]
         args: Dict[str, Any] = dict(s.get("args") or {})

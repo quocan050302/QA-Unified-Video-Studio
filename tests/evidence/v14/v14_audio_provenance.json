@@ -1,0 +1,16 @@
+{
+  "suite": "V14_AUDIO_PROVENANCE_MANIFEST",
+  "generated_at": 1794628553.9781148,
+  "n28_sfx_ingestion": {
+    "path_traversal_rejected": true,
+    "audit_status": null
+  },
+  "n29_procedural_lookup": {
+    "shield_bash_source": "PROCEDURAL",
+    "nonexistent_handled": true
+  },
+  "n30_mix_compliance": {
+    "target_lufs": -14.0,
+    "max_true_peak_dbtp": -1.0
+  }
+}
