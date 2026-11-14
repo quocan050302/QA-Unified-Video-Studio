@@ -255,8 +255,8 @@ def list_supported_director_models(force_refresh: bool = False) -> List[Dict[str
     return base_allowlist
 
 
-def test_gemini_connection(api_key: Optional[str] = None) -> Dict[str, Any]:
-    """Test live Gemini API connection with probe call."""
+def test_gemini_connection(api_key: Optional[str] = None, model: Optional[str] = None) -> Dict[str, Any]:
+    """Test live Gemini API connection with probe call and model fallback."""
     key = api_key or get_api_key_securely()
     if not key:
         return {
@@ -274,18 +274,57 @@ def test_gemini_connection(api_key: Optional[str] = None) -> Dict[str, Any]:
         }
     
     t0 = time.time()
+    cfg = load_global_settings()
+    primary = model or cfg.get("primary_model", "gemini-3.8-flash")
+    # Prefer fast, high-availability models for fallback probe
+    fallback_pool = ["gemini-3.5-flash", "gemini-3.6-flash", "gemini-3.7-flash", "gemini-3.8-flash"]
+    candidates = [primary] + [m for m in fallback_pool if m != primary]
+    
+    last_cat = FailureCategory.UNKNOWN
+    last_reason = "Connection probe failed."
+    first_err_reason = None
+    
     try:
-        client = genai.Client(api_key=key)
-        resp = client.models.generate_content(
-            model="gemini-3.8-flash",
-            contents="Say 'OK'",
-        )
+        # Use single attempt and 10s deadline so probe fails fast on 503 instead of hanging on SDK internal backoff
+        http_opts = None
+        if hasattr(types, "HttpOptions") and hasattr(types, "HttpRetryOptions"):
+            http_opts = types.HttpOptions(timeout=10000, retry_options=types.HttpRetryOptions(attempts=1))
+            
+        client = genai.Client(api_key=key, http_options=http_opts) if http_opts else genai.Client(api_key=key)
+        
+        for idx, m in enumerate(candidates):
+            mid = m["id"] if isinstance(m, dict) else str(m)
+            try:
+                resp = client.models.generate_content(
+                    model=mid,
+                    contents="Say 'OK'",
+                )
+                latency = int((time.time() - t0) * 1000)
+                msg = f"Successfully connected to Gemini API ({mid})."
+                if idx > 0 and first_err_reason:
+                    msg = f"Connected to Gemini API ({mid}; {candidates[0]} overloaded: {first_err_reason})."
+                return {
+                    "ok": True,
+                    "status": "CONNECTED",
+                    "model": mid,
+                    "message": msg,
+                    "latency_ms": latency,
+                }
+            except Exception as exc:
+                cat, safe_reason, _ = classify_gemini_failure(exc)
+                last_cat = cat
+                last_reason = safe_reason
+                if not first_err_reason:
+                    first_err_reason = safe_reason
+                # Terminal authentication errors should fail-fast immediately
+                if cat == FailureCategory.AUTH_INVALID:
+                    break
+                    
         latency = int((time.time() - t0) * 1000)
         return {
-            "ok": True,
-            "status": "CONNECTED",
-            "model": "gemini-3.8-flash",
-            "message": "Successfully connected to Gemini API.",
+            "ok": False,
+            "status": last_cat.value,
+            "message": redact_secrets(last_reason),
             "latency_ms": latency,
         }
     except Exception as exc:
@@ -395,7 +434,10 @@ def request_structured_with_fallback(
                     if mock_provider is not None:
                         result_dict = mock_provider(model_id, prompt, schema, model_attempts)
                     else:
-                        client = genai.Client(api_key=key)
+                        http_opts = None
+                        if hasattr(types, "HttpOptions") and hasattr(types, "HttpRetryOptions"):
+                            http_opts = types.HttpOptions(timeout=15000, retry_options=types.HttpRetryOptions(attempts=1))
+                        client = genai.Client(api_key=key, http_options=http_opts) if http_opts else genai.Client(api_key=key)
                         response = client.models.generate_content(
                             model=model_id,
                             contents=prompt,

@@ -1025,7 +1025,7 @@ class Handler(BaseHTTPRequestHandler):
             if parts == ['api', 'global-settings', 'test']:
                 from tools.gemini_client import test_gemini_connection
                 data = self.data()
-                res = test_gemini_connection(api_key=data.get('key'))
+                res = test_gemini_connection(api_key=data.get('key'), model=data.get('model'))
                 return self.send(200, res)
             if parts == ['api', 'sfx', 'import']:
                 from tools.sfx_library import import_sfx

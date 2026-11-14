@@ -209,13 +209,16 @@ async function testGeminiConnection(){
   $('gs-test-result').textContent='Đang kiểm tra kết nối Gemini...';
   try{
     const k=$('gs-api-key').value.trim();
-    const res=await post('/api/global-settings/test',k?{key:k}:{});
+    const m=$('gs-primary-model') ? $('gs-primary-model').value : 'gemini-3.8-flash';
+    const body = m ? {model: m} : {};
+    if (k) body.key = k;
+    const res=await post('/api/global-settings/test', body);
     if(res.ok){
-      $('gs-test-result').innerHTML=`<span style="color:#4ade80">● ${res.status}: ${res.model} (${res.latency_ms}ms)</span>`;
+      $('gs-test-result').innerHTML=`<span style="color:#4ade80">● ${res.status}: ${res.model} (${res.latency_ms}ms) — ${res.message}</span>`;
     } else {
       $('gs-test-result').innerHTML=`<span style="color:#f87171">○ ${res.status}: ${res.message}</span>`;
     }
-  }catch(e){$('gs-test-result').innerHTML=`<span style="color:#f87171">○ Error: ${e.message}</span>`;}
+  }catch(e){$('gs-test-result').innerHTML=`<span style="color:#f87171">○ Lỗi: ${e.message}</span>`;}
 }
 async function saveGlobalConfig(){
   try{

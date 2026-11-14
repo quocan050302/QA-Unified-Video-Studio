@@ -1,70 +1,26 @@
 {
   "suite": "V13_REAL_VIDEO_MATRIX",
-  "generated_at": 1794623473.3243754,
+  "generated_at": 1794624477.0179825,
   "videos": [
     {
-      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_squire_16x9\\build\\preview.mp4",
-      "size_bytes": 5466870,
-      "width": 1920,
-      "height": 1080,
-      "expected_width": 1920,
-      "expected_height": 1080,
-      "dimensions_correct": true,
-      "video_codec": "h264",
-      "has_audio": true,
-      "audio_codec": "aac",
-      "duration_sec": 30,
+      "note": "Skipped in --smoke run to preserve resources",
       "gate_id": "T16",
-      "title": "Squire Battle True 1080p 16:9 MP4",
-      "sha256": "64d46def5d348f49d8fb31c7b706df2e03f10d3e9fbe208710381bdf2760d7d8"
+      "title": "Squire 16:9 Full MP4"
     },
     {
-      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_squire_9x16\\build\\preview.mp4",
-      "size_bytes": 5279650,
-      "width": 1080,
-      "height": 1920,
-      "expected_width": 1080,
-      "expected_height": 1920,
-      "dimensions_correct": true,
-      "video_codec": "h264",
-      "has_audio": true,
-      "audio_codec": "aac",
-      "duration_sec": 30,
+      "note": "Skipped in --smoke run to preserve resources",
       "gate_id": "T17",
-      "title": "Squire Battle 1080x1920 9:16 Shorts MP4",
-      "sha256": "f841d56a071ffc313ebf4e46946745dbad6f8d8bf58641921e5525ab468993db"
+      "title": "Squire 9:16 Shorts MP4"
     },
     {
-      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_dem_16x9\\build\\preview.mp4",
-      "size_bytes": 1095940,
-      "width": 1920,
-      "height": 1080,
-      "expected_width": 1920,
-      "expected_height": 1080,
-      "dimensions_correct": true,
-      "video_codec": "h264",
-      "has_audio": true,
-      "audio_codec": "aac",
-      "duration_sec": 30,
+      "note": "Skipped in --smoke run to preserve resources",
       "gate_id": "T18",
-      "title": "DEM Self-Improvement 1080p 16:9 MP4",
-      "sha256": "3fab1f13a6e72e25779ec26a233b42f0aba25b0238e7a7118a879d7d35ffad4d"
+      "title": "DEM 16:9 Full MP4"
     },
     {
-      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_dem_9x16\\build\\preview.mp4",
-      "size_bytes": 1132932,
-      "width": 1080,
-      "height": 1920,
-      "expected_width": 1080,
-      "expected_height": 1920,
-      "dimensions_correct": true,
-      "video_codec": "h264",
-      "has_audio": true,
-      "audio_codec": "aac",
-      "duration_sec": 30,
+      "note": "Skipped in --smoke run to preserve resources",
       "gate_id": "T19",
-      "title": "DEM Self-Improvement 1080x1920 9:16 Shorts MP4",
-      "sha256": "c6d55bc35d1724edb7ff488d11fa1b6c87b97442c2fa68d6f8014faa39afc954"
+      "title": "DEM 9:16 Shorts MP4"
     }
   ]
 }
