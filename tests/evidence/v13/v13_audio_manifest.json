@@ -1,0 +1,13 @@
+{
+  "suite": "V13_AUDIO_PROVENANCE_MANIFEST",
+  "generated_at": 1794623473.324879,
+  "t20_sfx_ingestion": {
+    "path_traversal_blocked": true,
+    "duplicate_detection_verified": true,
+    "real_sfx_resolution_verified": true,
+    "license_audit_passed": true
+  },
+  "t21_mixer_source_truth": {
+    "resolved_source": "PROCEDURAL"
+  }
+}

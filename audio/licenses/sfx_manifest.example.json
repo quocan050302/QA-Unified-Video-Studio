@@ -1,0 +1,21 @@
+{
+  "manifest_version": "13.0",
+  "generated_at": 1731550000.0,
+  "description": "Example manifest of licensed real sound effects ingested into QA-Unified-Video-Studio.",
+  "items": [
+    {
+      "license_id": "freesound_cc0_shield",
+      "name": "shield_clash_real",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "license_type": "CC0",
+      "source_origin": "https://freesound.org/people/example/sounds/12345/",
+      "author": "SoundDesignerJohn",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use_allowed": true,
+      "tags": ["battle", "weapons", "shield", "impact", "clash"],
+      "duration_sec": 1.45,
+      "imported_at": 1731550000.0
+    }
+  ]
+}

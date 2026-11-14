@@ -727,18 +727,29 @@ def assign_visuals(
         story["shots"] = shots
         write_json(shots_file, story)
 
-    # Battle auto-director integration
-    if cfg.get("battle_auto_director", True) and not target_ids:
+    # Battle auto-director integration (V13: structured status, confidence checks, pack safety)
+    is_squire = (pack == "squire")
+    battle_kw = bool(re.search(r"\b(battle|war|legion|army|soldiers?|shields?|spears?|swords?|front\s+line|formation|centurions?|cohorts?|warlords?|enemies|enemy|phalanx|infantry|cavalry|chiến\s+trận|quân\s+đoàn|lính)\b", full_text, re.IGNORECASE))
+    
+    if is_squire and battle_kw and cfg.get("battle_auto_director", True) and not target_ids:
         try:
             from battle_choreo import plan_battle_choreo_for_project, parse_battle_events
             events = parse_battle_events(full_text)
-            if events:
+            # Require at least one distinct tactical maneuver to prevent false activation on unrelated stories
+            tactical_events = [e for e in events if e.get("event_type") in ("ADVANCE", "IMPACT", "BREAKTHROUGH", "FRONT_LINE_REPLACE", "ENCIRCLE", "FLANK_LEFT", "MISSILE_VOLLEY")]
+            if tactical_events:
                 b_res = plan_battle_choreo_for_project(P, review_only=False, apply_choreo=True)
                 if b_res.get("status") == "APPLIED":
                     print(f"[assign_visuals] Battle auto-director applied choreography: {b_res.get('changed_shots_count')} shots updated.")
                     modified = True
+                else:
+                    b_rev_file = os.path.join(P, "build", "battle_review.json")
+                    write_json(b_rev_file, {"status": b_res.get("status", "NOT_APPLIED"), "reason": b_res.get("message", "Validation or preconditions not met")})
         except Exception as b_exc:
-            print(f"[assign_visuals] Battle auto-director note: {b_exc}")
+            err_msg = str(b_exc)
+            print(f"[assign_visuals] Battle auto-director error: {err_msg}")
+            b_rev_file = os.path.join(P, "build", "battle_review.json")
+            write_json(b_rev_file, {"status": "ERROR", "error_message": err_msg})
 
     # Tao default thumbnail neu chua co
     thumb_path = os.path.join(P, "scenes", "shots", "thumb.js")

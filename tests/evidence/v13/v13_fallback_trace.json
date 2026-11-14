@@ -1,0 +1,11 @@
+{
+  "suite": "V13_3_STRIKE_FALLBACK_CIRCUIT",
+  "generated_at": 1794623473.324879,
+  "trace": {
+    "calls": {
+      "gemini-3.8-flash": 3,
+      "gemini-3.7-flash": 1
+    },
+    "primary_circuit_state": "OPEN"
+  }
+}

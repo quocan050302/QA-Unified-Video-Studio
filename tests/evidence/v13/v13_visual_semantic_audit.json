@@ -1,0 +1,71 @@
+{
+  "suite": "V13_VISUAL_SEMANTIC_AUDIT",
+  "generated_at": 1794623473.324879,
+  "t10_grounding_actor_polarity": {
+    "audited_shots": 6,
+    "facts": [
+      {
+        "shot_id": "s001",
+        "script_span": "The warlord orders full charge across the field.",
+        "polarity": "AFFIRMED",
+        "actor": "opponent",
+        "quote": "The warlord orders full charge across the field.",
+        "start_char": 0,
+        "end_char": 48
+      },
+      {
+        "shot_id": "s002",
+        "script_span": "They thought they had broken the line.",
+        "polarity": "PERCEIVED",
+        "actor": "unknown",
+        "quote": "They thought they had broken the line.",
+        "start_char": 49,
+        "end_char": 87
+      },
+      {
+        "shot_id": "s003",
+        "script_span": "What seemed like a breakthrough was an illusion.",
+        "polarity": "PERCEIVED",
+        "actor": "unknown",
+        "quote": "What seemed like a breakthrough was an illusion.",
+        "start_char": 88,
+        "end_char": 136
+      },
+      {
+        "shot_id": "s004",
+        "script_span": "The line did not break under pressure.",
+        "polarity": "NEGATED",
+        "actor": "unknown",
+        "quote": "The line did not break under pressure.",
+        "start_char": 137,
+        "end_char": 175
+      },
+      {
+        "shot_id": "s005",
+        "script_span": "If they broke the center, Rome would fall.",
+        "polarity": "HYPOTHETICAL",
+        "actor": "unknown",
+        "quote": "If they broke the center, Rome would fall.",
+        "start_char": 176,
+        "end_char": 218
+      },
+      {
+        "shot_id": "s006",
+        "script_span": "The Roman reserve stepped forward.",
+        "polarity": "AFFIRMED",
+        "actor": "roman",
+        "quote": "The Roman reserve stepped forward.",
+        "start_char": 219,
+        "end_char": 253
+      }
+    ],
+    "b4_opponent_attributed": true,
+    "b4_perceived_polarity_tagged": true
+  },
+  "t12_world_state_continuity": {
+    "valid_timeline_continuous": true,
+    "teleport_perturbation_detected": true,
+    "max_jump_detected": 0.25,
+    "b7_teleport_rejected": true
+  }
+}

@@ -149,24 +149,34 @@ canonical_aliases = {
 
 def find(name):
     if not name:
-        return None, 0.0
+        return None, 0.0, "MISSING", None, None
+    try:
+        from sfx_library import resolve_sfx
+        res = resolve_sfx(name)
+        if res.get("path") and os.path.exists(res["path"]):
+            m = re.search(r"hitAt(\d+)ms", res["name"])
+            hit_off = (int(m.group(1)) / 1000 if m else 0.0)
+            return res["path"], hit_off, res.get("asset_source", "PROCEDURAL"), res.get("license_id"), res.get("sha256")
+    except Exception:
+        pass
+
     if os.path.exists(os.path.join(P, name)):
-        return os.path.join(P, name), 0.0
+        return os.path.join(P, name), 0.0, "PROJECT_CUSTOM", None, None
     # 1. Exact canonical match
     if name in lib:
         m = re.search(r"hitAt(\d+)ms", name)
-        return lib[name], (int(m.group(1)) / 1000 if m else 0.0)
+        return lib[name], (int(m.group(1)) / 1000 if m else 0.0), "PROCEDURAL", "internal_procedural", None
     # 2. Alias match
     alias = canonical_aliases.get(name.lower())
     if alias and alias in lib:
         m = re.search(r"hitAt(\d+)ms", alias)
-        return lib[alias], (int(m.group(1)) / 1000 if m else 0.0)
+        return lib[alias], (int(m.group(1)) / 1000 if m else 0.0), "PROCEDURAL", "internal_procedural", None
     # 3. Delimited prefix match only
     for k, f in lib.items():
         if k.startswith(name + "_"):
             m = re.search(r"hitAt(\d+)ms", k)
-            return f, (int(m.group(1)) / 1000 if m else 0.0)
-    return None, 0.0
+            return f, (int(m.group(1)) / 1000 if m else 0.0), "PROCEDURAL", "internal_procedural", None
+    return None, 0.0, "MISSING", None, None
 
 cues = [(s.get("start", 0.0) + c.get("at", 0), c) for s in shots for c in s.get("sfx", [])] + [(c.get("t", 0.0), c) for c in story.get("sfx", [])]
 rendered_cues = []
@@ -174,7 +184,7 @@ if scfg.get("enabled", True):
     cache = {}
     for t, c in cues:
         cname = c.get("name", "")
-        f, off = find(cname)
+        f, off, src_type, lic_id, sha = find(cname)
         if not f:
             log.append(f"khong co sfx '{cname}'")
             continue
@@ -188,7 +198,15 @@ if scfg.get("enabled", True):
         L = min(len(y), N - i0)
         if L > 0:
             sfx[i0:i0 + L] += y[:L] * db(float(c.get("gain", -8)) + float(scfg.get("gainDb", -4)))
-            rendered_cues.append({"time": t, "name": cname, "file": f, "gain": c.get("gain", -8)})
+            rendered_cues.append({
+                "time": t,
+                "name": cname,
+                "file": f,
+                "gain": c.get("gain", -8),
+                "asset_source": src_type,
+                "license_id": lic_id,
+                "sha256": sha,
+            })
 
 # ---------- Mix master
 mix = voice + music + sfx
@@ -219,8 +237,9 @@ if os.path.exists(tmp):
 measured_lufs = float(m[-1]) if m else -14.0
 measured_tp = float(tp[-1]) if tp else -1.5
 
-# Save audio mix report
+# Save audio mix report and audio manifest
 audio_report = {
+    "version": "13.0",
     "project": os.path.basename(P),
     "mixed_at": time.time(),
     "status": "AUDIO_MIX_PASS",
@@ -232,9 +251,14 @@ audio_report = {
     "music_rms": float(np.sqrt(np.mean(music ** 2))),
     "sfx_rms": float(np.sqrt(np.mean(sfx ** 2))),
     "cues_rendered_count": len(rendered_cues),
-    "cues": rendered_cues[:20],
+    "real_sfx_count": sum(1 for c in rendered_cues if c.get("asset_source") == "REAL"),
+    "procedural_sfx_count": sum(1 for c in rendered_cues if c.get("asset_source") == "PROCEDURAL"),
+    "cues": rendered_cues,
 }
 with open(os.path.join(P, "build", "audio_mix_report.json"), "w", encoding="utf-8") as fp:
+    json.dump(audio_report, fp, indent=2)
+with open(os.path.join(P, "build", "audio_manifest.json"), "w", encoding="utf-8") as fp:
+    json.dump(audio_report, fp, indent=2)
     json.dump(audio_report, fp, indent=2)
 
 print("Am thanh:", out, f"({measured_lufs:.1f} LUFS, TP: {measured_tp:.1f} dBTP) |", "; ".join(sorted(set(log))) if log else "ok")

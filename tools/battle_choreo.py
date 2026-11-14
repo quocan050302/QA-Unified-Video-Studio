@@ -106,6 +106,18 @@ def parse_battle_events(
         re.IGNORECASE,
     )
 
+    perceived_regex = re.compile(
+        r"\b(thought\s+(?:they|he|the\s+enemy|the\s+warlord|the\s+barbarians)|"
+        r"seemed\s+(?:like|to\s+be)?|what\s+seemed\s+like|believed\s+(?:they|he)|"
+        r"appeared\s+(?:to|like)|feigned|pretended|imagined|assumed)\b",
+        re.IGNORECASE,
+    )
+
+    opponent_regex = re.compile(
+        r"\b(warlords?|chieftains?|gauls?|barbarians?|carthaginians?|enemies|enemy|hannibal|opponents?|invaders?|attacker|attackers)\b",
+        re.IGNORECASE,
+    )
+
     seen_ids: Set[str] = set()
     evt_counter = 0
 
@@ -123,6 +135,7 @@ def parse_battle_events(
         start_t = float(s.get("start", idx * dur))
 
         is_hypo = bool(hypothetical_regex.search(combined_text))
+        is_perceived = bool(perceived_regex.search(combined_text))
 
         def is_negated(pat: str) -> bool:
             for m in negation_regex.finditer(combined_text):
@@ -152,6 +165,23 @@ def parse_battle_events(
                     "global_start": start_t,
                     "global_end": start_t + dur,
                     "note": "Negated breakthrough: Roman front line held firmly",
+                })
+            elif is_perceived:
+                shot_events.append({
+                    "event_id": f"evt_{evt_counter:03d}",
+                    "owner_shot_id": sid,
+                    "event_type": "BREAKTHROUGH",
+                    "actor_side": "opponent",
+                    "target_side": "roman",
+                    "polarity": "PERCEIVED",
+                    "source_span": combined_text,
+                    "is_negated": False,
+                    "is_hypothetical": is_hypo,
+                    "confidence": 0.95,
+                    "local_t": 0.4 * dur,
+                    "global_start": start_t,
+                    "global_end": start_t + dur,
+                    "note": "Perceived breakthrough: Enemy mistakenly believed the line was broken",
                 })
             else:
                 shot_events.append({
@@ -299,13 +329,14 @@ def parse_battle_events(
             # If shot already has BREAKTHROUGH or RELIEF, only add IMPACT if distinct clash is stated
             is_impact = ("clash" in text_lower or "impact" in text_lower or "struck" in text_lower or "va" in text_lower)
             evt_counter += 1
+            is_opp = bool(opponent_regex.search(text_lower) or "enemy rushed" in text_lower or "their first blow" in text_lower)
             shot_events.append({
                 "event_id": f"evt_{evt_counter:03d}",
                 "owner_shot_id": sid,
                 "event_type": "IMPACT" if is_impact else "ADVANCE",
-                "actor_side": "opponent" if ("enemy rushed" in text_lower or "their first blow" in text_lower) else "roman",
-                "target_side": "roman" if ("enemy rushed" in text_lower or "their first blow" in text_lower) else "opponent",
-                "polarity": "HYPOTHETICAL" if is_hypo else "AFFIRMED",
+                "actor_side": "opponent" if is_opp else "roman",
+                "target_side": "roman" if is_opp else "opponent",
+                "polarity": "PERCEIVED" if is_perceived else ("HYPOTHETICAL" if is_hypo else "AFFIRMED"),
                 "source_span": combined_text,
                 "is_negated": False,
                 "is_hypothetical": is_hypo,
@@ -320,12 +351,13 @@ def parse_battle_events(
         command_pat = r"\b(signals?|signaled|signalling|horns?|trumpets?|commands?|commanded|consuls?|centurions?|standards?|eagles?|hi\u1ec7u\s+l\u1ec7nh|ti\u1ebfng\s+t\u00f9\s+v\u00e0|ch\u1ec9\s+huy)\b"
         if re.search(command_pat, text_lower) and not is_negated(command_pat):
             evt_counter += 1
+            is_opp = bool(opponent_regex.search(text_lower))
             shot_events.append({
                 "event_id": f"evt_{evt_counter:03d}",
                 "owner_shot_id": sid,
                 "event_type": "COMMAND_SIGNAL",
-                "actor_side": "roman",
-                "target_side": "roman",
+                "actor_side": "opponent" if is_opp else "roman",
+                "target_side": "roman" if is_opp else "roman",
                 "polarity": "AFFIRMED",
                 "source_span": combined_text,
                 "is_negated": False,
@@ -567,6 +599,7 @@ def build_battle_state_timeline(
         for e in evts:
             ev_type = e.get("event_type")
             is_negated = e.get("is_negated", False)
+            polarity = e.get("polarity", "AFFIRMED")
             actor = e.get("actor_side", "roman")
 
             if ev_type in ("ADVANCE", "APPROACH", "CHARGE") and not is_negated:
@@ -582,12 +615,18 @@ def build_battle_state_timeline(
                 end_state["ROMAN_FRONT_RIGHT"]["x"] = 0.40
 
             elif ev_type == "BREAKTHROUGH" and not is_negated:
-                # Gap opens outward in Y, enemy penetrates forward in X
-                end_state["ROMAN_FRONT_LEFT"]["y"] = max(0.28, end_state["ROMAN_FRONT_LEFT"]["y"] - 0.06)
-                end_state["ROMAN_FRONT_RIGHT"]["y"] = min(0.72, end_state["ROMAN_FRONT_RIGHT"]["y"] + 0.06)
-                end_state["ROMAN_FRONT_LEFT"]["gap_w"] = 0.45
-                end_state["ROMAN_FRONT_RIGHT"]["gap_w"] = 0.45
-                end_state["ENEMY_VANGUARD"]["x"] = max(0.40, end_state["ENEMY_VANGUARD"]["x"] - 0.10)
+                if polarity in ("PERCEIVED", "HYPOTHETICAL"):
+                    # Perceived or hypothetical: line holds firm under pressure, no structural gap opened
+                    end_state["ROMAN_FRONT_LEFT"]["gap_w"] = 0.05
+                    end_state["ROMAN_FRONT_RIGHT"]["gap_w"] = 0.05
+                    end_state["ENEMY_VANGUARD"]["x"] = max(0.48, end_state["ENEMY_VANGUARD"]["x"] - 0.02)
+                else:
+                    # Affirmed gap opens outward in Y, enemy penetrates forward in X
+                    end_state["ROMAN_FRONT_LEFT"]["y"] = max(0.28, end_state["ROMAN_FRONT_LEFT"]["y"] - 0.06)
+                    end_state["ROMAN_FRONT_RIGHT"]["y"] = min(0.72, end_state["ROMAN_FRONT_RIGHT"]["y"] + 0.06)
+                    end_state["ROMAN_FRONT_LEFT"]["gap_w"] = 0.45
+                    end_state["ROMAN_FRONT_RIGHT"]["gap_w"] = 0.45
+                    end_state["ENEMY_VANGUARD"]["x"] = max(0.40, end_state["ENEMY_VANGUARD"]["x"] - 0.10)
 
             elif ev_type == "FRONT_LINE_REPLACE" and not is_negated:
                 # Second line (Principes) moves forward continuously to meet enemy
@@ -651,7 +690,7 @@ def build_battle_state_timeline(
     all_events = [e for evts in events_by_shot.values() for e in evts]
     phase_flags = {
         "has_approach": any(e["event_type"] in ("ADVANCE", "APPROACH", "CHARGE", "IMPACT") for e in all_events),
-        "has_break": any(e["event_type"] == "BREAKTHROUGH" and not e.get("is_negated") for e in all_events),
+        "has_break": any(e["event_type"] == "BREAKTHROUGH" and not e.get("is_negated") and e.get("polarity") not in ("PERCEIVED", "HYPOTHETICAL", "NEGATED") for e in all_events),
         "has_relief": any(e["event_type"] in ("FRONT_LINE_REPLACE", "RESERVE_ADVANCE") for e in all_events),
         "has_flank": any(e["event_type"] in ("FLANK_LEFT", "FLANK_RIGHT", "ENCIRCLE") and not e.get("is_negated") for e in all_events),
     }

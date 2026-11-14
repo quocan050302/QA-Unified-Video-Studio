@@ -11,7 +11,15 @@ projects/*/timeline/voice.wav
 .DS_Store
 audio/music/
 audio/sfx/
+audio/real_sfx/
+audio/licenses/*.json
+!audio/licenses/.gitkeep
+!audio/licenses/*.schema.json
+!audio/licenses/*.example.json
 .test-runs/
 *.partial.mp4
+projects/v13_*/
+projects/test_*/
+temp_*.txt
 
 

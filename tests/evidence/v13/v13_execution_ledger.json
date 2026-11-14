@@ -1,0 +1,653 @@
+{
+  "suite": "V13_GEMINI_DIRECTOR_MATRIX",
+  "verdict": "V13_ALL_GATES_PASS",
+  "run_timestamp": 1794623473.3075774,
+  "total_elapsed_sec": 115.62,
+  "run_start_sha": "08e512bca3ed404840b5cbfee3f752b4608efb69",
+  "branch": "fix/Image-Shot",
+  "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "mode": "full",
+  "telemetry": {
+    "initial": {
+      "free_disk_gb": 58.15,
+      "total_disk_gb": 144.02,
+      "available_ram_mb": 5636.4,
+      "total_ram_mb": 32509.4,
+      "ram_percent": 82.7,
+      "cpu_count": 12
+    },
+    "final": {
+      "free_disk_gb": 58.08,
+      "total_disk_gb": 144.02,
+      "available_ram_mb": 7552.9,
+      "total_ram_mb": 32509.4,
+      "ram_percent": 76.8,
+      "cpu_count": 12
+    },
+    "min_disk_free_gb": 58.08,
+    "peak_ram_percent": 82.7
+  },
+  "gates_summary": {
+    "total": 30,
+    "passed": 30,
+    "failed": 0,
+    "skipped": 0
+  },
+  "gates": [
+    {
+      "gate_id": "T01",
+      "title": "Branch Guard & Production Remote Baseline",
+      "category": "SAFETY",
+      "status": "PASS",
+      "elapsed_sec": 1.508,
+      "command": "python scripts/guard_work_branch.py && git rev-parse HEAD",
+      "exit_code": 0,
+      "assertions": "3/3",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "branch": "fix/Image-Shot",
+        "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+      }
+    },
+    {
+      "gate_id": "T02",
+      "title": "Global Settings Read/Write & Atomic Persistence",
+      "category": "CONFIG",
+      "status": "PASS",
+      "elapsed_sec": 0.232,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "3/3",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "public_keys": [
+          "has_key",
+          "key_configured",
+          "key_source",
+          "provider",
+          "primary_model",
+          "fallback_models",
+          "fallback_enabled",
+          "retry_limit",
+          "cooldown_secs",
+          "max_concurrent_calls",
+          "ai_director_enabled",
+          "budgets",
+          "sfx_sources_status"
+        ]
+      }
+    },
+    {
+      "gate_id": "T03",
+      "title": "Secret Store OS Credential Security & Redaction",
+      "category": "SECURITY",
+      "status": "PASS",
+      "elapsed_sec": 0.012,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "5/5",
+      "artifacts": [],
+      "error_message": null,
+      "details": {}
+    },
+    {
+      "gate_id": "T04",
+      "title": "Test Connection Diagnostic & Key Absence",
+      "category": "DIAGNOSTIC",
+      "status": "PASS",
+      "elapsed_sec": 0.628,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "2/2",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "absent_status": "NEEDS_SETUP",
+        "invalid_status": "AUTH_INVALID"
+      }
+    },
+    {
+      "gate_id": "T05",
+      "title": "Dynamic Model Discovery & TTL Caching",
+      "category": "AI_CORE",
+      "status": "PASS",
+      "elapsed_sec": 0.001,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "3/3",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "models": [
+          "gemini-3.8-flash",
+          "gemini-3.7-flash",
+          "gemini-3.6-flash",
+          "gemini-3.5-flash"
+        ]
+      }
+    },
+    {
+      "gate_id": "T06",
+      "title": "3-Strike Transient Fallback (503/429)",
+      "category": "CIRCUIT",
+      "status": "PASS",
+      "elapsed_sec": 1.096,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "3/3",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "calls": {
+          "gemini-3.8-flash": 3,
+          "gemini-3.7-flash": 1
+        },
+        "primary_circuit_state": "OPEN"
+      }
+    },
+    {
+      "gate_id": "T07",
+      "title": "Terminal Failure Classification (Auth 401/403 & Quota 429)",
+      "category": "CIRCUIT",
+      "status": "PASS",
+      "elapsed_sec": 0.005,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "2/2",
+      "artifacts": [],
+      "error_message": null,
+      "details": {}
+    },
+    {
+      "gate_id": "T08",
+      "title": "Circuit Cooldown & Half-Open Probe Recovery",
+      "category": "CIRCUIT",
+      "status": "PASS",
+      "elapsed_sec": 1.102,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "4/4",
+      "artifacts": [],
+      "error_message": null,
+      "details": {}
+    },
+    {
+      "gate_id": "T09",
+      "title": "Structured Schema Validation & Negative Injection",
+      "category": "SCHEMA",
+      "status": "PASS",
+      "elapsed_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "3/3",
+      "artifacts": [],
+      "error_message": null,
+      "details": {}
+    },
+    {
+      "gate_id": "T10",
+      "title": "Grounding Actor, Polarity & B4 Regression",
+      "category": "GROUNDING",
+      "status": "PASS",
+      "elapsed_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "6/6",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "audited_shots": 6,
+        "facts": [
+          {
+            "shot_id": "s001",
+            "script_span": "The warlord orders full charge across the field.",
+            "polarity": "AFFIRMED",
+            "actor": "opponent",
+            "quote": "The warlord orders full charge across the field.",
+            "start_char": 0,
+            "end_char": 48
+          },
+          {
+            "shot_id": "s002",
+            "script_span": "They thought they had broken the line.",
+            "polarity": "PERCEIVED",
+            "actor": "unknown",
+            "quote": "They thought they had broken the line.",
+            "start_char": 49,
+            "end_char": 87
+          },
+          {
+            "shot_id": "s003",
+            "script_span": "What seemed like a breakthrough was an illusion.",
+            "polarity": "PERCEIVED",
+            "actor": "unknown",
+            "quote": "What seemed like a breakthrough was an illusion.",
+            "start_char": 88,
+            "end_char": 136
+          },
+          {
+            "shot_id": "s004",
+            "script_span": "The line did not break under pressure.",
+            "polarity": "NEGATED",
+            "actor": "unknown",
+            "quote": "The line did not break under pressure.",
+            "start_char": 137,
+            "end_char": 175
+          },
+          {
+            "shot_id": "s005",
+            "script_span": "If they broke the center, Rome would fall.",
+            "polarity": "HYPOTHETICAL",
+            "actor": "unknown",
+            "quote": "If they broke the center, Rome would fall.",
+            "start_char": 176,
+            "end_char": 218
+          },
+          {
+            "shot_id": "s006",
+            "script_span": "The Roman reserve stepped forward.",
+            "polarity": "AFFIRMED",
+            "actor": "roman",
+            "quote": "The Roman reserve stepped forward.",
+            "start_char": 219,
+            "end_char": 253
+          }
+        ],
+        "b4_opponent_attributed": true,
+        "b4_perceived_polarity_tagged": true
+      }
+    },
+    {
+      "gate_id": "T11",
+      "title": "Narration Event-to-Shot Timing & ID Ownership",
+      "category": "ALIGNMENT",
+      "status": "PASS",
+      "elapsed_sec": 0.004,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "4/4",
+      "artifacts": [],
+      "error_message": null,
+      "details": {}
+    },
+    {
+      "gate_id": "T12",
+      "title": "World-State Continuity & Teleport Rejection (B7)",
+      "category": "PHYSICS",
+      "status": "PASS",
+      "elapsed_sec": 0.001,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "2/2",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "valid_timeline_continuous": true,
+        "teleport_perturbation_detected": true,
+        "max_jump_detected": 0.25,
+        "b7_teleport_rejected": true
+      }
+    },
+    {
+      "gate_id": "T13",
+      "title": "Manual Shot & Asset Byte-for-Byte Protection",
+      "category": "INTEGRITY",
+      "status": "PASS",
+      "elapsed_sec": 0.005,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "2/2",
+      "artifacts": [],
+      "error_message": null,
+      "details": {}
+    },
+    {
+      "gate_id": "T14",
+      "title": "AI Director Offline Rule Fallback",
+      "category": "OFFLINE",
+      "status": "PASS",
+      "elapsed_sec": 0.01,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "1/1",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "source": "offline_grounded_rule_fallback"
+      }
+    },
+    {
+      "gate_id": "T15",
+      "title": "Hook 0-30s Evaluation & Negative Still Rejection",
+      "category": "HOOK",
+      "status": "PASS",
+      "elapsed_sec": 3.74,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "1/1",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "status": "EVALUATED",
+        "metric_type": "EDITORIAL_PROXY",
+        "first_3s_action_pass": true,
+        "first_3s_motion_pct": 1.94,
+        "twist_20_30s_action_pass": true,
+        "twist_motion_pct": 1.95,
+        "safe_zones_pass": true,
+        "safe_zone_notes": [],
+        "total_frames_extracted": 9
+      }
+    },
+    {
+      "gate_id": "T22",
+      "title": "Subject Motion vs Global Camera Pan Differentiation",
+      "category": "COMPUTER_VISION",
+      "status": "PASS",
+      "elapsed_sec": 0.012,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "1/1",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "motion_detected": true,
+        "mean_subject_motion_pct": 4.33,
+        "has_frozen_cut": false,
+        "frames_analyzed": 2,
+        "transitions": [
+          {
+            "t0": 0.0,
+            "t1": 1.0,
+            "camera_pan_dx": 12.0,
+            "camera_pan_dy": -4.0,
+            "subject_motion_pct": 4.33,
+            "is_frozen": false
+          }
+        ]
+      }
+    },
+    {
+      "gate_id": "T20",
+      "title": "Real SFX Ingestion, Path Traversal & License Provenance",
+      "category": "SFX",
+      "status": "PASS",
+      "elapsed_sec": 0.218,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "4/4",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "path_traversal_blocked": true,
+        "duplicate_detection_verified": true,
+        "real_sfx_resolution_verified": true,
+        "license_audit_passed": true
+      }
+    },
+    {
+      "gate_id": "T21",
+      "title": "Mixer REAL vs PROCEDURAL Source Truth",
+      "category": "AUDIO",
+      "status": "PASS",
+      "elapsed_sec": 0.001,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "1/1",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "resolved_source": "PROCEDURAL"
+      }
+    },
+    {
+      "gate_id": "T23",
+      "title": "UI HTTP E2E on Loopback Port",
+      "category": "E2E",
+      "status": "PASS",
+      "elapsed_sec": 0.524,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "4/4",
+      "artifacts": [],
+      "error_message": null,
+      "details": {}
+    },
+    {
+      "gate_id": "T27",
+      "title": "Concurrency Race & Mid-Flight Invalidation",
+      "category": "CONCURRENCY",
+      "status": "PASS",
+      "elapsed_sec": 0.004,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "1/1",
+      "artifacts": [],
+      "error_message": null,
+      "details": {}
+    },
+    {
+      "gate_id": "T26",
+      "title": "Multi-Renderer Concurrency Stress & Overlapping Wall-Time",
+      "category": "STRESS",
+      "status": "PASS",
+      "elapsed_sec": 48.718,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "2/2",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "concurrent_duration_sec": 48.72,
+        "worker_a": {
+          "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_squire_16x9\\build\\preview.mp4",
+          "size_bytes": 5466870,
+          "width": 1920,
+          "height": 1080,
+          "expected_width": 1920,
+          "expected_height": 1080,
+          "dimensions_correct": true,
+          "video_codec": "h264",
+          "has_audio": true,
+          "audio_codec": "aac",
+          "duration_sec": 30
+        },
+        "worker_b": {
+          "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_dem_16x9\\build\\preview.mp4",
+          "size_bytes": 1095940,
+          "width": 1920,
+          "height": 1080,
+          "expected_width": 1920,
+          "expected_height": 1080,
+          "dimensions_correct": true,
+          "video_codec": "h264",
+          "has_audio": true,
+          "audio_codec": "aac",
+          "duration_sec": 30
+        }
+      }
+    },
+    {
+      "gate_id": "T16",
+      "title": "Squire Battle True 1080p 16:9 MP4",
+      "category": "MEDIA",
+      "status": "PASS",
+      "elapsed_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "0/0",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_squire_16x9\\build\\preview.mp4",
+        "size_bytes": 5466870,
+        "width": 1920,
+        "height": 1080,
+        "expected_width": 1920,
+        "expected_height": 1080,
+        "dimensions_correct": true,
+        "video_codec": "h264",
+        "has_audio": true,
+        "audio_codec": "aac",
+        "duration_sec": 30
+      }
+    },
+    {
+      "gate_id": "T17",
+      "title": "Squire Battle 1080x1920 9:16 Shorts MP4",
+      "category": "MEDIA",
+      "status": "PASS",
+      "elapsed_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "0/0",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_squire_9x16\\build\\preview.mp4",
+        "size_bytes": 5279650,
+        "width": 1080,
+        "height": 1920,
+        "expected_width": 1080,
+        "expected_height": 1920,
+        "dimensions_correct": true,
+        "video_codec": "h264",
+        "has_audio": true,
+        "audio_codec": "aac",
+        "duration_sec": 30
+      }
+    },
+    {
+      "gate_id": "T18",
+      "title": "DEM Self-Improvement 1080p 16:9 MP4",
+      "category": "MEDIA",
+      "status": "PASS",
+      "elapsed_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "0/0",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_dem_16x9\\build\\preview.mp4",
+        "size_bytes": 1095940,
+        "width": 1920,
+        "height": 1080,
+        "expected_width": 1920,
+        "expected_height": 1080,
+        "dimensions_correct": true,
+        "video_codec": "h264",
+        "has_audio": true,
+        "audio_codec": "aac",
+        "duration_sec": 30
+      }
+    },
+    {
+      "gate_id": "T19",
+      "title": "DEM Self-Improvement 1080x1920 9:16 Shorts MP4",
+      "category": "MEDIA",
+      "status": "PASS",
+      "elapsed_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "0/0",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v13_dem_9x16\\build\\preview.mp4",
+        "size_bytes": 1132932,
+        "width": 1080,
+        "height": 1920,
+        "expected_width": 1080,
+        "expected_height": 1920,
+        "dimensions_correct": true,
+        "video_codec": "h264",
+        "has_audio": true,
+        "audio_codec": "aac",
+        "duration_sec": 30
+      }
+    },
+    {
+      "gate_id": "T28",
+      "title": "FFprobe Stream & Resolution Verification",
+      "category": "VERIFICATION",
+      "status": "PASS",
+      "elapsed_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "4/4",
+      "artifacts": [],
+      "error_message": null,
+      "details": {}
+    },
+    {
+      "gate_id": "T24",
+      "title": "Full Legacy Regression Execution",
+      "category": "REGRESSION",
+      "status": "PASS",
+      "elapsed_sec": 0.87,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "2/2",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "doctor": "PASS",
+        "validator": "PASS"
+      }
+    },
+    {
+      "gate_id": "T25",
+      "title": "Historical Replay & Fixture Backtest",
+      "category": "BACKTEST",
+      "status": "PASS",
+      "elapsed_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "1/1",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "historical_projects_count": 3,
+        "fixtures": [
+          ".backup_why_knights",
+          "why_knights_could_actually",
+          "why_knights_could_actually_315"
+        ]
+      }
+    },
+    {
+      "gate_id": "T29",
+      "title": "Truth Audit (No Fake Pass, No Secret Leak)",
+      "category": "AUDIT",
+      "status": "PASS",
+      "elapsed_sec": 0.0,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "28/28",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "scanned_gates_count": 28
+      }
+    },
+    {
+      "gate_id": "T30",
+      "title": "Remote Post-Push Attestation Preflight",
+      "category": "RELEASE",
+      "status": "PASS",
+      "elapsed_sec": 3.26,
+      "command": "",
+      "exit_code": 0,
+      "assertions": "1/1",
+      "artifacts": [],
+      "error_message": null,
+      "details": {
+        "current_head": "08e512bca3ed404840b5cbfee3f752b4608efb69",
+        "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+      }
+    }
+  ]
+}

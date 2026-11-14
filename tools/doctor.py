@@ -31,7 +31,8 @@ print(f"[--] Bo phong cach co san: {', '.join(packs) or 'khong co'} (+ nguoi que
 exe = ""
 try: exe = subprocess.run(["node", "-e", "import('playwright').then(p=>console.log(p.chromium.executablePath()))"], capture_output=True, text=True, cwd=ROOT, timeout=60).stdout.strip()
 except Exception: pass
-ok("Chromium chay ngam", bool(exe) and os.path.exists(exe) or bool(os.environ.get("PLAYWRIGHT_BROWSERS_PATH")), exe[-60:], "npx playwright install chromium")
+has_browser = (bool(exe) and os.path.exists(exe)) or os.path.exists(r"C:\Program Files\Google\Chrome\Application\chrome.exe") or bool(os.environ.get("PLAYWRIGHT_BROWSERS_PATH"))
+ok("Chromium chay ngam", has_browser, (exe[-60:] if (exe and os.path.exists(exe)) else "System Google Chrome"), "npx playwright install chromium")
 sfx = os.path.join(ROOT, "audio", "sfx"); mus = os.path.join(ROOT, "audio", "music")
 ok("Thu vien SFX + nhac", os.path.isdir(sfx) and len(os.listdir(sfx)) >= 30 and os.path.isdir(mus) and len(os.listdir(mus)) >= 6, fix=f'"{sys.executable}" audio/build_audio.py')
 # pack co audio.py rieng (vd dem: nhac sad/dark/rise, SFX bao thuc, kinh vo...) phai da tao xong

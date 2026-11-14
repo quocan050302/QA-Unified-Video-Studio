@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SFXLicenseProvenance",
+  "description": "Provenance and license metadata for imported real sound effects.",
+  "type": "object",
+  "required": [
+    "license_id",
+    "name",
+    "sha256",
+    "license_type",
+    "commercial_use_allowed",
+    "imported_at"
+  ],
+  "properties": {
+    "license_id": {
+      "type": "string",
+      "description": "Identifier for the license or asset pack (e.g., sonniss_gdc_2024, freesound_cc0)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Canonical name of the sound effect"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of the canonical 48kHz WAV audio file"
+    },
+    "license_type": {
+      "type": "string",
+      "enum": ["CC0", "RoyaltyFree_CommercialSafe", "CustomLicensed", "EditorialOnly"]
+    },
+    "source_origin": {
+      "type": "string",
+      "description": "URL, pack name, or author origin"
+    },
+    "author": {
+      "type": "string"
+    },
+    "attribution_required": {
+      "type": "boolean"
+    },
+    "attribution_text": {
+      "type": ["string", "null"]
+    },
+    "commercial_use_allowed": {
+      "type": "boolean"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "duration_sec": {
+      "type": "number"
+    },
+    "imported_at": {
+      "type": "number"
+    }
+  }
+}

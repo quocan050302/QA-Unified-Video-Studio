@@ -508,6 +508,14 @@ def task_commands(action, p: Path, params: dict = None):
         if ensure_project(p).get('pack') != 'squire':
             raise ValueError('Battle Choreography chỉ hỗ trợ pack Squire.')
         return [[py, 'tools/battle_choreo.py', '--project', proj, '--apply']]
+    if action == 'review-director':
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi review director.')
+        return [[py, 'tools/ai_director.py', '--project', proj, '--review']]
+    if action == 'apply-director':
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi apply director.')
+        return [[py, 'tools/ai_director.py', '--project', proj, '--apply']]
     if action == 'preview-battle':
         if not shots:
             raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi preview battle.')
@@ -697,6 +705,22 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
             return False, f"Battle review reported unexpected status: {rev_data.get('status')}"
         return True, ''
 
+    if action == 'review-director':
+        plan_file = p / 'build' / 'director_plan.json'
+        rev_file = p / 'build' / 'director_review.json'
+        if not plan_file.is_file() and not rev_file.is_file():
+            return ('REVIEWED' in log_text or 'SUCCESS' in log_text), 'Director plan review failed'
+        return True, ''
+
+    if action == 'apply-director':
+        rev_file = p / 'build' / 'director_review.json'
+        if not rev_file.is_file() or rev_file.stat().st_mtime < started - 2:
+            return False, 'build/director_review.json was not created or is stale'
+        rev_data = load_json(rev_file, {}) or {}
+        if rev_data.get('status') != 'APPLIED':
+            return False, f'Director apply failed with status: {rev_data.get("status")}'
+        return True, ''
+
     if action == 'apply-battle':
         diff_file = p / 'build' / 'battle_diff.json'
         rev_file = p / 'build' / 'battle_review.json'
@@ -867,8 +891,10 @@ class Handler(BaseHTTPRequestHandler):
         if length < 0 or length > max_size: raise ValueError('Request body exceeds allowed size')
         return self.rfile.read(length)
 
-    def data(self):
-        try: return json.loads(self.body().decode('utf-8'))
+    def data(self, default=None):
+        raw = self.body().decode('utf-8').strip()
+        if not raw: return (default if default is not None else {})
+        try: return json.loads(raw)
         except (ValueError, UnicodeDecodeError) as exc: raise ValueError('Expected valid JSON') from exc
 
     def do_GET(self):
@@ -878,6 +904,18 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send(200, (WEB / 'index.html').read_bytes(), 'text/html; charset=utf-8')
             if parts == ['api', 'status']:
                 return self.send(200, status())
+            if parts == ['api', 'global-settings']:
+                from tools.global_settings import get_global_settings_public
+                return self.send(200, get_global_settings_public())
+            if parts == ['api', 'global-settings', 'models']:
+                from tools.gemini_client import list_supported_director_models
+                return self.send(200, {'models': list_supported_director_models()})
+            if parts == ['api', 'ai', 'model-health']:
+                from tools.gemini_client import get_model_health
+                return self.send(200, {'health': get_model_health()})
+            if parts == ['api', 'sfx', 'status']:
+                from tools.sfx_library import audit_sfx_assets, list_real_sfx
+                return self.send(200, {'audit': audit_sfx_assets(), 'assets': list_real_sfx()})
             if parts == ['api', 'projects']:
                 valid, rec = scan_projects()
                 return self.send(200, {'projects': valid, 'recoverable': rec})
@@ -969,6 +1007,33 @@ class Handler(BaseHTTPRequestHandler):
             parts = self.parse_parts()
             if parts == ['api', 'projects']:
                 return self.send(201, {'project': create_project(self.data())})
+            if parts == ['api', 'global-settings']:
+                from tools.global_settings import save_global_settings
+                save_global_settings(self.data())
+                return self.send(200, {'saved': True})
+            if parts == ['api', 'global-settings', 'key']:
+                from tools.global_settings import store_api_key_securely
+                data = self.data()
+                key = data.get('key', '')
+                if not key: raise ValueError('Key is required')
+                store_api_key_securely(key)
+                return self.send(200, {'saved': True})
+            if parts == ['api', 'global-settings', 'key', 'delete']:
+                from tools.global_settings import delete_api_key_securely
+                deleted = delete_api_key_securely()
+                return self.send(200, {'deleted': deleted})
+            if parts == ['api', 'global-settings', 'test']:
+                from tools.gemini_client import test_gemini_connection
+                data = self.data()
+                res = test_gemini_connection(api_key=data.get('key'))
+                return self.send(200, res)
+            if parts == ['api', 'sfx', 'import']:
+                from tools.sfx_library import import_sfx
+                data = self.data()
+                src = data.get('source_path', '')
+                meta = data.get('metadata', {})
+                res = import_sfx(src, meta)
+                return self.send(200, res)
             if parts == ['api', 'projects', 'recover']:
                 d = self.data()
                 proj = recover_project(d.get('id', ''), pack=d.get('pack'), title=d.get('title'), aspect=d.get('aspect', '16:9'))

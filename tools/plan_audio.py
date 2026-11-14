@@ -29,28 +29,64 @@ except ImportError:
 
 
 def discover_sfx_library(root: Path) -> Dict[str, Dict[str, Any]]:
-    """Scan existing audio/sfx directory for real canonical WAV assets."""
-    sfx_dir = root / "audio" / "sfx"
+    """Scan real_sfx and audio/sfx directories for assets, prioritizing licensed real assets."""
     lib: Dict[str, Dict[str, Any]] = {}
-    if not sfx_dir.exists():
-        return lib
 
-    for p in sfx_dir.glob("*.wav"):
-        base = p.stem
-        hit_m = re.search(r"hitAt(\d+)ms", base)
-        hit_ms = int(hit_m.group(1)) if hit_m else 0
-        canonical = re.sub(r"_hitAt\d+ms", "", base)
-        file_stat = p.stat()
-        lib[canonical] = {
-            "name": canonical,
-            "filename": p.name,
-            "path": str(p),
-            "size": file_stat.st_size,
-            "hit_offset": hit_ms / 1000.0,
-        }
-        # Also store original stem if different
-        if base != canonical:
-            lib[base] = lib[canonical]
+    # 1. Real SFX directory (highest priority)
+    real_dir = root / "audio" / "real_sfx"
+    lic_dir = root / "audio" / "licenses"
+    if real_dir.exists() and lic_dir.exists():
+        for p in real_dir.glob("*.wav"):
+            base = p.stem
+            m_sha = re.search(r"_([a-f0-9]{8,64})$", base)
+            lic_data = {}
+            if m_sha:
+                sha_prefix = m_sha.group(1)
+                for l_file in lic_dir.glob("*.json"):
+                    if l_file.stem.startswith(sha_prefix):
+                        try:
+                            with open(l_file, "r", encoding="utf-8") as lf:
+                                lic_data = json.load(lf)
+                            break
+                        except Exception:
+                            pass
+            clean_name = re.sub(r"_[a-f0-9]{8,64}$", "", base)
+            item = {
+                "name": clean_name,
+                "filename": p.name,
+                "path": str(p),
+                "size": p.stat().st_size,
+                "hit_offset": 0.0,
+                "asset_source": "REAL",
+                "license_id": lic_data.get("license_id", "user_licensed"),
+                "sha256": lic_data.get("sha256"),
+            }
+            lib[clean_name] = item
+            lib[base] = item
+
+    # 2. Procedural SFX directory (fallback)
+    sfx_dir = root / "audio" / "sfx"
+    if sfx_dir.exists():
+        for p in sfx_dir.glob("*.wav"):
+            base = p.stem
+            hit_m = re.search(r"hitAt(\d+)ms", base)
+            hit_ms = int(hit_m.group(1)) if hit_m else 0
+            canonical = re.sub(r"_hitAt\d+ms", "", base)
+            file_stat = p.stat()
+            if canonical not in lib:
+                item = {
+                    "name": canonical,
+                    "filename": p.name,
+                    "path": str(p),
+                    "size": file_stat.st_size,
+                    "hit_offset": hit_ms / 1000.0,
+                    "asset_source": "PROCEDURAL",
+                    "license_id": "internal_procedural",
+                    "sha256": None,
+                }
+                lib[canonical] = item
+                if base != canonical:
+                    lib[base] = item
 
     return lib
 
