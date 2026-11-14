@@ -1,0 +1,88 @@
+{
+  "audit_version": "v14.3",
+  "audit_timestamp": "2026-11-14T06:54:00Z",
+  "repository": "quocan050302/QA-Unified-Video-Studio",
+  "branch": "fix/Image-Shot",
+  "local_head_sha": "0834332d3081dfa7e013e7f93769bebdc38d49f8",
+  "remote_fix_image_shot_sha": "0834332d3081dfa7e013e7f93769bebdc38d49f8",
+  "remote_production_baseline_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "environment": {
+    "os": "macOS (Darwin arm64)",
+    "python_version": "3.13",
+    "disk_available_gib": 19.0,
+    "gemini_api_status": "DURABLY_STORED_KEYRING",
+    "gemini_live_probe": "CONNECTED (gemini-3.6-flash)",
+    "tts_engine": "macOS speech synthesizer (Daniel en_GB, Samantha en_US) + tools/prep_voice.py"
+  },
+  "flaws_detected_in_v14_2": [
+    {
+      "id": "FLAW-01",
+      "severity": "P0",
+      "module": "scripts/run_v14_2_matrix.py::render_project_bounded",
+      "description": "Legacy cache check returned RENDER_CACHED_OK based solely on build/preview.mp4 > 50KB without validating SHA256 fingerprints of storyboard, voice, timeline, or renderer code modules."
+    },
+    {
+      "id": "FLAW-02",
+      "severity": "P0",
+      "module": "scripts/test_v14_2_camera.py::run_d30,run_d31,run_d32",
+      "description": "Cross-project evidence fallback permitted Medieval/Samurai tests to fall back to Roman MP4 and format tests to fall back to V14.1 artifacts."
+    },
+    {
+      "id": "FLAW-03",
+      "severity": "P0",
+      "module": "scripts/run_v14_2_matrix.py & tests D34/D35",
+      "description": "Historical backtest executed node render.mjs --check --scale 0.25 (dry-run syntax check) but misreported it as 'Re-rendered & Verified'."
+    },
+    {
+      "id": "FLAW-04",
+      "severity": "P0",
+      "module": "v14_2_camera_grammar_audit.json & tools/cinematic_camera.py",
+      "description": "Audit was computed from plan_camera_sequence data instead of actual decoded video frames and camera logs, reporting frontal_shots_count=0 despite frontal shots appearing in contact sheets."
+    },
+    {
+      "id": "FLAW-05",
+      "severity": "P1",
+      "module": "scripts/test_v14_2_camera.py::run_d28",
+      "description": "Concurrency gate used asyncio.sleep(0.05) dummy tasks rather than verifying two actual concurrent video render processes."
+    },
+    {
+      "id": "FLAW-06",
+      "severity": "P0",
+      "module": "tools/cinematic_camera.py::plan_camera_sequence",
+      "description": "Repetitive over-the-shoulder (OTS) viewpoints (6/22 shots) and giant foreground helmets obstructing scene readability."
+    },
+    {
+      "id": "FLAW-07",
+      "severity": "P0",
+      "module": "projects/v14_2_roman_film",
+      "description": "Existing films are 77s test narratives; no genuine 480-600s (8-10 min) production film exists yet."
+    },
+    {
+      "id": "FLAW-08",
+      "severity": "P1",
+      "module": "tools/ai_director.py::compile_director_plan_to_visuals",
+      "description": "Fixed coordinates and static hero positions in offline fallback; lacking continuous character bible across multi-shot sequences."
+    },
+    {
+      "id": "FLAW-09",
+      "severity": "P1",
+      "module": "tools/plan_audio.py & tools/sfx_library.py",
+      "description": "Hardcoded 'lab/treadmill' music heuristics from legacy templates; missing clear distinction between real licensed SFX and procedural synthesis."
+    },
+    {
+      "id": "FLAW-10",
+      "severity": "P1",
+      "module": "scripts/resource_guard.py",
+      "description": "DEFAULT_MIN_DISK_GB was 2.0GB, insufficient for multi-minute 1080p rendering runs on a host with ~19GB free disk."
+    }
+  ],
+  "action_plan_v14_3": {
+    "phase_1_cache_truth": "Implement scripts/production_fingerprint.py with InputManifest and strict SHA256 receipt validation.",
+    "phase_2_long_form_production": "Create original 480-600s Roman military history project (Cannae / Roman Legionary tactics) with verified historical claims and Daniel narration voice.",
+    "phase_3_visual_correction": "Implement CharacterBible in tools/ai_director.py and cinematic_camera.py to eliminate repetitive OTS and enforce character consistency.",
+    "phase_4_long_render": "Execute fresh 1080p long film render with streaming ffmpeg encoding and resource telemetry.",
+    "phase_5_cross_genre_regression": "Execute 4-format regression, Medieval/Samurai and DEM films, and real before/after backtests on copies of squire-mau and selfimprove-mau.",
+    "phase_6_evidence": "Execute 36 gates (P01-P36) and emit truthful JSON ledgers and review packet.",
+    "phase_7_git_push": "Verify git guard and push cleanly to fix/Image-Shot."
+  }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "B01",
+    "title": "The Deceptive Front Line",
+    "speaker": "NARRATOR",
+    "lines_count": 11
+  },
+  {
+    "id": "B02",
+    "title": "The Architecture of the Quincunx",
+    "speaker": "NARRATOR",
+    "lines_count": 15
+  },
+  {
+    "id": "B03",
+    "title": "The Physics of Hand-to-Hand Combat",
+    "speaker": "NARRATOR",
+    "lines_count": 10
+  },
+  {
+    "id": "B04",
+    "title": "The Centurion's Whistle: Rank Replacement",
+    "speaker": "NARRATOR",
+    "lines_count": 15
+  },
+  {
+    "id": "B05",
+    "title": "When the Front Line Yields: The Second Shock",
+    "speaker": "NARRATOR",
+    "lines_count": 11
+  },
+  {
+    "id": "B06",
+    "title": "It Has Come Down to the Triarii",
+    "speaker": "NARRATOR",
+    "lines_count": 12
+  }
+]

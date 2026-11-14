@@ -20,6 +20,10 @@ audio/licenses/*.json
 *.partial.mp4
 projects/v13_*/
 projects/v14_*/
+!projects/v14_3_first_long_film/
+projects/v14_3_first_long_film/out/
+projects/v14_3_first_long_film/timeline/*.wav
+projects/v14_3_first_long_film/story/*.backup.json
 projects/test_*/
 temp_*.txt
 pnpm-lock.yaml

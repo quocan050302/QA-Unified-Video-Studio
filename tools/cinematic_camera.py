@@ -227,6 +227,7 @@ def plan_camera_sequence(
     prev_view: Optional[CinematicViewpoint] = None
     prev_scale: Optional[CameraScale] = None
     prev_axis: str = "left_to_right"
+    prev_actor: Optional[str] = None
 
     total_shots = len(shots)
 
@@ -311,14 +312,15 @@ def plan_camera_sequence(
             chosen_scale = "extreme_wide" if any(w in line_lower for w in ("victory", "triumphs", "total")) else "wide"
             chosen_view = "front_three_quarter_right"
         else:
-            # Rotating variety for middle & general narrative
+            # Rotating variety for middle & general narrative (purposeful non-frontal angles)
             pool: List[CinematicViewpoint] = [
                 "profile_left",
                 "front_three_quarter_left",
-                "over_shoulder_right",
+                "rear",
                 "rear_three_quarter_right",
                 "profile_right",
                 "front_three_quarter_right",
+                "rear_three_quarter_left",
             ]
             # Pick a view that does not duplicate previous shot
             candidates = [v for v in pool if v != prev_view]
@@ -330,20 +332,32 @@ def plan_camera_sequence(
             if chosen_view == "front":
                 chosen_view = "profile_left"
             elif chosen_view == "front_three_quarter_left":
-                chosen_view = "over_shoulder_right"
+                chosen_view = "rear_three_quarter_left"
             else:
                 chosen_view = "profile_right"
 
         # 4. Continuity & 180-degree axis handling
+        neutral_views = {"top_down", "high_angle", "low_angle", "rear", "front", "map"}
+        left_views = {"profile_left", "front_three_quarter_left", "over_shoulder_left", "rear_three_quarter_left"}
+        right_views = {"profile_right", "front_three_quarter_right", "over_shoulder_right", "rear_three_quarter_right"}
+
         current_axis = prev_axis
-        if chosen_view in ("profile_left", "front_three_quarter_left", "over_shoulder_left"):
+        if chosen_view in left_views:
             current_axis = "left_to_right"
-        elif chosen_view in ("profile_right", "front_three_quarter_right", "over_shoulder_right"):
+        elif chosen_view in right_views:
             current_axis = "right_to_left"
+
+        is_neutral_transition = (
+            chosen_view in neutral_views
+            or prev_view in neutral_views
+            or prev_view is None
+        )
+        is_reverse_angle = (actor != prev_actor and prev_actor is not None)
+        axis_conforming = (current_axis == prev_axis or is_neutral_transition or is_reverse_angle)
 
         cut_data = {
             "type": "cut",
-            "matches_previous_axis": (current_axis == prev_axis or chosen_view in ("top_down", "high_angle", "rear")),
+            "matches_previous_axis": axis_conforming,
             "continuity_anchor": actor,
         }
 
@@ -389,6 +403,7 @@ def plan_camera_sequence(
         prev_view = chosen_view
         prev_scale = chosen_scale
         prev_axis = current_axis
+        prev_actor = actor
 
     return camera_plans
 

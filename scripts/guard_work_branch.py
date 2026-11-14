@@ -90,17 +90,30 @@ def check_git_guard(phase: str = "preflight") -> dict:
     except Exception as e:
         errors.append(f"Failed to check remote fix/Image-Shot SHA: {e}")
 
-    # 5. Check working tree dirty status
+    if phase == "postpush":
+        if remote_fix_sha != local_head:
+            errors.append(f"POSTPUSH VERIFICATION FAILED: Remote fix/Image-Shot ({remote_fix_sha}) != local HEAD ({local_head})")
+
+    # 5. Check working tree dirty status and sensitive files
     dirty_files = []
+    sensitive_patterns = [".mp4", ".key", ".pem", ".env", "temp_frames", "build/"]
     try:
         status_lines = run_git(["status", "--porcelain=v1"]).splitlines()
-        dirty_files = [line.strip() for line in status_lines if line.strip()]
+        for line in status_lines:
+            s_line = line.strip()
+            if not s_line:
+                continue
+            dirty_files.append(s_line)
+            # Check for sensitive staged files
+            for pat in sensitive_patterns:
+                if pat in s_line and s_line.startswith(("A", "M")):
+                    errors.append(f"SECURITY VIOLATION: Attempting to commit sensitive/temporary pattern '{pat}' in '{s_line}'")
     except Exception as e:
         errors.append(f"Failed to check git status: {e}")
 
     is_valid = len(errors) == 0
     attestation = {
-        "guard_version": "v14.2",
+        "guard_version": "v14.3",
         "phase": phase,
         "timestamp": timestamp,
         "is_valid": is_valid,

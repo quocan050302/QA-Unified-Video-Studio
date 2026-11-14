@@ -1,0 +1,74 @@
+[  0.50 -   7.95] s001 NARRATOR In the summer of two hundred and sixteen BC, eighty thousand Roman legionaries formed an iron wall on the plain of Cannae.
+[  8.35 -  14.83] s002 NARRATOR To a Celtic or Iberian warrior facing them, the front rank looked thin, almost fragile.
+[ 15.23 -  21.15] s003 NARRATOR A single violent charge from a veteran warband could punch straight through that first line of shields.
+[ 21.55 -  24.43] s004 NARRATOR Yet Roman commanders welcomed that breakthrough.
+[ 24.83 -  30.73] s005 NARRATOR Because breaking the first Roman cohort was not a victory. It was stepping into a meat grinder.
+[ 31.13 -  37.59] s006 NARRATOR To understand why, we have to look past Hollywood myths and examine the physical engineering of the legion.
+[ 37.99 -  44.33] s007 NARRATOR Every man in the front line carried a heavy curved plywood scutum, weighing nearly ten kilograms.
+[ 44.73 -  49.42] s008 NARRATOR They stood not in a chaotic mob, but in strict three-foot combat intervals.
+[ 49.82 -  55.58] s009 NARRATOR When the enemy charged, they did not meet a soft target; they met an anchored iron wall.
+[ 55.98 -  62.62] s010 NARRATOR Fifteen paces out, thousands of heavy iron-tipped javelins, the pila, whistled through the air.
+[ 63.02 -  69.29] s011 NARRATOR The soft iron shanks bent upon impact, pinning enemy shields together and dragging down their guard.
+[ 69.69 -  74.52] s012 NARRATOR Most ancient armies deployed their men in one massive, solid phalanx.
+[ 74.92 -  80.98] s013 NARRATOR If a phalanx broke anywhere along its line, the entire formation shattered like glass.
+[ 81.38 -  86.46] s014 NARRATOR The Romans learned that lesson the hard way at the Allia in three hundred and ninety BC.
+[ 86.87 -  94.44] s015 NARRATOR In response, they abandoned the single line and invented the Triplex Acies, arranged like the five dots on a die.
+[ 94.84 - 100.85] s016 NARRATOR In the front stood the Hastati: young, aggressive men in the prime of their physical strength.
+[101.25 - 108.45] s017 NARRATOR Behind them, spaced across the intervals, stood the Principes: seasoned veterans with superior armor.
+[108.85 - 115.65] s018 NARRATOR And in the far rear waited the Triarii: kneeling grimly on one knee behind massive wooden thrusting spears.
+[116.05 - 121.23] s019 NARRATOR Between each maniple was an open gap roughly equal to the front of the unit itself.
+[121.63 - 128.34] s020 NARRATOR To an invading warlord, those gaps looked like glaring invitations to encircle and split the front line.
+[128.74 - 132.59] s021 NARRATOR In reality, the gaps were calculated killing lanes.
+[132.99 - 137.91] s022 NARRATOR Any warrior entering an interval was immediately enveloped and struck from both sides.
+[138.31 - 145.65] s022b NARRATOR Behind the lines, every Roman legionary had marched twenty miles carrying forty pounds of entrenching gear.
+[146.05 - 152.55] s022c NARRATOR They called themselves Marius's Mules, because physical endurance was considered their deadliest weapon.
+[152.95 - 159.17] s022d NARRATOR Every single night on campaign, the legion fortified a complete rampart and ditch before sleeping.
+[159.57 - 166.61] s022e NARRATOR Discipline was not an abstract ideal in Rome; it was a matter of daily, exhausting physical engineering.
+[167.01 - 173.60] s023 NARRATOR Modern movies portray ancient battle as a continuous, frenzied brawl lasting hours without a pause.
+[174.01 - 177.14] s024 NARRATOR Human biology makes that completely impossible.
+[177.54 - 185.62] s025 NARRATOR A soldier swinging a four-pound sword while holding a twenty-pound shield reaches total muscular exhaustion in less than ten minutes.
+[186.02 - 193.43] s026 NARRATOR His heart rate soars above one hundred and eighty beats per minute, his lactic acid spikes, and his arms turn to lead.
+[193.83 - 198.24] s027 NARRATOR Historians call the real dynamic of ancient combat pulse fighting.
+[198.64 - 206.60] s028 NARRATOR Two battle lines would clash violently for a few brutal minutes, then step back just out of sword reach to catch their breath.
+[207.01 - 214.81] s029 NARRATOR During these pauses, men hurled insults, threw stray missiles, and gathered the courage for another clash.
+[215.21 - 222.34] s030 NARRATOR In an army without tactical rotation, the men in the very front had to fight every single pulse until they collapsed.
+[222.74 - 229.66] s031 NARRATOR Eventually, pure biological fatigue caught up with them. And when their knees buckled, they were cut down.
+[230.06 - 233.80] s032 NARRATOR Rome solved this fatigue crisis with military clockwork.
+[234.20 - 240.59] s033 NARRATOR Deep inside the Hastati lines, a Centurion watched his front-rank legionaries begin to tire.
+[240.99 - 246.10] s034 NARRATOR Their shields were heavy with embedded javelins; their sword thrusts were slowing down.
+[246.50 - 250.01] s035 NARRATOR The Centurion blew a sharp blast on his bronze whistle.
+[250.41 - 257.91] s036 NARRATOR Instantly, the men behind the front rank took one aggressive step forward, interlocking their scuta across the gaps.
+[258.31 - 263.26] s037 NARRATOR The exhausted front-line soldiers slipped backward through the files into safety.
+[263.66 - 270.42] s038 NARRATOR Within fifteen seconds, the enemy warrior found himself facing an entirely fresh Roman soldier.
+[270.82 - 278.83] s039 NARRATOR While the barbarian gasped for breath with bleeding lungs, his new opponent was energetic, hydrated, and ready to kill.
+[279.23 - 286.75] s040 NARRATOR The tired legionary walked to the rear, took a sip of posca, rinsed his dust-filled eyes, and caught his breath.
+[287.15 - 292.35] s041 NARRATOR Twenty minutes later, rested and steady, he stepped back into the rotation.
+[292.75 - 299.86] s042 NARRATOR This internal rotation meant Rome fought with ten thousand men, but struck with the endurance of thirty thousand.
+[300.26 - 305.93] s043 NARRATOR No single shock charge could overpower a system that continuously replaced its spent energy.
+[306.33 - 314.62] s043b NARRATOR Behind each century stood the Optio, the second-in-command, wielding a long wooden staff to physically maintain the ranks.
+[315.02 - 322.01] s043c NARRATOR If a nervous recruit tried to flee, the Optio's staff pushed him firmly back into the protective shield wall.
+[322.41 - 329.91] s043d NARRATOR The Signifer raised the cohort standard high above the dust, giving every soldier a visual anchor amidst the deafening chaos.
+[330.31 - 336.72] s043e NARRATOR Even in blinding dust, a legionary always knew exactly which file to step into and when to strike.
+[337.12 - 342.14] s044 NARRATOR What happened if the enemy's charge was too massive even for the Hastati to contain?
+[342.54 - 350.11] s045 NARRATOR In three hundred and forty BC, against the fierce Latin League, the front Roman line was pushed back step by step.
+[350.51 - 357.36] s046 NARRATOR To the Latins, it felt like victory was in their hands. They surged forward in wild celebration.
+[357.76 - 363.73] s047 NARRATOR But the Hastati did not run. They fell back in disciplined order through the Quincunx intervals.
+[364.13 - 370.38] s048 NARRATOR The Principes, standing completely fresh in full armor, stepped forward and closed the gaps.
+[370.78 - 378.93] s049 NARRATOR The cheering enemy, exhausted by ten minutes of hard fighting against the first line, slammed straight into a brand new army.
+[379.33 - 384.93] s050 NARRATOR These men were older, tougher, and better equipped. And they were completely unwearied.
+[385.33 - 389.97] s051 NARRATOR The enemy's forward momentum died instantly against the fresh red shields.
+[390.37 - 397.55] s052 NARRATOR Behind the Principes, the Hastati reorganized, drank water, and formed up again as the new reserve.
+[397.95 - 403.06] s053 NARRATOR What felt like a decisive breakthrough was revealed as an inescapable spatial trap.
+[403.46 - 409.78] s054 NARRATOR The deeper the enemy pushed, the more exhausted they became, and the harder the Roman opposition grew.
+[410.18 - 418.26] s055 NARRATOR If the Principes were also pushed back, the entire Roman world rested on one final phrase: Res ad Triarios rediit.
+[418.66 - 424.60] s056 NARRATOR It has come down to the Triarii. To a Roman, this was the moment of supreme crisis.
+[425.00 - 432.22] s057 NARRATOR Up to this moment, the Triarii had not moved. They remained kneeling silently behind their long thrusting pikes.
+[432.62 - 438.96] s058 NARRATOR As both Hastati and Principes fell back through their wide ranks, the Triarii rose in unison.
+[439.36 - 444.26] s059 NARRATOR They closed their ranks into an impenetrable wall of twelve-foot iron-tipped spears.
+[444.66 - 450.84] s060 NARRATOR The enemy, having fought through two full Roman armies, now stared at a hedge of bronze and iron.
+[451.24 - 457.76] s061 NARRATOR With their stamina completely drained and their formations broken into disorganized fragments, they broke.
+[458.17 - 464.23] s062 NARRATOR The Triarii advanced slowly, spear tips leveled, rolling over the shattered enemy vanguard.
+[464.63 - 471.57] s063 NARRATOR Behind them, the reorganized Hastati and Principes swept out from the flanks in a total double encirclement.
+[471.97 - 479.96] s064 NARRATOR Rome won not because its soldiers were superhuman giants, but because its formation respected the laws of human physics.
+[480.36 - 490.51] s065 NARRATOR By managing stamina, maintaining spatial intervals, and replacing combat ranks, the legion turned the enemy's greatest charge into their final grave.
+[490.91 - 497.83] s066 NARRATOR That is why breaking the Roman front line was never a triumph. It was the deadliest trap in ancient warfare.

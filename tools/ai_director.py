@@ -290,6 +290,7 @@ def generate_director_plan(
     project_path: Union[str, Path],
     shot_ids: Optional[List[str]] = None,
     mock_provider: Optional[Callable[[str, str, Any, int], Dict[str, Any]]] = None,
+    offline: bool = False,
 ) -> Dict[str, Any]:
     """
     Generate structured AI Director plan for a project using Gemini with 3-strike fallback.
@@ -299,6 +300,19 @@ def generate_director_plan(
     shots = ctx.get("shots", [])
     if not shots:
         return {"status": "NO_SHOTS", "plan": None, "message": "No storyboard shots found."}
+
+    if offline:
+        offline_plan = _generate_offline_grounded_plan(ctx)
+        return {
+            "status": "FALLBACK_OFFLINE",
+            "source": offline_plan.generation_source,
+            "model_used": None,
+            "model_path": [],
+            "attempts": 0,
+            "retries": 0,
+            "reason_codes": [],
+            "plan": offline_plan.model_dump(),
+        }
 
     facts = extract_grounded_story_facts(shots, ctx.get("script_text", ""))
     
@@ -482,7 +496,7 @@ def compile_director_plan_to_visuals(
                 if cp_view == "top_down" or cam == "top" or bm in ("relief", "encircle"):
                     chosen_tpl = "top"
                     s["camera"] = "in"
-                elif cp_scale in ("close", "extreme_close") or cp_view.startswith("over_shoulder") or (cam == "close" and not cp_view.startswith("profile")):
+                elif cp_scale in ("close", "extreme_close") or (cam == "close" and not cp_view.startswith("profile")):
                     chosen_tpl = "close"
                     s["camera"] = "pan"
                 elif cp_scale in ("wide", "extreme_wide") or (bm in ("charge", "advance") and cp_view in ("front", "profile_left", "profile_right")):
@@ -622,30 +636,31 @@ def compile_director_plan_to_visuals(
 
                     if cp_view.startswith("over_shoulder"):
                         # True Over-The-Shoulder cinematic staging
+                        # Balanced Over-The-Shoulder cinematic staging (unobscured view, no giant helmet)
                         if cp_view == "over_shoulder_right":
-                            args["x"] = 0.82
-                            args["y"] = 0.72
-                            args["R"] = 0.36
+                            args["x"] = 0.84
+                            args["y"] = 0.78
+                            args["R"] = 0.24
                             args["view"] = "rear"
                             args["others"] = [{
                                 "preset": other_preset,
-                                "x": 0.35,
-                                "y": 0.46,
-                                "R": 0.18,
+                                "x": 0.36,
+                                "y": 0.48,
+                                "R": 0.22,
                                 "view": "front",
                                 "main": False,
                                 "face": "fierce",
                             }]
                         else:
-                            args["x"] = 0.18
-                            args["y"] = 0.72
-                            args["R"] = 0.36
+                            args["x"] = 0.16
+                            args["y"] = 0.78
+                            args["R"] = 0.24
                             args["view"] = "rear"
                             args["others"] = [{
                                 "preset": other_preset,
-                                "x": 0.65,
-                                "y": 0.46,
-                                "R": 0.18,
+                                "x": 0.64,
+                                "y": 0.48,
+                                "R": 0.22,
                                 "view": "front",
                                 "main": False,
                                 "face": "fierce",

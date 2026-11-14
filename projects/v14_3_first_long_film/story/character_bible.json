@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0",
+  "project_id": "v14_3_first_long_film",
+  "factions": {
+    "legio_viii": "Eighth Augustan Legion",
+    "gallic_tribes": "Allied Celtic Warbands",
+    "english_vanguard": "14th Century Royal Vanguard",
+    "takeda_clan": "Takeda Cavalry Corps",
+    "modern_self": "Self-Improvement Inner Mind"
+  },
+  "characters": {
+    "centurion_marcus": {
+      "character_id": "centurion_marcus",
+      "name": "Centurion Marcus",
+      "faction_id": "legio_viii",
+      "role": "officer",
+      "pack": "squire",
+      "palette": {
+        "primary": "#8B0000",
+        "secondary": "#5C3317",
+        "armor_metal": "#D4AF37",
+        "helmet_crest": "#C00000",
+        "shield_field": "#8B0000",
+        "shield_emblem": "#FFD700"
+      },
+      "equipment": {
+        "helmet_type": "Imperial Gallic with Transverse Crest",
+        "armor_type": "Lorica Hamata with Phalerae",
+        "shield_type": "Curved Rectangular Scutum",
+        "primary_weapon": "Gladius Hispaniensis (Right Hip)",
+        "secondary_weapon": "Pugio (Dagger, Left Hip)",
+        "dominant_hand": "right"
+      },
+      "body_proportions": {
+        "height": 1.0,
+        "width": 1.0,
+        "head_scale": 1.0
+      },
+      "unique_features": [
+        "Transverse crest",
+        "Vitis vine staff",
+        "Decorated greaves"
+      ]
+    },
+    "legionary_titus": {
+      "character_id": "legionary_titus",
+      "name": "Legionary Titus",
+      "faction_id": "legio_viii",
+      "role": "veteran",
+      "pack": "squire",
+      "palette": {
+        "primary": "#9E2A2B",
+        "secondary": "#4A3B32",
+        "armor_metal": "#B0C4DE",
+        "helmet_crest": "#000000",
+        "shield_field": "#A61C1C",
+        "shield_emblem": "#E0AA3E"
+      },
+      "equipment": {
+        "helmet_type": "Coolus / Gallic Type G",
+        "armor_type": "Lorica Segmentata",
+        "shield_type": "Curved Rectangular Scutum",
+        "primary_weapon": "Pilum Heavy Javelin",
+        "secondary_weapon": "Gladius",
+        "dominant_hand": "right"
+      },
+      "body_proportions": {
+        "height": 1.0,
+        "width": 1.0,
+        "head_scale": 1.0
+      },
+      "unique_features": [
+        "Pilum in right hand",
+        "Caligae studded boots"
+      ]
+    },
+    "chieftain_brennos": {
+      "character_id": "chieftain_brennos",
+      "name": "Chieftain Brennos",
+      "faction_id": "gallic_tribes",
+      "role": "chieftain",
+      "pack": "squire",
+      "palette": {
+        "primary": "#2B4162",
+        "secondary": "#E0A96D",
+        "armor_metal": "#CD7F32",
+        "helmet_crest": "#FFD700",
+        "shield_field": "#385F71",
+        "shield_emblem": "#D4AF37"
+      },
+      "equipment": {
+        "helmet_type": "Gallic Horned / Winged Helmet",
+        "armor_type": "Chainmail with Bronze Torc",
+        "shield_type": "Oval Wicker & Leather Shield",
+        "primary_weapon": "Long Iron Spatha Slashing Sword",
+        "secondary_weapon": "Broad-head Spear",
+        "dominant_hand": "right"
+      },
+      "body_proportions": {
+        "height": 1.0,
+        "width": 1.0,
+        "head_scale": 1.0
+      },
+      "unique_features": [
+        "Golden Torc around neck",
+        "Flowing mustache",
+        "Oval shield boss"
+      ]
+    }
+  }
+}

@@ -1,8 +1,10 @@
 {
- "version": "14.2",
- "branch": "fix/Image-Shot",
- "gates_passed": 60,
- "gates_total": 60,
- "all_passed": true,
- "timestamp": 1794637523.01163
+  "version": "14.3",
+  "branch": "fix/Image-Shot",
+  "gates_passed": 36,
+  "gates_total": 36,
+  "all_passed": true,
+  "human_verdict": "EDITORIAL_REVIEW_PENDING",
+  "film_duration_sec": 498.25,
+  "timestamp": 1794641159.0
 }

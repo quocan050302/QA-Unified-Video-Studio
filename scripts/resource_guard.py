@@ -24,8 +24,8 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set
 
-DEFAULT_MIN_DISK_GB = 2.0  # Safe reserve for tests
-DEFAULT_MIN_RAM_GB = 0.05  # Available RAM reserve (50 MB)
+DEFAULT_MIN_DISK_GB = 6.0  # Conservative safe reserve (V14.3 production)
+DEFAULT_MIN_RAM_GB = 1.0   # Available RAM reserve (1.0 GB)
 
 
 def get_disk_info(path: str = ".") -> dict:

@@ -435,16 +435,16 @@ def schedule_music_sections(shots: List[Dict[str, Any]], music_lib: Dict[str, st
     # Phase 1: Hook / Setup (mud, struggle) -> Somber or Medieval
     # Phase 2: Evidence / Science / Testing -> Curious
     # Phase 3: Resolution / Conclusion / CTA -> Victory / Resolve
-    cut_lab = None
+    cut_middle = None
     cut_resolution = None
 
     for s in shots:
         t = float(s.get("start", 0))
         p = s.get("purpose", "")
         line = str(s.get("line", "")).lower()
-        if not cut_lab and (p == "evidence" or "lab" in line or "treadmill" in line):
-            cut_lab = t
-        if not cut_resolution and (p in ("resolution", "cta") or "joke" in line or "comment" in line):
+        if not cut_middle and (p in ("evidence", "tactical", "action") or any(w in line for w in ("tactic", "battle", "clash", "rotation", "formation", "charge", "lab", "treadmill"))):
+            cut_middle = t
+        if not cut_resolution and (p in ("resolution", "cta", "reveal") or any(w in line for w in ("victory", "proved", "triumphs", "concluded", "joke", "comment"))):
             cut_resolution = t
 
     if total_dur <= 25.0:
@@ -453,7 +453,7 @@ def schedule_music_sections(shots: List[Dict[str, Any]], music_lib: Dict[str, st
     else:
         # Multi-section dynamic score
         t0 = 0.0
-        t1 = cut_lab if cut_lab and cut_lab > 6.0 else round(total_dur * 0.38, 2)
+        t1 = cut_middle if cut_middle and cut_middle > 6.0 else round(total_dur * 0.38, 2)
         t2 = cut_resolution if cut_resolution and cut_resolution > t1 + 6.0 else round(total_dur * 0.78, 2)
 
         sections.append({"start": t0, "end": t1, "bed": somber_bed, "gainDb": -1.0})

@@ -1,0 +1,465 @@
+[
+  {
+    "gate_id": "P01",
+    "title": "Branch Correct & Remote Production Invariant Guard",
+    "category": "GIT_INTEGRITY",
+    "status": "PASS",
+    "assertions_passed": 2,
+    "assertions_total": 2,
+    "error_message": null,
+    "details": {
+      "current_branch": "fix/Image-Shot",
+      "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+    },
+    "elapsed_sec": 0.631
+  },
+  {
+    "gate_id": "P02",
+    "title": "Credential Protection & Test Namespace Isolation",
+    "category": "SECURITY",
+    "status": "PASS",
+    "assertions_passed": 4,
+    "assertions_total": 4,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.0
+  },
+  {
+    "gate_id": "P03",
+    "title": "Cryptographic Content Manifest & Deterministic Fingerprint",
+    "category": "CACHE_TRUTH",
+    "status": "PASS",
+    "assertions_passed": 5,
+    "assertions_total": 5,
+    "error_message": null,
+    "details": {
+      "fingerprint": "67c7516943ac3c87ecf26a76e6e4b868d364f00b09c0888b9d0982435edf5b05"
+    },
+    "elapsed_sec": 0.034
+  },
+  {
+    "gate_id": "P04",
+    "title": "Strict Verified Cache Hit & Code Module Invalidation",
+    "category": "CACHE_TRUTH",
+    "status": "PASS",
+    "assertions_passed": 5,
+    "assertions_total": 5,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.118
+  },
+  {
+    "gate_id": "P05",
+    "title": "Negative Cache Injections: Stale Receipt & Cross-Project Fail-Closed",
+    "category": "CACHE_TRUTH",
+    "status": "PASS",
+    "assertions_passed": 4,
+    "assertions_total": 4,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.014
+  },
+  {
+    "gate_id": "P06",
+    "title": "Original 8–10 Min Historical Script & Verified Claims Manifest",
+    "category": "CONTENT_GROUNDING",
+    "status": "PASS",
+    "assertions_passed": 6,
+    "assertions_total": 6,
+    "error_message": null,
+    "details": {
+      "claims_count": 74
+    },
+    "elapsed_sec": 0.0
+  },
+  {
+    "gate_id": "P07",
+    "title": "True Spoken English VO & Timestamp Alignment",
+    "category": "AUDIO_VOICE",
+    "status": "PASS",
+    "assertions_passed": 6,
+    "assertions_total": 6,
+    "error_message": null,
+    "details": {
+      "voice_duration_sec": 468.072875,
+      "lines_count": 74
+    },
+    "elapsed_sec": 0.044
+  },
+  {
+    "gate_id": "P08",
+    "title": "Long-Form Storyboard Coverage (480–600s, 74 Shots, Zero Gaps)",
+    "category": "STORYBOARD",
+    "status": "PASS",
+    "assertions_passed": 225,
+    "assertions_total": 225,
+    "error_message": null,
+    "details": {
+      "total_duration": 498.23,
+      "shots_count": 74
+    },
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P09",
+    "title": "Live Gemini API Connection & Grounded Offline Fallback",
+    "category": "AI_DIRECTOR",
+    "status": "PASS",
+    "assertions_passed": 4,
+    "assertions_total": 4,
+    "error_message": null,
+    "details": {
+      "live_status": "DAILY_OR_SPEND_QUOTA_EXHAUSTED",
+      "live_message": "Daily quota or billing spend limit reached (429 Quota Exhausted)",
+      "live_latency_ms": 17484,
+      "offline_shots": 74
+    },
+    "elapsed_sec": 17.533
+  },
+  {
+    "gate_id": "P10",
+    "title": "Full-Timeline Camera Applied Across 100% of Shots",
+    "category": "CAMERA_DIRECTOR",
+    "status": "PASS",
+    "assertions_passed": 1,
+    "assertions_total": 1,
+    "error_message": null,
+    "details": {
+      "camera_coverage_pct": 100.0
+    },
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P11",
+    "title": "Persistent Character Bible & Turnaround Consistency",
+    "category": "VISUAL_QUALITY",
+    "status": "PASS",
+    "assertions_passed": 4,
+    "assertions_total": 4,
+    "error_message": null,
+    "details": {
+      "actors_tracked": 3
+    },
+    "elapsed_sec": 0.002
+  },
+  {
+    "gate_id": "P12",
+    "title": "Multi-Genre 2D Silhouette Geometry (Roman, Knight, Samurai, DEM)",
+    "category": "VISUAL_QUALITY",
+    "status": "PASS",
+    "assertions_passed": 6,
+    "assertions_total": 6,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.002
+  },
+  {
+    "gate_id": "P13",
+    "title": "Narrative Polarity & Semantic Grounding (PERCEIVED/NEGATED)",
+    "category": "SEMANTICS",
+    "status": "PASS",
+    "assertions_passed": 2,
+    "assertions_total": 2,
+    "error_message": null,
+    "details": {
+      "polarities_observed": [
+        "AFFIRMED",
+        "NEGATED"
+      ]
+    },
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P14",
+    "title": "Camera Grammar Audit: Balanced OTS (<15%) & Anti-Monotony",
+    "category": "CAMERA_GRAMMAR",
+    "status": "PASS",
+    "assertions_passed": 1,
+    "assertions_total": 1,
+    "error_message": null,
+    "details": {
+      "ots_count": 0,
+      "ots_percentage": 0.0,
+      "total_shots": 74
+    },
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P15",
+    "title": "Active Subject Motion Distinct From Camera Pan",
+    "category": "ANIMATION",
+    "status": "PASS",
+    "assertions_passed": 2,
+    "assertions_total": 2,
+    "error_message": null,
+    "details": {
+      "actions_observed": [
+        "advance",
+        "breakthrough",
+        "charge",
+        "collision",
+        "encircle",
+        "hold",
+        "relief",
+        "stand"
+      ]
+    },
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P16",
+    "title": "Formation Continuity & 180-Degree Screen Axis Protection",
+    "category": "CONTINUITY",
+    "status": "PASS",
+    "assertions_passed": 1,
+    "assertions_total": 1,
+    "error_message": null,
+    "details": {
+      "axis_continuity_pct": 91.9
+    },
+    "elapsed_sec": 0.002
+  },
+  {
+    "gate_id": "P17",
+    "title": "16:9 & 9:16 Viewport Framing & Clamp Protection",
+    "category": "VIEWPORT",
+    "status": "PASS",
+    "assertions_passed": 148,
+    "assertions_total": 148,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P18",
+    "title": "Battle SFX Timing & Separation of Provenance",
+    "category": "AUDIO_SFX",
+    "status": "PASS",
+    "assertions_passed": 1,
+    "assertions_total": 1,
+    "error_message": null,
+    "details": {
+      "total_sfx_cues": 48
+    },
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P19",
+    "title": "Audio Integrated Loudness (-14 LUFS) & Speech Intelligibility",
+    "category": "AUDIO_MIX",
+    "status": "PASS",
+    "assertions_passed": 2,
+    "assertions_total": 2,
+    "error_message": null,
+    "details": {
+      "integrated_loudness_lufs": -14.0
+    },
+    "elapsed_sec": 8.103
+  },
+  {
+    "gate_id": "P20",
+    "title": "Fresh Long-Form 1080p MP4 (498s) & Cryptographic Receipt",
+    "category": "MEDIA_ACCEPTANCE",
+    "status": "PASS",
+    "assertions_passed": 6,
+    "assertions_total": 6,
+    "error_message": null,
+    "details": {
+      "output_sha256": "3a8be9961d8509883ea79e7211b90fc263e0b73fe02c7d281a493feff411e8b6",
+      "duration_sec": 498.25,
+      "file_size_mb": 122.26
+    },
+    "elapsed_sec": 0.144
+  },
+  {
+    "gate_id": "P21",
+    "title": "Complete MP4 Full-Packet Decode With Zero Corruption",
+    "category": "MEDIA_ACCEPTANCE",
+    "status": "PASS",
+    "assertions_passed": 2,
+    "assertions_total": 2,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 8.025
+  },
+  {
+    "gate_id": "P22",
+    "title": "Representative Contact Sheets (Hook, Middle, Ending Payoff)",
+    "category": "EDITORIAL_EVIDENCE",
+    "status": "PASS",
+    "assertions_passed": 6,
+    "assertions_total": 6,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.0
+  },
+  {
+    "gate_id": "P23",
+    "title": "Two Independent Non-Roman Genre Previews (Knight, Samurai)",
+    "category": "CROSS_GENRE",
+    "status": "PASS",
+    "assertions_passed": 3,
+    "assertions_total": 3,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P24",
+    "title": "DEM Self-Improvement Film Silent Guarantee (Zero Voice/TTS)",
+    "category": "DEM_SILENT",
+    "status": "PASS",
+    "assertions_passed": 3,
+    "assertions_total": 3,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.0
+  },
+  {
+    "gate_id": "P25",
+    "title": "Four-Format Media Regression Dimensions (16:9 & 9:16)",
+    "category": "FORMAT_REGRESSION",
+    "status": "PASS",
+    "assertions_passed": 8,
+    "assertions_total": 8,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P26",
+    "title": "Real Two-Process Concurrent Render Test With Overlap",
+    "category": "ASYNC_CONCURRENCY",
+    "status": "PASS",
+    "assertions_passed": 2,
+    "assertions_total": 2,
+    "error_message": null,
+    "details": {
+      "concurrent_wall_sec": 8.32
+    },
+    "elapsed_sec": 8.32
+  },
+  {
+    "gate_id": "P27",
+    "title": "Resource Guard: Injected Ceiling Breach Aborts Safely",
+    "category": "RESOURCE_SAFETY",
+    "status": "PASS",
+    "assertions_passed": 2,
+    "assertions_total": 2,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.0
+  },
+  {
+    "gate_id": "P28",
+    "title": "Backtest Squire Original Project Copied & Unmutated",
+    "category": "HISTORICAL_BACKTEST",
+    "status": "PASS",
+    "assertions_passed": 3,
+    "assertions_total": 3,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 12.802
+  },
+  {
+    "gate_id": "P29",
+    "title": "Backtest DEM Original Project Copied & Unmutated",
+    "category": "HISTORICAL_BACKTEST",
+    "status": "PASS",
+    "assertions_passed": 3,
+    "assertions_total": 3,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 6.805
+  },
+  {
+    "gate_id": "P30",
+    "title": "Legacy Regressions Executed & Logged (V10–V14.2)",
+    "category": "LEGACY_REGRESSION",
+    "status": "PASS",
+    "assertions_passed": 6,
+    "assertions_total": 6,
+    "error_message": null,
+    "details": {
+      "legacy_suites_verified": [
+        "scripts/test_v10_opening.py",
+        "scripts/test_v12_battle.py",
+        "scripts/test_v13_ai_director.py",
+        "scripts/test_v14_suite.py",
+        "scripts/test_v14_1_camera.py",
+        "scripts/test_v14_2_camera.py"
+      ]
+    },
+    "elapsed_sec": 0.0
+  },
+  {
+    "gate_id": "P31",
+    "title": "Byte-for-Byte Preservation of Manual Locks",
+    "category": "MANUAL_INVARIANTS",
+    "status": "PASS",
+    "assertions_passed": 2,
+    "assertions_total": 2,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.001
+  },
+  {
+    "gate_id": "P32",
+    "title": "Resource Cleanup Safety: Temp Frames Removed, Output Intact",
+    "category": "RESOURCE_SAFETY",
+    "status": "PASS",
+    "assertions_passed": 1,
+    "assertions_total": 1,
+    "error_message": null,
+    "details": {
+      "free_disk_gb": 15.94
+    },
+    "elapsed_sec": 0.0
+  },
+  {
+    "gate_id": "P33",
+    "title": "Strict Lineage Truth: Receipt Input Fingerprint Matches Project",
+    "category": "LINEAGE_TRUTH",
+    "status": "PASS",
+    "assertions_passed": 1,
+    "assertions_total": 1,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.021
+  },
+  {
+    "gate_id": "P34",
+    "title": "Source Asset Licensing Manifest Documented",
+    "category": "LICENSING",
+    "status": "PASS",
+    "assertions_passed": 1,
+    "assertions_total": 1,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.0
+  },
+  {
+    "gate_id": "P35",
+    "title": "Post-Push Exact SHA Remote Verification Guard",
+    "category": "GIT_INTEGRITY",
+    "status": "PASS",
+    "assertions_passed": 2,
+    "assertions_total": 2,
+    "error_message": null,
+    "details": {
+      "production_baseline": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+    },
+    "elapsed_sec": 1.422
+  },
+  {
+    "gate_id": "P36",
+    "title": "Editorial Review Packet Emitted & Human Verdict PENDING",
+    "category": "EDITORIAL_GATE",
+    "status": "EDITORIAL_REVIEW_PENDING",
+    "assertions_passed": 3,
+    "assertions_total": 3,
+    "error_message": null,
+    "details": {},
+    "elapsed_sec": 0.001
+  }
+]
