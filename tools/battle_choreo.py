@@ -848,6 +848,10 @@ def compile_battle_timeline_to_shots(
 
         tpl = cam["template"]
         args: Dict[str, Any] = dict(s.get("args") or {})
+        if s.get("args", {}).get("cameraRig"):
+            args["cameraRig"] = s["args"]["cameraRig"]
+        if s.get("args", {}).get("view"):
+            args["view"] = s["args"]["view"]
         args["move"] = cam["move"]
         args["zoom"] = cam["zoom"]
         args["safe_zones"] = cam["safe_zones"]
@@ -924,6 +928,8 @@ def compile_battle_timeline_to_shots(
                 "flip": False,
                 "flags": [{"col": 0.5, "kind": "eagle", "row": 0.7}],
             }]
+            if args.get("view"):
+                args["mid"][0]["view"] = args["view"]
             args["back"] = [{
                 "preset": "latin",
                 "rows": 3,
@@ -954,6 +960,8 @@ def compile_battle_timeline_to_shots(
                     "face": "determined",
                 }
             ]
+            if args.get("view"):
+                args["people"][0]["view"] = args["view"]
             if ev_type == "MISSILE_VOLLEY":
                 args["fx"] = [{"kind": "javelins", "at": 0.6, "dur": 1.2, "dir": 1}]
 

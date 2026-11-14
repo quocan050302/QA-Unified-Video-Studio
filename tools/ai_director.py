@@ -38,8 +38,16 @@ from tools.gemini_client import (
     request_structured_with_fallback,
 )
 from tools.global_settings import get_api_key_securely, load_global_settings, redact_secrets
+from tools.cinematic_camera import (
+    CinematicShotPlan,
+    plan_camera_sequence,
+    compile_camera_keyframes,
+    validate_camera_sequence,
+    audit_camera_grammar,
+    camera_plan_digest,
+)
 
-DIRECTOR_PLAN_VERSION = "13.0"
+DIRECTOR_PLAN_VERSION = "14.1"
 
 
 class SfxIntent(BaseModel):
@@ -60,6 +68,7 @@ class DirectorShot(BaseModel):
     sfx_intents: List[SfxIntent] = Field(default_factory=list)
     uncertainty: float = 0.0
     source_grounding: Dict[str, Any] = Field(default_factory=dict)
+    camera_plan: Optional[CinematicShotPlan] = None
 
 
 class DirectorPlan(BaseModel):
@@ -203,6 +212,9 @@ def _generate_offline_grounded_plan(ctx: Dict[str, Any]) -> DirectorPlan:
     facts = extract_grounded_story_facts(shots, script_text)
     facts_by_id = {f["shot_id"]: f for f in facts}
     pack = ctx.get("pack", "squire")
+    aspect = ctx.get("aspect", "16:9")
+    camera_plans = plan_camera_sequence(shots, config={"pack": pack, "aspect": aspect})
+    camera_plans_by_id = {cp.shot_id: cp for cp in camera_plans}
     
     director_shots: List[DirectorShot] = []
     
@@ -248,6 +260,8 @@ def _generate_offline_grounded_plan(ctx: Dict[str, Any]) -> DirectorPlan:
             body_motion = "hold" if f["polarity"] == "NEGATED" else "stand"
             camera_intent = "medium" if pack == "squire" else "focus"
 
+        cp_for_shot = camera_plans_by_id.get(sid)
+
         director_shots.append(DirectorShot(
             shot_id=sid,
             script_span=f["script_span"],
@@ -259,6 +273,7 @@ def _generate_offline_grounded_plan(ctx: Dict[str, Any]) -> DirectorPlan:
             sfx_intents=sfx_intents,
             uncertainty=0.1 if f["actor"] != "unknown" else 0.4,
             source_grounding={"quote": f["quote"], "start_char": f["start_char"], "end_char": f["end_char"]},
+            camera_plan=cp_for_shot,
         ))
 
     return DirectorPlan(
@@ -356,8 +371,8 @@ def validate_director_plan(plan: Union[Dict[str, Any], DirectorPlan], project_pa
     project_shots = {s.get("id"): s for s in story.get("shots", [])}
     
     plan_shots = p_dict.get("shots", [])
-    if not plan_shots:
-        errors.append("Director plan contains 0 shots.")
+    if not isinstance(plan_shots, list) or not plan_shots:
+        errors.append("Director plan must contain a non-empty list of shots.")
         return False, errors
         
     for idx, ps in enumerate(plan_shots):
@@ -374,22 +389,34 @@ def validate_director_plan(plan: Union[Dict[str, Any], DirectorPlan], project_pa
     return len(errors) == 0, errors
 
 
-def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Union[str, Path]) -> Tuple[List[Dict[str, Any]], int]:
+def compile_director_plan_to_visuals(
+    plan_dict: Any,
+    project_path: Any,
+    aspect: str = "16:9",
+) -> Tuple[List[Dict[str, Any]], int]:
     """
     Compile DirectorPlan into storyboard shot parameters with real executable motion args.
-    CRITICAL: Preserves manual shots (visual_source == 'manual') byte-for-byte!
+    CRITICAL: Preserves manual shots (visual_source == 'manual' or manual == True) byte-for-byte!
     Returns: (compiled_shots, changed_count)
     """
-    p = Path(project_path).resolve()
-    story_file = p / "story" / "shots.json"
-    story = read_json(story_file, {}) or {}
-    shots = copy.deepcopy(story.get("shots", []))
+    if hasattr(plan_dict, "model_dump"):
+        plan_dict = plan_dict.model_dump()
+
+    if isinstance(project_path, (list, tuple)):
+        shots = copy.deepcopy(list(project_path))
+        cfg = {"aspect": aspect, "pack": "squire"}
+    else:
+        p = Path(project_path).resolve()
+        story_file = p / "story" / "shots.json"
+        story = read_json(story_file, {}) or {}
+        shots = copy.deepcopy(story.get("shots", []))
+        cfg = read_json(p / "config.json", {})
+        aspect = cfg.get("aspect", aspect)
     
     plan_shots_by_id = {s.get("shot_id"): s for s in plan_dict.get("shots", [])}
     changed_count = 0
     plan_hash = hashlib.sha256(canonical_json_serialize(plan_dict).encode("utf-8")).hexdigest()[:12]
     
-    cfg = read_json(p / "config.json", {})
     pack = cfg.get("pack", "squire")
     
     for s in shots:
@@ -406,15 +433,27 @@ def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Un
             act = ps.get("actor", "unknown")
             dur = float(s.get("dur", 3.0))
             
-            # Map camera intent to template based on pack
+            # Extract or synthesize full-video cinematic camera plan
+            cp_plan = ps.get("camera_plan")
+            if not cp_plan:
+                auto_cps = plan_camera_sequence([s], config={"pack": pack, "aspect": cfg.get("aspect", "16:9")})
+                if auto_cps:
+                    cp_plan = auto_cps[0].model_dump()
+            elif hasattr(cp_plan, "model_dump"):
+                cp_plan = cp_plan.model_dump()
+
+            cp_view = cp_plan.get("viewpoint", "front") if isinstance(cp_plan, dict) else "front"
+            cp_scale = cp_plan.get("scale", "medium") if isinstance(cp_plan, dict) else "medium"
+
+            # Map camera intent and viewpoint to template based on pack
             if pack == "squire":
-                if cam == "top" or bm in ("relief", "encircle"):
+                if cp_view == "top_down" or cam == "top" or bm in ("relief", "encircle"):
                     chosen_tpl = "top"
                     s["camera"] = "in"
-                elif cam == "close" or bm == "collision":
+                elif cp_scale in ("close", "extreme_close") or cp_view.startswith("over_shoulder") or (cam == "close" and not cp_view.startswith("profile")):
                     chosen_tpl = "close"
                     s["camera"] = "pan"
-                elif cam == "wide" or bm in ("charge", "advance"):
+                elif cp_scale in ("wide", "extreme_wide") or (bm in ("charge", "advance") and cp_view in ("front", "profile_left", "profile_right")):
                     chosen_tpl = "army"
                     s["camera"] = "right"
                 else:
@@ -428,6 +467,16 @@ def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Un
             
             # Build real executable animation args
             args = copy.deepcopy(s.get("args") or {})
+            if cp_plan and isinstance(cp_plan, dict):
+                compiled_cam = compile_camera_keyframes(
+                    CinematicShotPlan(**cp_plan),
+                    dur=dur,
+                    aspect=cfg.get("aspect", "16:9"),
+                )
+                args["cameraRig"] = compiled_cam["cameraRig"]
+                args["view"] = cp_view
+                args["move"] = compiled_cam["move"]
+                args["moveAmt"] = compiled_cam["moveAmt"]
             if pack == "squire":
                 args["bg"] = args.get("bg", "plain")
                 args["time"] = args.get("time", "golden")
@@ -502,11 +551,43 @@ def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Un
                     args["move"] = "right" if cam == "pan" else "in"
                     
                 elif chosen_tpl == "close":
-                    # Close hero / centurion / warlord bust
+                    # Close hero / centurion / warlord bust with true 2D viewpoint
                     args["preset"] = "centurion" if act == "roman" else ("warlord" if act == "opponent" else "hastatus")
                     args["face"] = "fierce" if bm in ("charge", "collision") else ("shock" if pol == "PERCEIVED" else "neutral")
                     args["pose"] = "attack" if bm == "collision" else ("defend" if bm == "shield_wall" else "stand")
                     args["talk"] = bool(len(s.get("line", "")) > 18)
+                    args["view"] = cp_view
+
+                    if cp_view.startswith("over_shoulder"):
+                        # True Over-The-Shoulder cinematic staging
+                        if cp_view == "over_shoulder_right":
+                            args["x"] = 0.82
+                            args["y"] = 0.72
+                            args["R"] = 0.36
+                            args["view"] = "rear"
+                            args["others"] = [{
+                                "preset": "warlord" if act == "roman" else "hastatus",
+                                "x": 0.35,
+                                "y": 0.46,
+                                "R": 0.18,
+                                "view": "front",
+                                "main": False,
+                                "face": "fierce",
+                            }]
+                        else:
+                            args["x"] = 0.18
+                            args["y"] = 0.72
+                            args["R"] = 0.36
+                            args["view"] = "rear"
+                            args["others"] = [{
+                                "preset": "hastatus" if act == "roman" else "warlord",
+                                "x": 0.65,
+                                "y": 0.46,
+                                "R": 0.18,
+                                "view": "front",
+                                "main": False,
+                                "face": "fierce",
+                            }]
                     if bm == "collision":
                         args["fx"] = [{"kind": "sparks", "at": round(0.3 * dur, 2)}]
                     args["move"] = "in"
@@ -516,6 +597,7 @@ def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Un
                     move_pose = "march" if bm in ("advance", "march") else ("run" if bm == "charge" else ("attack" if bm == "collision" else "stand"))
                     from_x = 0.30 if act != "opponent" else 0.70
                     to_x = 0.55 if act != "opponent" else 0.45
+                    args["view"] = cp_view
                     args["people"] = [{
                         "preset": "hastatus" if act != "opponent" else "warlord",
                         "x": from_x,
@@ -530,6 +612,7 @@ def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Un
                         "face": "fierce" if bm in ("charge", "collision") else "neutral",
                         "weapon": "pilum" if bm == "throw" else "gladius",
                         "flip": bool(act == "opponent"),
+                        "view": cp_view,
                     }]
                     args["back"] = [{
                         "preset": "hastatus",
@@ -590,6 +673,9 @@ def compile_director_plan_to_visuals(plan_dict: Dict[str, Any], project_path: Un
                 "polarity": pol,
                 "action": bm,
                 "template": chosen_tpl,
+                "viewpoint": cp_view,
+                "camera_scale": cp_scale,
+                "camera_rig_active": ("cameraRig" in args),
                 "has_motion_args": True,
             }
             
@@ -658,6 +744,22 @@ def apply_director_plan_generated_only(
         if backup_file.exists():
             shutil.copyfile(backup_file, story_file)
         return {"status": "ERROR", "error": str(exc), "changed_shots_count": 0}
+
+
+def build_full_video_cinematic_camera_plan(
+    project_path: Union[str, Path],
+    director_plan: Optional[Dict[str, Any]] = None,
+) -> List[CinematicShotPlan]:
+    """
+    Author and validate a holistic, narrative-motivated camera plan across the entire timeline.
+    Works for both Gemini and offline plan.
+    """
+    p = Path(project_path).resolve()
+    story_file = p / "story" / "shots.json"
+    story = read_json(story_file, {}) or {}
+    shots = story.get("shots", [])
+    cfg = read_json(p / "config.json", {})
+    return plan_camera_sequence(shots, director_plan=director_plan, config=cfg)
 
 
 def review_director_plan(project_path: Union[str, Path]) -> Dict[str, Any]:

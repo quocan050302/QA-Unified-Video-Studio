@@ -760,9 +760,341 @@ function soldierLow(g, x, y, h, o) {
   g.restore();
 }
 
+// ====================================================================================== NHAN VAT 2D PERSPECTIVE VIEWS (V14.1)
+
+function drawSoldierProfile(g, x, y, h, o, dir = 1) {
+  o = { ...(CAST[o.preset] || {}), ...o };
+  const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
+  const W = walkInfo(o); o._walk = W;
+  const br = (W ? W.bob : Math.sin(t * 1.7 + (o.seed || 0)) * 0.6) * u;
+  const metal = o.metal || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronze : PAL.steel);
+  const metalD = o.metalDark || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronzeDark : PAL.steelDark);
+  const tc = o.tunicColor || (o.body === 'roman' ? PAL.red : (o.body === 'mail' ? PAL.mail : PAL.green));
+
+  g.save();
+  g.translate(x, y);
+  if (dir < 0) g.scale(-1, 1);
+  if (o.rot) g.rotate(o.rot);
+
+  // 1. Legs in profile (staggered stride or lunge)
+  const hipY = -30 * u;
+  const stepK = W ? Math.sin(2 * Math.PI * W.f) * 12 * u : 5 * u;
+  const farLeg = ik2(-3 * u, hipY, -8 * u - stepK, -3.2 * u, 14 * u, 14 * u, -1);
+  const nearLeg = ik2(3 * u, hipY, 8 * u + stepK, -3.2 * u, 14 * u, 14 * u, 1);
+  tube(g, farLeg, 6.5 * u, darker(o.legColor || PAL.brown, 0.15), lw);
+  tube(g, nearLeg, 6.5 * u, o.legColor || PAL.brown, lw);
+  shape(g, (c) => c.roundRect(farLeg[2][0] - 2 * u, farLeg[2][1] - 2 * u, 10 * u, 5 * u, [2 * u, 4 * u, 1 * u, 1 * u]), { fill: darker(PAL.brownDark, 0.1), lw: lw * 0.9 });
+  shape(g, (c) => c.roundRect(nearLeg[2][0] - 2 * u, nearLeg[2][1] - 2 * u, 10 * u, 5 * u, [2 * u, 4 * u, 1 * u, 1 * u]), { fill: PAL.brownDark, lw: lw * 0.9 });
+
+  // 2. Far Arm / Shield (held forward or edge-on)
+  const sh = o.shield;
+  if (sh && !sh.back) {
+    g.save();
+    g.translate(14 * u, -38 * u + br);
+    shape(g, (c) => {
+      c.moveTo(-4 * u, -30 * u);
+      c.quadraticCurveTo(8 * u, 0, -4 * u, 30 * u);
+      c.lineTo(4 * u, 30 * u);
+      c.quadraticCurveTo(16 * u, 0, 4 * u, -30 * u);
+      c.closePath();
+    }, { fill: sh.color || PAL.red, lw });
+    ellipse(g, 7 * u, 0, 5 * u, 8 * u, { fill: metal, lw: lw * 0.8 });
+    g.restore();
+  }
+
+  // 3. Torso in profile
+  g.save();
+  g.translate(0, br);
+  shape(g, (c) => {
+    c.moveTo(-7 * u, -58 * u);
+    c.quadraticCurveTo(-10 * u, -44 * u, -8 * u, -30 * u);
+    c.lineTo(-9 * u, -18 * u);
+    c.lineTo(8 * u, -18 * u);
+    c.quadraticCurveTo(11 * u, -30 * u, 10 * u, -46 * u);
+    c.quadraticCurveTo(9 * u, -54 * u, 5 * u, -58 * u);
+    c.closePath();
+  }, { fill: tc, lw, inner: (c) => {
+    if (o.body === 'roman') {
+      c.strokeStyle = metalD;
+      c.lineWidth = lw * 0.8;
+      c.beginPath();
+      c.moveTo(2 * u, -54 * u);
+      c.quadraticCurveTo(8 * u, -46 * u, 4 * u, -34 * u);
+      c.stroke();
+    }
+  } });
+  rect(g, -8.5 * u, -33 * u, 17 * u, 4.5 * u, { fill: PAL.leather, lw: lw * 0.8, r: 1 });
+  circ(g, 6 * u, -30.8 * u, 2 * u, { fill: PAL.gold, lw: lw * 0.6 });
+
+  // 4. Head & Helmet in profile
+  const R = 19 * u, hx = 2 * u, hy = -78 * u;
+  shape(g, (c) => {
+    c.moveTo(hx - R * 0.7, hy + R * 0.6);
+    c.lineTo(hx - R * 0.65, hy - R * 0.5);
+    c.quadraticCurveTo(hx, hy - R * 1.05, hx + R * 0.65, hy - R * 0.4);
+    c.lineTo(hx + R * 1.15, hy + R * 0.05); // Nose contour!
+    c.lineTo(hx + R * 0.75, hy + R * 0.16);
+    c.lineTo(hx + R * 0.85, hy + R * 0.26);
+    c.lineTo(hx + R * 0.72, hy + R * 0.35);
+    c.lineTo(hx + R * 0.82, hy + R * 0.48);
+    c.quadraticCurveTo(hx + R * 0.2, hy + R * 0.62, hx + R * 0.1, hy + R * 0.95);
+    c.lineTo(hx - R * 0.4, hy + R * 0.95);
+    c.closePath();
+  }, { fill: o.skin || PAL.skin, lw });
+
+  // Single profile eye
+  const ex = hx + R * 0.42, ey = hy - R * 0.05;
+  shape(g, (c) => {
+    c.moveTo(ex - R * 0.14, ey);
+    c.quadraticCurveTo(ex, ey - R * 0.12, ex + R * 0.16, ey);
+    c.quadraticCurveTo(ex, ey + R * 0.1, ex - R * 0.14, ey);
+    c.closePath();
+  }, { fill: '#ffffff', lw: lw * 0.6, inner: (c) => {
+    circ(c, ex + R * 0.06, ey, R * 0.07, { fill: OUT, lw: 0 });
+  } });
+  line(g, [[ex - R * 0.15, ey - R * 0.16], [ex + R * 0.18, ey - R * 0.12]], { lw: lw * 0.8, ink: o.hairColor || PAL.hairDark });
+
+  // Helmet in profile
+  const hl = o.helmet || 'none';
+  if (['montefortino', 'attic'].includes(hl) || hl !== 'none') {
+    shape(g, (c) => {
+      c.moveTo(hx - R * 1.25, hy + R * 0.3);
+      c.quadraticCurveTo(hx - R * 0.8, hy + R * 0.1, hx - R * 0.85, hy - R * 0.4);
+      c.bezierCurveTo(hx - R * 0.7, hy - R * 1.35, hx + R * 0.6, hy - R * 1.35, hx + R * 0.85, hy - R * 0.28);
+      c.quadraticCurveTo(hx + R * 0.3, hy - R * 0.42, hx - R * 0.3, hy - R * 0.35);
+      c.lineTo(hx - R * 1.25, hy + R * 0.3);
+      c.closePath();
+    }, { fill: metal, lw });
+    shape(g, (c) => {
+      c.moveTo(hx + R * 0.2, hy - R * 0.1);
+      c.lineTo(hx + R * 0.45, hy - R * 0.1);
+      c.quadraticCurveTo(hx + R * 0.4, hy + R * 0.55, hx + R * 0.15, hy + R * 0.65);
+      c.quadraticCurveTo(hx - R * 0.05, hy + R * 0.45, hx + R * 0.2, hy - R * 0.1);
+      c.closePath();
+    }, { fill: metal, lw: lw * 0.8 });
+    if (o.crest || hl === 'attic') {
+      const cc = o.crest && o.crest !== true ? o.crest : PAL.red;
+      shape(g, (c) => {
+        c.moveTo(hx - R * 0.8, hy - R * 0.8);
+        c.bezierCurveTo(hx - R * 0.5, hy - R * 1.9, hx + R * 0.5, hy - R * 1.9, hx + R * 0.85, hy - R * 0.6);
+        c.quadraticCurveTo(hx + R * 0.3, hy - R * 1.25, hx - R * 0.8, hy - R * 0.8);
+        c.closePath();
+      }, { fill: cc, lw, inner: (c) => {
+        c.strokeStyle = alpha(OUT, 0.3);
+        c.lineWidth = lw * 0.4;
+        for (let i = 0; i < 7; i++) {
+          c.beginPath();
+          c.moveTo(hx - R * 0.6 + i * R * 0.2, hy - R * 1.6);
+          c.lineTo(hx - R * 0.5 + i * R * 0.2, hy - R * 0.9);
+          c.stroke();
+        }
+      } });
+    }
+  }
+
+  // 5. Near Arm & Weapon in profile
+  const wp = o.weapon || 'gladius';
+  const armPtsList = [
+    [0, -52 * u],
+    [10 * u, -42 * u],
+    [20 * u, -45 * u],
+  ];
+  tube(g, armPtsList, 7 * u, o.sleeve || (o.body === 'roman' ? o.skin || PAL.skin : tc), lw);
+  hand(g, armPtsList[2][0], armPtsList[2][1], 5 * u, { lw });
+  if (wp === 'pilum' || wp === 'spear') {
+    line(g, [[12 * u, -45 * u], [68 * u, -45 * u]], { lw: 3 * u, ink: PAL.woodDark });
+    polyS(g, [[68 * u, -47 * u], [78 * u, -45 * u], [68 * u, -43 * u]], { fill: PAL.steelLight, lw });
+  } else {
+    rect(g, 22 * u, -47 * u, 24 * u, 4 * u, { fill: PAL.steelLight, lw: lw * 0.7, r: 1 });
+    rect(g, 18 * u, -49 * u, 4 * u, 8 * u, { fill: PAL.gold, lw: lw * 0.7, r: 1 });
+  }
+
+  g.restore();
+  g.restore();
+  return { x, y, h, head: [x + hx * dir, y + hy + br], R, view: dir < 0 ? 'profile_left' : 'profile_right' };
+}
+
+function drawSoldierRear(g, x, y, h, o, dir = 0) {
+  o = { ...(CAST[o.preset] || {}), ...o };
+  const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
+  const W = walkInfo(o); o._walk = W;
+  const br = (W ? W.bob : Math.sin(t * 1.7 + (o.seed || 0)) * 0.6) * u;
+  const metal = o.metal || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronze : PAL.steel);
+  const metalD = o.metalDark || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronzeDark : PAL.steelDark);
+  const tc = o.tunicColor || (o.body === 'roman' ? PAL.red : (o.body === 'mail' ? PAL.mail : PAL.green));
+
+  g.save();
+  g.translate(x, y);
+  if (dir !== 0) g.rotate(dir * 0.06);
+
+  // 1. Legs from rear
+  const hipY = -30 * u;
+  for (const s of [-1, 1]) {
+    const P = ik2(s * 6.2 * u, hipY, s * 7.2 * u, -3.2 * u, 14 * u, 14 * u, -s * 0.2);
+    tube(g, P, 6.5 * u, o.legColor || PAL.brown, lw);
+    shape(g, (c) => c.roundRect(P[2][0] - 4.5 * u, P[2][1] - 2 * u, 9 * u, 5.5 * u, [2 * u, 2 * u, 3 * u, 3 * u]), { fill: PAL.brownDark, lw: lw * 0.9 });
+  }
+
+  // 2. Torso from rear (backplate / spine)
+  g.save();
+  g.translate(0, br);
+  const wT = 13.5 * u, wB = 16 * u, topY = -59 * u, skirtY = hipY + 8 * u;
+  shape(g, (c) => {
+    c.moveTo(-wT, topY + 5 * u);
+    c.quadraticCurveTo(0, topY, wT, topY + 5 * u);
+    c.lineTo(wB, skirtY);
+    c.quadraticCurveTo(0, skirtY + 2 * u, -wB, skirtY);
+    c.closePath();
+  }, { fill: tc, lw, inner: (c) => {
+    if (o.body === 'roman') {
+      rect(c, -11 * u, topY + 4 * u, 22 * u, 28 * u, { fill: metal, lw: lw * 0.8, r: 2 * u });
+      line(c, [[-9 * u, topY + 4 * u], [-4 * u, topY + 20 * u]], { lw: 3 * u, ink: PAL.leather });
+      line(c, [[9 * u, topY + 4 * u], [4 * u, topY + 20 * u]], { lw: 3 * u, ink: PAL.leather });
+      line(c, [[0, topY + 8 * u], [0, topY + 26 * u]], { lw: 2 * u, ink: metalD });
+    }
+  } });
+  rect(g, -wB * 0.95, hipY - 5 * u, wB * 1.9, 4.5 * u, { fill: PAL.leather, lw: lw * 0.8, r: 1 });
+
+  // 3. Arms from rear
+  const leftArm = armPts(-12 * u, -54 * u, -1, 35, 75, u, 12 * u);
+  tube(g, [leftArm[0], leftArm[1], leftArm[2]], 7 * u, o.sleeve || (o.body === 'roman' ? o.skin || PAL.skin : tc), lw);
+  if (o.shield) {
+    g.save();
+    g.translate(-18 * u, -42 * u);
+    shape(g, (c) => c.roundRect(-8 * u, -26 * u, 16 * u, 52 * u, 4 * u), { fill: PAL.woodDark, lw: lw * 0.9 });
+    rect(g, -6 * u, -4 * u, 12 * u, 6 * u, { fill: PAL.leather, lw: lw * 0.7, r: 1 });
+    g.restore();
+  }
+
+  const rightArm = armPts(12 * u, -54 * u, 1, 40, 60, u, 12 * u);
+  tube(g, [rightArm[0], rightArm[1], rightArm[2]], 7 * u, o.sleeve || (o.body === 'roman' ? o.skin || PAL.skin : tc), lw);
+  hand(g, rightArm[2][0], rightArm[2][1], 5 * u, { lw });
+  const wp = o.weapon || 'gladius';
+  if (wp === 'pilum' || wp === 'spear') {
+    line(g, [[rightArm[2][0], rightArm[2][1]], [rightArm[2][0] + 8 * u, rightArm[2][1] - 65 * u]], { lw: 3 * u, ink: PAL.woodDark });
+    polyS(g, [[rightArm[2][0] + 6 * u, rightArm[2][1] - 65 * u], [rightArm[2][0] + 8 * u, rightArm[2][1] - 75 * u], [rightArm[2][0] + 10 * u, rightArm[2][1] - 65 * u]], { fill: PAL.steelLight, lw });
+  } else {
+    rect(g, rightArm[2][0] - 2 * u, rightArm[2][1] - 26 * u, 4 * u, 24 * u, { fill: PAL.steelLight, lw: lw * 0.7, r: 1 });
+    rect(g, rightArm[2][0] - 4 * u, rightArm[2][1] - 2 * u, 8 * u, 3 * u, { fill: PAL.gold, lw: lw * 0.7, r: 1 });
+  }
+
+  // 4. Back of Head & Helmet (VERIFIED ZERO EYES / ZERO FACE!)
+  const R = 19 * u, hx = 0, hy = -78 * u;
+  rect(g, hx - R * 0.45, hy + R * 0.4, R * 0.9, R * 0.5, { fill: o.skin || PAL.skin, lw: 0 });
+  shape(g, (c) => c.arc(hx, hy, R * 1.05, 0, Math.PI * 2), { fill: metal, lw });
+  shape(g, (c) => {
+    c.moveTo(hx - R * 1.15, hy + R * 0.1);
+    c.quadraticCurveTo(hx, hy + R * 0.65, hx + R * 1.15, hy + R * 0.1);
+    c.quadraticCurveTo(hx, hy + R * 0.4, hx - R * 1.15, hy + R * 0.1);
+    c.closePath();
+  }, { fill: lighter(metal, 0.08), lw });
+
+  if (o.crest || o.helmet === 'attic') {
+    const cc = o.crest && o.crest !== true ? o.crest : PAL.red;
+    rect(g, hx - 3 * u, hy - R * 1.7, 6 * u, R * 1.8, { fill: cc, lw: lw * 0.8, r: 2 * u });
+    line(g, [[hx, hy - R * 1.6], [hx, hy]], { lw: lw * 0.5, ink: OUT });
+  }
+
+  g.restore();
+  g.restore();
+  return { x, y, h, head: [x, y + hy + br], R, view: dir === 0 ? 'rear' : (dir < 0 ? 'rear_three_quarter_left' : 'rear_three_quarter_right') };
+}
+
+function drawSoldierThreeQuarter(g, x, y, h, o, dir = 1) {
+  o = { ...(CAST[o.preset] || {}), ...o };
+  const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
+  const W = walkInfo(o); o._walk = W;
+  const br = (W ? W.bob : Math.sin(t * 1.7 + (o.seed || 0)) * 0.6) * u;
+  const metal = o.metal || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronze : PAL.steel);
+  const metalD = o.metalDark || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronzeDark : PAL.steelDark);
+  const tc = o.tunicColor || (o.body === 'roman' ? PAL.red : (o.body === 'mail' ? PAL.mail : PAL.green));
+
+  g.save();
+  g.translate(x, y);
+  if (dir < 0) g.scale(-1, 1);
+  if (o.rot) g.rotate(o.rot);
+
+  // 1. Legs 3/4 angle
+  const hipY = -30 * u;
+  const legFar = ik2(-5 * u, hipY, -9 * u, -3.2 * u, 14 * u, 14 * u, -0.4);
+  const legNear = ik2(4 * u, hipY, 8 * u, -3.2 * u, 14 * u, 14 * u, 0.4);
+  tube(g, legFar, 6.5 * u, darker(o.legColor || PAL.brown, 0.12), lw);
+  tube(g, legNear, 6.5 * u, o.legColor || PAL.brown, lw);
+  shape(g, (c) => c.roundRect(legFar[2][0] - 3 * u, legFar[2][1] - 2 * u, 9 * u, 5 * u, [2 * u, 3 * u, 1 * u, 1 * u]), { fill: darker(PAL.brownDark, 0.08), lw: lw * 0.9 });
+  shape(g, (c) => c.roundRect(legNear[2][0] - 3 * u, legNear[2][1] - 2 * u, 10 * u, 5.5 * u, [2 * u, 4 * u, 1.5 * u, 1.5 * u]), { fill: PAL.brownDark, lw: lw * 0.9 });
+
+  // 2. Torso 3/4 turned
+  g.save();
+  g.translate(0, br);
+  shape(g, (c) => {
+    c.moveTo(-10 * u, -58 * u);
+    c.quadraticCurveTo(2 * u, -60 * u, 15 * u, -56 * u);
+    c.lineTo(17 * u, -22 * u);
+    c.quadraticCurveTo(0, -20 * u, -12 * u, -22 * u);
+    c.closePath();
+  }, { fill: tc, lw, inner: (c) => {
+    if (o.body === 'roman') {
+      rect(c, -8 * u, -55 * u, 21 * u, 28 * u, { fill: metal, lw: lw * 0.8, r: 2 * u });
+      line(c, [[5 * u, -54 * u], [5 * u, -30 * u]], { lw: 2 * u, ink: metalD });
+    }
+  } });
+  rect(g, -11 * u, -33 * u, 26 * u, 4.5 * u, { fill: PAL.leather, lw: lw * 0.8, r: 1 });
+  circ(g, 4 * u, -30.8 * u, 2.2 * u, { fill: PAL.gold, lw: lw * 0.6 });
+
+  // 3. Head & Helmet 3/4 turned
+  const R = 19 * u, hx = 2 * u, hy = -78 * u;
+  shape(g, (c) => c.arc(hx, hy, R, 0, Math.PI * 2), { fill: o.skin || PAL.skin, lw });
+  const ey = hy - R * 0.02;
+  circ(g, hx - R * 0.35, ey, R * 0.13, { fill: '#ffffff', lw: lw * 0.6, inner: (c) => circ(c, hx - R * 0.32, ey, R * 0.07, { fill: OUT, lw: 0 }) });
+  circ(g, hx + R * 0.25, ey, R * 0.17, { fill: '#ffffff', lw: lw * 0.6, inner: (c) => circ(c, hx + R * 0.28, ey, R * 0.08, { fill: OUT, lw: 0 }) });
+  line(g, [[hx - R * 0.05, hy - R * 0.15], [hx + R * 0.15, hy + R * 0.15], [hx - R * 0.02, hy + R * 0.18]], { lw: lw * 0.7, ink: darker(PAL.skin, 0.25) });
+  line(g, [[hx + R * 0.05, hy + R * 0.38], [hx + R * 0.3, hy + R * 0.38]], { lw: lw * 0.7, ink: OUT });
+
+  shape(g, (c) => {
+    c.moveTo(hx - R * 1.05, hy - R * 0.15);
+    c.bezierCurveTo(hx - R * 1.05, hy - R * 1.35, hx + R * 1.1, hy - R * 1.35, hx + R * 1.1, hy - R * 0.15);
+    c.quadraticCurveTo(hx + R * 0.2, hy - R * 0.35, hx - R * 1.05, hy - R * 0.15);
+    c.closePath();
+  }, { fill: metal, lw });
+  shape(g, (c) => {
+    c.moveTo(hx + R * 0.45, hy - R * 0.1);
+    c.quadraticCurveTo(hx + R * 0.8, hy + R * 0.35, hx + R * 0.55, hy + R * 0.6);
+    c.lineTo(hx + R * 0.3, hy + R * 0.2);
+    c.closePath();
+  }, { fill: metal, lw: lw * 0.8 });
+
+  // 4. Arms & Shield 3/4
+  if (o.shield) {
+    g.save();
+    g.translate(-12 * u, -38 * u);
+    shape(g, (c) => c.roundRect(-10 * u, -28 * u, 24 * u, 56 * u, 6 * u), { fill: o.shield.color || PAL.red, lw });
+    circ(g, 2 * u, 0, 7 * u, { fill: metal, lw: lw * 0.8 });
+    g.restore();
+  }
+  const wp = o.weapon || 'gladius';
+  const rightA = armPts(14 * u, -52 * u, 1, 45, 55, u, 12 * u);
+  tube(g, [rightA[0], rightA[1], rightA[2]], 7 * u, o.sleeve || (o.body === 'roman' ? o.skin || PAL.skin : tc), lw);
+  hand(g, rightA[2][0], rightA[2][1], 5 * u, { lw });
+  rect(g, rightA[2][0] + 4 * u, rightA[2][1] - 3 * u, 24 * u, 4 * u, { fill: PAL.steelLight, lw: lw * 0.7, r: 1 });
+
+  g.restore();
+  g.restore();
+  return { x, y, h, head: [x + hx * dir, y + hy + br], R, view: dir < 0 ? 'front_three_quarter_left' : 'front_three_quarter_right' };
+}
+
 // ====================================================================================== NHAN VAT DAY DU
 export function soldier(g, x, y, h, o = {}) {
   o = { ...(CAST[o.preset] || {}), ...o };
+  const v = o.view;
+  if (v === 'profile_left') return drawSoldierProfile(g, x, y, h, o, -1);
+  if (v === 'profile_right') return drawSoldierProfile(g, x, y, h, o, 1);
+  if (v === 'front_three_quarter_left') return drawSoldierThreeQuarter(g, x, y, h, o, -1);
+  if (v === 'front_three_quarter_right') return drawSoldierThreeQuarter(g, x, y, h, o, 1);
+  if (v === 'rear') return drawSoldierRear(g, x, y, h, o, 0);
+  if (v === 'rear_three_quarter_left') return drawSoldierRear(g, x, y, h, o, -1);
+  if (v === 'rear_three_quarter_right') return drawSoldierRear(g, x, y, h, o, 1);
+  if (v === 'over_shoulder_left') return drawSoldierRear(g, x, y, h, o, -1);
+  if (v === 'over_shoulder_right') return drawSoldierRear(g, x, y, h, o, 1);
   if (o.lod === 'low' || (o.lod !== 'high' && h < 70)) return soldierLow(g, x, y, h, o);
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const pose = POSES[o.pose] ? o.pose : 'stand';

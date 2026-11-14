@@ -54,7 +54,7 @@ async function boot() {
   await document.fonts.load(`800 40px ${FONTS.title}`); await document.fonts.load(`600 40px ${FONTS.body}`); await document.fonts.load(`700 40px ${FONTS.body}`); await document.fonts.load(`italic 700 40px ${FONTS.serif}`);
   await document.fonts.ready;
   const need = new Set(); E.shots.forEach((s, i) => imagesFor(i).forEach((x) => need.add(x)));
-  window.__info = { W: pw, H: ph, fps: E.fps, duration: E.duration, frames: Math.ceil(E.duration * E.fps), shots: E.shots.map((s) => ({ id: s.id, start: s.start, end: s.end, line: s.line || '', has: !!defOf(s) })), importErrors: errs, style: cfg.style, missingImages: [...need].filter((x) => !ASSETS.has(x)).sort(), images: need.size };
+  window.__info = { W: pw, H: ph, fps: E.fps, duration: E.duration, frames: Math.ceil(E.duration * E.fps), shots: E.shots.map((s) => ({ id: s.id, start: s.start, end: s.end, line: s.line || '', has: !!defOf(s), view: (s.args || {}).view || (s.execution_trace || {}).viewpoint || 'front', cameraRig: !!(s.args || {}).cameraRig, template: s.tpl || s.template })), importErrors: errs, style: cfg.style, missingImages: [...need].filter((x) => !ASSETS.has(x)).sort(), images: need.size };
   window.__ready = true;
 }
 

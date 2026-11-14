@@ -17,9 +17,46 @@ const at = (info, v, d = 0) => T(info, v, d);
 const SC = () => Math.min(E.W, E.H) / 1080;            // ti le net/blur theo do phan giai logic
 const vert = () => E.H > E.W;
 
-// ---------- may quay: move in|out|left|right|up|down|still, moveAmt, zoom [x, y, z, tu, keo_dai], shake
+// ---------- may quay: move in|out|left|right|up|down|still, moveAmt, zoom [x, y, z, tu, keo_dai], shake, cameraRig (V14.1)
 export function camera(g, lt, info, fn) {
-  const a = info.args || {}, d = info.dur, k = ease.sine(clamp(lt / Math.max(d, 0.1))), mv = a.move || 'in', amt = a.moveAmt ?? 0.035;
+  const a = info.args || {};
+  // V14.1: Bounded keyframe cameraRig path
+  if (a.cameraRig && a.cameraRig.keyframes && a.cameraRig.keyframes.length > 0) {
+    const kfs = a.cameraRig.keyframes;
+    let kf0 = kfs[0], kf1 = kfs[kfs.length - 1];
+    for (let idx = 0; idx < kfs.length - 1; idx++) {
+      if (lt >= kfs[idx].t && lt <= kfs[idx + 1].t) {
+        kf0 = kfs[idx];
+        kf1 = kfs[idx + 1];
+        break;
+      }
+    }
+    const span = Math.max(0.01, kf1.t - kf0.t);
+    const progress = clamp((lt - kf0.t) / span);
+    const k = ease.inOut(progress);
+    const z = Math.max(1.0, Math.min(3.0, lerp(kf0.z, kf1.z, k))); // Clamp guard against black edges
+    let cx = lerp(kf0.x, kf1.x, k) * E.W;
+    let cy = lerp(kf0.y, kf1.y, k) * E.H;
+    let dx = 0, dy = 0;
+    if (a.shake) {
+      const t0 = at(info, a.shakeAt, 0), s = a.shake * Math.max(0, 1 - (lt - t0) / 0.5) * (lt >= t0 ? 1 : 0);
+      dx += Math.sin(lt * 70) * 14 * s;
+      dy += Math.cos(lt * 60) * 10 * s;
+    }
+    const hw = E.W / (2 * z), hh = E.H / (2 * z);
+    cx = clamp(cx + dx, hw, E.W - hw) - dx;
+    cy = clamp(cy + dy, hh, E.H - hh) - dy;
+    g.save();
+    g.translate(E.W / 2, E.H / 2);
+    g.scale(z, z);
+    g.translate(-cx - dx, -cy - dy);
+    fn();
+    g.restore();
+    return;
+  }
+
+  // Legacy behavior bit-for-bit
+  const d = info.dur, k = ease.sine(clamp(lt / Math.max(d, 0.1))), mv = a.move || 'in', amt = a.moveAmt ?? 0.035;
   let z = 1, dx = 0, dy = 0;
   if (mv === 'in') z = 1 + amt * k; else if (mv === 'out') z = 1 + amt * (1 - k);
   else if (mv === 'left') { z = 1 + amt; dx = lerp(amt, -amt, k) * E.W * 0.45; } else if (mv === 'right') { z = 1 + amt; dx = lerp(-amt, amt, k) * E.W * 0.45; }
@@ -86,7 +123,7 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
   else soldier(g, x, y, h, o);
   g.restore();
 }
-export function drawPeople(g, lt, info, list, gy, dh) { for (const p of list || []) person(g, lt, info, p, gy, dh); }
+export function drawPeople(g, lt, info, list, gy, dh) { for (const p of list || []) person(g, lt, info, { view: (info.args || {}).view, ...p }, gy, dh); }
 // ---------- do vat: { kind, x, y, s, at, anim: pop|drop|grow|fall|spin, rot, ...tuy chon }
 export function prop(g, lt, info, p) {
   const a0 = at(info, p.at, 0); if (lt < a0) return;
@@ -260,7 +297,7 @@ registerTemplate('scene', { draw(g, lt, info) { const a = info.args || {}; camer
 // army: canh doi hinh (mac dinh 1 khoi quan lon, co the them doi hinh doi dien)
 registerTemplate('army', { draw(g, lt, info) {
   const a = info.args || {};
-  const mid = a.mid || [{ preset: a.preset || 'hastatus', presets: a.presets, rows: a.rows || 4, cols: a.cols || 9, x0: 0.02, x1: 0.98, yFront: 1.02, yBack: 0.72, hFront: vert() ? 0.26 : 0.42, hBack: 0.16, march: a.march, flip: a.flip, face: a.face, flags: a.flags }];
+  const mid = a.mid || [{ preset: a.preset || 'hastatus', presets: a.presets, rows: a.rows || 4, cols: a.cols || 9, x0: 0.02, x1: 0.98, yFront: 1.02, yBack: 0.72, hFront: vert() ? 0.26 : 0.42, hBack: 0.16, march: a.march, flip: a.flip, face: a.face, flags: a.flags, view: a.view }];
   camera(g, lt, info, () => { sceneBody(g, lt, info, { ...a, mid, back: a.back || [{ preset: a.enemy || a.preset || 'latin', presets: a.enemyPresets, rows: 3, cols: 22, x0: 0, x1: 1, yFront: 0.74, yBack: 0.66, hFront: 0.09, hBack: 0.06, flip: !a.flip, flags: a.enemyFlags }] }); overlays(g, lt, info); });
   vignette(g, 0.2);
 } });
@@ -278,7 +315,7 @@ registerTemplate('close', { draw(g, lt, info) {
       const a0 = at(info, p.at, 0); if (lt < a0) continue;
       const r = p.main ? R : fs(p.R, 0.16), x = fx(p.x, p.main ? 0.5 : 0.2), y = fy(p.y, p.main ? (vert() ? 0.5 : 0.48) : 0.5) + bob(lt, r * 0.012, 0.7, x);
       const talk = p.talk ? talkAmount(info.globalT, info.start + at(info, p.talkFrom, 0), info.start + info.dur) : 0;
-      bust(g, x, y, r, { ...p, shield: p.keepShield ? undefined : (p.shieldClose ?? null), x: undefined, y: undefined, t: lt + (p.seed || 0), face: listAt(info, lt, p.faceAt, p.face || 'neutral'), look: listAt(info, lt, p.lookAt, p.look || 0), pose: listAt(info, lt, p.poseAt, p.pose || 'stand'), talk, gesture: p.gesture });
+      bust(g, x, y, r, { view: p.view || a.view, ...p, shield: p.keepShield ? undefined : (p.shieldClose ?? null), x: undefined, y: undefined, t: lt + (p.seed || 0), face: listAt(info, lt, p.faceAt, p.face || 'neutral'), look: listAt(info, lt, p.lookAt, p.look || 0), pose: listAt(info, lt, p.poseAt, p.pose || 'stand'), talk, gesture: p.gesture });
     }
     effects(g, lt, info, a.fx);
     for (const p of a.props || []) prop(g, lt, info, p);

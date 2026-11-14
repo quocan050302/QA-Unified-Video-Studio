@@ -1,7 +1,7 @@
 {
- "timestamp": "2026-11-14T03:55:52.965649Z",
+ "timestamp": "2026-11-14T04:58:06.981051Z",
  "branch": "fix/Image-Shot",
- "sha": "0d97139b718deb0e0c704d3b07e650d44d1ac0ec",
+ "sha": "a2086347c6b1eb9315a253f55b9c7d500dd9ea58",
  "status": "V12_BATTLE_E2E_VERIFIED",
  "gates_passed": 20,
  "total_gates": 20,
@@ -14,7 +14,7 @@
     "negative_branch_rejection": true,
     "expected_branch": "fix/Image-Shot"
    },
-   "duration_sec": 0.085
+   "duration_sec": 0.104
   },
   {
    "gate": "L02_EVENT_TO_SHOT_OWNERSHIP",
@@ -27,7 +27,7 @@
     "s005_owned": true,
     "negative_orphan_filtered": true
    },
-   "duration_sec": 0.004
+   "duration_sec": 0.005
   },
   {
    "gate": "L03_SEMANTIC_POLARITY_AND_ACTORS",
@@ -39,7 +39,7 @@
     "active_actor_roman": true,
     "distinct_actor_attributions": true
    },
-   "duration_sec": 0.001
+   "duration_sec": 0.002
   },
   {
    "gate": "L04_CAUSAL_STATE_MACHINE",
@@ -64,7 +64,7 @@
     "max_observed_jump": 0.0,
     "negative_jump_detected": true
    },
-   "duration_sec": 0.001
+   "duration_sec": 0.002
   },
   {
    "gate": "L06_REAL_COMPILER_MULTI_EVENT",
@@ -92,9 +92,9 @@
     "measured_motion_diff": 0.3968,
     "threshold": 0.015,
     "identical_frame_diff": 0.0,
-    "render_duration_sec": 7.68
+    "render_duration_sec": 8.422
    },
-   "duration_sec": 7.883
+   "duration_sec": 8.629
   },
   {
    "gate": "L08_BREAKTHROUGH_GAP",
@@ -136,7 +136,7 @@
     "dem_pack_rejected_safe": true,
     "squire_tool_exit": 0
    },
-   "duration_sec": 0.969
+   "duration_sec": 1.247
   },
   {
    "gate": "L12_UI_HTTP_TASK_TRUTH",
@@ -147,7 +147,7 @@
     "verify_task_result_pass": true,
     "dem_battle_task_rejected": true
    },
-   "duration_sec": 0.259
+   "duration_sec": 0.385
   },
   {
    "gate": "L13_MANUAL_AND_IDEMPOTENCE",
@@ -158,7 +158,7 @@
     "res1_status": "APPLIED",
     "res2_status": "NO_CHANGE"
    },
-   "duration_sec": 0.029
+   "duration_sec": 0.03
   },
   {
    "gate": "L14_AUDIO_SFX_EVENT_SYNC",
@@ -208,16 +208,16 @@
    "gate": "L15_FINAL_MEDIA_60_90S",
    "passed": true,
    "details": {
-    "final_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\v12_20261114_105234\\l15_battle_60_90s\\out\\Why Breaking The Roman Front Line Was A Death Trap.mp4",
+    "final_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\v12_20261114_115513\\l15_battle_60_90s\\out\\Why Breaking The Roman Front Line Was A Death Trap.mp4",
     "final_duration": 75.458333,
     "video_codec": "h264",
     "audio_codec": "aac",
     "resolution": "1920x1080",
     "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v12\\contact_sheet_60_90s.jpg",
-    "render_time_sec": 101.387,
-    "mix_time_sec": 11.557
+    "render_time_sec": 96.383,
+    "mix_time_sec": 9.464
    },
-   "duration_sec": 117.161
+   "duration_sec": 109.313
   },
   {
    "gate": "L16_OPENING_FIRST_30S",
@@ -240,7 +240,7 @@
     ],
     "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v12\\contact_sheet_before_after_30s.jpg"
    },
-   "duration_sec": 42.37
+   "duration_sec": 29.454
   },
   {
    "gate": "L17_SHORTS_9x16",
@@ -252,7 +252,7 @@
     "safe_margins_configured": true,
     "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v12\\contact_sheet_shorts_9x16.jpg"
    },
-   "duration_sec": 29.595
+   "duration_sec": 23.77
   },
   {
    "gate": "L18_FULL_REGRESSION_ALL_PREVIOUS",
@@ -262,15 +262,15 @@
     "dem_audio_plan_ok": true,
     "dem_shots_count": 2
    },
-   "duration_sec": 0.451
+   "duration_sec": 0.412
   },
   {
    "gate": "L19_RESOURCE_CONCURRENCY_DISK_BACKTEST",
    "passed": true,
    "details": {
     "ram_total_gb": 31.75,
-    "ram_available_gb": 11.85,
-    "disk_free_gb": 53.8,
+    "ram_available_gb": 11.99,
+    "disk_free_gb": 54.3,
     "disk_total_gb": 144.02,
     "bounded_concurrency_max": 2
    },
@@ -282,7 +282,7 @@
    "details": {
     "branch_ok": true,
     "current_branch": "fix/Image-Shot",
-    "current_sha": "0d97139b718deb0e0c704d3b07e650d44d1ac0ec"
+    "current_sha": "a2086347c6b1eb9315a253f55b9c7d500dd9ea58"
    }
   }
  ]

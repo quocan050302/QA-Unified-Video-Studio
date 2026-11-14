@@ -25,7 +25,7 @@ export function formation(g, o = {}) {
       list.push({ x, y: y + (r() - 0.5) * h * 0.04, h: h * (0.94 + r() * 0.1), p, face: faces[Math.floor(r() * faces.length)], seed: i * 7 + j * 13, row: j });
     }
   }
-  for (const s of list) soldier(g, s.x, s.y, s.h, { preset: s.p, face: s.face, flip: o.flip, pose: o.pose || (o.march ? 'march' : 'stand'), walk: !!(o.march || o.advance), walkMode: o.advance ? 'side' : (o.march ? 'front' : undefined), walkPhase: o.advance ? Math.abs(o.advance * t * E.W) / (2 * 17 * s.h / 100) + s.seed * 0.07 : undefined, t: t * (o.march || 1) + s.seed * 0.13, seed: s.seed, look: o.look ?? (o.flip ? -0.6 : 0.6) * 0, weapon: o.weapon ?? CAST[s.p]?.weapon, lod: s.h < (o.lodH ?? 90) ? 'low' : 'high' });
+  for (const s of list) soldier(g, s.x, s.y, s.h, { preset: s.p, face: s.face, flip: o.flip, view: o.view, pose: o.pose || (o.march ? 'march' : 'stand'), walk: !!(o.march || o.advance), walkMode: o.advance ? 'side' : (o.march ? 'front' : undefined), walkPhase: o.advance ? Math.abs(o.advance * t * E.W) / (2 * 17 * s.h / 100) + s.seed * 0.07 : undefined, t: t * (o.march || 1) + s.seed * 0.13, seed: s.seed, look: o.look ?? (o.flip ? -0.6 : 0.6) * 0, weapon: o.weapon ?? CAST[s.p]?.weapon, lod: s.h < (o.lodH ?? 90) ? 'low' : 'high' });
   if (o.flags) for (const fl of o.flags) { const x = lerp(X0, X1, fl.col ?? 0.5), y = lerp(yF, yB, fl.row ?? 0.7), hh = lerp(hF, hB, fl.row ?? 0.7); standard(g, x, y - hh * 0.3, hh * 2.4, { ...fl, t }); }
 }
 // co hieu / dai bang La Ma

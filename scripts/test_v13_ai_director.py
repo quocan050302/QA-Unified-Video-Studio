@@ -92,15 +92,22 @@ from tools.gemini_client import (
     test_gemini_connection,
 )
 from tools.global_settings import (
+    InMemorySecretStore,
+    TestKeyringSecretStore,
     delete_api_key_securely,
     get_api_key_securely,
     get_global_settings_public,
     load_global_settings,
     redact_secrets,
     save_global_settings,
+    set_active_secret_store,
     store_api_key_securely,
     validate_global_settings,
 )
+
+# Test mode isolation guard
+if os.environ.get("QA_STUDIO_TEST_MODE") == "1":
+    set_active_secret_store(TestKeyringSecretStore("QAUnifiedVideoStudio_Test_V13"))
 from tools.sfx_library import (
     audit_sfx_assets,
     check_path_traversal,

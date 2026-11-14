@@ -1,0 +1,431 @@
+{
+ "test_run_id": "v14_1_1794632291",
+ "tested_branch": "fix/Image-Shot",
+ "baseline_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+ "start_sha": "a2086347c6b1eb9315a253f55b9c7d500dd9ea58",
+ "total_elapsed_sec": 439.12,
+ "gates": [
+  {
+   "gate_id": "C01",
+   "title": "Mandatory Branch & Production Baseline Invariant Guard",
+   "category": "SAFETY",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "branch": "fix/Image-Shot",
+    "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+   },
+   "elapsed_sec": 0.211
+  },
+  {
+   "gate_id": "C02",
+   "title": "Full-Timeline Camera Coverage (Hook, Middle, Ending)",
+   "category": "CAMERA_GRAMMAR",
+   "status": "PASS",
+   "assertions_passed": 5,
+   "assertions_total": 5,
+   "error_message": null,
+   "details": {
+    "total_shots": 22,
+    "hook_shots": 9,
+    "middle_shots": 9,
+    "ending_shots": 4
+   },
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C03",
+   "title": "0-30s Hook Framing & Dynamic Camera Progression",
+   "category": "HOOK_EXECUTION",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "unique_views": [
+     "low_angle",
+     "over_shoulder_right",
+     "front_three_quarter_left",
+     "rear",
+     "profile_right",
+     "profile_left"
+    ],
+    "unique_scales": [
+     "wide",
+     "medium_wide",
+     "medium_close",
+     "medium"
+    ]
+   },
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C04",
+   "title": "30s-to-End Middle & Ending Framing Diversity",
+   "category": "CAMERA_GRAMMAR",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "mid_end_views": [
+     "low_angle",
+     "over_shoulder_right",
+     "front_three_quarter_right",
+     "top_down",
+     "front_three_quarter_left",
+     "rear",
+     "profile_left"
+    ],
+    "tactical_views_count": 5
+   },
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C05",
+   "title": "CinematicShotPlan Schema Validation & Negative Injection",
+   "category": "SCHEMA",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C06",
+   "title": "Compiled CameraRig Args Consumed by Pack Renderer",
+   "category": "INTEGRATION",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "cameraRig": {
+     "viewpoint": "rear",
+     "scale": "close",
+     "keyframes": [
+      {
+       "t": 0.0,
+       "x": 0.5,
+       "y": 0.5,
+       "z": 1.2,
+       "ease": "sine"
+      },
+      {
+       "t": 3.0,
+       "x": 0.5,
+       "y": 0.5,
+       "z": 1.26,
+       "ease": "sine"
+      }
+     ],
+     "aspect": "16:9"
+    }
+   },
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C07",
+   "title": "Front vs Profile True 2D Geometric Silhouette Difference",
+   "category": "CHARACTER_ART",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C08",
+   "title": "Front vs 3/4 Perspective Asymmetric Vector Staging",
+   "category": "CHARACTER_ART",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C09",
+   "title": "True Rear View Geometry & Dorsal Occlusion (Zero Eyes/Mouth)",
+   "category": "CHARACTER_ART",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C10",
+   "title": "Over-The-Shoulder (OTS) Foreground-Background Staging",
+   "category": "COMPOSITION",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "foreground": {
+     "x": 0.82,
+     "y": 0.72,
+     "R": 0.36,
+     "view": "rear"
+    },
+    "background": {
+     "preset": "hastatus",
+     "x": 0.35,
+     "y": 0.46,
+     "R": 0.18,
+     "view": "front",
+     "main": false,
+     "face": "fierce"
+    }
+   },
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C11",
+   "title": "High-Angle & Low-Angle Viewport Framing",
+   "category": "CAMERA_GRAMMAR",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C12",
+   "title": "Tactical Top-Down Accuracy & Interpolation Continuity",
+   "category": "BATTLE_CHOREO",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C13",
+   "title": "Tracking Independent of Subject Motion",
+   "category": "VISUAL_QA",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 1.219
+  },
+  {
+   "gate_id": "C14",
+   "title": "Prevention of Overused Frontal Close Busts",
+   "category": "CAMERA_GRAMMAR",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "total_shots": 22,
+    "unique_viewpoints": 8,
+    "viewpoint_distribution": {
+     "profile_left": 4,
+     "low_angle": 3,
+     "over_shoulder_right": 7,
+     "profile_right": 1,
+     "front_three_quarter_left": 2,
+     "rear": 2,
+     "top_down": 1,
+     "front_three_quarter_right": 2
+    },
+    "scale_distribution": {
+     "wide": 2,
+     "medium": 10,
+     "medium_wide": 7,
+     "medium_close": 2,
+     "extreme_wide": 1
+    },
+    "purpose_distribution": {
+     "establishing": 1,
+     "character": 2,
+     "explanation": 11,
+     "action": 3,
+     "resolution": 1,
+     "tactical": 2,
+     "reveal": 2
+    },
+    "frontal_shots_count": 0,
+    "frontal_ratio": 0.0,
+    "consecutive_repetitions": 0,
+    "diverse_grammar_verified": true
+   },
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C15",
+   "title": "180-Degree Screen Direction Axis Continuity",
+   "category": "CAMERA_GRAMMAR",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C16",
+   "title": "Actor & Formation Position Continuity Across Cuts",
+   "category": "BATTLE_CHOREO",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.012
+  },
+  {
+   "gate_id": "C17",
+   "title": "16:9 Viewport Framing & Clamp Guard Against Black Edges",
+   "category": "VIEWPORT",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C18",
+   "title": "9:16 Vertical Shorts Safe Zones (Subtitle & UI Protection)",
+   "category": "VIEWPORT",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {
+    "safe_zones": {
+     "is_vertical": true,
+     "margin_bottom": 0.22,
+     "margin_top": 0.12,
+     "character_scale": 1.25
+    }
+   },
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C19",
+   "title": "Manual Camera Shot Locks Preserved Byte-for-Byte",
+   "category": "SAFETY",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C20",
+   "title": "Idempotent Plan Application & Atomic Rollback",
+   "category": "RELIABILITY",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.036
+  },
+  {
+   "gate_id": "C21",
+   "title": "Semantic Source Grounding of Camera Angle & Motion",
+   "category": "AI_DIRECTOR",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C22",
+   "title": "Squire Roman Tactical Narrative 75-120s Film with Spoken Voice",
+   "category": "MEDIA",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_roman_film\\out\\V14_1 ROMAN TACTICAL NARRATIVE EXPLAINER.mp4",
+    "size_bytes": 21716280
+   },
+   "elapsed_sec": 0.046
+  },
+  {
+   "gate_id": "C23",
+   "title": "Four-Format Media Regression (Squire 16:9, 9:16, DEM 16:9, 9:16)",
+   "category": "MEDIA",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "v14_1_squire_16x9": {
+     "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_squire_16x9\\out\\v14_1_squire_16x9.mp4",
+     "size": 8958371,
+     "aspect": "16:9"
+    },
+    "v14_1_squire_9x16": {
+     "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_squire_9x16\\out\\v14_1_squire_9x16.mp4",
+     "size": 8131511,
+     "aspect": "9:16"
+    },
+    "v14_1_dem_16x9": {
+     "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_dem_16x9\\out\\v14_1_dem_16x9.mp4",
+     "size": 2546856,
+     "aspect": "16:9"
+    },
+    "v14_1_dem_9x16": {
+     "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_dem_9x16\\out\\v14_1_dem_9x16.mp4",
+     "size": 2776522,
+     "aspect": "9:16"
+    }
+   },
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C24",
+   "title": "Negative Injection Matrix & Full Timeline Camera Report",
+   "category": "AUDIT",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "evidence_dir": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v14_1",
+    "proof_png": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v14_1\\v14_1_multi_view_geometry_proof.png"
+   },
+   "elapsed_sec": 0.0
+  }
+ ],
+ "legacy_regression": {
+  "V10 Opening": {
+   "passed": true,
+   "exit_code": 0
+  },
+  "V12 Battle Choreo": {
+   "passed": true,
+   "exit_code": 0
+  },
+  "V13 AI Director": {
+   "passed": true,
+   "exit_code": 0
+  },
+  "V14 Acceptance Suite": {
+   "passed": true,
+   "exit_code": 0
+  }
+ },
+ "timestamp": "2026-11-14T04:58:11Z"
+}

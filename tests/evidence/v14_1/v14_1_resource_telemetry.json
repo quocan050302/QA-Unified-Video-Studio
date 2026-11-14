@@ -1,0 +1,17 @@
+{
+ "initial": {
+  "free_disk_gb": 54.34,
+  "total_disk_gb": 144.02,
+  "available_ram_mb": 11508.29,
+  "cpu_count": 12,
+  "cpu_percent": 38.4
+ },
+ "final": {
+  "free_disk_gb": 54.3,
+  "total_disk_gb": 144.02,
+  "available_ram_mb": 12377.75,
+  "cpu_count": 12,
+  "cpu_percent": 14.7
+ },
+ "total_wall_sec": 439.12
+}

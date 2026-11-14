@@ -1,0 +1,52 @@
+{
+ "v14_1_squire_16x9": {
+  "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_squire_16x9\\build\\preview.mp4",
+  "size_bytes": 8958371,
+  "width": 1920,
+  "height": 1080,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "render_wall_sec": 22.66,
+  "duration_sec": 28.0
+ },
+ "v14_1_squire_9x16": {
+  "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_squire_9x16\\build\\preview.mp4",
+  "size_bytes": 8131511,
+  "width": 1080,
+  "height": 1920,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "render_wall_sec": 31.29,
+  "duration_sec": 28.0
+ },
+ "v14_1_dem_16x9": {
+  "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_dem_16x9\\build\\preview.mp4",
+  "size_bytes": 2546856,
+  "width": 1920,
+  "height": 1080,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "render_wall_sec": 13.58,
+  "duration_sec": 28.0
+ },
+ "v14_1_dem_9x16": {
+  "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_dem_9x16\\build\\preview.mp4",
+  "size_bytes": 2776522,
+  "width": 1080,
+  "height": 1920,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "render_wall_sec": 12.62,
+  "duration_sec": 28.0
+ },
+ "v14_1_roman_film": {
+  "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\v14_1_roman_film\\build\\preview.mp4",
+  "size_bytes": 21716280,
+  "width": 1920,
+  "height": 1080,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "render_wall_sec": 51.21,
+  "duration_sec": 77.0
+ }
+}

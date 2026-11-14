@@ -1,9 +1,9 @@
 {
   "status": "DERIVED_FROM_FINAL_AAC_MP4",
-  "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\v10_20261114_080023\\k06_squire_16x9_30s\\out\\Knights Agility Revealed.mp4",
+  "output_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\v10_20261114_115333\\k06_squire_16x9_30s\\out\\Knights Agility Revealed.mp4",
   "sha256": "cc8e26a597846477a6b7604833362ad974215a04265948931453cf38ac1b8e7e",
   "integrated_lufs": -14.1,
   "true_peak_dbtp": -1.8,
   "target_met": true,
-  "timestamp": 1794618112.2270694
+  "timestamp": 1794632104.7612774
 }

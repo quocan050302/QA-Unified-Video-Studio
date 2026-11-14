@@ -1,0 +1,14 @@
+{
+ "squire-mau": {
+  "exists": true,
+  "plan_status": "FALLBACK_OFFLINE",
+  "source": "offline_grounded_rule_fallback",
+  "shots_count": 24
+ },
+ "selfimprove-mau": {
+  "exists": true,
+  "plan_status": "FALLBACK_OFFLINE",
+  "source": "offline_grounded_rule_fallback",
+  "shots_count": 30
+ }
+}

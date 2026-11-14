@@ -1,6 +1,6 @@
 {
-  "run_id": "20261114_080023",
-  "timestamp": "2026-11-14T08:01:59.039388",
+  "run_id": "20261114_115333",
+  "timestamp": "2026-11-14T11:55:13.155485",
   "gates_total": 15,
   "required_gates_total": 15,
   "required_gates_passed": 15,
@@ -90,7 +90,7 @@
       "kind": "SHOWCASE_30S",
       "required": true,
       "details": {
-        "output_file": ".test-runs\\v10_20261114_080023\\k06_squire_16x9_30s\\out\\Knights Agility Revealed.mp4",
+        "output_file": ".test-runs\\v10_20261114_115333\\k06_squire_16x9_30s\\out\\Knights Agility Revealed.mp4",
         "duration": 33.0,
         "spoken_voice_synthesized": true,
         "full_decode_exit": 0,
@@ -105,7 +105,7 @@
       "kind": "SHORTS_VERTICAL",
       "required": true,
       "details": {
-        "output_file": ".test-runs\\v10_20261114_080023\\k07_squire_9x16_30s\\out\\Knights Agility Shorts 30s.mp4",
+        "output_file": ".test-runs\\v10_20261114_115333\\k07_squire_9x16_30s\\out\\Knights Agility Shorts 30s.mp4",
         "is_vertical_stream": true,
         "duration": 31.999674,
         "full_decode_exit": 0,
@@ -120,10 +120,10 @@
       "kind": "DEM_SHOWCASE",
       "required": true,
       "details": {
-        "output_file": ".test-runs\\v10_20261114_080023\\k08_dem_16x9_30s\\out\\The First Step.mp4",
+        "output_file": ".test-runs\\v10_20261114_115333\\k08_dem_16x9_30s\\out\\The First Step.mp4",
         "duration": 33.583333,
         "full_decode_exit": 0,
-        "sha256": "7d66b23a7e223ed139da21df0392308d52b4f35ed6342b47fd1817c1c4447fe2",
+        "sha256": "ad3d45a9c01b27c19a72b62b5ca3ade4c65f9428664b866c8f78ce6b1712b746",
         "proof_contact_sheet": "tests\\evidence\\v10\\proof_k8_dem_16x9.jpg"
       }
     },
@@ -134,11 +134,11 @@
       "kind": "SHORTS_VERTICAL",
       "required": true,
       "details": {
-        "output_file": ".test-runs\\v10_20261114_080023\\k09_dem_9x16_30s\\out\\Stop Scrolling Now.mp4",
+        "output_file": ".test-runs\\v10_20261114_115333\\k09_dem_9x16_30s\\out\\Stop Scrolling Now.mp4",
         "is_vertical_stream": true,
         "duration": 33.583333,
         "full_decode_exit": 0,
-        "sha256": "5e68e65bbb0fc496c501f4cbd8c5f5c32c27cc23d629a7363410c35eef883eaa",
+        "sha256": "1fa66f1a3bed5a1899629102ce5a2ce2340e6f5c02d0bdd61792b1599482cb6a",
         "proof_contact_sheet": "tests\\evidence\\v10\\proof_k9_dem_9x16.jpg"
       }
     },
@@ -174,8 +174,8 @@
       "kind": "RESOURCE_SAFETY",
       "required": true,
       "details": {
-        "worker1_pid": 33884,
-        "worker2_pid": 35028,
+        "worker1_pid": 8940,
+        "worker2_pid": 31944,
         "concurrent_overlap": true,
         "process_tree_cleaned": true
       }
@@ -211,7 +211,7 @@
       "required": true,
       "details": {
         "branch": "fix/Image-Shot",
-        "head_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+        "head_sha": "a2086347c6b1eb9315a253f55b9c7d500dd9ea58",
         "ledger_path": "tests\\evidence\\v10\\v10_execution_ledger.json",
         "matrix_path": "tests\\evidence\\v10\\v10_before_after_matrix.json"
       }
