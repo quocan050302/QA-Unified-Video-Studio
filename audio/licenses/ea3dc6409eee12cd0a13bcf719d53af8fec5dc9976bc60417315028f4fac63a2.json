@@ -1,0 +1,16 @@
+{
+  "license_id": "external_gravel_step_cc0",
+  "name": "external_gravel_step",
+  "sha256": "ea3dc6409eee12cd0a13bcf719d53af8fec5dc9976bc60417315028f4fac63a2",
+  "license_type": "CC0",
+  "source_origin": "https://mildlyuseless.com/res/foley-footstep-gravel",
+  "author": "Mildly Useless",
+  "attribution_required": false,
+  "attribution_text": null,
+  "commercial_use_allowed": true,
+  "tags": [
+    "gravel"
+  ],
+  "duration_sec": 0.24,
+  "imported_at": 1794672926.1692648
+}

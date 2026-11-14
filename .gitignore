@@ -30,3 +30,14 @@ pnpm-lock.yaml
 tests/evidence/*/frames/
 
 
+
+# Bundled external audio with documented licenses
+!audio/music/
+audio/music/*
+!audio/music/external_dark_fog.wav
+!audio/real_sfx/
+audio/real_sfx/*
+!audio/real_sfx/external_gravel_step_ea3dc640.wav
+!audio/licenses/ea3dc6409eee12cd0a13bcf719d53af8fec5dc9976bc60417315028f4fac63a2.json
+!audio/real_sfx/external_water_drops_72f972f0.wav
+!audio/licenses/72f972f0a83084c0e55d847df52d08eda7bc9bafe2324bb825853f413104fbae.json

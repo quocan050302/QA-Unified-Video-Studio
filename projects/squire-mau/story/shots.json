@@ -19,6 +19,11 @@
      "name": "drum_march",
      "at": 0.0,
      "gain": -8
+    },
+    {
+     "name": "external_gravel_step",
+     "at": 0.65,
+     "gain": -5
     }
    ],
    "notes": "",
@@ -1099,7 +1104,7 @@
   {
    "start": 0,
    "end": 41,
-   "bed": "roman"
+   "bed": "external_dark_fog"
   },
   {
    "start": 41,
