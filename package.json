@@ -4,6 +4,11 @@
  "private": true,
  "type": "module",
  "description": "H2 2D Studio: bo dung video nguoi que ve bang code (canvas), xuat tung khung hinh bang Chromium",
+ "scripts": {
+  "dev": "python app.py --open",
+  "start": "python app.py --open",
+  "doctor": "python tools/doctor.py"
+ },
  "dependencies": {
   "@fontsource/archivo-black": "5.2.8",
   "@fontsource/baloo-2": "5.1.0",
