@@ -1,0 +1,911 @@
+{
+ "release": "V14.2",
+ "title": "ALL-GENRE FULL-TIMELINE CINEMATIC CAMERA + GEMINI TRUTH + REAL DEM PERSPECTIVE + ASYNC QA/BACKTEST",
+ "working_branch": "fix/Image-Shot",
+ "production_remote_baseline_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+ "start_commit_sha": "f6a3926e87a886da42b8c8bc9861f883bbd184a1",
+ "end_commit_sha": "f6a3926e87a886da42b8c8bc9861f883bbd184a1",
+ "start_timestamp": 1794637262.684993,
+ "end_timestamp": 1794637522.993622,
+ "total_wall_clock_sec": 260.31,
+ "gates_summary": {
+  "total_gates": 60,
+  "passed": 60,
+  "failed": 0,
+  "all_passed": true
+ },
+ "media_results": {
+  "v14_2_squire_16x9": {
+   "success": true,
+   "message": "RENDER_CACHED_OK",
+   "details": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_squire_16x9/build/preview.mp4",
+    "size_bytes": 7330120,
+    "width": 1920,
+    "height": 1080,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "render_wall_sec": 0.0,
+    "duration_sec": 28.0,
+    "decode_verified": true
+   }
+  },
+  "v14_2_squire_9x16": {
+   "success": true,
+   "message": "RENDER_CACHED_OK",
+   "details": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_squire_9x16/build/preview.mp4",
+    "size_bytes": 6826706,
+    "width": 1080,
+    "height": 1920,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "render_wall_sec": 0.0,
+    "duration_sec": 28.0,
+    "decode_verified": true
+   }
+  },
+  "v14_2_dem_16x9": {
+   "success": true,
+   "message": "RENDER_CACHED_OK",
+   "details": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_dem_16x9/build/preview.mp4",
+    "size_bytes": 1999003,
+    "width": 1920,
+    "height": 1080,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "render_wall_sec": 0.0,
+    "duration_sec": 28.0,
+    "decode_verified": true
+   }
+  },
+  "v14_2_dem_9x16": {
+   "success": true,
+   "message": "RENDER_CACHED_OK",
+   "details": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_dem_9x16/build/preview.mp4",
+    "size_bytes": 2373022,
+    "width": 1080,
+    "height": 1920,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "render_wall_sec": 0.0,
+    "duration_sec": 28.0,
+    "decode_verified": true
+   }
+  },
+  "v14_2_roman_film": {
+   "success": true,
+   "message": "RENDER_CACHED_OK",
+   "details": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_roman_film/build/preview.mp4",
+    "size_bytes": 18309851,
+    "width": 1920,
+    "height": 1080,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "render_wall_sec": 0.0,
+    "duration_sec": 77.0,
+    "decode_verified": true
+   }
+  },
+  "v14_2_medieval_samurai_film": {
+   "success": true,
+   "message": "RENDER_CACHED_OK",
+   "details": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_medieval_samurai_film/build/preview.mp4",
+    "size_bytes": 19410699,
+    "width": 1920,
+    "height": 1080,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "render_wall_sec": 0.0,
+    "duration_sec": 77.0,
+    "decode_verified": true
+   }
+  },
+  "v14_2_dem_film": {
+   "success": true,
+   "message": "RENDER_CACHED_OK",
+   "details": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_dem_film/build/preview.mp4",
+    "size_bytes": 5457108,
+    "width": 1920,
+    "height": 1080,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "render_wall_sec": 0.0,
+    "duration_sec": 77.0,
+    "decode_verified": true
+   }
+  }
+ },
+ "grammar_audit": {
+  "total_shots": 22,
+  "unique_viewpoints": 8,
+  "viewpoint_distribution": {
+   "profile_left": 3,
+   "front_three_quarter_right": 3,
+   "over_shoulder_right": 6,
+   "profile_right": 2,
+   "low_angle": 2,
+   "front_three_quarter_left": 3,
+   "rear": 2,
+   "top_down": 1
+  },
+  "scale_distribution": {
+   "wide": 2,
+   "medium_close": 4,
+   "medium": 8,
+   "medium_wide": 6,
+   "extreme_wide": 2
+  },
+  "purpose_distribution": {
+   "establishing": 1,
+   "character": 3,
+   "explanation": 11,
+   "action": 3,
+   "resolution": 1,
+   "tactical": 1,
+   "reveal": 2
+  },
+  "frontal_shots_count": 0,
+  "frontal_ratio": 0.0,
+  "consecutive_repetitions": 0,
+  "diverse_grammar_verified": true,
+  "camera_plan_digest": "99f403d3fb5b770b"
+ },
+ "historical_backtest": {
+  "squire-mau": {
+   "initial_check_ok": true,
+   "director_applied": true,
+   "post_plan_check_ok": true,
+   "error": null
+  },
+  "selfimprove-mau": {
+   "initial_check_ok": true,
+   "director_applied": true,
+   "post_plan_check_ok": true,
+   "error": null
+  }
+ },
+ "legacy_suites": {
+  "V10 Opening": {
+   "status": "PASS",
+   "exit_code": 0
+  },
+  "V12 Battle Choreo": {
+   "status": "PASS",
+   "exit_code": 0
+  },
+  "V13 AI Director": {
+   "status": "PASS",
+   "exit_code": 0
+  },
+  "V14.1 Camera Director": {
+   "status": "PASS",
+   "exit_code": 0
+  }
+ },
+ "resource_summary": {
+  "samples_count": 516,
+  "violations_count": 0,
+  "sample_interval_sec": 0.5,
+  "peak_cpu_percent": 100.0,
+  "peak_ram_percent": 84.1,
+  "min_disk_free_gb_observed": 16.653,
+  "last_telemetry": {
+   "timestamp": 1794637522.485901,
+   "cpu_percent": 64.0,
+   "ram_percent": 75.3,
+   "ram_avail_mb": 4050.1,
+   "disk_free_gb": 16.724,
+   "tracked_pids_count": 1
+  },
+  "breach_reason": null,
+  "healthy": true
+ },
+ "gates_detail": [
+  {
+   "gate_id": "C01",
+   "title": "Mandatory Branch & Production Baseline Invariant Guard",
+   "category": "SAFETY",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {
+    "branch": "fix/Image-Shot",
+    "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+   },
+   "elapsed_sec": 1.487
+  },
+  {
+   "gate_id": "C02",
+   "title": "Full-Timeline Camera Coverage (Hook, Middle, Ending)",
+   "category": "ALGORITHM",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C03",
+   "title": "0-30s Hook Framing & Dynamic Camera Progression",
+   "category": "CINEMATIC",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C04",
+   "title": "30s-to-End Middle & Ending Framing Diversity",
+   "category": "CINEMATIC",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C05",
+   "title": "CinematicShotPlan Schema Validation & Negative Injection",
+   "category": "SCHEMA",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C06",
+   "title": "Compiled CameraRig Args Consumed by Pack Renderer",
+   "category": "RENDERER",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C07",
+   "title": "Front vs Profile True 2D Geometric Silhouette Difference",
+   "category": "GEOMETRY",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C08",
+   "title": "3/4 Perspective View Vector Staging",
+   "category": "GEOMETRY",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C09",
+   "title": "Rear View Geometric Silhouette & Occlusion Guard (ZERO Eyes/Mouth)",
+   "category": "GEOMETRY",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C10",
+   "title": "Over-The-Shoulder (OTS) 2D Spatial Depth Staging",
+   "category": "STAGING",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C11",
+   "title": "Pack Specific Camera Adaptation (Squire & DEM)",
+   "category": "PACKS",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C12",
+   "title": "Viewport Camera Rig Keyframe Interpolation",
+   "category": "MATH",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C13",
+   "title": "Camera Keyframe Endpoint Safety & Zero-Velocity Clamping",
+   "category": "INTERPOLATION",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C14",
+   "title": "Prevention of Overused Frontal Close Busts",
+   "category": "GRAMMAR",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {
+    "total_shots": 22,
+    "unique_viewpoints": 8,
+    "viewpoint_distribution": {
+     "profile_left": 3,
+     "front_three_quarter_right": 3,
+     "over_shoulder_right": 6,
+     "profile_right": 2,
+     "low_angle": 2,
+     "front_three_quarter_left": 3,
+     "rear": 2,
+     "top_down": 1
+    },
+    "scale_distribution": {
+     "wide": 2,
+     "medium_close": 4,
+     "medium": 8,
+     "medium_wide": 6,
+     "extreme_wide": 2
+    },
+    "purpose_distribution": {
+     "establishing": 1,
+     "character": 3,
+     "explanation": 11,
+     "action": 3,
+     "resolution": 1,
+     "tactical": 1,
+     "reveal": 2
+    },
+    "frontal_shots_count": 0,
+    "frontal_ratio": 0.0,
+    "consecutive_repetitions": 0,
+    "diverse_grammar_verified": true
+   },
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C15",
+   "title": "180-Degree Screen Direction Axis Continuity",
+   "category": "GRAMMAR",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C16",
+   "title": "Actor & Formation Position Continuity Across Cuts",
+   "category": "CONTINUITY",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C17",
+   "title": "16:9 Viewport Framing & Clamp Guard Against Black Edges",
+   "category": "VIEWPORT",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C18",
+   "title": "9:16 Vertical Shorts Safe Zones (Subtitle & UI Protection)",
+   "category": "SHORTS",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C19",
+   "title": "Manual Camera Shot Locks Preserved Byte-for-Byte",
+   "category": "INTEGRITY",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C20",
+   "title": "Idempotent Plan Application & Atomic Rollback",
+   "category": "ATOMICITY",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "C21",
+   "title": "Semantic Source Grounding of Camera Angle & Motion",
+   "category": "GROUNDING",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "C22",
+   "title": "Squire Roman Tactical Narrative 75-120s Film (HARDENED)",
+   "category": "MEDIA",
+   "status": "PASS",
+   "assertions_passed": 5,
+   "assertions_total": 5,
+   "error_message": null,
+   "details": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_roman_film/build/preview.mp4",
+    "duration": 77.0,
+    "size_bytes": 18309851
+   },
+   "elapsed_sec": 1.343
+  },
+  {
+   "gate_id": "C23",
+   "title": "Four-Format Media Regression (HARDENED)",
+   "category": "MEDIA",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 1.695
+  },
+  {
+   "gate_id": "C24",
+   "title": "Negative Injection Matrix & Full Timeline Camera Report (HARDENED)",
+   "category": "AUDIT",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D01",
+   "title": "Strict Branch and Remote Production SHA Baseline Guard",
+   "category": "SAFETY",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.025
+  },
+  {
+   "gate_id": "D02",
+   "title": "Full-Timeline Camera Director 100% Shot Coverage",
+   "category": "ALGORITHM",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "D03",
+   "title": "0-30s Dynamic Progression and Meaningful Visual Transition",
+   "category": "CINEMATIC",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D04",
+   "title": "Middle Timeline (30-60s) Tactical Variation & Non-Monotony",
+   "category": "CINEMATIC",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D05",
+   "title": "Ending Timeline (60s+) Climax and Resolution Framing",
+   "category": "CINEMATIC",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D06",
+   "title": "180-Degree Screen Direction Continuity Across Full Timeline",
+   "category": "GRAMMAR",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D07",
+   "title": "Grammar Audit: Monotonous Frontal Bust Repetition Prevention",
+   "category": "GRAMMAR",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D08",
+   "title": "DEM Bean True Profile: Single Eye, Nasal Contour, Trailing Ear",
+   "category": "DEM",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D09",
+   "title": "DEM Bean True Rear: ZERO Eyes, ZERO Mouth, Collar Crease",
+   "category": "DEM",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D10",
+   "title": "DEM Bean True 3/4 View: Asymmetric Eyes and Mouth",
+   "category": "DEM",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D11",
+   "title": "DEM Over-The-Shoulder Multi-Actor Staging",
+   "category": "DEM",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "D12",
+   "title": "DEM cameraRig Keyframe Interpolation & Z >= 1.0 Clamp",
+   "category": "DEM",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D13",
+   "title": "DEM Legacy args.cam Fallback Bit-For-Bit Backward Compatibility",
+   "category": "COMPAT",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D14",
+   "title": "DEM Self-Improvement Silent Guarantee (No Spoken Voice/TTS)",
+   "category": "AUDIO",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D15",
+   "title": "Squire Knight Silhouette: Bascinet Snout Visor & Aventail",
+   "category": "SQUIRE",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D16",
+   "title": "Squire Samurai Silhouette: Kabuto Crescent Horn & Shikoro",
+   "category": "SQUIRE",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D17",
+   "title": "Multi-Genre Safety: Knight and Samurai Never Receive Roman Presets",
+   "category": "GENRE",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "D18",
+   "title": "Holistic Full-Timeline Camera Sequence Compilation",
+   "category": "ALGORITHM",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D19",
+   "title": "Byte-for-Byte Preservation of Manual Shots & Visual Sources",
+   "category": "INTEGRITY",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D20",
+   "title": "Idempotent Director & Camera Plan Application (Consistent Digest)",
+   "category": "ATOMICITY",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "D21",
+   "title": "Atomic Plan Rollback Guard on Validation Failure",
+   "category": "ATOMICITY",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "D22",
+   "title": "Camera Keyframe Bounded Geometry: Coordinates in [0.1, 0.9], Zoom in [1.0, 3.0]",
+   "category": "VIEWPORT",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D23",
+   "title": "9:16 Shorts Safe Zone Viewport Compliance (Safe Top/Bottom Margins)",
+   "category": "SHORTS",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D24",
+   "title": "Negative Injection: Non-Positive Duration (dur <= 0.0) Raises ValueError",
+   "category": "ROBUSTNESS",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D25",
+   "title": "Negative Injection: Corrupted / Empty Story Shots Fail Closed",
+   "category": "ROBUSTNESS",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D26",
+   "title": "Continuous Resource Monitor Telemetry: Sampler <= 1.0s Interval",
+   "category": "MONITOR",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.815
+  },
+  {
+   "gate_id": "D27",
+   "title": "Resource Monitor Guard: Safe Disk Floor and RAM Ceilings Enforced",
+   "category": "MONITOR",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.001
+  },
+  {
+   "gate_id": "D28",
+   "title": "Asynchronous Bounded Worker Queue (Semaphore) Concurrency Verified",
+   "category": "ASYNC",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.11
+  },
+  {
+   "gate_id": "D29",
+   "title": "Roman Tactical Narrative Film (75-90s): Rendered & Decoded",
+   "category": "MEDIA",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 1.169
+  },
+  {
+   "gate_id": "D30",
+   "title": "Medieval/Samurai Tactical Film (75-90s): Rendered & Decoded",
+   "category": "MEDIA",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 1.246
+  },
+  {
+   "gate_id": "D31",
+   "title": "DEM Self-Improvement Film (75-90s): Rendered & Silent",
+   "category": "MEDIA",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.737
+  },
+  {
+   "gate_id": "D32",
+   "title": "Four-Format Media Regression: 4 Preview MP4s Verified",
+   "category": "MEDIA",
+   "status": "PASS",
+   "assertions_passed": 4,
+   "assertions_total": 4,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 1.519
+  },
+  {
+   "gate_id": "D33",
+   "title": "Multi-Genre Contact Sheets (Hook, Middle, Ending) Generated",
+   "category": "EVIDENCE",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.0
+  },
+  {
+   "gate_id": "D34",
+   "title": "Real Historical Backtest Replay: squire-mau Re-rendered & Verified",
+   "category": "BACKTEST",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 12.467
+  },
+  {
+   "gate_id": "D35",
+   "title": "Real Historical Backtest Replay: selfimprove-mau Re-rendered & Verified",
+   "category": "BACKTEST",
+   "status": "PASS",
+   "assertions_passed": 2,
+   "assertions_total": 2,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 6.955
+  },
+  {
+   "gate_id": "D36",
+   "title": "Production Credential Protection: QA_STUDIO_TEST_MODE='1' & Zero Key Leakage",
+   "category": "SAFETY",
+   "status": "PASS",
+   "assertions_passed": 3,
+   "assertions_total": 3,
+   "error_message": null,
+   "details": {},
+   "elapsed_sec": 0.041
+  }
+ ]
+}

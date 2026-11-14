@@ -47,7 +47,7 @@ from tools.cinematic_camera import (
     camera_plan_digest,
 )
 
-DIRECTOR_PLAN_VERSION = "14.1"
+DIRECTOR_PLAN_VERSION = "14.2"
 
 
 class SfxIntent(BaseModel):
@@ -393,6 +393,7 @@ def compile_director_plan_to_visuals(
     plan_dict: Any,
     project_path: Any,
     aspect: str = "16:9",
+    pack: Optional[str] = None,
 ) -> Tuple[List[Dict[str, Any]], int]:
     """
     Compile DirectorPlan into storyboard shot parameters with real executable motion args.
@@ -404,13 +405,23 @@ def compile_director_plan_to_visuals(
 
     if isinstance(project_path, (list, tuple)):
         shots = copy.deepcopy(list(project_path))
-        cfg = {"aspect": aspect, "pack": "squire"}
+        detected_pack = pack or (shots[0].get("pack") if shots and isinstance(shots[0], dict) else None)
+        if not detected_pack:
+            # Check if shots have dem characteristics
+            is_dem = any(
+                isinstance(s, dict) and (s.get("id", "").startswith("d") or "actors" in s.get("args", {}) or s.get("args", {}).get("set"))
+                for s in shots
+            )
+            detected_pack = "dem" if is_dem else "squire"
+        cfg = {"aspect": aspect, "pack": detected_pack}
     else:
         p = Path(project_path).resolve()
         story_file = p / "story" / "shots.json"
         story = read_json(story_file, {}) or {}
         shots = copy.deepcopy(story.get("shots", []))
         cfg = read_json(p / "config.json", {})
+        if pack:
+            cfg["pack"] = pack
         aspect = cfg.get("aspect", aspect)
     
     plan_shots_by_id = {s.get("shot_id"): s for s in plan_dict.get("shots", [])}
@@ -419,14 +430,37 @@ def compile_director_plan_to_visuals(
     
     pack = cfg.get("pack", "squire")
     
+    # Detect genre for appropriate aesthetic/presets (Samurai, Knight, Roman)
+    raw_genre = (str(cfg.get("genre") or "") + " " + str(cfg.get("theme") or "")).lower()
+    script_snippet = " ".join([
+        (s.get("line") or "") + " " + (s.get("scene") or "")
+        for s in shots
+    ]).lower()
+
+    if any(k in raw_genre or k in script_snippet for k in ("samurai", "katana", "shogun", "bushido", "ashigaru", "ronin", "daimyo", "sengoku", "edo")):
+        genre = "samurai"
+    elif any(k in raw_genre or k in script_snippet for k in ("knight", "medieval", "crusade", "chivalry", "feudal", "castle", "french", "norman", "english")):
+        genre = "knight"
+    else:
+        genre = "roman"
+
+    # Plan holistic camera sequence across the ENTIRE sequence of shots once upfront
+    full_camera_plans = plan_camera_sequence(
+        shots,
+        director_plan=plan_dict,
+        config=cfg,
+        aspect=aspect,
+    )
+    full_camera_plans_by_id = {cp.shot_id: cp for cp in full_camera_plans}
+
     for s in shots:
         sid = s.get("id")
         # 1. Byte-for-byte manual lock protection
-        if s.get("visual_source") == "manual":
+        if s.get("visual_source") == "manual" or s.get("manual") is True or s.get("camera_manual_lock") is True:
             continue
             
-        if sid in plan_shots_by_id:
-            ps = plan_shots_by_id[sid]
+        if sid in plan_shots_by_id or sid in full_camera_plans_by_id:
+            ps = plan_shots_by_id.get(sid, {})
             bm = ps.get("body_motion", "stand")
             cam = ps.get("camera_intent", "medium")
             pol = ps.get("polarity", "AFFIRMED")
@@ -435,10 +469,8 @@ def compile_director_plan_to_visuals(
             
             # Extract or synthesize full-video cinematic camera plan
             cp_plan = ps.get("camera_plan")
-            if not cp_plan:
-                auto_cps = plan_camera_sequence([s], config={"pack": pack, "aspect": cfg.get("aspect", "16:9")})
-                if auto_cps:
-                    cp_plan = auto_cps[0].model_dump()
+            if not cp_plan and sid in full_camera_plans_by_id:
+                cp_plan = full_camera_plans_by_id[sid].model_dump()
             elif hasattr(cp_plan, "model_dump"):
                 cp_plan = cp_plan.model_dump()
 
@@ -471,7 +503,7 @@ def compile_director_plan_to_visuals(
                 compiled_cam = compile_camera_keyframes(
                     CinematicShotPlan(**cp_plan),
                     dur=dur,
-                    aspect=cfg.get("aspect", "16:9"),
+                    aspect=cfg.get("aspect", aspect),
                 )
                 args["cameraRig"] = compiled_cam["cameraRig"]
                 args["view"] = cp_view
@@ -484,20 +516,30 @@ def compile_director_plan_to_visuals(
                 if chosen_tpl == "top":
                     # Tactical bird's-eye blocks with paths and continuous kinematics
                     blocks = []
-                    # Roman legion block
+                    # Blue ally block
+                    if genre == "samurai":
+                        ally_label = "SHOGUN"
+                        enemy_label = "RONIN" if act == "opponent" else "CLAN"
+                    elif genre == "knight":
+                        ally_label = "CHIVALRY"
+                        enemy_label = "INVADER" if act == "opponent" else "BARON"
+                    else:
+                        ally_label = "LEGIO"
+                        enemy_label = "WARLORD" if act == "opponent" else "ENEMY"
+
                     blocks.append({
                         "side": "blue",
-                        "label": "LEGIO",
+                        "label": ally_label,
                         "w": 0.32,
                         "h": 0.10,
                         "path": [[0.0, 0.48, 0.62], [dur, 0.48, 0.58]],
                         "gap": {"at": round(0.35 * dur, 2), "w": 0.08} if pol == "PERCEIVED" else None,
                     })
-                    # Opposing warlord block
+                    # Red opposing block
                     opp_path = [[0.0, 0.52, 0.28], [dur, 0.52, 0.45]] if bm in ("charge", "advance") else [[0.0, 0.52, 0.35], [dur, 0.52, 0.38]]
                     blocks.append({
                         "side": "red",
-                        "label": "WARLORD" if act == "opponent" else "ENEMY",
+                        "label": enemy_label,
                         "w": 0.35,
                         "h": 0.12,
                         "path": opp_path,
@@ -518,8 +560,18 @@ def compile_director_plan_to_visuals(
                 elif chosen_tpl == "army":
                     # Moving army formations with front/side marching
                     march_mode = "front" if bm in ("advance", "charge") else ("side" if cam in ("wide", "right") else True)
+                    if genre == "samurai":
+                        mid_preset = "samurai" if act != "opponent" else "ronin"
+                        back_preset = "ashigaru"
+                    elif genre == "knight":
+                        mid_preset = "knight14" if act != "opponent" else "frenchKnight"
+                        back_preset = "englishArcher"
+                    else:
+                        mid_preset = "hastatus" if act != "opponent" else "warlord"
+                        back_preset = "warlord" if act == "roman" else "latin"
+
                     args["mid"] = [{
-                        "preset": "hastatus" if act != "opponent" else "warlord",
+                        "preset": mid_preset,
                         "rows": 4,
                         "cols": 10,
                         "x0": 0.04,
@@ -533,7 +585,7 @@ def compile_director_plan_to_visuals(
                         "face": "fierce" if bm in ("charge", "collision") else "neutral",
                     }]
                     args["back"] = [{
-                        "preset": "warlord" if act == "roman" else "latin",
+                        "preset": back_preset,
                         "rows": 3,
                         "cols": 20,
                         "x0": 0.0,
@@ -551,8 +603,18 @@ def compile_director_plan_to_visuals(
                     args["move"] = "right" if cam == "pan" else "in"
                     
                 elif chosen_tpl == "close":
-                    # Close hero / centurion / warlord bust with true 2D viewpoint
-                    args["preset"] = "centurion" if act == "roman" else ("warlord" if act == "opponent" else "hastatus")
+                    # Close hero bust with true 2D viewpoint
+                    if genre == "samurai":
+                        hero_preset = "samurai" if act != "opponent" else "ronin"
+                        other_preset = "ronin" if act == "roman" else "samurai"
+                    elif genre == "knight":
+                        hero_preset = "knight15" if act != "opponent" else "frenchKnight"
+                        other_preset = "frenchKnight" if act == "roman" else "knight14"
+                    else:
+                        hero_preset = "centurion" if act == "roman" else ("warlord" if act == "opponent" else "hastatus")
+                        other_preset = "warlord" if act == "roman" else "hastatus"
+
+                    args["preset"] = hero_preset
                     args["face"] = "fierce" if bm in ("charge", "collision") else ("shock" if pol == "PERCEIVED" else "neutral")
                     args["pose"] = "attack" if bm == "collision" else ("defend" if bm == "shield_wall" else "stand")
                     args["talk"] = bool(len(s.get("line", "")) > 18)
@@ -566,7 +628,7 @@ def compile_director_plan_to_visuals(
                             args["R"] = 0.36
                             args["view"] = "rear"
                             args["others"] = [{
-                                "preset": "warlord" if act == "roman" else "hastatus",
+                                "preset": other_preset,
                                 "x": 0.35,
                                 "y": 0.46,
                                 "R": 0.18,
@@ -580,7 +642,7 @@ def compile_director_plan_to_visuals(
                             args["R"] = 0.36
                             args["view"] = "rear"
                             args["others"] = [{
-                                "preset": "hastatus" if act == "roman" else "warlord",
+                                "preset": other_preset,
                                 "x": 0.65,
                                 "y": 0.46,
                                 "R": 0.18,
@@ -598,8 +660,21 @@ def compile_director_plan_to_visuals(
                     from_x = 0.30 if act != "opponent" else 0.70
                     to_x = 0.55 if act != "opponent" else 0.45
                     args["view"] = cp_view
+                    if genre == "samurai":
+                        scene_preset = "samurai" if act != "opponent" else "ronin"
+                        scene_weapon = "katana"
+                        back_preset = "ashigaru"
+                    elif genre == "knight":
+                        scene_preset = "knight15" if act != "opponent" else "frenchKnight"
+                        scene_weapon = "sword" if bm != "throw" else "pollaxe"
+                        back_preset = "knight14"
+                    else:
+                        scene_preset = "hastatus" if act != "opponent" else "warlord"
+                        scene_weapon = "pilum" if bm == "throw" else "gladius"
+                        back_preset = "hastatus"
+
                     args["people"] = [{
-                        "preset": "hastatus" if act != "opponent" else "warlord",
+                        "preset": scene_preset,
                         "x": from_x,
                         "y": 0.88,
                         "h": 0.58,
@@ -610,12 +685,12 @@ def compile_director_plan_to_visuals(
                         "moveAt": round(0.15 * dur, 2),
                         "dur": round(0.65 * dur, 2),
                         "face": "fierce" if bm in ("charge", "collision") else "neutral",
-                        "weapon": "pilum" if bm == "throw" else "gladius",
+                        "weapon": scene_weapon,
                         "flip": bool(act == "opponent"),
                         "view": cp_view,
                     }]
                     args["back"] = [{
-                        "preset": "hastatus",
+                        "preset": back_preset,
                         "rows": 3,
                         "cols": 16,
                         "x0": 0.0,
@@ -631,31 +706,87 @@ def compile_director_plan_to_visuals(
                     elif bm == "throw":
                         args["fx"] = [{"kind": "javelins", "at": round(0.25 * dur, 2)}]
             else:
-                # DEM pack
+                # DEM pack (Self-Improvement SILENT)
                 args["set"] = args.get("set", "void")
                 dem_pose = "stand" if bm == "stand" else ("phone" if bm == "phone" else ("slump" if bm == "slump" else "walk"))
-                actor_obj = {
-                    "who": "hero",
-                    "x": 0.35,
-                    "y": 0.76,
-                    "h": 0.42,
-                    "pose": dem_pose,
-                    "face": "neutral" if pol == "AFFIRMED" else "tired",
-                }
-                if bm in ("walk", "advance", "charge"):
-                    actor_obj["walk"] = {
-                        "to": 0.65,
-                        "at": round(0.15 * dur, 2),
-                        "dur": round(0.65 * dur, 2),
-                        "speed": 1.0,
+                
+                if cp_view.startswith("over_shoulder"):
+                    if cp_view == "over_shoulder_right":
+                        bg_actor = {
+                            "who": "hero",
+                            "x": 0.36,
+                            "y": 0.72,
+                            "h": 0.40,
+                            "pose": dem_pose,
+                            "view": "three_quarter_right",
+                            "face": "neutral" if pol == "AFFIRMED" else "tired",
+                        }
+                        fg_actor = {
+                            "who": "other",
+                            "x": 0.80,
+                            "y": 0.84,
+                            "h": 0.62,
+                            "pose": "stand",
+                            "view": "rear",
+                            "face": "neutral",
+                        }
+                    else:
+                        bg_actor = {
+                            "who": "hero",
+                            "x": 0.64,
+                            "y": 0.72,
+                            "h": 0.40,
+                            "pose": dem_pose,
+                            "view": "three_quarter_left",
+                            "face": "neutral" if pol == "AFFIRMED" else "tired",
+                        }
+                        fg_actor = {
+                            "who": "other",
+                            "x": 0.20,
+                            "y": 0.84,
+                            "h": 0.62,
+                            "pose": "stand",
+                            "view": "rear",
+                            "face": "neutral",
+                        }
+                    args["actors"] = [bg_actor, fg_actor]
+                else:
+                    actor_obj = {
+                        "who": "hero",
+                        "x": 0.35,
+                        "y": 0.76,
+                        "h": 0.42,
+                        "pose": dem_pose,
+                        "view": cp_view,
+                        "face": "neutral" if pol == "AFFIRMED" else "tired",
                     }
-                args["actors"] = [actor_obj]
-                args["cam"] = {
-                    "from": [0.5, 0.5, 1.0],
-                    "to": [0.5, 0.5, 1.06],
-                    "at": 0,
-                    "dur": dur,
-                }
+                    if bm in ("walk", "advance", "charge"):
+                        actor_obj["walk"] = {
+                            "to": 0.65,
+                            "at": round(0.15 * dur, 2),
+                            "dur": round(0.65 * dur, 2),
+                            "speed": 1.0,
+                        }
+                    args["actors"] = [actor_obj]
+
+                args["view"] = cp_view
+                if cp_plan and isinstance(cp_plan, dict):
+                    compiled_cam = compile_camera_keyframes(
+                        CinematicShotPlan(**cp_plan),
+                        dur=dur,
+                        aspect=cfg.get("aspect", aspect),
+                    )
+                    args["cameraRig"] = compiled_cam["cameraRig"]
+                    first_kf = compiled_cam["cameraRig"]["keyframes"][0]
+                    last_kf = compiled_cam["cameraRig"]["keyframes"][-1]
+                    args["cam"] = {
+                        "from": [first_kf["x"], first_kf["y"], first_kf["z"]],
+                        "to": [last_kf["x"], last_kf["y"], last_kf["z"]],
+                        "at": 0,
+                        "dur": dur,
+                    }
+                    args["move"] = compiled_cam["move"]
+                    args["moveAmt"] = compiled_cam["moveAmt"]
                 beat_text = ps.get("action_beat") or s.get("line", "")[:45]
                 args["texts"] = [{"kind": "narr", "t": beat_text, "at": round(0.2 * dur, 2)}]
                 

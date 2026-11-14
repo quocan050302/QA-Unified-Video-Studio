@@ -1,0 +1,18 @@
+{
+  "release": "V14.2",
+  "branch": "fix/Image-Shot",
+  "remote_target": "origin/fix/Image-Shot",
+  "production_baseline_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_untouched": true,
+  "gates_passed": 60,
+  "gates_total": 60,
+  "all_gates_passed": true,
+  "legacy_v10_passed": true,
+  "legacy_v12_passed": true,
+  "legacy_v13_passed": true,
+  "legacy_v14_1_passed": true,
+  "films_rendered_count": 3,
+  "previews_rendered_count": 4,
+  "zero_packet_corruptions": true,
+  "timestamp": "2026-11-14T13:28:30Z"
+}

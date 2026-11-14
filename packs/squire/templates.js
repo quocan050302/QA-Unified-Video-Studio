@@ -23,12 +23,22 @@ export function camera(g, lt, info, fn) {
   // V14.1: Bounded keyframe cameraRig path
   if (a.cameraRig && a.cameraRig.keyframes && a.cameraRig.keyframes.length > 0) {
     const kfs = a.cameraRig.keyframes;
-    let kf0 = kfs[0], kf1 = kfs[kfs.length - 1];
-    for (let idx = 0; idx < kfs.length - 1; idx++) {
-      if (lt >= kfs[idx].t && lt <= kfs[idx + 1].t) {
-        kf0 = kfs[idx];
-        kf1 = kfs[idx + 1];
-        break;
+    let kf0, kf1;
+    if (lt <= kfs[0].t) {
+      kf0 = kfs[0];
+      kf1 = kfs[0];
+    } else if (lt >= kfs[kfs.length - 1].t) {
+      kf0 = kfs[kfs.length - 1];
+      kf1 = kfs[kfs.length - 1];
+    } else {
+      kf0 = kfs[0];
+      kf1 = kfs[1];
+      for (let idx = 0; idx < kfs.length - 1; idx++) {
+        if (lt >= kfs[idx].t && lt <= kfs[idx + 1].t) {
+          kf0 = kfs[idx];
+          kf1 = kfs[idx + 1];
+          break;
+        }
       }
     }
     const span = Math.max(0.01, kf1.t - kf0.t);

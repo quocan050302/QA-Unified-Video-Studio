@@ -854,9 +854,50 @@ function drawSoldierProfile(g, x, y, h, o, dir = 1) {
   } });
   line(g, [[ex - R * 0.15, ey - R * 0.16], [ex + R * 0.18, ey - R * 0.12]], { lw: lw * 0.8, ink: o.hairColor || PAL.hairDark });
 
-  // Helmet in profile
+  // Helmet & Genre identification in profile
   const hl = o.helmet || 'none';
-  if (['montefortino', 'attic'].includes(hl) || hl !== 'none') {
+  const isRoman = ['montefortino', 'attic'].includes(hl) || o.body === 'roman' || ['hastatus', 'princeps', 'triarius', 'latin', 'velites', 'legionary', 'consul', 'greek', 'spartan'].includes(o.preset);
+  const isKnight = ['bascinet', 'bucket', 'kettle', 'coif', 'nasal', 'spangen'].includes(hl) || o.body === 'plate' || o.arms === 'plate' || ['knight15', 'knight14', 'knight13', 'knight12', 'whiteArmor', 'frenchKnight', 'frenchKnight2', 'henry', 'englishArcher'].includes(o.preset);
+  const isSamurai = ['kabuto', 'jingasa'].includes(hl) || o.body === 'samurai' || ['samurai', 'ashigaru', 'ronin'].includes(o.preset);
+
+  if (isKnight) {
+    // Medieval Knight Bascinet / Great Helm in profile: pointed snout visor, mail aventail
+    shape(g, (c) => {
+      c.moveTo(hx - R * 1.15, hy + R * 0.4);
+      c.quadraticCurveTo(hx - R * 0.85, hy - R * 0.6, hx, hy - R * 1.15); // Conical bascinet top
+      c.lineTo(hx + R * 0.45, hy - R * 0.95);
+      c.lineTo(hx + R * 1.12, hy + R * 0.05); // Pointed snout visor!
+      c.lineTo(hx + R * 0.55, hy + R * 0.55);
+      c.lineTo(hx - R * 0.45, hy + R * 0.85); // Mail aventail over neck
+      c.lineTo(hx - R * 1.15, hy + R * 0.4);
+      c.closePath();
+    }, { fill: metal, lw });
+    // Eye slit in visor
+    line(g, [[hx + R * 0.35, hy - R * 0.08], [hx + R * 0.85, hy - R * 0.04]], { lw: lw * 1.2, ink: OUT });
+    // Mail aventail texture
+    line(g, [[hx - R * 0.75, hy + R * 0.5], [hx + R * 0.15, hy + R * 0.65]], { lw: lw * 0.8, ink: PAL.mail });
+  } else if (isSamurai) {
+    // Samurai Kabuto in profile: ribbed bowl, shikoro neck plates, crescent maedate horn
+    shape(g, (c) => {
+      c.moveTo(hx - R * 1.25, hy + R * 0.65); // Shikoro neck plates fan backward
+      c.lineTo(hx - R * 1.05, hy + R * 0.1);
+      c.quadraticCurveTo(hx - R * 0.75, hy - R * 1.1, hx, hy - R * 1.15);
+      c.quadraticCurveTo(hx + R * 0.75, hy - R * 0.9, hx + R * 0.95, hy - R * 0.2); // Brow peak
+      c.lineTo(hx + R * 0.35, hy - R * 0.15);
+      c.lineTo(hx - R * 0.45, hy + R * 0.75);
+      c.closePath();
+    }, { fill: '#1f2421', lw });
+    // Crescent horn crest (Maedate) at front
+    shape(g, (c) => {
+      c.moveTo(hx + R * 0.65, hy - R * 0.5);
+      c.quadraticCurveTo(hx + R * 1.2, hy - R * 1.4, hx + R * 0.5, hy - R * 1.8);
+      c.quadraticCurveTo(hx + R * 0.85, hy - R * 1.2, hx + R * 0.45, hy - R * 0.4);
+      c.closePath();
+    }, { fill: PAL.gold, lw: lw * 0.6 });
+    // Fukikaeshi ear wing
+    rect(g, hx - R * 0.15, hy - R * 0.25, R * 0.35, R * 0.45, { fill: PAL.gold, lw: lw * 0.6, r: 2 });
+  } else if (['montefortino', 'attic'].includes(hl) || hl !== 'none') {
+    // Roman Montefortino / Attic helmet in profile
     shape(g, (c) => {
       c.moveTo(hx - R * 1.25, hy + R * 0.3);
       c.quadraticCurveTo(hx - R * 0.8, hy + R * 0.1, hx - R * 0.85, hy - R * 0.4);
@@ -893,20 +934,35 @@ function drawSoldierProfile(g, x, y, h, o, dir = 1) {
   }
 
   // 5. Near Arm & Weapon in profile
-  const wp = o.weapon || 'gladius';
+  const wp = o.weapon || (isSamurai ? 'katana' : (isKnight ? 'sword' : 'gladius'));
   const armPtsList = [
     [0, -52 * u],
     [10 * u, -42 * u],
     [20 * u, -45 * u],
   ];
-  tube(g, armPtsList, 7 * u, o.sleeve || (o.body === 'roman' ? o.skin || PAL.skin : tc), lw);
+  tube(g, armPtsList, 7 * u, o.sleeve || (isRoman ? o.skin || PAL.skin : tc), lw);
   hand(g, armPtsList[2][0], armPtsList[2][1], 5 * u, { lw });
-  if (wp === 'pilum' || wp === 'spear') {
+
+  if (isSamurai || wp === 'katana') {
+    // Curved Katana with round tsuba guard
+    shape(g, (c) => {
+      c.moveTo(20 * u, -45 * u);
+      c.quadraticCurveTo(38 * u, -48 * u, 56 * u, -54 * u); // Curved katana tip
+      c.lineTo(55 * u, -50 * u);
+      c.quadraticCurveTo(38 * u, -45 * u, 20 * u, -43 * u);
+      c.closePath();
+    }, { fill: PAL.steelLight, lw: lw * 0.6 });
+    circ(g, 20 * u, -45 * u, 4.5 * u, { fill: PAL.gold, lw: lw * 0.6 }); // Tsuba
+  } else if (wp === 'pilum' || wp === 'spear') {
     line(g, [[12 * u, -45 * u], [68 * u, -45 * u]], { lw: 3 * u, ink: PAL.woodDark });
     polyS(g, [[68 * u, -47 * u], [78 * u, -45 * u], [68 * u, -43 * u]], { fill: PAL.steelLight, lw });
+  } else if (wp === 'pollaxe') {
+    line(g, [[10 * u, -70 * u], [22 * u, -15 * u]], { lw: 3.5 * u, ink: PAL.woodDark });
+    rect(g, 8 * u, -68 * u, 12 * u, 8 * u, { fill: PAL.steel, lw: lw * 0.8 });
   } else {
+    // Knight sword with crossguard / Roman gladius
     rect(g, 22 * u, -47 * u, 24 * u, 4 * u, { fill: PAL.steelLight, lw: lw * 0.7, r: 1 });
-    rect(g, 18 * u, -49 * u, 4 * u, 8 * u, { fill: PAL.gold, lw: lw * 0.7, r: 1 });
+    rect(g, 18 * u, -50 * u, 4 * u, 10 * u, { fill: PAL.gold, lw: lw * 0.7, r: 1 }); // Crossguard
   }
 
   g.restore();
@@ -919,9 +975,14 @@ function drawSoldierRear(g, x, y, h, o, dir = 0) {
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const W = walkInfo(o); o._walk = W;
   const br = (W ? W.bob : Math.sin(t * 1.7 + (o.seed || 0)) * 0.6) * u;
-  const metal = o.metal || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronze : PAL.steel);
-  const metalD = o.metalDark || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronzeDark : PAL.steelDark);
-  const tc = o.tunicColor || (o.body === 'roman' ? PAL.red : (o.body === 'mail' ? PAL.mail : PAL.green));
+  const hl = o.helmet || 'none';
+  const isRoman = ['montefortino', 'attic'].includes(hl) || o.body === 'roman' || ['hastatus', 'princeps', 'triarius', 'latin', 'velites', 'legionary', 'consul', 'greek', 'spartan'].includes(o.preset);
+  const isKnight = ['bascinet', 'bucket', 'kettle', 'coif', 'nasal', 'spangen'].includes(hl) || o.body === 'plate' || o.arms === 'plate' || ['knight15', 'knight14', 'knight13', 'knight12', 'whiteArmor', 'frenchKnight', 'frenchKnight2', 'henry', 'englishArcher'].includes(o.preset);
+  const isSamurai = ['kabuto', 'jingasa'].includes(hl) || o.body === 'samurai' || ['samurai', 'ashigaru', 'ronin'].includes(o.preset);
+
+  const metal = o.metal || (isRoman && ['montefortino', 'attic'].includes(o.helmet) ? PAL.bronze : PAL.steel);
+  const metalD = o.metalDark || (isRoman && ['montefortino', 'attic'].includes(o.helmet) ? PAL.bronzeDark : PAL.steelDark);
+  const tc = o.tunicColor || (isRoman ? PAL.red : (isKnight ? PAL.yellow : (isSamurai ? PAL.black : PAL.green)));
 
   g.save();
   g.translate(x, y);
@@ -946,18 +1007,29 @@ function drawSoldierRear(g, x, y, h, o, dir = 0) {
     c.quadraticCurveTo(0, skirtY + 2 * u, -wB, skirtY);
     c.closePath();
   }, { fill: tc, lw, inner: (c) => {
-    if (o.body === 'roman') {
+    if (isRoman) {
       rect(c, -11 * u, topY + 4 * u, 22 * u, 28 * u, { fill: metal, lw: lw * 0.8, r: 2 * u });
       line(c, [[-9 * u, topY + 4 * u], [-4 * u, topY + 20 * u]], { lw: 3 * u, ink: PAL.leather });
       line(c, [[9 * u, topY + 4 * u], [4 * u, topY + 20 * u]], { lw: 3 * u, ink: PAL.leather });
       line(c, [[0, topY + 8 * u], [0, topY + 26 * u]], { lw: 2 * u, ink: metalD });
+    } else if (isKnight) {
+      rect(c, -12 * u, topY + 2 * u, 24 * u, 30 * u, { fill: metal, lw: lw * 0.8, r: 3 * u });
+      line(c, [[0, topY + 4 * u], [0, topY + 30 * u]], { lw: 2.5 * u, ink: metalD });
+      if (o.tabard) {
+        rect(c, -10 * u, topY + 2 * u, 20 * u, 30 * u, { fill: o.tabardColor || PAL.yellow, lw: lw * 0.7 });
+      }
+    } else if (isSamurai) {
+      rect(c, -12 * u, topY + 4 * u, 24 * u, 28 * u, { fill: '#1b1e23', lw: lw * 0.8, r: 2 * u });
+      for (let l = 0; l < 4; l++) {
+        line(c, [[-11 * u, topY + (8 + l * 6) * u], [11 * u, topY + (8 + l * 6) * u]], { lw: 2 * u, ink: o.lacing || PAL.red });
+      }
     }
   } });
   rect(g, -wB * 0.95, hipY - 5 * u, wB * 1.9, 4.5 * u, { fill: PAL.leather, lw: lw * 0.8, r: 1 });
 
   // 3. Arms from rear
   const leftArm = armPts(-12 * u, -54 * u, -1, 35, 75, u, 12 * u);
-  tube(g, [leftArm[0], leftArm[1], leftArm[2]], 7 * u, o.sleeve || (o.body === 'roman' ? o.skin || PAL.skin : tc), lw);
+  tube(g, [leftArm[0], leftArm[1], leftArm[2]], 7 * u, o.sleeve || (isRoman ? o.skin || PAL.skin : tc), lw);
   if (o.shield) {
     g.save();
     g.translate(-18 * u, -42 * u);
@@ -967,10 +1039,19 @@ function drawSoldierRear(g, x, y, h, o, dir = 0) {
   }
 
   const rightArm = armPts(12 * u, -54 * u, 1, 40, 60, u, 12 * u);
-  tube(g, [rightArm[0], rightArm[1], rightArm[2]], 7 * u, o.sleeve || (o.body === 'roman' ? o.skin || PAL.skin : tc), lw);
+  tube(g, [rightArm[0], rightArm[1], rightArm[2]], 7 * u, o.sleeve || (isRoman ? o.skin || PAL.skin : tc), lw);
   hand(g, rightArm[2][0], rightArm[2][1], 5 * u, { lw });
-  const wp = o.weapon || 'gladius';
-  if (wp === 'pilum' || wp === 'spear') {
+  const wp = o.weapon || (isSamurai ? 'katana' : (isKnight ? 'sword' : 'gladius'));
+  if (isSamurai || wp === 'katana') {
+    shape(g, (c) => {
+      c.moveTo(rightArm[2][0], rightArm[2][1] - 5 * u);
+      c.quadraticCurveTo(rightArm[2][0] + 6 * u, rightArm[2][1] - 22 * u, rightArm[2][0] + 12 * u, rightArm[2][1] - 36 * u);
+      c.lineTo(rightArm[2][0] + 10 * u, rightArm[2][1] - 36 * u);
+      c.quadraticCurveTo(rightArm[2][0] + 4 * u, rightArm[2][1] - 22 * u, rightArm[2][0] - 2 * u, rightArm[2][1] - 5 * u);
+      c.closePath();
+    }, { fill: PAL.steelLight, lw: lw * 0.6 });
+    circ(g, rightArm[2][0], rightArm[2][1] - 5 * u, 4 * u, { fill: PAL.gold, lw: lw * 0.6 });
+  } else if (wp === 'pilum' || wp === 'spear') {
     line(g, [[rightArm[2][0], rightArm[2][1]], [rightArm[2][0] + 8 * u, rightArm[2][1] - 65 * u]], { lw: 3 * u, ink: PAL.woodDark });
     polyS(g, [[rightArm[2][0] + 6 * u, rightArm[2][1] - 65 * u], [rightArm[2][0] + 8 * u, rightArm[2][1] - 75 * u], [rightArm[2][0] + 10 * u, rightArm[2][1] - 65 * u]], { fill: PAL.steelLight, lw });
   } else {
@@ -982,17 +1063,39 @@ function drawSoldierRear(g, x, y, h, o, dir = 0) {
   const R = 19 * u, hx = 0, hy = -78 * u;
   rect(g, hx - R * 0.45, hy + R * 0.4, R * 0.9, R * 0.5, { fill: o.skin || PAL.skin, lw: 0 });
   shape(g, (c) => c.arc(hx, hy, R * 1.05, 0, Math.PI * 2), { fill: metal, lw });
-  shape(g, (c) => {
-    c.moveTo(hx - R * 1.15, hy + R * 0.1);
-    c.quadraticCurveTo(hx, hy + R * 0.65, hx + R * 1.15, hy + R * 0.1);
-    c.quadraticCurveTo(hx, hy + R * 0.4, hx - R * 1.15, hy + R * 0.1);
-    c.closePath();
-  }, { fill: lighter(metal, 0.08), lw });
 
-  if (o.crest || o.helmet === 'attic') {
-    const cc = o.crest && o.crest !== true ? o.crest : PAL.red;
-    rect(g, hx - 3 * u, hy - R * 1.7, 6 * u, R * 1.8, { fill: cc, lw: lw * 0.8, r: 2 * u });
-    line(g, [[hx, hy - R * 1.6], [hx, hy]], { lw: lw * 0.5, ink: OUT });
+  if (isSamurai) {
+    // Shikoro layered neck plates
+    shape(g, (c) => {
+      c.moveTo(hx - R * 1.35, hy + R * 0.8);
+      c.quadraticCurveTo(hx, hy + R * 1.1, hx + R * 1.35, hy + R * 0.8);
+      c.lineTo(hx + R * 1.15, hy + R * 0.2);
+      c.quadraticCurveTo(hx, hy + R * 0.4, hx - R * 1.15, hy + R * 0.2);
+      c.closePath();
+    }, { fill: '#1f2421', lw });
+    line(g, [[hx - R * 1.1, hy + R * 0.6], [hx + R * 1.1, hy + R * 0.6]], { lw: lw * 0.8, ink: PAL.gold });
+  } else if (isKnight) {
+    // Mail aventail hanging over shoulders
+    shape(g, (c) => {
+      c.moveTo(hx - R * 1.15, hy + R * 0.65);
+      c.quadraticCurveTo(hx, hy + R * 0.95, hx + R * 1.15, hy + R * 0.65);
+      c.lineTo(hx + R * 0.95, hy + R * 0.1);
+      c.quadraticCurveTo(hx, hy + R * 0.3, hx - R * 0.95, hy + R * 0.1);
+      c.closePath();
+    }, { fill: PAL.mail, lw });
+  } else if (isRoman) {
+    shape(g, (c) => {
+      c.moveTo(hx - R * 1.15, hy + R * 0.1);
+      c.quadraticCurveTo(hx, hy + R * 0.65, hx + R * 1.15, hy + R * 0.1);
+      c.quadraticCurveTo(hx, hy + R * 0.4, hx - R * 1.15, hy + R * 0.1);
+      c.closePath();
+    }, { fill: lighter(metal, 0.08), lw });
+
+    if (o.crest || o.helmet === 'attic') {
+      const cc = o.crest && o.crest !== true ? o.crest : PAL.red;
+      rect(g, hx - 3 * u, hy - R * 1.7, 6 * u, R * 1.8, { fill: cc, lw: lw * 0.8, r: 2 * u });
+      line(g, [[hx, hy - R * 1.6], [hx, hy]], { lw: lw * 0.5, ink: OUT });
+    }
   }
 
   g.restore();
@@ -1005,9 +1108,14 @@ function drawSoldierThreeQuarter(g, x, y, h, o, dir = 1) {
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const W = walkInfo(o); o._walk = W;
   const br = (W ? W.bob : Math.sin(t * 1.7 + (o.seed || 0)) * 0.6) * u;
-  const metal = o.metal || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronze : PAL.steel);
-  const metalD = o.metalDark || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronzeDark : PAL.steelDark);
-  const tc = o.tunicColor || (o.body === 'roman' ? PAL.red : (o.body === 'mail' ? PAL.mail : PAL.green));
+  const hl = o.helmet || 'none';
+  const isRoman = ['montefortino', 'attic'].includes(hl) || o.body === 'roman' || ['hastatus', 'princeps', 'triarius', 'latin', 'velites', 'legionary', 'consul', 'greek', 'spartan'].includes(o.preset);
+  const isKnight = ['bascinet', 'bucket', 'kettle', 'coif', 'nasal', 'spangen'].includes(hl) || o.body === 'plate' || o.arms === 'plate' || ['knight15', 'knight14', 'knight13', 'knight12', 'whiteArmor', 'frenchKnight', 'frenchKnight2', 'henry', 'englishArcher'].includes(o.preset);
+  const isSamurai = ['kabuto', 'jingasa'].includes(hl) || o.body === 'samurai' || ['samurai', 'ashigaru', 'ronin'].includes(o.preset);
+
+  const metal = o.metal || (isRoman && ['montefortino', 'attic'].includes(o.helmet) ? PAL.bronze : PAL.steel);
+  const metalD = o.metalDark || (isRoman && ['montefortino', 'attic'].includes(o.helmet) ? PAL.bronzeDark : PAL.steelDark);
+  const tc = o.tunicColor || (isRoman ? PAL.red : (isKnight ? PAL.yellow : (isSamurai ? PAL.black : PAL.green)));
 
   g.save();
   g.translate(x, y);
@@ -1033,9 +1141,19 @@ function drawSoldierThreeQuarter(g, x, y, h, o, dir = 1) {
     c.quadraticCurveTo(0, -20 * u, -12 * u, -22 * u);
     c.closePath();
   }, { fill: tc, lw, inner: (c) => {
-    if (o.body === 'roman') {
+    if (isRoman) {
       rect(c, -8 * u, -55 * u, 21 * u, 28 * u, { fill: metal, lw: lw * 0.8, r: 2 * u });
       line(c, [[5 * u, -54 * u], [5 * u, -30 * u]], { lw: 2 * u, ink: metalD });
+    } else if (isKnight) {
+      rect(c, -9 * u, -56 * u, 23 * u, 30 * u, { fill: metal, lw: lw * 0.8, r: 3 * u });
+      if (o.tabard) {
+        rect(c, -7 * u, -55 * u, 19 * u, 28 * u, { fill: o.tabardColor || PAL.yellow, lw: lw * 0.7 });
+      }
+    } else if (isSamurai) {
+      rect(c, -9 * u, -55 * u, 22 * u, 28 * u, { fill: '#1b1e23', lw: lw * 0.8, r: 2 * u });
+      for (let l = 0; l < 4; l++) {
+        line(c, [[-8 * u, -52 * u + l * 6 * u], [11 * u, -52 * u + l * 6 * u]], { lw: 2 * u, ink: o.lacing || PAL.red });
+      }
     }
   } });
   rect(g, -11 * u, -33 * u, 26 * u, 4.5 * u, { fill: PAL.leather, lw: lw * 0.8, r: 1 });
@@ -1050,32 +1168,87 @@ function drawSoldierThreeQuarter(g, x, y, h, o, dir = 1) {
   line(g, [[hx - R * 0.05, hy - R * 0.15], [hx + R * 0.15, hy + R * 0.15], [hx - R * 0.02, hy + R * 0.18]], { lw: lw * 0.7, ink: darker(PAL.skin, 0.25) });
   line(g, [[hx + R * 0.05, hy + R * 0.38], [hx + R * 0.3, hy + R * 0.38]], { lw: lw * 0.7, ink: OUT });
 
-  shape(g, (c) => {
-    c.moveTo(hx - R * 1.05, hy - R * 0.15);
-    c.bezierCurveTo(hx - R * 1.05, hy - R * 1.35, hx + R * 1.1, hy - R * 1.35, hx + R * 1.1, hy - R * 0.15);
-    c.quadraticCurveTo(hx + R * 0.2, hy - R * 0.35, hx - R * 1.05, hy - R * 0.15);
-    c.closePath();
-  }, { fill: metal, lw });
-  shape(g, (c) => {
-    c.moveTo(hx + R * 0.45, hy - R * 0.1);
-    c.quadraticCurveTo(hx + R * 0.8, hy + R * 0.35, hx + R * 0.55, hy + R * 0.6);
-    c.lineTo(hx + R * 0.3, hy + R * 0.2);
-    c.closePath();
-  }, { fill: metal, lw: lw * 0.8 });
+  if (isKnight) {
+    // Knight Bascinet in 3/4: conical top, pointed visor, eye slit
+    shape(g, (c) => {
+      c.moveTo(hx - R * 1.05, hy - R * 0.15);
+      c.bezierCurveTo(hx - R * 0.9, hy - R * 1.35, hx + R * 0.6, hy - R * 1.35, hx + R * 1.15, hy - R * 0.15);
+      c.lineTo(hx + R * 0.95, hy + R * 0.45);
+      c.lineTo(hx - R * 0.3, hy + R * 0.75);
+      c.closePath();
+    }, { fill: metal, lw });
+    line(g, [[hx + R * 0.1, hy - R * 0.05], [hx + R * 0.75, hy - R * 0.02]], { lw: lw * 1.1, ink: OUT });
+  } else if (isSamurai) {
+    // Samurai Kabuto in 3/4: crescent horn, shikoro, fukikaeshi
+    shape(g, (c) => {
+      c.moveTo(hx - R * 1.15, hy - R * 0.15);
+      c.bezierCurveTo(hx - R * 0.9, hy - R * 1.3, hx + R * 0.8, hy - R * 1.3, hx + R * 1.1, hy - R * 0.15);
+      c.lineTo(hx + R * 0.85, hy + R * 0.55);
+      c.lineTo(hx - R * 0.45, hy + R * 0.75);
+      c.closePath();
+    }, { fill: '#1f2421', lw });
+    // Crescent horn maedate
+    shape(g, (c) => {
+      c.moveTo(hx + R * 0.3, hy - R * 0.5);
+      c.quadraticCurveTo(hx + R * 0.8, hy - R * 1.5, hx + R * 0.2, hy - R * 1.8);
+      c.quadraticCurveTo(hx + R * 0.55, hy - R * 1.25, hx + R * 0.15, hy - R * 0.4);
+      c.closePath();
+    }, { fill: PAL.gold, lw: lw * 0.6 });
+    // Fukikaeshi ear wing
+    rect(g, hx + R * 0.55, hy - R * 0.15, R * 0.32, R * 0.4, { fill: PAL.gold, lw: lw * 0.6, r: 2 });
+  } else {
+    // Roman Attic / Montefortino in 3/4
+    shape(g, (c) => {
+      c.moveTo(hx - R * 1.05, hy - R * 0.15);
+      c.bezierCurveTo(hx - R * 1.05, hy - R * 1.35, hx + R * 1.1, hy - R * 1.35, hx + R * 1.1, hy - R * 0.15);
+      c.quadraticCurveTo(hx + R * 0.2, hy - R * 0.35, hx - R * 1.05, hy - R * 0.15);
+      c.closePath();
+    }, { fill: metal, lw });
+    shape(g, (c) => {
+      c.moveTo(hx + R * 0.45, hy - R * 0.1);
+      c.quadraticCurveTo(hx + R * 0.8, hy + R * 0.35, hx + R * 0.55, hy + R * 0.6);
+      c.lineTo(hx + R * 0.3, hy + R * 0.2);
+      c.closePath();
+    }, { fill: metal, lw: lw * 0.8 });
+  }
 
   // 4. Arms & Shield 3/4
   if (o.shield) {
     g.save();
     g.translate(-12 * u, -38 * u);
-    shape(g, (c) => c.roundRect(-10 * u, -28 * u, 24 * u, 56 * u, 6 * u), { fill: o.shield.color || PAL.red, lw });
-    circ(g, 2 * u, 0, 7 * u, { fill: metal, lw: lw * 0.8 });
+    if (isKnight) {
+      // Heater shield
+      shape(g, (c) => {
+        c.moveTo(-10 * u, -24 * u);
+        c.lineTo(14 * u, -24 * u);
+        c.quadraticCurveTo(12 * u, 12 * u, 2 * u, 28 * u);
+        c.quadraticCurveTo(-8 * u, 12 * u, -10 * u, -24 * u);
+        c.closePath();
+      }, { fill: o.shield.color || PAL.yellow, lw });
+    } else {
+      shape(g, (c) => c.roundRect(-10 * u, -28 * u, 24 * u, 56 * u, 6 * u), { fill: o.shield.color || PAL.red, lw });
+      circ(g, 2 * u, 0, 7 * u, { fill: metal, lw: lw * 0.8 });
+    }
     g.restore();
   }
-  const wp = o.weapon || 'gladius';
+
+  const wp = o.weapon || (isSamurai ? 'katana' : (isKnight ? 'sword' : 'gladius'));
   const rightA = armPts(14 * u, -52 * u, 1, 45, 55, u, 12 * u);
-  tube(g, [rightA[0], rightA[1], rightA[2]], 7 * u, o.sleeve || (o.body === 'roman' ? o.skin || PAL.skin : tc), lw);
+  tube(g, [rightA[0], rightA[1], rightA[2]], 7 * u, o.sleeve || (isRoman ? o.skin || PAL.skin : tc), lw);
   hand(g, rightA[2][0], rightA[2][1], 5 * u, { lw });
-  rect(g, rightA[2][0] + 4 * u, rightA[2][1] - 3 * u, 24 * u, 4 * u, { fill: PAL.steelLight, lw: lw * 0.7, r: 1 });
+
+  if (isSamurai || wp === 'katana') {
+    shape(g, (c) => {
+      c.moveTo(rightA[2][0] + 2 * u, rightA[2][1] - 4 * u);
+      c.quadraticCurveTo(rightA[2][0] + 16 * u, rightA[2][1] - 8 * u, rightA[2][0] + 30 * u, rightA[2][1] - 16 * u);
+      c.lineTo(rightA[2][0] + 28 * u, rightA[2][1] - 14 * u);
+      c.quadraticCurveTo(rightA[2][0] + 16 * u, rightA[2][1] - 6 * u, rightA[2][0] + 2 * u, rightA[2][1] - 2 * u);
+      c.closePath();
+    }, { fill: PAL.steelLight, lw: lw * 0.6 });
+    circ(g, rightA[2][0] + 3 * u, rightA[2][1] - 3 * u, 4.5 * u, { fill: PAL.gold, lw: lw * 0.6 });
+  } else {
+    rect(g, rightA[2][0] + 4 * u, rightA[2][1] - 3 * u, 24 * u, 4 * u, { fill: PAL.steelLight, lw: lw * 0.7, r: 1 });
+  }
 
   g.restore();
   g.restore();

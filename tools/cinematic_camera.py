@@ -233,6 +233,8 @@ def plan_camera_sequence(
     for idx, s in enumerate(shots):
         sid = s.get("id", f"s{idx+1:03d}")
         dur = float(s.get("dur", 3.0))
+        if dur <= 0.0:
+            raise ValueError(f"Shot '{sid}' has non-positive duration {dur}s. Duration must be strictly > 0.")
         start_t = float(s.get("start", idx * dur))
         end_t = float(s.get("end", start_t + dur))
         line = s.get("line", "")
@@ -256,7 +258,7 @@ def plan_camera_sequence(
         # Determine semantic purpose
         if idx == 0:
             purpose: ShotPurpose = "establishing"
-        elif any(w in line_lower for w in ("warlord", "general", "ordered", "consul", "signal")):
+        elif any(w in line_lower for w in ("warlord", "general", "commander", "centurion", "ordered", "orders", "consul", "signal")):
             purpose = "character"
         elif any(w in line_lower for w in ("charge", "assault", "collided", "clashes", "spear")):
             purpose = "action"
@@ -276,7 +278,7 @@ def plan_camera_sequence(
             # Shot 0 / Hook: High-impact establishing or lateral wide army
             chosen_scale = "wide"
             chosen_view = "profile_left" if idx == 0 else "high_angle"
-        elif "warlord" in line_lower or "commander" in line_lower or ("ordered" in line_lower and actor == "opponent"):
+        elif any(w in line_lower for w in ("warlord", "commander", "general", "centurion")) or "ordered" in line_lower or "orders" in line_lower:
             # Leader command: 3/4 front view or low angle showing authority
             chosen_scale = "medium_close"
             chosen_view = "front_three_quarter_right" if prev_view != "front_three_quarter_right" else "profile_right"
@@ -304,9 +306,9 @@ def plan_camera_sequence(
             # Rear-three-quarter lock preventing retreat
             chosen_scale = "medium"
             chosen_view = "rear_three_quarter_left"
-        elif any(w in line_lower for w in ("victory", "concluded", "total")):
+        elif any(w in line_lower for w in ("victory", "concluded", "total", "triumphs", "proved")) or (purpose in ("reveal", "resolution") and phase == "payoff"):
             # Climax & Payoff: Wide reveal / resolution
-            chosen_scale = "extreme_wide"
+            chosen_scale = "extreme_wide" if any(w in line_lower for w in ("victory", "triumphs", "total")) else "wide"
             chosen_view = "front_three_quarter_right"
         else:
             # Rotating variety for middle & general narrative

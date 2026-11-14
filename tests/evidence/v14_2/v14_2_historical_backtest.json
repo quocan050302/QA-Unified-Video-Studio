@@ -1,0 +1,14 @@
+{
+ "squire-mau": {
+  "initial_check_ok": true,
+  "director_applied": true,
+  "post_plan_check_ok": true,
+  "error": null
+ },
+ "selfimprove-mau": {
+  "initial_check_ok": true,
+  "director_applied": true,
+  "post_plan_check_ok": true,
+  "error": null
+ }
+}

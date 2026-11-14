@@ -1,0 +1,35 @@
+{
+ "total_shots": 22,
+ "unique_viewpoints": 8,
+ "viewpoint_distribution": {
+  "profile_left": 3,
+  "front_three_quarter_right": 3,
+  "over_shoulder_right": 6,
+  "profile_right": 2,
+  "low_angle": 2,
+  "front_three_quarter_left": 3,
+  "rear": 2,
+  "top_down": 1
+ },
+ "scale_distribution": {
+  "wide": 2,
+  "medium_close": 4,
+  "medium": 8,
+  "medium_wide": 6,
+  "extreme_wide": 2
+ },
+ "purpose_distribution": {
+  "establishing": 1,
+  "character": 3,
+  "explanation": 11,
+  "action": 3,
+  "resolution": 1,
+  "tactical": 1,
+  "reveal": 2
+ },
+ "frontal_shots_count": 0,
+ "frontal_ratio": 0.0,
+ "consecutive_repetitions": 0,
+ "diverse_grammar_verified": true,
+ "camera_plan_digest": "99f403d3fb5b770b"
+}

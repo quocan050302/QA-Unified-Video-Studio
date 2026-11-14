@@ -1,0 +1,107 @@
+{
+ "v14_2_squire_16x9": {
+  "success": true,
+  "message": "RENDER_CACHED_OK",
+  "details": {
+   "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_squire_16x9/build/preview.mp4",
+   "size_bytes": 7330120,
+   "width": 1920,
+   "height": 1080,
+   "video_codec": "h264",
+   "audio_codec": "aac",
+   "render_wall_sec": 0.0,
+   "duration_sec": 28.0,
+   "decode_verified": true
+  }
+ },
+ "v14_2_squire_9x16": {
+  "success": true,
+  "message": "RENDER_CACHED_OK",
+  "details": {
+   "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_squire_9x16/build/preview.mp4",
+   "size_bytes": 6826706,
+   "width": 1080,
+   "height": 1920,
+   "video_codec": "h264",
+   "audio_codec": "aac",
+   "render_wall_sec": 0.0,
+   "duration_sec": 28.0,
+   "decode_verified": true
+  }
+ },
+ "v14_2_dem_16x9": {
+  "success": true,
+  "message": "RENDER_CACHED_OK",
+  "details": {
+   "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_dem_16x9/build/preview.mp4",
+   "size_bytes": 1999003,
+   "width": 1920,
+   "height": 1080,
+   "video_codec": "h264",
+   "audio_codec": "aac",
+   "render_wall_sec": 0.0,
+   "duration_sec": 28.0,
+   "decode_verified": true
+  }
+ },
+ "v14_2_dem_9x16": {
+  "success": true,
+  "message": "RENDER_CACHED_OK",
+  "details": {
+   "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_dem_9x16/build/preview.mp4",
+   "size_bytes": 2373022,
+   "width": 1080,
+   "height": 1920,
+   "video_codec": "h264",
+   "audio_codec": "aac",
+   "render_wall_sec": 0.0,
+   "duration_sec": 28.0,
+   "decode_verified": true
+  }
+ },
+ "v14_2_roman_film": {
+  "success": true,
+  "message": "RENDER_CACHED_OK",
+  "details": {
+   "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_roman_film/build/preview.mp4",
+   "size_bytes": 18309851,
+   "width": 1920,
+   "height": 1080,
+   "video_codec": "h264",
+   "audio_codec": "aac",
+   "render_wall_sec": 0.0,
+   "duration_sec": 77.0,
+   "decode_verified": true
+  }
+ },
+ "v14_2_medieval_samurai_film": {
+  "success": true,
+  "message": "RENDER_CACHED_OK",
+  "details": {
+   "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_medieval_samurai_film/build/preview.mp4",
+   "size_bytes": 19410699,
+   "width": 1920,
+   "height": 1080,
+   "video_codec": "h264",
+   "audio_codec": "aac",
+   "render_wall_sec": 0.0,
+   "duration_sec": 77.0,
+   "decode_verified": true
+  }
+ },
+ "v14_2_dem_film": {
+  "success": true,
+  "message": "RENDER_CACHED_OK",
+  "details": {
+   "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_dem_film/build/preview.mp4",
+   "size_bytes": 5457108,
+   "width": 1920,
+   "height": 1080,
+   "video_codec": "h264",
+   "audio_codec": "aac",
+   "render_wall_sec": 0.0,
+   "duration_sec": 77.0,
+   "decode_verified": true
+  }
+ }
+}

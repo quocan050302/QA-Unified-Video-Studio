@@ -1,0 +1,18 @@
+{
+ "samples_count": 516,
+ "violations_count": 0,
+ "sample_interval_sec": 0.5,
+ "peak_cpu_percent": 100.0,
+ "peak_ram_percent": 84.1,
+ "min_disk_free_gb_observed": 16.653,
+ "last_telemetry": {
+  "timestamp": 1794637522.485901,
+  "cpu_percent": 64.0,
+  "ram_percent": 75.3,
+  "ram_avail_mb": 4050.1,
+  "disk_free_gb": 16.724,
+  "tracked_pids_count": 1
+ },
+ "breach_reason": null,
+ "healthy": true
+}

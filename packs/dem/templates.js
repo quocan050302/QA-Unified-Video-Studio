@@ -7,8 +7,58 @@ import { bean, lyingHead, head, bigHand, CAST } from './bean.js';
 import { set, rain, dust, calendar, digitClock } from './sets.js';
 import { phone, bigClock, notebook, phoneHand } from './phone.js';
 
-// ---------- may quay: cam = { from: [x, y, zoom], to: [x, y, zoom], at, dur } (x, y = diem nhin 0..1). shake = { at, amt, dur }
+// ---------- may quay: cam = { from: [x, y, zoom], to: [x, y, zoom], at, dur } (x, y = diem nhin 0..1). shake = { at, amt, dur } | cameraRig (V14.2)
 export function camera(g, lt, info, fn) {
+  const a = info.args || {};
+  // V14.2: CameraRig keyframe path
+  if (a.cameraRig && a.cameraRig.keyframes && a.cameraRig.keyframes.length > 0) {
+    const kfs = a.cameraRig.keyframes;
+    let kf0, kf1;
+    if (lt <= kfs[0].t) {
+      kf0 = kfs[0];
+      kf1 = kfs[0];
+    } else if (lt >= kfs[kfs.length - 1].t) {
+      kf0 = kfs[kfs.length - 1];
+      kf1 = kfs[kfs.length - 1];
+    } else {
+      kf0 = kfs[0];
+      kf1 = kfs[1];
+      for (let idx = 0; idx < kfs.length - 1; idx++) {
+        if (lt >= kfs[idx].t && lt <= kfs[idx + 1].t) {
+          kf0 = kfs[idx];
+          kf1 = kfs[idx + 1];
+          break;
+        }
+      }
+    }
+    const span = Math.max(0.01, kf1.t - kf0.t);
+    const progress = clamp((lt - kf0.t) / span);
+    const k = ease.inOut(progress);
+    const z = Math.max(1.0, Math.min(3.0, lerp(kf0.z, kf1.z, k))); // Clamp guard against black edges
+    let cx = lerp(kf0.x, kf1.x, k) * E.W;
+    let cy = lerp(kf0.y, kf1.y, k) * E.H;
+    let dx = 0, dy = 0;
+    for (const s of [].concat(info.args.shake || [])) {
+      const p = (lt - (s.at ?? 0)) / (s.dur ?? 0.45);
+      if (p >= 0 && p < 1) {
+        const amp = (s.amt ?? 1) * 18 * (1 - p);
+        dx += noise(lt * 40, 1) * amp;
+        dy += noise(lt * 40, 5) * amp;
+      }
+    }
+    const hw = E.W / (2 * z), hh = E.H / (2 * z);
+    cx = clamp(cx + dx, hw, E.W - hw) - dx;
+    cy = clamp(cy + dy, hh, E.H - hh) - dy;
+    g.save();
+    g.translate(E.W / 2, E.H / 2);
+    g.scale(z, z);
+    g.translate(-cx + dx, -cy + dy);
+    fn();
+    g.restore();
+    return;
+  }
+
+  // Legacy args.cam fallback
   const c = info.args.cam || {}, d = info.dur;
   const a0 = c.at ?? 0, dd = c.dur ?? (d - a0), k = (c.ease === 'linear' ? (x) => x : ease.sine)(clamp((lt - a0) / Math.max(0.1, dd)));
   const A = c.from || [0.5, 0.5, 1], B = c.to || (c.from ? c.from : [0.5, 0.5, info.args.push === false ? 1 : 1.05]);
@@ -45,7 +95,7 @@ function drawActor(g, a, lt, M, info) {
   const st = actorState(a, lt, M, info), h = fs(a.h, a.who === 'voice' ? 0.48 : 0.42);
   let alphaK = 1; if (a.fadeIn !== false && a.at) alphaK = clamp((lt - a0) / (a.fadeIn ?? (a.who === 'voice' ? 0.8 : 0.001))); if (a.out !== undefined) alphaK *= clamp(1 - (lt - a.out) / (a.fade ?? 0.6));
   const mv = a.walk || a.run;
-  const o = { ...a, t: lt + (a.seed || 0), facing: st.facing, pose: at(lt, a.poseAt, a.pose || 'stand'), face: at(lt, a.faceAt, a.face || (a.who === 'voice' ? 'grin' : 'neutral')), look: at(lt, a.lookAt, a.look ?? 0.25) };
+  const o = { ...a, view: a.view || info.args?.view || 'front', t: lt + (a.seed || 0), facing: st.facing, pose: at(lt, a.poseAt, a.pose || 'stand'), face: at(lt, a.faceAt, a.face || (a.who === 'voice' ? 'grin' : 'neutral')), look: at(lt, a.lookAt, a.look ?? 0.25) };
   if (st.moving) { if (a.run) o.run = a.run.speed || 1.6; else o.walk = (a.walk && a.walk.speed) || 0.9; }
   const k = alphaK; if (k <= 0) return null;
   g.save(); g.globalAlpha *= k;
