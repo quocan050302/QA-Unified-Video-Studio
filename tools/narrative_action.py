@@ -335,12 +335,96 @@ def build_shared_world_state(
             slot_id="bed",
         )
 
+    # Generic actor discovery from character_bible and shots (prevents hardcoded failures)
+    for char_id, c_data in ctx.character_bible.items():
+        if char_id not in actors and isinstance(c_data, dict):
+            actors[char_id] = ActorState(
+                actor_id=char_id,
+                character_id=char_id,
+                faction=c_data.get("faction", "defender"),
+                costume_id=c_data.get("costume", c_data.get("preset")),
+                equipment=c_data.get("equipment", []),
+                x=float(c_data.get("x", 0.4)),
+                y=float(c_data.get("y", 0.85)),
+                facing=int(c_data.get("facing", 1)),
+                slot_id=c_data.get("slot_id"),
+            )
+
+    for s in ctx.shots:
+        s_args = s.get("args", {})
+        combined = []
+        for key in ("people", "actors", "actionActors"):
+            val = s_args.get(key)
+            if isinstance(val, list):
+                combined.extend(val)
+        for p in combined:
+            if not isinstance(p, dict):
+                continue
+            p_id = p.get("id") or p.get("who")
+            if p_id and p_id not in actors:
+                actors[p_id] = ActorState(
+                    actor_id=p_id,
+                    character_id=p_id,
+                    faction=p.get("faction", "defender" if p.get("facing", 1) >= 0 else "opposing"),
+                    costume_id=p.get("preset") or p.get("costume"),
+                    equipment=p.get("equipment", []),
+                    x=float(p.get("x", p.get("from", 0.4))),
+                    y=float(p.get("y", p.get("fromY", 0.85))),
+                    facing=int(p.get("facing", 1)),
+                )
+
     timeline = WorldTimeline(
         actors=actors,
         formation_slots=slots,
         lanes=lanes,
     )
     return timeline
+
+
+def resolve_actor_preset(
+    act_id: str,
+    a_cfg: Dict[str, Any],
+    actor_state: Optional[ActorState] = None,
+    pack: str = "squire",
+    genre: str = "roman",
+) -> str:
+    """Resolve renderer preset cleanly without hardcoded brittle matching."""
+    if a_cfg.get("preset"):
+        return str(a_cfg["preset"])
+    if actor_state:
+        if actor_state.costume_id:
+            return actor_state.costume_id
+        if actor_state.character_id:
+            cid = actor_state.character_id.lower()
+            for known in ("hastatus", "princeps", "centurion", "celtic", "latin", "knight14", "knight15", "samurai", "ashigaru", "hero"):
+                if known in cid:
+                    return known
+
+    aid = act_id.lower()
+    if pack == "dem":
+        return "hero"
+
+    if genre == "knight":
+        if any(w in aid for w in ("attacker", "knight_b", "enemy", "opposing", "foe")):
+            return "knight15"
+        return "knight14"
+
+    if genre == "samurai":
+        if any(w in aid for w in ("challenger", "samurai_b", "enemy", "opposing", "ashigaru")):
+            return "ashigaru"
+        return "samurai"
+
+    # Default squire/roman
+    if any(w in aid for w in ("centurion", "officer", "commander", "marcus")):
+        return "centurion"
+    if any(w in aid for w in ("reserve", "princeps", "rear")):
+        return "princeps"
+    if any(w in aid for w in ("opposing", "enemy", "celtic", "gaul", "barbarian")):
+        return "celtic"
+    if any(w in aid for w in ("front", "hastatus", "forward", "vanguard")):
+        return "hastatus"
+
+    return "latin"
 
 
 # ---------------------------------------------------------------------------
@@ -351,15 +435,18 @@ def plan_action_beats(
     world: WorldTimeline,
     events: List[GroundedEventNode],
     script_timing: List[Dict[str, Any]],
+    pack: str = "squire",
+    genre: str = "roman",
+    project_id: str = "planned_project",
 ) -> ActionChoreography:
     """
     Plan causal, smooth actor state transitions and continuous paths across events.
     Enforces causal order: lane opening -> withdrawal -> reserve advance -> shield close.
     """
     choreo = ActionChoreography(
-        project_id="planned_project",
-        pack="squire",
-        genre="roman",
+        project_id=project_id,
+        pack=pack,
+        genre=genre,
         events=events,
         world_timeline=world,
     )
@@ -393,14 +480,24 @@ def plan_action_beats(
 
         # Apply specific state machine logic per action
         if action == "APPROACH":
-            # Enemy advances toward defender line
-            if "opposing_a" in cur_actors:
-                opp = cur_actors["opposing_a"]
+            # Opposing / enemy advances toward defender line
+            opp_id = None
+            for cand in ev.actor_ids + ["opposing_a", "knight_b", "samurai_b"]:
+                if cand in cur_actors:
+                    opp_id = cand
+                    break
+            if not opp_id:
+                for aid, act in cur_actors.items():
+                    if act.faction in ("opposing", "attacker") or act.facing == -1:
+                        opp_id = aid
+                        break
+            if opp_id and opp_id in cur_actors:
+                opp = cur_actors[opp_id]
                 start_x = opp.x
-                end_x = 0.58  # Closes in from 0.82 to 0.58
+                end_x = 0.55 if genre in ("knight", "samurai") else 0.58
                 opp.x = end_x
                 opp.pose = "run"
-                plan_entry["actors"]["opposing_a"] = {
+                plan_entry["actors"][opp_id] = {
                     "from_x": start_x,
                     "to_x": end_x,
                     "y": opp.y,
@@ -410,121 +507,104 @@ def plan_action_beats(
                     "dur": dur * 0.9,
                 }
                 plan_entry["sound_cues"].append({"kind": "marching", "at": 0.1})
-            elif "knight_b" in cur_actors:
-                kb = cur_actors["knight_b"]
-                start_x = kb.x
-                end_x = 0.55
-                kb.x = end_x
-                kb.pose = "run"
-                plan_entry["actors"]["knight_b"] = {
-                    "from_x": start_x,
-                    "to_x": end_x,
-                    "y": kb.y,
-                    "facing": -1,
-                    "pose": "run",
-                    "moveAt": 0.0,
-                    "dur": dur * 0.9,
-                }
-                plan_entry["sound_cues"].append({"kind": "marching", "at": 0.1})
-            elif "samurai_b" in cur_actors:
-                sb = cur_actors["samurai_b"]
-                start_x = sb.x
-                end_x = 0.55
-                sb.x = end_x
-                sb.pose = "run"
-                plan_entry["actors"]["samurai_b"] = {
-                    "from_x": start_x,
-                    "to_x": end_x,
-                    "y": sb.y,
-                    "facing": -1,
-                    "pose": "run",
-                    "moveAt": 0.0,
-                    "dur": dur * 0.9,
-                }
-                plan_entry["sound_cues"].append({"kind": "footsteps", "at": 0.1})
 
         elif action in ("BRACE", "BLOCK"):
             # Frontline raises shield / weapon and braces
-            for act_id in ("roman_front_a", "roman_front_b", "knight_a", "samurai_a"):
-                if act_id in cur_actors:
-                    a = cur_actors[act_id]
-                    a.shield_state = "braced"
-                    a.pose = "brace" if "roman" in act_id else "defend"
-                    plan_entry["actors"][act_id] = {
-                        "x": a.x,
-                        "y": a.y,
-                        "facing": 1,
-                        "pose": a.pose,
-                        "shield_state": "braced",
-                    }
+            def_ids = [aid for aid in ev.actor_ids if aid in cur_actors]
+            if not def_ids:
+                def_ids = [aid for aid in ("roman_front_a", "roman_front_b", "knight_a", "samurai_a") if aid in cur_actors]
+            if not def_ids:
+                def_ids = [aid for aid, act in cur_actors.items() if act.faction in ("defender", "roman", "protagonist")]
+            for act_id in def_ids:
+                a = cur_actors[act_id]
+                a.shield_state = "braced"
+                a.pose = "brace" if genre == "roman" else "defend"
+                plan_entry["actors"][act_id] = {
+                    "x": a.x,
+                    "y": a.y,
+                    "facing": 1,
+                    "pose": a.pose,
+                    "shield_state": "braced",
+                }
             plan_entry["sound_cues"].append({"kind": "shield_brace", "at": 0.2})
 
         elif action == "CONTACT":
             # Opponent collides with frontline, causing visible impact reaction
-            if "opposing_a" in cur_actors and "roman_front_a" in cur_actors:
-                opp = cur_actors["opposing_a"]
-                rf_a = cur_actors["roman_front_a"]
-                opp.x = 0.52
-                rf_a.shield_state = "recoiled"
-                rf_a.pose = "impact_recoil"
-                plan_entry["actors"]["opposing_a"] = {
-                    "from_x": 0.58,
-                    "to_x": 0.52,
+            opp_id = None
+            for cand in ev.actor_ids + ["opposing_a", "knight_b", "samurai_b"]:
+                if cand in cur_actors:
+                    opp_id = cand
+                    break
+            if not opp_id:
+                for aid, act in cur_actors.items():
+                    if act.faction in ("opposing", "attacker") or act.facing == -1:
+                        opp_id = aid
+                        break
+            def_id = None
+            for cand in ev.target_ids + ["roman_front_a", "knight_a", "samurai_a"]:
+                if cand in cur_actors:
+                    def_id = cand
+                    break
+            if not def_id:
+                for aid, act in cur_actors.items():
+                    if act.faction in ("defender", "roman") and aid != opp_id:
+                        def_id = aid
+                        break
+            if opp_id and def_id and opp_id in cur_actors and def_id in cur_actors:
+                opp = cur_actors[opp_id]
+                df = cur_actors[def_id]
+                target_x = 0.50 if genre in ("knight", "samurai") else 0.52
+                df.shield_state = "recoiled"
+                df.pose = "impact_recoil"
+                plan_entry["actors"][opp_id] = {
+                    "from_x": opp.x,
+                    "to_x": target_x,
                     "y": opp.y,
                     "facing": -1,
                     "pose": "attack",
                 }
-                plan_entry["actors"]["roman_front_a"] = {
-                    "from_x": 0.38,
-                    "to_x": 0.36,  # 2% backward displacement from impact
-                    "y": rf_a.y,
+                opp.x = target_x
+                recoil_x = max(0.1, df.x - 0.02)
+                plan_entry["actors"][def_id] = {
+                    "from_x": df.x,
+                    "to_x": recoil_x,
+                    "y": df.y,
                     "facing": 1,
                     "pose": "impact_recoil",
                     "shake": True,
                 }
-                plan_entry["sound_cues"].append({"kind": "shield_clash", "at": 0.15})
-            elif "knight_b" in cur_actors and "knight_a" in cur_actors:
-                kb = cur_actors["knight_b"]
-                ka = cur_actors["knight_a"]
-                kb.x = 0.50
-                ka.pose = "impact_recoil"
-                plan_entry["actors"]["knight_b"] = {
-                    "from_x": 0.55,
-                    "to_x": 0.50,
-                    "y": kb.y,
-                    "facing": -1,
-                    "pose": "attack",
-                }
-                plan_entry["actors"]["knight_a"] = {
-                    "from_x": 0.35,
-                    "to_x": 0.33,
-                    "y": ka.y,
-                    "facing": 1,
-                    "pose": "impact_recoil",
-                    "shake": True,
-                }
-                plan_entry["sound_cues"].append({"kind": "shield_clash", "at": 0.15})
-            elif "samurai_b" in cur_actors and "samurai_a" in cur_actors:
-                sb = cur_actors["samurai_b"]
-                sa = cur_actors["samurai_a"]
-                sb.x = 0.50
-                sa.pose = "impact_recoil"
-                plan_entry["actors"]["samurai_b"] = {
-                    "from_x": 0.55,
-                    "to_x": 0.50,
-                    "y": sb.y,
-                    "facing": -1,
-                    "pose": "attack",
-                }
-                plan_entry["actors"]["samurai_a"] = {
-                    "from_x": 0.35,
-                    "to_x": 0.33,
-                    "y": sa.y,
-                    "facing": 1,
-                    "pose": "impact_recoil",
-                    "shake": True,
-                }
-                plan_entry["sound_cues"].append({"kind": "sword_clash", "at": 0.15})
+                df.x = recoil_x
+                clash_sound = "sword_clash" if genre == "samurai" else "shield_clash"
+                plan_entry["sound_cues"].append({"kind": clash_sound, "at": 0.15})
+
+        elif action == "BREAKTHROUGH":
+            if ev.polarity in ("NEGATED", "PERCEIVED"):
+                # Negative / perceived breakthrough -> line holds firm!
+                def_ids = [aid for aid in ("roman_front_a", "roman_front_b", "knight_a", "samurai_a") if aid in cur_actors]
+                if not def_ids:
+                    def_ids = [aid for aid, act in cur_actors.items() if act.faction in ("defender", "roman")]
+                for act_id in def_ids:
+                    a = cur_actors[act_id]
+                    a.shield_state = "braced"
+                    a.pose = "brace"
+                    plan_entry["actors"][act_id] = {
+                        "x": a.x,
+                        "y": a.y,
+                        "facing": 1,
+                        "pose": "brace",
+                        "shield_state": "braced",
+                    }
+                plan_entry["sound_cues"].append({"kind": "shield_brace", "at": 0.2})
+            else:
+                for cand in ("opposing_a", "knight_b"):
+                    if cand in cur_actors:
+                        cur_actors[cand].x = 0.30
+                        plan_entry["actors"][cand] = {
+                            "from_x": 0.52,
+                            "to_x": 0.30,
+                            "facing": -1,
+                            "pose": "attack",
+                        }
 
         elif action == "DRAW_WEAPON":
             if "samurai_a" in cur_actors:
@@ -830,9 +910,16 @@ def compile_action_choreography_to_shots(
         # 1. Attach actionActors array for renderer
         action_actors = []
         for act_id, a_cfg in shot_plan.get("actors", {}).items():
+            preset = resolve_actor_preset(
+                act_id=act_id,
+                a_cfg=a_cfg,
+                actor_state=choreo.world_timeline.actors.get(act_id),
+                pack=choreo.pack,
+                genre=choreo.genre,
+            )
             entry = {
                 "id": act_id,
-                "preset": "hastatus" if "front" in act_id else ("princeps" if "reserve" in act_id else ("centurion" if "centurion" in act_id else "latin")),
+                "preset": preset,
                 "x": a_cfg.get("from_x", a_cfg.get("x", 0.5)),
                 "y": a_cfg.get("from_y", a_cfg.get("y", 0.85)),
                 "facing": a_cfg.get("facing", 1),
@@ -841,17 +928,61 @@ def compile_action_choreography_to_shots(
                 "motionRig": True,
             }
             if "to_x" in a_cfg:
+                entry["from"] = a_cfg.get("from_x", a_cfg.get("x", 0.5))
                 entry["to"] = a_cfg["to_x"]
                 entry["dur"] = a_cfg.get("dur", 1.0)
                 entry["moveAt"] = a_cfg.get("moveAt", 0.0)
+            if "to_y" in a_cfg:
+                entry["fromY"] = a_cfg.get("from_y", a_cfg.get("y", 0.85))
+                entry["toY"] = a_cfg["to_y"]
+                entry["dur"] = a_cfg.get("dur", 1.0)
+                entry["moveAt"] = a_cfg.get("moveAt", 0.0)
+            if a_cfg.get("shake"):
+                entry["shake"] = True
             action_actors.append(entry)
 
         if action_actors:
             args["actionActors"] = action_actors
 
-        # 2. Attach formationAction if present
+        # For DEM pack, populate native DEM actors array
+        if choreo.pack == "dem":
+            dem_actors = []
+            for act_id, a_cfg in shot_plan.get("actors", {}).items():
+                d_entry = {
+                    "who": "hero",
+                    "x": a_cfg.get("from_x", a_cfg.get("x", 0.5)),
+                    "y": a_cfg.get("from_y", a_cfg.get("y", 0.85)),
+                    "pose": a_cfg.get("pose", "stand"),
+                    "facing": a_cfg.get("facing", 1),
+                }
+                if "to_x" in a_cfg:
+                    d_entry["walk"] = {
+                        "to": a_cfg["to_x"],
+                        "at": a_cfg.get("moveAt", 0.0),
+                        "dur": a_cfg.get("dur", 1.0),
+                    }
+                dem_actors.append(d_entry)
+            if dem_actors:
+                args["actors"] = dem_actors
+
+        # 2. Attach formationAction and top-down blocks
         if shot_plan.get("formation_action"):
             args["formationAction"] = shot_plan["formation_action"]
+
+        if s_copy.get("tpl") == "top" or shot_plan.get("action") == "CAMERA_REVEAL":
+            if not args.get("blocks"):
+                args["blocks"] = [
+                    {"x": 0.5, "y": 0.28, "w": 0.72, "h": 0.12, "side": "red", "cols": 16, "rows": 4, "face": 1, "label": "OPPOSING WARBANDS"},
+                    {"x": 0.5, "y": 0.46, "w": 0.60, "h": 0.10, "side": "blue", "cols": 14, "rows": 3, "face": -1, "label": "PRINCEPS (NEW LINE)"},
+                    {"x": 0.5, "y": 0.66, "w": 0.48, "h": 0.08, "side": "blue", "cols": 10, "rows": 2, "face": -1, "label": "HASTATI (WITHDRAWN)"},
+                    {"x": 0.5, "y": 0.82, "w": 0.54, "h": 0.08, "side": "blue", "cols": 12, "rows": 2, "face": -1, "label": "TRIARII (RESERVE)"},
+                ]
+            if not args.get("labels"):
+                args["labels"] = [
+                    {"text": "1. CORRIDOR RELIEF", "x": 0.22, "y": 0.14, "color": "#f0dbad", "size": 32},
+                    {"text": "2. FRESH PRINCEPS FORMED", "x": 0.50, "y": 0.14, "color": "#f0dbad", "size": 32},
+                    {"text": "3. HASTATI SECURE IN REAR", "x": 0.78, "y": 0.14, "color": "#f0dbad", "size": 32},
+                ]
 
         # 3. Synchronize sound cues
         if shot_plan.get("sound_cues"):

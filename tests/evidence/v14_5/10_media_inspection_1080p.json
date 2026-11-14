@@ -1,0 +1,13 @@
+{
+  "valid": true,
+  "duration": 57.875,
+  "file_size": 14441410,
+  "width": 1920,
+  "height": 1080,
+  "fps": 24.0,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "has_video": true,
+  "has_audio": true,
+  "sha256": "d792cc729e1b7adfece45ffca4f45ec2d9c293b5b9a0f405153ddef438c54894"
+}

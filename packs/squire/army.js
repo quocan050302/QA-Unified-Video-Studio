@@ -18,12 +18,33 @@ export function formation(g, o = {}) {
     const y = lerp(yF, yB, Math.pow(k, 0.85)), h = lerp(hF, hB, Math.pow(k, 0.7)), cx = (X0 + X1) / 2, half = (X1 - X0) / 2 * lerp(1, spread, k);
     for (let i = 0; i < cols; i++) {
       if (o.gaps && o.gaps.includes(i)) continue;
-      if (o.formationAction && o.formationAction.kind === 'open_corridor' && j === 0) {
-        const m = Math.floor(cols / 2);
-        if (i === m || i === m - 1) continue; // Create visible corridor opening in front line
-      }
       const f = cols === 1 ? 0.5 : i / (cols - 1), jit = (o.jitter ?? 0.25) * (half * 2 / cols);
       let x = cx - half + f * half * 2 + (r() - 0.5) * jit + ((j % 2) ? half / cols * 0.5 : 0);
+      // V14.5: Smooth continuous animated corridor opening & closing
+      if (o.formationAction && j === 0) {
+        const fa = o.formationAction;
+        const m = Math.floor(cols / 2);
+        const colWidth = (half * 2) / Math.max(1, cols);
+        const corDur = fa.actionDur || 2.5;
+        const progress = clamp((t - (fa.at || 0)) / Math.max(0.2, corDur));
+        const easeK = ease.inOut(progress);
+
+        if (fa.kind === 'open_corridor') {
+          const shift = colWidth * 1.6 * easeK;
+          if (i < m) {
+            x -= shift * Math.max(0, 1.0 - (m - 1 - i) * 0.45);
+          } else {
+            x += shift * Math.max(0, 1.0 - (i - m) * 0.45);
+          }
+        } else if (fa.kind === 'close_corridor') {
+          const shift = colWidth * 1.6 * (1.0 - easeK);
+          if (i < m) {
+            x -= shift * Math.max(0, 1.0 - (m - 1 - i) * 0.45);
+          } else {
+            x += shift * Math.max(0, 1.0 - (i - m) * 0.45);
+          }
+        }
+      }
       if (o.advance) x += o.advance * t * E.W * (o.flip ? -1 : 1);
       const p = presets[Math.floor(r() * presets.length)];
       list.push({ x, y: y + (r() - 0.5) * h * 0.04, h: h * (0.94 + r() * 0.1), p, face: faces[Math.floor(r() * faces.length)], seed: i * 7 + j * 13, row: j });

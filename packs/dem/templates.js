@@ -10,33 +10,42 @@ import { phone, bigClock, notebook, phoneHand } from './phone.js';
 // ---------- may quay: cam = { from: [x, y, zoom], to: [x, y, zoom], at, dur } (x, y = diem nhin 0..1). shake = { at, amt, dur } | cameraRig (V14.2)
 export function camera(g, lt, info, fn) {
   const a = info.args || {};
-  // V14.2: CameraRig keyframe path
+  // V14.2 / V14.5: Robust CameraRig keyframe path (supports canonical t,x,y,z and local_sec,x_center,y_center,zoom)
   if (a.cameraRig && a.cameraRig.keyframes && a.cameraRig.keyframes.length > 0) {
     const kfs = a.cameraRig.keyframes;
-    let kf0, kf1;
-    if (lt <= kfs[0].t) {
+    const getT = (kf) => (Number.isFinite(kf.t) ? kf.t : (Number.isFinite(kf.local_sec) ? kf.local_sec : 0));
+    const getX = (kf) => (Number.isFinite(kf.x) ? kf.x : (Number.isFinite(kf.x_center) ? kf.x_center : 0.5));
+    const getY = (kf) => (Number.isFinite(kf.y) ? kf.y : (Number.isFinite(kf.y_center) ? kf.y_center : 0.5));
+    const getZ = (kf) => (Number.isFinite(kf.z) ? kf.z : (Number.isFinite(kf.zoom) ? kf.zoom : 1.0));
+
+    let kf0 = kfs[0], kf1 = kfs[0];
+    if (lt <= getT(kfs[0])) {
       kf0 = kfs[0];
       kf1 = kfs[0];
-    } else if (lt >= kfs[kfs.length - 1].t) {
+    } else if (lt >= getT(kfs[kfs.length - 1])) {
       kf0 = kfs[kfs.length - 1];
       kf1 = kfs[kfs.length - 1];
     } else {
       kf0 = kfs[0];
-      kf1 = kfs[1];
+      kf1 = kfs[1] || kfs[0];
       for (let idx = 0; idx < kfs.length - 1; idx++) {
-        if (lt >= kfs[idx].t && lt <= kfs[idx + 1].t) {
+        if (lt >= getT(kfs[idx]) && lt <= getT(kfs[idx + 1])) {
           kf0 = kfs[idx];
           kf1 = kfs[idx + 1];
           break;
         }
       }
     }
-    const span = Math.max(0.01, kf1.t - kf0.t);
-    const progress = clamp((lt - kf0.t) / span);
+    const t0 = getT(kf0), t1 = getT(kf1);
+    const span = Math.max(0.01, t1 - t0);
+    const progress = clamp((lt - t0) / span);
     const k = ease.inOut(progress);
-    const z = Math.max(1.0, Math.min(3.0, lerp(kf0.z, kf1.z, k))); // Clamp guard against black edges
-    let cx = lerp(kf0.x, kf1.x, k) * E.W;
-    let cy = lerp(kf0.y, kf1.y, k) * E.H;
+    const rawZ = lerp(getZ(kf0), getZ(kf1), k);
+    const z = Math.max(1.0, Math.min(3.0, Number.isFinite(rawZ) ? rawZ : 1.0)); // Clamp guard against black edges
+    const rawX = lerp(getX(kf0), getX(kf1), k);
+    const rawY = lerp(getY(kf0), getY(kf1), k);
+    let cx = (Number.isFinite(rawX) ? rawX : 0.5) * E.W;
+    let cy = (Number.isFinite(rawY) ? rawY : 0.5) * E.H;
     let dx = 0, dy = 0;
     for (const s of [].concat(info.args.shake || [])) {
       const p = (lt - (s.at ?? 0)) / (s.dur ?? 0.45);

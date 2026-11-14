@@ -832,6 +832,12 @@ def compile_director_plan_to_visuals(
             changed_count += 1
 
     # V14.4 Universal Narrative Action Choreography integration
+    action_diag = {
+        "status": "OK",
+        "events_count": 0,
+        "modified_count": 0,
+        "errors": [],
+    }
     try:
         from tools.narrative_action import (
             build_action_context,
@@ -847,10 +853,24 @@ def compile_director_plan_to_visuals(
         ctx.shots = shots
         events = parse_action_intents(ctx, director_plan=plan_dict)
         world = build_shared_world_state(ctx, events)
-        choreo = plan_action_beats(world, events, [])
-        shots, _ = compile_action_choreography_to_shots(shots, choreo)
+        choreo = plan_action_beats(world, events, [], pack=ctx.pack, genre=ctx.genre, project_id=ctx.project_id)
+        shots, modified_action_count = compile_action_choreography_to_shots(shots, choreo)
+        action_diag["events_count"] = len(events)
+        action_diag["modified_count"] = modified_action_count
+        if choreo.validation_errors:
+            action_diag["status"] = "CHOREOGRAPHY_VALIDATION_ERRORS"
+            action_diag["errors"] = choreo.validation_errors
     except Exception as exc:
-        # Safe fallback preserves shots
+        import logging
+        logging.getLogger(__name__).error(f"Action choreography compilation failed: {exc}", exc_info=True)
+        action_diag["status"] = "ERROR"
+        action_diag["error_message"] = str(exc)
+        action_diag["errors"] = [repr(exc)]
+
+    # Attach diagnostic to returned shots list for caller audit
+    try:
+        setattr(shots, "_action_choreography_diagnostic", action_diag)
+    except Exception:
         pass
             
     return shots, changed_count
@@ -884,6 +904,7 @@ def apply_director_plan_generated_only(
             "generation_source": plan_dict.get("generation_source"),
             "model_used": plan_dict.get("model_used"),
             "changed_shots_count": changed_count,
+            "action_choreography_diagnostic": getattr(compiled_shots, "_action_choreography_diagnostic", None),
         }
         
         # Atomic write
@@ -899,6 +920,7 @@ def apply_director_plan_generated_only(
             "model_used": plan_dict.get("model_used"),
             "generation_source": plan_dict.get("generation_source"),
             "changed_shots_count": changed_count,
+            "action_choreography_diagnostic": getattr(compiled_shots, "_action_choreography_diagnostic", None),
         })
         
         return {

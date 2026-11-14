@@ -1,0 +1,6 @@
+{
+  "target_lufs": -14.0,
+  "tolerance_lufs": 1.0,
+  "measured_lufs": -14.1,
+  "compliant": true
+}

@@ -1,0 +1,6 @@
+{
+  "working_branch": "fix/Image-Shot",
+  "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "expected_baseline": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "invariant_verified": true
+}

@@ -1,0 +1,71 @@
+{
+  "framing_safe_all": true,
+  "shot_bounds": {
+    "s01": {
+      "ymin": 0.546,
+      "ymax": 0.979,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s02": {
+      "ymin": 0.333,
+      "ymax": 0.862,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s03": {
+      "ymin": 0.2,
+      "ymax": 0.863,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s04": {
+      "ymin": 0.2,
+      "ymax": 0.865,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s05": {
+      "ymin": 0.302,
+      "ymax": 0.862,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s06": {
+      "ymin": 0.2,
+      "ymax": 0.675,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s07": {
+      "ymin": 0.291,
+      "ymax": 0.979,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s08": {
+      "ymin": 0.206,
+      "ymax": 0.767,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s09": {
+      "ymin": 0.254,
+      "ymax": 0.821,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s10": {
+      "ymin": 0.2,
+      "ymax": 0.863,
+      "safe": true,
+      "diagnostics": []
+    },
+    "s11": {
+      "ymin": 0.104,
+      "ymax": 0.862,
+      "safe": true,
+      "diagnostics": []
+    }
+  }
+}

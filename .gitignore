@@ -27,5 +27,6 @@ projects/v14_3_first_long_film/story/*.backup.json
 projects/test_*/
 temp_*.txt
 pnpm-lock.yaml
+tests/evidence/*/frames/
 
 

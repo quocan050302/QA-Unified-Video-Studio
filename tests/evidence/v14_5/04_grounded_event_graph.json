@@ -1,0 +1,373 @@
+{
+  "events": [
+    {
+      "event_id": "ev_s01_defend",
+      "action_kind": "DEFEND",
+      "shot_id": "s01",
+      "actor_ids": [
+        "roman_front_a"
+      ],
+      "target_ids": [],
+      "target_slot_id": null,
+      "start_sec": 0.0,
+      "end_sec": 5.621,
+      "preconditions": [],
+      "postconditions": [],
+      "evidence_text": "An opening in the Roman line looks like the end. But watch what happens behind the shields.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s02_approach",
+      "action_kind": "APPROACH",
+      "shot_id": "s02",
+      "actor_ids": [
+        "opposing_a"
+      ],
+      "target_ids": [
+        "roman_front_a",
+        "roman_front_b"
+      ],
+      "target_slot_id": null,
+      "start_sec": 5.621,
+      "end_sec": 10.104,
+      "preconditions": [
+        {
+          "entity": "opposing_a",
+          "distance": "far"
+        }
+      ],
+      "postconditions": [
+        {
+          "entity": "opposing_a",
+          "distance": "near"
+        }
+      ],
+      "evidence_text": "Across the field, enemy warbands charge forward in a violent surge.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s03_brace",
+      "action_kind": "BRACE",
+      "shot_id": "s03",
+      "actor_ids": [
+        "roman_front_a",
+        "roman_front_b"
+      ],
+      "target_ids": [],
+      "target_slot_id": null,
+      "start_sec": 10.104,
+      "end_sec": 15.261,
+      "preconditions": [
+        {
+          "entity": "roman_front_a",
+          "shield_state": "normal"
+        }
+      ],
+      "postconditions": [
+        {
+          "entity": "roman_front_a",
+          "shield_state": "braced"
+        }
+      ],
+      "evidence_text": "The front rank Hastati brace, locking their scuta against the incoming assault.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s04_contact",
+      "action_kind": "CONTACT",
+      "shot_id": "s04",
+      "actor_ids": [
+        "opposing_a"
+      ],
+      "target_ids": [
+        "roman_front_a"
+      ],
+      "target_slot_id": null,
+      "start_sec": 15.261,
+      "end_sec": 20.441,
+      "preconditions": [
+        {
+          "entity": "opposing_a",
+          "distance": "near"
+        }
+      ],
+      "postconditions": [
+        {
+          "entity": "roman_front_a",
+          "impact_state": "recoil"
+        }
+      ],
+      "evidence_text": "The two battle lines collide with brutal force, shields shuddering under the impact.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s05_fatigue",
+      "action_kind": "FATIGUE",
+      "shot_id": "s05",
+      "actor_ids": [
+        "roman_front_a",
+        "roman_front_b"
+      ],
+      "target_ids": [],
+      "target_slot_id": null,
+      "start_sec": 20.441,
+      "end_sec": 25.412,
+      "preconditions": [
+        {
+          "entity": "roman_front_a",
+          "stamina": "fresh"
+        }
+      ],
+      "postconditions": [
+        {
+          "entity": "roman_front_a",
+          "stamina": "exhausted"
+        }
+      ],
+      "evidence_text": "Under continuous pressure, the frontline soldiers struggle and begin to fatigue.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s06_signal",
+      "action_kind": "SIGNAL",
+      "shot_id": "s06",
+      "actor_ids": [
+        "centurion_officer"
+      ],
+      "target_ids": [
+        "roman_reserve_a",
+        "roman_reserve_b"
+      ],
+      "target_slot_id": null,
+      "start_sec": 25.412,
+      "end_sec": 31.242,
+      "preconditions": [
+        {
+          "entity": "centurion_officer",
+          "signal_state": "idle"
+        }
+      ],
+      "postconditions": [
+        {
+          "entity": "centurion_officer",
+          "signal_state": "signaled"
+        }
+      ],
+      "evidence_text": "Behind them, the centurion sounds a sharp horn blast, ordering an immediate relief.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s07_open_lane",
+      "action_kind": "OPEN_LANE",
+      "shot_id": "s07",
+      "actor_ids": [
+        "roman_front_a",
+        "roman_front_b"
+      ],
+      "target_ids": [],
+      "target_slot_id": "corridor_center",
+      "start_sec": 31.242,
+      "end_sec": 36.491,
+      "preconditions": [
+        {
+          "lane": "corridor_center",
+          "open": false
+        }
+      ],
+      "postconditions": [
+        {
+          "lane": "corridor_center",
+          "open": true
+        }
+      ],
+      "evidence_text": "A narrow corridor opens between the front files, parting the Roman shield wall.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s08_front_withdraw",
+      "action_kind": "FRONT_WITHDRAW",
+      "shot_id": "s08",
+      "actor_ids": [
+        "roman_front_a",
+        "roman_front_b"
+      ],
+      "target_ids": [],
+      "target_slot_id": null,
+      "start_sec": 36.491,
+      "end_sec": 41.392,
+      "preconditions": [
+        {
+          "lane": "corridor_center",
+          "open": true
+        }
+      ],
+      "postconditions": [
+        {
+          "slot": "front_slots",
+          "occupied": false
+        }
+      ],
+      "evidence_text": "The exhausted defenders slip backward through the gap along a clear withdrawal path.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s09_reserve_advance",
+      "action_kind": "RESERVE_ADVANCE",
+      "shot_id": "s09",
+      "actor_ids": [
+        "roman_reserve_a",
+        "roman_reserve_b"
+      ],
+      "target_ids": [],
+      "target_slot_id": "front_slots",
+      "start_sec": 41.392,
+      "end_sec": 47.152,
+      "preconditions": [
+        {
+          "slot": "front_slots",
+          "occupied": false
+        }
+      ],
+      "postconditions": [
+        {
+          "slot": "front_slots",
+          "occupied": true
+        }
+      ],
+      "evidence_text": "Fresh Princeps from the second line march forward, advancing into the vacated positions.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s10_shield_close",
+      "action_kind": "SHIELD_CLOSE",
+      "shot_id": "s10",
+      "actor_ids": [
+        "roman_reserve_a",
+        "roman_reserve_b"
+      ],
+      "target_ids": [],
+      "target_slot_id": null,
+      "start_sec": 47.152,
+      "end_sec": 52.425,
+      "preconditions": [
+        {
+          "slot": "front_slots",
+          "shield_wall": "open"
+        }
+      ],
+      "postconditions": [
+        {
+          "slot": "front_slots",
+          "shield_wall": "locked"
+        }
+      ],
+      "evidence_text": "The reserves close shields into an unbreakable wall, repelling the enemy counter-thrust.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    },
+    {
+      "event_id": "ev_s11_reveal",
+      "action_kind": "CAMERA_REVEAL",
+      "shot_id": "s11",
+      "actor_ids": [
+        "roman_reserve_a",
+        "roman_front_a",
+        "opposing_a"
+      ],
+      "target_ids": [],
+      "target_slot_id": null,
+      "start_sec": 52.425,
+      "end_sec": 57.883,
+      "preconditions": [],
+      "postconditions": [],
+      "evidence_text": "An overhead tactical view reveals how the Roman manipular system preserved fighting stamina.",
+      "polarity": "AFFIRMED",
+      "grounding": "NARRATED_FACT",
+      "confidence": 1.0,
+      "dependencies": [],
+      "reconstruction_flag": false
+    }
+  ],
+  "causal_links": [
+    {
+      "from": "ev_s01_defend",
+      "to": "ev_s02_approach"
+    },
+    {
+      "from": "ev_s02_approach",
+      "to": "ev_s03_brace"
+    },
+    {
+      "from": "ev_s03_brace",
+      "to": "ev_s04_contact"
+    },
+    {
+      "from": "ev_s04_contact",
+      "to": "ev_s05_fatigue"
+    },
+    {
+      "from": "ev_s05_fatigue",
+      "to": "ev_s06_signal"
+    },
+    {
+      "from": "ev_s06_signal",
+      "to": "ev_s07_open_lane"
+    },
+    {
+      "from": "ev_s07_open_lane",
+      "to": "ev_s08_front_withdraw"
+    },
+    {
+      "from": "ev_s08_front_withdraw",
+      "to": "ev_s09_reserve_advance"
+    },
+    {
+      "from": "ev_s09_reserve_advance",
+      "to": "ev_s10_shield_close"
+    },
+    {
+      "from": "ev_s10_shield_close",
+      "to": "ev_s11_reveal"
+    }
+  ],
+  "unsupported_events": []
+}

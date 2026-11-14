@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "project_id": "v14_5_action_demo",
+  "pack": "squire",
+  "genre": "roman",
+  "output_sha256": "d792cc729e1b7adfece45ffca4f45ec2d9c293b5b9a0f405153ddef438c54894",
+  "render_fingerprint": "e14b786ebb24c9bfee60cce1983ddcd112536f883a447a65a740845ebb208c13",
+  "is_valid": true,
+  "total_events": 11,
+  "causal_trace": [
+    {
+      "shot_id": "s01",
+      "action": "DEFEND",
+      "start": 0.0,
+      "end": 5.621,
+      "lane_open": false,
+      "front_left_occupant": "roman_front_a",
+      "front_right_occupant": "roman_front_b",
+      "opposing_distance": 0.44
+    },
+    {
+      "shot_id": "s02",
+      "action": "APPROACH",
+      "start": 5.621,
+      "end": 10.104,
+      "lane_open": false,
+      "front_left_occupant": "roman_front_a",
+      "front_right_occupant": "roman_front_b",
+      "opposing_distance": 0.2
+    },
+    {
+      "shot_id": "s03",
+      "action": "BRACE",
+      "start": 10.104,
+      "end": 15.261,
+      "lane_open": false,
+      "front_left_occupant": "roman_front_a",
+      "front_right_occupant": "roman_front_b",
+      "opposing_distance": 0.2
+    },
+    {
+      "shot_id": "s04",
+      "action": "CONTACT",
+      "start": 15.261,
+      "end": 20.441,
+      "lane_open": false,
+      "front_left_occupant": "roman_front_a",
+      "front_right_occupant": "roman_front_b",
+      "opposing_distance": 0.16
+    },
+    {
+      "shot_id": "s05",
+      "action": "FATIGUE",
+      "start": 20.441,
+      "end": 25.412,
+      "lane_open": false,
+      "front_left_occupant": "roman_front_a",
+      "front_right_occupant": "roman_front_b",
+      "opposing_distance": 0.16
+    },
+    {
+      "shot_id": "s06",
+      "action": "SIGNAL",
+      "start": 25.412,
+      "end": 31.242,
+      "lane_open": false,
+      "front_left_occupant": "roman_front_a",
+      "front_right_occupant": "roman_front_b",
+      "opposing_distance": 0.16
+    },
+    {
+      "shot_id": "s07",
+      "action": "OPEN_LANE",
+      "start": 31.242,
+      "end": 36.491,
+      "lane_open": true,
+      "front_left_occupant": "roman_front_a",
+      "front_right_occupant": "roman_front_b",
+      "opposing_distance": 0.18
+    },
+    {
+      "shot_id": "s08",
+      "action": "FRONT_WITHDRAW",
+      "start": 36.491,
+      "end": 41.392,
+      "lane_open": true,
+      "front_left_occupant": null,
+      "front_right_occupant": null,
+      "opposing_distance": 0.32
+    },
+    {
+      "shot_id": "s09",
+      "action": "RESERVE_ADVANCE",
+      "start": 41.392,
+      "end": 47.152,
+      "lane_open": true,
+      "front_left_occupant": "roman_reserve_a",
+      "front_right_occupant": "roman_reserve_b",
+      "opposing_distance": 0.32
+    },
+    {
+      "shot_id": "s10",
+      "action": "SHIELD_CLOSE",
+      "start": 47.152,
+      "end": 52.425,
+      "lane_open": false,
+      "front_left_occupant": "roman_reserve_a",
+      "front_right_occupant": "roman_reserve_b",
+      "opposing_distance": 0.32
+    },
+    {
+      "shot_id": "s11",
+      "action": "CAMERA_REVEAL",
+      "start": 52.425,
+      "end": 57.883,
+      "lane_open": false,
+      "front_left_occupant": "roman_reserve_a",
+      "front_right_occupant": "roman_reserve_b",
+      "opposing_distance": 0.32
+    }
+  ],
+  "snapshots_count": 11
+}

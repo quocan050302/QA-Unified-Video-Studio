@@ -1,0 +1,71 @@
+{
+  "motion_verified_all": true,
+  "displacements": {
+    "s01": {
+      "action": "DEFEND",
+      "raw_motion_px": 86.25,
+      "net_dx_px": 18.99,
+      "verified": true
+    },
+    "s02": {
+      "action": "APPROACH",
+      "raw_motion_px": 5.69,
+      "net_dx_px": 446.79,
+      "verified": true
+    },
+    "s03": {
+      "action": "BRACE",
+      "raw_motion_px": 8.65,
+      "net_dx_px": 8.48,
+      "verified": true
+    },
+    "s04": {
+      "action": "CONTACT",
+      "raw_motion_px": 9.9,
+      "net_dx_px": 57.12,
+      "verified": true
+    },
+    "s05": {
+      "action": "FATIGUE",
+      "raw_motion_px": 9.45,
+      "net_dx_px": 44.63,
+      "verified": true
+    },
+    "s06": {
+      "action": "SIGNAL",
+      "raw_motion_px": 8.83,
+      "net_dx_px": 49.3,
+      "verified": true
+    },
+    "s07": {
+      "action": "OPEN_LANE",
+      "raw_motion_px": 30.92,
+      "net_dx_px": 9.75,
+      "verified": true
+    },
+    "s08": {
+      "action": "FRONT_WITHDRAW",
+      "raw_motion_px": 20.79,
+      "net_dx_px": 378.59,
+      "verified": true
+    },
+    "s09": {
+      "action": "RESERVE_ADVANCE",
+      "raw_motion_px": 15.88,
+      "net_dx_px": 350.27,
+      "verified": true
+    },
+    "s10": {
+      "action": "SHIELD_CLOSE",
+      "raw_motion_px": 9.04,
+      "net_dx_px": 6.29,
+      "verified": true
+    },
+    "s11": {
+      "action": "CAMERA_REVEAL",
+      "raw_motion_px": 112.46,
+      "net_dx_px": 5.53,
+      "verified": true
+    }
+  }
+}

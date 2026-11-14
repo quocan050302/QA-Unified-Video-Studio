@@ -1,0 +1,154 @@
+{
+  "project_id": "v14_5_action_demo",
+  "pack": "squire",
+  "genre": "roman",
+  "entities": {
+    "roman_front_a": {
+      "entity_id": "roman_front_a",
+      "entity_type": "actor",
+      "pack": "squire",
+      "genre": "roman",
+      "name": "Frontline Hastatus A",
+      "faction": "roman",
+      "role": "frontline_defender",
+      "costume_id": "hastatus_scutum_pilum",
+      "equipment": [
+        "scutum",
+        "gladius",
+        "montefortino_helmet"
+      ],
+      "initial_state": {
+        "slot": "front_left",
+        "status": "active"
+      },
+      "confidence": 1.0,
+      "grounding": "NARRATED_FACT",
+      "source_span": ""
+    },
+    "roman_front_b": {
+      "entity_id": "roman_front_b",
+      "entity_type": "actor",
+      "pack": "squire",
+      "genre": "roman",
+      "name": "Frontline Hastatus B",
+      "faction": "roman",
+      "role": "frontline_defender",
+      "costume_id": "hastatus_scutum_pilum",
+      "equipment": [
+        "scutum",
+        "gladius",
+        "montefortino_helmet"
+      ],
+      "initial_state": {
+        "slot": "front_right",
+        "status": "active"
+      },
+      "confidence": 1.0,
+      "grounding": "NARRATED_FACT",
+      "source_span": ""
+    },
+    "roman_reserve_a": {
+      "entity_id": "roman_reserve_a",
+      "entity_type": "actor",
+      "pack": "squire",
+      "genre": "roman",
+      "name": "Reserve Princeps A",
+      "faction": "roman",
+      "role": "reserve_line",
+      "costume_id": "princeps_lorica_hamata",
+      "equipment": [
+        "scutum",
+        "gladius",
+        "plumed_helmet"
+      ],
+      "initial_state": {
+        "slot": "reserve_left",
+        "status": "ready"
+      },
+      "confidence": 1.0,
+      "grounding": "NARRATED_FACT",
+      "source_span": ""
+    },
+    "roman_reserve_b": {
+      "entity_id": "roman_reserve_b",
+      "entity_type": "actor",
+      "pack": "squire",
+      "genre": "roman",
+      "name": "Reserve Princeps B",
+      "faction": "roman",
+      "role": "reserve_line",
+      "costume_id": "princeps_lorica_hamata",
+      "equipment": [
+        "scutum",
+        "gladius",
+        "plumed_helmet"
+      ],
+      "initial_state": {
+        "slot": "reserve_right",
+        "status": "ready"
+      },
+      "confidence": 1.0,
+      "grounding": "NARRATED_FACT",
+      "source_span": ""
+    },
+    "opposing_a": {
+      "entity_id": "opposing_a",
+      "entity_type": "actor",
+      "pack": "squire",
+      "genre": "roman",
+      "name": "Opposing Warrior",
+      "faction": "opposing",
+      "role": "attacker",
+      "costume_id": "celtic_warrior",
+      "equipment": [
+        "spatha",
+        "oval_shield"
+      ],
+      "initial_state": {
+        "slot": "enemy_front",
+        "status": "charging"
+      },
+      "confidence": 1.0,
+      "grounding": "NARRATED_FACT",
+      "source_span": ""
+    },
+    "centurion_officer": {
+      "entity_id": "centurion_officer",
+      "entity_type": "actor",
+      "pack": "squire",
+      "genre": "roman",
+      "name": "Centurion Marcus",
+      "faction": "roman",
+      "role": "command_officer",
+      "costume_id": "centurion_transverse_crest",
+      "equipment": [
+        "gladius",
+        "vitis",
+        "lorica_hamata"
+      ],
+      "initial_state": {
+        "slot": "rear_command",
+        "status": "observing"
+      },
+      "confidence": 1.0,
+      "grounding": "NARRATED_FACT",
+      "source_span": ""
+    }
+  },
+  "relations": [],
+  "locations": {},
+  "shot_references": {
+    "s01": [],
+    "s02": [],
+    "s03": [],
+    "s04": [],
+    "s05": [],
+    "s06": [],
+    "s07": [],
+    "s08": [],
+    "s09": [],
+    "s10": [],
+    "s11": []
+  },
+  "ambiguities": []
+}

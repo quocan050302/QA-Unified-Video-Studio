@@ -53,6 +53,7 @@ ActionKind = Literal[
     "OBSERVE",
     "WAIT",
     "CAMERA_REVEAL",
+    "BREAKTHROUGH",
 ]
 
 
@@ -696,6 +697,37 @@ def infer_grounded_event_graph(
                         grounding=grounding,
                         reconstruction_flag=reconstruction,
                     )
+                    events.append(ev)
+                elif explicit_action == "BREAKTHROUGH" or any(w in lower for w in ("broken through", "breakthrough", "broke through")):
+                    # If perception or line held, this is perceived/negated, not an actual breakthrough
+                    if polarity in ("NEGATED", "PERCEIVED") or any(w in lower for w in ("held", "firm", "repelled", "failed", "thought")):
+                        ev = GroundedEventNode(
+                            event_id=f"ev_{sid}_breakthrough_negated",
+                            action_kind="BREAKTHROUGH",
+                            shot_id=sid,
+                            actor_ids=["opposing_a"],
+                            target_ids=["roman_front_a"],
+                            start_sec=start_t,
+                            end_sec=end_t,
+                            evidence_text=line,
+                            polarity=polarity if polarity != "AFFIRMED" else "PERCEIVED",
+                            grounding="PERCEPTION" if "thought" in lower else "NARRATED_FACT",
+                            reconstruction_flag=reconstruction,
+                        )
+                    else:
+                        ev = GroundedEventNode(
+                            event_id=f"ev_{sid}_breakthrough",
+                            action_kind="BREAKTHROUGH",
+                            shot_id=sid,
+                            actor_ids=["opposing_a"],
+                            target_ids=["roman_front_a"],
+                            start_sec=start_t,
+                            end_sec=end_t,
+                            evidence_text=line,
+                            polarity="AFFIRMED",
+                            grounding=grounding,
+                            reconstruction_flag=reconstruction,
+                        )
                     events.append(ev)
                 elif explicit_action == "BRACE" or any(w in lower for w in ("brace", "holds", "locked", "shields held")):
                     ev = GroundedEventNode(

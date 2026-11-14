@@ -17,39 +17,48 @@ const at = (info, v, d = 0) => T(info, v, d);
 const SC = () => Math.min(E.W, E.H) / 1080;            // ti le net/blur theo do phan giai logic
 const vert = () => E.H > E.W;
 
-// ---------- may quay: move in|out|left|right|up|down|still, moveAmt, zoom [x, y, z, tu, keo_dai], shake, cameraRig (V14.1)
+// ---------- may quay: move in|out|left|right|up|down|still, moveAmt, zoom [x, y, z, tu, keo_dai], shake, cameraRig (V14.1 / V14.5)
 export function camera(g, lt, info, fn) {
   const a = info.args || {};
-  // V14.1: Bounded keyframe cameraRig path
+  // V14.1 / V14.5: Robust keyframe cameraRig path (supports canonical t,x,y,z and local_sec,x_center,y_center,zoom)
   if (a.cameraRig && a.cameraRig.keyframes && a.cameraRig.keyframes.length > 0) {
     const kfs = a.cameraRig.keyframes;
-    let kf0, kf1;
-    if (lt <= kfs[0].t) {
+    const getT = (kf) => (Number.isFinite(kf.t) ? kf.t : (Number.isFinite(kf.local_sec) ? kf.local_sec : 0));
+    const getX = (kf) => (Number.isFinite(kf.x) ? kf.x : (Number.isFinite(kf.x_center) ? kf.x_center : 0.5));
+    const getY = (kf) => (Number.isFinite(kf.y) ? kf.y : (Number.isFinite(kf.y_center) ? kf.y_center : 0.5));
+    const getZ = (kf) => (Number.isFinite(kf.z) ? kf.z : (Number.isFinite(kf.zoom) ? kf.zoom : 1.0));
+
+    let kf0 = kfs[0], kf1 = kfs[0];
+    if (lt <= getT(kfs[0])) {
       kf0 = kfs[0];
       kf1 = kfs[0];
-    } else if (lt >= kfs[kfs.length - 1].t) {
+    } else if (lt >= getT(kfs[kfs.length - 1])) {
       kf0 = kfs[kfs.length - 1];
       kf1 = kfs[kfs.length - 1];
     } else {
       kf0 = kfs[0];
-      kf1 = kfs[1];
+      kf1 = kfs[1] || kfs[0];
       for (let idx = 0; idx < kfs.length - 1; idx++) {
-        if (lt >= kfs[idx].t && lt <= kfs[idx + 1].t) {
+        if (lt >= getT(kfs[idx]) && lt <= getT(kfs[idx + 1])) {
           kf0 = kfs[idx];
           kf1 = kfs[idx + 1];
           break;
         }
       }
     }
-    const span = Math.max(0.01, kf1.t - kf0.t);
-    const progress = clamp((lt - kf0.t) / span);
+    const t0 = getT(kf0), t1 = getT(kf1);
+    const span = Math.max(0.01, t1 - t0);
+    const progress = clamp((lt - t0) / span);
     const k = ease.inOut(progress);
-    const z = Math.max(1.0, Math.min(3.0, lerp(kf0.z, kf1.z, k))); // Clamp guard against black edges
-    let cx = lerp(kf0.x, kf1.x, k) * E.W;
-    let cy = lerp(kf0.y, kf1.y, k) * E.H;
+    const rawZ = lerp(getZ(kf0), getZ(kf1), k);
+    const z = Math.max(1.0, Math.min(3.0, Number.isFinite(rawZ) ? rawZ : 1.0)); // Clamp guard against black edges
+    const rawX = lerp(getX(kf0), getX(kf1), k);
+    const rawY = lerp(getY(kf0), getY(kf1), k);
+    let cx = (Number.isFinite(rawX) ? rawX : 0.5) * E.W;
+    let cy = (Number.isFinite(rawY) ? rawY : 0.5) * E.H;
     let dx = 0, dy = 0;
     if (a.shake) {
-      const t0 = at(info, a.shakeAt, 0), s = a.shake * Math.max(0, 1 - (lt - t0) / 0.5) * (lt >= t0 ? 1 : 0);
+      const st0 = at(info, a.shakeAt, 0), s = a.shake * Math.max(0, 1 - (lt - st0) / 0.5) * (lt >= st0 ? 1 : 0);
       dx += Math.sin(lt * 70) * 14 * s;
       dy += Math.cos(lt * 60) * 10 * s;
     }
@@ -95,12 +104,26 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
   const isInPlace = p.moveMode === 'in_place' || p.in_place === true || p.walk === 'in_place' || p.walkMode === 'in_place';
   const isFront = p.walk === 'front' || p.walkMode === 'front' || pose0 === 'march';
 
-  if (p.to !== undefined) {
-    const t0 = at(info, p.moveAt, a0), x0 = fx(p.from ?? p.x), x1 = fx(p.to), k = ease.inOut(clamp((lt - t0) / (p.dur || Math.max(0.3, info.dur - t0))));
-    x = lerp(x0, x1, k); travel = Math.abs(x - x0); if (p.flip === undefined) flip = x1 < x0; walkMode = Math.abs(x1 - x0) > 2 ? 'side' : null;
-    if (p.toY !== undefined || p.to_y !== undefined) {
-      const y0 = fy(p.fromY ?? p.from_y ?? p.y, gy), y1 = fy(p.toY ?? p.to_y, gy);
+  const hasMoveX = p.to !== undefined;
+  const hasMoveY = p.toY !== undefined || p.to_y !== undefined;
+  if (hasMoveX || hasMoveY) {
+    const t0 = at(info, p.moveAt, a0);
+    const mDur = p.dur || Math.max(0.3, info.dur - t0);
+    const k = ease.inOut(clamp((lt - t0) / mDur));
+    if (hasMoveX) {
+      const x0 = fx(p.from ?? p.x, 0.5), x1 = fx(p.to, 0.5);
+      x = lerp(x0, x1, k);
+      travel = Math.abs(x - x0);
+      if (p.flip === undefined) flip = x1 < x0;
+      walkMode = Math.abs(x1 - x0) > 2 ? 'side' : null;
+    }
+    if (hasMoveY) {
+      const y0 = fy(p.fromY ?? p.from_y ?? p.y, gy);
+      const y1 = fy(p.toY ?? p.to_y, gy);
       y = lerp(y0, y1, k);
+      if (!walkMode && Math.abs(y1 - y0) > 2) {
+        walkMode = (y1 < y0) ? 'side' : 'front';
+      }
     }
   } else if (isInPlace) {
     // Chay/di bo tai cho (treadmill): giu x co dinh tai vi tri goc (khong troi ngang), van animate buoc chan
@@ -301,7 +324,9 @@ function sceneBody(g, lt, info, a) {
   if (a.midHaze) haze(g, a.midHaze[0], a.midHaze[1]); else if ((a.bg || 'field') === 'plain') haze(g, '#e9c486', 0.1);
   for (const f of a.mid || []) formation(g, { ...f, t: lt });
   for (const p of a.props || []) if (!p.top) prop(g, lt, info, p);
-  const allPeople = [...(a.people || []), ...(a.actionActors || [])];
+  const actionIds = new Set((a.actionActors || []).map(p => p.id || p.who).filter(Boolean));
+  const filteredPeople = (a.people || []).filter(p => !actionIds.has(p.id || p.who));
+  const allPeople = [...filteredPeople, ...(a.actionActors || [])];
   drawPeople(g, lt, info, allPeople, 0.93, vert() ? 0.36 : 0.55);
   for (const p of a.props || []) if (p.top) prop(g, lt, info, p);
   if (a.front && a.front.length) blurLayer(g, (a.frontBlur ?? 7) * SC(), (c) => drawPeople(c, lt, info, a.front, 1.25, 0.9));
@@ -355,7 +380,15 @@ registerTemplate('top', { draw(g, lt, info) {
   const a = info.args || {};
   camera(g, lt, info, () => {
     topGround(g, a.ground || {});
-    for (const b of a.blocks || []) {
+    const blocksList = (a.blocks && a.blocks.length > 0) ? a.blocks : (
+      (a.formationAction && a.formationAction.kind === 'tactical_overhead') ? [
+        { x: 0.5, y: 0.28, w: 0.72, h: 0.12, side: 'red', cols: 16, rows: 4, face: 1, label: 'OPPOSING WARBANDS' },
+        { x: 0.5, y: 0.46, w: 0.60, h: 0.10, side: 'blue', cols: 14, rows: 3, face: -1, label: 'PRINCEPS (NEW LINE)' },
+        { x: 0.5, y: 0.66, w: 0.48, h: 0.08, side: 'blue', cols: 10, rows: 2, face: -1, label: 'HASTATI (WITHDRAWN)' },
+        { x: 0.5, y: 0.82, w: 0.54, h: 0.08, side: 'blue', cols: 12, rows: 2, face: -1, label: 'TRIARII (RESERVE)' },
+      ] : []
+    );
+    for (const b of blocksList) {
       const a0 = at(info, b.at, 0); if (lt < a0) continue;
       const bb = {
         ...b,

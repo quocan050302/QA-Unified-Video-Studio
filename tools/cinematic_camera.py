@@ -140,9 +140,12 @@ def build_camera_keyframe_path(
     viewpoint: CinematicViewpoint,
     action: str = "stand",
     aspect: str = "16:9",
+    focus_x: Optional[float] = None,
+    focus_y: Optional[float] = None,
 ) -> List[CameraKeyframe]:
     """
     Build a smooth, bounded viewport path for the camera rig without black clipping edges.
+    Frames subjects with safe vertical positioning so characters are centered and not cut off.
     """
     is_vert = (aspect == "9:16")
     base_zoom = 1.0
@@ -156,8 +159,9 @@ def build_camera_keyframe_path(
     dur = max(0.5, float(dur))
 
     # Center coordinates depend on viewpoint & narrative framing
+    # Ground action baseline: actors feet at y=0.85, height h=0.55 -> action center is at y=0.58-0.62
     start_x, end_x = 0.5, 0.5
-    start_y, end_y = 0.5, 0.5
+    start_y, end_y = 0.59, 0.57
 
     if viewpoint in ("profile_left", "front_three_quarter_left"):
         start_x, end_x = 0.52, 0.48
@@ -168,9 +172,18 @@ def build_camera_keyframe_path(
     elif viewpoint in ("over_shoulder_left", "rear_three_quarter_left"):
         start_x, end_x = 0.55, 0.58
     elif viewpoint == "low_angle":
-        start_y, end_y = 0.54, 0.51
+        # Low angle looking up at shield line: aimed directly at chest/shield level
+        start_y, end_y = 0.63, 0.60
     elif viewpoint == "high_angle":
-        start_y, end_y = 0.46, 0.49
+        start_y, end_y = 0.54, 0.56
+    elif viewpoint == "top_down":
+        start_y, end_y = 0.52, 0.52
+
+    # Override with subject focus if explicitly provided
+    if focus_x is not None:
+        start_x, end_x = focus_x, focus_x
+    if focus_y is not None:
+        start_y, end_y = focus_y, focus_y
 
     if action == "charge":
         # Dynamic subtle push-in
@@ -198,6 +211,60 @@ def build_camera_keyframe_path(
             easing="sine",
         ),
     ]
+
+
+def validate_camera_rig_contract(
+    rig: Dict[str, Any],
+    duration: float,
+    aspect: str = "16:9",
+) -> Dict[str, Any]:
+    """
+    Validate that cameraRig conforms to the strict canonical contract:
+    - keyframes is a list of dicts with t, x, y, z
+    - all values are finite numbers
+    - 0 <= t <= duration + 0.1
+    - 0.05 <= x, y <= 0.95
+    - 0.8 <= z <= 3.5
+    - t is monotonically non-decreasing
+    """
+    errors = []
+    if not isinstance(rig, dict):
+        return {"valid": False, "errors": ["cameraRig must be a dict"]}
+    kfs = rig.get("keyframes")
+    if not isinstance(kfs, list) or len(kfs) == 0:
+        return {"valid": False, "errors": ["cameraRig.keyframes must be a non-empty list"]}
+
+    prev_t = -0.001
+    for idx, kf in enumerate(kfs):
+        if not isinstance(kf, dict):
+            errors.append(f"Keyframe {idx} must be a dict")
+            continue
+        t = kf.get("t") if kf.get("t") is not None else kf.get("local_sec")
+        x = kf.get("x") if kf.get("x") is not None else kf.get("x_center")
+        y = kf.get("y") if kf.get("y") is not None else kf.get("y_center")
+        z = kf.get("z") if kf.get("z") is not None else kf.get("zoom")
+
+        if t is None or not (isinstance(t, (int, float)) and math.isfinite(t)):
+            errors.append(f"Keyframe {idx}: invalid time t={t}")
+        elif t < -0.05 or t > duration + 0.5:
+            errors.append(f"Keyframe {idx}: time t={t} outside duration bounds [0, {duration}]")
+        elif t < prev_t - 0.001:
+            errors.append(f"Keyframe {idx}: time t={t} is non-monotonic (previous was {prev_t})")
+        else:
+            prev_t = t
+
+        if x is None or not (isinstance(x, (int, float)) and math.isfinite(x) and 0.05 <= x <= 0.95):
+            errors.append(f"Keyframe {idx}: invalid x focal coordinate {x}")
+        if y is None or not (isinstance(y, (int, float)) and math.isfinite(y) and 0.05 <= y <= 0.95):
+            errors.append(f"Keyframe {idx}: invalid y focal coordinate {y}")
+        if z is None or not (isinstance(z, (int, float)) and math.isfinite(z) and 0.8 <= z <= 3.5):
+            errors.append(f"Keyframe {idx}: invalid zoom {z}")
+
+    return {
+        "valid": len(errors) == 0,
+        "errors": errors,
+        "keyframe_count": len(kfs),
+    }
 
 
 def plan_camera_sequence(

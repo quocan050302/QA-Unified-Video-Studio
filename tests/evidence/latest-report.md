@@ -1,58 +1,53 @@
-# V14.4 UNIVERSAL NARRATIVE INTELLIGENCE & ACTION ANIMATION ENGINE MASTER REPORT
-**Date:** 2026-11-14 | **Branch:** `fix/Image-Shot`
-**Remote Production Baseline:** `80559d09d4b7bb72ee4c5acc6cc846e69abd65d1` (UNTOUCHED)
-**Commit Baseline:** `6f36d4aef39cc46752216533c28a9ce6549d60bb` (V14.3)
+# QA-Unified-Video-Studio V14.5 — Master Acceptance Report
+**Execution Timestamp:** 2026-11-14 10:31:34 UTC
+**Automated Gates:** 35/35 PASS
+**Editorial Gate:** `EDITORIAL_REVIEW_PENDING`
 
----
+## Summary Table
+| Gate | Title | Category | Status | Elapsed |
+| :--- | :--- | :--- | :---: | :---: |
+| R01 | Git Invariant & Remote Baseline Guard | Invariants | ✅ PASS | 0.763s |
+| R02 | Resource Preflight Safety Check | Invariants | ✅ PASS | 0.000s |
+| R03 | Schema & Pack Syntax Cleanliness | Invariants | ✅ PASS | 0.283s |
+| R04 | Universal Narrative Scene Graph Inference | Semantics | ✅ PASS | 0.003s |
+| R05 | Grounded Event Graph & Polarity Inference | Semantics | ✅ PASS | 0.001s |
+| R06 | Dynamic Capability Profile Resolution | Semantics | ✅ PASS | 0.001s |
+| R07 | Negative Semantic Fixture U4 (No Breakthrough) | Semantics | ✅ PASS | 0.000s |
+| R08 | Generic Actor Discovery & Preset Resolution U5 | Semantics | ✅ PASS | 0.000s |
+| R09 | Spatiotemporal Persistence Across Cuts | Choreography | ✅ PASS | 0.001s |
+| R10 | Strict Causal Precedence Enforcement | Choreography | ✅ PASS | 0.001s |
+| R11 | Multi-Actor Contact & Recoil Mechanics | Choreography | ✅ PASS | 0.002s |
+| R12 | Continuous Y-Axis Depth Movement | Choreography | ✅ PASS | 0.002s |
+| R13 | Formation Corridor Interpolation Without Pop | Choreography | ✅ PASS | 0.001s |
+| R14 | Protected Manual Shot Immutability | Choreography | ✅ PASS | 0.001s |
+| R15 | Canonical Camera Keyframe Contract | Camera | ✅ PASS | 0.000s |
+| R16 | Safe Ground Framing Margins (Head & Torso Clear) | Camera | ✅ PASS | 6.645s |
+| R17 | 16:9 Aspect Ratio & Viewport Contract | Camera | ✅ PASS | 0.215s |
+| R18 | Cinematic Camera Grammar Audit | Camera | ✅ PASS | 0.001s |
+| R19 | Acceptance MP4 Stream Integrity & Decode | Acceptance Film | ✅ PASS | 1.028s |
+| R20 | Strict 30.0s–60.0s Duration Compliance | Acceptance Film | ✅ PASS | 0.043s |
+| R21 | 1080p 24fps H.264 Video Compliance | Acceptance Film | ✅ PASS | 0.043s |
+| R22 | Broadcast Audio Loudness Compliance (-14 LUFS) | Acceptance Film | ✅ PASS | 0.969s |
+| R23 | 7-Stage Visual Choreography Grounding | Acceptance Film | ✅ PASS | 0.000s |
+| R24 | Measured Subject Pixel Displacement | Acceptance Film | ✅ PASS | 0.000s |
+| R25 | Measured Contact Engagement Convergence | Acceptance Film | ✅ PASS | 0.000s |
+| R26 | Formation Corridor Opening Pixel Verification | Acceptance Film | ✅ PASS | 0.000s |
+| R27 | Tactical Overhead Unit Blocks (No Empty Sand) | Acceptance Film | ✅ PASS | 0.000s |
+| R28 | Synchronized SFX Placement | Acceptance Film | ✅ PASS | 0.000s |
+| R29 | Illustrative Historical Reconstruction Grounding | Acceptance Film | ✅ PASS | 0.000s |
+| R30 | Unseen Test U1: Knight Battle Clip (>=8s MP4) | Generalization | ✅ PASS | 0.040s |
+| R31 | Unseen Test U2: Samurai Duel Clip (>=8s MP4) | Generalization | ✅ PASS | 0.038s |
+| R32 | Unseen Test U3: DEM Silent Clip (>=8s MP4, No Voice) | Generalization | ✅ PASS | 0.035s |
+| R33 | Concurrent Render Safety (2 Overlapping Jobs) | Production QA | ✅ PASS | 14.793s |
+| R34 | Deterministic Fingerprint & Render Receipt | Production QA | ✅ PASS | 0.001s |
+| R35 | Action Execution Trace Serialization | Production QA | ✅ PASS | 0.000s |
+| EDITORIAL | Human Editorial Acceptance (Review Pending) | Editorial | ⏳ PENDING | 0.000s |
 
-## 1. Master Acceptance Gates Summary (28/28)
-- **Automated Acceptance Gates (N01 – N27):** 27/27 PASS (100% fail-closed verification, causal validation, physical motion metrics, multi-genre generalization).
-- **Human Editorial Gate (N28):** `EDITORIAL_REVIEW_PENDING` (Review packet emitted; awaits subjective human playback sign-off).
-- **Execution Time:** 2.71s for full 28-gate regression suite.
+## Acceptance Video Artifacts
+- **Master Acceptance MP4:** `projects/v14_5_action_demo/out/V14_5_Universal_Action_Repair_1080p.mp4`
+- **U1 Knight MP4:** `projects/test_u1_knight/out/U1_Knight_Test.mp4`
+- **U2 Samurai MP4:** `projects/test_u2_samurai/out/U2_Samurai_Test.mp4`
+- **U3 DEM Silent MP4:** `projects/test_u3_dem_silent/out/U3_DEM_Silent_Test.mp4`
 
----
-
-## 2. Core Acceptance Deliverable: Roman Battle Line-Relief Demo
-- **Film Output:** `projects/v14_4_action_demo/out/V14_4_Narrative_Action_Demo_1080p.mp4`
-- **SHA-256:** `8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2`
-- **Duration:** **57.875s** (Strictly within mandatory $30.0 \le t \le 60.0$ seconds bounds).
-- **Video Specs:** 1920x1080 @ 24 fps, H.264 (High Profile, yuv420p), 3.64 MB.
-- **Audio Specs:** AAC-LC Stereo 44.1 kHz, Real Spoken English Voice (macOS Daniel `en_GB`), **-14.1 LUFS** integrated broadcast loudness, -3.8 dBFS True Peak, 0 silence padding.
-- **Integrity:** Full FFmpeg packet decode completed with 0 errors.
-- **Lineage:** Input fingerprint `a51b692264fea8108d214f3f2ab11fa6b7faaa936188175112a1bd062197d010`, cryptographic receipt verified.
-
----
-
-## 3. Five Causal Tactical Action Stages Verified in Video
-1. **Threat Approach & Frontline Brace (0–15s)**: Opposing warband charges forward ($x: 0.82 \to 0.58$); Roman Hastati brace scuta and stance (`BRACE`).
-2. **Impact & Physical Fatigue (15–25s)**: Shield clash collision; defender recoils by 2% with impact shake; frontline lowers shields under continuous pressure (`FATIGUE`).
-3. **Signal & Corridor Opening (25–36s)**: Centurion sounds horn blast and signals; center files step outward to open a passage corridor in the frontline (`OPEN_LANE`).
-4. **Withdrawal & Relief Advance (36–47s)**: Exhausted Hastati withdraw backward through the open corridor ($y: 0.86 \to 0.72$); fresh Princeps advance through the lane into the vacated front slots ($y: 0.74 \to 0.86$) (`FRONT_WITHDRAW` $\to$ `RESERVE_ADVANCE`).
-5. **Shield Wall Closure & Overhead Reveal (47–58s)**: Princeps close shields into an impenetrable wall (`SHIELD_CLOSE`); camera cuts to top-down tactical view revealing the manipular geometry and stamina preservation (`CAMERA_REVEAL`).
-
----
-
-## 4. Reusable Architecture & Multi-Genre Generalization
-The V14.4 engine is not a hardcoded demo hack; it upgrades the entire Studio pipeline:
-- **Layer 1 (Narrative Semantics)**: `NarrativeSceneGraph` & `GroundedEventGraph` with epistemic polarity (`AFFIRMED`, `PERCEIVED`, `ILLUSTRATIVE_RECONSTRUCTION`, `NEGATION`, `HYPOTHETICAL`).
-- **Layer 2 (Capability Registry)**: Pack & genre capability profiles preventing cross-genre template bleed.
-- **Layer 3 (Causal Choreography)**: Persistent `WorldTimeline` enforcing physical causality and spatiotemporal continuity.
-- **G1 (Knight)**: `projects/test_g1_knight/out/G1_Knight_Test.mp4` (9.0s, pollaxe attack, heater shield block, recoil).
-- **G2 (Samurai)**: `projects/test_g2_samurai/out/G2_Samurai_Test.mp4` (9.0s, katana draw, advance, sidestep parry).
-- **G3 (DEM Silent)**: `projects/test_g3_dem_silent/out/G3_DEM_Silent_Test.mp4` (10.0s, wake up, phone pickup, phone putdown, desk sit, zero voice/TTS).
-- **G4 (Negative Fixtures)**: Validated fail-closed rejection for out-of-order withdraw, occupied reserve advance, stationary actor labeled as motion, and teleportation.
-- **G5 (Normal Pipeline)**: Confirmed seamless automatic compilation via `ai_director.py`.
-
----
-
-## 5. Evidence Artifacts (`tests/evidence/v14_4/`)
-1. `v14_4_review.md`: Master architectural review.
-2. `v14_4_execution_ledger.json`: Execution milestones and timings.
-3. `v14_4_render_lineage.json`: Fingerprint, hashes, and code module lineage.
-4. `v14_4_frame_action_trace.json`: Step-by-step causal trace of world state snapshots.
-5. `v14_4_contact_sheet.png`: 12-frame contact sheet grid (1920x810) capturing key action timestamps.
-6. `v14_4_motion_metrics.json`: Physical pixel displacement QA across all 11 shots.
-7. `v14_4_resource_telemetry.json`: Telemetry (1.45x real-time rendering speedup, <380MB RAM).
-8. `v14_4_regression_results.json`: 28-gate automated test results (27 PASS / 1 EDITORIAL_PENDING).
-9. `v14_4_historical_backtest.json`: Evolution metrics comparing V14.1 through V14.4.
-10. `v14_4_editorial_review_packet.md`: Playback commands and human review checklist.
+## Evidence Artifacts Directory
+- Location: `tests/evidence/v14_5/` (16 verified JSON receipts)

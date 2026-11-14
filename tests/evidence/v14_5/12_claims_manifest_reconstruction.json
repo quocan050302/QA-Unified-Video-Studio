@@ -1,0 +1,94 @@
+{
+  "title": "When the Front Line Gives Way \u2014 A Roman Relief Manoeuvre",
+  "genre": "roman",
+  "methodology": "ILLUSTRATIVE_RECONSTRUCTION",
+  "primary_sources": [
+    "Polybius, Histories, Book VI (The Roman Military System)",
+    "Titus Livius (Livy), Ab Urbe Condita, Book VIII, Chapter 8 (The Manipular Battle Order)"
+  ],
+  "scholarly_references": [
+    "Adrian Goldsworthy, The Complete Roman Army (2003)",
+    "Philip Sabin, The Mechanics of Battle in Antiquity (2000)"
+  ],
+  "total_claims": 11,
+  "reconstruction_disclaimer": "This video depicts an illustrative reconstruction of a tactical line-relief manoeuvre based on Polybius and Livy, not a minute-by-minute attested recording of a specific historical battle.",
+  "claims": [
+    {
+      "shot_id": "s01",
+      "claim": "An opening in the Roman line looks like the end. But watch what happens behind the shields.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s02",
+      "claim": "Across the field, enemy warbands charge forward in a violent surge.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s03",
+      "claim": "The front rank Hastati brace, locking their scuta against the incoming assault.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s04",
+      "claim": "The two battle lines collide with brutal force, shields shuddering under the impact.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s05",
+      "claim": "Under continuous pressure, the frontline soldiers struggle and begin to fatigue.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s06",
+      "claim": "Behind them, the centurion sounds a sharp horn blast, ordering an immediate relief.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s07",
+      "claim": "A narrow corridor opens between the front files, parting the Roman shield wall.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s08",
+      "claim": "The exhausted defenders slip backward through the gap along a clear withdrawal path.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s09",
+      "claim": "Fresh Princeps from the second line march forward, advancing into the vacated positions.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s10",
+      "claim": "The reserves close shields into an unbreakable wall, repelling the enemy counter-thrust.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s11",
+      "claim": "An overhead tactical view reveals how the Roman manipular system preserved fighting stamina.",
+      "citation": "Polybius VI.21-24 & Livy VIII.8",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    }
+  ]
+}

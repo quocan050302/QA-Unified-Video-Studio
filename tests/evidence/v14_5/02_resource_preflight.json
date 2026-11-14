@@ -1,0 +1,14 @@
+{
+  "disk": {
+    "total_gb": 460.43,
+    "used_gb": 444.37,
+    "free_gb": 16.06
+  },
+  "ram": {
+    "total_gb": 16.0,
+    "available_gb": 4.87,
+    "ram_percent": 69.5,
+    "ram_avail_mb": 4989.6
+  },
+  "timestamp": 1794652293.678483
+}
