@@ -275,6 +275,18 @@ def summarize_project(p: Path):
         hdata = load_json(hook_rev_file, {}) or {}
         hook_status = hdata.get('validation', {}).get('editorial_state')
 
+    battle_rev_file = p / 'build' / 'battle_review.json'
+    battle_status = 'NOT_APPLICABLE' if mode != 'squire' else 'NOT_PLANNED'
+    battle_events_count = 0
+    battle_changed_shots = 0
+    if battle_rev_file.is_file():
+        bdata = load_json(battle_rev_file, {}) or {}
+        battle_status = bdata.get('status', 'REVIEWED')
+        battle_events_count = bdata.get('events_count', 0)
+        battle_changed_shots = bdata.get('changed_shots_count', 0)
+    elif story.get('battle_choreo_status'):
+        battle_status = story.get('battle_choreo_status')
+
     return {'id': p.name, 'title': cfg.get('title', p.name), 'mode': mode,
             'aspect': cfg.get('aspect', '16:9'), 'resolution': cfg.get('resolution', '1080p'),
             'duration': story.get('duration', cfg.get('duration', 0)),
@@ -283,6 +295,9 @@ def summarize_project(p: Path):
             'audio_planned': audio_planned, 'audio_mixed': audio_mixed,
             'audio_status': audio_status,
             'hook_status': hook_status,
+            'battle_status': battle_status,
+            'battle_events_count': battle_events_count,
+            'battle_changed_shots': battle_changed_shots,
             'stage': stage, 'files': available_files(p)}
 
 
@@ -481,6 +496,33 @@ def task_commands(action, p: Path, params: dict = None):
         if not shots:
             raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi enhance opening.')
         return [[py, 'tools/plan_hook.py', '--project', proj, '--apply-hook']]
+    if action == 'review-battle':
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi review battle.')
+        if ensure_project(p).get('pack') != 'squire':
+            raise ValueError('Battle Choreography chỉ hỗ trợ pack Squire.')
+        return [[py, 'tools/battle_choreo.py', '--project', proj, '--review']]
+    if action == 'apply-battle':
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi apply battle.')
+        if ensure_project(p).get('pack') != 'squire':
+            raise ValueError('Battle Choreography chỉ hỗ trợ pack Squire.')
+        return [[py, 'tools/battle_choreo.py', '--project', proj, '--apply']]
+    if action == 'preview-battle':
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi preview battle.')
+        if ensure_project(p).get('pack') != 'squire':
+            raise ValueError('Battle Choreography chỉ hỗ trợ pack Squire.')
+        dur = float(story.get('duration', 30.0))
+        op_to = str(min(30.0, dur) if dur > 0 else 30.0)
+        return [
+            [node, 'render.mjs', '--project', proj, '--from', '0', '--to', op_to, '--scale', '0.5'],
+            [py, 'tools/mix.py', '--project', proj, '--preview', '--from-sec', '0', '--to-sec', op_to]
+        ]
+    if action == 'validate-battle':
+        if not shots:
+            raise ValueError('Chưa có storyboard (0 shots). Vui lòng chuẩn bị kịch bản/visuals trước khi validate battle.')
+        return [[py, 'tools/battle_choreo.py', '--project', proj, '--validate-only']]
     if action == 'plan-audio':
         return [[py, 'tools/plan_audio.py', '--project', proj]]
     if action == 'upgrade-generated-audio':
@@ -646,6 +688,54 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
                 return False, 'Preview video has invalid zero duration'
         return True, ''
 
+    if action == 'review-battle':
+        rev_file = p / 'build' / 'battle_review.json'
+        if not rev_file.is_file() or rev_file.stat().st_mtime < started - 2:
+            return False, 'build/battle_review.json was not created or is stale'
+        rev_data = load_json(rev_file, {}) or {}
+        if rev_data.get('status') not in ('REVIEWED', 'NOT_APPLICABLE', 'NOT_BATTLE'):
+            return False, f"Battle review reported unexpected status: {rev_data.get('status')}"
+        return True, ''
+
+    if action == 'apply-battle':
+        diff_file = p / 'build' / 'battle_diff.json'
+        rev_file = p / 'build' / 'battle_review.json'
+        shots_file = p / 'story' / 'shots.json'
+        if not diff_file.is_file() and not rev_file.is_file():
+            return False, 'Battle diff or review metadata was not generated'
+        diff_data = load_json(diff_file, {}) or {}
+        status_val = diff_data.get('status', '')
+        if status_val in ('APPLIED', 'NOT_BATTLE', 'NO_CHANGE', 'MANUAL_PROTECTED', 'VALIDATED'):
+            if status_val == 'APPLIED' and shots_file.is_file() and shots_file.stat().st_mtime < started - 2:
+                return False, 'shots.json was not updated with compiled battle choreography'
+            return True, ''
+        return False, f'Battle apply reported unrecognized status: {status_val}'
+
+    if action == 'preview-battle':
+        prev_file = p / 'build' / 'preview.mp4'
+        if not prev_file.is_file() or prev_file.stat().st_size < 1000 or prev_file.stat().st_mtime < started - 2:
+            return False, 'build/preview.mp4 for battle opening was not created or is empty/stale'
+        if shutil.which('ffprobe'):
+            r = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration:stream=codec_type',
+                                '-of', 'default=noprint_wrappers=1', str(prev_file)],
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=30)
+            if r.returncode != 0 or 'codec_type=video' not in r.stdout:
+                return False, 'Preview output missing video stream'
+            dur_m = re.search(r'duration=([\d.]+)', r.stdout)
+            dur_val = float(dur_m.group(1)) if dur_m else 0
+            if dur_val <= 0:
+                return False, 'Preview video has invalid zero duration'
+        return True, ''
+
+    if action == 'validate-battle':
+        rev_file = p / 'build' / 'battle_review.json'
+        if not rev_file.is_file() or rev_file.stat().st_mtime < started - 2:
+            return False, 'build/battle_review.json was not created or is stale'
+        rev_data = load_json(rev_file, {}) or {}
+        if not rev_data.get('causality_valid', False):
+            return False, f"Battle validation failed causality checks: {rev_data.get('causality_issues')}"
+        return True, ''
+
     expected = {
         'preview': [p / 'build' / 'preview.mp4'],
         'render': [p / 'build' / 'video_silent.mp4'],
@@ -798,7 +888,9 @@ class Handler(BaseHTTPRequestHandler):
                     'config': load_json(p / 'config.json', {}),
                     'story': load_json(p / 'story' / 'shots.json', {}),
                     'script': script.read_text('utf-8') if script.exists() else '',
-                    'voice_script': voice_script.read_text('utf-8') if voice_script.exists() else ''})
+                    'voice_script': voice_script.read_text('utf-8') if voice_script.exists() else '',
+                    'battle_review': load_json(p / 'build' / 'battle_review.json', None),
+                    'battle_diff': load_json(p / 'build' / 'battle_diff.json', None)})
             if len(parts) == 3 and parts[:2] == ['api', 'jobs']:
                 j = JOBS.get(parts[2]);
                 if not j: return self.error(404, 'Job not found')

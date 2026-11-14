@@ -393,6 +393,14 @@ def _compile_squire_hook_action(
     effects: List[str] = []
     args = dict(shot.get("args") or {})
 
+    # Preserve battle choreography staging
+    if shot.get("visual_source") == "battle_choreo_v12":
+        tpl = shot.get("tpl", "army")
+        if is_vertical and "safe_margin_bottom" not in args:
+            args["safe_margin_bottom"] = 0.22
+        effects.append("preserved V12 battle choreography staging and continuous formation state")
+        return tpl, args, effects
+
     # Preserve any existing camera moves unless directed
     current_move = args.get("move", "in")
 

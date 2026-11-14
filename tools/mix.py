@@ -168,7 +168,7 @@ def find(name):
             return f, (int(m.group(1)) / 1000 if m else 0.0)
     return None, 0.0
 
-cues = [(s["start"] + c.get("at", 0), c) for s in shots for c in s.get("sfx", [])] + [(c["t"], c) for c in story.get("sfx", [])]
+cues = [(s.get("start", 0.0) + c.get("at", 0), c) for s in shots for c in s.get("sfx", [])] + [(c.get("t", 0.0), c) for c in story.get("sfx", [])]
 rendered_cues = []
 if scfg.get("enabled", True):
     cache = {}

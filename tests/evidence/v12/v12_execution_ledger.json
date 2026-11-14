@@ -1,0 +1,289 @@
+{
+ "timestamp": "2026-11-14T01:44:47.664581Z",
+ "branch": "fix/Image-Shot",
+ "sha": "85e63a26fbbcacab1bfdc85dc1bf3759d8a9eabd",
+ "status": "V12_BATTLE_E2E_VERIFIED",
+ "gates_passed": 20,
+ "total_gates": 20,
+ "gate_results": [
+  {
+   "gate": "L01_BRANCH_GUARD",
+   "passed": true,
+   "details": {
+    "current_branch_guard": true,
+    "negative_branch_rejection": true,
+    "expected_branch": "fix/Image-Shot"
+   },
+   "duration_sec": 0.076
+  },
+  {
+   "gate": "L02_EVENT_TO_SHOT_OWNERSHIP",
+   "passed": true,
+   "details": {
+    "s001_owned": true,
+    "s002_empty": true,
+    "s003_owned": true,
+    "s004_empty": true,
+    "s005_owned": true,
+    "negative_orphan_filtered": true
+   },
+   "duration_sec": 0.003
+  },
+  {
+   "gate": "L03_SEMANTIC_POLARITY_AND_ACTORS",
+   "passed": true,
+   "details": {
+    "negation_hold_position": true,
+    "hypothetical_flag": true,
+    "passive_actor_opponent": true,
+    "active_actor_roman": true,
+    "distinct_actor_attributions": true
+   },
+   "duration_sec": 0.002
+  },
+  {
+   "gate": "L04_CAUSAL_STATE_MACHINE",
+   "passed": true,
+   "details": {
+    "valid_causality_pass": true,
+    "premature_relief_detected": true,
+    "unflanked_encirclement_detected": true,
+    "reported_issues_sample": [
+     "Causality violation: Relief/replacement occurred before enemy breakthrough or contact",
+     "Encirclement asserted without preceding flanking maneuvers"
+    ]
+   },
+   "duration_sec": 0.0
+  },
+  {
+   "gate": "L05_SHOT_BOUNDARY_CONTINUITY",
+   "passed": true,
+   "details": {
+    "cuts_evaluated": 4,
+    "all_cuts_continuous": true,
+    "max_observed_jump": 0.0,
+    "negative_jump_detected": true
+   },
+   "duration_sec": 0.001
+  },
+  {
+   "gate": "L06_REAL_COMPILER_MULTI_EVENT",
+   "passed": true,
+   "details": {
+    "compiled_templates": [
+     "army",
+     "scene",
+     "close",
+     "top"
+    ],
+    "has_army": true,
+    "has_scene": true,
+    "has_close": true,
+    "has_top": true,
+    "all_args_valid": true,
+    "zero_shot_safe": true
+   },
+   "duration_sec": 0.001
+  },
+  {
+   "gate": "L07_RENDERED_FORMATION_MOTION",
+   "passed": true,
+   "details": {
+    "measured_motion_diff": 0.0984,
+    "threshold": 0.015,
+    "identical_frame_diff": 0.0,
+    "render_duration_sec": 4.722
+   },
+   "duration_sec": 4.867
+  },
+  {
+   "gate": "L08_BREAKTHROUGH_GAP",
+   "passed": true,
+   "details": {
+    "has_gap_block_in_compiled": true,
+    "reducer_gap_width": 0.45,
+    "enemy_vanguard_penetration_x": 0.4,
+    "negated_breakthrough_gap_width": 0.0
+   },
+   "duration_sec": 0.001
+  },
+  {
+   "gate": "L09_RELIEF_ROTATION",
+   "passed": true,
+   "details": {
+    "principes_reserve_advance_dx": 0.22,
+    "hastati_front_withdraw_dx": 0.16,
+    "relief_ok": true
+   },
+   "duration_sec": 0.001
+  },
+  {
+   "gate": "L10_FLANK_AND_COUNTERATTACK",
+   "passed": true,
+   "details": {
+    "left_flank_tilt": 0.85,
+    "right_flank_tilt": -0.85,
+    "flanks_curved_inward": true,
+    "enemy_pushed_back_x": 0.5599999999999999
+   },
+   "duration_sec": 0.001
+  },
+  {
+   "gate": "L11_AUTO_FLOW_INTEGRATION",
+   "passed": true,
+   "details": {
+    "squire_auto_applied": true,
+    "dem_pack_rejected_safe": true,
+    "squire_tool_exit": 0
+   },
+   "duration_sec": 0.259
+  },
+  {
+   "gate": "L12_UI_HTTP_TASK_TRUTH",
+   "passed": true,
+   "details": {
+    "all_battle_task_commands_valid": true,
+    "review_execution_ret": 0,
+    "verify_task_result_pass": true,
+    "dem_battle_task_rejected": true
+   },
+   "duration_sec": 0.242
+  },
+  {
+   "gate": "L13_MANUAL_AND_IDEMPOTENCE",
+   "passed": true,
+   "details": {
+    "manual_shot_preserved": true,
+    "second_run_idempotent_no_change": true,
+    "res1_status": "APPLIED",
+    "res2_status": "NO_CHANGE"
+   },
+   "duration_sec": 0.027
+  },
+  {
+   "gate": "L14_AUDIO_SFX_EVENT_SYNC",
+   "passed": true,
+   "details": {
+    "total_cues_compiled": 6,
+    "all_gains_negative_db": true,
+    "all_cues_within_duration": true,
+    "cue_samples": [
+     {
+      "source": "auto_battle_v12",
+      "event_id": "evt_001",
+      "name": "drum_march",
+      "at": 0.8,
+      "gain": -12.0,
+      "auto": true
+     },
+     {
+      "source": "auto_battle_v12",
+      "event_id": "evt_001",
+      "name": "footsteps",
+      "at": 2.0,
+      "gain": -15.0,
+      "auto": true
+     },
+     {
+      "source": "auto_battle_v12",
+      "event_id": "evt_001",
+      "name": "arrow_volley",
+      "at": 0.75,
+      "gain": -10.0,
+      "auto": true
+     },
+     {
+      "source": "auto_battle_v12",
+      "event_id": "evt_001",
+      "name": "javelin_throw",
+      "at": 1.95,
+      "gain": -9.0,
+      "auto": true
+     }
+    ]
+   },
+   "duration_sec": 0.001
+  },
+  {
+   "gate": "L15_FINAL_MEDIA_60_90S",
+   "passed": true,
+   "details": {
+    "final_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\v12_20261114_084203\\l15_battle_60_90s\\out\\Why Breaking The Roman Front Line Was A Death Trap.mp4",
+    "final_duration": 75.458333,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "resolution": "1920x1080",
+    "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v12\\contact_sheet_60_90s.jpg",
+    "render_time_sec": 87.32,
+    "mix_time_sec": 9.692
+   },
+   "duration_sec": 100.339
+  },
+  {
+   "gate": "L16_OPENING_FIRST_30S",
+   "passed": true,
+   "details": {
+    "mean_divergence": 0.6188,
+    "timestamps_checked": [
+     2.0,
+     7.0,
+     14.0,
+     21.0,
+     28.0
+    ],
+    "diffs_per_timestamp": [
+     0.9876,
+     0.1305,
+     0.987,
+     0.0,
+     0.9888
+    ],
+    "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v12\\contact_sheet_before_after_30s.jpg"
+   },
+   "duration_sec": 30.634
+  },
+  {
+   "gate": "L17_SHORTS_9x16",
+   "passed": true,
+   "details": {
+    "aspect": "9:16",
+    "preview_exists": true,
+    "preview_size_bytes": 5000154,
+    "safe_margins_configured": true,
+    "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\v12\\contact_sheet_shorts_9x16.jpg"
+   },
+   "duration_sec": 26.811
+  },
+  {
+   "gate": "L18_FULL_REGRESSION_ALL_PREVIOUS",
+   "passed": true,
+   "details": {
+    "dem_compile_ok": true,
+    "dem_audio_plan_ok": true,
+    "dem_shots_count": 2
+   },
+   "duration_sec": 0.524
+  },
+  {
+   "gate": "L19_RESOURCE_CONCURRENCY_DISK_BACKTEST",
+   "passed": true,
+   "details": {
+    "ram_total_gb": 31.75,
+    "ram_available_gb": 7.6,
+    "disk_free_gb": 58.18,
+    "disk_total_gb": 144.02,
+    "bounded_concurrency_max": 2
+   },
+   "duration_sec": 0.001
+  },
+  {
+   "gate": "L20_PROVENANCE_POST_PUSH",
+   "passed": true,
+   "details": {
+    "branch_ok": true,
+    "current_branch": "fix/Image-Shot",
+    "current_sha": "85e63a26fbbcacab1bfdc85dc1bf3759d8a9eabd"
+   }
+  }
+ ]
+}

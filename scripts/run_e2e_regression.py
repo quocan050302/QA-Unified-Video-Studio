@@ -59,6 +59,8 @@ EVIDENCE_V9_DIR = EVIDENCE_DIR / "v9"
 EVIDENCE_V9_DIR.mkdir(parents=True, exist_ok=True)
 EVIDENCE_V10_DIR = EVIDENCE_DIR / "v10"
 EVIDENCE_V10_DIR.mkdir(parents=True, exist_ok=True)
+EVIDENCE_V12_DIR = EVIDENCE_DIR / "v12"
+EVIDENCE_V12_DIR.mkdir(parents=True, exist_ok=True)
 
 from test_v10_opening import (
     k01_real_compiler_behavior_squire,

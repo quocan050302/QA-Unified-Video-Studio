@@ -727,6 +727,19 @@ def assign_visuals(
         story["shots"] = shots
         write_json(shots_file, story)
 
+    # Battle auto-director integration
+    if cfg.get("battle_auto_director", True) and not target_ids:
+        try:
+            from battle_choreo import plan_battle_choreo_for_project, parse_battle_events
+            events = parse_battle_events(full_text)
+            if events:
+                b_res = plan_battle_choreo_for_project(P, review_only=False, apply_choreo=True)
+                if b_res.get("status") == "APPLIED":
+                    print(f"[assign_visuals] Battle auto-director applied choreography: {b_res.get('changed_shots_count')} shots updated.")
+                    modified = True
+        except Exception as b_exc:
+            print(f"[assign_visuals] Battle auto-director note: {b_exc}")
+
     # Tao default thumbnail neu chua co
     thumb_path = os.path.join(P, "scenes", "shots", "thumb.js")
     if not os.path.exists(thumb_path):
