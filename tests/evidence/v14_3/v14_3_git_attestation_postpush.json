@@ -1,0 +1,15 @@
+{
+  "guard_version": "v14.3",
+  "phase": "postpush",
+  "timestamp": "2026-11-14T07:29:20Z",
+  "is_valid": true,
+  "current_branch": "fix/Image-Shot",
+  "mandatory_branch": "fix/Image-Shot",
+  "local_head": "7f1d65fe58d187002c1c6ae4d9eddedac1faa9e8",
+  "remote_fix_sha": "7f1d65fe58d187002c1c6ae4d9eddedac1faa9e8",
+  "remote_prod_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_baseline": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "dirty_files_count": 0,
+  "dirty_files": [],
+  "errors": []
+}
