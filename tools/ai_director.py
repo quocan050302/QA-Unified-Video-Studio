@@ -830,6 +830,28 @@ def compile_director_plan_to_visuals(
                 s["director_sfx_cues"] = ps["sfx_intents"]
                 
             changed_count += 1
+
+    # V14.4 Universal Narrative Action Choreography integration
+    try:
+        from tools.narrative_action import (
+            build_action_context,
+            parse_action_intents,
+            build_shared_world_state,
+            plan_action_beats,
+            compile_action_choreography_to_shots,
+        )
+        p_arg = project_path if not isinstance(project_path, (list, tuple)) else {
+            "id": "action_proj", "pack": pack, "genre": genre
+        }
+        ctx = build_action_context(p_arg)
+        ctx.shots = shots
+        events = parse_action_intents(ctx, director_plan=plan_dict)
+        world = build_shared_world_state(ctx, events)
+        choreo = plan_action_beats(world, events, [])
+        shots, _ = compile_action_choreography_to_shots(shots, choreo)
+    except Exception as exc:
+        # Safe fallback preserves shots
+        pass
             
     return shots, changed_count
 

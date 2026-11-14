@@ -1,0 +1,133 @@
+{
+  "schema_version": "14.4",
+  "video_path": "projects/v14_4_action_demo/out/V14_4_Narrative_Action_Demo_1080p.mp4",
+  "total_shots": 11,
+  "motion_metrics": [
+    {
+      "shot_id": "s01",
+      "action": "DEFEND",
+      "view": "profile_left",
+      "start": 0.0,
+      "dur": 5.621,
+      "frames_sampled": 135,
+      "mean_frame_diff": 1.2739,
+      "max_frame_diff": 14.677,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s02",
+      "action": "APPROACH",
+      "view": "profile_right",
+      "start": 5.621,
+      "dur": 4.483,
+      "frames_sampled": 108,
+      "mean_frame_diff": 0.0127,
+      "max_frame_diff": 0.0215,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s03",
+      "action": "BRACE",
+      "view": "low_angle",
+      "start": 10.104,
+      "dur": 5.157,
+      "frames_sampled": 125,
+      "mean_frame_diff": 0.0518,
+      "max_frame_diff": 0.1435,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s04",
+      "action": "CONTACT",
+      "view": "over_shoulder_right",
+      "start": 15.261,
+      "dur": 5.18,
+      "frames_sampled": 126,
+      "mean_frame_diff": 0.0502,
+      "max_frame_diff": 2.5197,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s05",
+      "action": "FATIGUE",
+      "view": "front_three_quarter_left",
+      "start": 20.441,
+      "dur": 4.971,
+      "frames_sampled": 120,
+      "mean_frame_diff": 0.0767,
+      "max_frame_diff": 4.5293,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s06",
+      "action": "SIGNAL",
+      "view": "front_three_quarter_right",
+      "start": 25.412,
+      "dur": 5.83,
+      "frames_sampled": 140,
+      "mean_frame_diff": 0.0457,
+      "max_frame_diff": 0.1454,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s07",
+      "action": "OPEN_LANE",
+      "view": "profile_left",
+      "start": 31.242,
+      "dur": 5.249,
+      "frames_sampled": 126,
+      "mean_frame_diff": 0.0929,
+      "max_frame_diff": 0.2099,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s08",
+      "action": "FRONT_WITHDRAW",
+      "view": "rear",
+      "start": 36.491,
+      "dur": 4.901,
+      "frames_sampled": 118,
+      "mean_frame_diff": 0.3142,
+      "max_frame_diff": 0.721,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s09",
+      "action": "RESERVE_ADVANCE",
+      "view": "profile_left",
+      "start": 41.392,
+      "dur": 5.76,
+      "frames_sampled": 140,
+      "mean_frame_diff": 0.6481,
+      "max_frame_diff": 4.8293,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s10",
+      "action": "SHIELD_CLOSE",
+      "view": "low_angle",
+      "start": 47.152,
+      "dur": 5.273,
+      "frames_sampled": 127,
+      "mean_frame_diff": 0.0521,
+      "max_frame_diff": 0.1431,
+      "has_motion": true
+    },
+    {
+      "shot_id": "s11",
+      "action": "CAMERA_REVEAL",
+      "view": "top_down",
+      "start": 52.425,
+      "dur": 5.458,
+      "frames_sampled": 131,
+      "mean_frame_diff": 1.2197,
+      "max_frame_diff": 9.6009,
+      "has_motion": true
+    }
+  ],
+  "summary": {
+    "all_shots_valid": true,
+    "moving_shots_count": 11,
+    "action_continuity_verified": true
+  }
+}

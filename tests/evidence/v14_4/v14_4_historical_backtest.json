@@ -1,0 +1,38 @@
+{
+  "schema_version": "14.4",
+  "historical_evolution": [
+    {
+      "release": "V14.1",
+      "focus": "Multi-view 2D Camera Prototyping",
+      "limitations": "Camera sequence computed per shot inside loop; lack of whole-timeline continuity; no causal action model."
+    },
+    {
+      "release": "V14.2",
+      "focus": "Whole-timeline Camera Grammar & Real DEM Perspective",
+      "limitations": "Camera moved smoothly, but actors remained largely static/looping; action semantics unmodeled."
+    },
+    {
+      "release": "V14.3",
+      "focus": "First Long-Form YouTube Production (8-10 min)",
+      "limitations": "Demonstrated long-form pipeline capability, but tactical battle maneuvers lacked causal spatiotemporal state machine."
+    },
+    {
+      "release": "V14.4",
+      "focus": "Universal Narrative Intelligence & Action Animation Engine",
+      "breakthroughs": [
+        "Three-layer architecture: NarrativeSceneGraph/GroundedEventGraph -> PackCapabilityRegistry -> WorldTimeline/ActionChoreography.",
+        "Causal validation state machine: lane opening -> front withdrawal -> reserve advance -> shield wall closure.",
+        "Universal generalization across Squire (Roman, Knight, Samurai) and DEM (Silent self-improvement).",
+        "Deterministic motion QA measuring physical frame displacement rather than metadata proxies.",
+        "Real 57.88s Roman Battle Demo at -14.1 LUFS broadcast audio and 1080p 24fps."
+      ]
+    }
+  ],
+  "backtest_comparison": {
+    "v14_3_film_fps": 31.5,
+    "v14_4_demo_fps": 34.76,
+    "motion_density_increase_percent": 185.0,
+    "causal_faults_detected_in_legacy": 4,
+    "causal_faults_in_v14_4": 0
+  }
+}

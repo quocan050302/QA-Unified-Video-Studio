@@ -1,0 +1,82 @@
+{
+  "schema_version": "14.4",
+  "project_id": "v14_4_action_demo",
+  "branch": "fix/Image-Shot",
+  "baseline_commit": "6f36d4aef39cc46752216533c28a9ce6549d60bb",
+  "production_baseline_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "execution_timestamp": 1731575800,
+  "milestones": [
+    {
+      "step": 1,
+      "name": "Git & Safety Preflight",
+      "status": "PASS",
+      "details": "Verified branch fix/Image-Shot and remote Production baseline 80559d09d4b7bb72ee4c5acc6cc846e69abd65d1."
+    },
+    {
+      "step": 2,
+      "name": "Architecture Layer 1: Narrative Semantics",
+      "status": "PASS",
+      "file": "tools/narrative_semantics.py",
+      "details": "Implemented NarrativeSceneGraph and GroundedEventGraph with epistemic polarity tagging."
+    },
+    {
+      "step": 3,
+      "name": "Architecture Layer 2: Action Capabilities",
+      "status": "PASS",
+      "file": "tools/action_capabilities.py",
+      "details": "Defined capability profiles for Squire Roman, Knight, Samurai and DEM Self-Improvement."
+    },
+    {
+      "step": 4,
+      "name": "Architecture Layer 3: Narrative Action Choreography",
+      "status": "PASS",
+      "file": "tools/narrative_action.py",
+      "details": "Implemented causal state machine, world timeline, action beats planning, and causality validation."
+    },
+    {
+      "step": 5,
+      "name": "2D Canvas Renderer Upgrades",
+      "status": "PASS",
+      "files": ["packs/squire/templates.js", "packs/squire/army.js"],
+      "details": "Added actionActors rendering, y-interpolation, recoil shake, and dynamic corridor opening."
+    },
+    {
+      "step": 6,
+      "name": "Universal Director Plan Integration",
+      "status": "PASS",
+      "file": "tools/ai_director.py",
+      "details": "Wired universal action choreography into compile_director_plan_to_visuals."
+    },
+    {
+      "step": 7,
+      "name": "V14.4 Roman Battle Demo Production",
+      "status": "PASS",
+      "output_path": "projects/v14_4_action_demo/out/V14_4_Narrative_Action_Demo_1080p.mp4",
+      "output_sha256": "8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2",
+      "duration_sec": 57.875,
+      "loudness_lufs": -14.1,
+      "resolution": "1920x1080",
+      "fps": 24.0
+    },
+    {
+      "step": 8,
+      "name": "Generalization Clips Produced",
+      "status": "PASS",
+      "clips": [
+        {"genre": "knight", "path": "projects/test_g1_knight/out/G1_Knight_Test.mp4", "duration": 9.0},
+        {"genre": "samurai", "path": "projects/test_g2_samurai/out/G2_Samurai_Test.mp4", "duration": 9.0},
+        {"genre": "dem_silent", "path": "projects/test_g3_dem_silent/out/G3_DEM_Silent_Test.mp4", "duration": 10.0}
+      ]
+    },
+    {
+      "step": 9,
+      "name": "Motion QA & Contact Sheet",
+      "status": "PASS",
+      "files": [
+        "tests/evidence/v14_4/v14_4_contact_sheet.png",
+        "tests/evidence/v14_4/v14_4_motion_metrics.json",
+        "tests/evidence/v14_4/v14_4_frame_action_trace.json"
+      ]
+    }
+  ]
+}

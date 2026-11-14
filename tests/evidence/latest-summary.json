@@ -1,10 +1,20 @@
 {
-  "version": "14.3",
+  "version": "14.4",
+  "release_title": "Universal Narrative Intelligence & Action Animation Engine",
   "branch": "fix/Image-Shot",
-  "gates_passed": 36,
-  "gates_total": 36,
-  "all_passed": true,
+  "gates_passed": 27,
+  "gates_pending": 1,
+  "gates_total": 28,
+  "all_automated_passed": true,
   "human_verdict": "EDITORIAL_REVIEW_PENDING",
-  "film_duration_sec": 498.25,
-  "timestamp": 1794641159.0
+  "demo_mp4_path": "projects/v14_4_action_demo/out/V14_4_Narrative_Action_Demo_1080p.mp4",
+  "demo_mp4_sha256": "8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2",
+  "demo_duration_sec": 57.875,
+  "audio_loudness_lufs": -14.1,
+  "generalization_clips": {
+    "knight": "projects/test_g1_knight/out/G1_Knight_Test.mp4",
+    "samurai": "projects/test_g2_samurai/out/G2_Samurai_Test.mp4",
+    "dem_silent": "projects/test_g3_dem_silent/out/G3_DEM_Silent_Test.mp4"
+  },
+  "timestamp": 1731576440.0
 }

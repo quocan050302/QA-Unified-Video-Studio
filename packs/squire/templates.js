@@ -98,6 +98,10 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
   if (p.to !== undefined) {
     const t0 = at(info, p.moveAt, a0), x0 = fx(p.from ?? p.x), x1 = fx(p.to), k = ease.inOut(clamp((lt - t0) / (p.dur || Math.max(0.3, info.dur - t0))));
     x = lerp(x0, x1, k); travel = Math.abs(x - x0); if (p.flip === undefined) flip = x1 < x0; walkMode = Math.abs(x1 - x0) > 2 ? 'side' : null;
+    if (p.toY !== undefined || p.to_y !== undefined) {
+      const y0 = fy(p.fromY ?? p.from_y ?? p.y, gy), y1 = fy(p.toY ?? p.to_y, gy);
+      y = lerp(y0, y1, k);
+    }
   } else if (isInPlace) {
     // Chay/di bo tai cho (treadmill): giu x co dinh tai vi tri goc (khong troi ngang), van animate buoc chan
     travel = v * lt;
@@ -115,6 +119,7 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
   if (p.exit !== undefined) { const k = ease.in(clamp((lt - at(info, p.exit, 1e9)) / 0.4)); x += k * E.W * 0.6 * (p.exitDir === 'left' ? -1 : 1); }
   if (p.jump !== undefined) { const t0 = at(info, p.jump, 0); if (lt >= t0) y -= Math.abs(Math.sin((lt - t0) * 9)) * h * 0.06 * Math.max(0, 1 - (lt - t0) / 1.2); }
   if (p.tremble) x += Math.sin(lt * 60) * h * 0.004;
+  if (p.shake) x += Math.sin(lt * 45) * h * 0.035 * Math.max(0, 1 - (lt - a0) / 0.5);
   const talk = p.talk ? talkAmount(info.globalT, info.start + at(info, p.talkFrom, 0), info.start + (p.talkTo !== undefined ? at(info, p.talkTo, info.dur) : info.dur)) : 0;
   const pk = p.pop ? pop(lt, a0, 0.4) : 1;
   g.save(); if (pk < 1) { g.translate(x, y); g.scale(pk, pk); g.translate(-x, -y); }
@@ -296,7 +301,8 @@ function sceneBody(g, lt, info, a) {
   if (a.midHaze) haze(g, a.midHaze[0], a.midHaze[1]); else if ((a.bg || 'field') === 'plain') haze(g, '#e9c486', 0.1);
   for (const f of a.mid || []) formation(g, { ...f, t: lt });
   for (const p of a.props || []) if (!p.top) prop(g, lt, info, p);
-  drawPeople(g, lt, info, a.people, 0.93, vert() ? 0.36 : 0.55);
+  const allPeople = [...(a.people || []), ...(a.actionActors || [])];
+  drawPeople(g, lt, info, allPeople, 0.93, vert() ? 0.36 : 0.55);
   for (const p of a.props || []) if (p.top) prop(g, lt, info, p);
   if (a.front && a.front.length) blurLayer(g, (a.frontBlur ?? 7) * SC(), (c) => drawPeople(c, lt, info, a.front, 1.25, 0.9));
   effects(g, lt, info, a.fx);
@@ -307,7 +313,10 @@ registerTemplate('scene', { draw(g, lt, info) { const a = info.args || {}; camer
 // army: canh doi hinh (mac dinh 1 khoi quan lon, co the them doi hinh doi dien)
 registerTemplate('army', { draw(g, lt, info) {
   const a = info.args || {};
-  const mid = a.mid || [{ preset: a.preset || 'hastatus', presets: a.presets, rows: a.rows || 4, cols: a.cols || 9, x0: 0.02, x1: 0.98, yFront: 1.02, yBack: 0.72, hFront: vert() ? 0.26 : 0.42, hBack: 0.16, march: a.march, flip: a.flip, face: a.face, flags: a.flags, view: a.view }];
+  let mid = a.mid || [{ preset: a.preset || 'hastatus', presets: a.presets, rows: a.rows || 4, cols: a.cols || 9, x0: 0.02, x1: 0.98, yFront: 1.02, yBack: 0.72, hFront: vert() ? 0.26 : 0.42, hBack: 0.16, march: a.march, flip: a.flip, face: a.face, flags: a.flags, view: a.view }];
+  if (a.formationAction && mid.length > 0) {
+    mid = mid.map(f => ({ ...f, formationAction: a.formationAction }));
+  }
   camera(g, lt, info, () => { sceneBody(g, lt, info, { ...a, mid, back: a.back || [{ preset: a.enemy || a.preset || 'latin', presets: a.enemyPresets, rows: 3, cols: 22, x0: 0, x1: 1, yFront: 0.74, yBack: 0.66, hFront: 0.09, hBack: 0.06, flip: !a.flip, flags: a.enemyFlags }] }); overlays(g, lt, info); });
   vignette(g, 0.2);
 } });

@@ -1,0 +1,418 @@
+{
+  "version": "14.4",
+  "timestamp": 1794648444.02608,
+  "elapsed_sec": 2.71,
+  "total_gates": 28,
+  "passed": 27,
+  "editorial_pending": 1,
+  "failed": 0,
+  "gates": [
+    {
+      "gate_id": "N01",
+      "title": "Git Invariant & Remote Safety Guard",
+      "category": "SAFETY",
+      "status": "PASS",
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "error_message": null,
+      "details": {
+        "current_branch": "fix/Image-Shot",
+        "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+      },
+      "elapsed_sec": 0.888
+    },
+    {
+      "gate_id": "N02",
+      "title": "Resource Preflight Check",
+      "category": "SAFETY",
+      "status": "PASS",
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "error_message": null,
+      "details": {
+        "disk_free_gb": 16.68,
+        "ram_available_gb": 3.13
+      },
+      "elapsed_sec": 0.001
+    },
+    {
+      "gate_id": "N03",
+      "title": "Narrative Scene Graph Extraction",
+      "category": "SEMANTICS",
+      "status": "PASS",
+      "assertions_passed": 5,
+      "assertions_total": 5,
+      "error_message": null,
+      "details": {
+        "entity_count": 6
+      },
+      "elapsed_sec": 0.001
+    },
+    {
+      "gate_id": "N04",
+      "title": "Grounded Event Graph & Epistemic Polarity",
+      "category": "SEMANTICS",
+      "status": "PASS",
+      "assertions_passed": 5,
+      "assertions_total": 5,
+      "error_message": null,
+      "details": {
+        "polarities": [
+          "AFFIRMED",
+          "PERCEIVED",
+          "NEGATED",
+          "AFFIRMED"
+        ]
+      },
+      "elapsed_sec": 0.001
+    },
+    {
+      "gate_id": "N05",
+      "title": "Pack Capability Resolution & Boundaries",
+      "category": "CAPABILITIES",
+      "status": "PASS",
+      "assertions_passed": 5,
+      "assertions_total": 5,
+      "error_message": null,
+      "details": {
+        "unsupported_action": "FRONT_WITHDRAW"
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N06",
+      "title": "Causal State Machine & Choreography Planning",
+      "category": "CHOREOGRAPHY",
+      "status": "PASS",
+      "assertions_passed": 8,
+      "assertions_total": 8,
+      "error_message": null,
+      "details": {
+        "causal_timeline": {
+          "valid": true,
+          "errors": [],
+          "total_steps": 11,
+          "lane_opened_step": 6,
+          "front_withdrawn_step": 7,
+          "reserve_arrived_step": 8,
+          "shield_closed_step": 9
+        }
+      },
+      "elapsed_sec": 0.004
+    },
+    {
+      "gate_id": "N07",
+      "title": "Negative Fixture: Out-of-Order Causal Violation",
+      "category": "CHOREOGRAPHY",
+      "status": "PASS",
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "error_message": null,
+      "details": {
+        "expected_error": "Causal violation in s1: FRONT_WITHDRAW attempted before corridor_center opened!"
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N08",
+      "title": "Negative Fixture: Stationary Actor Labeled as Motion",
+      "category": "CHOREOGRAPHY",
+      "status": "PASS",
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "error_message": null,
+      "details": {
+        "displacement": 0.0
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N09",
+      "title": "Negative Fixture: Teleportation / Infeasible Velocity",
+      "category": "CHOREOGRAPHY",
+      "status": "PASS",
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "error_message": null,
+      "details": {
+        "calculated_speed": 1.6,
+        "max_allowed_speed": 0.5
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N10",
+      "title": "Negative Fixture: Camera Pan Only Disallowed",
+      "category": "CHOREOGRAPHY",
+      "status": "PASS",
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "error_message": null,
+      "details": {
+        "cam_shift": 0.15,
+        "actor_shift": 0.0
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N11",
+      "title": "V14.4 Roman Battle Demo MP4 Existence & Format",
+      "category": "RENDER_QA",
+      "status": "PASS",
+      "assertions_passed": 7,
+      "assertions_total": 7,
+      "error_message": null,
+      "details": {
+        "media_info": {
+          "valid": true,
+          "duration": 57.875,
+          "file_size": 3819028,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "has_video": true,
+          "has_audio": true,
+          "sha256": "8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2"
+        }
+      },
+      "elapsed_sec": 0.081
+    },
+    {
+      "gate_id": "N12",
+      "title": "V14.4 Roman Battle Demo Duration Strict Invariant",
+      "category": "RENDER_QA",
+      "status": "PASS",
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "error_message": null,
+      "details": {
+        "duration_sec": 57.875
+      },
+      "elapsed_sec": 0.031
+    },
+    {
+      "gate_id": "N13",
+      "title": "V14.4 Roman Battle Demo Audio & Broadcast Loudness",
+      "category": "RENDER_QA",
+      "status": "PASS",
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "error_message": null,
+      "details": {
+        "integrated_lufs": -14.1
+      },
+      "elapsed_sec": 0.811
+    },
+    {
+      "gate_id": "N14",
+      "title": "V14.4 Roman Battle Demo Video Packet Integrity",
+      "category": "RENDER_QA",
+      "status": "PASS",
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "error_message": null,
+      "details": {
+        "decode_errors": 0
+      },
+      "elapsed_sec": 0.759
+    },
+    {
+      "gate_id": "N15",
+      "title": "Multi-view Camera Angles & Grammar Audit",
+      "category": "CINEMATOGRAPHY",
+      "status": "PASS",
+      "assertions_passed": 5,
+      "assertions_total": 5,
+      "error_message": null,
+      "details": {
+        "distinct_viewpoints": [
+          "front_three_quarter_left",
+          "front_three_quarter_right",
+          "low_angle",
+          "over_shoulder_right",
+          "profile_left",
+          "profile_right",
+          "rear",
+          "top_down"
+        ]
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N16",
+      "title": "Spatiotemporal Continuity & Actor Persistence",
+      "category": "CONTINUITY",
+      "status": "PASS",
+      "assertions_passed": 4,
+      "assertions_total": 4,
+      "error_message": null,
+      "details": {
+        "persistent_characters": [
+          "legionary_titus",
+          "chieftain_brennos",
+          "centurion_marcus"
+        ]
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N17",
+      "title": "Physical Motion & Pixel Displacement QA",
+      "category": "MOTION_QA",
+      "status": "PASS",
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "error_message": null,
+      "details": {
+        "moving_shots_count": 11
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N18",
+      "title": "Cryptographic Render Receipt & Lineage",
+      "category": "LINEAGE",
+      "status": "PASS",
+      "assertions_passed": 5,
+      "assertions_total": 5,
+      "error_message": null,
+      "details": {
+        "receipt_sha256": "8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2"
+      },
+      "elapsed_sec": 0.029
+    },
+    {
+      "gate_id": "N19",
+      "title": "Frame Action Trace Verification",
+      "category": "EVIDENCE",
+      "status": "PASS",
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "error_message": null,
+      "details": {
+        "total_trace_events": 11
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N20",
+      "title": "Generalization G1: Squire Knight Combat Clip",
+      "category": "GENERALIZATION",
+      "status": "PASS",
+      "assertions_passed": 4,
+      "assertions_total": 4,
+      "error_message": null,
+      "details": {
+        "knight_duration": 9.0
+      },
+      "elapsed_sec": 0.03
+    },
+    {
+      "gate_id": "N21",
+      "title": "Generalization G2: Squire Samurai Duel Clip",
+      "category": "GENERALIZATION",
+      "status": "PASS",
+      "assertions_passed": 4,
+      "assertions_total": 4,
+      "error_message": null,
+      "details": {
+        "samurai_duration": 9.0
+      },
+      "elapsed_sec": 0.031
+    },
+    {
+      "gate_id": "N22",
+      "title": "Generalization G3: DEM Silent Self-Improvement Clip",
+      "category": "GENERALIZATION",
+      "status": "PASS",
+      "assertions_passed": 4,
+      "assertions_total": 4,
+      "error_message": null,
+      "details": {
+        "dem_duration": 10.0
+      },
+      "elapsed_sec": 0.032
+    },
+    {
+      "gate_id": "N23",
+      "title": "Generalization G4: Normal Studio Director Integration",
+      "category": "GENERALIZATION",
+      "status": "PASS",
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "error_message": null,
+      "details": {
+        "director_compiled_count": 11
+      },
+      "elapsed_sec": 0.007
+    },
+    {
+      "gate_id": "N24",
+      "title": "Regression Safety: Legacy Project Compatibility",
+      "category": "REGRESSION",
+      "status": "PASS",
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "error_message": null,
+      "details": {
+        "legacy_compat": "VERIFIED"
+      },
+      "elapsed_sec": 0.002
+    },
+    {
+      "gate_id": "N25",
+      "title": "Concurrency & Lock Safety",
+      "category": "SYSTEM",
+      "status": "PASS",
+      "assertions_passed": 2,
+      "assertions_total": 2,
+      "error_message": null,
+      "details": {
+        "concurrent_events_count": 11
+      },
+      "elapsed_sec": 0.001
+    },
+    {
+      "gate_id": "N26",
+      "title": "Historical Source & Claims Grounding",
+      "category": "GROUNDING",
+      "status": "PASS",
+      "assertions_passed": 4,
+      "assertions_total": 4,
+      "error_message": null,
+      "details": {
+        "claims_count": 11
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N27",
+      "title": "Evidence Artifact Completeness",
+      "category": "EVIDENCE",
+      "status": "PASS",
+      "assertions_passed": 1,
+      "assertions_total": 1,
+      "error_message": null,
+      "details": {
+        "artifacts_verified": 10
+      },
+      "elapsed_sec": 0.0
+    },
+    {
+      "gate_id": "N28",
+      "title": "Human Editorial Acceptance Packet",
+      "category": "ACCEPTANCE",
+      "status": "EDITORIAL_REVIEW_PENDING",
+      "assertions_passed": 3,
+      "assertions_total": 3,
+      "error_message": null,
+      "details": {
+        "status": "EDITORIAL_REVIEW_PENDING",
+        "user_action_required": "Human editorial review & playback sign-off"
+      },
+      "elapsed_sec": 0.0
+    }
+  ]
+}

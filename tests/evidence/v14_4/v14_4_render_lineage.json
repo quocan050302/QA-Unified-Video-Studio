@@ -1,0 +1,39 @@
+{
+  "schema_version": "14.4",
+  "project_id": "v14_4_action_demo",
+  "render_fingerprint": "a51b692264fea8108d214f3f2ab11fa6b7faaa936188175112a1bd062197d010",
+  "media_output": {
+    "path": "projects/v14_4_action_demo/out/V14_4_Narrative_Action_Demo_1080p.mp4",
+    "sha256": "8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2",
+    "duration_sec": 57.875,
+    "file_size_bytes": 3819028,
+    "format": "h264/aac",
+    "resolution": "1920x1080",
+    "fps": 24.0,
+    "integrated_loudness_lufs": -14.1,
+    "loudness_range_lu": 2.2,
+    "true_peak_dbfs": -3.8
+  },
+  "receipt_path": "projects/v14_4_action_demo/build/render_receipt.json",
+  "receipt_valid": true,
+  "tracked_inputs": {
+    "config.json": "projects/v14_4_action_demo/config.json",
+    "story/shots.json": "projects/v14_4_action_demo/story/shots.json",
+    "story/claims_manifest.json": "projects/v14_4_action_demo/story/claims_manifest.json",
+    "story/character_bible.json": "projects/v14_4_action_demo/story/character_bible.json",
+    "story/director_plan.json": "projects/v14_4_action_demo/story/director_plan.json",
+    "timeline/voice.wav": "projects/v14_4_action_demo/timeline/voice.wav",
+    "timeline/lines.json": "projects/v14_4_action_demo/timeline/lines.json"
+  },
+  "code_modules": {
+    "render.mjs": "render.mjs",
+    "packs/squire/templates.js": "packs/squire/templates.js",
+    "packs/squire/army.js": "packs/squire/army.js",
+    "packs/squire/chara.js": "packs/squire/chara.js",
+    "tools/narrative_semantics.py": "tools/narrative_semantics.py",
+    "tools/action_capabilities.py": "tools/action_capabilities.py",
+    "tools/narrative_action.py": "tools/narrative_action.py",
+    "tools/ai_director.py": "tools/ai_director.py",
+    "tools/cinematic_camera.py": "tools/cinematic_camera.py"
+  }
+}

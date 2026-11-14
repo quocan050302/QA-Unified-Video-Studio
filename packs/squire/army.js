@@ -18,6 +18,10 @@ export function formation(g, o = {}) {
     const y = lerp(yF, yB, Math.pow(k, 0.85)), h = lerp(hF, hB, Math.pow(k, 0.7)), cx = (X0 + X1) / 2, half = (X1 - X0) / 2 * lerp(1, spread, k);
     for (let i = 0; i < cols; i++) {
       if (o.gaps && o.gaps.includes(i)) continue;
+      if (o.formationAction && o.formationAction.kind === 'open_corridor' && j === 0) {
+        const m = Math.floor(cols / 2);
+        if (i === m || i === m - 1) continue; // Create visible corridor opening in front line
+      }
       const f = cols === 1 ? 0.5 : i / (cols - 1), jit = (o.jitter ?? 0.25) * (half * 2 / cols);
       let x = cx - half + f * half * 2 + (r() - 0.5) * jit + ((j % 2) ? half / cols * 0.5 : 0);
       if (o.advance) x += o.advance * t * E.W * (o.flip ? -1 : 1);
