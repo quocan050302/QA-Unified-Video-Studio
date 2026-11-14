@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "mp4": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/test_u1_knight/out/U1_Knight_Test.mp4",
+  "duration": 9.0,
+  "genre": "knight",
+  "verified_equipment": [
+    "bascinet",
+    "sword",
+    "heater_shield"
+  ],
+  "no_roman_assets": true
+}

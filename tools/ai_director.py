@@ -860,6 +860,22 @@ def compile_director_plan_to_visuals(
         if choreo.validation_errors:
             action_diag["status"] = "CHOREOGRAPHY_VALIDATION_ERRORS"
             action_diag["errors"] = choreo.validation_errors
+
+        # V14.6 Dynamic Scene Composition integration (progressive environments, no wallpaper loop)
+        try:
+            from tools.visual_storytelling import build_story_context, plan_visual_story_sequence
+            from tools.scene_composition import plan_scene_composition, compile_environment_to_render_args
+            s_ctx = build_story_context(shots=shots, pack=ctx.pack, genre=ctx.genre, project_id=str(p_arg))
+            v_seq = plan_visual_story_sequence(s_ctx)
+            env_plans = plan_scene_composition(v_seq, s_ctx)
+            for sh in shots:
+                sid = sh.get("id") or sh.get("shot_id")
+                if sh.get("manual") is True or sh.get("visual_source") == "manual":
+                    continue
+                if sid in env_plans:
+                    sh["args"] = compile_environment_to_render_args(env_plans[sid], sh.get("args", {}), pack=ctx.pack)
+        except Exception as sc_exc:
+            logging.getLogger(__name__).warning(f"Scene composition planning skipped: {sc_exc}")
     except Exception as exc:
         import logging
         logging.getLogger(__name__).error(f"Action choreography compilation failed: {exc}", exc_info=True)

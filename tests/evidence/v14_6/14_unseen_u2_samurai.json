@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "mp4": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/test_u2_samurai/out/U2_Samurai_Test.mp4",
+  "duration": 9.0,
+  "genre": "samurai",
+  "verified_equipment": [
+    "kabuto",
+    "katana",
+    "parry_guard"
+  ],
+  "no_roman_formation": true
+}

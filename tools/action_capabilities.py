@@ -121,11 +121,21 @@ def get_pack_capabilities(pack: str = "squire", genre: Optional[str] = None) -> 
     pack_dict = CAPABILITY_REGISTRY.get(pack, {})
     if p_genre in pack_dict:
         return pack_dict[p_genre]
-    # Default fallback profile within pack
-    if pack_dict:
-        return next(iter(pack_dict.values()))
-    # Absolute generic fallback
-    return PackCapabilityProfile(pack=pack, genre=p_genre)
+    
+    # Generic unspecialized profile for unknown/unregistered genres
+    # Strictly avoids quietly inheriting Roman formation, weapons, or choreography
+    return PackCapabilityProfile(
+        pack=pack,
+        genre=p_genre,
+        supported_actions={"STAND", "WALK", "MOVE_TO", "STOP", "TURN", "OBSERVE", "WAIT", "CAMERA_REVEAL"},
+        supported_viewpoints={"front", "profile_left", "profile_right"},
+        supported_templates={"scene"},
+        supported_props=set(),
+        supports_formation_actions=False,
+        supports_motion_rig=True,
+        supports_multi_actor_contact=False,
+        supports_silent_beatboard=(pack == "dem"),
+    )
 
 
 def resolve_event_capabilities(

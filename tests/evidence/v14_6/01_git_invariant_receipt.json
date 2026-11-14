@@ -1,0 +1,8 @@
+{
+  "current_branch": "fix/Image-Shot",
+  "expected_branch": "fix/Image-Shot",
+  "remote_production_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "expected_production_baseline": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "branch_valid": true,
+  "production_untouched": true
+}

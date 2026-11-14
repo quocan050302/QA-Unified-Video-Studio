@@ -125,15 +125,30 @@ export function topBlock(g, b, lt) {
     }
   }
 
-  // Tactical unit label
+  // Tactical unit label with high-contrast badge for mobile readability (V14.6)
   if (b.label) {
     g.save();
-    g.font = `bold ${Math.max(12, Math.round(18 * (E.W / 1920)))}px sans-serif`;
+    const fontSize = Math.max(24, Math.round(36 * (E.W / 1920)));
+    g.font = `bold ${fontSize}px sans-serif`;
     g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    const txt = String(b.label);
+    const textWidth = (g.measureText ? g.measureText(txt).width : txt.length * fontSize * 0.6) || 120;
+    const padX = 14 * (E.W / 1920);
+    const padY = 8 * (E.W / 1920);
+    const boxW = textWidth + padX * 2;
+    const boxH = fontSize + padY * 2;
+    const boxY = -H / 2 - boxH / 2 - 8;
+
+    rect(g, -boxW / 2, boxY - boxH / 2, boxW, boxH, {
+      fill: 'rgba(16, 20, 28, 0.90)',
+      lw: Math.max(1.5, 2.5 * (E.W / 1920)),
+      ink: b.side === 'red' ? '#e05050' : '#4a90e2',
+      r: 6 * (E.W / 1920),
+    });
+
     g.fillStyle = '#ffffff';
-    g.shadowColor = '#000000';
-    g.shadowBlur = 4;
-    g.fillText(String(b.label), 0, -H / 2 - 8);
+    g.fillText(txt, 0, boxY);
     g.restore();
   }
   g.restore();

@@ -414,17 +414,19 @@ def resolve_actor_preset(
             return "ashigaru"
         return "samurai"
 
-    # Default squire/roman
-    if any(w in aid for w in ("centurion", "officer", "commander", "marcus")):
-        return "centurion"
-    if any(w in aid for w in ("reserve", "princeps", "rear")):
-        return "princeps"
-    if any(w in aid for w in ("opposing", "enemy", "celtic", "gaul", "barbarian")):
-        return "celtic"
-    if any(w in aid for w in ("front", "hastatus", "forward", "vanguard")):
-        return "hastatus"
+    if genre == "roman":
+        if any(w in aid for w in ("centurion", "officer", "commander", "marcus")):
+            return "centurion"
+        if any(w in aid for w in ("reserve", "princeps", "rear")):
+            return "princeps"
+        if any(w in aid for w in ("opposing", "enemy", "celtic", "gaul", "barbarian")):
+            return "celtic"
+        if any(w in aid for w in ("front", "hastatus", "forward", "vanguard")):
+            return "hastatus"
+        return "latin"
 
-    return "latin"
+    # Generic or unknown genre: strictly fail closed / avoid Roman equipment bleed
+    return "peasant"
 
 
 # ---------------------------------------------------------------------------

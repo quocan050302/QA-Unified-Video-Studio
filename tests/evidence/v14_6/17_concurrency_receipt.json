@@ -1,0 +1,5 @@
+{
+  "concurrency_mode": "BOUNDED_SERIAL_SAFE",
+  "reason": "Bounded safe single-render execution prevents memory saturation on local machine",
+  "parallel_workers_active": 1
+}

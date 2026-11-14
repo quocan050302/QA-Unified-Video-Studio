@@ -532,6 +532,7 @@ export const POSES = {
   hold:    [40, 55, 40, 55], carry: [25, 80, 25, 80], guard: [35, 70, 110, 35], thrust: [30, 60, 80, -5], raise: [30, 60, 160, 10],
   shoot:   [80, 0, 70, 70], draw: [85, 0, 80, 130], aim: [70, 40, 75, 55], cross: [40, 125, 40, 125], beg: [60, 70, 60, 70], stop: [12, 6, 75, 75],
   march:   [12, 6, 12, 6], walk: [12, 6, 12, 6], lunge: [70, 40, 60, 50], push: [75, 55, 70, 55], brace: [60, 70, 40, 80], wide: [20, 10, 20, 10], run: [40, 70, 40, 70], kneel: [12, 6, 12, 6], sit: [30, 60, 30, 60], ride: [30, 55, 30, 55], fall: [120, 20, 100, 30], lying: [25, 20, 25, 20], prone: [40, 50, 40, 50],
+  recoil:  [85, 95, 20, 110], fatigue: [15, 25, 8, 12], signal: [45, 65, 160, 20], parry: [75, 90, 120, 60], contact: [75, 55, 70, 55],
   scratch: [12, 6, 140, 150], hug: [70, 60, 70, 60], hand: [12, 6, 50, 30],
 };
 const D2R = Math.PI / 180;
@@ -766,31 +767,54 @@ function drawSoldierProfile(g, x, y, h, o, dir = 1) {
   o = { ...(CAST[o.preset] || {}), ...o };
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const W = walkInfo(o); o._walk = W;
-  const br = (W ? W.bob : Math.sin(t * 1.7 + (o.seed || 0)) * 0.6) * u;
   const metal = o.metal || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronze : PAL.steel);
   const metalD = o.metalDark || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronzeDark : PAL.steelDark);
   const tc = o.tunicColor || (o.body === 'roman' ? PAL.red : (o.body === 'mail' ? PAL.mail : PAL.green));
+
+  // Expressive character acting states
+  const pose = o.pose || 'stand';
+  const isBrace = pose === 'brace' || o.shield_state === 'brace';
+  const isRecoil = pose === 'recoil' || pose === 'impact_recoil';
+  const isFatigue = pose === 'fatigue' || (o.stamina !== undefined && o.stamina < 0.4);
+  const isSignal = pose === 'signal';
+  const isParry = pose === 'parry';
+  const isContact = pose === 'contact' || pose === 'push';
+
+  const leanVal = (o.lean || 0) * 0.01 + (isBrace ? -0.06 : (isRecoil ? -0.10 : (isFatigue ? 0.12 : (isContact ? 0.08 : 0))));
+  const breathFreq = isFatigue ? 3.6 : (isBrace || isContact ? 2.5 : 1.7);
+  const breathAmp = (isFatigue ? 1.4 : 0.6) * u;
+  const br = (W ? W.bob : Math.sin(t * breathFreq + (o.seed || 0)) * breathAmp);
 
   g.save();
   g.translate(x, y);
   if (dir < 0) g.scale(-1, 1);
   if (o.rot) g.rotate(o.rot);
 
-  // 1. Legs in profile (staggered stride or lunge)
+  // 1. Legs in profile (staggered stride, wide brace, or weary shuffle)
   const hipY = -30 * u;
-  const stepK = W ? Math.sin(2 * Math.PI * W.f) * 12 * u : 5 * u;
-  const farLeg = ik2(-3 * u, hipY, -8 * u - stepK, -3.2 * u, 14 * u, 14 * u, -1);
-  const nearLeg = ik2(3 * u, hipY, 8 * u + stepK, -3.2 * u, 14 * u, 14 * u, 1);
+  const stepK = W ? Math.sin(2 * Math.PI * W.f) * 12 * u : (isBrace ? 9 * u : 5 * u);
+  const farX = isBrace ? -12 * u : -8 * u - stepK;
+  const nearX = isBrace ? 12 * u : 8 * u + stepK;
+  const farLeg = ik2(-3 * u, hipY, farX, -3.2 * u, 14 * u, 14 * u, isBrace ? -1.3 : -1);
+  const nearLeg = ik2(3 * u, hipY, nearX, -3.2 * u, 14 * u, 14 * u, isBrace ? 0.9 : 1);
   tube(g, farLeg, 6.5 * u, darker(o.legColor || PAL.brown, 0.15), lw);
   tube(g, nearLeg, 6.5 * u, o.legColor || PAL.brown, lw);
   shape(g, (c) => c.roundRect(farLeg[2][0] - 2 * u, farLeg[2][1] - 2 * u, 10 * u, 5 * u, [2 * u, 4 * u, 1 * u, 1 * u]), { fill: darker(PAL.brownDark, 0.1), lw: lw * 0.9 });
   shape(g, (c) => c.roundRect(nearLeg[2][0] - 2 * u, nearLeg[2][1] - 2 * u, 10 * u, 5 * u, [2 * u, 4 * u, 1 * u, 1 * u]), { fill: PAL.brownDark, lw: lw * 0.9 });
 
-  // 2. Far Arm / Shield (held forward or edge-on)
+  // 2. Far Arm / Shield (dynamic posture: braced forward, knocked back recoil, sagging fatigue)
   const sh = o.shield;
   if (sh && !sh.back) {
     g.save();
-    g.translate(14 * u, -38 * u + br);
+    let shX = 14 * u, shY = -38 * u + br, shTilt = o.shieldTilt || 0;
+    if (isBrace) { shX = 17 * u; shY = -36 * u + br; shTilt -= 0.14; }
+    else if (isRecoil) { shX = 9 * u; shY = -34 * u + br; shTilt += 0.24; }
+    else if (isFatigue) { shX = 13 * u; shY = -24 * u + br; shTilt += 0.18; }
+    else if (isSignal) { shX = 11 * u; shY = -38 * u + br; shTilt -= 0.04; }
+    else if (isParry) { shX = 13 * u; shY = -42 * u + br; shTilt -= 0.10; }
+
+    g.translate(shX, shY);
+    if (shTilt) g.rotate(shTilt);
     shape(g, (c) => {
       c.moveTo(-4 * u, -30 * u);
       c.quadraticCurveTo(8 * u, 0, -4 * u, 30 * u);
@@ -802,9 +826,10 @@ function drawSoldierProfile(g, x, y, h, o, dir = 1) {
     g.restore();
   }
 
-  // 3. Torso in profile
+  // 3. Torso in profile with dynamic lean
   g.save();
   g.translate(0, br);
+  if (leanVal) g.rotate(leanVal);
   shape(g, (c) => {
     c.moveTo(-7 * u, -58 * u);
     c.quadraticCurveTo(-10 * u, -44 * u, -8 * u, -30 * u);
@@ -933,37 +958,64 @@ function drawSoldierProfile(g, x, y, h, o, dir = 1) {
     }
   }
 
-  // 5. Near Arm & Weapon in profile
+  // 5. Near Arm & Weapon in profile (acting-driven articulation)
   const wp = o.weapon || (isSamurai ? 'katana' : (isKnight ? 'sword' : 'gladius'));
-  const armPtsList = [
-    [0, -52 * u],
-    [10 * u, -42 * u],
-    [20 * u, -45 * u],
-  ];
+  let armPtsList;
+  let wpAng = 0;
+
+  if (isSignal) {
+    armPtsList = [[0, -52 * u], [8 * u, -70 * u], [14 * u, -88 * u]];
+    wpAng = -1.2;
+  } else if (isFatigue) {
+    armPtsList = [[0, -52 * u], [6 * u, -36 * u], [10 * u, -20 * u]];
+    wpAng = 0.65;
+  } else if (isParry) {
+    armPtsList = [[0, -52 * u], [12 * u, -56 * u], [18 * u, -68 * u]];
+    wpAng = -0.7;
+  } else if (isBrace) {
+    armPtsList = [[0, -52 * u], [12 * u, -42 * u], [22 * u, -42 * u]];
+    wpAng = -0.15;
+  } else if (isRecoil) {
+    armPtsList = [[0, -52 * u], [5 * u, -46 * u], [12 * u, -48 * u]];
+    wpAng = 0.40;
+  } else {
+    armPtsList = [
+      [0, -52 * u],
+      [10 * u, -42 * u],
+      [20 * u, -45 * u],
+    ];
+  }
+
   tube(g, armPtsList, 7 * u, o.sleeve || (isRoman ? o.skin || PAL.skin : tc), lw);
-  hand(g, armPtsList[2][0], armPtsList[2][1], 5 * u, { lw });
+  const handPos = armPtsList[2];
+  hand(g, handPos[0], handPos[1], 5 * u, { lw });
+
+  g.save();
+  g.translate(handPos[0], handPos[1]);
+  if (wpAng) g.rotate(wpAng);
 
   if (isSamurai || wp === 'katana') {
     // Curved Katana with round tsuba guard
     shape(g, (c) => {
-      c.moveTo(20 * u, -45 * u);
-      c.quadraticCurveTo(38 * u, -48 * u, 56 * u, -54 * u); // Curved katana tip
-      c.lineTo(55 * u, -50 * u);
-      c.quadraticCurveTo(38 * u, -45 * u, 20 * u, -43 * u);
+      c.moveTo(0, 0);
+      c.quadraticCurveTo(18 * u, -3 * u, 36 * u, -9 * u);
+      c.lineTo(35 * u, -5 * u);
+      c.quadraticCurveTo(18 * u, 0, 0, 2 * u);
       c.closePath();
     }, { fill: PAL.steelLight, lw: lw * 0.6 });
-    circ(g, 20 * u, -45 * u, 4.5 * u, { fill: PAL.gold, lw: lw * 0.6 }); // Tsuba
+    circ(g, 0, 0, 4.5 * u, { fill: PAL.gold, lw: lw * 0.6 });
   } else if (wp === 'pilum' || wp === 'spear') {
-    line(g, [[12 * u, -45 * u], [68 * u, -45 * u]], { lw: 3 * u, ink: PAL.woodDark });
-    polyS(g, [[68 * u, -47 * u], [78 * u, -45 * u], [68 * u, -43 * u]], { fill: PAL.steelLight, lw });
+    line(g, [[-8 * u, 0], [48 * u, 0]], { lw: 3 * u, ink: PAL.woodDark });
+    polyS(g, [[48 * u, -2 * u], [58 * u, 0], [48 * u, 2 * u]], { fill: PAL.steelLight, lw });
   } else if (wp === 'pollaxe') {
-    line(g, [[10 * u, -70 * u], [22 * u, -15 * u]], { lw: 3.5 * u, ink: PAL.woodDark });
-    rect(g, 8 * u, -68 * u, 12 * u, 8 * u, { fill: PAL.steel, lw: lw * 0.8 });
+    line(g, [[-10 * u, -25 * u], [12 * u, 30 * u]], { lw: 3.5 * u, ink: PAL.woodDark });
+    rect(g, -12 * u, -23 * u, 12 * u, 8 * u, { fill: PAL.steel, lw: lw * 0.8 });
   } else {
     // Knight sword with crossguard / Roman gladius
-    rect(g, 22 * u, -47 * u, 24 * u, 4 * u, { fill: PAL.steelLight, lw: lw * 0.7, r: 1 });
-    rect(g, 18 * u, -50 * u, 4 * u, 10 * u, { fill: PAL.gold, lw: lw * 0.7, r: 1 }); // Crossguard
+    rect(g, 2 * u, -2 * u, 24 * u, 4 * u, { fill: PAL.steelLight, lw: lw * 0.7, r: 1 });
+    rect(g, -2 * u, -5 * u, 4 * u, 10 * u, { fill: PAL.gold, lw: lw * 0.7, r: 1 });
   }
+  g.restore();
 
   g.restore();
   g.restore();
@@ -1212,10 +1264,25 @@ function drawSoldierThreeQuarter(g, x, y, h, o, dir = 1) {
     }, { fill: metal, lw: lw * 0.8 });
   }
 
-  // 4. Arms & Shield 3/4
+  // 4. Arms & Shield 3/4 (acting-driven articulation)
+  const pose = o.pose || 'stand';
+  const isBrace = pose === 'brace' || o.shield_state === 'brace';
+  const isRecoil = pose === 'recoil' || pose === 'impact_recoil';
+  const isFatigue = pose === 'fatigue' || (o.stamina !== undefined && o.stamina < 0.4);
+  const isSignal = pose === 'signal';
+  const isParry = pose === 'parry';
+
   if (o.shield) {
     g.save();
-    g.translate(-12 * u, -38 * u);
+    let shX = -12 * u, shY = -38 * u, shTilt = o.shieldTilt || 0;
+    if (isBrace) { shX = -6 * u; shY = -38 * u; shTilt -= 0.10; }
+    else if (isRecoil) { shX = -16 * u; shY = -34 * u; shTilt += 0.22; }
+    else if (isFatigue) { shX = -12 * u; shY = -28 * u; shTilt += 0.16; }
+    else if (isParry) { shX = -8 * u; shY = -42 * u; shTilt -= 0.08; }
+
+    g.translate(shX, shY);
+    if (shTilt) g.rotate(shTilt);
+
     if (isKnight) {
       // Heater shield
       shape(g, (c) => {
@@ -1233,7 +1300,14 @@ function drawSoldierThreeQuarter(g, x, y, h, o, dir = 1) {
   }
 
   const wp = o.weapon || (isSamurai ? 'katana' : (isKnight ? 'sword' : 'gladius'));
-  const rightA = armPts(14 * u, -52 * u, 1, 45, 55, u, 12 * u);
+  let shAng = 45, elAng = 55;
+  if (isSignal) { shAng = 150; elAng = 20; }
+  else if (isFatigue) { shAng = 15; elAng = 25; }
+  else if (isParry) { shAng = 115; elAng = 60; }
+  else if (isBrace) { shAng = 35; elAng = 75; }
+  else if (isRecoil) { shAng = 20; elAng = 110; }
+
+  const rightA = armPts(14 * u, -52 * u, 1, shAng, elAng, u, 12 * u);
   tube(g, [rightA[0], rightA[1], rightA[2]], 7 * u, o.sleeve || (isRoman ? o.skin || PAL.skin : tc), lw);
   hand(g, rightA[2][0], rightA[2][1], 5 * u, { lw });
 
