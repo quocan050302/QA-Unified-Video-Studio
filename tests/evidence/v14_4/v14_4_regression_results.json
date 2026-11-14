@@ -1,7 +1,7 @@
 {
   "version": "14.4",
-  "timestamp": 1794656525.297303,
-  "elapsed_sec": 3.08,
+  "timestamp": 1794663339.368242,
+  "elapsed_sec": 2.34,
   "total_gates": 28,
   "passed": 27,
   "editorial_pending": 1,
@@ -19,7 +19,7 @@
         "current_branch": "fix/Image-Shot",
         "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
       },
-      "elapsed_sec": 1.146
+      "elapsed_sec": 0.656
     },
     {
       "gate_id": "N02",
@@ -30,8 +30,8 @@
       "assertions_total": 2,
       "error_message": null,
       "details": {
-        "disk_free_gb": 15.61,
-        "ram_available_gb": 2.52
+        "disk_free_gb": 19.48,
+        "ram_available_gb": 3.44
       },
       "elapsed_sec": 0.0
     },
@@ -64,7 +64,7 @@
           "AFFIRMED"
         ]
       },
-      "elapsed_sec": 0.001
+      "elapsed_sec": 0.0
     },
     {
       "gate_id": "N05",
@@ -98,7 +98,7 @@
           "shield_closed_step": 9
         }
       },
-      "elapsed_sec": 0.003
+      "elapsed_sec": 0.004
     },
     {
       "gate_id": "N07",
@@ -177,7 +177,7 @@
           "sha256": "8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2"
         }
       },
-      "elapsed_sec": 0.032
+      "elapsed_sec": 0.034
     },
     {
       "gate_id": "N12",
@@ -190,7 +190,7 @@
       "details": {
         "duration_sec": 57.875
       },
-      "elapsed_sec": 0.03
+      "elapsed_sec": 0.031
     },
     {
       "gate_id": "N13",
@@ -203,7 +203,7 @@
       "details": {
         "integrated_lufs": -14.1
       },
-      "elapsed_sec": 0.88
+      "elapsed_sec": 0.856
     },
     {
       "gate_id": "N14",
@@ -216,7 +216,7 @@
       "details": {
         "decode_errors": 0
       },
-      "elapsed_sec": 0.834
+      "elapsed_sec": 0.619
     },
     {
       "gate_id": "N15",
@@ -250,8 +250,8 @@
       "error_message": null,
       "details": {
         "persistent_characters": [
-          "chieftain_brennos",
           "legionary_titus",
+          "chieftain_brennos",
           "centurion_marcus"
         ]
       },
@@ -281,7 +281,7 @@
       "details": {
         "receipt_sha256": "8e974e21c683c316e2b8442943701368b77fa82779271c78e9d35b1e47cd5ab2"
       },
-      "elapsed_sec": 0.033
+      "elapsed_sec": 0.029
     },
     {
       "gate_id": "N19",
@@ -320,7 +320,7 @@
       "details": {
         "samurai_duration": 9.0
       },
-      "elapsed_sec": 0.035
+      "elapsed_sec": 0.031
     },
     {
       "gate_id": "N22",
@@ -333,7 +333,7 @@
       "details": {
         "dem_duration": 10.0
       },
-      "elapsed_sec": 0.03
+      "elapsed_sec": 0.028
     },
     {
       "gate_id": "N23",
@@ -346,7 +346,7 @@
       "details": {
         "director_compiled_count": 11
       },
-      "elapsed_sec": 0.014
+      "elapsed_sec": 0.012
     },
     {
       "gate_id": "N24",
@@ -398,7 +398,7 @@
       "details": {
         "artifacts_verified": 10
       },
-      "elapsed_sec": 0.001
+      "elapsed_sec": 0.0
     },
     {
       "gate_id": "N28",

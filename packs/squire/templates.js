@@ -106,23 +106,30 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
 
   const hasMoveX = p.to !== undefined;
   const hasMoveY = p.toY !== undefined || p.to_y !== undefined;
+  let hScale = 1.0;
   if (hasMoveX || hasMoveY) {
     const t0 = at(info, p.moveAt, a0);
     const mDur = p.dur || Math.max(0.3, info.dur - t0);
     const k = ease.inOut(clamp((lt - t0) / mDur));
+    const isMovingTime = (lt >= t0 && lt <= t0 + mDur + 0.05);
     if (hasMoveX) {
       const x0 = fx(p.from ?? p.x, 0.5), x1 = fx(p.to, 0.5);
       x = lerp(x0, x1, k);
-      travel = Math.abs(x - x0);
+      travel = isMovingTime ? v * (lt - t0) : (lt > t0 + mDur ? v * mDur : 0);
       if (p.flip === undefined) flip = x1 < x0;
-      walkMode = Math.abs(x1 - x0) > 2 ? 'side' : null;
+      walkMode = (isMovingTime && Math.abs(x1 - x0) > 2) ? 'side' : null;
     }
     if (hasMoveY) {
       const y0 = fy(p.fromY ?? p.from_y ?? p.y, gy);
       const y1 = fy(p.toY ?? p.to_y, gy);
       y = lerp(y0, y1, k);
-      if (!walkMode && Math.abs(y1 - y0) > 2) {
+      if (!walkMode && isMovingTime && Math.abs(y1 - y0) > 2) {
         walkMode = (y1 < y0) ? 'side' : 'front';
+        travel = v * (lt - t0);
+      }
+      if (p.perspectiveScale !== false) {
+        const baselineY = fy(gy, gy);
+        hScale = clamp(y / Math.max(10, baselineY), 0.70, 1.30);
       }
     }
   } else if (isInPlace) {
@@ -135,7 +142,13 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
     walkMode = null;
   } else if (p.walk === true || ((pose0 === 'walk' || pose0 === 'run') && p.walk !== false) || (p.horse && ['walk', 'gallop'].includes(p.horse.gait) && p.horse.travel !== false)) {
     const dir = (p.dir ?? (p.flip ? -1 : 1));
-    travel = v * lt; x += dir * (travel - v * info.dur / 2); flip = dir < 0; walkMode = 'side';
+    travel = v * lt;
+    if (p.centerWalk) {
+      x += dir * (travel - v * info.dur / 2);
+    } else {
+      x += dir * travel;
+    }
+    flip = dir < 0; walkMode = 'side';
   }
   if (walkMode === 'side') walkPhase = travel / (2 * STEP * (run ? 1.5 : 1) * hu * 100 / 100 * 1);
   if (p.enter) { const k = ease.out(clamp((lt - a0) / 0.5)); x += (1 - k) * (p.enter === 'left' ? -1 : 1) * E.W * 0.5; }
@@ -157,8 +170,9 @@ export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
   }
   const lk = listAt(info, lt, p.lookAt, p.look);
   const o = { ...p, t: lt + (p.seed || 0) * 0.37, pose: pose0, face: listAt(info, lt, p.faceAt, p.face || 'neutral'), look: lk === undefined ? (walkMode === 'side' ? 0.75 : 0) : lk, talk, flip, walkMode: p.horse ? null : walkMode, walkPhase: p.horse ? undefined : walkPhase, walk: p.horse ? false : !!walkMode, lw: p.lw };
-  if (p.horse) horse(g, x, y, h * (p.horse.h ?? 0.85), { ...p.horse, t: lt, flip, travel: walkMode === 'side' ? travel : undefined, rider: { ...o, x: undefined, y: undefined, h: undefined, flip: false, look: lk ?? 0.5 }, riderH: p.horse.riderH });
-  else soldier(g, x, y, h, o);
+  const hRender = h * (Number.isFinite(hScale) ? hScale : 1.0);
+  if (p.horse) horse(g, x, y, hRender * (p.horse.h ?? 0.85), { ...p.horse, t: lt, flip, travel: walkMode === 'side' ? travel : undefined, rider: { ...o, x: undefined, y: undefined, h: undefined, flip: false, look: lk ?? 0.5 }, riderH: p.horse.riderH });
+  else soldier(g, x, y, hRender, o);
   g.restore();
 }
 export function drawPeople(g, lt, info, list, gy, dh) { for (const p of list || []) person(g, lt, info, { view: (info.args || {}).view, ...p }, gy, dh); }
@@ -185,7 +199,7 @@ export function drawThing(g, kind, x, y, s, o = {}) {
       weapon(g, kind, x, y + ((kind === 'pot' || kind === 'basket') ? -s * 0.25 : s * 0.5), s, o.ang ?? (kind === 'bow' ? Math.PI / 2 : (kind === 'pot' || kind === 'basket') ? 0 : Math.PI), { ...o, lw }); break;
     case 'flag': flag(g, x, y + s * 0.5, s, o); break;
     case 'standard': case 'eagle': standard(g, x, y + s * 0.5, s, { ...o, kind: kind === 'eagle' ? 'eagle' : o.style }); break;
-    case 'tent': tent(g, x, y + s * 0.5, s, o); break;
+    case 'tent': tent(g, x, y, s, o); break;
     case 'tree': case 'pine': case 'cypress': tree(g, x, y + s * 0.5, s, { ...o, kind: kind === 'tree' ? o.style : kind }); break;
     case 'bush': bush(g, x, y, s * 0.5, o); break;
     case 'castle': castle(g, x, y + s * 0.5, s, o); break;
@@ -338,11 +352,15 @@ registerTemplate('scene', { draw(g, lt, info) { const a = info.args || {}; camer
 // army: canh doi hinh (mac dinh 1 khoi quan lon, co the them doi hinh doi dien)
 registerTemplate('army', { draw(g, lt, info) {
   const a = info.args || {};
-  let mid = a.mid || [{ preset: a.preset || 'hastatus', presets: a.presets, rows: a.rows || 4, cols: a.cols || 9, x0: 0.02, x1: 0.98, yFront: 1.02, yBack: 0.72, hFront: vert() ? 0.26 : 0.42, hBack: 0.16, march: a.march, flip: a.flip, face: a.face, flags: a.flags, view: a.view }];
+  const yF = a.yFront ?? 0.92;
+  const yB = a.yBack ?? 0.68;
+  const hF = a.hFront ?? (vert() ? 0.24 : 0.34);
+  const hB = a.hBack ?? 0.14;
+  let mid = a.mid || [{ preset: a.preset || 'hastatus', presets: a.presets, rows: a.rows || 4, cols: a.cols || 9, x0: 0.04, x1: 0.96, yFront: yF, yBack: yB, hFront: hF, hBack: hB, march: a.march, flip: a.flip, face: a.face, flags: a.flags, view: a.view }];
   if (a.formationAction && mid.length > 0) {
     mid = mid.map(f => ({ ...f, formationAction: a.formationAction }));
   }
-  camera(g, lt, info, () => { sceneBody(g, lt, info, { ...a, mid, back: a.back || [{ preset: a.enemy || a.preset || 'latin', presets: a.enemyPresets, rows: 3, cols: 22, x0: 0, x1: 1, yFront: 0.74, yBack: 0.66, hFront: 0.09, hBack: 0.06, flip: !a.flip, flags: a.enemyFlags }] }); overlays(g, lt, info); });
+  camera(g, lt, info, () => { sceneBody(g, lt, info, { ...a, mid, back: a.back || [{ preset: a.enemy || a.preset || 'latin', presets: a.enemyPresets, rows: 3, cols: 22, x0: 0, x1: 1, yFront: 0.70, yBack: 0.62, hFront: 0.08, hBack: 0.05, flip: !a.flip, flags: a.enemyFlags }] }); overlays(g, lt, info); });
   vignette(g, 0.2);
 } });
 // ======================================================================================= CLOSE

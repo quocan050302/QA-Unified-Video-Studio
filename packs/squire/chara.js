@@ -1345,7 +1345,7 @@ export function soldier(g, x, y, h, o = {}) {
   if (o.lod === 'low' || (o.lod !== 'high' && h < 70)) return soldierLow(g, x, y, h, o);
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const pose = POSES[o.pose] ? o.pose : 'stand';
-  let [lsh, lel, rsh, rel] = o.armsAng || POSES[pose];
+  let [lsh, lel, rsh, rel] = Array.isArray(o.armsAng) ? o.armsAng : (POSES[pose] || [12, 6, 12, 6]);
   const W = walkInfo(o); o._walk = W;
   if (W && !o.noSwing) { const k = W.swing * (W.mode === 'side' ? 20 : 9) * (W.run ? 1.6 : 1); lsh += k; rsh -= k; }
   if (o.gesture) { const k = Math.sin(t * 2.2) * 6; rsh += k; rel -= k * 0.5; }

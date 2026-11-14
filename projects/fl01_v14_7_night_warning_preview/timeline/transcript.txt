@@ -1,0 +1,10 @@
+s01: Past midnight on the frontier. Deep in the cold mist, the sentries of the Third Cohort keep watch.
+s02: Suddenly, across the black ridge, signal fires flare. An allied outpost has been overrun.
+s03: No drill. No hesitation. Every legionary knows what fire in the hills means before dawn.
+s04: The alarm horn sounds. A dispatch runner dashes through camp toward the praetorium.
+s05: The dispatch arrives: an enemy warband bypassed the river ford under darkness.
+s06: On the map, the danger is clear: the defile narrows at the timber bridge.
+s07: Centurion Marcus issues the order: Hastati to the palisade, archers to the angle towers.
+s08: In minutes, shadow turns into iron. Men buckle their armor and raise their shields.
+s09: Two centuries lock their scuta, forming an impenetrable wall of bronze and steel.
+s10: At sunrise, dawn reveals not a surprised camp, but an unbreakable Roman shield wall.

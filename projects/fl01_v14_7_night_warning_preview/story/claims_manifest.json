@@ -1,0 +1,87 @@
+{
+  "title": "The Warning Before Dawn \u2014 A Roman Night Watch",
+  "genre": "roman",
+  "methodology": "ILLUSTRATIVE_RECONSTRUCTION",
+  "primary_sources": [
+    "Flavius Vegetius Renatus, De Re Militari, Book III (The Night Watches and Alarms)",
+    "Polybius, Histories, Book VI (The Roman Camp Fortification & Sentinel System)"
+  ],
+  "scholarly_references": [
+    "Adrian Goldsworthy, The Complete Roman Army (2003)",
+    "Yann Le Bohec, The Imperial Roman Army (2001)"
+  ],
+  "total_claims": 10,
+  "reconstruction_disclaimer": "This video depicts an illustrative reconstruction of a Roman frontier night watch and pre-dawn alarm sequence based on Vegetius and Polybius.",
+  "claims": [
+    {
+      "shot_id": "s01",
+      "claim": "Past midnight on the frontier. Deep in the cold mist, the sentries of the Third Cohort keep watch.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s02",
+      "claim": "Suddenly, across the black ridge, signal fires flare. An allied outpost has been overrun.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s03",
+      "claim": "No drill. No hesitation. Every legionary knows what fire in the hills means before dawn.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s04",
+      "claim": "The alarm horn sounds. A dispatch runner dashes through camp toward the praetorium.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s05",
+      "claim": "The dispatch arrives: an enemy warband bypassed the river ford under darkness.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s06",
+      "claim": "On the map, the danger is clear: the defile narrows at the timber bridge.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s07",
+      "claim": "Centurion Marcus issues the order: Hastati to the palisade, archers to the angle towers.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s08",
+      "claim": "In minutes, shadow turns into iron. Men buckle their armor and raise their shields.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s09",
+      "claim": "Two centuries lock their scuta, forming an impenetrable wall of bronze and steel.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    },
+    {
+      "shot_id": "s10",
+      "claim": "At sunrise, dawn reveals not a surprised camp, but an unbreakable Roman shield wall.",
+      "citation": "Vegetius III.8 & Polybius VI.35",
+      "grounding": "ILLUSTRATIVE_RECONSTRUCTION",
+      "verified": true
+    }
+  ]
+}

@@ -1,0 +1,909 @@
+{
+  "version": "14.7",
+  "title": "FL01_V14_7_FRESH_PREVIEW_1080P",
+  "duration": 53.0,
+  "pack": "squire",
+  "genre": "roman",
+  "shots": [
+    {
+      "id": "s01",
+      "tpl": "scene",
+      "start": 0.0,
+      "end": 5.8,
+      "dur": 5.8,
+      "line": "Past midnight on the frontier. Deep in the cold mist, the sentries of the Third Cohort keep watch.",
+      "action": "STAND",
+      "action_kind": "STAND",
+      "purpose": "hook_threat_approach",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "camp",
+        "time": "night",
+        "seed": 101,
+        "bgOpts": {
+          "sky": "#0a0e1a",
+          "stars": true,
+          "haze": 0.35,
+          "tint": [
+            "#080c16",
+            0.45
+          ]
+        },
+        "people": [
+          {
+            "id": "sentry_titus",
+            "preset": "hastatus",
+            "x": 0.46,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1,
+            "look": 0.85
+          }
+        ],
+        "props": [
+          {
+            "kind": "torch",
+            "x": 0.32,
+            "y": 0.82,
+            "s": 0.35,
+            "anim": "none"
+          },
+          {
+            "kind": "tent",
+            "x": 0.16,
+            "y": 0.78,
+            "s": 0.38,
+            "anim": "none"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "profile_left",
+          "scale": "wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.8,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "wind_loop",
+          "at": 0.2,
+          "vol": 0.6
+        },
+        {
+          "kind": "fire_crackle",
+          "at": 0.5,
+          "vol": 0.5
+        }
+      ]
+    },
+    {
+      "id": "s02",
+      "tpl": "scene",
+      "start": 5.8,
+      "end": 11.6,
+      "dur": 5.8,
+      "line": "Suddenly, across the black ridge, signal fires flare. An allied outpost has been overrun.",
+      "action": "BRACE",
+      "action_kind": "BRACE",
+      "purpose": "signal_alert",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "hills",
+        "time": "night",
+        "seed": 102,
+        "bgOpts": {
+          "sky": "#0a0e1a",
+          "stars": true,
+          "tint": [
+            "#090d18",
+            0.4
+          ]
+        },
+        "people": [
+          {
+            "id": "sentry_titus",
+            "preset": "hastatus",
+            "x": 0.36,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "brace",
+            "facing": 1,
+            "lean": 0.14,
+            "look": 0.95
+          }
+        ],
+        "props": [
+          {
+            "kind": "torch",
+            "x": 0.82,
+            "y": 0.6,
+            "s": 0.32,
+            "anim": "pop",
+            "at": 0.5
+          },
+          {
+            "kind": "torch",
+            "x": 0.92,
+            "y": 0.58,
+            "s": 0.26,
+            "anim": "pop",
+            "at": 1.6
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "rear",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.8,
+              "x": 0.5,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "fire_crackle",
+          "at": 0.5,
+          "vol": 0.7
+        },
+        {
+          "kind": "alarm_long",
+          "at": 2.0,
+          "vol": 0.6
+        }
+      ]
+    },
+    {
+      "id": "s03",
+      "tpl": "close",
+      "start": 11.6,
+      "end": 17.0,
+      "dur": 5.4,
+      "line": "No drill. No hesitation. Every legionary knows what fire in the hills means before dawn.",
+      "action": "SIGNAL",
+      "action_kind": "SIGNAL",
+      "purpose": "reaction_alarm",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "camp",
+        "time": "night",
+        "seed": 103,
+        "bgOpts": {
+          "sky": "#0a0e1a",
+          "groundY": 0.68
+        },
+        "preset": "hastatus",
+        "pose": "signal",
+        "armsAng": [
+          45,
+          65,
+          160,
+          20
+        ],
+        "look": 0.85,
+        "face": "grim",
+        "x": 0.5,
+        "y": 0.46,
+        "cameraRig": {
+          "viewpoint": "rear_three_quarter_right",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.45,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.4,
+              "x": 0.42,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "breath_in",
+          "at": 0.3,
+          "vol": 0.6
+        },
+        {
+          "kind": "horn_roman",
+          "at": 1.2,
+          "vol": 0.85
+        }
+      ]
+    },
+    {
+      "id": "s04",
+      "tpl": "scene",
+      "start": 17.0,
+      "end": 22.0,
+      "dur": 5.0,
+      "line": "The alarm horn sounds. A dispatch runner dashes through camp toward the praetorium.",
+      "action": "ADVANCE",
+      "action_kind": "ADVANCE",
+      "purpose": "courier_transit",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "plain",
+        "time": "night",
+        "seed": 104,
+        "bgOpts": {
+          "sky": "#0a0e1a",
+          "tint": [
+            "#090d18",
+            0.4
+          ]
+        },
+        "people": [
+          {
+            "id": "runner_lucius",
+            "preset": "velites",
+            "from": 0.12,
+            "to": 0.84,
+            "y": 0.81,
+            "h": 0.46,
+            "moveAt": 0.2,
+            "dur": 4.5,
+            "pose": "run",
+            "facing": 1,
+            "perspectiveScale": false
+          }
+        ],
+        "props": [
+          {
+            "kind": "tent",
+            "x": 0.2,
+            "y": 0.78,
+            "s": 0.38
+          },
+          {
+            "kind": "tent",
+            "x": 0.55,
+            "y": 0.78,
+            "s": 0.38
+          },
+          {
+            "kind": "tent",
+            "x": 0.88,
+            "y": 0.78,
+            "s": 0.38
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "profile_right",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "footsteps",
+          "at": 0.2,
+          "vol": 0.75
+        },
+        {
+          "kind": "war_horn",
+          "at": 0.5,
+          "vol": 0.5
+        }
+      ]
+    },
+    {
+      "id": "s05",
+      "tpl": "scene",
+      "start": 22.0,
+      "end": 26.8,
+      "dur": 4.8,
+      "line": "The dispatch arrives: an enemy warband bypassed the river ford under darkness.",
+      "action": "STAND",
+      "action_kind": "STAND",
+      "purpose": "dispatch_handoff",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "castle",
+        "time": "night",
+        "seed": 105,
+        "bgOpts": {
+          "sky": "#0a0e1a",
+          "tint": [
+            "#201610",
+            0.25
+          ]
+        },
+        "people": [
+          {
+            "id": "centurion_marcus",
+            "preset": "centurion",
+            "x": 0.42,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1
+          },
+          {
+            "id": "runner_lucius",
+            "preset": "velites",
+            "from": 0.82,
+            "to": 0.66,
+            "y": 0.81,
+            "h": 0.46,
+            "moveAt": 0.2,
+            "dur": 1.4,
+            "pose": "stand",
+            "facing": -1,
+            "armsAng": [
+              30,
+              45,
+              45,
+              60
+            ]
+          },
+          {
+            "id": "aide_quintus",
+            "preset": "princeps",
+            "x": 0.24,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "torch",
+            "x": 0.52,
+            "y": 0.82,
+            "s": 0.32
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "front_three_quarter_right",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 4.8,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "armor_clank",
+          "at": 0.3,
+          "vol": 0.65
+        },
+        {
+          "kind": "footsteps",
+          "at": 0.2,
+          "vol": 0.4
+        }
+      ]
+    },
+    {
+      "id": "s06",
+      "tpl": "map",
+      "start": 26.8,
+      "end": 31.6,
+      "dur": 4.8,
+      "line": "On the map, the danger is clear: the defile narrows at the timber bridge.",
+      "action": "MAP_ANALYSIS",
+      "action_kind": "MAP_ANALYSIS",
+      "purpose": "tactical_map_defile",
+      "visual_source": "auto_planned",
+      "args": {
+        "view": {
+          "layers": [
+            {
+              "type": "terrain",
+              "seed": 42
+            },
+            {
+              "type": "river",
+              "from": [
+                0.1,
+                0.3
+              ],
+              "to": [
+                0.9,
+                0.4
+              ]
+            },
+            {
+              "type": "defile",
+              "pos": [
+                0.52,
+                0.38
+              ]
+            }
+          ]
+        },
+        "labels": [
+          {
+            "text": "RIVER FORD",
+            "x": 0.28,
+            "y": 0.32
+          },
+          {
+            "text": "BRIDGE DEFILE",
+            "x": 0.52,
+            "y": 0.44
+          },
+          {
+            "text": "III COHORT CAMP",
+            "x": 0.76,
+            "y": 0.68
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "rear_three_quarter_left",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.55,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 4.8,
+              "x": 0.58,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "drum_march",
+          "at": 0.3,
+          "vol": 0.6
+        }
+      ]
+    },
+    {
+      "id": "s07",
+      "tpl": "scene",
+      "start": 31.6,
+      "end": 37.2,
+      "dur": 5.6,
+      "line": "Centurion Marcus issues the order: Hastati to the palisade, archers to the angle towers.",
+      "action": "SIGNAL",
+      "action_kind": "SIGNAL",
+      "purpose": "command_order",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "hall",
+        "time": "night",
+        "seed": 107,
+        "bgOpts": {
+          "sky": "#0a0e1a",
+          "tint": [
+            "#0c1220",
+            0.35
+          ]
+        },
+        "people": [
+          {
+            "id": "centurion_marcus",
+            "preset": "centurion",
+            "x": 0.48,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "signal",
+            "armsAng": [
+              45,
+              65,
+              160,
+              20
+            ],
+            "facing": 1
+          },
+          {
+            "id": "aide_quintus",
+            "preset": "princeps",
+            "x": 0.26,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1
+          },
+          {
+            "id": "legionary_servius",
+            "preset": "hastatus",
+            "x": 0.72,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": -1
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "front_three_quarter_right",
+          "scale": "medium_close",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.18,
+              "ease": "sine"
+            },
+            {
+              "t": 5.6,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.227,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "sword_draw",
+          "at": 0.4,
+          "vol": 0.8
+        },
+        {
+          "kind": "battle_far",
+          "at": 1.0,
+          "vol": 0.5
+        }
+      ]
+    },
+    {
+      "id": "s08",
+      "tpl": "scene",
+      "start": 37.2,
+      "end": 42.4,
+      "dur": 5.2,
+      "line": "In minutes, shadow turns into iron. Men buckle their armor and raise their shields.",
+      "action": "BRACE",
+      "action_kind": "BRACE",
+      "purpose": "gear_preparation",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "camp",
+        "time": "night",
+        "seed": 108,
+        "bgOpts": {
+          "sky": "#0a0e1a",
+          "tint": [
+            "#16120e",
+            0.3
+          ]
+        },
+        "people": [
+          {
+            "id": "hastatus_a",
+            "preset": "hastatus",
+            "x": 0.38,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "brace",
+            "armsAng": [
+              65,
+              80,
+              35,
+              85
+            ],
+            "shieldTilt": 0.18,
+            "facing": 1
+          },
+          {
+            "id": "hastatus_b",
+            "preset": "hastatus",
+            "x": 0.62,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "brace",
+            "armsAng": [
+              65,
+              80,
+              35,
+              85
+            ],
+            "shieldTilt": 0.18,
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "torch",
+            "x": 0.5,
+            "y": 0.82,
+            "s": 0.34
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "low_angle",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.2,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "chainmail",
+          "at": 0.3,
+          "vol": 0.7
+        },
+        {
+          "kind": "armor_clank",
+          "at": 1.5,
+          "vol": 0.75
+        }
+      ]
+    },
+    {
+      "id": "s09",
+      "tpl": "army",
+      "start": 42.4,
+      "end": 47.4,
+      "dur": 5.0,
+      "line": "Two centuries lock their scuta, forming an impenetrable wall of bronze and steel.",
+      "action": "CONTACT",
+      "action_kind": "CONTACT",
+      "purpose": "tactical_line_formation",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "field",
+        "time": "night",
+        "seed": 109,
+        "preset": "hastatus",
+        "rows": 4,
+        "cols": 9,
+        "yFront": 0.9,
+        "yBack": 0.68,
+        "hFront": 0.32,
+        "march": false,
+        "flags": [
+          {
+            "col": 0.5,
+            "color": "#c9473a",
+            "charge": "eagle"
+          }
+        ],
+        "blocks": [
+          {
+            "x": 0.5,
+            "y": 0.58,
+            "w": 0.62,
+            "h": 0.12,
+            "side": "blue",
+            "label": "III COHORS HASTATI"
+          },
+          {
+            "x": 0.5,
+            "y": 0.74,
+            "w": 0.58,
+            "h": 0.11,
+            "side": "blue",
+            "label": "III COHORS PRINCIPES"
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "front_three_quarter_left",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "shield_bash",
+          "at": 0.4,
+          "vol": 0.85
+        },
+        {
+          "kind": "drum_march",
+          "at": 1.0,
+          "vol": 0.7
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "tpl": "scene",
+      "start": 47.4,
+      "end": 53.0,
+      "dur": 5.6,
+      "line": "At sunrise, dawn reveals not a surprised camp, but an unbreakable Roman shield wall.",
+      "action": "STAND",
+      "action_kind": "STAND",
+      "purpose": "dawn_resolution_payoff",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "battlefield",
+        "time": "dawn",
+        "seed": 110,
+        "bgOpts": {
+          "sky": "#ebb57e",
+          "tint": [
+            "#e0a86e",
+            0.18
+          ],
+          "groundY": 0.86
+        },
+        "people": [
+          {
+            "id": "centurion_marcus",
+            "preset": "centurion",
+            "x": 0.18,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1
+          },
+          {
+            "id": "hastatus_a",
+            "preset": "hastatus",
+            "x": 0.38,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1
+          },
+          {
+            "id": "hastatus_b",
+            "preset": "hastatus",
+            "x": 0.52,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1
+          },
+          {
+            "id": "princeps_a",
+            "preset": "princeps",
+            "x": 0.66,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1
+          },
+          {
+            "id": "princeps_b",
+            "preset": "princeps",
+            "x": 0.8,
+            "y": 0.81,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": 1
+          }
+        ],
+        "cameraRig": {
+          "viewpoint": "profile_right",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.6,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "wind_loop",
+          "at": 0.2,
+          "vol": 0.5
+        },
+        {
+          "kind": "battle_roar",
+          "at": 1.2,
+          "vol": 0.4
+        }
+      ]
+    }
+  ]
+}

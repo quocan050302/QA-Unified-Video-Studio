@@ -1,0 +1,243 @@
+{
+  "release": "V14.7",
+  "fl_initiative": "FL-01",
+  "timestamp": 1794663346.611428,
+  "elapsed_sec": 4.15,
+  "master_status": "VISUAL_TECH_PASS",
+  "tech_all_passed": true,
+  "total_gates": 14,
+  "passed_gates": 13,
+  "pending_gates": 1,
+  "failed_gates": 0,
+  "gates": [
+    {
+      "gate_id": "J0",
+      "name": "Git Branch & Remote Production Invariant",
+      "status": "PASS",
+      "details": {
+        "current_branch": "fix/Image-Shot",
+        "head_sha": "61a157a6c1031ac107c1f279cebcccdecbe24bc7",
+        "production_baseline_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+        "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J1",
+      "name": "Tooling Preflight & System Isolation",
+      "status": "PASS",
+      "details": {
+        "tools": {
+          "node": true,
+          "ffmpeg": true,
+          "ffprobe": true,
+          "python3": true,
+          "say": true
+        },
+        "python_version": "3.13.0 (v3.13.0:60403a5409f, Oct  7 2024, 00:37:40) [Clang 15.0.0 (clang-1500.3.9.4)]",
+        "test_mode": true
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J2",
+      "name": "FL-01 Gemini Policy Routing Matrix",
+      "status": "PASS",
+      "details": {
+        "OFFLINE_ONLY": {
+          "enabled": true,
+          "mode": "OFFLINE_ONLY",
+          "primary_model": "gemini-3.8-flash",
+          "fallback_models": [
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash"
+          ],
+          "has_key": false,
+          "enabled_source": "project_override",
+          "mode_source": "project_override"
+        },
+        "DISABLED": {
+          "enabled": false,
+          "mode": "OFFLINE_ONLY",
+          "primary_model": "gemini-3.8-flash",
+          "fallback_models": [
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash"
+          ],
+          "has_key": false,
+          "enabled_source": "project_override",
+          "mode_source": "global_settings"
+        },
+        "LIVE_REQUIRED_NO_KEY": {
+          "enabled": true,
+          "mode": "LIVE_REQUIRED",
+          "primary_model": "gemini-3.8-flash",
+          "fallback_models": [
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash"
+          ],
+          "has_key": false,
+          "enabled_source": "global_settings",
+          "mode_source": "project_override"
+        },
+        "LIVE_WITH_EXPLICIT_FALLBACK_NO_KEY": {
+          "enabled": true,
+          "mode": "OFFLINE_ONLY",
+          "primary_model": "gemini-3.8-flash",
+          "fallback_models": [
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash"
+          ],
+          "has_key": false,
+          "enabled_source": "global_settings",
+          "mode_source": "project_override"
+        }
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J3",
+      "name": "Schema, Actor Rig & Renderer Contracts",
+      "status": "PASS",
+      "details": {
+        "hScale_depth_scaling": true,
+        "tent_baseline_fix": true,
+        "army_yfront_safe_default": true,
+        "chara_armsAng_array_guard": true,
+        "army_flags_array_guard": true
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J4",
+      "name": "Cross-Shot Spatial Continuity & No Teleport",
+      "status": "PASS",
+      "details": {
+        "total_shots": 10,
+        "teleport_violations": []
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J5",
+      "name": "Truthful Visual QA & Strict Classification",
+      "status": "PASS",
+      "details": {
+        "technical_verdict": "VISUAL_TECH_PASS",
+        "all_passed": true,
+        "passed_shots": "10/10",
+        "framing_safe_all": true,
+        "no_clipped_heads": true,
+        "acting_verified_all": true
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J6",
+      "name": "Spoken English Narration & Loudness Balance",
+      "status": "PASS",
+      "details": {
+        "voice_wav_exists": true,
+        "voice_wav_size": 5088078,
+        "mixed_wav_exists": true,
+        "mixed_wav_size": 10176078,
+        "integrated_lufs": -15.1
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J7",
+      "name": "Brand New Acceptance Preview Film",
+      "status": "PASS",
+      "details": {
+        "output_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4",
+        "duration": 53.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "vcodec": null,
+        "acodec": null,
+        "sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+        "size_bytes": 14085487
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J8",
+      "name": "Multi-Format Regressions (Squire 16:9, 9:16, DEM)",
+      "status": "PASS",
+      "details": {
+        "squire_16x9_camera_frames": 2,
+        "squire_9x16_camera_frames": 2,
+        "dem_pack_supported_actions": 10,
+        "squire_pack_supported_actions": 19
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J9",
+      "name": "Historical Lineage & Backtest Intactness",
+      "status": "PASS",
+      "details": {
+        "v14_4_artifact": true,
+        "v14_5_artifact": true,
+        "v14_6_artifact": true,
+        "test_v14_4_narrative_action.py_exists": true,
+        "test_v14_5_real_video.py_exists": true,
+        "test_v14_6_acceptance.py_exists": true
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J10",
+      "name": "Resource & Memory Telemetry Guard",
+      "status": "PASS",
+      "details": {
+        "available_ram_mb": 3665.7,
+        "free_disk_gb": 19.48,
+        "concurrency_limit": 1,
+        "concurrency_mode": "BOUNDED_SERIAL_SAFE"
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J11",
+      "name": "Cryptographic Fingerprint & Atomic Receipt",
+      "status": "PASS",
+      "details": {
+        "input_fingerprint": "2c52e1b8fa604b5c7295936a084428ae86db3f44b6c6ffb78547d84be46a5b6a",
+        "output_sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+        "status": null
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J12",
+      "name": "Git Workspace Cleanliness & Launch Receipt",
+      "status": "PASS",
+      "details": {
+        "guard_precommit_returncode": 0,
+        "preview_launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4"
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J13",
+      "name": "Creative Editorial Narrative Gate",
+      "status": "EDITORIAL_REVIEW_PENDING",
+      "details": {
+        "reviewer": "USER / Lead Editor",
+        "verdict": "EDITORIAL_REVIEW_PENDING",
+        "instruction": "Human editor must visually review MP4 pacing and storytelling.",
+        "hook_0_to_3s": "Midnight sentry on frontier wall with wind loop and fire crackle SFX",
+        "action_beats": "Alarm signal horn, runner transit, centurion handoff, tactical map, shield wall payoff",
+        "launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4"
+      },
+      "error": null
+    }
+  ]
+}

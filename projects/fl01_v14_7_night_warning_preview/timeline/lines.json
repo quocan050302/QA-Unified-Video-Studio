@@ -1,0 +1,72 @@
+[
+  {
+    "id": "s01",
+    "text": "Past midnight on the frontier. Deep in the cold mist, the sentries of the Third Cohort keep watch.",
+    "start": 0.0,
+    "dur": 5.8,
+    "spoken_dur": 5.94
+  },
+  {
+    "id": "s02",
+    "text": "Suddenly, across the black ridge, signal fires flare. An allied outpost has been overrun.",
+    "start": 5.8,
+    "dur": 5.8,
+    "spoken_dur": 6.13
+  },
+  {
+    "id": "s03",
+    "text": "No drill. No hesitation. Every legionary knows what fire in the hills means before dawn.",
+    "start": 11.6,
+    "dur": 5.4,
+    "spoken_dur": 5.74
+  },
+  {
+    "id": "s04",
+    "text": "The alarm horn sounds. A dispatch runner dashes through camp toward the praetorium.",
+    "start": 17.0,
+    "dur": 5.0,
+    "spoken_dur": 4.95
+  },
+  {
+    "id": "s05",
+    "text": "The dispatch arrives: an enemy warband bypassed the river ford under darkness.",
+    "start": 22.0,
+    "dur": 4.8,
+    "spoken_dur": 4.53
+  },
+  {
+    "id": "s06",
+    "text": "On the map, the danger is clear: the defile narrows at the timber bridge.",
+    "start": 26.8,
+    "dur": 4.8,
+    "spoken_dur": 4.41
+  },
+  {
+    "id": "s07",
+    "text": "Centurion Marcus issues the order: Hastati to the palisade, archers to the angle towers.",
+    "start": 31.6,
+    "dur": 5.6,
+    "spoken_dur": 5.76
+  },
+  {
+    "id": "s08",
+    "text": "In minutes, shadow turns into iron. Men buckle their armor and raise their shields.",
+    "start": 37.2,
+    "dur": 5.2,
+    "spoken_dur": 5.13
+  },
+  {
+    "id": "s09",
+    "text": "Two centuries lock their scuta, forming an impenetrable wall of bronze and steel.",
+    "start": 42.4,
+    "dur": 5.0,
+    "spoken_dur": 4.83
+  },
+  {
+    "id": "s10",
+    "text": "At sunrise, dawn reveals not a surprised camp, but an unbreakable Roman shield wall.",
+    "start": 47.4,
+    "dur": 5.6,
+    "spoken_dur": 5.64
+  }
+]

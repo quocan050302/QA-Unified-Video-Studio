@@ -1,0 +1,13 @@
+{
+  "title": "FL01_V14_7_FRESH_PREVIEW_1080P",
+  "pack": "squire",
+  "genre": "roman",
+  "theme": "military_history",
+  "aspect": "16:9",
+  "resolution": "1080p",
+  "fps": 24,
+  "audio_mode": "voice_sfx",
+  "enable_narrative_action": true,
+  "enable_universal_storytelling": true,
+  "ai_director_mode": "OFFLINE_ONLY"
+}

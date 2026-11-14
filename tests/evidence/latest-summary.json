@@ -1,7 +1,7 @@
 {
   "version": "14.6",
-  "timestamp": 1794656525.393632,
-  "elapsed_sec": 18.98,
+  "timestamp": 1794663339.477612,
+  "elapsed_sec": 15.22,
   "gates_count": 35,
   "passed_count": 34,
   "failed_count": 0,
@@ -113,16 +113,16 @@
       "details": {
         "distinct_actions_count": 10,
         "distinct_actions": [
-          "OBSERVE",
-          "RESERVE_ADVANCE",
-          "BRACE",
+          "FATIGUE",
+          "SIGNAL",
           "STAND",
+          "CONTACT",
+          "OBSERVE",
+          "APPROACH",
+          "RESERVE_ADVANCE",
           "FRONT_WITHDRAW",
           "SHIELD_CLOSE",
-          "CONTACT",
-          "APPROACH",
-          "FATIGUE",
-          "SIGNAL"
+          "BRACE"
         ],
         "valid": true
       },
@@ -144,11 +144,11 @@
       "status": "PASS",
       "details": {
         "distinct_locations_in_scene": [
-          "camp_plain",
-          "resolute_line",
           "relief_corridor",
+          "resolute_line",
+          "contact_line",
           "attrition_line",
-          "contact_line"
+          "camp_plain"
         ],
         "total_shots": 11
       },
@@ -238,8 +238,7 @@
       "details": {
         "negative_fixture_caught": true,
         "diagnostics": [
-          "Head/helmet clipped out of frame top (top_ink=71040 px, ymin=0.010)",
-          "Subject feet pushed against/below bottom frame margin (bot_ink=32640 px, ymax=0.850)"
+          "Head/helmet clipped out of frame top (top_ink=35520 px, ymin=0.010)"
         ]
       },
       "error": null
@@ -428,8 +427,8 @@
       "name": "System resource preflight and memory monitoring",
       "status": "PASS",
       "details": {
-        "available_ram_mb": 2554.4,
-        "free_disk_gb": 15.61,
+        "available_ram_mb": 3555.7,
+        "free_disk_gb": 19.48,
         "resource_sufficient": true
       },
       "error": null

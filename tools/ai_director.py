@@ -286,25 +286,107 @@ def _generate_offline_grounded_plan(ctx: Dict[str, Any]) -> DirectorPlan:
     )
 
 
+def resolve_ai_director_policy(project_path: Union[str, Path]) -> Dict[str, Any]:
+    """
+    Resolve AI Director execution policy with clear precedence (FL-01):
+    1. Project config explicit override (projects/<name>/config.json)
+    2. Global Studio settings (.studio/global_settings.json)
+    3. Default studio fallback
+
+    Modes:
+    - LIVE_REQUIRED: Must run live Gemini; fail-closed BLOCKED if key missing or API error.
+    - LIVE_WITH_EXPLICIT_FALLBACK: Attempts live Gemini; if unavailable, falls back to offline
+      grounded rule engine and marks provenance as 'offline_grounded_rule_fallback'.
+    - OFFLINE_ONLY: Fully offline rule-based generation with zero network/API requests.
+    """
+    p = Path(project_path).resolve()
+    cfg_file = p / "config.json"
+    p_cfg: Dict[str, Any] = {}
+    if cfg_file.is_file():
+        try:
+            p_cfg = read_json(cfg_file, {}) or {}
+        except Exception:
+            p_cfg = {}
+
+    g_settings = load_global_settings()
+
+    # Precedence: Project override > Global settings > Default
+    p_enabled = p_cfg.get("ai_director_enabled")
+    if p_enabled is not None:
+        enabled = bool(p_enabled)
+        enabled_source = "project_override"
+    else:
+        enabled = bool(g_settings.get("ai_director_enabled", True))
+        enabled_source = "global_settings"
+
+    p_mode = p_cfg.get("ai_director_mode")
+    if p_mode and str(p_mode).strip().upper() in ("LIVE_REQUIRED", "LIVE_WITH_EXPLICIT_FALLBACK", "OFFLINE_ONLY"):
+        mode = str(p_mode).strip().upper()
+        mode_source = "project_override"
+    else:
+        mode = str(g_settings.get("ai_director_mode", "LIVE_WITH_EXPLICIT_FALLBACK")).strip().upper()
+        if mode not in ("LIVE_REQUIRED", "LIVE_WITH_EXPLICIT_FALLBACK", "OFFLINE_ONLY"):
+            mode = "LIVE_WITH_EXPLICIT_FALLBACK"
+        mode_source = "global_settings"
+
+    # Test mode isolation guard: Do not make accidental live network calls in test mode
+    # unless force_test_live is explicitly requested by the test harness.
+    if os.environ.get("QA_STUDIO_TEST_MODE") == "1" and not p_cfg.get("force_test_live"):
+        if mode == "LIVE_WITH_EXPLICIT_FALLBACK":
+            mode = "OFFLINE_ONLY"
+
+    try:
+        api_key = get_api_key_securely()
+        has_key = bool(api_key and len(api_key) >= 10)
+    except Exception:
+        has_key = False
+
+    return {
+        "enabled": enabled,
+        "mode": mode,
+        "primary_model": g_settings.get("primary_model", "gemini-3.8-flash"),
+        "fallback_models": g_settings.get("fallback_models", []),
+        "has_key": has_key,
+        "enabled_source": enabled_source,
+        "mode_source": mode_source,
+    }
+
+
 def generate_director_plan(
     project_path: Union[str, Path],
     shot_ids: Optional[List[str]] = None,
     mock_provider: Optional[Callable[[str, str, Any, int], Dict[str, Any]]] = None,
     offline: bool = False,
+    mode_override: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Generate structured AI Director plan for a project using Gemini with 3-strike fallback.
-    Falls back gracefully to offline grounded rule generator if Gemini API is unavailable.
+    Respects resolved AI Director policy (OFFLINE_ONLY, LIVE_WITH_EXPLICIT_FALLBACK, LIVE_REQUIRED).
     """
-    ctx = build_director_context(project_path, shot_ids=shot_ids)
+    p = Path(project_path).resolve()
+    policy = resolve_ai_director_policy(p)
+    if mode_override:
+        policy["mode"] = mode_override
+
+    if not policy.get("enabled", True):
+        return {
+            "status": "DISABLED",
+            "source": "disabled",
+            "model_used": None,
+            "plan": None,
+            "message": "AI Director is disabled by policy.",
+        }
+
+    ctx = build_director_context(p, shot_ids=shot_ids)
     shots = ctx.get("shots", [])
     if not shots:
         return {"status": "NO_SHOTS", "plan": None, "message": "No storyboard shots found."}
 
-    if offline:
+    effective_mode = policy.get("mode", "LIVE_WITH_EXPLICIT_FALLBACK")
+    if offline or effective_mode == "OFFLINE_ONLY":
         offline_plan = _generate_offline_grounded_plan(ctx)
         return {
-            "status": "FALLBACK_OFFLINE",
+            "status": "OFFLINE_ONLY",
             "source": offline_plan.generation_source,
             "model_used": None,
             "model_path": [],
@@ -314,8 +396,19 @@ def generate_director_plan(
             "plan": offline_plan.model_dump(),
         }
 
+    # If LIVE_REQUIRED: Check key before attempting, fail closed if unconfigured
+    if effective_mode == "LIVE_REQUIRED" and not policy.get("has_key") and mock_provider is None:
+        return {
+            "status": "BLOCKED_LIVE_REQUIRED",
+            "source": "none",
+            "model_used": None,
+            "error": "Gemini API key is not configured in OS credential store.",
+            "reason_category": "AUTH_INVALID",
+            "plan": None,
+        }
+
     facts = extract_grounded_story_facts(shots, ctx.get("script_text", ""))
-    
+
     prompt = f"""You are the AI Director for a historical battle animation studio.
 Project: {ctx.get('project_id')} | Pack: {ctx.get('pack')} | Aspect: {ctx.get('aspect')}
 Total shots: {len(shots)}
@@ -342,7 +435,7 @@ Output JSON adhering to the DirectorPlan schema.
 
     # Attempt structured request via Gemini client
     res = request_structured_with_fallback(prompt, DirectorPlan, ctx=ctx, mock_provider=mock_provider)
-    
+
     if res.get("status") == "SUCCESS" and res.get("plan"):
         plan_dict = res["plan"]
         plan_dict["generation_source"] = "gemini_live" if mock_provider is None else "gemini_mock"
@@ -357,8 +450,17 @@ Output JSON adhering to the DirectorPlan schema.
             "plan": plan_dict,
         }
     else:
+        if effective_mode == "LIVE_REQUIRED":
+            return {
+                "status": "BLOCKED_LIVE_REQUIRED",
+                "source": "gemini_error",
+                "model_used": None,
+                "error": res.get("error", "Live Gemini API call failed in LIVE_REQUIRED mode"),
+                "reason_category": res.get("failure_category", "UNKNOWN"),
+                "plan": None,
+            }
         # Fallback to offline rule-based generator
-        print(f"[ai_director] Gemini call unavailable ({res.get('error')}). Using offline grounded fallback plan.", file=sys.stderr)
+        print(f"[ai_director] Gemini call unavailable ({res.get('error')}). Using explicit offline grounded fallback plan.", file=sys.stderr)
         offline_plan = _generate_offline_grounded_plan(ctx)
         return {
             "status": "FALLBACK_OFFLINE",
@@ -367,7 +469,7 @@ Output JSON adhering to the DirectorPlan schema.
             "model_path": res.get("model_path", []),
             "attempts": res.get("attempts", 0),
             "retries": res.get("retries", 0),
-            "reason_codes": res.get("reason_codes", []),
+            "reason_codes": [res.get("failure_category", "UNKNOWN")],
             "plan": offline_plan.model_dump(),
         }
 

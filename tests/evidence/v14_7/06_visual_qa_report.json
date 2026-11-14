@@ -1,0 +1,226 @@
+{
+  "version": "14.6",
+  "project_id": "fl01_v14_7_night_warning_preview",
+  "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4",
+  "technical_verdict": "VISUAL_TECH_PASS",
+  "all_passed": true,
+  "passed_shots": 10,
+  "total_shots": 10,
+  "framing_safe_all": true,
+  "no_clipped_heads": true,
+  "acting_verified_all": true,
+  "scene_diversity_passed": true,
+  "global_issues": [],
+  "shots": {
+    "s01": {
+      "action_kind": "STAND",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "standard",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.25555555555555554,
+        "ymax": 0.8796296296296297,
+        "xmin": 0.3,
+        "xmax": 0.5369791666666667,
+        "mass_x": 0.44265889584170137,
+        "mass_y": 0.5720896255111844,
+        "detected": true,
+        "confidence": 1.0
+      }
+    },
+    "s02": {
+      "action_kind": "BRACE",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "brace",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.25555555555555554,
+        "ymax": 0.812037037037037,
+        "xmin": 0.25,
+        "xmax": 0.44635416666666666,
+        "mass_x": 0.37061702412203296,
+        "mass_y": 0.5454402457915428,
+        "detected": true,
+        "confidence": 1.0
+      }
+    },
+    "s03": {
+      "action_kind": "SIGNAL",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "signal",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.03981481481481482,
+        "ymax": 0.9787037037037037,
+        "xmin": 0.45,
+        "xmax": 0.6994791666666667,
+        "mass_x": 0.5421983552157449,
+        "mass_y": 0.5569054805031062,
+        "detected": true,
+        "confidence": 1.0
+      }
+    },
+    "s04": {
+      "action_kind": "ADVANCE",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "standard",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.18333333333333332,
+        "ymax": 0.8037037037037037,
+        "xmin": 0.5,
+        "xmax": 0.7494791666666667,
+        "mass_x": 0.6095164597388874,
+        "mass_y": 0.37667912208647,
+        "detected": true,
+        "confidence": 1.0
+      }
+    },
+    "s05": {
+      "action_kind": "STAND",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "standard",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.16296296296296298,
+        "ymax": 0.8101851851851852,
+        "xmin": 0.1,
+        "xmax": 0.3494791666666667,
+        "mass_x": 0.2274334205360149,
+        "mass_y": 0.5403024511648479,
+        "detected": true,
+        "confidence": 1.0
+      }
+    },
+    "s06": {
+      "action_kind": "MAP_ANALYSIS",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "standard",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.06018518518518518,
+        "ymax": 0.9231481481481482,
+        "xmin": 0.4,
+        "xmax": 0.6494791666666667,
+        "mass_x": 0.5199556389164864,
+        "mass_y": 0.6410431597319174,
+        "detected": true,
+        "confidence": 1.0
+      }
+    },
+    "s07": {
+      "action_kind": "SIGNAL",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "signal",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.03981481481481482,
+        "ymax": 0.8083333333333333,
+        "xmin": 0.25,
+        "xmax": 0.49947916666666664,
+        "mass_x": 0.36856002272517535,
+        "mass_y": 0.392130282149662,
+        "detected": true,
+        "confidence": 1.0
+      }
+    },
+    "s08": {
+      "action_kind": "BRACE",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "brace",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.25555555555555554,
+        "ymax": 0.8787037037037037,
+        "xmin": 0.3,
+        "xmax": 0.5494791666666666,
+        "mass_x": 0.402844091333654,
+        "mass_y": 0.5636449816328949,
+        "detected": true,
+        "confidence": 1.0
+      }
+    },
+    "s09": {
+      "action_kind": "CONTACT",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "brace",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.17685185185185184,
+        "ymax": 0.9259259259259259,
+        "xmin": 0.6,
+        "xmax": 0.8494791666666667,
+        "mass_x": 0.7303977340400191,
+        "mass_y": 0.663404340103165,
+        "detected": true,
+        "confidence": 1.0
+      }
+    },
+    "s10": {
+      "action_kind": "STAND",
+      "passed": true,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "performance_readability": true,
+      "detected_acting_pose": "standard",
+      "diagnostics": [],
+      "bounds": {
+        "ymin": 0.1388888888888889,
+        "ymax": 0.8101851851851852,
+        "xmin": 0.15,
+        "xmax": 0.39947916666666666,
+        "mass_x": 0.2772124839832752,
+        "mass_y": 0.43267913442247063,
+        "detected": true,
+        "confidence": 1.0
+      }
+    }
+  }
+}

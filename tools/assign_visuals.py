@@ -727,8 +727,10 @@ def assign_visuals(
         story["shots"] = shots
         write_json(shots_file, story)
 
-    # AI Director integration (V14: grounded camera, executable animation, polarity, SFX intents)
-    if cfg.get("ai_director_enabled", True) and not target_ids:
+    # AI Director integration (FL-01 / V14.7: Grounded camera, executable animation, polarity, SFX intents, strict policy routing)
+    from ai_director import resolve_ai_director_policy
+    ai_policy = resolve_ai_director_policy(P)
+    if ai_policy.get("enabled", True) and not target_ids:
         try:
             from ai_director import generate_director_plan, apply_director_plan_generated_only
             dir_res = generate_director_plan(P)
@@ -739,8 +741,14 @@ def assign_visuals(
                     modified = True
                     story = read_json(shots_file, {})
                     shots = story.get("shots", [])
+            elif dir_res.get("status") == "BLOCKED_LIVE_REQUIRED":
+                print(f"[assign_visuals] WARNING: AI Director BLOCKED in LIVE_REQUIRED mode: {dir_res.get('error')}", file=sys.stderr)
+            elif dir_res.get("status") == "DISABLED":
+                print("[assign_visuals] AI Director disabled by policy; skipping AI director phase.")
         except Exception as dir_exc:
             print(f"[assign_visuals] AI Director warning: {dir_exc}")
+    elif not ai_policy.get("enabled", True):
+        print(f"[assign_visuals] AI Director disabled via {ai_policy.get('enabled_source', 'policy')}; skipping AI Director phase.")
 
     # Battle auto-director integration (V13: structured status, confidence checks, pack safety)
     is_squire = (pack == "squire")

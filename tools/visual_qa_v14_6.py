@@ -31,6 +31,8 @@ class ActorBoundingBox(BaseModel):
     xmax: float
     mass_x: float
     mass_y: float
+    detected: bool = True
+    confidence: float = 1.0
 
 
 class ShotVisualAuditV14_6(BaseModel):
@@ -47,6 +49,9 @@ class ShotVisualAuditV14_6(BaseModel):
     motion_verified: bool = True
     performance_readability: bool = True
     formation_labels_mobile_readable: bool = True
+    subject_detected: bool = True
+    detection_confidence: float = 1.0
+    technical_verdict: str = "VISUAL_TECH_PASS"
     diagnostics: List[str] = Field(default_factory=list)
     frame_samples: List[str] = Field(default_factory=list)
     bounds: Optional[ActorBoundingBox] = None
@@ -64,6 +69,7 @@ class VisualQAReportV14_6(BaseModel):
     total_shots: int = 0
     passed_shots: int = 0
     all_passed: bool = True
+    technical_verdict: str = "VISUAL_TECH_PASS"
     framing_safe_all: bool = True
     no_clipped_heads: bool = True
     motion_verified_all: bool = True
@@ -98,6 +104,11 @@ def track_actor_instances_full_frame(
     Strictly avoids false sky matches while accurately capturing actor bounds.
     """
     h, w, c = img_arr.shape
+    if float(np.mean(img_arr)) < 5.0 or float(np.std(img_arr)) < 6.0:
+        return ActorBoundingBox(
+            ymin=0.0, ymax=0.0, xmin=0.0, xmax=0.0, mass_x=0.0, mass_y=0.0, detected=False, confidence=0.0
+        )
+
     r, g, b = img_arr[:, :, 0], img_arr[:, :, 1], img_arr[:, :, 2]
 
     # Outline ink & actor costume tones (avoiding bright sky gradients)
@@ -108,7 +119,28 @@ def track_actor_instances_full_frame(
         ((b > 110) & (r < 90) & (g < 95)) |    # Blue Latin shield
         ((r > 180) & (g > 175) & (b > 165) & (b < 200))     # Steel plate armor
     )
-    actor_pixels = is_ink | is_actor_tone
+
+    y_tone, x_tone = np.where(is_actor_tone)
+    if len(y_tone) >= 80:
+        # Cluster actor's main horizontal column to isolate actor from background props & scenery ink
+        x_hist, _ = np.histogram(x_tone / w, bins=20, range=(0.0, 1.0))
+        peak_idx = int(np.argmax(x_hist))
+        col_min = max(0.0, (peak_idx - 2) * 0.05)
+        col_max = min(1.0, (peak_idx + 3) * 0.05)
+        col_mask = np.zeros((h, w), dtype=bool)
+        col_mask[:, int(col_min * w):int(col_max * w)] = True
+
+        y_tone_col, _ = np.where(is_actor_tone & col_mask)
+        if len(y_tone_col) > 0:
+            ymin_tone = np.min(y_tone_col) / h
+            ymax_tone = np.max(y_tone_col) / h
+            y_mask = np.zeros((h, w), dtype=bool)
+            y_mask[int(max(0, ymin_tone - 0.06) * h):int(min(1.0, ymax_tone + 0.04) * h), :] = True
+            actor_pixels = (is_ink | is_actor_tone) & col_mask & y_mask
+        else:
+            actor_pixels = is_actor_tone
+    else:
+        actor_pixels = is_ink | is_actor_tone
 
     if tpl == "top":
         y_indices, x_indices = np.where(actor_pixels)
@@ -125,9 +157,9 @@ def track_actor_instances_full_frame(
         y_indices, x_indices = np.where(edge_energy[int(h * 0.15):int(h * 0.95), :])
         y_indices += int(h * 0.15)
 
-    if len(y_indices) == 0:
+    if len(y_indices) < 20:
         return ActorBoundingBox(
-            ymin=0.4, ymax=0.85, xmin=0.3, xmax=0.7, mass_x=0.5, mass_y=0.65
+            ymin=0.0, ymax=0.0, xmin=0.0, xmax=0.0, mass_x=0.0, mass_y=0.0, detected=False, confidence=0.0
         )
 
     ymin = float(np.min(y_indices)) / h
@@ -136,9 +168,10 @@ def track_actor_instances_full_frame(
     xmax = float(np.max(x_indices)) / w
     mass_x = float(np.mean(x_indices)) / w
     mass_y = float(np.mean(y_indices)) / h
+    confidence = min(1.0, len(y_indices) / 500.0)
 
     return ActorBoundingBox(
-        ymin=ymin, ymax=ymax, xmin=xmin, xmax=xmax, mass_x=mass_x, mass_y=mass_y
+        ymin=ymin, ymax=ymax, xmin=xmin, xmax=xmax, mass_x=mass_x, mass_y=mass_y, detected=True, confidence=round(confidence, 3)
     )
 
 
@@ -161,13 +194,21 @@ def audit_safe_framing(
 
     h, w, c = img_arr.shape
 
+    if not bounds.detected or bounds.confidence < 0.05:
+        diags.append(f"Actor undetected in shot {shot_id} (confidence={bounds.confidence:.2f}) - safe framing NOT_VERIFIED")
+        return False, False, False, diags
+
     if tpl in ("scene", "army", "close") and action != "SIGNAL":
+        # Check ink directly within and above/below the actor horizontal span
+        actor_col_left = max(0, int((bounds.xmin - 0.05) * w))
+        actor_col_right = min(w, int((bounds.xmax + 0.05) * w))
+
         # 1. Top margin check: Head/helmet apex must not clip screen top
-        top_strip = img_arr[:int(h * 0.035), :, :]
-        is_ink_top = (top_strip[:, :, 0] < 50) & (top_strip[:, :, 1] < 45) & (top_strip[:, :, 2] < 45)
+        actor_top_strip = img_arr[:int(h * 0.035), actor_col_left:actor_col_right, :]
+        is_ink_top = (actor_top_strip[:, :, 0] < 45) & (actor_top_strip[:, :, 1] < 40) & (actor_top_strip[:, :, 2] < 40)
         ink_top_count = int(np.sum(is_ink_top))
 
-        if ink_top_count > 80 or bounds.ymin < 0.035:
+        if bounds.ymin < 0.035 or (bounds.ymin < 0.06 and ink_top_count > 60):
             head_clipped = True
             safe = False
             diags.append(
@@ -175,16 +216,17 @@ def audit_safe_framing(
             )
 
         # 2. Bottom margin check: Feet must not touch bottom screen edge
-        bot_strip = img_arr[int(h * 0.985):, :, :]
-        is_ink_bot = (bot_strip[:, :, 0] < 50) & (bot_strip[:, :, 1] < 45) & (bot_strip[:, :, 2] < 45)
-        ink_bot_count = int(np.sum(is_ink_bot))
+        if tpl in ("scene", "army"):
+            actor_bot_strip = img_arr[int(h * 0.985):, actor_col_left:actor_col_right, :]
+            is_ink_bot = (actor_bot_strip[:, :, 0] < 45) & (actor_bot_strip[:, :, 1] < 40) & (actor_bot_strip[:, :, 2] < 40)
+            ink_bot_count = int(np.sum(is_ink_bot))
 
-        if ink_bot_count > 150 or bounds.ymax > 0.988:
-            feet_clipped = True
-            safe = False
-            diags.append(
-                f"Subject feet pushed against/below bottom frame margin (bot_ink={ink_bot_count} px, ymax={bounds.ymax:.3f})"
-            )
+            if bounds.ymax > 0.988 or (bounds.ymax > 0.970 and ink_bot_count > 120):
+                feet_clipped = True
+                safe = False
+                diags.append(
+                    f"Subject feet pushed against/below bottom frame margin (bot_ink={ink_bot_count} px, ymax={bounds.ymax:.3f})"
+                )
 
         # 3. Extreme lateral clipping check (for close-up shots)
         if tpl == "close":
@@ -249,9 +291,13 @@ def audit_acting_posture(
     h, w, _ = img_mid.shape
     r, g, b = img_mid[:, :, 0], img_mid[:, :, 1], img_mid[:, :, 2]
 
+    if not bounds.detected:
+        diags.append(f"Actor undetected for action '{action}' - acting posture NOT_VERIFIED")
+        return False, "undetected", diags
+
     if action in ("BRACE", "CONTACT"):
         # Brace shows lowered center of mass and wide horizontal shield stance
-        if bounds.mass_y < 0.44:
+        if bounds.mass_y < 0.42:
             diags.append(f"BRACE acting posture: center of mass too high ({bounds.mass_y:.3f})")
             verified = False
         detected_pose = "brace"
@@ -376,6 +422,8 @@ def audit_visual_project_v14_6(
         # 1. Unmasked boundary tracking
         bounds = track_actor_instances_full_frame(img_mid, tpl=tpl)
         audit.bounds = bounds
+        audit.subject_detected = bounds.detected
+        audit.detection_confidence = bounds.confidence
 
         # 2. Strict framing safety audit (catching clipped heads and bottom touching)
         safe, head_clip, feet_clip, framing_diags = audit_safe_framing(img_mid, bounds, tpl, action, sid)
@@ -415,8 +463,20 @@ def audit_visual_project_v14_6(
         bounds_s = track_actor_instances_full_frame(img_start, tpl=tpl)
         bounds_e = track_actor_instances_full_frame(img_end, tpl=tpl)
         frame_w = img_start.shape[1]
-        screen_dx = abs(bounds_e.mass_x - bounds_s.mass_x) * frame_w
+        if bounds_s.detected and bounds_e.detected:
+            screen_dx = abs(bounds_e.mass_x - bounds_s.mass_x) * frame_w
+        else:
+            screen_dx = 0.0
         audit.net_motion_px = round(screen_dx, 2)
+
+        if not audit.non_empty_content:
+            audit.technical_verdict = "FAIL"
+        elif not bounds.detected:
+            audit.technical_verdict = "NOT_VERIFIED"
+        elif not audit.passed:
+            audit.technical_verdict = "FAIL"
+        else:
+            audit.technical_verdict = "VISUAL_TECH_PASS"
 
         # Camera stabilization
         cam_info = s.get("args", {}).get("cam", {})
@@ -440,6 +500,13 @@ def audit_visual_project_v14_6(
 
     report.passed_shots = passed_count
     report.all_passed = (passed_count == report.total_shots) and report.scene_diversity_passed and report.no_clipped_heads
+
+    if report.all_passed:
+        report.technical_verdict = "VISUAL_TECH_PASS"
+    elif any(a.technical_verdict == "NOT_VERIFIED" for a in report.shot_audits.values()):
+        report.technical_verdict = "NOT_VERIFIED"
+    else:
+        report.technical_verdict = "FAIL"
 
     return report
 

@@ -2,10 +2,11 @@
   "version": "14.6",
   "project_id": "v14_6_action_demo",
   "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_6_action_demo/out/V14_6_Visual_Storytelling_Acting_Demo_1080p.mp4",
-  "generated_at": 1794656509.374017,
+  "generated_at": 1794663327.3531399,
   "total_shots": 11,
   "passed_shots": 11,
   "all_passed": true,
+  "technical_verdict": "VISUAL_TECH_PASS",
   "framing_safe_all": true,
   "no_clipped_heads": true,
   "motion_verified_all": true,
@@ -27,6 +28,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s01_start.png",
@@ -36,14 +40,16 @@
       "bounds": {
         "ymin": 0.5083333333333333,
         "ymax": 0.9787037037037037,
-        "xmin": 0.019791666666666666,
-        "xmax": 0.9791666666666666,
-        "mass_x": 0.5061846706571163,
-        "mass_y": 0.7090713101949618
+        "xmin": 0.35,
+        "xmax": 0.5994791666666667,
+        "mass_x": 0.4769000334526593,
+        "mass_y": 0.68157003714663,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 79.27,
-      "net_motion_px": 2.84,
-      "world_motion_px": 0.0,
+      "net_motion_px": 794.58,
+      "world_motion_px": 756.18,
       "detected_acting_pose": "standard"
     },
     "s02": {
@@ -60,6 +66,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s02_start.png",
@@ -67,16 +76,18 @@
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s02_end.png"
       ],
       "bounds": {
-        "ymin": 0.2462962962962963,
-        "ymax": 0.9787037037037037,
-        "xmin": 0.019791666666666666,
-        "xmax": 0.9791666666666666,
-        "mass_x": 0.5194633260414603,
-        "mass_y": 0.7669937323703978
+        "ymin": 0.3388888888888889,
+        "ymax": 0.9638888888888889,
+        "xmin": 0.45,
+        "xmax": 0.6994791666666667,
+        "mass_x": 0.58941958563228,
+        "mass_y": 0.7385731668803062,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 5.74,
-      "net_motion_px": 33.16,
-      "world_motion_px": 33.16,
+      "net_motion_px": 22.7,
+      "world_motion_px": 22.7,
       "detected_acting_pose": "standard"
     },
     "s03": {
@@ -93,6 +104,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s03_start.png",
@@ -101,15 +115,17 @@
       ],
       "bounds": {
         "ymin": 0.03981481481481482,
-        "ymax": 0.9787037037037037,
-        "xmin": 0.019791666666666666,
-        "xmax": 0.9505208333333334,
-        "mass_x": 0.346364025690082,
-        "mass_y": 0.4727490632686065
+        "ymax": 0.862037037037037,
+        "xmin": 0.3,
+        "xmax": 0.5494791666666666,
+        "mass_x": 0.40524530460782227,
+        "mass_y": 0.4838380026534381,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 10.71,
-      "net_motion_px": 0.71,
-      "world_motion_px": 0.71,
+      "net_motion_px": 12.97,
+      "world_motion_px": 12.97,
       "detected_acting_pose": "brace"
     },
     "s04": {
@@ -126,6 +142,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s04_start.png",
@@ -134,15 +153,17 @@
       ],
       "bounds": {
         "ymin": 0.04259259259259259,
-        "ymax": 0.9787037037037037,
-        "xmin": 0.019791666666666666,
-        "xmax": 0.6734375,
-        "mass_x": 0.3923818618313139,
-        "mass_y": 0.467849558635696
+        "ymax": 0.7342592592592593,
+        "xmin": 0.4,
+        "xmax": 0.6479166666666667,
+        "mass_x": 0.53767223966562,
+        "mass_y": 0.43083577948286067,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 10.51,
-      "net_motion_px": 166.74,
-      "world_motion_px": 166.74,
+      "net_motion_px": 385.42,
+      "world_motion_px": 385.42,
       "detected_acting_pose": "brace"
     },
     "s05": {
@@ -159,6 +180,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s05_start.png",
@@ -167,15 +191,17 @@
       ],
       "bounds": {
         "ymin": 0.30185185185185187,
-        "ymax": 0.9259259259259259,
-        "xmin": 0.019791666666666666,
-        "xmax": 0.9791666666666666,
-        "mass_x": 0.46136718223329926,
-        "mass_y": 0.6568553470134819
+        "ymax": 0.925,
+        "xmin": 0.35,
+        "xmax": 0.5994791666666667,
+        "mass_x": 0.45505563075163935,
+        "mass_y": 0.5391384710053085,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 8.97,
-      "net_motion_px": 9.84,
-      "world_motion_px": 0.0,
+      "net_motion_px": 81.6,
+      "world_motion_px": 43.2,
       "detected_acting_pose": "fatigue"
     },
     "s06": {
@@ -192,6 +218,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s06_start.png",
@@ -201,14 +230,16 @@
       "bounds": {
         "ymin": 0.13425925925925927,
         "ymax": 0.9259259259259259,
-        "xmin": 0.019791666666666666,
-        "xmax": 0.9791666666666666,
-        "mass_x": 0.48860854303369733,
-        "mass_y": 0.6479820871520006
+        "xmin": 0.4,
+        "xmax": 0.6494791666666667,
+        "mass_x": 0.5232490203173118,
+        "mass_y": 0.452162082696983,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 8.13,
-      "net_motion_px": 21.51,
-      "world_motion_px": 0.0,
+      "net_motion_px": 41.07,
+      "world_motion_px": 2.67,
       "detected_acting_pose": "signal"
     },
     "s07": {
@@ -225,6 +256,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s07_start.png",
@@ -232,16 +266,18 @@
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s07_end.png"
       ],
       "bounds": {
-        "ymin": 0.29814814814814816,
+        "ymin": 0.5425925925925926,
         "ymax": 0.9787037037037037,
-        "xmin": 0.019791666666666666,
+        "xmin": 0.85,
         "xmax": 0.9791666666666666,
-        "mass_x": 0.4788597950408721,
-        "mass_y": 0.6584392290273036
+        "mass_x": 0.9203393039346981,
+        "mass_y": 0.7198127599572023,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 27.27,
-      "net_motion_px": 4.03,
-      "world_motion_px": 0.0,
+      "net_motion_px": 1562.58,
+      "world_motion_px": 1524.18,
       "detected_acting_pose": "standard"
     },
     "s08": {
@@ -258,6 +294,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s08_start.png",
@@ -265,16 +304,18 @@
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s08_end.png"
       ],
       "bounds": {
-        "ymin": 0.07222222222222222,
+        "ymin": 0.2064814814814815,
         "ymax": 0.9194444444444444,
-        "xmin": 0.019791666666666666,
-        "xmax": 0.9692708333333333,
-        "mass_x": 0.397333743309738,
-        "mass_y": 0.5655823681263621
+        "xmin": 0.13229166666666667,
+        "xmax": 0.3494791666666667,
+        "mass_x": 0.25583040166371,
+        "mass_y": 0.43947633266387165,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 12.56,
-      "net_motion_px": 179.49,
-      "world_motion_px": 179.49,
+      "net_motion_px": 521.68,
+      "world_motion_px": 521.68,
       "detected_acting_pose": "standard"
     },
     "s09": {
@@ -291,6 +332,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s09_start.png",
@@ -298,16 +342,18 @@
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s09_end.png"
       ],
       "bounds": {
-        "ymin": 0.25925925925925924,
+        "ymin": 0.5824074074074074,
         "ymax": 0.9203703703703704,
         "xmin": 0.019791666666666666,
-        "xmax": 0.9697916666666667,
-        "mass_x": 0.4510308219421348,
-        "mass_y": 0.6690000111931655
+        "xmax": 0.109375,
+        "mass_x": 0.04331750801282051,
+        "mass_y": 0.7880742877492877,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 13.85,
-      "net_motion_px": 113.44,
-      "world_motion_px": 84.64,
+      "net_motion_px": 364.74,
+      "world_motion_px": 335.94,
       "detected_acting_pose": "standard"
     },
     "s10": {
@@ -324,6 +370,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s10_start.png",
@@ -331,16 +380,18 @@
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s10_end.png"
       ],
       "bounds": {
-        "ymin": 0.19907407407407407,
+        "ymin": 0.2,
         "ymax": 0.8629629629629629,
-        "xmin": 0.11875,
-        "xmax": 0.9286458333333333,
-        "mass_x": 0.4563658610068672,
-        "mass_y": 0.5358338986835213
+        "xmin": 0.4,
+        "xmax": 0.5828125,
+        "mass_x": 0.48993880690052477,
+        "mass_y": 0.5475809681978162,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 7.29,
-      "net_motion_px": 2.05,
-      "world_motion_px": 2.05,
+      "net_motion_px": 4.46,
+      "world_motion_px": 4.46,
       "detected_acting_pose": "standard"
     },
     "s11": {
@@ -357,6 +408,9 @@
       "motion_verified": true,
       "performance_readability": true,
       "formation_labels_mobile_readable": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
       "diagnostics": [],
       "frame_samples": [
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s11_start.png",
@@ -364,16 +418,18 @@
         "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/frames/s11_end.png"
       ],
       "bounds": {
-        "ymin": 0.1037037037037037,
+        "ymin": 0.10555555555555556,
         "ymax": 0.862037037037037,
-        "xmin": 0.14270833333333333,
-        "xmax": 0.8869791666666667,
-        "mass_x": 0.5010622716145344,
-        "mass_y": 0.4517493296722169
+        "xmin": 0.45,
+        "xmax": 0.6994791666666667,
+        "mass_x": 0.5426226843164238,
+        "mass_y": 0.4599081226876467,
+        "detected": true,
+        "confidence": 1.0
       },
       "subject_motion_px": 110.56,
-      "net_motion_px": 3.09,
-      "world_motion_px": 3.09,
+      "net_motion_px": 87.35,
+      "world_motion_px": 87.35,
       "detected_acting_pose": "standard"
     }
   },

@@ -249,6 +249,7 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "cooldown_secs": 120,
     "max_concurrent_calls": 2,
     "ai_director_enabled": True,
+    "ai_director_mode": "LIVE_WITH_EXPLICIT_FALLBACK",
     "budgets": {
         "token_budget_monthly": 1_000_000,
         "tokens_used": 0,
@@ -270,6 +271,7 @@ PUBLIC_WHITELIST_KEYS = {
     "cooldown_secs",
     "max_concurrent_calls",
     "ai_director_enabled",
+    "ai_director_mode",
     "budgets",
     "sfx_sources_status",
 }
@@ -363,8 +365,12 @@ def validate_global_settings(config: Dict[str, Any]) -> Dict[str, Any]:
         concurrency = 2
     cleaned["max_concurrent_calls"] = concurrency
     
-    # AI Director enabled
+    # AI Director enabled and mode
     cleaned["ai_director_enabled"] = bool(cleaned.get("ai_director_enabled", True))
+    mode = str(cleaned.get("ai_director_mode", "LIVE_WITH_EXPLICIT_FALLBACK")).strip().upper()
+    if mode not in ("LIVE_REQUIRED", "LIVE_WITH_EXPLICIT_FALLBACK", "OFFLINE_ONLY"):
+        mode = "LIVE_WITH_EXPLICIT_FALLBACK"
+    cleaned["ai_director_mode"] = mode
     
     # Budgets
     budgets = cleaned.get("budgets", {})
@@ -480,6 +486,7 @@ def get_global_settings_public() -> Dict[str, Any]:
         "cooldown_secs": cfg.get("cooldown_secs", 120),
         "max_concurrent_calls": cfg.get("max_concurrent_calls", 2),
         "ai_director_enabled": cfg.get("ai_director_enabled", True),
+        "ai_director_mode": cfg.get("ai_director_mode", "LIVE_WITH_EXPLICIT_FALLBACK"),
         "budgets": cfg.get("budgets", {}),
         "sfx_sources_status": {
             "real_sfx_count": real_count,
