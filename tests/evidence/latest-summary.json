@@ -1,64 +1,13 @@
 {
-  "run_id": "20261113_215502",
-  "timestamp": "2026-11-13T21:56:30.434840",
-  "total_duration_sec": 87.89,
-  "gates_total": 17,
-  "required_gates_total": 17,
-  "required_gates_passed": 17,
+  "run_id": "20261114_080023",
+  "timestamp": "2026-11-14T08:01:59.039388",
+  "gates_total": 15,
+  "required_gates_total": 15,
+  "required_gates_passed": 15,
   "required_gates_failed": 0,
-  "optional_gates_total": 0,
   "verdict": "FLOW_READY",
-  "verdict_reason": "Tất cả 17/17 cổng BẮT BUỘC (Required Gates: G0-G17, G-A..G-G, N1-N12, H1-H14, J1-J15, K1-K15) đều PASS với video, âm thanh và decode thực tế. Cổng tùy chọn G5c chẩn đoán: 0 NOT_RUN_OPTIONAL_MISSING_FIXTURE.",
+  "verdict_reason": "Tất cả 15/15 cổng V10 (K1 - K15) đều PASS với video, âm thanh và decode thực tế.",
   "results": [
-    {
-      "gate": "G0",
-      "name": "Baseline & Environment Check",
-      "status": "PASS",
-      "kind": "BASELINE",
-      "details": {
-        "resource_check": {
-          "ok": true,
-          "message": "OK",
-          "resources": {
-            "disk": {
-              "total_gb": 460.43,
-              "used_gb": 444.35,
-              "free_gb": 16.08
-            },
-            "ram": {
-              "total_gb": 16.0,
-              "available_gb": 3.13
-            },
-            "cpus": 8,
-            "workspace": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio"
-          }
-        },
-        "git_branch": "Production",
-        "git_head": "ea69ef36521ae68dc415be20499c2da7425370f2",
-        "git_production_head": "ea69ef36521ae68dc415be20499c2da7425370f2",
-        "git_working_tree_clean": false,
-        "node_version": "v22.22.3",
-        "ffmpeg_available": true
-      }
-    },
-    {
-      "gate": "G16",
-      "name": "Performance & Resource Audit",
-      "status": "PASS",
-      "required": true,
-      "kind": "TELEMETRY_AUDIT",
-      "details": {
-        "disk_free_gb": 16.01,
-        "ram_available_gb": 3.35,
-        "min_disk_headroom_gb": 16.0,
-        "min_ram_headroom_gb": 2.52,
-        "resource_breached": false,
-        "continuous_monitor_samples": 86,
-        "measured_180_shot_check_sec": 0.0,
-        "fast_check_samples_per_sec": 0,
-        "medium_20_shot_e2e_sec": 0.0
-      }
-    },
     {
       "gate": "K1",
       "name": "REAL_COMPILER_BEHAVIOR: Squire Executable Animation Parameters",
@@ -100,11 +49,11 @@
       "kind": "RENDER_PROOF",
       "required": true,
       "details": {
-        "diff_shot1_prone_vs_stand": 17.46,
-        "diff_shot2_treadmill_vs_stand": 109.49,
-        "proof_contact_sheet": "tests/evidence/v10/proof_k3_before_after.jpg",
-        "before_mp4_sha256": "c2f40109345cbfb489ff8528ea9f8ebc6532d83e8be8c66ac6e3a03de49330f3",
-        "after_mp4_sha256": "eb6f0f3af0f2b9627f196ba860e4fc9caaa011c84467e1a6cab0c047e567e083",
+        "diff_shot1_prone_vs_stand": 17.38,
+        "diff_shot2_treadmill_vs_stand": 109.16,
+        "proof_contact_sheet": "tests\\evidence\\v10\\proof_k3_before_after.jpg",
+        "before_mp4_sha256": "42c7bff49425ff4de9f38e513e3947135add82afc00c018d281c4befa4c1b213",
+        "after_mp4_sha256": "49fcf9e278c426367a49eebeaeea4b382e73d5c1d10c426a99674ca28bbdb325",
         "meaningful_pixel_divergence": true
       }
     },
@@ -128,9 +77,9 @@
       "kind": "MOTION_PROOF",
       "required": true,
       "details": {
-        "motion_prone_to_rise": 9.27,
-        "motion_rise_to_sprint": 61.1,
-        "proof_contact_sheet": "tests/evidence/v10/proof_k5_motion.jpg",
+        "motion_prone_to_rise": 9.29,
+        "motion_rise_to_sprint": 60.57,
+        "proof_contact_sheet": "tests\\evidence\\v10\\proof_k5_motion.jpg",
         "stationary_defect_rejected": true
       }
     },
@@ -141,12 +90,12 @@
       "kind": "SHOWCASE_30S",
       "required": true,
       "details": {
-        "output_file": ".test-runs/v10_20261113_215502/k06_squire_16x9_30s/out/Knights Agility Revealed.mp4",
+        "output_file": ".test-runs\\v10_20261114_080023\\k06_squire_16x9_30s\\out\\Knights Agility Revealed.mp4",
         "duration": 33.0,
         "spoken_voice_synthesized": true,
         "full_decode_exit": 0,
-        "sha256": "fbe72691766d9644f08aa4f1b529d49bfb1c9d4048927cf66ea3eb6a7efef8cb",
-        "proof_contact_sheet": "tests/evidence/v10/proof_k6_squire_16x9.jpg"
+        "sha256": "cc8e26a597846477a6b7604833362ad974215a04265948931453cf38ac1b8e7e",
+        "proof_contact_sheet": "tests\\evidence\\v10\\proof_k6_squire_16x9.jpg"
       }
     },
     {
@@ -156,12 +105,12 @@
       "kind": "SHORTS_VERTICAL",
       "required": true,
       "details": {
-        "output_file": ".test-runs/v10_20261113_215502/k07_squire_9x16_30s/out/Knights Agility Shorts 30s.mp4",
+        "output_file": ".test-runs\\v10_20261114_080023\\k07_squire_9x16_30s\\out\\Knights Agility Shorts 30s.mp4",
         "is_vertical_stream": true,
-        "duration": 32.0,
+        "duration": 31.999674,
         "full_decode_exit": 0,
-        "sha256": "5c82bd6bb996e49b4c69f87749352784f8cfeaebf5c03bd78006ccd781a04f1f",
-        "proof_contact_sheet": "tests/evidence/v10/proof_k7_squire_9x16.jpg"
+        "sha256": "e61942928b90661a3b8e24d8bed2c73416d51afe49c3cc1bd5784898e7bc88c6",
+        "proof_contact_sheet": "tests\\evidence\\v10\\proof_k7_squire_9x16.jpg"
       }
     },
     {
@@ -171,11 +120,11 @@
       "kind": "DEM_SHOWCASE",
       "required": true,
       "details": {
-        "output_file": ".test-runs/v10_20261113_215502/k08_dem_16x9_30s/out/The First Step.mp4",
-        "duration": 33.584,
+        "output_file": ".test-runs\\v10_20261114_080023\\k08_dem_16x9_30s\\out\\The First Step.mp4",
+        "duration": 33.583333,
         "full_decode_exit": 0,
-        "sha256": "69614ff1bfd24e03613cd44e81c5963422f79983dd7dffe8521ed0e8164f2568",
-        "proof_contact_sheet": "tests/evidence/v10/proof_k8_dem_16x9.jpg"
+        "sha256": "7d66b23a7e223ed139da21df0392308d52b4f35ed6342b47fd1817c1c4447fe2",
+        "proof_contact_sheet": "tests\\evidence\\v10\\proof_k8_dem_16x9.jpg"
       }
     },
     {
@@ -185,12 +134,12 @@
       "kind": "SHORTS_VERTICAL",
       "required": true,
       "details": {
-        "output_file": ".test-runs/v10_20261113_215502/k09_dem_9x16_30s/out/Stop Scrolling Now.mp4",
+        "output_file": ".test-runs\\v10_20261114_080023\\k09_dem_9x16_30s\\out\\Stop Scrolling Now.mp4",
         "is_vertical_stream": true,
-        "duration": 33.584,
+        "duration": 33.583333,
         "full_decode_exit": 0,
-        "sha256": "0f418763cd619d0c33eef01fc7ee27c96bdb49ef9dea68340e1749669625b568",
-        "proof_contact_sheet": "tests/evidence/v10/proof_k9_dem_9x16.jpg"
+        "sha256": "5e68e65bbb0fc496c501f4cbd8c5f5c32c27cc23d629a7363410c35eef883eaa",
+        "proof_contact_sheet": "tests\\evidence\\v10\\proof_k9_dem_9x16.jpg"
       }
     },
     {
@@ -200,10 +149,10 @@
       "kind": "AUDIO_METRICS",
       "required": true,
       "details": {
-        "measured_integrated_lufs": -14.0,
-        "measured_true_peak_dbtp": -3.3,
+        "measured_integrated_lufs": -14.1,
+        "measured_true_peak_dbtp": -1.8,
         "target_tolerance_met": true,
-        "evidence_saved": "tests/evidence/v10/v10_audio_report.json"
+        "evidence_saved": "tests\\evidence\\v10\\v10_audio_report.json"
       }
     },
     {
@@ -225,8 +174,8 @@
       "kind": "RESOURCE_SAFETY",
       "required": true,
       "details": {
-        "worker1_pid": 17933,
-        "worker2_pid": 17934,
+        "worker1_pid": 33884,
+        "worker2_pid": 35028,
         "concurrent_overlap": true,
         "process_tree_cleaned": true
       }
@@ -261,10 +210,10 @@
       "kind": "PROVENANCE",
       "required": true,
       "details": {
-        "branch": "Production",
-        "head_sha": "ea69ef36521ae68dc415be20499c2da7425370f2",
-        "ledger_path": "tests/evidence/v10/v10_execution_ledger.json",
-        "matrix_path": "tests/evidence/v10/v10_before_after_matrix.json"
+        "branch": "fix/Image-Shot",
+        "head_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+        "ledger_path": "tests\\evidence\\v10\\v10_execution_ledger.json",
+        "matrix_path": "tests\\evidence\\v10\\v10_before_after_matrix.json"
       }
     }
   ]

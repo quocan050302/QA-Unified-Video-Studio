@@ -1,38 +1,64 @@
 {
   "format_A_squire_16x9": {
     "description": "Military History / Squire, Horizontal 16:9 1080p",
+    "source_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
     "duration": 33.0,
-    "speech_voice": "REAL_SPOKEN_TTS",
-    "animation_compiled": "prone_lying_in_mud -> lab_treadmill_in_place -> 3phase_rise_run -> board_telemetry",
-    "audio_design": "mud_step, armor_clank, footsteps, battle_roar",
+    "fps": 30,
+    "resolution": "1920x1080",
     "aspect": "16:9",
-    "resolution": "1920x1080"
+    "speech_voice": "REAL_SPOKEN_TTS",
+    "output_file": ".test-runs\\v10_20261114_080023\\k06_squire_16x9_30s\\out\\Knights Agility Revealed.mp4",
+    "media_sha256": "cc8e26a597846477a6b7604833362ad974215a04265948931453cf38ac1b8e7e",
+    "before_hash": "42c7bff49425ff4de9f38e513e3947135add82afc00c018d281c4befa4c1b213",
+    "after_hash": "49fcf9e278c426367a49eebeaeea4b382e73d5c1d10c426a99674ca28bbdb325",
+    "animation_compiled": "prone_lying_in_mud -> lab_treadmill_in_place -> 3phase_rise_run -> board_telemetry",
+    "motion_checks": {
+      "prone_to_rise_diff": 9.29,
+      "rise_to_sprint_diff": 60.57
+    },
+    "audio_metrics": {
+      "integrated_lufs": -14.1,
+      "true_peak_dbtp": -1.8
+    },
+    "audio_design": "mud_step, armor_clank, footsteps, battle_roar"
   },
   "format_B_squire_9x16": {
     "description": "Military History / Squire, Vertical 9:16 Shorts (1080x1920)",
-    "duration": 32.0,
-    "speech_voice": "REAL_SPOKEN_TTS",
-    "animation_compiled": "vertical_safe_zones, mobile_scale_1.25, character_centered",
-    "audio_design": "mud_step, armor_clank, footsteps",
+    "source_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+    "duration": 31.999674,
+    "fps": 30,
+    "resolution": "1080x1920",
     "aspect": "9:16",
-    "resolution": "1080x1920"
+    "speech_voice": "REAL_SPOKEN_TTS",
+    "output_file": ".test-runs\\v10_20261114_080023\\k07_squire_9x16_30s\\out\\Knights Agility Shorts 30s.mp4",
+    "media_sha256": "e61942928b90661a3b8e24d8bed2c73416d51afe49c3cc1bd5784898e7bc88c6",
+    "animation_compiled": "vertical_safe_zones, mobile_scale_1.25, character_centered",
+    "audio_design": "mud_step, armor_clank, footsteps"
   },
   "format_C_dem_16x9": {
     "description": "Self-Improvement / DEM, Horizontal 16:9 1080p (Silent Animation)",
-    "duration": 33.0,
-    "speech_voice": "NONE_ORIGINAL_SILENT",
-    "animation_compiled": "clock_ring -> phone_feed_scroll -> bed_sit_to_stand -> city_sprint_speed_fx",
-    "audio_design": "alarm_beep, phone_vibrate, thud_soft, footsteps, music_bed",
+    "source_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+    "duration": 33.583333,
+    "fps": 30,
+    "resolution": "1920x1080",
     "aspect": "16:9",
-    "resolution": "1920x1080"
+    "speech_voice": "NONE_ORIGINAL_SILENT",
+    "output_file": ".test-runs\\v10_20261114_080023\\k08_dem_16x9_30s\\out\\The First Step.mp4",
+    "media_sha256": "7d66b23a7e223ed139da21df0392308d52b4f35ed6342b47fd1817c1c4447fe2",
+    "animation_compiled": "clock_ring -> phone_feed_scroll -> bed_sit_to_stand -> city_sprint_speed_fx",
+    "audio_design": "alarm_beep, phone_vibrate, thud_soft, footsteps, music_bed"
   },
   "format_D_dem_9x16": {
     "description": "Self-Improvement / DEM, Vertical 9:16 Shorts (1080x1920)",
-    "duration": 33.0,
-    "speech_voice": "NONE_ORIGINAL_SILENT",
-    "animation_compiled": "vertical_safe_margins, high_contrast_narr_text, phone_focal_push",
-    "audio_design": "phone_vibrate, alarm_beep, thud_soft, footsteps, cta_whoosh",
+    "source_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+    "duration": 33.583333,
+    "fps": 30,
+    "resolution": "1080x1920",
     "aspect": "9:16",
-    "resolution": "1080x1920"
+    "speech_voice": "NONE_ORIGINAL_SILENT",
+    "output_file": ".test-runs\\v10_20261114_080023\\k09_dem_9x16_30s\\out\\Stop Scrolling Now.mp4",
+    "media_sha256": "5e68e65bbb0fc496c501f4cbd8c5f5c32c27cc23d629a7363410c35eef883eaa",
+    "animation_compiled": "vertical_safe_margins, high_contrast_narr_text, phone_focal_push",
+    "audio_design": "phone_vibrate, alarm_beep, thud_soft, footsteps, cta_whoosh"
   }
 }
