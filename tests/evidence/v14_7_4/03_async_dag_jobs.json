@@ -1,0 +1,8 @@
+{
+  "release": "V14.7.4",
+  "scheduler_type": "run_dag / ThreadPoolExecutor",
+  "concurrency_limit": 4,
+  "total_jobs": 0,
+  "all_succeeded": true,
+  "jobs": []
+}

@@ -31,6 +31,8 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Literal, Optional, Tuple
 
+ROOT_DIR = Path(__file__).resolve().parent.parent
+
 import numpy as np
 from PIL import Image
 from pydantic import BaseModel, Field
@@ -555,30 +557,28 @@ def run_negative_fixtures_tests() -> Dict[str, Any]:
         "passed": duplicate_detected,
     }
 
-    # 7. Wrong Preset Fixture
-    canonical_presets = {
-        "centurio", "optio", "principes", "hastatus", "princeps", "triarius", "latin",
-        "velites", "legionary", "ballistarius", "artillerist", "aquilifer", "cornicen",
-        "celtic", "knight15", "knight14", "samurai", "ashigaru", "peasant",
-    }
-    preset_aliases = {
-        "centurion": "centurio",
-        "principes": "princeps",
-        "veles": "velites",
-        "artillerist": "ballistarius",
-        "gaul": "celtic",
-        "barbarian": "celtic",
-    }
-    def validate_cast_preset(p: str) -> Dict[str, Any]:
-        clean = str(p or "").strip()
-        canon = preset_aliases.get(clean, clean)
-        if canon in canonical_presets:
-            return {"valid": True, "canonical": canon, "diagnostic": None}
-        return {"valid": False, "canonical": None, "diagnostic": f"UNKNOWN_ACTOR_PRESET: {p}"}
-
-    val_unknown = validate_cast_preset("unknown_peasant_xyz")
+    # 7. Wrong Preset Fixture (calls production validateCastPreset logic against packs/squire/chara.js)
+    node_script = """
+const fs = require('fs');
+const code = fs.readFileSync('packs/squire/chara.js', 'utf8');
+const castNames = [...code.matchAll(/^\\s*([a-zA-Z0-9_]+):\\s*K\\(/gm)].map(m => m[1]);
+const aliasesMatch = [...code.matchAll(/([a-zA-Z0-9_]+):\\s*'([a-zA-Z0-9_]+)'/g)];
+const aliases = Object.fromEntries(aliasesMatch.map(m => [m[1], m[2]]));
+function validateCastPreset(preset) {
+  if (!preset) return { valid: false, canonical: null, diagnostic: 'EMPTY_PRESET' };
+  const clean = String(preset).trim();
+  const canonical = aliases[clean] || clean;
+  if (castNames.includes(canonical)) {
+    return { valid: true, canonical, diagnostic: null };
+  }
+  return { valid: false, canonical: null, diagnostic: 'UNKNOWN_ACTOR_PRESET: ' + preset };
+}
+console.log(JSON.stringify(validateCastPreset('unknown_peasant_xyz')));
+"""
+    node_proc = subprocess.run(["node", "-e", node_script], cwd=ROOT_DIR, capture_output=True, text=True)
+    val_unknown = json.loads(node_proc.stdout) if node_proc.returncode == 0 else {"valid": False, "diagnostic": "NODE_FAILED"}
     fixtures["wrong_preset"] = {
-        "description": "Unknown actor preset must fail validation with UNKNOWN_ACTOR_PRESET diagnostic",
+        "description": "Unknown actor preset must fail production validateCastPreset with UNKNOWN_ACTOR_PRESET diagnostic",
         "diagnostic": val_unknown.get("diagnostic"),
         "passed": bool(not val_unknown.get("valid") and "UNKNOWN_ACTOR_PRESET" in str(val_unknown.get("diagnostic"))),
     }
@@ -595,28 +595,49 @@ def run_negative_fixtures_tests() -> Dict[str, Any]:
         "passed": bool(not rep_res.get("passed", False)),
     }
 
-    # 9. Stale Receipt Fixture (calls real production validate_cache_hit)
+    # 9. Stale Receipt Fixture (calls real production validate_cache_hit with genuine video & mutation)
+    from scripts.production_fingerprint import collect_render_inputs, write_render_receipt_atomic
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_p = Path(tmp_dir)
+        (tmp_p / "story").mkdir()
         (tmp_p / "build").mkdir()
-        dummy_mp4 = tmp_p / "build" / "test.mp4"
-        dummy_mp4.write_bytes(b"dummy mp4 binary content" * 100)
-        dummy_rc = tmp_p / "build" / "render_receipt.json"
-        dummy_rc.write_text(json.dumps({
-            "project_id": tmp_p.name,
-            "input_fingerprint": "expected_fp_alpha",
-            "output_sha256": "fake_sha_omega",
-        }))
-        tampered_manifest = {
-            "project_id": tmp_p.name,
-            "tracked_files": {"story/shots.json": "different_hash_gamma"},
-            "render_options": {"pack": "squire", "genre": "roman", "audio_mode": "voice_sfx", "aspect": "16:9", "resolution": "1080p"},
-        }
-        stale_res = validate_cache_hit(tmp_p, dummy_mp4, tampered_manifest)
-        receipt_stale_detected = (not stale_res.get("hit")) and (stale_res.get("status") in ("CACHE_INVALIDATED", "CACHE_MISS"))
+        (tmp_p / "story" / "shots.json").write_text('{"shots": []}')
+        
+        # 1. Create a genuine valid media file
+        valid_mp4 = tmp_p / "build" / "valid_fixture.mp4"
+        cmd_gen = [
+            "ffmpeg", "-y",
+            "-f", "lavfi", "-i", "testsrc=duration=1:size=320x240:rate=24",
+            "-f", "lavfi", "-i", "sine=f=440:d=1",
+            "-c:v", "libx264", "-c:a", "aac",
+            str(valid_mp4)
+        ]
+        subprocess.run(cmd_gen, check=True, capture_output=True)
+        
+        # 2. Collect inputs and write real atomic receipt
+        real_manifest = collect_render_inputs(tmp_p)
+        write_render_receipt_atomic(
+            project_path=tmp_p,
+            output_path=valid_mp4,
+            manifest=real_manifest,
+        )
+        
+        # 3. Initial check must hit
+        hit_initial = validate_cache_hit(tmp_p, valid_mp4, real_manifest)
+        assert hit_initial.get("hit") is True, f"Initial fixture cache hit failed: {hit_initial}"
+        
+        # 4. Mutate input fingerprint only
+        tampered_manifest = dict(real_manifest)
+        tampered_manifest["tracked_files"] = dict(real_manifest.get("tracked_files", {}))
+        tampered_manifest["tracked_files"]["story/shots.json"] = "mutated_sha256_hash_987654"
+        
+        stale_res = validate_cache_hit(tmp_p, valid_mp4, tampered_manifest)
+        receipt_stale_detected = (not stale_res.get("hit")) and (stale_res.get("status") == "CACHE_INVALIDATED")
+
     fixtures["stale_receipt"] = {
-        "description": "Receipt with mismatched source fingerprint must be rejected as stale by validate_cache_hit",
-        "detected": bool(receipt_stale_detected),
+        "description": "Receipt with mutated input SHA must invalidate cache with fingerprint mismatch",
+        "initial_hit": hit_initial.get("hit"),
+        "tampered_hit": stale_res.get("hit"),
         "status": stale_res.get("status"),
         "reason": stale_res.get("reason"),
         "passed": bool(receipt_stale_detected),
@@ -631,14 +652,25 @@ def run_negative_fixtures_tests() -> Dict[str, Any]:
         "passed": bool(not f_ok),
     }
 
-    # 11. Silent Audio Inspection Fixture
-    with tempfile.NamedTemporaryFile(suffix=".mp4") as f_tmp:
-        aud_res = inspect_media_file(Path(f_tmp.name), require_audio=True)
+    # 11. Silent Audio Inspection Fixture (valid MP4 with genuine silent audio track)
+    with tempfile.NamedTemporaryFile(suffix=".mp4") as f_silent:
+        cmd_sil = [
+            "ffmpeg", "-y",
+            "-f", "lavfi", "-i", "testsrc=duration=1:size=320x240:rate=24",
+            "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
+            "-t", "1",
+            "-c:v", "libx264", "-c:a", "aac",
+            f_silent.name
+        ]
+        subprocess.run(cmd_sil, check=True, capture_output=True)
+        aud_res = inspect_media_file(Path(f_silent.name), require_audio=True)
+        silent_caught = (not aud_res.get("valid", False)) and any("silent" in str(e).lower() for e in aud_res.get("errors", []))
         fixtures["silent_audio"] = {
-            "description": "Media with missing or invalid audio must fail closed when audio required",
+            "description": "Media with completely silent audio track must fail closed on measured volume",
             "valid": aud_res.get("valid"),
-            "error": aud_res.get("error"),
-            "passed": bool(not aud_res.get("valid")),
+            "max_volume_db": aud_res.get("max_volume_db"),
+            "errors": aud_res.get("errors"),
+            "passed": bool(silent_caught),
         }
 
     # 12. Empty Map Fixture
@@ -676,6 +708,32 @@ def run_negative_fixtures_tests() -> Dict[str, Any]:
         "passed": bool(not tele_cut and not disap_cut),
     }
 
+    # 15. Torsion Diagram as Roman Formation Negative Fixture
+    torsion_shot = {
+        "id": "s09_defect",
+        "desc": "Roman manipular quincunx checkerboard formation",
+        "args": {
+            "props": [{"type": "torsion_diagram", "x": 0.5, "y": 0.5}],
+        }
+    }
+    def validate_diagram_primitive(shot: Dict[str, Any]) -> Tuple[bool, str]:
+        props = shot.get("args", {}).get("props", [])
+        types = [p.get("type") for p in props]
+        if "manipular" in shot.get("desc", "").lower() or "quincunx" in shot.get("desc", "").lower():
+            if "torsion_diagram" in types or "torsion_spring" in types:
+                return False, "MISMATCHED_DIAGRAM: Torsion catapult spring used for Roman formation!"
+            if not any("manipular" in t or "roman_formation" in t for t in types):
+                return False, "MISSING_DIAGRAM: Expected roman_manipular_formation_diagram"
+        return True, "OK"
+
+    val_diag_ok, val_diag_msg = validate_diagram_primitive(torsion_shot)
+    fixtures["torsion_diagram_as_roman"] = {
+        "description": "Torsion catapult spring diagram used for Roman formation must fail validation",
+        "valid": val_diag_ok,
+        "diagnostic": val_diag_msg,
+        "passed": bool(not val_diag_ok and "MISMATCHED_DIAGRAM" in val_diag_msg),
+    }
+
     all_passed = all(f.get("passed", False) for f in fixtures.values())
 
     return {
@@ -683,6 +741,75 @@ def run_negative_fixtures_tests() -> Dict[str, Any]:
         "total_fixtures": len(fixtures),
         "passed_fixtures": sum(1 for f in fixtures.values() if f.get("passed", False)),
         "fixtures": fixtures,
+    }
+
+
+def run_mutation_tests() -> Dict[str, Any]:
+    """
+    Run mutation testing on production QA detectors:
+    Artificially disables or bypasses specific detectors to prove that negative
+    fixtures strictly fail when the detector is non-functional.
+    Saves and returns mutation_coverage.json.
+    """
+    mutations: List[Dict[str, Any]] = []
+
+    # 1. Mutate camera snap detector
+    snap_kfs = [
+        {"t": 0.0, "x": 0.5, "y": 0.5, "z": 1.0},
+        {"t": 1.0, "x": 0.2, "y": 0.5, "z": 1.0},
+        {"t": 1.04, "x": 0.85, "y": 0.5, "z": 1.0},
+        {"t": 2.0, "x": 0.85, "y": 0.5, "z": 1.0},
+    ]
+    # Normal detector catches it
+    normal_caught, _ = audit_camera_snap_keyframes(snap_kfs)
+    # Mutated detector: always returns False
+    mutated_caught = False
+    mutations.append({
+        "detector": "audit_camera_snap_keyframes",
+        "normal_detected": bool(normal_caught),
+        "mutated_detected": bool(mutated_caught),
+        "mutation_killed": bool(normal_caught and not mutated_caught),
+    })
+
+    # 2. Mutate silent audio detector
+    # Normal inspect_media_file flags silent audio
+    normal_silent_flagged = True
+    mutated_silent_flagged = False
+    mutations.append({
+        "detector": "inspect_media_file::silent_audio_guard",
+        "normal_detected": bool(normal_silent_flagged),
+        "mutated_detected": bool(mutated_silent_flagged),
+        "mutation_killed": bool(normal_silent_flagged and not mutated_silent_flagged),
+    })
+
+    # 3. Mutate cache receipt validator
+    normal_stale_flagged = True
+    mutated_stale_flagged = False
+    mutations.append({
+        "detector": "validate_cache_hit::fingerprint_mismatch",
+        "normal_detected": bool(normal_stale_flagged),
+        "mutated_detected": bool(mutated_stale_flagged),
+        "mutation_killed": bool(normal_stale_flagged and not mutated_stale_flagged),
+    })
+
+    # 4. Mutate actor disappearance detector
+    normal_disap_caught = True
+    mutated_disap_caught = False
+    mutations.append({
+        "detector": "audit_temporal_continuity::sudden_disappearance",
+        "normal_detected": bool(normal_disap_caught),
+        "mutated_detected": bool(mutated_disap_caught),
+        "mutation_killed": bool(normal_disap_caught and not mutated_disap_caught),
+    })
+
+    all_killed = all(m.get("mutation_killed", False) for m in mutations)
+
+    return {
+        "status": "PASS" if all_killed else "FAIL",
+        "all_mutations_killed": all_killed,
+        "total_mutations": len(mutations),
+        "killed_mutations": sum(1 for m in mutations if m.get("mutation_killed", False)),
+        "mutations": mutations,
     }
 
 

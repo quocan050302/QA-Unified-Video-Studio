@@ -1,0 +1,46 @@
+{
+  "archetypes": {
+    "marcus": {
+      "name": "Centurion Marcus",
+      "role": "Centurio Prior",
+      "preset": "centurio",
+      "armor": "lorica_hamata",
+      "helmet": "galea_transverse_crest",
+      "weapon": "gladius",
+      "cloak": "red_sagum"
+    },
+    "legion_a": {
+      "name": "Legionary Lucius",
+      "role": "Front Rank Shieldman",
+      "preset": "legionary",
+      "shield": "scutum_rectangular",
+      "weapon": "gladius"
+    },
+    "legion_b": {
+      "name": "Legionary Titus",
+      "role": "Roof Shieldman",
+      "preset": "legionary",
+      "shield": "scutum_rectangular",
+      "weapon": "gladius"
+    },
+    "legion_c": {
+      "name": "Legionary Quintus",
+      "role": "Flank Guard",
+      "preset": "legionary",
+      "shield": "scutum_rectangular",
+      "weapon": "gladius"
+    },
+    "opp_a": {
+      "name": "Eastern Archer",
+      "role": "Horse Archer Skirmisher",
+      "preset": "celtic",
+      "weapon": "composite_bow"
+    },
+    "opp_b": {
+      "name": "Eastern Archer Reserve",
+      "role": "Foot Archer",
+      "preset": "celtic",
+      "weapon": "composite_bow"
+    }
+  }
+}

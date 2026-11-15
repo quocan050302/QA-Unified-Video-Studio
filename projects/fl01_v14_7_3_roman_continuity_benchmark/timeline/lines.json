@@ -1,72 +1,92 @@
 [
   {
     "id": "s01",
-    "text": "When a Roman front line began to buckle under relentless enemy pressure, why was a sudden gap not a fatal disaster, but a calculated trap?",
+    "text": "When a Roman line buckled, why was a sudden gap not fatal, but a trap?",
     "start": 0.0,
-    "dur": 4.5,
-    "spoken_dur": 8.34
+    "dur": 5.4,
+    "spoken_dur": 4.5,
+    "speech_start": 0.2,
+    "speech_end": 4.7
   },
   {
     "id": "s02",
-    "text": "In early republican warfare, the legion did not fight as one rigid wall. It deployed in three staggered lines of maniples.",
-    "start": 4.5,
-    "dur": 5.0,
-    "spoken_dur": 7.36
+    "text": "The early legion deployed not as a rigid wall, but in three staggered lines.",
+    "start": 5.4,
+    "dur": 5.4,
+    "spoken_dur": 4.5,
+    "speech_start": 5.6,
+    "speech_end": 10.1
   },
   {
     "id": "s03",
-    "text": "Centurion Marcus watches the forward hastati. The enemy's fierce charge collides with brutal kinetic weight.",
-    "start": 9.5,
-    "dur": 5.5,
-    "spoken_dur": 6.5
+    "text": "Centurion Marcus monitors the hastati as Celtic warriors charge.",
+    "start": 10.8,
+    "dur": 5.4,
+    "spoken_dur": 4.16,
+    "speech_start": 11.0,
+    "speech_end": 15.16
   },
   {
     "id": "s04",
-    "text": "Young hastati lock their shields edge to edge. The pressure mounts with every passing second as fatigue sets in.",
-    "start": 15.0,
-    "dur": 5.5,
-    "spoken_dur": 6.36
+    "text": "Hastati lock their heavy shields rim to rim, absorbing the violent collision.",
+    "start": 16.2,
+    "dur": 5.4,
+    "spoken_dur": 4.44,
+    "speech_start": 16.4,
+    "speech_end": 20.84
   },
   {
     "id": "s05",
-    "text": "Individual files absorb the brutal impact, but mortal men cannot maintain hand-to-hand combat indefinitely.",
-    "start": 20.5,
-    "dur": 5.5,
-    "spoken_dur": 6.55
+    "text": "Front ranks hold against the weight, but human stamina rapidly drains.",
+    "start": 21.6,
+    "dur": 5.4,
+    "spoken_dur": 4.37,
+    "speech_start": 21.8,
+    "speech_end": 26.17
   },
   {
     "id": "s06",
-    "text": "At Marcus's sharp command, file partners sidestep in disciplined unison, opening clean corridors through the line.",
-    "start": 26.0,
-    "dur": 5.5,
-    "spoken_dur": 6.99
+    "text": "Marcus gives the command, and front ranks sidestep into corridors.",
+    "start": 27.0,
+    "dur": 5.4,
+    "spoken_dur": 4.23,
+    "speech_start": 27.2,
+    "speech_end": 31.43
   },
   {
     "id": "s07",
-    "text": "Through these precise gaps, fresh principes advance in locked formation, taking the strain without losing an inch of ground.",
-    "start": 31.5,
-    "dur": 5.5,
-    "spoken_dur": 7.38
+    "text": "Exhausted hastati slip backward into the lanes to rest.",
+    "start": 32.4,
+    "dur": 5.4,
+    "spoken_dur": 3.48,
+    "speech_start": 32.6,
+    "speech_end": 36.08
   },
   {
     "id": "s08",
-    "text": "The exhausted hastati fall back between the files, while the fresh line seals together like a solid iron gate.",
-    "start": 37.0,
-    "dur": 5.5,
-    "spoken_dur": 6.64
+    "text": "Fresh principes advance through the gaps, locking shields like an iron gate.",
+    "start": 37.8,
+    "dur": 5.4,
+    "spoken_dur": 4.41,
+    "speech_start": 38.0,
+    "speech_end": 42.41
   },
   {
     "id": "s09",
-    "text": "This quincunx formation turned line relief into an impenetrable engine of rotating manpower.",
-    "start": 42.5,
-    "dur": 5.5,
-    "spoken_dur": 5.29
+    "text": "This quincunx formation turned line relief into an engine of manpower.",
+    "start": 43.2,
+    "dur": 5.4,
+    "spoken_dur": 4.02,
+    "speech_start": 43.4,
+    "speech_end": 47.42
   },
   {
     "id": "s10",
-    "text": "By replacing tired fighters with fresh steel, the legion transformed an apparent crisis into overwhelming tactical order.",
-    "start": 48.0,
-    "dur": 4.5,
-    "spoken_dur": 7.06
+    "text": "By rotating fresh ranks, Roman discipline turned crisis into victory.",
+    "start": 48.6,
+    "dur": 5.4,
+    "spoken_dur": 4.74,
+    "speech_start": 48.8,
+    "speech_end": 53.54
   }
 ]

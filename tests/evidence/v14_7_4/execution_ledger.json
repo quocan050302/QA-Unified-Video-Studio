@@ -1,0 +1,41 @@
+{
+  "release": "V14.7.4",
+  "benchmark": "ROMAN_CONTINUITY_BENCHMARK",
+  "total_time_sec": 82.25,
+  "steps": [
+    {
+      "step": "branch_integrity_check",
+      "branch": "fix/Image-Shot",
+      "head": "c635ed5c4a725bd4ecb0c5a78a8b71b152c90e25",
+      "timestamp": 1794728051.8075168
+    },
+    {
+      "step": "preflight_resource_check",
+      "budget": {
+        "status": "PASS",
+        "healthy": true,
+        "message": "OK",
+        "disk_free_gb": 18.52,
+        "disk_min_reserve_gb": 6.0,
+        "ram_available_gb": 3.57,
+        "ram_min_reserve_gb": 1.0,
+        "cpu_count": 8,
+        "timestamp": 1794728051.807692
+      },
+      "concurrency_limit": 4,
+      "timestamp": 1794728051.80778
+    },
+    {
+      "step": "acceptance_suite",
+      "elapsed_sec": 44.65,
+      "master_status": "TECH_VERIFIED",
+      "passed_gates": "8/9"
+    },
+    {
+      "step": "evidence_generation_complete",
+      "artifacts_generated": 20,
+      "total_elapsed_sec": 82.25,
+      "timestamp": 1794728134.021579
+    }
+  ]
+}

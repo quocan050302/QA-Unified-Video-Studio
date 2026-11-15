@@ -1,0 +1,33 @@
+{
+  "release": "V14.7.4",
+  "multi_format_fixtures": {
+    "squire_16x9": {
+      "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_squire_16x9/out/v14_2_squire_16x9.mp4",
+      "exists": true,
+      "width": 1920,
+      "height": 1080,
+      "fps": 24.0,
+      "codec": "h264",
+      "valid": true
+    },
+    "squire_9x16": {
+      "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_squire_9x16/out/v14_2_squire_9x16.mp4",
+      "exists": true,
+      "width": 1080,
+      "height": 1920,
+      "fps": 24.0,
+      "codec": "h264",
+      "valid": true
+    },
+    "dem_16x9": {
+      "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_2_dem_16x9/out/v14_2_dem_16x9.mp4",
+      "exists": true,
+      "width": 1920,
+      "height": 1080,
+      "fps": 24.0,
+      "codec": "h264",
+      "valid": true
+    }
+  },
+  "all_fixtures_valid": true
+}

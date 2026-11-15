@@ -1,0 +1,7 @@
+{
+  "release": "V14.7.4",
+  "voice_synthesis_sec": 6.7,
+  "visual_qa_audit_sec": 20.09,
+  "negative_fixtures_sec": 11.16,
+  "total_validation_elapsed_sec": 66.31
+}

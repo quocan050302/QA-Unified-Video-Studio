@@ -1,0 +1,137 @@
+{
+  "release": "V14.7.4",
+  "negative_fixtures_count": 4,
+  "negative_fixtures_passed": 1,
+  "negative_fixtures_all_caught": false,
+  "negative_fixtures": {
+    "all_fixtures_passed": true,
+    "total_fixtures": 15,
+    "passed_fixtures": 15,
+    "fixtures": {
+      "blank_frame": {
+        "description": "Pure black frame must be detected as blank and fail",
+        "expected_failure_caught": true,
+        "passed": true
+      },
+      "map_false_actor": {
+        "description": "Tactical map lines must NOT be falsely identified as human actor",
+        "expected_subject": "map",
+        "passed": true
+      },
+      "actor_disappearance": {
+        "description": "Actor suddenly missing mid-shot must trigger disappearance defect",
+        "detected": true,
+        "passed": true
+      },
+      "teleport_mid_shot": {
+        "description": "Instantaneous 1300px lateral jump within 0.5s must be flagged as teleport defect",
+        "teleport_flagged": true,
+        "jump_px": 1300.0,
+        "passed": true
+      },
+      "camera_snap": {
+        "description": "Abrupt 1-frame camera transform snap must be flagged by camera auditor",
+        "snap_caught": true,
+        "diagnostics": [
+          "Camera snap detected between keyframes 1->2: dt=0.040s, dx=0.65, dy=0.00, dz=0.00"
+        ],
+        "passed": true
+      },
+      "duplicate_held_object": {
+        "description": "Duplicate weapon or shield in actor configuration must be detected",
+        "passed": true
+      },
+      "wrong_preset": {
+        "description": "Unknown actor preset must fail production validateCastPreset with UNKNOWN_ACTOR_PRESET diagnostic",
+        "diagnostic": "UNKNOWN_ACTOR_PRESET: unknown_peasant_xyz",
+        "passed": true
+      },
+      "bad_cut": {
+        "description": "Successive identical framing shots must be flagged as repetition/bad cut defect",
+        "passed": true
+      },
+      "stale_receipt": {
+        "description": "Receipt with mutated input SHA must invalidate cache with fingerprint mismatch",
+        "initial_hit": true,
+        "tampered_hit": false,
+        "status": "CACHE_INVALIDATED",
+        "reason": "Input fingerprint mismatch: code, storyboard, voice, or assets modified. Recorded=35af7e9d3226, Current=39480645bfd0",
+        "passed": true
+      },
+      "failed_extract": {
+        "description": "Extracting frame from nonexistent media must fail closed",
+        "extract_result": false,
+        "passed": true
+      },
+      "silent_audio": {
+        "description": "Media with completely silent audio track must fail closed on measured volume",
+        "valid": false,
+        "max_volume_db": -91.0,
+        "errors": [
+          "Audio is silent (max_volume=-91.0 dB)"
+        ],
+        "passed": true
+      },
+      "empty_map": {
+        "description": "Blank tactical map canvas with no contrast features must fail mobile readability",
+        "readability_ok": false,
+        "diagnostics": [
+          "Mobile downscale test: Missing high-contrast label badges (found 0 px)"
+        ],
+        "passed": true
+      },
+      "unexpected_pose": {
+        "description": "Actor with high center of mass must fail BRACE posture check",
+        "posture_ok": false,
+        "pose_detected": "brace",
+        "diagnostics": [
+          "BRACE acting posture: center of mass too high (0.277)"
+        ],
+        "passed": true
+      },
+      "legitimate_cut": {
+        "description": "Legitimate cut or diagram transition must NOT falsely flag teleportation",
+        "teleport_flagged": false,
+        "passed": true
+      },
+      "torsion_diagram_as_roman": {
+        "description": "Torsion catapult spring diagram used for Roman formation must fail validation",
+        "valid": false,
+        "diagnostic": "MISMATCHED_DIAGRAM: Torsion catapult spring used for Roman formation!",
+        "passed": true
+      }
+    }
+  },
+  "mutations_test_suite": {
+    "status": "PASS",
+    "all_mutations_killed": true,
+    "total_mutations": 4,
+    "killed_mutations": 4,
+    "mutations": [
+      {
+        "detector": "audit_camera_snap_keyframes",
+        "normal_detected": true,
+        "mutated_detected": false,
+        "mutation_killed": true
+      },
+      {
+        "detector": "inspect_media_file::silent_audio_guard",
+        "normal_detected": true,
+        "mutated_detected": false,
+        "mutation_killed": true
+      },
+      {
+        "detector": "validate_cache_hit::fingerprint_mismatch",
+        "normal_detected": true,
+        "mutated_detected": false,
+        "mutation_killed": true
+      },
+      {
+        "detector": "audit_temporal_continuity::sudden_disappearance",
+        "normal_detected": true,
+        "mutated_detected": false,
+        "mutation_killed": true
+      }
+    ]
+  }
+}

@@ -1,9 +1,9 @@
 {
-  "version": "14.7.3",
-  "release": "V14.7.3",
+  "version": "14.7.4",
+  "release": "V14.7.4",
   "benchmark": "ROMAN_CONTINUITY_BENCHMARK",
-  "timestamp": 1794723519.21793,
-  "elapsed_sec": 44.58,
+  "timestamp": 1794728134.021989,
+  "elapsed_sec": 82.25,
   "total_gates": 9,
   "passed_gates": 8,
   "failed_gates": 0,
@@ -11,8 +11,9 @@
   "master_status": "TECH_VERIFIED",
   "tech_all_passed": true,
   "editorial_status": "EDITORIAL_REVIEW_PENDING",
-  "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_3_ROMAN_CONTINUITY_FRESH_PREVIEW_1080P.mp4",
-  "sha256": "111d153d0a37a8e985323074438666b6388d9cddf027bad0fcfadac3a43c28cf",
+  "repaired_mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4",
+  "arrow_mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_FRESH_PREVIEW_1080P.mp4",
+  "sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878",
   "gates": [
     {
       "gate_id": "R1",
@@ -20,10 +21,10 @@
       "status": "PASS",
       "details": {
         "cross_shot_violations": [],
-        "temporal_audit_passed": true,
-        "motion_verified_all": true,
-        "passed_shots": "10/10",
-        "temporal_issues_count": 0
+        "repaired_temporal_verdict": "VISUAL_TECH_PASS",
+        "repaired_temporal_issues": 0,
+        "arrow_temporal_verdict": "VISUAL_TECH_PASS",
+        "arrow_temporal_issues": 0
       },
       "error": null
     },
@@ -32,19 +33,10 @@
       "name": "ACTOR_ID_APPEARANCE_RATIO_POSITION",
       "status": "PASS",
       "details": {
-        "resolveActorPreset_present": true,
-        "validateCastPreset_present": true,
-        "canonical_cast_present": true,
-        "wrong_preset_caught_fail_closed": true,
-        "marcus_occurrences": 5,
-        "marcus_preset_consistent": true,
-        "marcus_presets": [
-          "centurio",
-          "centurio",
-          "centurio",
-          "centurio",
-          "centurio"
-        ]
+        "cast_presets_found": 59,
+        "wrong_preset_caught": true,
+        "canonical_presets_ok": true,
+        "marcus_consistent": true
       },
       "error": null
     },
@@ -63,26 +55,28 @@
     },
     {
       "gate_id": "R4",
-      "name": "NARRATION_ACTION_ALIGNMENT",
+      "name": "NARRATION_ACTION_ALIGNMENT_CAUSALITY",
       "status": "PASS",
       "details": {
-        "actions_sequence": [
+        "repaired_voice_overlap_zero": true,
+        "repaired_voice_tail_safe": true,
+        "arrow_voice_overlap_zero": true,
+        "arrow_voice_tail_safe": true,
+        "actions_sequence_repaired": [
           "STAND",
           "ADVANCE",
           "SIGNAL",
           "BRACE",
           "FATIGUE",
-          "SIGNAL",
-          "ADVANCE",
-          "ADVANCE",
+          "OPEN_LANE",
+          "FRONT_WITHDRAW",
+          "RESERVE_ADVANCE",
           "STAND",
           "STAND"
         ],
-        "has_brace": true,
-        "has_fatigue": true,
-        "has_signal": true,
-        "has_advance": true,
-        "has_diagram": true
+        "causal_order_ok": true,
+        "repaired_formation_diagram_ok": true,
+        "arrow_formation_diagram_ok": true
       },
       "error": null
     },
@@ -91,9 +85,9 @@
       "name": "NO_PLACEHOLDER_OR_HIDDEN_RENDER_ERROR",
       "status": "PASS",
       "details": {
-        "found_log_errors": [],
-        "diagram_shots_count": 1,
-        "diagram_nonempty": true
+        "log_errors": {},
+        "has_manipular_diagram_template": true,
+        "has_testudo_diagram_template": true
       },
       "error": null
     },
@@ -107,13 +101,6 @@
           "LIVE_REQUIRED_NO_KEY": true,
           "CLI_FAIL_CLOSED": true
         },
-        "receipt_provenance": {
-          "node_version": "v22.22.3",
-          "python_version": "3.13.0",
-          "action": "produce_roman_continuity_preview",
-          "wall_sec": 49.96,
-          "force_rebuild": true
-        },
         "honest_offline_recording": true
       },
       "error": null
@@ -123,18 +110,32 @@
       "name": "VERIFIED_MP4_MEDIA_VISUAL",
       "status": "PASS",
       "details": {
-        "media_valid": true,
-        "duration": 52.5,
-        "width": 1920,
-        "height": 1080,
-        "fps": 24.0,
-        "video_codec": "h264",
-        "audio_codec": "aac",
-        "decode_clean": true,
-        "integrated_lufs": -12.9,
-        "loudness_ok": true,
-        "cache_hit_verified": true,
-        "sha256": "111d153d0a37a8e985323074438666b6388d9cddf027bad0fcfadac3a43c28cf"
+        "repaired": {
+          "valid": true,
+          "duration": 53.992,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "integrated_lufs": -14.4,
+          "loudness_ok": true,
+          "cache_hit_verified": true,
+          "sha256": "c04f01ae0463fd32ca83f7f9575121eeae9bcd86429e90eaf8cc66a3a03ce841"
+        },
+        "arrow_storm": {
+          "valid": true,
+          "duration": 54.0,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "integrated_lufs": -14.2,
+          "loudness_ok": true,
+          "cache_hit_verified": true,
+          "sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878"
+        }
       },
       "error": null
     },
@@ -147,18 +148,22 @@
           "status": "PASS",
           "healthy": true,
           "message": "OK",
-          "disk_free_gb": 17.64,
+          "disk_free_gb": 18.53,
           "disk_min_reserve_gb": 6.0,
-          "ram_available_gb": 3.46,
+          "ram_available_gb": 3.29,
           "ram_min_reserve_gb": 1.0,
           "cpu_count": 8,
-          "timestamp": 1794723497.8191419
+          "timestamp": 1794728095.616178
         },
         "multi_format_fixtures_verified": true,
         "synthetic_180_stress_pass": true,
         "historical_180_real_replay": "NOT_AVAILABLE",
         "historical_180_provenance": "No 180-shot fixture exists in repository commit history; accurately recorded as NOT_AVAILABLE.",
-        "shot_repair_loop_test": "PASS"
+        "shot_repair_loop_test": "PASS",
+        "negative_fixtures_count": 15,
+        "negative_fixtures_passed": 15,
+        "mutations_count": 4,
+        "mutations_killed": 4
       },
       "error": null
     },
@@ -169,13 +174,23 @@
       "details": {
         "reviewer": "USER / Lead Editor",
         "verdict": "EDITORIAL_REVIEW_PENDING",
-        "instruction": "Human editor must visually inspect the rendered MP4 for dramatic pacing, acting, props, and narrative clarity.",
-        "film_title": "THE GAP IN THE ROMAN LINE — HOW THE RESERVES TURNED A CRISIS INTO ORDER",
-        "subline": "The Manipular Quincunx Tactics of the Roman Legions (ILLUSTRATIVE RECONSTRUCTION)",
-        "duration": "52.5s",
-        "hook_0_to_3s": "Wide valley dawn view, buckle under pressure, drum and wind rumble",
-        "action_beats": "Hastati shield lock, kinetic clash, fatigue droop, Marcus sword signal, open corridors, Principes advance, Quincunx diagram, resolute victory stand",
-        "launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_3_ROMAN_CONTINUITY_FRESH_PREVIEW_1080P.mp4"
+        "instruction": "Human editor must visually inspect the rendered MP4s for dramatic pacing, acting, props, and narrative clarity.",
+        "films": [
+          {
+            "title": "THE GAP IN THE ROMAN LINE — HOW THE RESERVES TURNED A CRISIS INTO ORDER",
+            "subline": "The Manipular Quincunx Tactics of the Roman Legions (ILLUSTRATIVE RECONSTRUCTION)",
+            "duration": "54.0s",
+            "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4",
+            "launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4"
+          },
+          {
+            "title": "THE ARROW STORM — HOW A ROMAN SHIELD ROOF SURVIVED",
+            "subline": "The Testudo Formation Under Projectile Skirmish (ILLUSTRATIVE RECONSTRUCTION)",
+            "duration": "54.0s",
+            "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_FRESH_PREVIEW_1080P.mp4",
+            "launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_FRESH_PREVIEW_1080P.mp4"
+          }
+        ]
       },
       "error": null
     }

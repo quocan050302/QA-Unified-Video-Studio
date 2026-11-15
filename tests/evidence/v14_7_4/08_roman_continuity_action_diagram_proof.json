@@ -1,0 +1,84 @@
+{
+  "release": "V14.7.4",
+  "project": "fl01_v14_7_3_roman_continuity_benchmark",
+  "actions_sequence": [
+    "STAND",
+    "ADVANCE",
+    "SIGNAL",
+    "BRACE",
+    "FATIGUE",
+    "OPEN_LANE",
+    "FRONT_WITHDRAW",
+    "RESERVE_ADVANCE",
+    "STAND",
+    "STAND"
+  ],
+  "causal_trace": [
+    {
+      "shot": "s01",
+      "action": "STAND",
+      "start": 0.0,
+      "end": 5.4
+    },
+    {
+      "shot": "s02",
+      "action": "ADVANCE",
+      "start": 5.4,
+      "end": 10.8
+    },
+    {
+      "shot": "s03",
+      "action": "SIGNAL",
+      "start": 10.8,
+      "end": 16.2
+    },
+    {
+      "shot": "s04",
+      "action": "BRACE",
+      "start": 16.2,
+      "end": 21.6
+    },
+    {
+      "shot": "s05",
+      "action": "FATIGUE",
+      "start": 21.6,
+      "end": 27.0
+    },
+    {
+      "shot": "s06",
+      "action": "OPEN_LANE",
+      "start": 27.0,
+      "end": 32.4
+    },
+    {
+      "shot": "s07",
+      "action": "FRONT_WITHDRAW",
+      "start": 32.4,
+      "end": 37.8
+    },
+    {
+      "shot": "s08",
+      "action": "RESERVE_ADVANCE",
+      "start": 37.8,
+      "end": 43.2
+    },
+    {
+      "shot": "s09",
+      "action": "STAND",
+      "start": 43.2,
+      "end": 48.6
+    },
+    {
+      "shot": "s10",
+      "action": "STAND",
+      "start": 48.6,
+      "end": 54.0
+    }
+  ],
+  "open_lane_before_withdraw": true,
+  "withdraw_before_advance": true,
+  "diagram_shot_id": "s09",
+  "diagram_prop_type": "roman_manipular_formation_diagram",
+  "is_quincunx_formation_diagram": true,
+  "torsion_diagram_eliminated": true
+}

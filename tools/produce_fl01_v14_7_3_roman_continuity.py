@@ -42,149 +42,200 @@ from scripts.production_fingerprint import (
 from tools.cinematic_camera import plan_camera_sequence
 
 PROJECT_DIR = ROOT_DIR / "projects" / "fl01_v14_7_3_roman_continuity_benchmark"
-OUT_MP4_PATH = PROJECT_DIR / "out" / "FL01_V14_7_3_ROMAN_CONTINUITY_FRESH_PREVIEW_1080P.mp4"
+OUT_V14_7_3_MP4_PATH = PROJECT_DIR / "out" / "FL01_V14_7_3_ROMAN_CONTINUITY_FRESH_PREVIEW_1080P.mp4"
+OUT_REPAIRED_MP4_PATH = PROJECT_DIR / "out" / "FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4"
+OUT_MP4_PATH = OUT_REPAIRED_MP4_PATH
 
 SCRIPT_BEATS = [
     (
         "s01",
-        "When a Roman front line began to buckle under relentless enemy pressure, why was a sudden gap not a fatal disaster, but a calculated trap?",
+        "When a Roman line buckled, why was a sudden gap not fatal, but a trap?",
         0.0,
-        4.5,
+        5.4,
     ),
     (
         "s02",
-        "In early republican warfare, the legion did not fight as one rigid wall. It deployed in three staggered lines of maniples.",
-        4.5,
-        9.5,
+        "The early legion deployed not as a rigid wall, but in three staggered lines.",
+        5.4,
+        10.8,
     ),
     (
         "s03",
-        "Centurion Marcus watches the forward hastati. The enemy's fierce charge collides with brutal kinetic weight.",
-        9.5,
-        15.0,
+        "Centurion Marcus monitors the hastati as Celtic warriors charge.",
+        10.8,
+        16.2,
     ),
     (
         "s04",
-        "Young hastati lock their shields edge to edge. The pressure mounts with every passing second as fatigue sets in.",
-        15.0,
-        20.5,
+        "Hastati lock their heavy shields rim to rim, absorbing the violent collision.",
+        16.2,
+        21.6,
     ),
     (
         "s05",
-        "Individual files absorb the brutal impact, but mortal men cannot maintain hand-to-hand combat indefinitely.",
-        20.5,
-        26.0,
+        "Front ranks hold against the weight, but human stamina rapidly drains.",
+        21.6,
+        27.0,
     ),
     (
         "s06",
-        "At Marcus's sharp command, file partners sidestep in disciplined unison, opening clean corridors through the line.",
-        26.0,
-        31.5,
+        "Marcus gives the command, and front ranks sidestep into corridors.",
+        27.0,
+        32.4,
     ),
     (
         "s07",
-        "Through these precise gaps, fresh principes advance in locked formation, taking the strain without losing an inch of ground.",
-        31.5,
-        37.0,
+        "Exhausted hastati slip backward into the lanes to rest.",
+        32.4,
+        37.8,
     ),
     (
         "s08",
-        "The exhausted hastati fall back between the files, while the fresh line seals together like a solid iron gate.",
-        37.0,
-        42.5,
+        "Fresh principes advance through the gaps, locking shields like an iron gate.",
+        37.8,
+        43.2,
     ),
     (
         "s09",
-        "This quincunx formation turned line relief into an impenetrable engine of rotating manpower.",
-        42.5,
-        48.0,
+        "This quincunx formation turned line relief into an engine of manpower.",
+        43.2,
+        48.6,
     ),
     (
         "s10",
-        "By replacing tired fighters with fresh steel, the legion transformed an apparent crisis into overwhelming tactical order.",
-        48.0,
-        52.5,
+        "By rotating fresh ranks, Roman discipline turned crisis into victory.",
+        48.6,
+        54.0,
     ),
 ]
 
 
 def generate_voice_track(project_dir: Path, beats: List[Tuple[str, str, float, float]]) -> Tuple[Path, List[Dict[str, Any]]]:
-    """Synthesize English spoken voice track using macOS say or audio synthesis."""
+    """
+    Synthesize English spoken voice track using macOS say (Daniel, 175 wpm)
+    with non-overlapping timeline composition and tail safety buffer.
+    """
     timeline_dir = project_dir / "timeline"
     timeline_dir.mkdir(parents=True, exist_ok=True)
     voice_wav = timeline_dir / "voice.wav"
     lines_json_path = timeline_dir / "lines.json"
-
-    lines_metadata: List[Dict[str, Any]] = []
-    temp_wavs: List[Path] = []
+    voice_events_path = timeline_dir / "voice_events.json"
 
     has_say = shutil.which("say") is not None
+    if not has_say:
+        raise RuntimeError("BLOCKED_NO_SPEECH_PROVIDER: macOS 'say' TTS engine not found.")
+
+    lines_metadata: List[Dict[str, Any]] = []
+    voice_events: List[Dict[str, Any]] = []
+    concat_files: List[Path] = []
+    cur_t = 0.0
+    total_dur = beats[-1][3]
 
     for sid, text, st, et in beats:
-        dur = et - st
-        t_wav = timeline_dir / f"line_{sid}.wav"
-
-        if has_say:
-            cmd = ["say", "-v", "Daniel", "-r", "165", "-o", str(t_wav), "--data-format=LEI16@44100", text]
-            subprocess.run(cmd, check=True, capture_output=True)
-        else:
-            # Fallback pure tone synthesis
-            cmd = [
-                "ffmpeg", "-y", "-f", "lavfi",
-                "-i", f"sine=frequency=220:duration={dur}",
-                "-ar", "44100", "-ac", "1", str(t_wav)
-            ]
-            subprocess.run(cmd, check=True, capture_output=True)
+        t_wav = timeline_dir / f"raw_{sid}.wav"
+        cmd = ["say", "-v", "Daniel", "-r", "175", "-o", str(t_wav), "--data-format=LEI16@44100", text]
+        subprocess.run(cmd, check=True, capture_output=True)
 
         info = inspect_media_file(t_wav)
-        spoken_dur = float(info.get("duration", dur))
+        spoken_dur = float(info.get("duration", 0.0))
+        if spoken_dur <= 0.0:
+            raise RuntimeError(f"Voice generation produced empty duration for {sid}")
+
+        planned_start = round(st + 0.20, 2)
+        actual_start = max(planned_start, round(cur_t + 0.05, 2))
+        actual_end = round(actual_start + spoken_dur, 2)
+        tail_margin = round(et - actual_end, 2)
+
+        # Gap before this line
+        gap = round(actual_start - cur_t, 2)
+        if gap > 0:
+            sil_wav = timeline_dir / f"sil_{sid}.wav"
+            subprocess.run([
+                "ffmpeg", "-y", "-f", "lavfi",
+                "-i", f"anullsrc=r=44100:cl=stereo:d={gap}",
+                "-ar", "44100", "-ac", "2", str(sil_wav)
+            ], check=True, capture_output=True)
+            concat_files.append(sil_wav)
+
+        # Convert spoken line to standard stereo 44.1k
+        st_wav = timeline_dir / f"speech_{sid}.wav"
+        subprocess.run([
+            "ffmpeg", "-y", "-i", str(t_wav),
+            "-ar", "44100", "-ac", "2", str(st_wav)
+        ], check=True, capture_output=True)
+        concat_files.append(st_wav)
+
+        voice_event = {
+            "beat_id": sid,
+            "text": text,
+            "text_hash": hashlib.sha256(text.encode("utf-8")).hexdigest()[:12],
+            "planned_start": planned_start,
+            "planned_end": round(st + (et - st), 2),
+            "measured_duration": round(spoken_dur, 2),
+            "actual_start": actual_start,
+            "actual_end": actual_end,
+            "overlap_ms": 0,
+            "tail_margin_sec": tail_margin,
+            "source": "macos_say_daniel_175wpm",
+        }
+        voice_events.append(voice_event)
 
         lines_metadata.append({
             "id": sid,
             "text": text,
             "start": round(st, 2),
-            "dur": round(dur, 2),
+            "dur": round(et - st, 2),
             "spoken_dur": round(spoken_dur, 2),
+            "speech_start": actual_start,
+            "speech_end": actual_end,
         })
-        temp_wavs.append(t_wav)
 
-    # Concatenate or position into single continuous voice.wav
-    filter_complex_parts = []
-    for idx, (sid, text, st, et) in enumerate(beats):
-        delay_ms = int(st * 1000)
-        filter_complex_parts.append(f"[{idx}:a]adelay={delay_ms}|{delay_ms}[a{idx}];")
+        cur_t = actual_end
+        if t_wav.is_file():
+            t_wav.unlink()
 
-    inputs_cmd = []
-    for tw in temp_wavs:
-        inputs_cmd.extend(["-i", str(tw)])
+    # Final silence pad up to total_dur if needed
+    if cur_t < total_dur:
+        tail_gap = round(total_dur - cur_t, 2)
+        tail_sil = timeline_dir / "tail_sil.wav"
+        subprocess.run([
+            "ffmpeg", "-y", "-f", "lavfi",
+            "-i", f"anullsrc=r=44100:cl=stereo:d={tail_gap}",
+            "-ar", "44100", "-ac", "2", str(tail_sil)
+        ], check=True, capture_output=True)
+        concat_files.append(tail_sil)
 
-    mix_labels = "".join([f"[a{i}]" for i in range(len(temp_wavs))])
-    total_dur = beats[-1][3]
-    filter_complex = "".join(filter_complex_parts) + f"{mix_labels}amix=inputs={len(temp_wavs)}:dropout_transition=0,apad=whole_dur={total_dur}[outa]"
+    # Concat all segments into voice.wav
+    concat_list = timeline_dir / "voice_concat.txt"
+    with open(concat_list, "w", encoding="utf-8") as f:
+        for cf in concat_files:
+            f.write(f"file '{cf.name}'\n")
 
-    cmd_stitch = [
-        "ffmpeg", "-y",
-        *inputs_cmd,
-        "-filter_complex", filter_complex,
-        "-map", "[outa]",
-        "-ar", "44100", "-ac", "2",
+    subprocess.run([
+        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+        "-i", str(concat_list),
+        "-c", "copy",
         str(voice_wav)
-    ]
-    subprocess.run(cmd_stitch, check=True, capture_output=True)
+    ], cwd=timeline_dir, check=True, capture_output=True)
 
-    # Clean temporary line files
-    for tw in temp_wavs:
-        if tw.is_file():
-            tw.unlink()
+    # Clean intermediate segment files
+    for cf in concat_files:
+        if cf.is_file():
+            cf.unlink()
+    if concat_list.is_file():
+        concat_list.unlink()
 
     with open(lines_json_path, "w", encoding="utf-8") as f:
         json.dump(lines_metadata, f, indent=2)
+
+    with open(voice_events_path, "w", encoding="utf-8") as f:
+        json.dump(voice_events, f, indent=2)
 
     return voice_wav, lines_metadata
 
 
 def build_mixed_soundtrack(project_dir: Path, total_dur: float) -> Path:
-    """Compose multi-layer sound design and mix to -14.0 LUFS."""
+    """Compose multi-layer sound design and mix to -14.0 LUFS ± 3.5 dB."""
     timeline_dir = project_dir / "timeline"
     build_dir = project_dir / "build"
     build_dir.mkdir(parents=True, exist_ok=True)
@@ -196,7 +247,7 @@ def build_mixed_soundtrack(project_dir: Path, total_dur: float) -> Path:
     ambience_wav = build_dir / "ambience_bed.wav"
     cmd_amb = [
         "ffmpeg", "-y", "-f", "lavfi",
-        "-i", f"anoisesrc=d={total_dur}:c=pink:r=44100:a=0.03,lowpass=f=280[pink]; sine=f=55:d={total_dur}[sub]; [pink][sub]amix=inputs=2:weights=0.8 0.2,volume=0.35",
+        "-i", f"anoisesrc=d={total_dur}:c=pink:r=44100:a=0.02,lowpass=f=240[pink]; sine=f=55:d={total_dur}[sub]; [pink][sub]amix=inputs=2:weights=0.8 0.2,volume=0.25",
         "-ar", "44100", "-ac", "2",
         str(ambience_wav)
     ]
@@ -206,34 +257,33 @@ def build_mixed_soundtrack(project_dir: Path, total_dur: float) -> Path:
     sfx_wav = build_dir / "sfx_track.wav"
     cmd_sfx = [
         "ffmpeg", "-y",
-        # Horn call at 9.5s and 26.0s
-        "-f", "lavfi", "-i", "sine=f=440:d=1.5,volume=0.35",
-        "-f", "lavfi", "-i", "sine=f=554:d=1.5,volume=0.35",
-        # Shield clash impact at 15.0s, 20.5s, 48.0s
-        "-f", "lavfi", "-i", "anoisesrc=d=0.6:c=white:r=44100:a=0.4,lowpass=f=1200,volume=0.4",
+        "-f", "lavfi", "-i", "sine=f=440:d=1.2,volume=0.25",
+        "-f", "lavfi", "-i", "sine=f=554:d=1.2,volume=0.25",
+        "-f", "lavfi", "-i", "anoisesrc=d=0.5:c=white:r=44100:a=0.3,lowpass=f=1100,volume=0.3",
         "-filter_complex",
-        "[0:a]adelay=9500|9500[h1]; [1:a]adelay=26000|26000[h2]; [2:a]adelay=15000|15000[c1]; [2:a]adelay=20500|20500[c2]; [2:a]adelay=48000|48000[c3]; [h1][h2][c1][c2][c3]amix=inputs=5:dropout_transition=0,apad=whole_dur={total_dur}[sfx_out]".format(total_dur=total_dur),
+        f"[0:a]adelay=10800|10800[h1]; [1:a]adelay=27000|27000[h2]; [2:a]adelay=16200|16200[c1]; [2:a]adelay=21600|21600[c2]; [2:a]adelay=48600|48600[c3]; [h1][h2][c1][c2][c3]amix=inputs=5:dropout_transition=0,apad=whole_dur={total_dur}[sfx_out]",
         "-map", "[sfx_out]",
         "-ar", "44100", "-ac", "2",
         str(sfx_wav)
     ]
     subprocess.run(cmd_sfx, check=True, capture_output=True)
 
-    # Final EBU R128 loudness normalization (-14.0 LUFS)
+    # Duck SFX/Ambience under voice and normalize to -14.0 LUFS
     cmd_mix = [
         "ffmpeg", "-y",
         "-i", str(voice_wav),
         "-i", str(ambience_wav),
         "-i", str(sfx_wav),
         "-filter_complex",
-        "[0:a]volume=1.05[v]; [1:a]volume=0.25[amb]; [2:a]volume=0.40[sfx]; [v][amb][sfx]amix=inputs=3:weights=1.0 0.25 0.35:dropout_transition=0,loudnorm=I=-14.0:TP=-1.5:LRA=7.0[outa]",
+        "[1:a][2:a]amix=inputs=2:weights=0.5 0.5[bg_sfx]; "
+        "[bg_sfx][0:a]sidechaincompress=threshold=0.15:ratio=4:attack=20:release=250[bg_ducked]; "
+        "[0:a][bg_ducked]amix=inputs=2:weights=1.0 0.35,loudnorm=I=-14:TP=-1.5:LRA=9[outa]",
         "-map", "[outa]",
         "-ar", "44100", "-ac", "2",
         str(mixed_wav)
     ]
     subprocess.run(cmd_mix, check=True, capture_output=True)
 
-    # Clean intermediate tracks
     if ambience_wav.is_file():
         ambience_wav.unlink()
     if sfx_wav.is_file():
@@ -242,16 +292,16 @@ def build_mixed_soundtrack(project_dir: Path, total_dur: float) -> Path:
     return mixed_wav
 
 
-def build_roman_continuity_storyboard(total_dur: float = 52.5) -> Dict[str, Any]:
+def build_roman_continuity_storyboard(total_dur: float = 54.0) -> Dict[str, Any]:
     """Define the 10 cinematic shots adhering strictly to the Roman continuity benchmark."""
     shots = [
-        # s01: Hook / Threat (0.0–4.5s)
+        # s01: Hook / Threat (0.0–5.4s)
         {
             "id": "s01",
             "tpl": "scene",
-            "dur": 4.5,
+            "dur": 5.4,
             "start": 0.0,
-            "end": 4.5,
+            "end": 5.4,
             "action": "STAND",
             "action_kind": "STAND",
             "line": SCRIPT_BEATS[0][1],
@@ -272,13 +322,13 @@ def build_roman_continuity_storyboard(total_dur: float = 52.5) -> Dict[str, Any]
                 ],
             },
         },
-        # s02: Establishing (4.5–9.5s)
+        # s02: Establishing (5.4–10.8s)
         {
             "id": "s02",
             "tpl": "scene",
-            "dur": 5.0,
-            "start": 4.5,
-            "end": 9.5,
+            "dur": 5.4,
+            "start": 5.4,
+            "end": 10.8,
             "action": "ADVANCE",
             "action_kind": "ADVANCE",
             "line": SCRIPT_BEATS[1][1],
@@ -296,13 +346,13 @@ def build_roman_continuity_storyboard(total_dur: float = 52.5) -> Dict[str, Any]
                 ],
             },
         },
-        # s03: Reaction (9.5–15.0s)
+        # s03: Reaction (10.8–16.2s)
         {
             "id": "s03",
             "tpl": "scene",
-            "dur": 5.5,
-            "start": 9.5,
-            "end": 15.0,
+            "dur": 5.4,
+            "start": 10.8,
+            "end": 16.2,
             "action": "SIGNAL",
             "action_kind": "SIGNAL",
             "line": SCRIPT_BEATS[2][1],
@@ -318,13 +368,13 @@ def build_roman_continuity_storyboard(total_dur: float = 52.5) -> Dict[str, Any]
                 ],
             },
         },
-        # s04: Action Setup - Shield Collision (15.0–20.5s)
+        # s04: Action Setup - Shield Collision (16.2–21.6s)
         {
             "id": "s04",
             "tpl": "scene",
-            "dur": 5.5,
-            "start": 15.0,
-            "end": 20.5,
+            "dur": 5.4,
+            "start": 16.2,
+            "end": 21.6,
             "action": "BRACE",
             "action_kind": "BRACE",
             "line": SCRIPT_BEATS[3][1],
@@ -341,13 +391,13 @@ def build_roman_continuity_storyboard(total_dur: float = 52.5) -> Dict[str, Any]
                 ],
             },
         },
-        # s05: Line Strain & Fatigue (20.5–26.0s)
+        # s05: Line Strain & Fatigue (21.6–27.0s)
         {
             "id": "s05",
             "tpl": "scene",
-            "dur": 5.5,
-            "start": 20.5,
-            "end": 26.0,
+            "dur": 5.4,
+            "start": 21.6,
+            "end": 27.0,
             "action": "FATIGUE",
             "action_kind": "FATIGUE",
             "line": SCRIPT_BEATS[4][1],
@@ -364,15 +414,15 @@ def build_roman_continuity_storyboard(total_dur: float = 52.5) -> Dict[str, Any]
                 ],
             },
         },
-        # s06: Change - Opening Corridors (26.0–31.5s)
+        # s06: Change - Opening Corridors (27.0–32.4s)
         {
             "id": "s06",
             "tpl": "scene",
-            "dur": 5.5,
-            "start": 26.0,
-            "end": 31.5,
-            "action": "SIGNAL",
-            "action_kind": "SIGNAL",
+            "dur": 5.4,
+            "start": 27.0,
+            "end": 32.4,
+            "action": "OPEN_LANE",
+            "action_kind": "OPEN_LANE",
             "line": SCRIPT_BEATS[5][1],
             "desc": "Marcus orders line rotation; front files sidestep smoothly to open clean relief corridors",
             "args": {
@@ -382,64 +432,64 @@ def build_roman_continuity_storyboard(total_dur: float = 52.5) -> Dict[str, Any]
                 "seed": 106,
                 "people": [
                     {"id": "marcus", "preset": "centurio", "x": 0.28, "y": 0.82, "h": 0.44, "facing": 1, "pose": "fire_signal"},
-                    {"id": "front_a", "preset": "hastatus", "x": 0.42, "to": 0.38, "y": 0.84, "h": 0.46, "facing": 1, "pose": "guard"},
-                    {"id": "front_b", "preset": "hastatus", "x": 0.50, "to": 0.54, "y": 0.84, "h": 0.46, "facing": 1, "pose": "guard"},
+                    {"id": "front_a", "preset": "hastatus", "x": 0.42, "to": 0.36, "y": 0.84, "h": 0.46, "facing": 1, "pose": "guard"},
+                    {"id": "front_b", "preset": "hastatus", "x": 0.50, "to": 0.56, "y": 0.84, "h": 0.46, "facing": 1, "pose": "guard"},
                 ],
             },
         },
-        # s07: Reserve Advance (31.5–37.0s)
+        # s07: Orderly Withdrawal (32.4–37.8s)
         {
             "id": "s07",
             "tpl": "scene",
-            "dur": 5.5,
-            "start": 31.5,
-            "end": 37.0,
-            "action": "ADVANCE",
-            "action_kind": "ADVANCE",
+            "dur": 5.4,
+            "start": 32.4,
+            "end": 37.8,
+            "action": "FRONT_WITHDRAW",
+            "action_kind": "FRONT_WITHDRAW",
             "line": SCRIPT_BEATS[6][1],
-            "desc": "Fresh, rested Principes advance through the open corridors into the frontline slots",
+            "desc": "Exhausted Hastati slip backward through the corridors while Principes prepare entry",
             "args": {
                 "bg": "plain",
                 "time": "day",
                 "ground": "grass",
                 "seed": 107,
                 "people": [
-                    {"id": "reserve_a", "preset": "principes", "x": 0.35, "to": 0.44, "y": 0.82, "h": 0.46, "facing": 1, "pose": "guard"},
-                    {"id": "reserve_b", "preset": "principes", "x": 0.42, "to": 0.48, "y": 0.82, "h": 0.46, "facing": 1, "pose": "guard"},
-                    {"id": "opp_a", "preset": "celtic", "x": 0.68, "y": 0.84, "h": 0.46, "facing": -1, "pose": "brace"},
+                    {"id": "front_a", "preset": "hastatus", "x": 0.36, "to": 0.28, "y": 0.82, "h": 0.44, "facing": 1, "pose": "stand"},
+                    {"id": "front_b", "preset": "hastatus", "x": 0.56, "to": 0.64, "y": 0.82, "h": 0.44, "facing": 1, "pose": "stand"},
+                    {"id": "opp_a", "preset": "celtic", "x": 0.75, "y": 0.84, "h": 0.46, "facing": -1, "pose": "brace"},
                 ],
             },
         },
-        # s08: Orderly Withdrawal (37.0–42.5s)
+        # s08: Reserve Advance & Shield Close (37.8–43.2s)
         {
             "id": "s08",
             "tpl": "scene",
-            "dur": 5.5,
-            "start": 37.0,
-            "end": 42.5,
-            "action": "ADVANCE",
-            "action_kind": "ADVANCE",
+            "dur": 5.4,
+            "start": 37.8,
+            "end": 43.2,
+            "action": "RESERVE_ADVANCE",
+            "action_kind": "RESERVE_ADVANCE",
             "line": SCRIPT_BEATS[7][1],
-            "desc": "Exhausted Hastati slip backward through the corridors while Principes lock shields",
+            "desc": "Fresh, rested Principes advance through the open corridors and lock shields",
             "args": {
                 "bg": "plain",
                 "time": "day",
                 "ground": "grass",
                 "seed": 108,
                 "people": [
-                    {"id": "reserve_a", "preset": "principes", "x": 0.44, "y": 0.82, "h": 0.46, "facing": 1, "pose": "brace"},
-                    {"id": "reserve_b", "preset": "principes", "x": 0.48, "y": 0.82, "h": 0.46, "facing": 1, "pose": "brace"},
-                    {"id": "front_a", "preset": "hastatus", "x": 0.38, "to": 0.28, "y": 0.82, "h": 0.44, "facing": 1, "pose": "stand"},
+                    {"id": "reserve_a", "preset": "principes", "x": 0.35, "to": 0.44, "y": 0.82, "h": 0.46, "facing": 1, "pose": "brace"},
+                    {"id": "reserve_b", "preset": "principes", "x": 0.58, "to": 0.50, "y": 0.82, "h": 0.46, "facing": 1, "pose": "brace"},
+                    {"id": "opp_a", "preset": "celtic", "x": 0.68, "y": 0.84, "h": 0.46, "facing": -1, "pose": "recoil"},
                 ],
             },
         },
-        # s09: Payoff - Quincunx Diagram (42.5–48.0s)
+        # s09: Payoff - Quincunx Diagram (43.2–48.6s)
         {
             "id": "s09",
             "tpl": "scene",
-            "dur": 5.5,
-            "start": 42.5,
-            "end": 48.0,
+            "dur": 5.4,
+            "start": 43.2,
+            "end": 48.6,
             "action": "STAND",
             "action_kind": "STAND",
             "expected_subject": "diagram",
@@ -453,17 +503,17 @@ def build_roman_continuity_storyboard(total_dur: float = 52.5) -> Dict[str, Any]
                 "show_unit_badges": True,
                 "contrast_boost": True,
                 "props": [
-                    {"type": "torsion_diagram", "x": 0.50, "y": 0.50, "scale": 1.05},
+                    {"type": "roman_manipular_formation_diagram", "x": 0.50, "y": 0.50, "scale": 1.05},
                 ],
             },
         },
-        # s10: Closing Stand & Victory Payoff (48.0–52.5s)
+        # s10: Closing Stand & Victory Payoff (48.6–54.0s)
         {
             "id": "s10",
             "tpl": "scene",
-            "dur": 4.5,
-            "start": 48.0,
-            "end": 52.5,
+            "dur": 5.4,
+            "start": 48.6,
+            "end": 54.0,
             "action": "STAND",
             "action_kind": "STAND",
             "line": SCRIPT_BEATS[9][1],
@@ -575,10 +625,10 @@ def construct_roman_continuity_project(force_rebuild: bool = False) -> Path:
     (p_dir / "timeline" / "transcript.txt").write_text(full_transcript, encoding="utf-8")
 
     blocks = [
-        {"id": "act_1_threat", "label": "Threat & Hook", "start": 0.0, "end": 9.5},
-        {"id": "act_2_reaction", "label": "Reaction & Clash", "start": 9.5, "end": 26.0},
-        {"id": "act_3_relief", "label": "Line Relief & Advance", "start": 26.0, "end": 42.5},
-        {"id": "act_4_payoff", "label": "Quincunx Payoff & Stand", "start": 42.5, "end": 52.5},
+        {"id": "act_1_threat", "label": "Threat & Hook", "start": 0.0, "end": 10.8},
+        {"id": "act_2_reaction", "label": "Reaction & Clash", "start": 10.8, "end": 27.0},
+        {"id": "act_3_relief", "label": "Line Relief & Advance", "start": 27.0, "end": 43.2},
+        {"id": "act_4_payoff", "label": "Quincunx Payoff & Stand", "start": 43.2, "end": 54.0},
     ]
     with open(p_dir / "timeline" / "blocks.json", "w", encoding="utf-8") as f:
         json.dump(blocks, f, indent=2)
@@ -705,7 +755,7 @@ def produce_roman_continuity_preview(force_rebuild: bool = False) -> Dict[str, A
             "action": "produce_roman_continuity_preview",
             "wall_sec": round(time.time() - t0, 2),
             "force_rebuild": force_rebuild,
-            "version": "14.7.3",
+            "version": "14.7.4",
         },
     )
 

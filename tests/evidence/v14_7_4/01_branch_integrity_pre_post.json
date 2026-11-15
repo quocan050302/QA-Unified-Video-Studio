@@ -1,0 +1,8 @@
+{
+  "verified_branch": "fix/Image-Shot",
+  "is_fix_image_shot": true,
+  "working_head": "c635ed5c4a725bd4ecb0c5a78a8b71b152c90e25",
+  "production_sha_baseline_invariant": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_unmodified": true,
+  "remote_production_untouched": true
+}

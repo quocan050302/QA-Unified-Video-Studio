@@ -1,0 +1,13 @@
+{
+  "release": "V14.7.4",
+  "synthetic_180_stress": {
+    "status": "PASS",
+    "total_shots": 180,
+    "camera_plans_compiled": 180,
+    "type": "SYNTHETIC_STRESS_BACKTEST"
+  },
+  "historical_180_real_replay": {
+    "status": "NOT_AVAILABLE",
+    "provenance": "No 180-shot fixture exists in repository commit history; accurately recorded as NOT_AVAILABLE per V14.7.4 specification."
+  }
+}

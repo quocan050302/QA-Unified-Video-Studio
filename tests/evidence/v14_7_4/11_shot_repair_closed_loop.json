@@ -1,0 +1,9 @@
+{
+  "test_status": "PASS",
+  "classified_defects": 1,
+  "manual_locked_preserved": true,
+  "repaired_preset": "legionary",
+  "repair_logs": [
+    "Shot s02: repaired actor preset to 'legionary'"
+  ]
+}

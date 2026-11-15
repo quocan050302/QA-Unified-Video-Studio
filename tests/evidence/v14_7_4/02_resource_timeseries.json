@@ -1,0 +1,312 @@
+{
+  "release": "V14.7.4",
+  "benchmark": "ROMAN_CONTINUITY_BENCHMARK",
+  "sample_count": 89,
+  "sampling_interval_sec": 0.5,
+  "max_process_rss_mb": 519.5,
+  "min_disk_free_gb": 18.52,
+  "hard_disk_safety_floor_gb": 6.0,
+  "disk_safety_floor_satisfied": true,
+  "samples": [
+    {
+      "timestamp": 1794728071.581,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.49,
+      "process_rss_mb": 430.81
+    },
+    {
+      "timestamp": 1794728072.089,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.42,
+      "process_rss_mb": 422.91
+    },
+    {
+      "timestamp": 1794728072.596,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.49,
+      "process_rss_mb": 425.36
+    },
+    {
+      "timestamp": 1794728073.103,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.42,
+      "process_rss_mb": 425.36
+    },
+    {
+      "timestamp": 1794728073.606,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.44,
+      "process_rss_mb": 431.03
+    },
+    {
+      "timestamp": 1794728074.116,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.42,
+      "process_rss_mb": 432.03
+    },
+    {
+      "timestamp": 1794728074.625,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.48,
+      "process_rss_mb": 432.67
+    },
+    {
+      "timestamp": 1794728075.131,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.4,
+      "process_rss_mb": 494.11
+    },
+    {
+      "timestamp": 1794728075.639,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.39,
+      "process_rss_mb": 485.42
+    },
+    {
+      "timestamp": 1794728076.14,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.44,
+      "process_rss_mb": 488.08
+    },
+    {
+      "timestamp": 1794728076.651,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.37,
+      "process_rss_mb": 488.09
+    },
+    {
+      "timestamp": 1794728077.152,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.35,
+      "process_rss_mb": 486.72
+    },
+    {
+      "timestamp": 1794728077.659,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.43,
+      "process_rss_mb": 493.5
+    },
+    {
+      "timestamp": 1794728078.167,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.36,
+      "process_rss_mb": 493.55
+    },
+    {
+      "timestamp": 1794728078.676,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.34,
+      "process_rss_mb": 498.94
+    },
+    {
+      "timestamp": 1794728079.187,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.33,
+      "process_rss_mb": 397.83
+    },
+    {
+      "timestamp": 1794728079.699,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.37,
+      "process_rss_mb": 401.66
+    },
+    {
+      "timestamp": 1794728080.205,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.33,
+      "process_rss_mb": 392.89
+    },
+    {
+      "timestamp": 1794728080.716,
+      "disk_free_gb": 18.52,
+      "ram_available_gb": 3.39,
+      "process_rss_mb": 397.05
+    },
+    {
+      "timestamp": 1794728081.225,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.37,
+      "process_rss_mb": 392.31
+    },
+    {
+      "timestamp": 1794728081.735,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.33,
+      "process_rss_mb": 393.33
+    },
+    {
+      "timestamp": 1794728082.246,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.39,
+      "process_rss_mb": 381.55
+    },
+    {
+      "timestamp": 1794728082.751,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.41,
+      "process_rss_mb": 387.55
+    },
+    {
+      "timestamp": 1794728083.253,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.4,
+      "process_rss_mb": 387.53
+    },
+    {
+      "timestamp": 1794728083.758,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.33,
+      "process_rss_mb": 392.39
+    },
+    {
+      "timestamp": 1794728084.268,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.39,
+      "process_rss_mb": 392.73
+    },
+    {
+      "timestamp": 1794728084.779,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.3,
+      "process_rss_mb": 391.39
+    },
+    {
+      "timestamp": 1794728085.29,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.32,
+      "process_rss_mb": 393.38
+    },
+    {
+      "timestamp": 1794728085.793,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.38,
+      "process_rss_mb": 394.94
+    },
+    {
+      "timestamp": 1794728086.298,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.38,
+      "process_rss_mb": 401.52
+    },
+    {
+      "timestamp": 1794728086.808,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.34,
+      "process_rss_mb": 405.66
+    },
+    {
+      "timestamp": 1794728087.319,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.29,
+      "process_rss_mb": 405.67
+    },
+    {
+      "timestamp": 1794728087.83,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.32,
+      "process_rss_mb": 405.77
+    },
+    {
+      "timestamp": 1794728088.34,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.37,
+      "process_rss_mb": 405.78
+    },
+    {
+      "timestamp": 1794728088.843,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.28,
+      "process_rss_mb": 519.5
+    },
+    {
+      "timestamp": 1794728089.353,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.29,
+      "process_rss_mb": 509.08
+    },
+    {
+      "timestamp": 1794728089.859,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.27,
+      "process_rss_mb": 463.44
+    },
+    {
+      "timestamp": 1794728090.37,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.28,
+      "process_rss_mb": 419.69
+    },
+    {
+      "timestamp": 1794728090.881,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.29,
+      "process_rss_mb": 390.27
+    },
+    {
+      "timestamp": 1794728091.388,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.29,
+      "process_rss_mb": 390.27
+    },
+    {
+      "timestamp": 1794728091.889,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.27,
+      "process_rss_mb": 390.34
+    },
+    {
+      "timestamp": 1794728092.4,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.27,
+      "process_rss_mb": 390.62
+    },
+    {
+      "timestamp": 1794728092.91,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.34,
+      "process_rss_mb": 378.73
+    },
+    {
+      "timestamp": 1794728093.421,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.28,
+      "process_rss_mb": 378.73
+    },
+    {
+      "timestamp": 1794728093.931,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.3,
+      "process_rss_mb": 378.73
+    },
+    {
+      "timestamp": 1794728094.435,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.29,
+      "process_rss_mb": 378.73
+    },
+    {
+      "timestamp": 1794728094.945,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.28,
+      "process_rss_mb": 369.45
+    },
+    {
+      "timestamp": 1794728095.448,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.29,
+      "process_rss_mb": 369.48
+    },
+    {
+      "timestamp": 1794728095.958,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.29,
+      "process_rss_mb": 403.31
+    },
+    {
+      "timestamp": 1794728096.461,
+      "disk_free_gb": 18.53,
+      "ram_available_gb": 3.39,
+      "process_rss_mb": 421.3
+    }
+  ]
+}

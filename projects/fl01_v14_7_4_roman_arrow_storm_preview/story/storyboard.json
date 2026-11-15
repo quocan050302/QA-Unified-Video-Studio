@@ -1,0 +1,1295 @@
+{
+  "title": "THE ARROW STORM \u2014 HOW A ROMAN SHIELD ROOF SURVIVED",
+  "subline": "The Testudo Formation Under Projectile Skirmish (ILLUSTRATIVE RECONSTRUCTION)",
+  "duration": 54.0,
+  "shots": [
+    {
+      "id": "s01",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 0.0,
+      "end": 5.4,
+      "action": "STAND",
+      "action_kind": "STAND",
+      "line": "When thousands of arrows rained down, how did Roman legions cross the valley alive?",
+      "desc": "Wide view of sunlit desert valley; whistling enemy arrow thuds into dirt before Roman line",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 201,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.35,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "stand"
+          },
+          {
+            "id": "legion_a",
+            "preset": "legionary",
+            "x": 0.45,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "legion_b",
+            "preset": "legionary",
+            "x": 0.55,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "guard"
+          }
+        ],
+        "props": [
+          {
+            "type": "banner",
+            "x": 0.33,
+            "y": 0.55,
+            "scale": 0.5
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.4,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s01",
+        "source_span": "When thousands of arrows rained down, how did Roman legions cross the valley alive?",
+        "source_start_sec": 0.0,
+        "source_end_sec": 5.4,
+        "shot_purpose": "establishing",
+        "narrative_role": "hook",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "wide",
+        "viewpoint": "profile_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.52,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.48,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "STAND",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "When thousands of arrows rained down, how did Roman legions cross the valley alive?",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s02",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 5.4,
+      "end": 10.8,
+      "action": "ADVANCE",
+      "action_kind": "ADVANCE",
+      "line": "Parthian archers held the high ridge, unleashing continuous volleys into the valley.",
+      "desc": "Parthian archers on distant ridge draw recurve bows and release black cloud of arrows",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 202,
+        "people": [
+          {
+            "id": "opp_a",
+            "preset": "celtic",
+            "x": 0.75,
+            "to": 0.7,
+            "y": 0.78,
+            "h": 0.4,
+            "facing": -1,
+            "pose": "charge"
+          },
+          {
+            "id": "opp_b",
+            "preset": "celtic",
+            "x": 0.85,
+            "to": 0.8,
+            "y": 0.78,
+            "h": 0.4,
+            "facing": -1,
+            "pose": "charge"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0
+            },
+            {
+              "t": 5.4,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s02",
+        "source_span": "Parthian archers held the high ridge, unleashing continuous volleys into the valley.",
+        "source_start_sec": 5.4,
+        "source_end_sec": 10.8,
+        "shot_purpose": "explanation",
+        "narrative_role": "hook",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "ADVANCE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Parthian archers held the high ridge, unleashing continuous volleys into the valley.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s03",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 10.8,
+      "end": 16.2,
+      "action": "SIGNAL",
+      "action_kind": "SIGNAL",
+      "line": "Centurion Marcus raised his staff and bellowed the command: lock the shields!",
+      "desc": "Centurion Marcus shouts command: 'Ad testudinem!' with sword raised in crisp signal",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 203,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.45,
+            "y": 0.8,
+            "h": 0.55,
+            "facing": 1,
+            "pose": "fire_signal"
+          },
+          {
+            "id": "legion_a",
+            "preset": "legionary",
+            "x": 0.65,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "brace"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.18
+            },
+            {
+              "t": 5.4,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.227
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s03",
+        "source_span": "Centurion Marcus raised his staff and bellowed the command: lock the shields!",
+        "source_start_sec": 10.8,
+        "source_end_sec": 16.2,
+        "shot_purpose": "character",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_close",
+        "viewpoint": "front_three_quarter_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.48,
+            "y_center": 0.59,
+            "zoom": 1.18,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.52,
+            "y_center": 0.57,
+            "zoom": 1.227,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "SIGNAL",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Centurion Marcus raised his staff and bellowed the command: lock the shields!",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s04",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 16.2,
+      "end": 21.6,
+      "action": "BRACE",
+      "action_kind": "BRACE",
+      "line": "The front ranks formed an unbroken wall while rear lines raised shields overhead.",
+      "desc": "Front rank drops to one knee with locked scuta; rear files raise shields flat overhead",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 204,
+        "people": [
+          {
+            "id": "legion_a",
+            "preset": "legionary",
+            "x": 0.42,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "legion_b",
+            "preset": "legionary",
+            "x": 0.5,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "legion_c",
+            "preset": "legionary",
+            "x": 0.58,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0
+            },
+            {
+              "t": 5.4,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s04",
+        "source_span": "The front ranks formed an unbroken wall while rear lines raised shields overhead.",
+        "source_start_sec": 16.2,
+        "source_end_sec": 21.6,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "BRACE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "The front ranks formed an unbroken wall while rear lines raised shields overhead.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s05",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 21.6,
+      "end": 27.0,
+      "action": "STAND",
+      "action_kind": "STAND",
+      "expected_subject": "diagram",
+      "line": "Seen from above, the testudo formed an interlocking timber vault, shedding heavy missiles.",
+      "desc": "Overhead tactical schematic of interlocking testudo shield roof with trajectory deflection arrows",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 205,
+        "show_unit_badges": true,
+        "contrast_boost": true,
+        "props": [
+          {
+            "type": "roman_testudo_formation_diagram",
+            "x": 0.5,
+            "y": 0.5,
+            "scale": 1.05
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.4,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s05",
+        "source_span": "Seen from above, the testudo formed an interlocking timber vault, shedding heavy missiles.",
+        "source_start_sec": 21.6,
+        "source_end_sec": 27.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "profile_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.48,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.52,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "STAND",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Seen from above, the testudo formed an interlocking timber vault, shedding heavy missiles.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s06",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 27.0,
+      "end": 32.4,
+      "action": "BRACE",
+      "action_kind": "BRACE",
+      "line": "Hundreds of shafts slammed into curved wood, glancing harmlessly off the vaulted shell.",
+      "desc": "Arrow shower crashes down on the wooden carapace; iron points splinter and deflect",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 206,
+        "people": [
+          {
+            "id": "legion_a",
+            "preset": "legionary",
+            "x": 0.42,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "legion_b",
+            "preset": "legionary",
+            "x": 0.5,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "legion_c",
+            "preset": "legionary",
+            "x": 0.58,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.55,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.4,
+              "x": 0.58,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s06",
+        "source_span": "Hundreds of shafts slammed into curved wood, glancing harmlessly off the vaulted shell.",
+        "source_start_sec": 27.0,
+        "source_end_sec": 32.4,
+        "shot_purpose": "explanation",
+        "narrative_role": "complication",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "rear_three_quarter_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.55,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.58,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": false,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "BRACE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Hundreds of shafts slammed into curved wood, glancing harmlessly off the vaulted shell.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s07",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 32.4,
+      "end": 37.8,
+      "action": "ADVANCE",
+      "action_kind": "ADVANCE",
+      "line": "Blind to the sky, the legion moved forward together in rigid, measured cadence.",
+      "desc": "Locked ranks advance in steady unison; armored caligae crush the dry earth in lockstep",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 207,
+        "people": [
+          {
+            "id": "legion_a",
+            "preset": "legionary",
+            "x": 0.38,
+            "to": 0.46,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "legion_b",
+            "preset": "legionary",
+            "x": 0.46,
+            "to": 0.54,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.4,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s07",
+        "source_span": "Blind to the sky, the legion moved forward together in rigid, measured cadence.",
+        "source_start_sec": 32.4,
+        "source_end_sec": 37.8,
+        "shot_purpose": "explanation",
+        "narrative_role": "explanation",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "profile_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.52,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.48,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "ADVANCE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Blind to the sky, the legion moved forward together in rigid, measured cadence.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s08",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 37.8,
+      "end": 43.2,
+      "action": "SUPPORT",
+      "action_kind": "SUPPORT",
+      "line": "When one soldier stumbled, neighboring shields shifted instantly to close the vulnerable opening.",
+      "desc": "A legionary trips on rocky ground; comrade immediately tilts scutum over the exposed gap",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 208,
+        "people": [
+          {
+            "id": "legion_a",
+            "preset": "legionary",
+            "x": 0.44,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "legion_b",
+            "preset": "legionary",
+            "x": 0.52,
+            "y": 0.86,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.3,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "stand"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0
+            },
+            {
+              "t": 5.4,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s08",
+        "source_span": "When one soldier stumbled, neighboring shields shifted instantly to close the vulnerable opening.",
+        "source_start_sec": 37.8,
+        "source_end_sec": 43.2,
+        "shot_purpose": "explanation",
+        "narrative_role": "complication",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "SUPPORT",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "When one soldier stumbled, neighboring shields shifted instantly to close the vulnerable opening.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s09",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 43.2,
+      "end": 48.6,
+      "action": "ADVANCE",
+      "action_kind": "ADVANCE",
+      "line": "Moving steadily beneath the storm, the locked formation cleared the deadly archery zone.",
+      "desc": "The testudo reaches the base of the ridge beyond enemy bow effective range",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 209,
+        "people": [
+          {
+            "id": "legion_a",
+            "preset": "legionary",
+            "x": 0.4,
+            "to": 0.5,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "legion_b",
+            "preset": "legionary",
+            "x": 0.5,
+            "to": 0.6,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0
+            },
+            {
+              "t": 5.4,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s09",
+        "source_span": "Moving steadily beneath the storm, the locked formation cleared the deadly archery zone.",
+        "source_start_sec": 43.2,
+        "source_end_sec": 48.6,
+        "shot_purpose": "tactical",
+        "narrative_role": "explanation",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "ADVANCE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Moving steadily beneath the storm, the locked formation cleared the deadly archery zone.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s10",
+      "tpl": "scene",
+      "dur": 5.4,
+      "start": 48.6,
+      "end": 54.0,
+      "action": "STAND",
+      "action_kind": "STAND",
+      "line": "Discipline transformed wooden boards into armor, proving collective unity defeated overwhelming firepower.",
+      "desc": "Overhead shields lower in unison; legionaries draw gladii, ready for final infantry assault",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 210,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.32,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "stand"
+          },
+          {
+            "id": "legion_a",
+            "preset": "legionary",
+            "x": 0.45,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "legion_b",
+            "preset": "legionary",
+            "x": 0.55,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          }
+        ],
+        "props": [
+          {
+            "type": "banner",
+            "x": 0.3,
+            "y": 0.55,
+            "scale": 0.5
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.4,
+              "x": 0.5,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s10",
+        "source_span": "Discipline transformed wooden boards into armor, proving collective unity defeated overwhelming firepower.",
+        "source_start_sec": 48.6,
+        "source_end_sec": 54.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "complication",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "rear",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.4,
+            "x_center": 0.5,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "STAND",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Discipline transformed wooden boards into armor, proving collective unity defeated overwhelming firepower.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    }
+  ]
+}

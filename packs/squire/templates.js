@@ -363,6 +363,142 @@ export function drawThing(g, kind, x, y, s, o = {}) {
       g.restore();
       break;
     }
+    case 'roman_manipular_formation_diagram': case 'roman_formation_diagram': {
+      const lw2 = o.lw ?? Math.max(2, s * 0.02);
+      g.save(); g.translate(x, y);
+      const pw = s * 1.6, ph = s * 1.05;
+      rect(g, -pw * 0.5, -ph * 0.5, pw, ph, {
+        fill: '#1a1f28', lw: lw2 * 1.2, ink: PAL.gold, r: 12,
+        inner: (c) => {
+          for (let gy = -ph * 0.4; gy <= ph * 0.4; gy += ph * 0.2) {
+            line(c, [[-pw * 0.46, gy], [pw * 0.46, gy]], { lw: 1, ink: 'rgba(255,255,255,0.08)' });
+          }
+        }
+      });
+
+      rect(g, -pw * 0.42, -ph * 0.46, pw * 0.84, ph * 0.12, {
+        fill: '#2a1a12', lw: lw2 * 0.8, ink: PAL.bronze, r: 4
+      });
+      g.fillStyle = PAL.gold;
+      g.font = `bold ${Math.round(ph * 0.065)}px sans-serif`;
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      g.fillText('ROMAN MANIPULAR QUINCUNX FORMATION', 0, -ph * 0.40);
+
+      const row1Y = -ph * 0.18;
+      const bW = pw * 0.16, bH = ph * 0.14;
+      const colX1 = [-pw * 0.33, -pw * 0.11, pw * 0.11, pw * 0.33];
+      for (let i = 0; i < 4; i++) {
+        rect(g, colX1[i] - bW * 0.5, row1Y - bH * 0.5, bW, bH, {
+          fill: '#8b1e1e', lw: lw2, ink: PAL.steelLight, r: 4,
+          inner: (c) => {
+            for (let k = -2; k <= 2; k++) {
+              rect(c, k * (bW * 0.16) - 3, -bH * 0.3, 6, bH * 0.6, { fill: PAL.gold, lw: 0 });
+            }
+          }
+        });
+      }
+      g.fillStyle = '#ffffff';
+      g.font = `bold ${Math.round(ph * 0.048)}px sans-serif`;
+      g.fillText('1. HASTATI (FRONT LINE)', 0, row1Y - bH * 0.7);
+
+      const row2Y = ph * 0.05;
+      const colX2 = [-pw * 0.22, 0, pw * 0.22];
+      for (let i = 0; i < 3; i++) {
+        rect(g, colX2[i] - bW * 0.5, row2Y - bH * 0.5, bW, bH, {
+          fill: '#2b4c7e', lw: lw2, ink: PAL.gold, r: 4,
+          inner: (c) => {
+            for (let k = -2; k <= 2; k++) {
+              rect(c, k * (bW * 0.16) - 3, -bH * 0.3, 6, bH * 0.6, { fill: PAL.steelLight, lw: 0 });
+            }
+          }
+        });
+      }
+      g.fillStyle = '#ffffff';
+      g.fillText('2. PRINCIPES (RESERVE LINE)', 0, row2Y - bH * 0.7);
+
+      const row3Y = ph * 0.28;
+      for (let i = 0; i < 4; i++) {
+        rect(g, colX1[i] - bW * 0.5, row3Y - bH * 0.5, bW, bH, {
+          fill: '#4a3b2c', lw: lw2, ink: PAL.bronze, r: 4,
+          inner: (c) => {
+            for (let k = -2; k <= 2; k++) {
+              line(c, [[k * (bW * 0.16), -bH * 0.35], [k * (bW * 0.16), bH * 0.35]], { lw: 2, ink: PAL.steelLight });
+            }
+          }
+        });
+      }
+      g.fillStyle = '#ffffff';
+      g.fillText('3. TRIARII (VETERAN SPEARMEN)', 0, row3Y - bH * 0.7);
+
+      for (let i = 0; i < 3; i++) {
+        const ax = colX2[i];
+        tube(g, [[ax, row2Y - bH * 0.55], [ax, row1Y + bH * 0.55]], bW * 0.10, '#f1c40f', lw2 * 0.6);
+        polyS(g, [[ax - 8, row1Y + bH * 0.55 + 6], [ax + 8, row1Y + bH * 0.55 + 6], [ax, row1Y + bH * 0.55 - 6]], { fill: '#f1c40f', lw: 1 });
+      }
+
+      rect(g, -pw * 0.44, ph * 0.38, pw * 0.88, ph * 0.10, {
+        fill: 'rgba(0,0,0,0.6)', lw: 1, ink: 'rgba(255,255,255,0.2)', r: 4
+      });
+      g.fillStyle = '#e2e8f0';
+      g.font = `italic ${Math.round(ph * 0.040)}px sans-serif`;
+      g.fillText('TACTICAL LOGIC: Exhausted ranks withdraw into intervals as fresh lines seal the gap.', 0, ph * 0.43);
+
+      g.restore();
+      break;
+    }
+    case 'roman_testudo_formation_diagram': case 'roman_testudo_roof': {
+      const lw2 = o.lw ?? Math.max(2, s * 0.02);
+      g.save(); g.translate(x, y);
+      const pw = s * 1.5, ph = s * 1.0;
+      rect(g, -pw * 0.5, -ph * 0.5, pw, ph, {
+        fill: '#151b24', lw: lw2 * 1.2, ink: PAL.gold, r: 10
+      });
+      rect(g, -pw * 0.42, -ph * 0.46, pw * 0.84, ph * 0.11, {
+        fill: '#2a1a12', lw: lw2 * 0.8, ink: PAL.bronze, r: 4
+      });
+      g.fillStyle = PAL.gold;
+      g.font = `bold ${Math.round(ph * 0.065)}px sans-serif`;
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      g.fillText('ROMAN TESTUDO (TORTOISE) FORMATION', 0, -ph * 0.40);
+
+      const rows = 4, cols = 6;
+      const shW = pw * 0.11, shH = ph * 0.14;
+      const startX = -pw * 0.22, startY = -ph * 0.18;
+      for (let rIdx = 0; rIdx < rows; rIdx++) {
+        for (let cIdx = 0; cIdx < cols; cIdx++) {
+          const sx = startX + cIdx * (shW * 0.88);
+          const sy = startY + rIdx * (shH * 0.85);
+          rect(g, sx - shW * 0.5, sy - shH * 0.5, shW, shH, {
+            fill: (rIdx === 0) ? '#a82424' : '#8b1e1e',
+            lw: lw2 * 0.8,
+            ink: PAL.steelLight,
+            r: 3,
+            inner: (c) => {
+              circ(c, 0, 0, shW * 0.18, { fill: PAL.gold, lw: 1, ink: PAL.steelDark });
+            }
+          });
+        }
+      }
+      for (let aIdx = 0; aIdx < 5; aIdx++) {
+        const ax = -pw * 0.22 + aIdx * (pw * 0.11);
+        const ay = -ph * 0.26 + (aIdx % 2) * (ph * 0.05);
+        tube(g, [[ax - 18, ay - 35], [ax, ay]], 3, PAL.woodDark, 1);
+        polyS(g, [[ax - 4, ay - 4], [ax + 4, ay - 4], [ax, ay + 4]], { fill: PAL.steelDark, lw: 1 });
+        circ(g, ax, ay, 4, { fill: '#ffeb3b', lw: 0 });
+      }
+
+      rect(g, -pw * 0.44, ph * 0.36, pw * 0.88, ph * 0.11, {
+        fill: 'rgba(0,0,0,0.6)', lw: 1, ink: 'rgba(255,255,255,0.2)', r: 4
+      });
+      g.fillStyle = '#ffffff';
+      g.font = `bold ${Math.round(ph * 0.042)}px sans-serif`;
+      g.fillText('TESTUDO TACTICS: Overlapping scuta deflect high-angle projectile volleys.', 0, ph * 0.41);
+
+      g.restore();
+      break;
+    }
     case 'flag': flag(g, x, y + s * 0.5, s, o); break;
     case 'standard': case 'eagle': standard(g, x, y + s * 0.5, s, { ...o, kind: kind === 'eagle' ? 'eagle' : o.style }); break;
     case 'tent': tent(g, x, y, s, o); break;

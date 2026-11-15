@@ -1,0 +1,32 @@
+{
+  "release": "V14.7.4",
+  "preserved_count": 2,
+  "matrix": {
+    "V14.7.3 Continuity": {
+      "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_3_ROMAN_CONTINUITY_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "size_bytes": 13078836,
+      "sha256": "111d153d0a37a8e985323074438666b6388d9cddf027bad0fcfadac3a43c28cf",
+      "duration": 52.5,
+      "status": "PRESERVED_INTACT"
+    },
+    "V14.7.2 Ballista": {
+      "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_2_ballista_preview/out/FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "size_bytes": 13189209,
+      "sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+      "duration": 51.5,
+      "status": "PRESERVED_INTACT"
+    },
+    "V14.7.1 Bridge": {
+      "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_1_bridge_preview/out/FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4",
+      "exists": false,
+      "status": "NOT_FOUND"
+    },
+    "V14.6 Night Watch": {
+      "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_6_roman_fort_night_watch/out/V14_6_ROMAN_FORT_NIGHT_WATCH_1080P.mp4",
+      "exists": false,
+      "status": "NOT_FOUND"
+    }
+  }
+}
