@@ -164,11 +164,19 @@ def compute_render_fingerprint(manifest: Dict[str, Any]) -> str:
     return sha256_json(manifest)
 
 
-def inspect_media_file(mp4_path: Path | str) -> Dict[str, Any]:
-    """Run ffprobe on an MP4 file to inspect streams, codecs, duration, dimensions."""
+def inspect_media_file(
+    mp4_path: Path | str,
+    expected_specs: Optional[Dict[str, Any]] = None,
+    require_audio: bool = False,
+    full_decode: bool = False,
+) -> Dict[str, Any]:
+    """
+    Run ffprobe and optional FFmpeg full decode on an MP4 file.
+    Validates streams, codecs, duration, dimensions, decode integrity, and audio level.
+    """
     p = Path(mp4_path)
     if not p.is_file() or p.stat().st_size < 100:
-        return {"valid": False, "error": "File missing or empty"}
+        return {"valid": False, "error": f"File missing or empty: {p}", "errors": ["File missing or empty"]}
 
     cmd = [
         "ffprobe",
@@ -178,10 +186,10 @@ def inspect_media_file(mp4_path: Path | str) -> Dict[str, Any]:
         str(p)
     ]
     try:
-        res = subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=15)
+        res = subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=20)
         probe = json.loads(res.stdout)
     except Exception as e:
-        return {"valid": False, "error": f"ffprobe failed: {e}"}
+        return {"valid": False, "error": f"ffprobe failed: {e}", "errors": [str(e)]}
 
     streams = probe.get("streams", [])
     format_info = probe.get("format", {})
@@ -210,8 +218,64 @@ def inspect_media_file(mp4_path: Path | str) -> Dict[str, Any]:
             except Exception:
                 pass
 
+    has_video = v_stream is not None
+    has_audio = a_stream is not None
+
+    errors: List[str] = []
+    if not has_video:
+        errors.append("No video stream found in media file")
+    if duration <= 0.0:
+        errors.append(f"Invalid duration: {duration}s <= 0")
+    if file_size < 1000:
+        errors.append(f"File size suspiciously small: {file_size} bytes")
+
+    if require_audio and not has_audio:
+        errors.append("Audio stream required but not found in media file")
+
+    if expected_specs:
+        if "width" in expected_specs and width != expected_specs["width"]:
+            errors.append(f"Width mismatch: expected {expected_specs['width']}, got {width}")
+        if "height" in expected_specs and height != expected_specs["height"]:
+            errors.append(f"Height mismatch: expected {expected_specs['height']}, got {height}")
+        if "video_codec" in expected_specs and v_codec != expected_specs["video_codec"]:
+            errors.append(f"Video codec mismatch: expected {expected_specs['video_codec']}, got {v_codec}")
+        if "audio_codec" in expected_specs and a_codec != expected_specs["audio_codec"]:
+            errors.append(f"Audio codec mismatch: expected {expected_specs['audio_codec']}, got {a_codec}")
+        if "min_duration" in expected_specs and duration < expected_specs["min_duration"]:
+            errors.append(f"Duration {duration:.2f}s below minimum {expected_specs['min_duration']}s")
+        if "max_duration" in expected_specs and duration > expected_specs["max_duration"]:
+            errors.append(f"Duration {duration:.2f}s exceeds maximum {expected_specs['max_duration']}s")
+        if "fps" in expected_specs and fps and abs(fps - expected_specs["fps"]) > 0.5:
+            errors.append(f"FPS mismatch: expected {expected_specs['fps']}, got {fps}")
+
+    decode_clean = True
+    if full_decode and has_video:
+        dec_cmd = ["ffmpeg", "-v", "error", "-i", str(p), "-f", "null", "-"]
+        dec_res = subprocess.run(dec_cmd, capture_output=True, text=True)
+        if dec_res.returncode != 0 or dec_res.stderr.strip():
+            decode_clean = False
+            errors.append(f"Full ffmpeg decode failed: {dec_res.stderr.strip()[:200]}")
+
+    max_volume_db = None
+    if has_audio and (require_audio or (expected_specs and expected_specs.get("check_volume"))):
+        vol_cmd = ["ffmpeg", "-i", str(p), "-af", "volumedetect", "-f", "null", "-"]
+        vol_res = subprocess.run(vol_cmd, capture_output=True, text=True)
+        import re
+        m_max = re.search(r"max_volume:\s+([-\d.]+)\s+dB", vol_res.stderr)
+        if m_max:
+            try:
+                max_volume_db = float(m_max.group(1))
+                if max_volume_db <= -60.0:
+                    errors.append(f"Audio is silent (max_volume={max_volume_db} dB)")
+            except ValueError:
+                pass
+
+    sha_val = sha256_file(p)
+
     return {
-        "valid": True,
+        "valid": len(errors) == 0,
+        "error": "; ".join(errors) if errors else None,
+        "errors": errors,
         "duration": duration,
         "file_size": file_size,
         "width": width,
@@ -219,9 +283,11 @@ def inspect_media_file(mp4_path: Path | str) -> Dict[str, Any]:
         "fps": fps,
         "video_codec": v_codec,
         "audio_codec": a_codec,
-        "has_video": v_stream is not None,
-        "has_audio": a_stream is not None,
-        "sha256": sha256_file(p),
+        "has_video": has_video,
+        "has_audio": has_audio,
+        "decode_clean": decode_clean,
+        "max_volume_db": max_volume_db,
+        "sha256": sha_val,
     }
 
 
@@ -242,7 +308,8 @@ def write_render_receipt_atomic(
     if not out_p.is_file():
         raise FileNotFoundError(f"Cannot write receipt for nonexistent output: {out_p}")
 
-    media_info = inspect_media_file(out_p)
+    req_audio = (manifest.get("render_options", {}).get("audio_mode") == "voice_sfx")
+    media_info = inspect_media_file(out_p, require_audio=req_audio, full_decode=True)
     if not media_info.get("valid"):
         raise ValueError(f"Cannot write receipt for invalid media: {media_info.get('error')}")
 

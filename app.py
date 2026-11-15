@@ -812,8 +812,8 @@ def verify_task_result(action: str, p: Path, started: float, log_text: str):
                         rep = load_json(report_file, {})
                         if rep.get('status') != 'AUDIO_MIX_PASS':
                             return False, f'Audio mix report status is not pass: {rep.get("status")}'
-                    except Exception:
-                        pass
+                    except Exception as exc:
+                        return False, f'Failed to parse audio_mix_report.json: {exc}'
                 return True, ''
         return False, 'FFprobe failed to validate rendered video duration'
     return True, ''

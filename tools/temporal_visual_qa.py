@@ -26,6 +26,7 @@ import json
 import math
 import os
 import subprocess
+import tempfile
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Literal, Optional, Tuple
@@ -34,6 +35,8 @@ import numpy as np
 from PIL import Image
 from pydantic import BaseModel, Field
 
+from scripts.production_fingerprint import inspect_media_file, validate_cache_hit
+from tools.cinematic_camera import audit_camera_snap_keyframes
 from tools.visual_qa_v14_6 import (
     ActorBoundingBox,
     extract_frame_at_time,
@@ -159,15 +162,34 @@ def audit_acting_posture_temporal(
         detected_pose = "hammer"
 
     elif act in ("WINCH", "CRANK"):
+        # Detect cyclic or lateral crank displacement across frames
+        if len(sample_frames) >= 2:
+            diff = float(np.mean(np.abs(sample_frames[-1].astype(float) - sample_frames[0].astype(float))))
+            if diff < 0.6:
+                diags.append(f"WINCH/CRANK posture: static actor without observable crank motion (diff={diff:.2f})")
+                verified = False
         detected_pose = "winch"
 
     elif act in ("LOAD", "AIM"):
+        if len(sample_frames) >= 2:
+            diff = float(np.mean(np.abs(sample_frames[-1].astype(float) - sample_frames[0].astype(float))))
+            if diff < 0.5:
+                diags.append(f"{act} posture: static actor without observable loading/aiming motion (diff={diff:.2f})")
+                verified = False
         detected_pose = act.lower()
 
     elif act in ("RECOIL", "IMPACT_RECOIL"):
+        if len(sample_frames) >= 3:
+            diff = float(np.mean(np.abs(sample_frames[len(sample_frames)//2].astype(float) - sample_frames[0].astype(float))))
+            if diff < 1.0:
+                diags.append(f"RECOIL posture: insufficient kinetic displacement (diff={diff:.2f})")
+                verified = False
         detected_pose = "recoil"
 
     elif act in ("FATIGUE",):
+        if bounds.mass_y < 0.38:
+            diags.append(f"FATIGUE posture: lack of visible postural droop or slump (mass_y={bounds.mass_y:.3f})")
+            verified = False
         detected_pose = "fatigue"
 
     return verified, detected_pose, diags
@@ -199,10 +221,12 @@ def audit_temporal_continuity(
             prev_bounds = b
             continue
 
-        # Check disappearance
+        # Check disappearance (ignore if frame is fading to black / tail dissolve where mean < 15.0)
         if prev_bounds and prev_bounds.detected and not b.detected:
-            disappearance_detected = True
-            diags.append(f"Temporal defect: Actor suddenly disappeared at t={ts:.2f}s without shot cut")
+            frame_mean = float(np.mean(frame))
+            if frame_mean >= 15.0:
+                disappearance_detected = True
+                diags.append(f"Temporal defect: Actor suddenly disappeared at t={ts:.2f}s without shot cut")
 
         # Check teleportation (jump > 35% frame width between successive sub-second samples)
         if prev_bounds and prev_bounds.detected and b.detected:
@@ -276,13 +300,30 @@ def audit_project_temporal_visual(
             end_time=et,
         )
 
-        # Adaptive temporal sampling: start, 25%, mid, 75%, end, boundary offsets
-        t_start = min(et - 0.05, st + 0.15)
-        t_q1 = st + dur * 0.25
+        # Genuinely adaptive temporal sampling:
+        # 1. Boundary frames (±1, ±2 frames at 24fps)
+        fps_step = 1.0 / 24.0
+        t_b_start1 = min(et - fps_step, st + fps_step)
+        t_b_start2 = min(et - fps_step, st + 2 * fps_step)
+        t_b_end2 = max(st + fps_step, et - 2 * fps_step)
+        t_b_end1 = max(st + fps_step, et - fps_step)
         t_mid = (st + et) / 2.0
-        t_q3 = st + dur * 0.75
-        t_end = max(st + 0.05, et - 0.15)
-        timestamps = [t_start, t_q1, t_mid, t_q3, t_end]
+
+        raw_ts = [t_b_start1, t_b_start2, st + dur * 0.25, t_mid, st + dur * 0.75, t_b_end2, t_b_end1]
+
+        # 2. Dynamic intervals if action involves motion or longer duration
+        is_dynamic = any(k in action.upper() for k in ("ADVANCE", "CHARGE", "WITHDRAW", "HAMMER", "WINCH", "CRANK", "RECOIL", "STEP", "OPEN", "LANE"))
+        if is_dynamic and dur >= 3.0:
+            raw_ts.extend([st + dur * 0.40, st + dur * 0.60])
+
+        # Sort and deduplicate timestamps within 0.04s (1 frame)
+        sorted_ts = sorted(list(set([round(t, 3) for t in raw_ts if st <= t <= et])))
+        timestamps = []
+        for t in sorted_ts:
+            if not timestamps or (t - timestamps[-1]) >= 0.035:
+                timestamps.append(t)
+        if len(timestamps) > 10:
+            timestamps = timestamps[:10]  # Cap at 10 samples per shot for memory safety
 
         sample_imgs: List[np.ndarray] = []
         sample_paths: List[str] = []
@@ -491,11 +532,19 @@ def run_negative_fixtures_tests() -> Dict[str, Any]:
         "passed": bool(tele_res and jump_px > 500),
     }
 
-    # 5. Camera Snap Fixture
-    snap_caught = True  # Simulated camera snap check
+    # 5. Camera Snap Fixture (calls real production camera snap detector)
+    snap_kfs = [
+        {"t": 0.0, "x": 0.5, "y": 0.5, "z": 1.0},
+        {"t": 1.0, "x": 0.2, "y": 0.5, "z": 1.0},
+        {"t": 1.04, "x": 0.85, "y": 0.5, "z": 1.0},  # 1-frame 65% lateral snap
+        {"t": 2.0, "x": 0.85, "y": 0.5, "z": 1.0},
+    ]
+    snap_caught, snap_diags = audit_camera_snap_keyframes(snap_kfs)
     fixtures["camera_snap"] = {
-        "description": "Abrupt 1-frame camera transform snap must be flagged",
-        "passed": snap_caught,
+        "description": "Abrupt 1-frame camera transform snap must be flagged by camera auditor",
+        "snap_caught": bool(snap_caught),
+        "diagnostics": snap_diags,
+        "passed": bool(snap_caught and len(snap_diags) > 0),
     }
 
     # 6. Duplicate Held Object Fixture
@@ -546,11 +595,85 @@ def run_negative_fixtures_tests() -> Dict[str, Any]:
         "passed": bool(not rep_res.get("passed", False)),
     }
 
-    # 9. Stale Receipt Fixture
-    receipt_stale_detected = True
+    # 9. Stale Receipt Fixture (calls real production validate_cache_hit)
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp_p = Path(tmp_dir)
+        (tmp_p / "build").mkdir()
+        dummy_mp4 = tmp_p / "build" / "test.mp4"
+        dummy_mp4.write_bytes(b"dummy mp4 binary content" * 100)
+        dummy_rc = tmp_p / "build" / "render_receipt.json"
+        dummy_rc.write_text(json.dumps({
+            "project_id": tmp_p.name,
+            "input_fingerprint": "expected_fp_alpha",
+            "output_sha256": "fake_sha_omega",
+        }))
+        tampered_manifest = {
+            "project_id": tmp_p.name,
+            "tracked_files": {"story/shots.json": "different_hash_gamma"},
+            "render_options": {"pack": "squire", "genre": "roman", "audio_mode": "voice_sfx", "aspect": "16:9", "resolution": "1080p"},
+        }
+        stale_res = validate_cache_hit(tmp_p, dummy_mp4, tampered_manifest)
+        receipt_stale_detected = (not stale_res.get("hit")) and (stale_res.get("status") in ("CACHE_INVALIDATED", "CACHE_MISS"))
     fixtures["stale_receipt"] = {
-        "description": "Receipt with mismatched source fingerprint must be rejected as stale",
-        "passed": receipt_stale_detected,
+        "description": "Receipt with mismatched source fingerprint must be rejected as stale by validate_cache_hit",
+        "detected": bool(receipt_stale_detected),
+        "status": stale_res.get("status"),
+        "reason": stale_res.get("reason"),
+        "passed": bool(receipt_stale_detected),
+    }
+
+    # 10. Failed Extraction Fixture
+    non_existent_mp4 = Path("/tmp/non_existent_video_file_987654.mp4")
+    f_ok = extract_frame_at_time(non_existent_mp4, 1.0, Path("/tmp/dummy_frame.png"))
+    fixtures["failed_extract"] = {
+        "description": "Extracting frame from nonexistent media must fail closed",
+        "extract_result": f_ok,
+        "passed": bool(not f_ok),
+    }
+
+    # 11. Silent Audio Inspection Fixture
+    with tempfile.NamedTemporaryFile(suffix=".mp4") as f_tmp:
+        aud_res = inspect_media_file(Path(f_tmp.name), require_audio=True)
+        fixtures["silent_audio"] = {
+            "description": "Media with missing or invalid audio must fail closed when audio required",
+            "valid": aud_res.get("valid"),
+            "error": aud_res.get("error"),
+            "passed": bool(not aud_res.get("valid")),
+        }
+
+    # 12. Empty Map Fixture
+    blank_map_frame = np.full((1080, 1920, 3), 200, dtype=np.uint8)
+    map_ok, map_diags = audit_tactical_labels_mobile(blank_map_frame)
+    fixtures["empty_map"] = {
+        "description": "Blank tactical map canvas with no contrast features must fail mobile readability",
+        "readability_ok": map_ok,
+        "diagnostics": map_diags,
+        "passed": bool(not map_ok),
+    }
+
+    # 13. Unexpected Pose Fixture
+    upright_actor = np.full((1080, 1920, 3), (120, 150, 180), dtype=np.uint8)
+    upright_actor[100:500, 900:1020] = (180, 30, 30)
+    b_up = track_actor_instances_full_frame(upright_actor)
+    posture_ok, pose_det, p_diags = audit_acting_posture_temporal([upright_actor, upright_actor], "BRACE", b_up, "actor")
+    fixtures["unexpected_pose"] = {
+        "description": "Actor with high center of mass must fail BRACE posture check",
+        "posture_ok": posture_ok,
+        "pose_detected": pose_det,
+        "diagnostics": p_diags,
+        "passed": bool(not posture_ok),
+    }
+
+    # 14. Legitimate Cut Positive Control Fixture
+    cut_frame_a = np.full((1080, 1920, 3), (120, 150, 180), dtype=np.uint8)
+    cut_frame_a[400:800, 200:320] = (180, 30, 30)
+    cut_frame_b = np.full((1080, 1920, 3), (180, 140, 100), dtype=np.uint8)
+    cut_frame_b[400:800, 1500:1620] = (180, 30, 30)
+    tele_cut, disap_cut, _, _ = audit_temporal_continuity([cut_frame_a, cut_frame_b], [0.0, 2.5], expected_subject="map")
+    fixtures["legitimate_cut"] = {
+        "description": "Legitimate cut or diagram transition must NOT falsely flag teleportation",
+        "teleport_flagged": tele_cut,
+        "passed": bool(not tele_cut and not disap_cut),
     }
 
     all_passed = all(f.get("passed", False) for f in fixtures.values())

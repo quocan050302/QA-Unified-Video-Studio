@@ -1,0 +1,10 @@
+{
+  "timestamp": 1794723519.216071,
+  "configured_mode": "OFFLINE_ONLY",
+  "director_enabled": false,
+  "actual_execution_path": "OFFLINE_DETERMINISTIC_COMPILATION",
+  "api_tokens_used": 0,
+  "live_api_called": false,
+  "fail_closed_test_verified": true,
+  "reason": "V14.7.3 benchmark configured for truthful offline reproduction."
+}

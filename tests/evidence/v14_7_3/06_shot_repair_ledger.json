@@ -1,0 +1,17 @@
+{
+  "timestamp": 1794723519.215405,
+  "project_id": "fl01_v14_7_3_roman_continuity_benchmark",
+  "repaired_shots_count": 0,
+  "production_defects_found": 0,
+  "repair_needed": false,
+  "synthetic_defect_injection_test": {
+    "test_status": "PASS",
+    "classified_defects": 1,
+    "manual_locked_preserved": true,
+    "repaired_preset": "centurio",
+    "repair_logs": [
+      "Shot s02: repaired actor preset to 'centurio'"
+    ]
+  },
+  "status": "CLEAN_PASS_NO_REPAIR_NEEDED"
+}

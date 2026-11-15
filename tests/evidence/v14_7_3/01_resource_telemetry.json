@@ -1,0 +1,49 @@
+{
+  "release": "V14.7.3",
+  "benchmark": "ROMAN_CONTINUITY_BENCHMARK",
+  "concurrency_limit": 4,
+  "concurrency_mode": "BOUNDED_PARALLEL_SAFE",
+  "before": {
+    "timestamp": 1794723474.638219,
+    "cpu_count": 8,
+    "load_average_1_5_15": [
+      11.82958984375,
+      20.3408203125,
+      16.09521484375
+    ],
+    "ram": {
+      "total_gb": 16.0,
+      "available_gb": 3.48,
+      "ram_percent": 78.2,
+      "ram_avail_mb": 3567.9
+    },
+    "disk": {
+      "total_gb": 460.43,
+      "used_gb": 442.79,
+      "free_gb": 17.64
+    }
+  },
+  "after": {
+    "timestamp": 1794723497.936486,
+    "cpu_count": 8,
+    "load_average_1_5_15": [
+      10.67578125,
+      19.3818359375,
+      15.87109375
+    ],
+    "ram": {
+      "total_gb": 16.0,
+      "available_gb": 3.45,
+      "ram_percent": 78.4,
+      "ram_avail_mb": 3535.9
+    },
+    "disk": {
+      "total_gb": 460.43,
+      "used_gb": 442.8,
+      "free_gb": 17.64
+    }
+  },
+  "min_disk_reserve_gb": 6.0,
+  "disk_free_gb": 17.64,
+  "ram_available_gb": 3.45
+}

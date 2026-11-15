@@ -267,6 +267,51 @@ def validate_camera_rig_contract(
     }
 
 
+def audit_camera_snap_keyframes(
+    keyframes: List[Dict[str, Any]],
+    time_threshold_sec: float = 0.15,
+    pos_threshold: float = 0.35,
+    zoom_threshold: float = 0.8,
+) -> Tuple[bool, List[str]]:
+    """
+    Audit within-shot camera keyframe continuity:
+    Detects abrupt transform snaps (e.g. 1-frame position/zoom pop)
+    between adjacent keyframes without motivated narrative cut.
+    Returns (snap_detected: bool, diagnostics: List[str]).
+    """
+    diags: List[str] = []
+    if not keyframes or len(keyframes) < 2:
+        return False, diags
+
+    for i in range(len(keyframes) - 1):
+        k1 = keyframes[i]
+        k2 = keyframes[i + 1]
+
+        t1 = float(k1.get("t", k1.get("local_sec", 0.0)))
+        t2 = float(k2.get("t", k2.get("local_sec", 0.0)))
+        dt = abs(t2 - t1)
+
+        x1 = float(k1.get("x", k1.get("x_center", 0.5)))
+        x2 = float(k2.get("x", k2.get("x_center", 0.5)))
+        dx = abs(x2 - x1)
+
+        y1 = float(k1.get("y", k1.get("y_center", 0.5)))
+        y2 = float(k2.get("y", k2.get("y_center", 0.5)))
+        dy = abs(y2 - y1)
+
+        z1 = float(k1.get("z", k1.get("zoom", 1.0)))
+        z2 = float(k2.get("z", k2.get("zoom", 1.0)))
+        dz = abs(z2 - z1)
+
+        if dt <= time_threshold_sec:
+            if dx > pos_threshold or dy > pos_threshold or dz > zoom_threshold:
+                diags.append(
+                    f"Camera snap detected between keyframes {i}->{i+1}: dt={dt:.3f}s, dx={dx:.2f}, dy={dy:.2f}, dz={dz:.2f}"
+                )
+
+    return len(diags) > 0, diags
+
+
 def plan_camera_sequence(
     shots: List[Dict[str, Any]],
     director_plan: Optional[Dict[str, Any]] = None,

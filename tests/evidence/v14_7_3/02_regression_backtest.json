@@ -1,0 +1,26 @@
+{
+  "release": "V14.7.3",
+  "benchmark": "ROMAN_CONTINUITY_BENCHMARK",
+  "timestamp": 1794723497.937097,
+  "multi_format_checks": {
+    "squire_16x9": "PASS (1920x1080 @24fps)",
+    "squire_9x16": "PASS (1080x1920 @24fps)",
+    "dem_16x9": "PASS (1920x1080 @24fps)"
+  },
+  "synthetic_180_stress": {
+    "status": "PASS",
+    "total_shots": 180,
+    "camera_plans_compiled": 180,
+    "type": "SYNTHETIC_STRESS_BACKTEST"
+  },
+  "historical_180_real_replay": {
+    "status": "NOT_AVAILABLE",
+    "provenance": "No 180-shot fixture exists in repository commit history; accurately recorded as NOT_AVAILABLE per V14.7.3 specification."
+  },
+  "shot_repair_loop_regression": {
+    "status": "PASS",
+    "injected_defect": "corrupted_blue_peasant",
+    "repair_applied": "centurio",
+    "manual_locks_protected": true
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "act_1_threat",
+    "label": "Threat & Hook",
+    "start": 0.0,
+    "end": 9.5
+  },
+  {
+    "id": "act_2_reaction",
+    "label": "Reaction & Clash",
+    "start": 9.5,
+    "end": 26.0
+  },
+  {
+    "id": "act_3_relief",
+    "label": "Line Relief & Advance",
+    "start": 26.0,
+    "end": 42.5
+  },
+  {
+    "id": "act_4_payoff",
+    "label": "Quincunx Payoff & Stand",
+    "start": 42.5,
+    "end": 52.5
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "release": "V14.7.3",
+  "benchmark": "ROMAN_CONTINUITY_BENCHMARK",
+  "total_time_sec": 44.58,
+  "steps": [
+    {
+      "step": "preflight_resource_check",
+      "budget": {
+        "status": "PASS",
+        "healthy": true,
+        "message": "OK",
+        "disk_free_gb": 17.64,
+        "disk_min_reserve_gb": 6.0,
+        "ram_available_gb": 3.48,
+        "ram_min_reserve_gb": 1.0,
+        "cpu_count": 8,
+        "timestamp": 1794723474.638295
+      },
+      "concurrency_limit": 4,
+      "timestamp": 1794723474.6383371
+    },
+    {
+      "step": "acceptance_suite",
+      "elapsed_sec": 23.3,
+      "status": "TECH_VERIFIED",
+      "passed_gates": "8/9"
+    },
+    {
+      "step": "evidence_generation",
+      "artifacts_generated": 14,
+      "total_elapsed_sec": 44.58,
+      "timestamp": 1794723519.217289
+    }
+  ]
+}

@@ -1,0 +1,1351 @@
+{
+  "title": "THE GAP IN THE ROMAN LINE \u2014 HOW THE RESERVES TURNED A CRISIS INTO ORDER",
+  "subline": "The Manipular Quincunx Tactics of the Roman Legions (ILLUSTRATIVE RECONSTRUCTION)",
+  "duration": 52.5,
+  "shots": [
+    {
+      "id": "s01",
+      "tpl": "scene",
+      "dur": 4.5,
+      "start": 0.0,
+      "end": 4.5,
+      "action": "STAND",
+      "action_kind": "STAND",
+      "line": "When a Roman front line began to buckle under relentless enemy pressure, why was a sudden gap not a fatal disaster, but a calculated trap?",
+      "desc": "Wide sunrise view of Roman front line facing approaching Celtic horde across the valley",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "grass",
+        "seed": 101,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.35,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "stand"
+          },
+          {
+            "id": "front_a",
+            "preset": "hastatus",
+            "x": 0.45,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "front_b",
+            "preset": "hastatus",
+            "x": 0.55,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "opp_a",
+            "preset": "celtic",
+            "x": 0.88,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": -1,
+            "pose": "charge"
+          }
+        ],
+        "props": [
+          {
+            "type": "banner",
+            "x": 0.33,
+            "y": 0.55,
+            "scale": 0.5
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 4.5,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s01",
+        "source_span": "When a Roman front line began to buckle under relentless enemy pressure, why was a sudden gap not a fatal disaster, but a calculated trap?",
+        "source_start_sec": 0.0,
+        "source_end_sec": 4.5,
+        "shot_purpose": "establishing",
+        "narrative_role": "hook",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "wide",
+        "viewpoint": "profile_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.52,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.5,
+            "x_center": 0.48,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "STAND",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "When a Roman front line began to buckle under relentless enemy pressure, why was a sudden gap not a fatal disaster, but a calculated trap?",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s02",
+      "tpl": "scene",
+      "dur": 5.0,
+      "start": 4.5,
+      "end": 9.5,
+      "action": "ADVANCE",
+      "action_kind": "ADVANCE",
+      "line": "In early republican warfare, the legion did not fight as one rigid wall. It deployed in three staggered lines of maniples.",
+      "desc": "Staggered manipular lines on grassy ridge; Celtic warriors advance closer from the right",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "grass",
+        "seed": 102,
+        "people": [
+          {
+            "id": "front_a",
+            "preset": "hastatus",
+            "x": 0.45,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "front_b",
+            "preset": "hastatus",
+            "x": 0.55,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "opp_a",
+            "preset": "celtic",
+            "x": 0.82,
+            "to": 0.72,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": -1,
+            "pose": "charge"
+          },
+          {
+            "id": "opp_b",
+            "preset": "celtic",
+            "x": 0.9,
+            "to": 0.8,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": -1,
+            "pose": "charge"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.0,
+              "x": 0.5,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s02",
+        "source_span": "In early republican warfare, the legion did not fight as one rigid wall. It deployed in three staggered lines of maniples.",
+        "source_start_sec": 4.5,
+        "source_end_sec": 9.5,
+        "shot_purpose": "explanation",
+        "narrative_role": "hook",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "rear",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.0,
+            "x_center": 0.5,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "ADVANCE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "In early republican warfare, the legion did not fight as one rigid wall. It deployed in three staggered lines of maniples.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s03",
+      "tpl": "scene",
+      "dur": 5.5,
+      "start": 9.5,
+      "end": 15.0,
+      "action": "SIGNAL",
+      "action_kind": "SIGNAL",
+      "line": "Centurion Marcus watches the forward hastati. The enemy's fierce charge collides with brutal kinetic weight.",
+      "desc": "Medium close-up on Centurion Marcus monitoring the impending clash with drawn sword",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "grass",
+        "seed": 103,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.45,
+            "y": 0.8,
+            "h": 0.55,
+            "facing": 1,
+            "pose": "fire_signal"
+          },
+          {
+            "id": "front_a",
+            "preset": "hastatus",
+            "x": 0.68,
+            "y": 0.82,
+            "h": 0.42,
+            "facing": 1,
+            "pose": "brace"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.18
+            },
+            {
+              "t": 5.5,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.227
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s03",
+        "source_span": "Centurion Marcus watches the forward hastati. The enemy's fierce charge collides with brutal kinetic weight.",
+        "source_start_sec": 9.5,
+        "source_end_sec": 15.0,
+        "shot_purpose": "character",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_close",
+        "viewpoint": "front_three_quarter_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.48,
+            "y_center": 0.59,
+            "zoom": 1.18,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.5,
+            "x_center": 0.52,
+            "y_center": 0.57,
+            "zoom": 1.227,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "SIGNAL",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Centurion Marcus watches the forward hastati. The enemy's fierce charge collides with brutal kinetic weight.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s04",
+      "tpl": "scene",
+      "dur": 5.5,
+      "start": 15.0,
+      "end": 20.5,
+      "action": "BRACE",
+      "action_kind": "BRACE",
+      "line": "Young hastati lock their shields edge to edge. The pressure mounts with every passing second as fatigue sets in.",
+      "desc": "Hastati lock shields rim to rim; shields shudder under violent Celtic impact",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 104,
+        "people": [
+          {
+            "id": "front_a",
+            "preset": "hastatus",
+            "x": 0.42,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "front_b",
+            "preset": "hastatus",
+            "x": 0.5,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "opp_a",
+            "preset": "celtic",
+            "x": 0.58,
+            "to": 0.53,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": -1,
+            "pose": "recoil"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0
+            },
+            {
+              "t": 5.5,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s04",
+        "source_span": "Young hastati lock their shields edge to edge. The pressure mounts with every passing second as fatigue sets in.",
+        "source_start_sec": 15.0,
+        "source_end_sec": 20.5,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.5,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "BRACE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Young hastati lock their shields edge to edge. The pressure mounts with every passing second as fatigue sets in.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s05",
+      "tpl": "scene",
+      "dur": 5.5,
+      "start": 20.5,
+      "end": 26.0,
+      "action": "FATIGUE",
+      "action_kind": "FATIGUE",
+      "line": "Individual files absorb the brutal impact, but mortal men cannot maintain hand-to-hand combat indefinitely.",
+      "desc": "Hastati fighters absorb continuous strain; shield posture droops under intense pressure",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "dirt",
+        "seed": 105,
+        "people": [
+          {
+            "id": "front_a",
+            "preset": "hastatus",
+            "x": 0.42,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "front_b",
+            "preset": "hastatus",
+            "x": 0.5,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.28,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "stand"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.45,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.5,
+              "x": 0.42,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s05",
+        "source_span": "Individual files absorb the brutal impact, but mortal men cannot maintain hand-to-hand combat indefinitely.",
+        "source_start_sec": 20.5,
+        "source_end_sec": 26.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "over_shoulder_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.45,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.5,
+            "x_center": 0.42,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": true
+        },
+        "action_sync": {
+          "action": "FATIGUE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Individual files absorb the brutal impact, but mortal men cannot maintain hand-to-hand combat indefinitely.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s06",
+      "tpl": "scene",
+      "dur": 5.5,
+      "start": 26.0,
+      "end": 31.5,
+      "action": "SIGNAL",
+      "action_kind": "SIGNAL",
+      "line": "At Marcus's sharp command, file partners sidestep in disciplined unison, opening clean corridors through the line.",
+      "desc": "Marcus orders line rotation; front files sidestep smoothly to open clean relief corridors",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "grass",
+        "seed": 106,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.28,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "fire_signal"
+          },
+          {
+            "id": "front_a",
+            "preset": "hastatus",
+            "x": 0.42,
+            "to": 0.38,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "front_b",
+            "preset": "hastatus",
+            "x": 0.5,
+            "to": 0.54,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.5,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s06",
+        "source_span": "At Marcus's sharp command, file partners sidestep in disciplined unison, opening clean corridors through the line.",
+        "source_start_sec": 26.0,
+        "source_end_sec": 31.5,
+        "shot_purpose": "explanation",
+        "narrative_role": "complication",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "front_three_quarter_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.48,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.5,
+            "x_center": 0.52,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "SIGNAL",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "At Marcus's sharp command, file partners sidestep in disciplined unison, opening clean corridors through the line.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s07",
+      "tpl": "scene",
+      "dur": 5.5,
+      "start": 31.5,
+      "end": 37.0,
+      "action": "ADVANCE",
+      "action_kind": "ADVANCE",
+      "line": "Through these precise gaps, fresh principes advance in locked formation, taking the strain without losing an inch of ground.",
+      "desc": "Fresh, rested Principes advance through the open corridors into the frontline slots",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "grass",
+        "seed": 107,
+        "people": [
+          {
+            "id": "reserve_a",
+            "preset": "principes",
+            "x": 0.35,
+            "to": 0.44,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "reserve_b",
+            "preset": "principes",
+            "x": 0.42,
+            "to": 0.48,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "opp_a",
+            "preset": "celtic",
+            "x": 0.68,
+            "y": 0.84,
+            "h": 0.46,
+            "facing": -1,
+            "pose": "brace"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0
+            },
+            {
+              "t": 5.5,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s07",
+        "source_span": "Through these precise gaps, fresh principes advance in locked formation, taking the strain without losing an inch of ground.",
+        "source_start_sec": 31.5,
+        "source_end_sec": 37.0,
+        "shot_purpose": "tactical",
+        "narrative_role": "explanation",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.5,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "ADVANCE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Through these precise gaps, fresh principes advance in locked formation, taking the strain without losing an inch of ground.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s08",
+      "tpl": "scene",
+      "dur": 5.5,
+      "start": 37.0,
+      "end": 42.5,
+      "action": "ADVANCE",
+      "action_kind": "ADVANCE",
+      "line": "The exhausted hastati fall back between the files, while the fresh line seals together like a solid iron gate.",
+      "desc": "Exhausted Hastati slip backward through the corridors while Principes lock shields",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "grass",
+        "seed": 108,
+        "people": [
+          {
+            "id": "reserve_a",
+            "preset": "principes",
+            "x": 0.44,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "reserve_b",
+            "preset": "principes",
+            "x": 0.48,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "brace"
+          },
+          {
+            "id": "front_a",
+            "preset": "hastatus",
+            "x": 0.38,
+            "to": 0.28,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "stand"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.5,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s08",
+        "source_span": "The exhausted hastati fall back between the files, while the fresh line seals together like a solid iron gate.",
+        "source_start_sec": 37.0,
+        "source_end_sec": 42.5,
+        "shot_purpose": "explanation",
+        "narrative_role": "complication",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "profile_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.52,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.5,
+            "x_center": 0.48,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "ADVANCE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "The exhausted hastati fall back between the files, while the fresh line seals together like a solid iron gate.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s09",
+      "tpl": "scene",
+      "dur": 5.5,
+      "start": 42.5,
+      "end": 48.0,
+      "action": "STAND",
+      "action_kind": "STAND",
+      "expected_subject": "diagram",
+      "line": "This quincunx formation turned line relief into an impenetrable engine of rotating manpower.",
+      "desc": "Overhead tactical schematic of manipular quincunx checkerboard with bold unit badges",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "grass",
+        "seed": 109,
+        "show_unit_badges": true,
+        "contrast_boost": true,
+        "props": [
+          {
+            "type": "torsion_diagram",
+            "x": 0.5,
+            "y": 0.5,
+            "scale": 1.05
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 5.5,
+              "x": 0.5,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s09",
+        "source_span": "This quincunx formation turned line relief into an impenetrable engine of rotating manpower.",
+        "source_start_sec": 42.5,
+        "source_end_sec": 48.0,
+        "shot_purpose": "tactical",
+        "narrative_role": "explanation",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "rear",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 5.5,
+            "x_center": 0.5,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "STAND",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "This quincunx formation turned line relief into an impenetrable engine of rotating manpower.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s10",
+      "tpl": "scene",
+      "dur": 4.5,
+      "start": 48.0,
+      "end": 52.5,
+      "action": "STAND",
+      "action_kind": "STAND",
+      "line": "By replacing tired fighters with fresh steel, the legion transformed an apparent crisis into overwhelming tactical order.",
+      "desc": "Wide panoramic view: Principes shield wall stands resolute, enemy counter-thrust repelled",
+      "args": {
+        "bg": "plain",
+        "time": "day",
+        "ground": "grass",
+        "seed": 110,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.32,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": 1,
+            "pose": "stand"
+          },
+          {
+            "id": "reserve_a",
+            "preset": "principes",
+            "x": 0.45,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "reserve_b",
+            "preset": "principes",
+            "x": 0.53,
+            "y": 0.82,
+            "h": 0.46,
+            "facing": 1,
+            "pose": "guard"
+          },
+          {
+            "id": "opp_a",
+            "preset": "celtic",
+            "x": 0.78,
+            "y": 0.82,
+            "h": 0.44,
+            "facing": -1,
+            "pose": "recoil"
+          }
+        ],
+        "props": [
+          {
+            "type": "banner",
+            "x": 0.3,
+            "y": 0.55,
+            "scale": 0.5
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0
+            },
+            {
+              "t": 4.5,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s10",
+        "source_span": "By replacing tired fighters with fresh steel, the legion transformed an apparent crisis into overwhelming tactical order.",
+        "source_start_sec": 48.0,
+        "source_end_sec": 52.5,
+        "shot_purpose": "explanation",
+        "narrative_role": "complication",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "profile_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.48,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.5,
+            "x_center": 0.52,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "STAND",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "By replacing tired fighters with fresh steel, the legion transformed an apparent crisis into overwhelming tactical order.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    }
+  ]
+}

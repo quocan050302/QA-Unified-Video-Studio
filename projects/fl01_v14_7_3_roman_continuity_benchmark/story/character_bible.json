@@ -1,0 +1,34 @@
+{
+  "archetypes": {
+    "marcus": {
+      "name": "Centurion Marcus",
+      "role": "Centurio Prior",
+      "preset": "centurio",
+      "armor": "lorica_hamata",
+      "helmet": "galea_transverse_crest",
+      "weapon": "gladius",
+      "cloak": "red_sagum"
+    },
+    "front_a": {
+      "name": "Hastatus Lucius",
+      "role": "Forward Legionary",
+      "preset": "hastatus",
+      "shield": "scutum_oval",
+      "weapon": "hasta"
+    },
+    "reserve_a": {
+      "name": "Princeps Titus",
+      "role": "Heavy Reserve Infantry",
+      "preset": "principes",
+      "armor": "lorica_squamata",
+      "shield": "scutum_red"
+    },
+    "opp_a": {
+      "name": "Celtic Warrior",
+      "role": "Warband Fighter",
+      "preset": "celtic",
+      "shield": "oval",
+      "weapon": "longsword"
+    }
+  }
+}

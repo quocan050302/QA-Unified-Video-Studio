@@ -1,0 +1,89 @@
+{
+  "all_fixtures_passed": true,
+  "total_fixtures": 14,
+  "passed_fixtures": 14,
+  "fixtures": {
+    "blank_frame": {
+      "description": "Pure black frame must be detected as blank and fail",
+      "expected_failure_caught": true,
+      "passed": true
+    },
+    "map_false_actor": {
+      "description": "Tactical map lines must NOT be falsely identified as human actor",
+      "expected_subject": "map",
+      "passed": true
+    },
+    "actor_disappearance": {
+      "description": "Actor suddenly missing mid-shot must trigger disappearance defect",
+      "detected": true,
+      "passed": true
+    },
+    "teleport_mid_shot": {
+      "description": "Instantaneous 1300px lateral jump within 0.5s must be flagged as teleport defect",
+      "teleport_flagged": true,
+      "jump_px": 1300.0,
+      "passed": true
+    },
+    "camera_snap": {
+      "description": "Abrupt 1-frame camera transform snap must be flagged by camera auditor",
+      "snap_caught": true,
+      "diagnostics": [
+        "Camera snap detected between keyframes 1->2: dt=0.040s, dx=0.65, dy=0.00, dz=0.00"
+      ],
+      "passed": true
+    },
+    "duplicate_held_object": {
+      "description": "Duplicate weapon or shield in actor configuration must be detected",
+      "passed": true
+    },
+    "wrong_preset": {
+      "description": "Unknown actor preset must fail validation with UNKNOWN_ACTOR_PRESET diagnostic",
+      "diagnostic": "UNKNOWN_ACTOR_PRESET: unknown_peasant_xyz",
+      "passed": true
+    },
+    "bad_cut": {
+      "description": "Successive identical framing shots must be flagged as repetition/bad cut defect",
+      "passed": true
+    },
+    "stale_receipt": {
+      "description": "Receipt with mismatched source fingerprint must be rejected as stale by validate_cache_hit",
+      "detected": true,
+      "status": "CACHE_INVALIDATED",
+      "reason": "Input fingerprint mismatch: code, storyboard, voice, or assets modified. Recorded=expected_fp_, Current=eee3233df8cf",
+      "passed": true
+    },
+    "failed_extract": {
+      "description": "Extracting frame from nonexistent media must fail closed",
+      "extract_result": false,
+      "passed": true
+    },
+    "silent_audio": {
+      "description": "Media with missing or invalid audio must fail closed when audio required",
+      "valid": false,
+      "error": "File missing or empty: /var/folders/n_/hz396std3x792_n2yrmrcw640000gn/T/tmpi01jbrmm.mp4",
+      "passed": true
+    },
+    "empty_map": {
+      "description": "Blank tactical map canvas with no contrast features must fail mobile readability",
+      "readability_ok": false,
+      "diagnostics": [
+        "Mobile downscale test: Missing high-contrast label badges (found 0 px)"
+      ],
+      "passed": true
+    },
+    "unexpected_pose": {
+      "description": "Actor with high center of mass must fail BRACE posture check",
+      "posture_ok": false,
+      "pose_detected": "brace",
+      "diagnostics": [
+        "BRACE acting posture: center of mass too high (0.277)"
+      ],
+      "passed": true
+    },
+    "legitimate_cut": {
+      "description": "Legitimate cut or diagram transition must NOT falsely flag teleportation",
+      "teleport_flagged": false,
+      "passed": true
+    }
+  }
+}

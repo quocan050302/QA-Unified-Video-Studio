@@ -1,0 +1,1 @@
+export default function(g, opt) { g.fillStyle = '#1a202c'; g.fillRect(0, 0, 1920, 1080); }
