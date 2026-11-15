@@ -1,0 +1,34 @@
+{
+  "release": "V14.7.4",
+  "initiative": "FL-01",
+  "timestamp": 1794728225.0,
+  "git_branch": "fix/Image-Shot",
+  "pushed_commit_sha": "c9095559ce0fc2d3e4d9c7d42cfc089d71c15f9b",
+  "remote_origin_url": "https://github.com/quocan050302/QA-Unified-Video-Studio.git",
+  "production_sha_baseline_invariant": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_verified_untouched": true,
+  "technical_gates_verdict": "TECH_VERIFIED",
+  "technical_gates_passed": 8,
+  "total_gates": 9,
+  "creative_gate_j13": "EDITORIAL_REVIEW_PENDING",
+  "films": {
+    "repaired_continuity_benchmark": {
+      "title": "THE GAP IN THE ROMAN LINE — HOW THE RESERVES TURNED A CRISIS INTO ORDER",
+      "path": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4",
+      "sha256": "c04f01ae0463fd32ca83f7f9575121eeae9bcd86429e90eaf8cc66a3a03ce841",
+      "duration_sec": 53.992,
+      "speech_overlap_ms": 0,
+      "min_tail_margin_sec": 0.70,
+      "diagram": "roman_manipular_formation_diagram"
+    },
+    "brand_new_arrow_storm_preview": {
+      "title": "THE ARROW STORM — HOW A ROMAN SHIELD ROOF SURVIVED",
+      "path": "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_FRESH_PREVIEW_1080P.mp4",
+      "sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878",
+      "duration_sec": 54.0,
+      "speech_overlap_ms": 0,
+      "min_tail_margin_sec": 0.277,
+      "diagram": "roman_testudo_formation_diagram"
+    }
+  }
+}
