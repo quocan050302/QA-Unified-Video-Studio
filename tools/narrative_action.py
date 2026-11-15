@@ -396,7 +396,7 @@ def resolve_actor_preset(
             return actor_state.costume_id
         if actor_state.character_id:
             cid = actor_state.character_id.lower()
-            for known in ("hastatus", "princeps", "centurion", "celtic", "latin", "knight14", "knight15", "samurai", "ashigaru", "hero"):
+            for known in ("centurio", "centurion", "optio", "ballistarius", "artillerist", "hastatus", "princeps", "principes", "triarius", "velites", "veles", "celtic", "latin", "legionary", "knight14", "knight15", "samurai", "ashigaru", "hero"):
                 if known in cid:
                     return known
 
@@ -415,15 +415,27 @@ def resolve_actor_preset(
         return "samurai"
 
     if genre == "roman":
-        if any(w in aid for w in ("centurion", "officer", "commander", "marcus")):
-            return "centurion"
-        if any(w in aid for w in ("reserve", "princeps", "rear")):
+        if any(w in aid for w in ("centurio", "centurion", "officer", "commander", "marcus")):
+            return "centurio"
+        if any(w in aid for w in ("engineer", "servius", "optio", "second", "deputy")):
+            return "optio"
+        if any(w in aid for w in ("artillerist", "ballistarius", "gunner", "crew", "cranker", "loader")):
+            return "ballistarius"
+        if any(w in aid for w in ("reserve", "princeps", "principes", "rear")):
             return "princeps"
         if any(w in aid for w in ("opposing", "enemy", "celtic", "gaul", "barbarian")):
             return "celtic"
-        if any(w in aid for w in ("front", "hastatus", "forward", "vanguard")):
+        if any(w in aid for w in ("front", "hastatus", "forward", "vanguard", "lucius")):
             return "hastatus"
-        return "latin"
+        if any(w in aid for w in ("triarius", "triarii", "veteran")):
+            return "triarius"
+        if any(w in aid for w in ("velites", "veles", "skirmisher")):
+            return "velites"
+        if any(w in aid for w in ("aquilifer", "standard_bearer", "eagle")):
+            return "aquilifer"
+        if any(w in aid for w in ("cornicen", "horn")):
+            return "cornicen"
+        return "legionary"
 
     # Generic or unknown genre: strictly fail closed / avoid Roman equipment bleed
     return "peasant"

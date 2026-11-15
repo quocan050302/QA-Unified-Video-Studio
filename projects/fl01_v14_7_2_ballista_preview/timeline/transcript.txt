@@ -1,0 +1,10 @@
+s01: At three hundred paces, no wooden shield or bronze breastplate could stop what the Romans were preparing to unleash.
+s02: Behind the frontline legionaries stood the torsion artillery: field ballistae capable of turning defensive sieges into devastating long-range barrages.
+s03: A crew of four artillerists turned the rear winch, tightening dual skeins of twisted sinew until hundreds of foot-pounds of torque were locked in place.
+s04: Unlike medieval counterweight catapults, Roman artillery was powered purely by torsion physics: horsehair and sinew wound tightly inside bronze tightening rings.
+s05: A three-span iron-tipped bolt was laid into the carved guide channel, seated snugly against the drawn bowstring.
+s06: Optio Servius sighted the target angle using elevation wedges, calculating wind drift and trajectory before giving the final firing signal.
+s07: Every man braced. A machine under full tension was dangerous to friends and foes alike if a sinew gave way.
+s08: With a sharp strike of the mallet on the release claw, the stored torsion exploded outward, hurling the projectile down the ramp.
+s09: Downrange, the bodkin point shattered heavy timber palisades upon impact, proving that Roman engineering was as lethal as Roman steel.
+s10: From the Rhine to the Euphrates, Rome dominated ancient warfare not merely by sword, but by the relentless precision of mechanical science.

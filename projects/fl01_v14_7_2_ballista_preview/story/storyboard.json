@@ -1,0 +1,1010 @@
+{
+  "version": "14.7.2",
+  "title": "FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P",
+  "duration": 51.5,
+  "pack": "squire",
+  "genre": "roman",
+  "shots": [
+    {
+      "id": "s01",
+      "tpl": "scene",
+      "start": 0.0,
+      "end": 4.5,
+      "dur": 4.5,
+      "line": "At three hundred paces, no wooden shield or bronze breastplate could stop what the Romans were preparing to unleash.",
+      "action": "STAND",
+      "action_kind": "STAND",
+      "purpose": "hook_lethal_weapon",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "field",
+        "time": "day",
+        "seed": 301,
+        "bgOpts": {
+          "sky": "#2e4860",
+          "haze": 0.15
+        },
+        "people": [
+          {
+            "id": "artillerist_guard",
+            "preset": "ballistarius",
+            "x": 0.28,
+            "y": 0.82,
+            "h": 0.44,
+            "pose": "stand",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "ballista",
+            "x": 0.52,
+            "y": 0.78,
+            "s": 0.72,
+            "loaded": true
+          },
+          {
+            "kind": "bolt",
+            "x": 0.58,
+            "y": 0.6,
+            "s": 0.48,
+            "ang": 0.04,
+            "anim": "pop"
+          }
+        ],
+        "cam": {
+          "pan": [
+            -0.04,
+            0.03
+          ],
+          "zoom": 1.05
+        },
+        "cameraRig": {
+          "viewpoint": "profile_left",
+          "scale": "wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 4.5,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "wind_loop",
+          "at": 0.2,
+          "vol": 0.35
+        },
+        {
+          "kind": "armor_clank",
+          "at": 1.8,
+          "vol": 0.4
+        },
+        {
+          "kind": "thud_soft",
+          "at": 3.2,
+          "vol": 0.5
+        }
+      ]
+    },
+    {
+      "id": "s02",
+      "tpl": "scene",
+      "start": 4.5,
+      "end": 9.5,
+      "dur": 5.0,
+      "line": "Behind the frontline legionaries stood the torsion artillery: field ballistae capable of turning defensive sieges into devastating long-range barrages.",
+      "action": "SIGNAL",
+      "action_kind": "SIGNAL",
+      "purpose": "context_artillery_battery",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "field",
+        "time": "day",
+        "seed": 302,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.3,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "signal",
+            "facing": 1
+          },
+          {
+            "id": "servius",
+            "preset": "optio",
+            "x": 0.46,
+            "y": 0.8,
+            "h": 0.45,
+            "pose": "stand",
+            "facing": 1
+          },
+          {
+            "id": "lucius",
+            "preset": "ballistarius",
+            "x": 0.68,
+            "y": 0.8,
+            "h": 0.45,
+            "pose": "stand",
+            "facing": -1
+          }
+        ],
+        "props": [
+          {
+            "kind": "ballista",
+            "x": 0.78,
+            "y": 0.81,
+            "s": 0.62,
+            "loaded": true
+          },
+          {
+            "kind": "standard",
+            "x": 0.18,
+            "y": 0.8,
+            "s": 0.55
+          }
+        ],
+        "cam": {
+          "pan": [
+            0.05,
+            0.0
+          ],
+          "zoom": 1.02
+        },
+        "cameraRig": {
+          "viewpoint": "rear",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.5,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "horn_roman",
+          "at": 1.0,
+          "vol": 0.55
+        },
+        {
+          "kind": "armor_clank",
+          "at": 2.5,
+          "vol": 0.45
+        },
+        {
+          "kind": "drum_hit",
+          "at": 4.0,
+          "vol": 0.5
+        }
+      ]
+    },
+    {
+      "id": "s03",
+      "tpl": "scene",
+      "start": 9.5,
+      "end": 14.5,
+      "dur": 5.0,
+      "line": "A crew of four artillerists turned the rear winch, tightening dual skeins of twisted sinew until hundreds of foot-pounds of torque were locked in place.",
+      "action": "WINCH",
+      "action_kind": "WINCH",
+      "purpose": "tension_mechanism_winch",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "camp",
+        "time": "day",
+        "seed": 303,
+        "people": [
+          {
+            "id": "lucius",
+            "preset": "ballistarius",
+            "x": 0.38,
+            "y": 0.8,
+            "h": 0.47,
+            "pose": "winch",
+            "facing": 1
+          },
+          {
+            "id": "crew_cranker",
+            "preset": "ballistarius",
+            "x": 0.62,
+            "y": 0.8,
+            "h": 0.47,
+            "pose": "crank",
+            "facing": -1
+          }
+        ],
+        "props": [
+          {
+            "kind": "ballista",
+            "x": 0.5,
+            "y": 0.78,
+            "s": 0.76,
+            "cranking": true,
+            "tension": 0.85
+          }
+        ],
+        "cam": {
+          "zoom": 1.08,
+          "pan": [
+            0.0,
+            -0.02
+          ]
+        },
+        "cameraRig": {
+          "viewpoint": "low_angle",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "clock_tick",
+          "at": 0.5,
+          "vol": 0.55
+        },
+        {
+          "kind": "clock_tick",
+          "at": 1.2,
+          "vol": 0.6
+        },
+        {
+          "kind": "clock_tick",
+          "at": 2.0,
+          "vol": 0.65
+        },
+        {
+          "kind": "chainmail",
+          "at": 3.0,
+          "vol": 0.5
+        },
+        {
+          "kind": "clock_tick",
+          "at": 3.8,
+          "vol": 0.7
+        }
+      ]
+    },
+    {
+      "id": "s04",
+      "tpl": "scene",
+      "start": 14.5,
+      "end": 19.5,
+      "dur": 5.0,
+      "line": "Unlike medieval counterweight catapults, Roman artillery was powered purely by torsion physics: horsehair and sinew wound tightly inside bronze tightening rings.",
+      "action": "STAND",
+      "action_kind": "STAND",
+      "expected_subject": "diagram",
+      "purpose": "engineering_cutaway_schematic",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "parchment",
+        "time": "day",
+        "seed": 304,
+        "props": [
+          {
+            "kind": "torsion_diagram",
+            "x": 0.5,
+            "y": 0.5,
+            "s": 0.64,
+            "anim": "pop"
+          }
+        ],
+        "labels": [
+          {
+            "kind": "sign",
+            "text": "BRONZE MODIOLUS CASING",
+            "x": 0.5,
+            "y": 0.16,
+            "size": 34
+          },
+          {
+            "kind": "sign",
+            "text": "TWISTED HORSEHAIR & SINEW SKEIN",
+            "x": 0.5,
+            "y": 0.84,
+            "size": 30
+          }
+        ],
+        "cam": {
+          "zoom": 1.04
+        },
+        "cameraRig": {
+          "viewpoint": "rear_three_quarter_right",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.45,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.42,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "page_turn",
+          "at": 0.4,
+          "vol": 0.5
+        },
+        {
+          "kind": "thud_soft",
+          "at": 2.5,
+          "vol": 0.45
+        }
+      ]
+    },
+    {
+      "id": "s05",
+      "tpl": "scene",
+      "start": 19.5,
+      "end": 24.5,
+      "dur": 5.0,
+      "line": "A three-span iron-tipped bolt was laid into the carved guide channel, seated snugly against the drawn bowstring.",
+      "action": "LOAD",
+      "action_kind": "LOAD",
+      "purpose": "loading_bolt_into_trough",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "field",
+        "time": "day",
+        "seed": 305,
+        "people": [
+          {
+            "id": "lucius",
+            "preset": "ballistarius",
+            "x": 0.38,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "load",
+            "facing": 1
+          },
+          {
+            "id": "loader_assistant",
+            "preset": "ballistarius",
+            "x": 0.64,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "stand",
+            "facing": -1
+          }
+        ],
+        "props": [
+          {
+            "kind": "ballista",
+            "x": 0.58,
+            "y": 0.79,
+            "s": 0.72,
+            "drawn": true
+          },
+          {
+            "kind": "bolt",
+            "x": 0.5,
+            "y": 0.68,
+            "from": 0.36,
+            "to": 0.56,
+            "s": 0.34,
+            "moveAt": 0.6,
+            "dur": 1.8
+          }
+        ],
+        "cam": {
+          "pan": [
+            0.03,
+            0.0
+          ],
+          "zoom": 1.05
+        },
+        "cameraRig": {
+          "viewpoint": "front_three_quarter_right",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.52,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "chainmail",
+          "at": 0.6,
+          "vol": 0.5
+        },
+        {
+          "kind": "armor_clank",
+          "at": 2.2,
+          "vol": 0.55
+        },
+        {
+          "kind": "thud_soft",
+          "at": 3.6,
+          "vol": 0.6
+        }
+      ]
+    },
+    {
+      "id": "s06",
+      "tpl": "scene",
+      "start": 24.5,
+      "end": 29.5,
+      "dur": 5.0,
+      "line": "Optio Servius sighted the target angle using elevation wedges, calculating wind drift and trajectory before giving the final firing signal.",
+      "action": "AIM",
+      "action_kind": "AIM",
+      "purpose": "elevation_and_targeting",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "field",
+        "time": "day",
+        "seed": 306,
+        "people": [
+          {
+            "id": "servius",
+            "preset": "optio",
+            "x": 0.36,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "aim",
+            "facing": 1
+          },
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.58,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "signal",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "ballista",
+            "x": 0.72,
+            "y": 0.8,
+            "s": 0.66,
+            "loaded": true
+          }
+        ],
+        "cam": {
+          "pan": [
+            -0.03,
+            0.01
+          ],
+          "zoom": 1.04
+        },
+        "cameraRig": {
+          "viewpoint": "rear_three_quarter_left",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.55,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.58,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "wind_loop",
+          "at": 0.4,
+          "vol": 0.4
+        },
+        {
+          "kind": "armor_clank",
+          "at": 2.0,
+          "vol": 0.5
+        },
+        {
+          "kind": "horn_roman",
+          "at": 4.0,
+          "vol": 0.55
+        }
+      ]
+    },
+    {
+      "id": "s07",
+      "tpl": "scene",
+      "start": 29.5,
+      "end": 34.5,
+      "dur": 5.0,
+      "line": "Every man braced. A machine under full tension was dangerous to friends and foes alike if a sinew gave way.",
+      "action": "BRACE",
+      "action_kind": "BRACE",
+      "purpose": "tension_peak_command_pause",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "field",
+        "time": "day",
+        "seed": 307,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.3,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "fire_signal",
+            "facing": 1
+          },
+          {
+            "id": "lucius",
+            "preset": "ballistarius",
+            "x": 0.5,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "hammer_up",
+            "facing": 1
+          },
+          {
+            "id": "titus",
+            "preset": "principes",
+            "x": 0.72,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "brace",
+            "facing": -1
+          }
+        ],
+        "props": [
+          {
+            "kind": "ballista",
+            "x": 0.58,
+            "y": 0.8,
+            "s": 0.7,
+            "tension": 1.0,
+            "loaded": true
+          }
+        ],
+        "cam": {
+          "zoom": 1.06,
+          "pan": [
+            0.0,
+            -0.01
+          ]
+        },
+        "cameraRig": {
+          "viewpoint": "low_angle",
+          "scale": "medium",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.63,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.0,
+              "x": 0.5,
+              "y": 0.6,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "chainmail",
+          "at": 0.8,
+          "vol": 0.5
+        },
+        {
+          "kind": "war_horn",
+          "at": 2.2,
+          "vol": 0.6
+        },
+        {
+          "kind": "drum_hit",
+          "at": 4.0,
+          "vol": 0.65
+        }
+      ]
+    },
+    {
+      "id": "s08",
+      "tpl": "scene",
+      "start": 34.5,
+      "end": 40.0,
+      "dur": 5.5,
+      "line": "With a sharp strike of the mallet on the release claw, the stored torsion exploded outward, hurling the projectile down the ramp.",
+      "action": "HAMMER",
+      "action_kind": "HAMMER",
+      "purpose": "trigger_strike_and_flight",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "field",
+        "time": "day",
+        "seed": 308,
+        "people": [
+          {
+            "id": "lucius",
+            "preset": "ballistarius",
+            "x": 0.38,
+            "y": 0.8,
+            "h": 0.46,
+            "pose": "hammer_down",
+            "facing": 1
+          },
+          {
+            "id": "servius",
+            "preset": "optio",
+            "x": 0.65,
+            "y": 0.8,
+            "h": 0.45,
+            "pose": "recoil",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "ballista",
+            "x": 0.46,
+            "y": 0.8,
+            "s": 0.7,
+            "tension": 0.0
+          },
+          {
+            "kind": "bolt",
+            "x": 0.5,
+            "y": 0.55,
+            "from": 0.5,
+            "to": 1.2,
+            "fromY": 0.6,
+            "toY": 0.35,
+            "s": 0.35,
+            "moveAt": 0.25,
+            "dur": 0.4,
+            "easing": "linear"
+          }
+        ],
+        "cam": {
+          "shake": 0.04,
+          "pan": [
+            0.06,
+            0.0
+          ]
+        },
+        "cameraRig": {
+          "viewpoint": "profile_left",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.5,
+              "x": 0.48,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "drum_hit",
+          "at": 0.2,
+          "vol": 0.8
+        },
+        {
+          "kind": "whoosh_fast",
+          "at": 0.35,
+          "vol": 0.75
+        },
+        {
+          "kind": "arrow_whoosh",
+          "at": 1.0,
+          "vol": 0.65
+        },
+        {
+          "kind": "shield_bash",
+          "at": 2.5,
+          "vol": 0.5
+        }
+      ]
+    },
+    {
+      "id": "s09",
+      "tpl": "scene",
+      "start": 40.0,
+      "end": 45.5,
+      "dur": 5.5,
+      "line": "Downrange, the bodkin point shattered heavy timber palisades upon impact, proving that Roman engineering was as lethal as Roman steel.",
+      "action": "IMPACT_RECOIL",
+      "action_kind": "IMPACT_RECOIL",
+      "purpose": "target_palisade_penetration",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "mud",
+        "time": "storm",
+        "seed": 309,
+        "people": [
+          {
+            "id": "celtic_defender",
+            "preset": "celtic",
+            "x": 0.35,
+            "y": 0.82,
+            "h": 0.46,
+            "pose": "react",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "target_barrier",
+            "x": 0.58,
+            "y": 0.74,
+            "s": 0.82,
+            "hit": true,
+            "shattered": true
+          },
+          {
+            "kind": "bolt",
+            "x": 0.5,
+            "y": 0.62,
+            "from": -0.15,
+            "to": 0.52,
+            "fromY": 0.48,
+            "toY": 0.62,
+            "s": 0.32,
+            "moveAt": 0.05,
+            "dur": 0.25,
+            "easing": "linear"
+          }
+        ],
+        "cam": {
+          "shake": 0.06,
+          "zoom": 1.08
+        },
+        "cameraRig": {
+          "viewpoint": "over_shoulder_right",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.45,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 5.5,
+              "x": 0.42,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "whoosh_fast",
+          "at": 0.05,
+          "vol": 0.7
+        },
+        {
+          "kind": "impact_heavy",
+          "at": 0.3,
+          "vol": 0.85
+        },
+        {
+          "kind": "shield_bash",
+          "at": 0.45,
+          "vol": 0.7
+        },
+        {
+          "kind": "battle_roar",
+          "at": 1.8,
+          "vol": 0.5
+        },
+        {
+          "kind": "thud_soft",
+          "at": 3.2,
+          "vol": 0.55
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "tpl": "scene",
+      "start": 45.5,
+      "end": 51.5,
+      "dur": 6.0,
+      "line": "From the Rhine to the Euphrates, Rome dominated ancient warfare not merely by sword, but by the relentless precision of mechanical science.",
+      "action": "STAND",
+      "action_kind": "STAND",
+      "purpose": "payoff_historical_citations",
+      "visual_source": "auto_planned",
+      "args": {
+        "bg": "field",
+        "time": "sunset",
+        "seed": 310,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.28,
+            "y": 0.79,
+            "h": 0.46,
+            "pose": "march",
+            "facing": 1
+          },
+          {
+            "id": "servius",
+            "preset": "optio",
+            "x": 0.46,
+            "y": 0.79,
+            "h": 0.45,
+            "pose": "march",
+            "facing": 1
+          },
+          {
+            "id": "lucius",
+            "preset": "ballistarius",
+            "x": 0.65,
+            "y": 0.79,
+            "h": 0.45,
+            "pose": "march",
+            "facing": 1
+          }
+        ],
+        "props": [
+          {
+            "kind": "ballista",
+            "x": 0.84,
+            "y": 0.8,
+            "s": 0.58
+          }
+        ],
+        "labels": [
+          {
+            "kind": "sign",
+            "text": "VITRUVIUS: DE ARCHITECTURA X.10",
+            "x": 0.5,
+            "y": 0.16,
+            "size": 32
+          },
+          {
+            "kind": "sign",
+            "text": "VEGETIUS: DE RE MILITARI",
+            "x": 0.5,
+            "y": 0.24,
+            "size": 28
+          }
+        ],
+        "cam": {
+          "pan": [
+            0.04,
+            0.0
+          ],
+          "zoom": 1.02
+        },
+        "cameraRig": {
+          "viewpoint": "rear",
+          "scale": "medium_wide",
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.59,
+              "z": 1.0,
+              "ease": "sine"
+            },
+            {
+              "t": 6.0,
+              "x": 0.5,
+              "y": 0.57,
+              "z": 1.04,
+              "ease": "sine"
+            }
+          ],
+          "aspect": "16:9"
+        }
+      },
+      "sfx": [
+        {
+          "kind": "drum_march",
+          "at": 0.5,
+          "vol": 0.6
+        },
+        {
+          "kind": "armor_clank",
+          "at": 2.0,
+          "vol": 0.5
+        },
+        {
+          "kind": "crowd_cheer",
+          "at": 3.5,
+          "vol": 0.45
+        }
+      ]
+    }
+  ]
+}

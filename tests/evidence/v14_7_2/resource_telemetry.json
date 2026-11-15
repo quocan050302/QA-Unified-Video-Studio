@@ -1,0 +1,56 @@
+{
+  "release": "V14.7.2",
+  "concurrency_limit": 2,
+  "concurrency_mode": "BOUNDED_CONCURRENT_SAFE",
+  "before": {
+    "timestamp": 1794716094.4378161,
+    "cpu_count": 8,
+    "load_average_1_5_15": [
+      5.716796875,
+      10.8564453125,
+      12.462890625
+    ],
+    "ram": {
+      "total_gb": 16.0,
+      "available_gb": 3.69,
+      "ram_percent": 76.9,
+      "ram_avail_mb": 3783.3
+    },
+    "disk": {
+      "total_gb": 460.43,
+      "used_gb": 440.78,
+      "free_gb": 19.65
+    }
+  },
+  "after": {
+    "timestamp": 1794716124.794816,
+    "cpu_count": 8,
+    "load_average_1_5_15": [
+      7.8369140625,
+      10.8447265625,
+      12.39990234375
+    ],
+    "ram": {
+      "total_gb": 16.0,
+      "available_gb": 3.76,
+      "ram_percent": 76.5,
+      "ram_avail_mb": 3850.8
+    },
+    "disk": {
+      "total_gb": 460.43,
+      "used_gb": 440.79,
+      "free_gb": 19.64
+    }
+  },
+  "ram": {
+    "total_gb": 16.0,
+    "available_gb": 3.76,
+    "ram_percent": 76.5,
+    "ram_avail_mb": 3850.8
+  },
+  "disk": {
+    "total_gb": 460.43,
+    "used_gb": 440.79,
+    "free_gb": 19.64
+  }
+}

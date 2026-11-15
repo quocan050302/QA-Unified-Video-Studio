@@ -179,10 +179,46 @@ export function drawPeople(g, lt, info, list, gy, dh) { for (const p of list || 
 // ---------- do vat: { kind, x, y, s, at, anim: pop|drop|grow|fall|spin, rot, ...tuy chon }
 export function prop(g, lt, info, p) {
   const a0 = at(info, p.at, 0); if (lt < a0) return;
-  const x = fx(p.x), s = fs(p.s, 0.2); let y = fy(p.y), sc = 1, rot = p.rot || 0; const k = clamp((lt - a0) / 0.45), anim = p.anim || 'none';
-  if (anim === 'pop') sc = ease.outBack(k); else if (anim === 'drop') y -= (1 - ease.outBack(k)) * E.H * 0.5; else if (anim === 'grow') sc = ease.inOut(clamp((lt - a0) / 0.9));
-  else if (anim === 'spin') rot += lt * 1.4; else if (anim === 'float') y += bob(lt, 8, 0.8, x);
-  if (p.gone !== undefined) { const kk = clamp((lt - at(info, p.gone, 1e9)) / 0.4); if (kk >= 1) { if (p.ghost) ghost(g, p, x, y, s); return; } sc *= 1 - kk; }
+  let x = fx(p.x), s = fs(p.s, 0.2); let y = fy(p.y), sc = 1, rot = p.rot || 0;
+
+  // Dynamic keyframed motion (from/to, fromY/toY, rotFrom/rotTo, moveAt, dur, easing, arc)
+  if (p.from !== undefined || p.fromY !== undefined || p.rotFrom !== undefined) {
+    const mStart = p.moveAt !== undefined ? at(info, p.moveAt, 0) : a0;
+    const mDur = p.dur || p.moveDur || 1.0;
+    let u = 0;
+    if (lt >= mStart) {
+      const rawU = clamp((lt - mStart) / Math.max(0.001, mDur));
+      const easeFn = ease[p.easing] || (p.easing === 'linear' ? (v) => v : ease.inOut);
+      u = easeFn(rawU);
+    }
+    if (p.from !== undefined && p.to !== undefined) {
+      const startX = fx(p.from), endX = fx(p.to);
+      x = startX + (endX - startX) * u;
+    }
+    if (p.fromY !== undefined && p.toY !== undefined) {
+      const startY = fy(p.fromY), endY = fy(p.toY);
+      y = startY + (endY - startY) * u;
+    }
+    if (p.rotFrom !== undefined && p.rotTo !== undefined) {
+      rot = p.rotFrom + (p.rotTo - p.rotFrom) * u;
+    }
+    if (p.arc && u > 0 && u < 1) {
+      y -= Math.sin(u * Math.PI) * fy(p.arc);
+    }
+  }
+
+  const k = clamp((lt - a0) / 0.45), anim = p.anim || 'none';
+  if (anim === 'pop') sc = ease.outBack(k);
+  else if (anim === 'drop') y -= (1 - ease.outBack(k)) * E.H * 0.5;
+  else if (anim === 'grow') sc = ease.inOut(clamp((lt - a0) / 0.9));
+  else if (anim === 'spin') rot += lt * 1.4;
+  else if (anim === 'float') y += bob(lt, 8, 0.8, x);
+
+  if (p.gone !== undefined) {
+    const kk = clamp((lt - at(info, p.gone, 1e9)) / 0.4);
+    if (kk >= 1) { if (p.ghost) ghost(g, p, x, y, s); return; }
+    sc *= 1 - kk;
+  }
   g.save(); g.translate(x, y); g.rotate(rot); g.scale(sc, sc); if (p.flip) g.scale(-1, 1);
   drawThing(g, p.kind, 0, 0, s, { ...p, t: lt });
   g.restore();
@@ -197,6 +233,136 @@ export function drawThing(g, kind, x, y, s, o = {}) {
     case 'pavise': shield(g, x, y, s, { ...o, type: 'pavise' }); break;
     case 'shovel': case 'pickaxe': case 'saw': case 'stake': case 'pot': case 'basket': case 'sword': case 'spear': case 'pilum': case 'pollaxe': case 'axe': case 'bow': case 'crossbow': case 'rifle': case 'musket': case 'torch': case 'katana': case 'lance': case 'mace': case 'hammer': case 'dagger': case 'naginata': case 'grenade': case 'scroll': case 'pouch':
       weapon(g, kind, x, y + ((kind === 'pot' || kind === 'basket') ? -s * 0.25 : s * 0.5), s, o.ang ?? (kind === 'bow' ? Math.PI / 2 : (kind === 'pot' || kind === 'basket') ? 0 : Math.PI), { ...o, lw }); break;
+    case 'bolt': {
+      const lw2 = o.lw ?? Math.max(1.5, s * 0.025);
+      g.save(); g.translate(x, y); if (o.ang) g.rotate(o.ang);
+      line(g, [[-s * 0.5, 0], [s * 0.35, 0]], { lw: s * 0.045, ink: PAL.wood });
+      polyS(g, [[s * 0.35, -s * 0.06], [s * 0.35, s * 0.06], [s * 0.55, 0]], { fill: PAL.steelLight, lw: lw2 * 0.8 });
+      shape(g, (c) => {
+        c.moveTo(-s * 0.48, 0); c.lineTo(-s * 0.38, -s * 0.1); c.lineTo(-s * 0.25, -s * 0.03); c.closePath();
+        c.moveTo(-s * 0.48, 0); c.lineTo(-s * 0.38, s * 0.1); c.lineTo(-s * 0.25, s * 0.03); c.closePath();
+      }, { fill: PAL.leather, lw: lw2 * 0.6 });
+      g.restore();
+      break;
+    }
+    case 'ballista': {
+      const lw2 = o.lw ?? Math.max(2, s * 0.02);
+      g.save(); g.translate(x, y);
+      const tension = clamp(o.tension ?? (o.drawn ? 1 : 0));
+      // Base tripod & trail
+      line(g, [[-s * 0.15, s * 0.35], [-s * 0.05, s * 0.05]], { lw: s * 0.06, ink: PAL.woodDark });
+      line(g, [[s * 0.15, s * 0.35], [s * 0.05, s * 0.05]], { lw: s * 0.06, ink: PAL.woodDark });
+      line(g, [[-s * 0.45, s * 0.38], [0, s * 0.05]], { lw: s * 0.055, ink: PAL.wood });
+      polyS(g, [[-s * 0.08, s * 0.05], [s * 0.08, s * 0.05], [0, -s * 0.08]], { fill: PAL.bronze, lw: lw2 * 0.8 });
+
+      // Mensa slider trough
+      rect(g, -s * 0.48, -s * 0.06, s * 0.96, s * 0.12, { fill: PAL.wood, lw: lw2, r: 2, inner: (c) => {
+        line(c, [[-s * 0.46, 0], [s * 0.46, 0]], { lw: s * 0.03, ink: '#2a1a0f' });
+      } });
+
+      // Capitulum head frame with twin bronze torsion cylinders
+      const capX = s * 0.32;
+      rect(g, capX - s * 0.08, -s * 0.32, s * 0.16, s * 0.64, { fill: PAL.woodDark, lw: lw2, r: 4 });
+      for (const side of [-1, 1]) {
+        const cy = side * s * 0.18;
+        rect(g, capX - s * 0.07, cy - s * 0.1, s * 0.14, s * 0.2, { fill: PAL.bronze, lw: lw2 * 0.9, r: 3, inner: (c) => {
+          for (let i = -2; i <= 2; i++) {
+            line(c, [[capX - s * 0.05, cy + i * s * 0.03], [capX + s * 0.05, cy + i * s * 0.03]], { lw: lw2 * 0.5, ink: PAL.bronzeDark });
+          }
+        } });
+        circ(g, capX, cy - s * 0.1, s * 0.045, { fill: PAL.gold, lw: lw2 * 0.7 });
+        circ(g, capX, cy + s * 0.1, s * 0.045, { fill: PAL.gold, lw: lw2 * 0.7 });
+      }
+
+      // Twin throwing arms
+      const armAngle = 0.35 + tension * 0.55;
+      const armLen = s * 0.38;
+      const leftArmTip = [capX - Math.sin(armAngle) * armLen, -s * 0.18 - Math.cos(armAngle) * armLen];
+      const rightArmTip = [capX - Math.sin(armAngle) * armLen, s * 0.18 + Math.cos(armAngle) * armLen];
+      tube(g, [[capX, -s * 0.18], leftArmTip], s * 0.05, PAL.woodLight, lw2);
+      tube(g, [[capX, s * 0.18], rightArmTip], s * 0.05, PAL.woodLight, lw2);
+
+      // Tension bowstring
+      const clawX = -s * 0.38 + (1 - tension) * s * 0.65;
+      shape(g, (c) => {
+        c.moveTo(leftArmTip[0], leftArmTip[1]);
+        c.lineTo(clawX, 0);
+        c.lineTo(rightArmTip[0], rightArmTip[1]);
+      }, { fill: null, lw: lw2 * 1.4, ink: PAL.rope });
+
+      // Loaded bolt
+      if (o.loaded || tension > 0.5) {
+        line(g, [[clawX, 0], [clawX + s * 0.45, 0]], { lw: s * 0.04, ink: PAL.wood });
+        polyS(g, [[clawX + s * 0.45, -s * 0.04], [clawX + s * 0.45, s * 0.04], [clawX + s * 0.53, 0]], { fill: PAL.steelLight, lw: lw2 * 0.7 });
+      }
+
+      // Rear winch cylinder (sucula)
+      const winchX = -s * 0.42;
+      rect(g, winchX - s * 0.04, -s * 0.08, s * 0.08, s * 0.16, { fill: PAL.steelDark, lw: lw2 * 0.8, r: 2 });
+      const crankPhase = (o.winchTurn || (o.t || 0) * (o.cranking ? 4 : 0)) * Math.PI * 2;
+      for (let sp = 0; sp < 4; sp++) {
+        const ang = crankPhase + sp * (Math.PI / 2);
+        line(g, [[winchX, 0], [winchX + Math.cos(ang) * s * 0.14, Math.sin(ang) * s * 0.14]], { lw: s * 0.03, ink: PAL.woodDark });
+      }
+      circ(g, winchX, 0, s * 0.04, { fill: PAL.bronze, lw: lw2 * 0.7 });
+      g.restore();
+      break;
+    }
+    case 'target_barrier': case 'barrier': {
+      const lw2 = o.lw ?? Math.max(2, s * 0.025);
+      g.save(); g.translate(x, y);
+      const hit = o.hit || o.fractured || o.shattered;
+      const bw = s * 0.85, bh = s * 1.1;
+      rect(g, -bw * 0.5, -bh * 0.5, bw, bh, { fill: PAL.wood, lw: lw2, r: 4, inner: (c) => {
+        for (let p = -3; p <= 3; p++) {
+          line(c, [[p * bw * 0.14, -bh * 0.5], [p * bw * 0.14, bh * 0.5]], { lw: lw2 * 0.6, ink: '#321c10' });
+        }
+        for (const yb of [-bh * 0.35, 0, bh * 0.35]) {
+          rect(c, -bw * 0.5, yb - s * 0.03, bw, s * 0.06, { fill: PAL.steelDark, lw: lw2 * 0.6, r: 0 });
+          for (let b = -3; b <= 3; b++) circ(c, b * bw * 0.14, yb, s * 0.015, { fill: PAL.gold, lw: 0 });
+        }
+        if (hit) {
+          c.strokeStyle = '#fff';
+          c.lineWidth = lw2 * 1.2;
+          c.beginPath();
+          c.moveTo(-s * 0.15, -s * 0.15); c.lineTo(s * 0.05, 0); c.lineTo(-s * 0.08, s * 0.2);
+          c.moveTo(s * 0.05, 0); c.lineTo(s * 0.25, -s * 0.1);
+          c.moveTo(s * 0.05, 0); c.lineTo(s * 0.28, s * 0.18);
+          c.stroke();
+          circ(c, s * 0.05, 0, s * 0.08, { fill: '#140c06', lw: lw2 * 0.8 });
+        }
+      } });
+      if (o.shattered) {
+        for (let sp = 0; sp < 6; sp++) {
+          const spAng = sp * 1.1 + (o.t || 0);
+          const spDist = s * (0.35 + (sp % 3) * 0.15);
+          line(g, [[Math.cos(spAng) * spDist, Math.sin(spAng) * spDist], [Math.cos(spAng) * (spDist + s * 0.1), Math.sin(spAng) * (spDist + s * 0.06)]], { lw: s * 0.025, ink: PAL.woodLight });
+        }
+      }
+      g.restore();
+      break;
+    }
+    case 'torsion_diagram': case 'torsion_spring': {
+      const lw2 = o.lw ?? Math.max(2, s * 0.02);
+      g.save(); g.translate(x, y);
+      rect(g, -s * 0.35, -s * 0.45, s * 0.7, s * 0.9, { fill: PAL.bronze, lw: lw2, r: 8, inner: (c) => {
+        rect(c, -s * 0.22, -s * 0.38, s * 0.44, s * 0.76, { fill: '#231709', lw: lw2 * 0.8, r: 4 });
+        const twistCount = 14;
+        for (let i = 0; i < twistCount; i++) {
+          const yy = -s * 0.34 + i * (s * 0.68 / twistCount);
+          const phase = Math.sin(i * 0.8 + (o.t || 0) * 2) * s * 0.08;
+          shape(c, (cc) => {
+            cc.moveTo(-s * 0.18, yy);
+            cc.quadraticCurveTo(phase, yy + s * 0.03, s * 0.18, yy + s * 0.05);
+          }, { fill: null, lw: lw2 * 0.9, ink: PAL.rope });
+        }
+      } });
+      tube(g, [[-s * 0.45, 0], [s * 0.45, -s * 0.12]], s * 0.06, PAL.woodDark, lw2);
+      rect(g, -s * 0.28, -s * 0.48, s * 0.56, s * 0.08, { fill: PAL.gold, lw: lw2 * 0.8, r: 2 });
+      rect(g, -s * 0.28, s * 0.4, s * 0.56, s * 0.08, { fill: PAL.gold, lw: lw2 * 0.8, r: 2 });
+      g.restore();
+      break;
+    }
     case 'flag': flag(g, x, y + s * 0.5, s, o); break;
     case 'standard': case 'eagle': standard(g, x, y + s * 0.5, s, { ...o, kind: kind === 'eagle' ? 'eagle' : o.style }); break;
     case 'tent': tent(g, x, y, s, o); break;

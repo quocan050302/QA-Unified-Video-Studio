@@ -1,489 +1,377 @@
 {
-  "version": "14.6",
-  "timestamp": 1794671565.8471382,
-  "elapsed_sec": 15.3,
-  "gates_count": 35,
-  "passed_count": 34,
-  "failed_count": 0,
-  "pending_count": 1,
-  "technical_status": "V14_6_TECHNICAL_ACCEPTANCE",
+  "version": "14.7.2",
+  "release": "V14.7.2",
+  "timestamp": 1794716124.7936819,
+  "elapsed_sec": 30.36,
+  "total_gates": 14,
+  "passed_gates": 13,
+  "failed_gates": 0,
+  "pending_gates": 1,
+  "master_status": "VISUAL_TECH_PASS",
+  "tech_all_passed": true,
   "editorial_status": "EDITORIAL_REVIEW_PENDING",
-  "mp4": {
-    "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_6_action_demo/out/V14_6_Visual_Storytelling_Acting_Demo_1080p.mp4",
-    "size_bytes": 16513932
-  },
+  "ballista_mp4": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_2_ballista_preview/out/FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4",
+  "bridge_mp4": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_1_bridge_before_enemy_preview/out/FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4",
+  "night_mp4": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4",
   "gates": [
     {
-      "gate_id": "S01",
-      "name": "Git branch and Production baseline invariant",
+      "gate_id": "J0",
+      "name": "Git Branch & Remote Production Invariant",
       "status": "PASS",
       "details": {
         "current_branch": "fix/Image-Shot",
-        "expected_branch": "fix/Image-Shot",
-        "remote_production_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
-        "expected_production_baseline": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
-        "branch_valid": true,
-        "production_untouched": true
+        "head_sha": "523066fa94c3a65266fa710c34fab227280f7d6c",
+        "production_baseline_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+        "production_remote_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
       },
       "error": null
     },
     {
-      "gate_id": "S02",
-      "name": "Keyring and test credential isolation",
+      "gate_id": "J1",
+      "name": "Tooling Preflight & System Isolation",
       "status": "PASS",
       "details": {
-        "test_mode": "1",
-        "real_key_exposed_in_env": false
+        "tools": {
+          "node": true,
+          "ffmpeg": true,
+          "ffprobe": true,
+          "python3": true,
+          "say": true
+        },
+        "python_version": "3.13.0 (v3.13.0:60403a5409f, Oct  7 2024, 00:37:40) [Clang 15.0.0 (clang-1500.3.9.4)]",
+        "test_mode": true
       },
       "error": null
     },
     {
-      "gate_id": "S03",
-      "name": "Source syntax and py_compile check",
+      "gate_id": "J2",
+      "name": "FL-01 Gemini Policy Routing Matrix & Fail-Closed Gate",
       "status": "PASS",
       "details": {
-        "returncode": 0
+        "OFFLINE_ONLY": {
+          "enabled": true,
+          "mode": "OFFLINE_ONLY",
+          "primary_model": "gemini-3.8-flash",
+          "fallback_models": [
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash"
+          ],
+          "has_key": false,
+          "enabled_source": "project_override",
+          "mode_source": "project_override"
+        },
+        "DISABLED": {
+          "enabled": false,
+          "mode": "OFFLINE_ONLY",
+          "primary_model": "gemini-3.8-flash",
+          "fallback_models": [
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash"
+          ],
+          "has_key": false,
+          "enabled_source": "project_override",
+          "mode_source": "global_settings"
+        },
+        "LIVE_REQUIRED_NO_KEY": {
+          "enabled": true,
+          "mode": "LIVE_REQUIRED",
+          "primary_model": "gemini-3.8-flash",
+          "fallback_models": [
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash"
+          ],
+          "has_key": false,
+          "enabled_source": "global_settings",
+          "mode_source": "project_override"
+        },
+        "LIVE_WITH_EXPLICIT_FALLBACK_NO_KEY": {
+          "enabled": true,
+          "mode": "OFFLINE_ONLY",
+          "primary_model": "gemini-3.8-flash",
+          "fallback_models": [
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash"
+          ],
+          "has_key": false,
+          "enabled_source": "global_settings",
+          "mode_source": "project_override"
+        },
+        "cli_fail_closed_code": 1
       },
       "error": null
     },
     {
-      "gate_id": "S04",
-      "name": "Semantic polarity and grounding inference",
+      "gate_id": "J3",
+      "name": "Schema, Actor Rig & Renderer Contracts",
       "status": "PASS",
       "details": {
-        "status": "PASS",
-        "events_count": 2,
-        "perceived_event": "ev_s01_breakthrough_negated",
-        "perceived_grounding": "PERCEPTION",
-        "negated_event": "ev_s02_front_withdraw",
-        "physical_breakthrough_suppressed": true
+        "hScale_depth_scaling": true,
+        "tent_baseline_fix": true,
+        "army_yfront_safe_default": true,
+        "chara_armsAng_array_guard": true,
+        "army_flags_array_guard": true,
+        "bridge_props_in_templates": true,
+        "prop_keyframed_motion": true,
+        "ballista_props_in_templates": true,
+        "resolveActorPreset_in_chara": true,
+        "validateCastPreset_in_chara": true,
+        "preset_aliases_and_roman_presets": true,
+        "canonical_cast_presets": true,
+        "weapons_in_chara": true,
+        "poses_in_chara": true,
+        "dynamic_arms_physics": true,
+        "shield_oval_builder": true,
+        "river_background_in_world": true,
+        "narrative_action_preset_mapping": true,
+        "character_bible_optio_and_ballistarius": true
       },
       "error": null
     },
     {
-      "gate_id": "S05",
-      "name": "Generic actor discovery and unknown genre fail closed",
+      "gate_id": "J4",
+      "name": "Cross-Shot Spatial Continuity & No Teleport",
       "status": "PASS",
       "details": {
-        "status": "PASS",
-        "genre_tested": "steampunk",
-        "resolved_preset": "peasant",
-        "supports_roman_formation": false,
-        "fail_closed": true
+        "projects": {
+          "night_warning": {
+            "total_shots": 10,
+            "violations": []
+          },
+          "bridge_crossing": {
+            "total_shots": 10,
+            "violations": []
+          },
+          "ballista_preview": {
+            "total_shots": 10,
+            "violations": []
+          }
+        },
+        "teleport_violations": []
       },
       "error": null
     },
     {
-      "gate_id": "S06",
-      "name": "World state stability across cuts",
+      "gate_id": "J5",
+      "name": "Truthful Visual QA & Strict Classification",
       "status": "PASS",
       "details": {
-        "tracked_actors_count": 8,
-        "actors": [
-          "roman_front_a",
-          "roman_front_b",
-          "roman_reserve_a",
-          "roman_reserve_b",
-          "opposing_a",
-          "centurion_officer",
-          "factions",
-          "characters"
-        ],
-        "lanes_present": [
-          "corridor_center"
-        ]
+        "negative_fixtures_all_pass": true,
+        "negative_fixtures_count": "9/9",
+        "ballista_vqa_verdict": "VISUAL_TECH_PASS",
+        "ballista_vqa_passed": "10/10",
+        "ballista_temporal_verdict": "VISUAL_TECH_PASS",
+        "ballista_temporal_passed": "10/10",
+        "ballista_contact_sheet": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_2/contact_sheet_v14_7_2.png",
+        "bridge_improved_contact_sheet": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_2/contact_sheet_bridge_improved.png",
+        "bridge_improved_contact_sheet_exists": true
       },
       "error": null
     },
     {
-      "gate_id": "S07",
-      "name": "Multi-actor causal choreography sequence",
+      "gate_id": "J6",
+      "name": "Spoken English Narration & Loudness Balance",
       "status": "PASS",
       "details": {
-        "valid": true,
-        "errors": [],
-        "shots_planned": 11
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S08",
-      "name": "Acting beat compilation and distinct postures",
-      "status": "PASS",
-      "details": {
-        "distinct_actions_count": 10,
-        "distinct_actions": [
-          "BRACE",
-          "SHIELD_CLOSE",
-          "OBSERVE",
-          "CONTACT",
-          "FATIGUE",
-          "SIGNAL",
-          "FRONT_WITHDRAW",
-          "STAND",
-          "APPROACH",
-          "RESERVE_ADVANCE"
-        ],
-        "valid": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S09",
-      "name": "Renderer acting and mobile contrast contracts",
-      "status": "PASS",
-      "details": {
-        "has_acting_poses": true,
-        "has_mobile_labels": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S10",
-      "name": "Environmental geographic continuity and progression",
-      "status": "PASS",
-      "details": {
-        "distinct_locations_in_scene": [
-          "camp_plain",
-          "attrition_line",
-          "contact_line",
-          "relief_corridor",
-          "resolute_line"
-        ],
-        "total_shots": 11
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S11",
-      "name": "Scene composition variety and no wallpaper loop",
-      "status": "PASS",
-      "details": {
-        "passed": true,
-        "repeat_violations": [],
-        "total_violations": 0
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S12",
-      "name": "Canonical cameraRig and aspect-safe margins",
-      "status": "PASS",
-      "details": {
-        "rig_present": true,
-        "vertical_margins": [
-          0.12,
-          0.88
-        ]
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S13",
-      "name": "Manual shot lock exact hash preservation",
-      "status": "PASS",
-      "details": {
-        "status": "PASS",
-        "manual_shot_id": "s03_manual",
-        "preserved_exact_hash": "966c584b051199af5171d60d49d969163857f83371b1b96c6df0bc3b51f244cb",
-        "byte_for_byte_match": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S14",
-      "name": "Valid 1080p 24fps MP4 acceptance video output",
-      "status": "PASS",
-      "details": {
-        "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_6_action_demo/out/V14_6_Visual_Storytelling_Acting_Demo_1080p.mp4",
-        "duration": 57.875,
-        "width": 1920,
-        "height": 1080,
-        "fps": 24.0,
-        "sha256": "f774b9dc3d21d6ff1ec1ad986587a86dc955a0e943c30fe6b09da28c31cbac48",
-        "size_bytes": 16513932
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S15",
-      "name": "Audio loudness normalization and decode proof",
-      "status": "PASS",
-      "details": {
-        "integrated_lufs": -14.1,
-        "target_lufs": -14.0,
-        "tolerance": 2.0,
-        "voice_language": "en"
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S16",
-      "name": "Per-shot decoded frame visual QA audit",
-      "status": "PASS",
-      "details": {
-        "total_shots": 11,
-        "passed_shots": 11,
-        "all_passed": true,
-        "no_clipped_heads": true,
-        "framing_safe_all": true,
-        "acting_verified_all": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S17",
-      "name": "Clipped-head negative regression fixture rejected",
-      "status": "PASS",
-      "details": {
-        "negative_fixture_caught": true,
-        "diagnostics": [
-          "Head/helmet clipped out of frame top (top_ink=35520 px, ymin=0.010)"
-        ]
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S18",
-      "name": "Genuine actor physical displacement and acting legibility",
-      "status": "PASS",
-      "details": {
-        "motions": {
-          "s01": 79.27,
-          "s02": 5.74,
-          "s03": 10.71,
-          "s04": 10.51,
-          "s05": 8.97,
-          "s06": 8.13,
-          "s07": 27.27,
-          "s08": 12.56,
-          "s09": 13.85,
-          "s10": 7.29,
-          "s11": 110.56
+        "night_warning": {
+          "integrated_lufs": -15.1,
+          "in_target_range": true
+        },
+        "bridge_crossing": {
+          "integrated_lufs": -14.8,
+          "in_target_range": true
+        },
+        "ballista_preview": {
+          "integrated_lufs": -14.6,
+          "in_target_range": true
         }
       },
       "error": null
     },
     {
-      "gate_id": "S19",
-      "name": "Multi-actor simultaneous physical action",
+      "gate_id": "J7",
+      "name": "Brand New Acceptance Preview Film",
       "status": "PASS",
       "details": {
-        "shots_with_multiple_simultaneous_actors": [
-          "s03",
-          "s04",
-          "s05",
-          "s07",
-          "s08",
-          "s09",
-          "s10"
-        ]
+        "night_warning": {
+          "output_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4",
+          "duration": 53.0,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+          "size_bytes": 14085487,
+          "decode_clean": true
+        },
+        "bridge_crossing": {
+          "output_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_1_bridge_before_enemy_preview/out/FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4",
+          "duration": 52.0,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "sha256": "3bda2c3a1aa4583bfec783de154343548cec993b21442699d596abe041f808e6",
+          "size_bytes": 11681291,
+          "decode_clean": true
+        },
+        "ballista_preview": {
+          "output_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_2_ballista_preview/out/FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4",
+          "duration": 51.5,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+          "size_bytes": 13189209,
+          "decode_clean": true
+        }
       },
       "error": null
     },
     {
-      "gate_id": "S20",
-      "name": "Causal temporal order and subject tracking",
+      "gate_id": "J8",
+      "name": "Multi-Format Regressions (Squire 16:9, 9:16, DEM)",
       "status": "PASS",
       "details": {
-        "action_order": [
-          "DEFEND",
-          "APPROACH",
-          "BRACE",
-          "CONTACT",
-          "FATIGUE",
-          "SIGNAL",
-          "OPEN_LANE",
-          "FRONT_WITHDRAW",
-          "RESERVE_ADVANCE",
-          "SHIELD_CLOSE",
-          "CAMERA_REVEAL"
-        ],
-        "causal_order_valid": true
+        "squire_16x9": {
+          "width": 1920,
+          "height": 1080,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "decode_clean": true
+        },
+        "squire_9x16": {
+          "width": 1080,
+          "height": 1920,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "decode_clean": true
+        },
+        "dem_16x9": {
+          "width": 1920,
+          "height": 1080,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "decode_clean": true
+        },
+        "cam_16x9_len": 2,
+        "cam_9x16_len": 2,
+        "dem_capabilities": 10,
+        "squire_capabilities": 19
       },
       "error": null
     },
     {
-      "gate_id": "S21",
-      "name": "Continuous corridor opening and withdrawal flow",
+      "gate_id": "J9",
+      "name": "Historical Lineage & Backtest Intactness",
       "status": "PASS",
       "details": {
-        "has_corridor": true,
-        "has_withdraw": true
+        "v14_4_artifact": true,
+        "v14_5_artifact": true,
+        "v14_6_artifact": true,
+        "HISTORICAL_180_REAL_REPLAY": "NOT_AVAILABLE",
+        "historical_180_provenance": "No 180-shot fixture exists in repository commit history; accurately recorded as NOT_AVAILABLE per V14.7.2 specification.",
+        "SYNTHETIC_180_STRESS": {
+          "status": "PASS",
+          "total_shots": 180,
+          "camera_plans_compiled": 180,
+          "elapsed_sec": 0.003
+        }
       },
       "error": null
     },
     {
-      "gate_id": "S22",
-      "name": "Top-down tactical label readability at mobile scale",
+      "gate_id": "J10",
+      "name": "Resource & Memory Telemetry Guard",
       "status": "PASS",
       "details": {
-        "mobile_labels_verified": true
+        "available_ram_mb": 3855.6,
+        "free_disk_gb": 19.64,
+        "concurrency_limit": 2,
+        "concurrency_mode": "BOUNDED_CONCURRENT_SAFE"
       },
       "error": null
     },
     {
-      "gate_id": "S23",
-      "name": "V14.5 vs V14.6 comparative visual evidence",
+      "gate_id": "J11",
+      "name": "Cryptographic Fingerprint & Atomic Receipt",
       "status": "PASS",
       "details": {
-        "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_6/before_after_v14_5.png",
-        "exists": true,
-        "bytes": 839525
+        "night_warning": {
+          "input_fingerprint": "2c52e1b8fa604b5c7295936a084428ae86db3f44b6c6ffb78547d84be46a5b6a",
+          "receipt_sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+          "disk_sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+          "sha_matches": true,
+          "status": "VERIFIED"
+        },
+        "bridge_crossing": {
+          "input_fingerprint": "633a0be5e75db8e67ada8566835cbc21655730c06f22bc8c0614fd1e2ef59827",
+          "receipt_sha256": "3bda2c3a1aa4583bfec783de154343548cec993b21442699d596abe041f808e6",
+          "disk_sha256": "3bda2c3a1aa4583bfec783de154343548cec993b21442699d596abe041f808e6",
+          "sha_matches": true,
+          "status": "VERIFIED"
+        },
+        "ballista_preview": {
+          "input_fingerprint": "a3194462771d867427262de3a5864311ac6d3e148f22ad15d8bae09231c3f884",
+          "receipt_sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+          "disk_sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+          "sha_matches": true,
+          "status": "VERIFIED"
+        }
       },
       "error": null
     },
     {
-      "gate_id": "S24",
-      "name": "Unseen Knight medieval physical render and acting",
+      "gate_id": "J12",
+      "name": "Git Workspace Cleanliness & Launch Receipt",
       "status": "PASS",
       "details": {
-        "status": "PASS",
-        "mp4": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/test_u1_knight/out/U1_Knight_Test.mp4",
-        "duration": 9.0,
-        "genre": "knight",
-        "verified_equipment": [
-          "bascinet",
-          "sword",
-          "heater_shield"
-        ],
-        "no_roman_assets": true
+        "guard_precommit_returncode": 0,
+        "ballista_launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_2_ballista_preview/out/FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4",
+        "bridge_launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_1_bridge_before_enemy_preview/out/FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4",
+        "night_launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4"
       },
       "error": null
     },
     {
-      "gate_id": "S25",
-      "name": "Unseen Samurai Japanese physical render and acting",
-      "status": "PASS",
-      "details": {
-        "status": "PASS",
-        "mp4": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/test_u2_samurai/out/U2_Samurai_Test.mp4",
-        "duration": 9.0,
-        "genre": "samurai",
-        "verified_equipment": [
-          "kabuto",
-          "katana",
-          "parry_guard"
-        ],
-        "no_roman_formation": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S26",
-      "name": "Unseen DEM silent everyday physical render and acting",
-      "status": "PASS",
-      "details": {
-        "status": "PASS",
-        "mp4": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/test_u3_dem_silent/out/U3_DEM_Silent_Test.mp4",
-        "duration": 10.5,
-        "pack": "dem",
-        "is_silent_voice": true,
-        "gestures": [
-          "reach",
-          "sitdesk"
-        ]
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S27",
-      "name": "Generic unknown genre asset isolation (no Roman bleed)",
-      "status": "PASS",
-      "details": {
-        "status": "PASS",
-        "genre_tested": "steampunk",
-        "resolved_preset": "peasant",
-        "supports_roman_formation": false,
-        "fail_closed": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S28",
-      "name": "Normal studio project pipeline integration",
-      "status": "PASS",
-      "details": {
-        "status": "PASS",
-        "assigned_count": 2,
-        "modified": true,
-        "integrated_director": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S29",
-      "name": "Async concurrency safety and resource bounds",
-      "status": "PASS",
-      "details": {
-        "concurrency_mode": "BOUNDED_SERIAL_SAFE",
-        "reason": "Bounded safe single-render execution prevents memory saturation on local machine",
-        "parallel_workers_active": 1
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S30",
-      "name": "System resource preflight and memory monitoring",
-      "status": "PASS",
-      "details": {
-        "available_ram_mb": 3082.8,
-        "free_disk_gb": 18.8,
-        "resource_sufficient": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S31",
-      "name": "Deterministic render fingerprint and audit receipt",
-      "status": "PASS",
-      "details": {
-        "fingerprint": "049d60676f10d5c26c07686b70d1f78e00734482f5759c542839a12e53cb7beb",
-        "output_sha256": "f774b9dc3d21d6ff1ec1ad986587a86dc955a0e943c30fe6b09da28c31cbac48",
-        "receipt_id": "rcpt_1794655863_f774b9dc3d",
-        "valid": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S32",
-      "name": "V14.4 narrative action regression suite execution",
-      "status": "PASS",
-      "details": {
-        "returncode": 0
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S33",
-      "name": "Historical two-project regression backtest intactness",
-      "status": "PASS",
-      "details": {
-        "v14_4_demo_intact": true,
-        "v14_5_demo_intact": true
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S34",
-      "name": "Final acceptance film availability and launch command",
-      "status": "PASS",
-      "details": {
-        "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_6_action_demo/out/V14_6_Visual_Storytelling_Acting_Demo_1080p.mp4",
-        "sha256": "f774b9dc3d21d6ff1ec1ad986587a86dc955a0e943c30fe6b09da28c31cbac48",
-        "open_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/v14_6_action_demo/out/V14_6_Visual_Storytelling_Acting_Demo_1080p.mp4",
-        "size_bytes": 16513932
-      },
-      "error": null
-    },
-    {
-      "gate_id": "S35",
-      "name": "Human editorial and visual quality gate",
+      "gate_id": "J13",
+      "name": "Creative Editorial Narrative Gate",
       "status": "EDITORIAL_REVIEW_PENDING",
       "details": {
-        "reviewer": "USER / Editor",
+        "reviewer": "USER / Lead Editor",
         "verdict": "EDITORIAL_REVIEW_PENDING",
-        "instruction": "Human editor must watch the MP4 before release."
+        "instruction": "Human editor must visually review MP4 pacing, acting, props, and storytelling.",
+        "ballista_preview": {
+          "title": "THE WOODEN MACHINE THAT SHOOK A BATTLEFIELD \u2014 HOW A ROMAN BALLISTA WORKED",
+          "subline": "The Torsion Artillery of the Roman Legions (ILLUSTRATIVE RECONSTRUCTION)",
+          "duration": "51.5s",
+          "hook_0_to_3s": "Frontier hill, heavy wooden ballista silhouette against sunrise with wind loop",
+          "action_beats": "Winch ratcheting, torsion sinew diagram, heavy bolt loading, targeting lock, fire signal, high-speed bolt arc, palisade splintering impact",
+          "launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_2_ballista_preview/out/FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4"
+        },
+        "bridge_preview": {
+          "title": "THE BRIDGE THEY BUILT BEFORE THE ENEMY ARRIVED",
+          "subline": "How Roman Engineers Could Turn a River Into a Road",
+          "duration": "52.0s",
+          "hook_0_to_3s": "Swollen river obstacle, approaching enemy dust cloud on distant hills",
+          "action_beats": "Groma survey, pile driving, timber slip & rope recovery, deck plank hammering, cohort crossing payoff",
+          "launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_1_bridge_before_enemy_preview/out/FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4"
+        },
+        "night_preview": {
+          "title": "THE WARNING BEFORE DAWN \u2014 A ROMAN NIGHT WATCH",
+          "subline": "A Roman Night Watch",
+          "duration": "53.0s",
+          "hook_0_to_3s": "Midnight sentry on frontier wall with wind loop and fire crackle SFX",
+          "action_beats": "Alarm signal horn, runner transit, centurion handoff, tactical map, shield wall payoff",
+          "launch_command": "open /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4"
+        }
       },
       "error": null
     }

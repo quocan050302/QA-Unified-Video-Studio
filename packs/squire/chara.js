@@ -412,11 +412,12 @@ export function shield(g, x, y, s, o = {}) {
     kite: (c) => { c.moveTo(0, -s * 0.5); c.bezierCurveTo(s * 0.4, -s * 0.5, s * 0.36, -s * 0.05, 0, s * 0.62); c.bezierCurveTo(-s * 0.36, -s * 0.05, -s * 0.4, -s * 0.5, 0, -s * 0.5); },
     heater: (c) => { c.moveTo(-s * 0.36, -s * 0.42); c.lineTo(s * 0.36, -s * 0.42); c.bezierCurveTo(s * 0.38, s * 0.05, s * 0.2, s * 0.32, 0, s * 0.46); c.bezierCurveTo(-s * 0.2, s * 0.32, -s * 0.38, s * 0.05, -s * 0.36, -s * 0.42); },
     scutum: (c) => c.ellipse(0, 0, s * 0.33, s * 0.5, 0, 0, Math.PI * 2),
+    oval: (c) => c.ellipse(0, 0, s * 0.35, s * 0.52, 0, 0, Math.PI * 2),
     round: (c) => c.arc(0, 0, s * 0.42, 0, Math.PI * 2),
     buckler: (c) => c.arc(0, 0, s * 0.22, 0, Math.PI * 2),
     pavise: (c) => { c.moveTo(-s * 0.3, -s * 0.5); c.lineTo(s * 0.3, -s * 0.5); c.lineTo(s * 0.34, s * 0.5); c.lineTo(-s * 0.34, s * 0.5); c.closePath(); },
     riot: (c) => c.roundRect(-s * 0.3, -s * 0.5, s * 0.6, s * 1.0, s * 0.08),
-  }[type];
+  }[type] || ((c) => c.ellipse(0, 0, s * 0.35, s * 0.5, 0, 0, Math.PI * 2));
   if (o.back) { shape(g, P, { fill: o.backColor || PAL.wood, lw, inner: (c) => { for (let i = -3; i <= 3; i++) line(c, [[i * s * 0.1, -s], [i * s * 0.1, s]], { lw: lw * 0.4, a: 0.5 }); rect(c, -s * 0.06, -s * 0.2, s * 0.12, s * 0.4, { fill: PAL.leather, lw: lw * 0.6 }); } }); g.restore(); return; }
   shape(g, P, { fill: col, lw, inner: (c) => {
     if (o.charge) charge(c, o.charge, o.chargeX ?? 0, o.chargeY ?? (type === 'kite' ? -s * 0.08 : 0), (o.chargeS ?? 0.62) * s, o.chargeColor || PAL.yellow, o.color2, lw * 0.8);
@@ -525,6 +526,15 @@ export function weapon(g, kind, hx, hy, L, ang, o = {}) {
       shape(g, (c) => { c.moveTo(-L * 0.1, -L * 0.3); c.quadraticCurveTo(L * 0.15, 0, -L * 0.1, L * 0.5); }, { fill: null, lw: lw * 2.2, ink: PAL.rope });
       break;
     }
+    case 'bolt': {
+      shaft(-L * 0.3, L * 0.75, L * 0.045, PAL.wood);
+      polyS(g, [[-L * 0.06, L * 0.72], [L * 0.06, L * 0.72], [0, L * 0.95]], { fill: PAL.steelLight, lw: lw * 0.8 });
+      shape(g, (c) => {
+        c.moveTo(-L * 0.03, -L * 0.28); c.lineTo(-L * 0.09, -L * 0.15); c.lineTo(-L * 0.03, -L * 0.08); c.closePath();
+        c.moveTo(L * 0.03, -L * 0.28); c.lineTo(L * 0.09, -L * 0.15); c.lineTo(L * 0.03, -L * 0.08); c.closePath();
+      }, { fill: PAL.leather, lw: lw * 0.6 });
+      break;
+    }
   }
   g.restore();
 }
@@ -544,6 +554,8 @@ export const POSES = {
   scratch: [12, 6, 140, 150], hug: [70, 60, 70, 60], hand: [12, 6, 50, 30],
   pass_object: [30, 45, 75, 40], receive_object: [45, 60, 45, 60], equip: [55, 75, 45, 80],
   raise_shield: [60, 85, 30, 40], react: [25, 30, 85, 45], turn_head: [15, 10, 15, 10], hammer: [30, 60, 120, 80],
+  winch: [50, 60, 50, 60], crank: [50, 60, 50, 60], load: [45, 50, 65, 45], fire_signal: [25, 30, 110, 15],
+  hammer_down: [20, 25, 40, 10], hammer_up: [45, 80, 140, 70],
 };
 const D2R = Math.PI / 180;
 function armPts(sx, sy, s, sh, el, u, L) {
@@ -584,13 +596,23 @@ Object.assign(CAST, {
   monk:       K({ helmet: 'hood', hoodColor: PAL.brown, body: 'robe', tunicColor: PAL.brown, skirt: 1, legs: 'cloth', legColor: PAL.brownDark }),
   lady:       K({ hair: 'long', hairColor: PAL.hairDark, body: 'dress', tunicColor: PAL.blue, skirt: 1 }),
   // --- La Ma / Latin
+  centurio:   K({ helmet: 'attic', crest: PAL.red, body: 'roman', mail: true, tunicColor: PAL.crimson, cape: PAL.red, legs: 'bare', beard: 'stubble', shield: { type: 'scutum', color: PAL.crimson, charge: 'wings', chargeColor: PAL.yellow }, weapon: 'sword' }),
+  centurion:  K({ helmet: 'attic', crest: PAL.red, body: 'roman', mail: true, tunicColor: PAL.crimson, cape: PAL.red, legs: 'bare', beard: 'stubble', shield: { type: 'scutum', color: PAL.crimson, charge: 'wings', chargeColor: PAL.yellow }, weapon: 'sword' }),
+  optio:      K({ helmet: 'montefortino', feathers: 2, featherColors: [PAL.red, PAL.white, PAL.red], body: 'roman', mail: true, tunicColor: PAL.red, legs: 'bare', mustache: 'normal', shield: { type: 'round', color: PAL.red, charge: 'sun', chargeColor: PAL.yellow }, weapon: 'spear' }),
+  principes:  K({ helmet: 'montefortino', feathers: 3, featherColors: [PAL.red, OUT, PAL.red], body: 'roman', tunicColor: PAL.red, legs: 'bare', mustache: 'big', shield: { type: 'scutum', color: PAL.red, charge: 'wings', chargeColor: PAL.yellow }, weapon: 'pilum' }),
   hastatus:   K({ helmet: 'montefortino', feathers: 3, body: 'roman', tunicColor: PAL.red, legs: 'bare', shield: { type: 'scutum', color: PAL.red, charge: 'lightning', chargeColor: PAL.yellow }, weapon: 'spear' }),
   princeps:   K({ helmet: 'montefortino', feathers: 3, featherColors: [PAL.red, OUT, PAL.red], body: 'roman', tunicColor: PAL.red, legs: 'bare', mustache: 'big', shield: { type: 'scutum', color: PAL.red, charge: 'wings', chargeColor: PAL.yellow }, weapon: 'pilum' }),
   triarius:   K({ helmet: 'attic', body: 'roman', mail: true, tunicColor: PAL.red, legs: 'bare', beard: 'full', hairColor: PAL.grey, shield: { type: 'scutum', color: PAL.red, charge: 'sun', chargeColor: PAL.yellow }, weapon: 'spear' }),
   latin:      K({ helmet: 'montefortino', feathers: 2, body: 'roman', tunicColor: PAL.blue, legs: 'bare', shield: { type: 'round', color: PAL.blue, charge: 'circle', chargeColor: PAL.white, rim: PAL.gold }, weapon: 'spear' }),
   latinOld:   K({ helmet: 'montefortino', feathers: 0, body: 'roman', tunicColor: PAL.blue, legs: 'bare', beard: 'full', hairColor: PAL.grey, shield: { type: 'round', color: PAL.blue, charge: 'circle', chargeColor: PAL.white }, weapon: 'spear' }),
   velites:    K({ hair: 'short', hairColor: PAL.hair, body: 'tunic', tunicColor: '#d9c9a5', legs: 'bare', shield: { type: 'buckler', color: PAL.red }, weapon: 'spear' }),
+  veles:      K({ hair: 'short', hairColor: PAL.hair, body: 'tunic', tunicColor: '#d9c9a5', legs: 'bare', shield: { type: 'buckler', color: PAL.red }, weapon: 'spear' }),
   legionary:  K({ helmet: 'montefortino', crest: PAL.red, body: 'roman', mail: true, tunicColor: PAL.red, legs: 'bare', shield: { type: 'scutum', color: PAL.red, charge: 'wings', chargeColor: PAL.yellow }, weapon: 'pilum' }),
+  ballistarius: K({ helmet: 'montefortino', body: 'roman', mail: true, tunicColor: PAL.red, legs: 'bare', beard: 'stubble', shield: { type: 'buckler', color: PAL.red }, weapon: 'hammer' }),
+  artillerist: K({ helmet: 'montefortino', body: 'roman', mail: true, tunicColor: PAL.red, legs: 'bare', beard: 'stubble', shield: { type: 'buckler', color: PAL.red }, weapon: 'hammer' }),
+  aquilifer:  K({ helmet: 'montefortino', body: 'roman', mail: true, tunicColor: PAL.red, cape: '#7d5233', legs: 'bare', shield: { type: 'round', color: PAL.crimson, charge: 'circle', chargeColor: PAL.gold }, weapon: 'standard' }),
+  cornicen:   K({ helmet: 'attic', body: 'roman', mail: true, tunicColor: PAL.red, legs: 'bare', shield: { type: 'round', color: PAL.red }, weapon: 'horn' }),
+  celtic:     K({ hair: 'spiky', hairColor: PAL.ginger, mustache: 'big', body: 'tunic', tunicColor: '#4a7060', legs: 'cloth', legColor: '#7a5a3a', shield: { type: 'oval', color: '#3b5f7a', charge: 'cross', chargeColor: PAL.cream }, weapon: 'sword' }),
   senator:    K({ hair: 'short', hairColor: PAL.hairDark, body: 'toga', tunicColor: PAL.white, sash: PAL.crimson, legs: 'bare', skirt: 1 }),
   priest:     K({ helmet: 'hood', hoodColor: PAL.white, body: 'toga', tunicColor: PAL.white, sash: PAL.red, skirt: 1 }),
   consul:     K({ helmet: 'attic', crest: PAL.red, body: 'roman', tunicColor: PAL.crimson, cape: PAL.red, legs: 'bare', beard: 'stubble', weapon: 'sword' }),
@@ -618,6 +640,49 @@ Object.assign(CAST, {
   scientist:  K({ hair: 'side', hairColor: PAL.grey, body: 'robe', tunicColor: PAL.white, skirt: 0.7, glasses: true, mustache: 'normal', hairColor2: PAL.grey }),
   you:        K({ helmet: 'bascinet', visor: 'up', body: 'plate', arms: 'plate', legs: 'plate', tabard: true, tabardColor: PAL.yellow, charge: 'lion', chargeColor: PAL.red, skirt: 0.35, gauntlet: true }),
 });
+
+export const PRESET_ALIASES = {
+  centurion: 'centurio',
+  principes: 'princeps',
+  veles: 'velites',
+  artillerist: 'ballistarius',
+  gaul: 'celtic',
+  barbarian: 'celtic',
+  roman_soldier: 'legionary',
+  roman_commander: 'centurio',
+  roman_engineer: 'optio',
+};
+
+export const ROMAN_PRESETS = [
+  'centurio', 'centurion', 'optio', 'principes', 'hastatus', 'princeps', 'triarius',
+  'latin', 'velites', 'veles', 'legionary', 'ballistarius', 'artillerist',
+  'aquilifer', 'cornicen', 'consul', 'greek', 'spartan',
+];
+
+export function resolveActorPreset(preset, o = {}) {
+  if (!preset && !o.body && !o.helmet && !o.hair && !o.tunicColor) {
+    return { preset: 'peasant', diagnostic: 'MISSING_ACTOR_PRESET', resolved: false, data: CAST.peasant };
+  }
+  const clean = String(preset || '').trim();
+  const canonical = PRESET_ALIASES[clean] || clean;
+  if (CAST[canonical]) {
+    return { preset: canonical, diagnostic: null, resolved: true, data: CAST[canonical] };
+  }
+  if (o.body || o.helmet || o.hair || o.tunicColor || o.mail || o.plate) {
+    return { preset: clean || 'custom', diagnostic: null, resolved: true, custom: true, data: o };
+  }
+  return { preset: clean, diagnostic: `UNKNOWN_ACTOR_PRESET: ${clean}`, resolved: false, data: CAST.peasant };
+}
+
+export function validateCastPreset(preset) {
+  if (!preset) return { valid: false, canonical: null, diagnostic: 'EMPTY_PRESET' };
+  const clean = String(preset).trim();
+  const canonical = PRESET_ALIASES[clean] || clean;
+  if (CAST[canonical]) {
+    return { valid: true, canonical, diagnostic: null };
+  }
+  return { valid: false, canonical: null, diagnostic: `UNKNOWN_ACTOR_PRESET: ${preset}` };
+}
 
 // ve than (torso + vay + chan) — tra ve diem vai va hong
 // ---------- dang di: chan cham dat that (IK 2 doan), khong truot
@@ -758,7 +823,8 @@ function soldierLowHood(g, x, y, h, o) {
   rect(g, -HW * 0.98, -30 * u, HW * 1.96, 3 * u, { fill: PAL.leather, lw: lw * 0.7, r: 0 });
   g.restore();
 }
-function soldierLow(g, x, y, h, o) {
+function soldierLow(g, x, y, h, o = {}) {
+  o = { ...(resolveActorPreset(o.preset, o).data || {}), ...o };
   if (['nasal', 'coif', 'spangen'].includes(o.helmet) && o.body === 'mail') return soldierLowHood(g, x, y, h, o);
   const u = h / 100, lw = Math.max(0.8, h * 0.012);
   g.save(); g.translate(x, y); if (o.flip) g.scale(-1, 1);
@@ -774,7 +840,7 @@ function soldierLow(g, x, y, h, o) {
 // ====================================================================================== NHAN VAT 2D PERSPECTIVE VIEWS (V14.1)
 
 function drawSoldierProfile(g, x, y, h, o, dir = 1) {
-  o = { ...(CAST[o.preset] || {}), ...o };
+  o = { ...(resolveActorPreset(o.preset, o).data || {}), ...o };
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const W = walkInfo(o); o._walk = W;
   const metal = o.metal || (['montefortino', 'attic'].includes(o.helmet) ? PAL.bronze : PAL.steel);
@@ -891,7 +957,7 @@ function drawSoldierProfile(g, x, y, h, o, dir = 1) {
 
   // Helmet & Genre identification in profile
   const hl = o.helmet || 'none';
-  const isRoman = ['montefortino', 'attic'].includes(hl) || o.body === 'roman' || ['hastatus', 'princeps', 'triarius', 'latin', 'velites', 'legionary', 'consul', 'greek', 'spartan'].includes(o.preset);
+  const isRoman = ['montefortino', 'attic'].includes(hl) || o.body === 'roman' || ROMAN_PRESETS.includes(o.preset);
   const isKnight = ['bascinet', 'bucket', 'kettle', 'coif', 'nasal', 'spangen'].includes(hl) || o.body === 'plate' || o.arms === 'plate' || ['knight15', 'knight14', 'knight13', 'knight12', 'whiteArmor', 'frenchKnight', 'frenchKnight2', 'henry', 'englishArcher'].includes(o.preset);
   const isSamurai = ['kabuto', 'jingasa'].includes(hl) || o.body === 'samurai' || ['samurai', 'ashigaru', 'ronin'].includes(o.preset);
 
@@ -1033,12 +1099,12 @@ function drawSoldierProfile(g, x, y, h, o, dir = 1) {
 }
 
 function drawSoldierRear(g, x, y, h, o, dir = 0) {
-  o = { ...(CAST[o.preset] || {}), ...o };
+  o = { ...(resolveActorPreset(o.preset, o).data || {}), ...o };
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const W = walkInfo(o); o._walk = W;
   const br = (W ? W.bob : Math.sin(t * 1.7 + (o.seed || 0)) * 0.6) * u;
   const hl = o.helmet || 'none';
-  const isRoman = ['montefortino', 'attic'].includes(hl) || o.body === 'roman' || ['hastatus', 'princeps', 'triarius', 'latin', 'velites', 'legionary', 'consul', 'greek', 'spartan'].includes(o.preset);
+  const isRoman = ['montefortino', 'attic'].includes(hl) || o.body === 'roman' || ROMAN_PRESETS.includes(o.preset);
   const isKnight = ['bascinet', 'bucket', 'kettle', 'coif', 'nasal', 'spangen'].includes(hl) || o.body === 'plate' || o.arms === 'plate' || ['knight15', 'knight14', 'knight13', 'knight12', 'whiteArmor', 'frenchKnight', 'frenchKnight2', 'henry', 'englishArcher'].includes(o.preset);
   const isSamurai = ['kabuto', 'jingasa'].includes(hl) || o.body === 'samurai' || ['samurai', 'ashigaru', 'ronin'].includes(o.preset);
 
@@ -1166,12 +1232,12 @@ function drawSoldierRear(g, x, y, h, o, dir = 0) {
 }
 
 function drawSoldierThreeQuarter(g, x, y, h, o, dir = 1) {
-  o = { ...(CAST[o.preset] || {}), ...o };
+  o = { ...(resolveActorPreset(o.preset, o).data || {}), ...o };
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const W = walkInfo(o); o._walk = W;
   const br = (W ? W.bob : Math.sin(t * 1.7 + (o.seed || 0)) * 0.6) * u;
   const hl = o.helmet || 'none';
-  const isRoman = ['montefortino', 'attic'].includes(hl) || o.body === 'roman' || ['hastatus', 'princeps', 'triarius', 'latin', 'velites', 'legionary', 'consul', 'greek', 'spartan'].includes(o.preset);
+  const isRoman = ['montefortino', 'attic'].includes(hl) || o.body === 'roman' || ROMAN_PRESETS.includes(o.preset);
   const isKnight = ['bascinet', 'bucket', 'kettle', 'coif', 'nasal', 'spangen'].includes(hl) || o.body === 'plate' || o.arms === 'plate' || ['knight15', 'knight14', 'knight13', 'knight12', 'whiteArmor', 'frenchKnight', 'frenchKnight2', 'henry', 'englishArcher'].includes(o.preset);
   const isSamurai = ['kabuto', 'jingasa'].includes(hl) || o.body === 'samurai' || ['samurai', 'ashigaru', 'ronin'].includes(o.preset);
 
@@ -1341,7 +1407,7 @@ function drawSoldierThreeQuarter(g, x, y, h, o, dir = 1) {
 
 // ====================================================================================== NHAN VAT DAY DU
 export function soldier(g, x, y, h, o = {}) {
-  o = { ...(CAST[o.preset] || {}), ...o };
+  o = { ...(resolveActorPreset(o.preset, o).data || {}), ...o };
   const v = o.view;
   if (v === 'profile_left') return drawSoldierProfile(g, x, y, h, o, -1);
   if (v === 'profile_right') return drawSoldierProfile(g, x, y, h, o, 1);
@@ -1356,6 +1422,39 @@ export function soldier(g, x, y, h, o = {}) {
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const pose = POSES[o.pose] ? o.pose : 'stand';
   let [lsh, lel, rsh, rel] = Array.isArray(o.armsAng) ? o.armsAng : (POSES[pose] || [12, 6, 12, 6]);
+  // Dynamic arm physics for acting and tool manipulation
+  if (!Array.isArray(o.armsAng)) {
+    if (pose === 'hammer') {
+      const cycle = ((t * 2.8 + (o.seed || 0)) % 1);
+      if (cycle < 0.45) {
+        const p = cycle / 0.45;
+        rsh = 40 + p * 100; rel = 70 + p * 15;
+      } else if (cycle < 0.65) {
+        const p = (cycle - 0.45) / 0.20;
+        rsh = 140 - p * 125; rel = 85 - p * 75;
+      } else {
+        const p = (cycle - 0.65) / 0.35;
+        rsh = 15 + p * 25; rel = 10 + p * 60;
+      }
+    } else if (pose === 'winch' || pose === 'crank') {
+      const wPhase = (t * 3.5 + (o.seed || 0)) * Math.PI * 2;
+      rsh = 50 + Math.sin(wPhase) * 28;
+      rel = 55 + Math.cos(wPhase) * 25;
+      lsh = 45 + Math.sin(wPhase + Math.PI) * 25;
+      lel = 50 + Math.cos(wPhase + Math.PI) * 22;
+    } else if (pose === 'aim') {
+      rsh = 75; rel = 25; lsh = 40; lel = 60;
+    } else if (pose === 'load') {
+      const lCycle = Math.sin(t * 2.2);
+      rsh = 50 + lCycle * 15; rel = 60 - lCycle * 20;
+      lsh = 45 - lCycle * 10; lel = 55 + lCycle * 15;
+    } else if (pose === 'fire_signal') {
+      const sPhase = Math.min(1, Math.max(0, Math.sin(t * 2.5) * 1.5));
+      rsh = 30 + sPhase * 95; rel = 15;
+    } else if (pose === 'react' || pose === 'recoil') {
+      rsh = 25; rel = 35; lsh = 85; lel = 45;
+    }
+  }
   const W = walkInfo(o); o._walk = W;
   if (W && !o.noSwing) { const k = W.swing * (W.mode === 'side' ? 20 : 9) * (W.run ? 1.6 : 1); lsh += k; rsh -= k; }
   if (o.gesture) { const k = Math.sin(t * 2.2) * 6; rsh += k; rel -= k * 0.5; }
@@ -1586,7 +1685,7 @@ import { label } from './ink.js';
 
 // can canh ban than (phan ung): bust(g, x, y, R, o) — dau ban kinh R o tam (x,y), vai ben duoi
 export function bust(g, x, y, R, o = {}) {
-  const sh = o.shield; o = { ...(CAST[o.preset] || {}), ...o }; if (sh === null) o.shield = null;
+  const sh = o.shield; o = { ...(resolveActorPreset(o.preset, o).data || {}), ...o }; if (sh === null) o.shield = null;
   const h = R / 0.19; // tuong duong chieu cao nhan vat
   soldier(g, x, y + 78 * h / 100, h, { ...o, lod: 'high' });
 }

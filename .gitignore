@@ -28,6 +28,8 @@ projects/test_*/
 temp_*.txt
 pnpm-lock.yaml
 tests/evidence/*/frames/
+tests/evidence/*/*frames/
+tests/evidence/*/vqa_*/
 
 
 

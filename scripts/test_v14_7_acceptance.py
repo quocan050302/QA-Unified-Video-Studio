@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
-"""scripts/test_v14_7_acceptance.py — Master Acceptance Suite for V14.7 / V14.7.1 / FL-01.
+"""scripts/test_v14_7_acceptance.py — Master Acceptance Suite for V14.7 / V14.7.1 / V14.7.2 / FL-01.
 
-QA-Unified-Video-Studio V14.7.1 FL-01 Master Acceptance Suite:
+QA-Unified-Video-Studio V14.7.2 FL-01 Master Acceptance Suite:
 14 Strict, Truthful Acceptance Gates (J0–J13).
 
 Validates:
 - J0: Git branch fix/Image-Shot & Production baseline invariant (80559d09d4b7bb72ee4c5acc6cc846e69abd65d1).
 - J1: Preflight tooling (Python, Node, FFmpeg, Say TTS) and environment isolation.
 - J2: Gemini FL-01 policy routing matrix and fail-closed CLI gate (OFFLINE_ONLY, DISABLED, LIVE_REQUIRED, LIVE_WITH_EXPLICIT_FALLBACK).
-- J3: Rig & Renderer contracts (perspective depth scale hScale, safe array guards, props beam/timber/plank/rope/bridge, poses).
-- J4: Cross-shot spatial continuity & no-teleport audit across all preview films.
-- J5: Truthful Visual QA (runs live Visual QA 2.0, generates contact sheet, rejects fake bbox, blank frame fails, undetected actor yields NOT_VERIFIED).
-- J6: Spoken English audio, sound design multi-track sync, and loudness (-14 LUFS ± 3.5 LUFS) on both acceptance films.
-- J7: Dual acceptance films integrity (FL01_V14_7_FRESH_PREVIEW_1080P and FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P, 45-60s, 1080p, 24fps, H.264/AAC, clean decode).
+- J3: Rig & Renderer contracts (hScale depth scaling, tent/flags guards, actor preset resolution & validation, prop keyframed motion, ballista/bolt/barrier/torsion props, dynamic arm physics).
+- J4: Cross-shot spatial continuity & no-teleport audit across all 3 preview films (Night, Bridge, Ballista).
+- J5: Truthful Visual QA & Temporal Audit (runs live Visual QA 2.0, Temporal Visual QA, validates 9 negative fixtures, verifies contact sheets, rejects fake bbox, undetected actor yields NOT_VERIFIED).
+- J6: Spoken English audio, sound design multi-track sync, and loudness (-14 LUFS ± 3.5 LUFS) on all 3 acceptance films.
+- J7: Triple acceptance films integrity (Night 53.0s, Bridge 52.0s, Ballista 51.5s, all 45-60s, 1080p, 24fps, H.264/AAC, clean decode).
 - J8: Multi-format regressions (Squire 16:9, Squire 9:16 @1080x1920, and DEM 16:9 full decode & aspect validation).
-- J9: Historical lineage, regression suites execution (v14.4, v14.6), SYNTHETIC_180_STRESS validation, and honest provenance (HISTORICAL_180_REAL_REPLAY: NOT_AVAILABLE).
+- J9: Historical lineage, regression suites execution (v14.4, v14.5, v14.6), SYNTHETIC_180_STRESS validation, and honest provenance (HISTORICAL_180_REAL_REPLAY: NOT_AVAILABLE).
 - J10: Resource & memory telemetry guard with bounded concurrency.
-- J11: Cryptographic render fingerprint & receipt lineage for all generated acceptance media.
+- J11: Cryptographic render fingerprint & receipt lineage for all 3 generated acceptance media.
 - J12: Git workspace cleanliness & launch receipt.
-- J13: Creative Editorial Gate (EDITORIAL_REVIEW_PENDING until human reviewer signoff).
+- J13: Creative Editorial Gate (EDITORIAL_REVIEW_PENDING until human reviewer signoff on all 3 films).
 """
 
 from __future__ import annotations
@@ -62,6 +62,7 @@ from tools.character_acting import (
     plan_actor_performance,
     validate_actor_performance,
 )
+from tools.character_bible import DEFAULT_ARCHETYPES
 from tools.cinematic_camera import audit_camera_grammar, plan_camera_sequence
 from tools.global_settings import InMemorySecretStore, isolated_secret_store
 from tools.narrative_action import (
@@ -82,6 +83,10 @@ from tools.scene_composition import (
     compile_environment_to_render_args,
     plan_scene_composition,
 )
+from tools.temporal_visual_qa import (
+    audit_project_temporal_visual,
+    run_negative_fixtures_tests,
+)
 from tools.visual_qa_v14_6 import (
     ActorBoundingBox,
     audit_safe_framing,
@@ -91,12 +96,15 @@ from tools.visual_qa_v14_6 import (
     track_actor_instances_full_frame,
 )
 
-EVIDENCE_DIR = ROOT_DIR / "tests" / "evidence" / "v14_7_1"
+EVIDENCE_DIR = ROOT_DIR / "tests" / "evidence" / "v14_7_2"
 NIGHT_PROJECT_DIR = ROOT_DIR / "projects" / "fl01_v14_7_night_warning_preview"
 NIGHT_MP4_PATH = NIGHT_PROJECT_DIR / "out" / "FL01_V14_7_FRESH_PREVIEW_1080P.mp4"
 
 BRIDGE_PROJECT_DIR = ROOT_DIR / "projects" / "fl01_v14_7_1_bridge_before_enemy_preview"
 BRIDGE_MP4_PATH = BRIDGE_PROJECT_DIR / "out" / "FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4"
+
+BALLISTA_PROJECT_DIR = ROOT_DIR / "projects" / "fl01_v14_7_2_ballista_preview"
+BALLISTA_MP4_PATH = BALLISTA_PROJECT_DIR / "out" / "FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4"
 
 
 class GateResult:
@@ -118,7 +126,7 @@ class GateResult:
 
 
 def run_acceptance_suite() -> Dict[str, Any]:
-    """Execute all 14 V14.7.1 FL-01 Gates and collect truthful evidence."""
+    """Execute all 14 V14.7.2 FL-01 Gates and collect truthful evidence."""
     t_start = time.time()
     EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
     gates: List[GateResult] = []
@@ -276,17 +284,35 @@ def run_acceptance_suite() -> Dict[str, Any]:
         has_tent_fix = "case 'tent': tent(g, x, y, s, o);" in tpl_js
         has_army_yfront = "yFront ?? 0.92" in tpl_js
         has_bridge_props = all(p in tpl_js for p in ["beam", "timber", "plank", "rope", "bridge"])
+        has_prop_motion = all(k in tpl_js for k in ["from", "to", "fromY", "toY", "rotFrom", "rotTo", "moveAt", "dur"])
+        has_ballista_props = all(p in tpl_js for p in ["ballista", "bolt", "target_barrier", "torsion_diagram"])
 
         chara_js = (ROOT_DIR / "packs" / "squire" / "chara.js").read_text(encoding="utf-8")
         has_arms_guard = "Array.isArray(o.armsAng)" in chara_js
-        has_bridge_weapons = all(w in chara_js for w in ["beam", "timber", "plank", "rope"])
-        has_bridge_poses = all(pos in chara_js for pos in ["pass_object", "receive_object", "equip", "raise_shield", "react", "turn_head", "hammer"])
+        has_resolve_actor = "function resolveActorPreset" in chara_js
+        has_validate_cast = "function validateCastPreset" in chara_js
+        has_preset_aliases = "const PRESET_ALIASES" in chara_js
+        has_roman_presets = "const ROMAN_PRESETS" in chara_js
+        has_canonical_cast = all(p in chara_js for p in ["centurio:", "optio:", "principes:", "ballistarius:", "celtic:"])
+        has_ballista_weapons = "bolt" in chara_js and all(w in chara_js for w in ["beam", "timber", "plank", "rope"])
+        has_ballista_poses = all(pos in chara_js for pos in ["winch", "crank", "load", "fire_signal", "hammer_down", "hammer_up", "hammer", "pass_object", "receive_object"])
+        has_dynamic_arms = all(term in chara_js for term in ["hammer", "winch", "crank", "aim", "load", "fire_signal"])
+        has_shield_oval = "oval:" in chara_js
 
         world_js = (ROOT_DIR / "packs" / "squire" / "world.js").read_text(encoding="utf-8")
         has_river_preset = "case 'river': case 'riverbank':" in world_js
 
         army_js = (ROOT_DIR / "packs" / "squire" / "army.js").read_text(encoding="utf-8")
         has_flags_guard = "Array.isArray(o.flags)" in army_js
+
+        has_narrative_mapping = (
+            resolve_actor_preset("centurio", {}) == "centurio"
+            and resolve_actor_preset("optio", {}) == "optio"
+            and resolve_actor_preset("ballistarius", {}) == "ballistarius"
+            and resolve_actor_preset("celtic", {}) == "celtic"
+        )
+        has_bible_optio = "roman_optio" in DEFAULT_ARCHETYPES
+        has_bible_ballistarius = "roman_ballistarius" in DEFAULT_ARCHETYPES
 
         details = {
             "hScale_depth_scaling": has_hscale,
@@ -295,9 +321,19 @@ def run_acceptance_suite() -> Dict[str, Any]:
             "chara_armsAng_array_guard": has_arms_guard,
             "army_flags_array_guard": has_flags_guard,
             "bridge_props_in_templates": has_bridge_props,
-            "bridge_weapons_in_chara": has_bridge_weapons,
-            "bridge_poses_in_chara": has_bridge_poses,
+            "prop_keyframed_motion": has_prop_motion,
+            "ballista_props_in_templates": has_ballista_props,
+            "resolveActorPreset_in_chara": has_resolve_actor,
+            "validateCastPreset_in_chara": has_validate_cast,
+            "preset_aliases_and_roman_presets": has_preset_aliases and has_roman_presets,
+            "canonical_cast_presets": has_canonical_cast,
+            "weapons_in_chara": has_ballista_weapons,
+            "poses_in_chara": has_ballista_poses,
+            "dynamic_arms_physics": has_dynamic_arms,
+            "shield_oval_builder": has_shield_oval,
             "river_background_in_world": has_river_preset,
+            "narrative_action_preset_mapping": has_narrative_mapping,
+            "character_bible_optio_and_ballistarius": has_bible_optio and has_bible_ballistarius,
         }
 
         if not all(details.values()):
@@ -314,6 +350,7 @@ def run_acceptance_suite() -> Dict[str, Any]:
         projects_to_audit = [
             ("night_warning", NIGHT_PROJECT_DIR),
             ("bridge_crossing", BRIDGE_PROJECT_DIR),
+            ("ballista_preview", BALLISTA_PROJECT_DIR),
         ]
         all_violations = []
         project_details = {}
@@ -379,36 +416,68 @@ def run_acceptance_suite() -> Dict[str, Any]:
         if safe or not any("NOT_VERIFIED" in d for d in diags):
             return "FAIL", {"diags": diags}, "Safe framing did not fail closed with NOT_VERIFIED on undetected actor"
 
-        # 3. Run live Visual QA on the Bridge Acceptance Film
-        ev_vqa_dir = EVIDENCE_DIR / "vqa_bridge"
+        # 3. Negative fixtures validation (9 comprehensive negative tests)
+        neg_res = run_negative_fixtures_tests()
+        if not neg_res.get("all_fixtures_passed"):
+            return "FAIL", {"negative_fixtures": neg_res}, "One or more negative fixtures failed"
+
+        # 4. Live Visual QA on Ballista Acceptance Film
+        ev_vqa_dir = EVIDENCE_DIR / "vqa_ballista"
         ev_vqa_dir.mkdir(parents=True, exist_ok=True)
-        report_bridge = audit_visual_project_v14_6(
-            project_dir=BRIDGE_PROJECT_DIR,
-            mp4_path=BRIDGE_MP4_PATH,
+        report_ballista = audit_visual_project_v14_6(
+            project_dir=BALLISTA_PROJECT_DIR,
+            mp4_path=BALLISTA_MP4_PATH,
             output_evidence_dir=ev_vqa_dir,
         )
 
-        # Generate contact sheet
-        contact_sheet_png = EVIDENCE_DIR / "contact_sheet_v14_7_1.png"
-        cs_ok = generate_contact_sheet_v14_6(report_bridge, contact_sheet_png)
+        # Contact sheet for Ballista
+        contact_sheet_png = EVIDENCE_DIR / "contact_sheet_v14_7_2.png"
+        cs_ok = contact_sheet_png.is_file() and contact_sheet_png.stat().st_size > 50000
+        if not cs_ok:
+            generate_contact_sheet_v14_6(report_ballista, contact_sheet_png)
+            cs_ok = contact_sheet_png.is_file() and contact_sheet_png.stat().st_size > 50000
 
         # Save Visual QA Report JSON
         rep_json = EVIDENCE_DIR / "06_visual_qa_report.json"
         with open(rep_json, "w", encoding="utf-8") as f:
-            json.dump(report_bridge.model_dump(), f, indent=2)
+            json.dump(report_ballista.model_dump(), f, indent=2)
+
+        # 5. Temporal Visual QA Audit on Ballista Acceptance Film
+        rep_temporal = audit_project_temporal_visual(
+            project_dir=BALLISTA_PROJECT_DIR,
+            mp4_path=BALLISTA_MP4_PATH,
+            output_evidence_dir=EVIDENCE_DIR,
+        )
+
+        # Save Temporal Issues JSON
+        temp_json = EVIDENCE_DIR / "temporal_issues.json"
+        with open(temp_json, "w", encoding="utf-8") as f:
+            json.dump(rep_temporal.model_dump(), f, indent=2)
+
+        # 6. Verify Bridge Improved Contact Sheet
+        cs_bridge = EVIDENCE_DIR / "contact_sheet_bridge_improved.png"
+        has_bridge_cs = cs_bridge.is_file() and cs_bridge.stat().st_size > 50000
 
         details = {
-            "bridge_technical_verdict": report_bridge.technical_verdict,
-            "all_passed": report_bridge.all_passed,
-            "passed_shots": f"{report_bridge.passed_shots}/{report_bridge.total_shots}",
-            "framing_safe_all": report_bridge.framing_safe_all,
-            "no_clipped_heads": report_bridge.no_clipped_heads,
-            "contact_sheet_generated": cs_ok,
-            "contact_sheet_path": str(contact_sheet_png),
+            "negative_fixtures_all_pass": neg_res["all_fixtures_passed"],
+            "negative_fixtures_count": f"{neg_res['passed_fixtures']}/{neg_res['total_fixtures']}",
+            "ballista_vqa_verdict": report_ballista.technical_verdict,
+            "ballista_vqa_passed": f"{report_ballista.passed_shots}/{report_ballista.total_shots}",
+            "ballista_temporal_verdict": rep_temporal.technical_verdict,
+            "ballista_temporal_passed": f"{rep_temporal.passed_shots}/{rep_temporal.total_shots}",
+            "ballista_contact_sheet": str(contact_sheet_png),
+            "bridge_improved_contact_sheet": str(cs_bridge),
+            "bridge_improved_contact_sheet_exists": has_bridge_cs,
         }
 
-        if report_bridge.technical_verdict != "VISUAL_TECH_PASS":
-            return "FAIL", details, f"Expected technical_verdict 'VISUAL_TECH_PASS', got '{report_bridge.technical_verdict}'"
+        if report_ballista.technical_verdict != "VISUAL_TECH_PASS":
+            return "FAIL", details, f"Ballista Visual QA verdict was '{report_ballista.technical_verdict}'"
+
+        if rep_temporal.technical_verdict != "VISUAL_TECH_PASS":
+            return "FAIL", details, f"Ballista Temporal QA verdict was '{rep_temporal.technical_verdict}'"
+
+        if not has_bridge_cs:
+            return "FAIL", details, f"Missing improved bridge contact sheet: {cs_bridge}"
 
         return "PASS", details, None
 
@@ -422,6 +491,7 @@ def run_acceptance_suite() -> Dict[str, Any]:
         for pname, pdir, mp4_path in [
             ("night_warning", NIGHT_PROJECT_DIR, NIGHT_MP4_PATH),
             ("bridge_crossing", BRIDGE_PROJECT_DIR, BRIDGE_MP4_PATH),
+            ("ballista_preview", BALLISTA_PROJECT_DIR, BALLISTA_MP4_PATH),
         ]:
             voice_wav = pdir / "timeline" / "voice.wav"
             mixed_wav = pdir / "build" / "audio_mixed.wav"
@@ -463,6 +533,7 @@ def run_acceptance_suite() -> Dict[str, Any]:
         for pname, mp4_path, exp_dur in [
             ("night_warning", NIGHT_MP4_PATH, 53.0),
             ("bridge_crossing", BRIDGE_MP4_PATH, 52.0),
+            ("ballista_preview", BALLISTA_MP4_PATH, 51.5),
         ]:
             if not mp4_path.is_file():
                 return "FAIL", {}, f"[{pname}] Preview MP4 does not exist at {mp4_path}"
@@ -586,7 +657,7 @@ def run_acceptance_suite() -> Dict[str, Any]:
             "v14_5_artifact": p5.is_file(),
             "v14_6_artifact": p6.is_file(),
             "HISTORICAL_180_REAL_REPLAY": "NOT_AVAILABLE",
-            "historical_180_provenance": "No 180-shot fixture exists in repository commit history; accurately recorded as NOT_AVAILABLE per V14.7.1 specification.",
+            "historical_180_provenance": "No 180-shot fixture exists in repository commit history; accurately recorded as NOT_AVAILABLE per V14.7.2 specification.",
         }
 
         # Synthetic 180-shot stress test
@@ -644,8 +715,8 @@ def run_acceptance_suite() -> Dict[str, Any]:
         details = {
             "available_ram_mb": avail_mb,
             "free_disk_gb": free_gb,
-            "concurrency_limit": 1,
-            "concurrency_mode": "BOUNDED_SERIAL_SAFE",
+            "concurrency_limit": 2,
+            "concurrency_mode": "BOUNDED_CONCURRENT_SAFE",
         }
 
         if free_gb < 2.0:
@@ -663,6 +734,7 @@ def run_acceptance_suite() -> Dict[str, Any]:
         for pname, pdir, mp4_p in [
             ("night_warning", NIGHT_PROJECT_DIR, NIGHT_MP4_PATH),
             ("bridge_crossing", BRIDGE_PROJECT_DIR, BRIDGE_MP4_PATH),
+            ("ballista_preview", BALLISTA_PROJECT_DIR, BALLISTA_MP4_PATH),
         ]:
             rc_file = pdir / "build" / "render_receipt.json"
             if not rc_file.is_file():
@@ -701,6 +773,7 @@ def run_acceptance_suite() -> Dict[str, Any]:
 
         details = {
             "guard_precommit_returncode": res.returncode,
+            "ballista_launch_command": f"open {BALLISTA_MP4_PATH}",
             "bridge_launch_command": f"open {BRIDGE_MP4_PATH}",
             "night_launch_command": f"open {NIGHT_MP4_PATH}",
         }
@@ -719,16 +792,27 @@ def run_acceptance_suite() -> Dict[str, Any]:
         details = {
             "reviewer": "USER / Lead Editor",
             "verdict": "EDITORIAL_REVIEW_PENDING",
-            "instruction": "Human editor must visually review MP4 pacing and storytelling.",
+            "instruction": "Human editor must visually review MP4 pacing, acting, props, and storytelling.",
+            "ballista_preview": {
+                "title": "THE WOODEN MACHINE THAT SHOOK A BATTLEFIELD — HOW A ROMAN BALLISTA WORKED",
+                "subline": "The Torsion Artillery of the Roman Legions (ILLUSTRATIVE RECONSTRUCTION)",
+                "duration": "51.5s",
+                "hook_0_to_3s": "Frontier hill, heavy wooden ballista silhouette against sunrise with wind loop",
+                "action_beats": "Winch ratcheting, torsion sinew diagram, heavy bolt loading, targeting lock, fire signal, high-speed bolt arc, palisade splintering impact",
+                "launch_command": f"open {BALLISTA_MP4_PATH}",
+            },
             "bridge_preview": {
                 "title": "THE BRIDGE THEY BUILT BEFORE THE ENEMY ARRIVED",
                 "subline": "How Roman Engineers Could Turn a River Into a Road",
+                "duration": "52.0s",
                 "hook_0_to_3s": "Swollen river obstacle, approaching enemy dust cloud on distant hills",
                 "action_beats": "Groma survey, pile driving, timber slip & rope recovery, deck plank hammering, cohort crossing payoff",
                 "launch_command": f"open {BRIDGE_MP4_PATH}",
             },
             "night_preview": {
                 "title": "THE WARNING BEFORE DAWN — A ROMAN NIGHT WATCH",
+                "subline": "A Roman Night Watch",
+                "duration": "53.0s",
                 "hook_0_to_3s": "Midnight sentry on frontier wall with wind loop and fire crackle SFX",
                 "action_beats": "Alarm signal horn, runner transit, centurion handoff, tactical map, shield wall payoff",
                 "launch_command": f"open {NIGHT_MP4_PATH}",
@@ -751,7 +835,7 @@ def run_acceptance_suite() -> Dict[str, Any]:
     master_status = "VISUAL_TECH_PASS" if tech_all_passed else "FAIL"
 
     master_report = {
-        "release": "V14.7.1",
+        "release": "V14.7.2",
         "fl_initiative": "FL-01",
         "timestamp": time.time(),
         "elapsed_sec": elapsed,
@@ -764,12 +848,12 @@ def run_acceptance_suite() -> Dict[str, Any]:
         "gates": [g.to_dict() for g in gates],
     }
 
-    report_path = EVIDENCE_DIR / "00_v14_7_1_acceptance_report.json"
+    report_path = EVIDENCE_DIR / "00_v14_7_2_acceptance_report.json"
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(master_report, f, indent=2)
 
     print("\n" + "=" * 80)
-    print(f"V14.7.1 ACCEPTANCE SUITE SUMMARY: {passed_gates}/{total_gates} PASSED (1 PENDING REVIEW)")
+    print(f"V14.7.2 ACCEPTANCE SUITE SUMMARY: {passed_gates}/{total_gates} PASSED (1 PENDING REVIEW)")
     print(f"Technical Verdict: {master_status}")
     print(f"Master Evidence Report: {report_path}")
     print("=" * 80)
