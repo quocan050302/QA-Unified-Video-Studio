@@ -1,0 +1,30 @@
+{
+  "schema_version": "14.7.5",
+  "historical_framing": "Illustrative Fictional Reconstruction",
+  "characters": {
+    "marcus": {
+      "name": "Centurion Marcus",
+      "preset": "centurio",
+      "role": "Cohort Centurion",
+      "silhouette_markers": "Attic helmet with transverse red crest, crimson cloak, scutum/signal torch"
+    },
+    "gaius": {
+      "name": "Aquilifer Gaius",
+      "preset": "aquilifer",
+      "role": "Standard-Bearer",
+      "silhouette_markers": "Montefortino helmet, brown pelt cape, round buckler, gilded Cohort Eagle standard"
+    },
+    "decimus": {
+      "name": "Legionary Decimus",
+      "preset": "legionary",
+      "role": "Lead Rescue Legionary",
+      "silhouette_markers": "Montefortino helmet with red crest, mail lorica, curved red scutum"
+    },
+    "lucius": {
+      "name": "Optio-file Lucius",
+      "preset": "principes",
+      "role": "Second Rescue Legionary",
+      "silhouette_markers": "Three-feathered Montefortino helmet, red tunic, curved scutum"
+    }
+  }
+}

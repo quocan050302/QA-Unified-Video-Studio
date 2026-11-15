@@ -6,7 +6,7 @@ import { OUT, PAL, T, pop, grow, bob, shape, rect, ellipse, circ, blob, polyS, l
 import { soldier, bust, shield, weapon, charge, CAST, hand, head, arrowStuck, STEP } from './chara.js';
 import { horse } from './horse.js';
 import { bg, tree, bush, tent, flag, castle, cloud, TIMES } from './world.js';
-import { formation, standard, topGround, topBlock, dustPuff, rain, volley, stuckArrows, dust, javelins, smoke, sparks, arrowFly } from './army.js';
+import { formation, standard, topGround, topBlock, dustPuff, rain, volley, stuckArrows, dust, javelins, smoke, sparks, arrowFly, fogBank } from './army.js';
 import { loadWorld, drawMap, projector, VIEWS } from '../doodle/map.js';
 export { loadWorld };
 
@@ -179,7 +179,8 @@ export function drawPeople(g, lt, info, list, gy, dh) { for (const p of list || 
 // ---------- do vat: { kind, x, y, s, at, anim: pop|drop|grow|fall|spin, rot, ...tuy chon }
 export function prop(g, lt, info, p) {
   const a0 = at(info, p.at, 0); if (lt < a0) return;
-  let x = fx(p.x), s = fs(p.s, 0.2); let y = fy(p.y), sc = 1, rot = p.rot || 0;
+  const kind = p.kind || p.type;
+  let x = fx(p.x), s = fs(p.s ?? p.scale, 0.2); let y = fy(p.y), sc = 1, rot = p.rot || 0;
 
   // Dynamic keyframed motion (from/to, fromY/toY, rotFrom/rotTo, moveAt, dur, easing, arc)
   if (p.from !== undefined || p.fromY !== undefined || p.rotFrom !== undefined) {
@@ -220,7 +221,7 @@ export function prop(g, lt, info, p) {
     sc *= 1 - kk;
   }
   g.save(); g.translate(x, y); g.rotate(rot); g.scale(sc, sc); if (p.flip) g.scale(-1, 1);
-  drawThing(g, p.kind, 0, 0, s, { ...p, t: lt });
+  drawThing(g, kind, 0, 0, s, { ...p, kind, t: lt });
   g.restore();
 }
 function ghost(g, p, x, y, s) { g.save(); g.translate(x, y); g.setLineDash([s * 0.06, s * 0.05]); g.lineWidth = Math.max(3, s * 0.025); g.strokeStyle = '#ffffff'; g.beginPath(); if (p.kind === 'shield' && (p.type || 'heater') === 'kite') { g.moveTo(0, -s * 0.5); g.bezierCurveTo(s * 0.4, -s * 0.5, s * 0.36, -s * 0.05, 0, s * 0.62); g.bezierCurveTo(-s * 0.36, -s * 0.05, -s * 0.4, -s * 0.5, 0, -s * 0.5); } else { g.moveTo(-s * 0.36, -s * 0.42); g.lineTo(s * 0.36, -s * 0.42); g.bezierCurveTo(s * 0.38, s * 0.05, s * 0.2, s * 0.32, 0, s * 0.46); g.bezierCurveTo(-s * 0.2, s * 0.32, -s * 0.38, s * 0.05, -s * 0.36, -s * 0.42); } g.stroke(); g.restore(); }
@@ -499,6 +500,101 @@ export function drawThing(g, kind, x, y, s, o = {}) {
       g.restore();
       break;
     }
+    case 'roman_eagle_rescue_diagram': {
+      const lw2 = o.lw ?? Math.max(2, s * 0.02);
+      g.save(); g.translate(x, y);
+      const pw = s * 1.62, ph = s * 1.04;
+      rect(g, -pw * 0.5, -ph * 0.5, pw, ph, {
+        fill: '#141922', lw: lw2 * 1.25, ink: PAL.gold, r: 12,
+        inner: (c) => {
+          for (let gy = -ph * 0.36; gy <= ph * 0.36; gy += ph * 0.18) {
+            line(c, [[-pw * 0.46, gy], [pw * 0.46, gy]], { lw: 1, ink: 'rgba(255,255,255,0.09)' });
+          }
+        }
+      });
+
+      // Header badge (dark contrast < 45 RGB with crisp gold text)
+      rect(g, -pw * 0.46, -ph * 0.46, pw * 0.92, ph * 0.115, {
+        fill: '#231610', lw: lw2 * 0.9, ink: PAL.gold, r: 5
+      });
+      g.fillStyle = PAL.gold;
+      g.font = `bold ${Math.round(ph * 0.046)}px sans-serif`;
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      g.fillText('COHORT STANDARD RESCUE — SHIELD CORRIDOR', 0, -ph * 0.402);
+
+      // Opposing ridge pressure line (top)
+      const enemyY = -ph * 0.22;
+      for (let i = -2; i <= 2; i++) {
+        rect(g, i * (pw * 0.16) - pw * 0.06, enemyY - ph * 0.042, pw * 0.12, ph * 0.084, {
+          fill: '#35526b', lw: lw2 * 0.8, ink: PAL.steelLight, r: 4
+        });
+      }
+      g.fillStyle = '#d7e6f5';
+      g.font = `bold ${Math.round(ph * 0.038)}px sans-serif`;
+      g.fillText('MISTY RIDGE PRESSURE (SKIRMISH LINE)', 0, enemyY - ph * 0.082);
+
+      // Fallen Eagle standard zone in central fog gap (label placed cleanly above emblem so rescue arrows never cross text)
+      const zoneY = ph * 0.03;
+      rect(g, -pw * 0.22, zoneY - ph * 0.185, pw * 0.44, ph * 0.072, {
+        fill: '#1b222c', lw: 1, ink: PAL.gold, r: 4
+      });
+      g.fillStyle = '#ffd56b';
+      g.font = `bold ${Math.round(ph * 0.036)}px sans-serif`;
+      g.fillText('FALLEN AQUILA / EAGLE ZONE', 0, zoneY - ph * 0.149);
+
+      circ(g, 0, zoneY, ph * 0.088, { fill: '#2c2112', lw: lw2 * 1.1, ink: PAL.gold });
+      polyS(g, [[-ph * 0.048, zoneY + ph * 0.02], [0, zoneY - ph * 0.052], [ph * 0.048, zoneY + ph * 0.02]], {
+        fill: PAL.gold, lw: 1
+      });
+
+      // Roman cohort anchor rank (bottom) + twin shield-cover rescue vectors
+      const cohortY = ph * 0.265;
+      const unitCols = [-pw * 0.32, -pw * 0.16, pw * 0.16, pw * 0.32];
+      for (const ux of unitCols) {
+        rect(g, ux - pw * 0.065, cohortY - ph * 0.052, pw * 0.13, ph * 0.104, {
+          fill: '#8b1e1e', lw: lw2 * 0.9, ink: PAL.gold, r: 4
+        });
+      }
+      // Rescue detail advancing up the center corridor
+      for (const rx of [-pw * 0.07, pw * 0.07]) {
+        tube(g, [[rx, cohortY - ph * 0.055], [rx * 0.55, zoneY + ph * 0.105]], ph * 0.022, '#f1c40f', lw2 * 0.6);
+        polyS(g, [
+          [rx * 0.55 - 8, zoneY + ph * 0.115],
+          [rx * 0.55 + 8, zoneY + ph * 0.115],
+          [rx * 0.55, zoneY + ph * 0.072]
+        ], { fill: '#f1c40f', lw: 1 });
+      }
+
+      // Footer tactical summary badge
+      rect(g, -pw * 0.46, ph * 0.365, pw * 0.92, ph * 0.10, {
+        fill: '#10151d', lw: 1.5, ink: PAL.bronze, r: 4
+      });
+      g.fillStyle = '#ffffff';
+      g.font = `bold ${Math.round(ph * 0.034)}px sans-serif`;
+      g.fillText('SHIELD LOCK ANCHORS FLANKS WHILE TWO LEGIONARIES RECOVER THE STANDARD', 0, ph * 0.415);
+
+      g.restore();
+      break;
+    }
+    case 'mobile_summary_card': {
+      const lw2 = o.lw ?? Math.max(2, s * 0.02);
+      g.save(); g.translate(x, y);
+      const cw = s * 5.8, ch = s * 0.48;
+      rect(g, -cw * 0.5, -ch * 0.5, cw, ch, {
+        fill: '#10151d', lw: lw2 * 1.15, ink: PAL.gold, r: 10
+      });
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      g.fillStyle = PAL.gold;
+      g.font = `bold ${Math.round(ch * 0.24)}px sans-serif`;
+      g.fillText(String(o.title || 'COHORT DISCIPLINE RECOVERED THE EAGLE'), 0, -ch * 0.16);
+      g.fillStyle = '#f4f7fb';
+      g.font = `bold ${Math.round(ch * 0.18)}px sans-serif`;
+      g.fillText(String(o.subtitle || 'SHIELD COVER • COORDINATED LIFT • UNBROKEN LINE'), 0, ch * 0.20);
+      g.restore();
+      break;
+    }
     case 'flag': flag(g, x, y + s * 0.5, s, o); break;
     case 'standard': case 'eagle': standard(g, x, y + s * 0.5, s, { ...o, kind: kind === 'eagle' ? 'eagle' : o.style }); break;
     case 'tent': tent(g, x, y, s, o); break;
@@ -640,6 +736,7 @@ function effects(g, lt, info, list) {
     else if (f.kind === 'stuck') stuckArrows(g, f);
     else if (f.kind === 'dust') dust(g, lt, f);
     else if (f.kind === 'smoke') smoke(g, lt, f);
+    else if (f.kind === 'fog' || f.kind === 'mist') fogBank(g, lt, f);
     else if (f.kind === 'rays') { g.save(); g.globalAlpha = f.a ?? 0.18; g.fillStyle = f.color || '#fff4d6'; for (let i = 0; i < (f.n || 4); i++) { const x = E.W * ((f.x ?? 0.7) + i * 0.08); g.beginPath(); g.moveTo(x, -10); g.lineTo(x + E.W * 0.05, -10); g.lineTo(x - E.W * 0.25, E.H + 10); g.lineTo(x - E.W * 0.32, E.H + 10); g.fill(); } g.restore(); }
     else if (f.kind === 'flash') { const k = clamp((lt - a0) / 0.3); if (k < 1) haze(g, f.color || '#ffffff', (1 - k) * 0.7); }
     else if (f.kind === 'thunder') { const k = (lt - a0) % 3; if (k < 0.15) haze(g, '#eef4ff', 0.5 - k * 3); }

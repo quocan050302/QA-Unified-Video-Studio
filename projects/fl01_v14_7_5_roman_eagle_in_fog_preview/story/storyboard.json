@@ -1,0 +1,1840 @@
+{
+  "schema_version": "14.7.5",
+  "title": "THE EAGLE IN THE FOG — A ROMAN STANDARD RESCUE",
+  "subtitle": "Illustrative Fictional Reconstruction",
+  "historical_framing": "Illustrative Fictional Reconstruction",
+  "pack": "squire",
+  "aspect": "16:9",
+  "fps": 24,
+  "total_duration": 53.875,
+  "shots": [
+    {
+      "id": "s01",
+      "act": "I_HOOK_DISORIENTATION",
+      "start": 0.0,
+      "end": 3.875,
+      "dur": 3.875,
+      "action": "STAND",
+      "action_kind": "STAND",
+      "line": "Cold valley fog swallowed the cohort as their gilded standard tilted.",
+      "causal_cut_reason": "opening_hook",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "Cold mountain fog drifts across the pass as Aquilifer Gaius steadies the tilting Eagle standard",
+      "args": {
+        "bg": "mountain",
+        "time": "dawn",
+        "seed": 501,
+        "tint": [
+          "#b8cad8",
+          0.14
+        ],
+        "people": [
+          {
+            "id": "gaius",
+            "preset": "aquilifer",
+            "weapon": "sword",
+            "x": 0.48,
+            "to": 0.51,
+            "y": 0.85,
+            "h": 0.48,
+            "pose": "march",
+            "face": "worried"
+          },
+          {
+            "id": "decimus",
+            "preset": "legionary",
+            "x": 0.31,
+            "to": 0.33,
+            "y": 0.86,
+            "h": 0.45,
+            "pose": "guard",
+            "face": "determined"
+          }
+        ],
+        "props": [
+          {
+            "kind": "eagle",
+            "from": 0.52,
+            "to": 0.55,
+            "y": 0.62,
+            "rotFrom": 0.05,
+            "rotTo": 0.18,
+            "dur": 3.4,
+            "s": 0.43,
+            "top": true
+          }
+        ],
+        "fx": [
+          {
+            "kind": "fog",
+            "density": 0.34,
+            "speed": 1.1,
+            "seed": 11
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.53,
+              "z": 1.0
+            },
+            {
+              "t": 3.88,
+              "x": 0.48,
+              "y": 0.53,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s01",
+        "source_span": "Cold valley fog swallowed the cohort as their gilded standard tilted.",
+        "source_start_sec": 0.0,
+        "source_end_sec": 3.875,
+        "shot_purpose": "establishing",
+        "narrative_role": "hook",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "wide",
+        "viewpoint": "profile_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.52,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 3.88,
+            "x_center": 0.48,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "STAND",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Cold valley fog swallowed the cohort as their gilded standard tilted.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s02",
+      "act": "I_HOOK_DISORIENTATION",
+      "start": 3.875,
+      "end": 8.375,
+      "dur": 4.5,
+      "action": "WITHDRAW",
+      "action_kind": "WITHDRAW",
+      "line": "Along the stony pass, skirmishers pressed from the misty ridge.",
+      "causal_cut_reason": "wide_spatial_establish",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "Wide multi-layer pass: skirmishers press from the high ridge while the Roman cohort withdraws in order",
+      "args": {
+        "bg": "mountain",
+        "time": "dawn",
+        "seed": 502,
+        "back": [
+          {
+            "preset": "celtic",
+            "rows": 2,
+            "cols": 10,
+            "x0": 0.55,
+            "x1": 0.96,
+            "yFront": 0.67,
+            "yBack": 0.61,
+            "hFront": 0.11,
+            "hBack": 0.07,
+            "flip": true
+          }
+        ],
+        "mid": [
+          {
+            "preset": "hastatus",
+            "rows": 2,
+            "cols": 6,
+            "x0": 0.06,
+            "x1": 0.46,
+            "yFront": 0.79,
+            "yBack": 0.72,
+            "hFront": 0.22,
+            "hBack": 0.15
+          }
+        ],
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.36,
+            "to": 0.33,
+            "y": 0.86,
+            "h": 0.46,
+            "pose": "walk",
+            "face": "determined"
+          },
+          {
+            "id": "gaius",
+            "preset": "aquilifer",
+            "weapon": "sword",
+            "x": 0.58,
+            "to": 0.55,
+            "y": 0.86,
+            "h": 0.46,
+            "pose": "walk",
+            "face": "worried"
+          }
+        ],
+        "props": [
+          {
+            "kind": "eagle",
+            "from": 0.62,
+            "to": 0.59,
+            "y": 0.63,
+            "rotFrom": 0.08,
+            "rotTo": 0.14,
+            "dur": 4.0,
+            "s": 0.42,
+            "top": true
+          }
+        ],
+        "fx": [
+          {
+            "kind": "fog",
+            "density": 0.3,
+            "speed": 0.95,
+            "seed": 22
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.53,
+              "z": 1.0
+            },
+            {
+              "t": 4.5,
+              "x": 0.5,
+              "y": 0.53,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s02",
+        "source_span": "Along the stony pass, skirmishers pressed from the misty ridge.",
+        "source_start_sec": 3.875,
+        "source_end_sec": 8.375,
+        "shot_purpose": "explanation",
+        "narrative_role": "hook",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "rear",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.5,
+            "x_center": 0.5,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "WITHDRAW",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Along the stony pass, skirmishers pressed from the misty ridge.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s03",
+      "act": "I_HOOK_DISORIENTATION",
+      "start": 8.375,
+      "end": 12.875,
+      "dur": 4.5,
+      "action": "SLIP",
+      "action_kind": "SLIP",
+      "line": "On slick slate, Gaius slipped, dropping the eagle onto stone.",
+      "causal_cut_reason": "inciting_physical_slip",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "Aquilifer Gaius slips on wet slate and stumbles to one knee as the bronze Eagle standard drops forward",
+      "args": {
+        "bg": "mountain",
+        "time": "dawn",
+        "seed": 503,
+        "people": [
+          {
+            "id": "gaius",
+            "preset": "aquilifer",
+            "weapon": "sword",
+            "x": 0.46,
+            "to": 0.49,
+            "y": 0.86,
+            "h": 0.46,
+            "fall": 0.45,
+            "face": "pain"
+          }
+        ],
+        "props": [
+          {
+            "kind": "rock",
+            "x": 0.54,
+            "y": 0.88,
+            "s": 0.12
+          },
+          {
+            "kind": "eagle",
+            "x": 0.53,
+            "from": 0.5,
+            "to": 0.6,
+            "y": 0.68,
+            "fromY": 0.58,
+            "toY": 0.78,
+            "rotFrom": 0.15,
+            "rotTo": 1.28,
+            "moveAt": 0.35,
+            "dur": 0.95,
+            "s": 0.42,
+            "top": true
+          }
+        ],
+        "fx": [
+          {
+            "kind": "fog",
+            "density": 0.3,
+            "speed": 1.0,
+            "seed": 33
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.46,
+              "y": 0.53,
+              "z": 1.0
+            },
+            {
+              "t": 4.5,
+              "x": 0.46,
+              "y": 0.53,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s03",
+        "source_span": "On slick slate, Gaius slipped, dropping the eagle onto stone.",
+        "source_start_sec": 8.375,
+        "source_end_sec": 12.875,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "rear_three_quarter_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.45,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.5,
+            "x_center": 0.42,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "SLIP",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "On slick slate, Gaius slipped, dropping the eagle onto stone.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s04",
+      "act": "II_DISCOVERY_COMMAND",
+      "start": 12.875,
+      "end": 17.0,
+      "dur": 4.125,
+      "action": "STAND",
+      "action_kind": "STAND",
+      "line": "Through drifting mist, Centurion Marcus spotted the fallen emblem.",
+      "causal_cut_reason": "reaction_closeup",
+      "visual_source": "generated",
+      "tpl": "close",
+      "expected_subject": "actor",
+      "desc": "Close-up on Centurion Marcus turning sharply as his eyes lock onto the fallen cohort standard",
+      "args": {
+        "bg": "mountain",
+        "time": "dawn",
+        "seed": 504,
+        "preset": "centurio",
+        "x": 0.5,
+        "y": 0.56,
+        "R": 0.18,
+        "face": "shock",
+        "faceAt": [
+          [
+            1.1,
+            "determined"
+          ]
+        ],
+        "look": 0.65,
+        "talk": true,
+        "fx": [
+          {
+            "kind": "fog",
+            "density": 0.22,
+            "speed": 0.85,
+            "seed": 44
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.53,
+              "z": 1.08
+            },
+            {
+              "t": 4.12,
+              "x": 0.52,
+              "y": 0.53,
+              "z": 1.08
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s04",
+        "source_span": "Through drifting mist, Centurion Marcus spotted the fallen emblem.",
+        "source_start_sec": 12.875,
+        "source_end_sec": 17.0,
+        "shot_purpose": "character",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_close",
+        "viewpoint": "front_three_quarter_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.48,
+            "y_center": 0.59,
+            "zoom": 1.18,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.12,
+            "x_center": 0.52,
+            "y_center": 0.57,
+            "zoom": 1.227,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "STAND",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Through drifting mist, Centurion Marcus spotted the fallen emblem.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s05",
+      "act": "II_DISCOVERY_COMMAND",
+      "start": 17.0,
+      "end": 21.5,
+      "dur": 4.5,
+      "action": "SIGNAL",
+      "action_kind": "SIGNAL",
+      "line": "Raising a bright torch, Marcus sent a two-man rescue forward.",
+      "causal_cut_reason": "command_signal_action",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "Centurion Marcus raises a blazing signal torch high above his red transverse crest",
+      "args": {
+        "bg": "mountain",
+        "time": "dawn",
+        "seed": 505,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "weapon": "torch",
+            "x": 0.42,
+            "y": 0.85,
+            "h": 0.5,
+            "pose": "fire_signal",
+            "face": "shout",
+            "talk": true
+          },
+          {
+            "id": "decimus",
+            "preset": "legionary",
+            "x": 0.6,
+            "to": 0.66,
+            "y": 0.86,
+            "h": 0.46,
+            "pose": "run",
+            "face": "determined"
+          }
+        ],
+        "props": [
+          {
+            "kind": "campfire",
+            "x": 0.24,
+            "y": 0.87,
+            "s": 0.14
+          }
+        ],
+        "fx": [
+          {
+            "kind": "fog",
+            "density": 0.26,
+            "speed": 1.0,
+            "seed": 55
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.53,
+              "z": 1.0
+            },
+            {
+              "t": 4.5,
+              "x": 0.52,
+              "y": 0.53,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s05",
+        "source_span": "Raising a bright torch, Marcus sent a two-man rescue forward.",
+        "source_start_sec": 17.0,
+        "source_end_sec": 21.5,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "profile_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.48,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.5,
+            "x_center": 0.52,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "SIGNAL",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Raising a bright torch, Marcus sent a two-man rescue forward.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s06",
+      "act": "II_DISCOVERY_COMMAND",
+      "start": 21.5,
+      "end": 26.25,
+      "dur": 4.75,
+      "action": "STAND",
+      "action_kind": "STAND",
+      "line": "Flank shields locked an anchor corridor as two legionaries dashed out.",
+      "causal_cut_reason": "tactical_schematic_cutaway",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "diagram",
+      "desc": "Tactical schematic showing the locked Roman shield flanks and two-man rescue corridor to the fallen Eagle",
+      "args": {
+        "bg": "mountain",
+        "time": "night",
+        "blur": 12,
+        "seed": 506,
+        "props": [
+          {
+            "kind": "roman_eagle_rescue_diagram",
+            "x": 0.5,
+            "y": 0.5,
+            "s": 0.86,
+            "top": true
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.5,
+              "z": 1.0
+            },
+            {
+              "t": 4.75,
+              "x": 0.5,
+              "y": 0.5,
+              "z": 1.03
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s06",
+        "source_span": "Flank shields locked an anchor corridor as two legionaries dashed out.",
+        "source_start_sec": 21.5,
+        "source_end_sec": 26.25,
+        "shot_purpose": "tactical",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.75,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "STAND",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Flank shields locked an anchor corridor as two legionaries dashed out.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s07",
+      "act": "III_RESCUE_UNDER_COVER",
+      "start": 26.25,
+      "end": 30.75,
+      "dur": 4.5,
+      "action": "RESCUE_DASH",
+      "action_kind": "RESCUE_DASH",
+      "line": "Decimus and Lucius sprinted across wet stone toward Gaius.",
+      "causal_cut_reason": "tactical_to_ground_execution",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "Rescue legionaries Decimus and Lucius sprint in tight pair across wet slate toward the fallen Eagle",
+      "args": {
+        "bg": "mountain",
+        "time": "dawn",
+        "seed": 507,
+        "people": [
+          {
+            "id": "decimus",
+            "preset": "legionary",
+            "from": 0.28,
+            "to": 0.54,
+            "y": 0.86,
+            "h": 0.46,
+            "pose": "run",
+            "face": "determined"
+          },
+          {
+            "id": "lucius",
+            "preset": "principes",
+            "from": 0.18,
+            "to": 0.43,
+            "y": 0.87,
+            "h": 0.45,
+            "pose": "run",
+            "face": "determined"
+          }
+        ],
+        "props": [
+          {
+            "kind": "eagle",
+            "x": 0.68,
+            "y": 0.79,
+            "rot": 1.28,
+            "s": 0.4,
+            "top": true
+          }
+        ],
+        "fx": [
+          {
+            "kind": "fog",
+            "density": 0.3,
+            "speed": 1.25,
+            "seed": 77
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.54,
+              "y": 0.53,
+              "z": 1.0
+            },
+            {
+              "t": 4.5,
+              "x": 0.54,
+              "y": 0.53,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s07",
+        "source_span": "Decimus and Lucius sprinted across wet stone toward Gaius.",
+        "source_start_sec": 26.25,
+        "source_end_sec": 30.75,
+        "shot_purpose": "explanation",
+        "narrative_role": "explanation",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "rear_three_quarter_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.55,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.5,
+            "x_center": 0.58,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "RESCUE_DASH",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Decimus and Lucius sprinted across wet stone toward Gaius.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s08",
+      "act": "III_RESCUE_UNDER_COVER",
+      "start": 30.75,
+      "end": 35.375,
+      "dur": 4.625,
+      "action": "BRACE",
+      "action_kind": "BRACE",
+      "line": "Behind them, front ranks braced curved scuta against flying shafts.",
+      "causal_cut_reason": "parallel_shield_cover",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "Frontline hastati and legionaries lock curved red scuta in low brace stance deflecting skirmish arrows",
+      "args": {
+        "bg": "mountain",
+        "time": "dawn",
+        "seed": 508,
+        "tint": [
+          "#2b221e",
+          0.18
+        ],
+        "people": [
+          {
+            "id": "cover_a",
+            "preset": "hastatus",
+            "x": 0.36,
+            "y": 0.9,
+            "h": 0.43,
+            "pose": "brace",
+            "face": "determined"
+          },
+          {
+            "id": "cover_b",
+            "preset": "legionary",
+            "x": 0.48,
+            "y": 0.9,
+            "h": 0.43,
+            "pose": "brace",
+            "face": "determined"
+          },
+          {
+            "id": "cover_c",
+            "preset": "principes",
+            "x": 0.6,
+            "y": 0.9,
+            "h": 0.43,
+            "pose": "brace",
+            "face": "determined"
+          }
+        ],
+        "fx": [
+          {
+            "kind": "volley",
+            "n": 18,
+            "at": 0.35,
+            "dur": 1.3,
+            "dir": -1,
+            "x0": 0.32,
+            "x1": 0.68,
+            "y0": 0.52,
+            "y1": 0.84
+          },
+          {
+            "kind": "fog",
+            "density": 0.22,
+            "speed": 1.05,
+            "seed": 88
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.53,
+              "z": 1.0
+            },
+            {
+              "t": 4.62,
+              "x": 0.5,
+              "y": 0.53,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s08",
+        "source_span": "Behind them, front ranks braced curved scuta against flying shafts.",
+        "source_start_sec": 30.75,
+        "source_end_sec": 35.375,
+        "shot_purpose": "explanation",
+        "narrative_role": "complication",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.62,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "BRACE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Behind them, front ranks braced curved scuta against flying shafts.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s09",
+      "act": "III_RESCUE_UNDER_COVER",
+      "start": 35.375,
+      "end": 40.0,
+      "dur": 4.625,
+      "action": "LIFT_STANDARD",
+      "action_kind": "LIFT_STANDARD",
+      "line": "Together they hauled Gaius upright and gripped the bronze shaft.",
+      "causal_cut_reason": "physical_standard_recovery",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "Decimus guards with his scutum while Gaius rises from the slate and rotates the bronze Eagle upright",
+      "args": {
+        "bg": "mountain",
+        "time": "dawn",
+        "seed": 509,
+        "people": [
+          {
+            "id": "gaius",
+            "preset": "aquilifer",
+            "weapon": "sword",
+            "x": 0.48,
+            "y": 0.86,
+            "h": 0.47,
+            "rise": 0.25,
+            "riseDur": 1.6,
+            "pose": "stand",
+            "face": "determined"
+          },
+          {
+            "id": "decimus",
+            "preset": "legionary",
+            "x": 0.6,
+            "y": 0.86,
+            "h": 0.46,
+            "pose": "guard",
+            "face": "determined"
+          }
+        ],
+        "props": [
+          {
+            "kind": "eagle",
+            "x": 0.52,
+            "from": 0.55,
+            "to": 0.52,
+            "y": 0.62,
+            "fromY": 0.78,
+            "toY": 0.58,
+            "rotFrom": 1.28,
+            "rotTo": 0.0,
+            "moveAt": 0.25,
+            "dur": 1.65,
+            "s": 0.44,
+            "top": true
+          }
+        ],
+        "fx": [
+          {
+            "kind": "fog",
+            "density": 0.26,
+            "speed": 0.9,
+            "seed": 99
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.53,
+              "z": 1.0
+            },
+            {
+              "t": 4.62,
+              "x": 0.48,
+              "y": 0.53,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s09",
+        "source_span": "Together they hauled Gaius upright and gripped the bronze shaft.",
+        "source_start_sec": 35.375,
+        "source_end_sec": 40.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "explanation",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "front_three_quarter_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.52,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.62,
+            "x_center": 0.48,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "LIFT_STANDARD",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Together they hauled Gaius upright and gripped the bronze shaft.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s10",
+      "act": "IV_WITHDRAWAL_RECOVERY",
+      "start": 40.0,
+      "end": 44.5,
+      "dur": 4.5,
+      "action": "WITHDRAW",
+      "action_kind": "WITHDRAW",
+      "line": "Step by step, the team withdrew safely behind Roman shields.",
+      "causal_cut_reason": "coordinated_withdrawal",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "With the Eagle secured in Gaius's grip, the rescue pair withdraws in measured step toward cohort shields",
+      "args": {
+        "bg": "mountain",
+        "time": "dawn",
+        "seed": 510,
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.26,
+            "y": 0.86,
+            "h": 0.47,
+            "pose": "guard",
+            "face": "determined"
+          },
+          {
+            "id": "gaius",
+            "preset": "aquilifer",
+            "weapon": "sword",
+            "from": 0.62,
+            "to": 0.44,
+            "y": 0.86,
+            "h": 0.47,
+            "pose": "walk",
+            "face": "determined"
+          },
+          {
+            "id": "decimus",
+            "preset": "legionary",
+            "from": 0.72,
+            "to": 0.55,
+            "y": 0.86,
+            "h": 0.46,
+            "pose": "walk",
+            "face": "determined"
+          }
+        ],
+        "props": [
+          {
+            "kind": "eagle",
+            "from": 0.66,
+            "to": 0.48,
+            "y": 0.61,
+            "dur": 4.1,
+            "s": 0.43,
+            "top": true
+          }
+        ],
+        "fx": [
+          {
+            "kind": "fog",
+            "density": 0.24,
+            "speed": 0.85,
+            "seed": 110
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.53,
+              "z": 1.0
+            },
+            {
+              "t": 4.5,
+              "x": 0.5,
+              "y": 0.53,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s10",
+        "source_span": "Step by step, the team withdrew safely behind Roman shields.",
+        "source_start_sec": 40.0,
+        "source_end_sec": 44.5,
+        "shot_purpose": "explanation",
+        "narrative_role": "complication",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.5,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "WITHDRAW",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Step by step, the team withdrew safely behind Roman shields.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s11",
+      "act": "IV_WITHDRAWAL_RECOVERY",
+      "start": 44.5,
+      "end": 49.0,
+      "dur": 4.5,
+      "action": "REFORM",
+      "action_kind": "REFORM",
+      "line": "The cohort closed its interval, restoring an unbroken iron wall.",
+      "causal_cut_reason": "wide_cohort_reform",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "The Roman cohort closes its protective interval around Marcus and Gaius as dawn light warms the pass",
+      "args": {
+        "bg": "mountain",
+        "time": "day",
+        "seed": 511,
+        "mid": [
+          {
+            "preset": "hastatus",
+            "rows": 2,
+            "cols": 8,
+            "x0": 0.1,
+            "x1": 0.9,
+            "yFront": 0.79,
+            "yBack": 0.71,
+            "hFront": 0.23,
+            "hBack": 0.15
+          }
+        ],
+        "people": [
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "from": 0.36,
+            "to": 0.4,
+            "y": 0.86,
+            "h": 0.47,
+            "pose": "march",
+            "face": "proud"
+          },
+          {
+            "id": "gaius",
+            "preset": "aquilifer",
+            "weapon": "sword",
+            "from": 0.54,
+            "to": 0.5,
+            "y": 0.86,
+            "h": 0.48,
+            "pose": "march",
+            "face": "determined"
+          },
+          {
+            "id": "decimus",
+            "preset": "legionary",
+            "from": 0.66,
+            "to": 0.6,
+            "y": 0.86,
+            "h": 0.46,
+            "pose": "march",
+            "face": "calm"
+          }
+        ],
+        "props": [
+          {
+            "kind": "eagle",
+            "from": 0.58,
+            "to": 0.54,
+            "y": 0.6,
+            "dur": 4.1,
+            "s": 0.44,
+            "top": true
+          }
+        ],
+        "fx": [
+          {
+            "kind": "fog",
+            "density": 0.18,
+            "speed": 0.75,
+            "seed": 121
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.52,
+              "y": 0.53,
+              "z": 1.08
+            },
+            {
+              "t": 4.5,
+              "x": 0.48,
+              "y": 0.53,
+              "z": 1.08
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s11",
+        "source_span": "The cohort closed its interval, restoring an unbroken iron wall.",
+        "source_start_sec": 44.5,
+        "source_end_sec": 49.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "explanation",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_close",
+        "viewpoint": "front_three_quarter_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.52,
+            "y_center": 0.59,
+            "zoom": 1.18,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.5,
+            "x_center": 0.48,
+            "y_center": 0.57,
+            "zoom": 1.227,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "REFORM",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "The cohort closed its interval, restoring an unbroken iron wall.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "s12",
+      "act": "IV_WITHDRAWAL_RECOVERY",
+      "start": 49.0,
+      "end": 53.875,
+      "dur": 4.875,
+      "action": "RAISE_STANDARD",
+      "action_kind": "RAISE_STANDARD",
+      "line": "Above parting fog, discipline and cohesion held the eagle high.",
+      "causal_cut_reason": "heroic_payoff_summary",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "desc": "Parting valley mist reveals the gilded Cohort Eagle held high alongside a crisp mobile-readable takeaway card",
+      "args": {
+        "bg": "mountain",
+        "time": "day",
+        "seed": 512,
+        "people": [
+          {
+            "id": "gaius",
+            "preset": "aquilifer",
+            "weapon": "sword",
+            "x": 0.49,
+            "y": 0.87,
+            "h": 0.49,
+            "pose": "raise_standard",
+            "face": "proud"
+          },
+          {
+            "id": "marcus",
+            "preset": "centurio",
+            "x": 0.34,
+            "y": 0.87,
+            "h": 0.47,
+            "pose": "stand",
+            "face": "determined"
+          },
+          {
+            "id": "decimus",
+            "preset": "legionary",
+            "x": 0.65,
+            "y": 0.87,
+            "h": 0.46,
+            "pose": "stand",
+            "face": "calm"
+          }
+        ],
+        "props": [
+          {
+            "kind": "eagle",
+            "x": 0.54,
+            "fromY": 0.58,
+            "toY": 0.53,
+            "dur": 2.2,
+            "s": 0.46,
+            "top": true
+          },
+          {
+            "kind": "mobile_summary_card",
+            "x": 0.5,
+            "y": 0.14,
+            "s": 0.23,
+            "title": "THE EAGLE IN THE FOG — COHORT STANDARD RECOVERED",
+            "subtitle": "SHIELD CORRIDOR • DISCIPLINED TEAMWORK • UNBROKEN LINE",
+            "top": true
+          }
+        ],
+        "fx": [
+          {
+            "kind": "rays",
+            "x": 0.62,
+            "n": 4,
+            "a": 0.16
+          },
+          {
+            "kind": "fog",
+            "density": 0.24,
+            "speed": 0.8,
+            "parting": true,
+            "partAt": 0.2,
+            "partDur": 2.8,
+            "seed": 132
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.5,
+              "z": 1.0
+            },
+            {
+              "t": 4.88,
+              "x": 0.5,
+              "y": 0.49,
+              "z": 1.04
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "s12",
+        "source_span": "Above parting fog, discipline and cohesion held the eagle high.",
+        "source_start_sec": 49.0,
+        "source_end_sec": 53.875,
+        "shot_purpose": "explanation",
+        "narrative_role": "complication",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "low_angle",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.63,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.88,
+            "x_center": 0.5,
+            "y_center": 0.6,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "RAISE_STANDARD",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Above parting fog, discipline and cohesion held the eagle high.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+=== NORMAL CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector validate_cache_hit_stale_receipt (rc=0) ===
+{
+  "detector_id": "validate_cache_hit_stale_receipt",
+  "mutated": false,
+  "defect_detected": true,
+  "cache_status": "CACHE_INVALIDATED",
+  "reason": "Input fingerprint mismatch: code, storyboard, voice, or assets modified. Recorded=953b7e22cdc0, Current=8c638d9cddf5"
+}
+
+
+=== MUTANT CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector validate_cache_hit_stale_receipt --mutate (rc=2) ===
+{
+  "detector_id": "validate_cache_hit_stale_receipt",
+  "mutated": true,
+  "defect_detected": false,
+  "cache_status": "CACHE_HIT_VERIFIED",
+  "reason": "MUTATED_BLIND_CACHE_HIT"
+}
+
+

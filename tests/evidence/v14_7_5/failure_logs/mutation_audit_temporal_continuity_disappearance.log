@@ -1,0 +1,20 @@
+=== NORMAL CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector audit_temporal_continuity_disappearance (rc=0) ===
+{
+  "detector_id": "audit_temporal_continuity_disappearance",
+  "mutated": false,
+  "defect_detected": true,
+  "diagnostics": [
+    "Temporal defect: Actor suddenly disappeared at t=1.00s without shot cut"
+  ]
+}
+
+
+=== MUTANT CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector audit_temporal_continuity_disappearance --mutate (rc=2) ===
+{
+  "detector_id": "audit_temporal_continuity_disappearance",
+  "mutated": true,
+  "defect_detected": false,
+  "diagnostics": []
+}
+
+

@@ -1,0 +1,48 @@
+{
+  "schema_version": "14.7.5",
+  "run_id": "v14_7_5_val_1794737666",
+  "status": "PASS",
+  "title": "THE EAGLE IN THE FOG — A ROMAN STANDARD RESCUE",
+  "subtitle": "Illustrative Fictional Reconstruction",
+  "project_dir": "projects/fl01_v14_7_5_roman_eagle_in_fog_preview",
+  "output_mp4": "projects/fl01_v14_7_5_roman_eagle_in_fog_preview/out/FL01_V14_7_5_ROMAN_EAGLE_IN_FOG_FRESH_PREVIEW_1080P.mp4",
+  "producer_status": "CACHE_HIT_VERIFIED",
+  "cache_status": "CACHE_HIT_VERIFIED",
+  "media_info": {
+    "valid": true,
+    "error": null,
+    "errors": [],
+    "duration": 53.851,
+    "file_size": 16923383,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "has_video": true,
+    "has_audio": true,
+    "decode_clean": true,
+    "max_volume_db": -1.4,
+    "mean_volume_db": -18.4,
+    "integrated_lufs": -14.2,
+    "true_peak_dbtp": -1.4,
+    "sha256": "5276bb238384541139e59a04d8457d683d39f883abb480a523171da25ae51421"
+  },
+  "provenance": {
+    "node_version": "v22.22.3",
+    "python_version": "3.13.0",
+    "action": "produce_eagle_in_fog_preview",
+    "wall_sec": 101.492,
+    "force_rebuild": false,
+    "render_mode": "REAL_RENDER",
+    "ai_director_mode": "OFFLINE_ONLY",
+    "ai_director_live_used": false,
+    "version": "14.7.5"
+  },
+  "fingerprint": null,
+  "contact_sheets_published": [
+    "tests/evidence/v14_7_5/contact_sheet_full.png",
+    "tests/evidence/v14_7_5/contact_sheet_hook.png",
+    "tests/evidence/v14_7_5/contact_sheet_action.png"
+  ]
+}

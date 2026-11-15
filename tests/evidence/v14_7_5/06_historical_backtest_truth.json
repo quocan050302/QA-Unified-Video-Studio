@@ -1,0 +1,22 @@
+{
+  "schema_version": "14.7.5",
+  "run_id": "20261115_171439",
+  "status": "PASS",
+  "synthetic_180_stress_gate_g5": "PASS",
+  "synthetic_180_details": {
+    "synthetic_replay_status": "PASS_SYNTHETIC",
+    "old_bug_detected_by_preflight": true,
+    "missing_ids_before_fix": 180,
+    "visuals_assigned_ok": true,
+    "validator_after_fix_status": "PASS",
+    "fast_check_duration_sec": 6.76,
+    "fast_check_stdout": "Card do hoa dang dung: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)\nPASS: 0 loi trong 541 khung kiem tra (180 shots hop le, che do fast).",
+    "proof_saved": "tests/evidence/proof_g5_replay.jpg"
+  },
+  "medium_20_shot_real_render_g5b": "PASS",
+  "historical_180_real_replay": "NOT_AVAILABLE",
+  "historical_180_raw_gate_status": "NOT_RUN_OPTIONAL_MISSING_FIXTURE",
+  "historical_180_fixture_path": "projects/why_knights_could_actually",
+  "counted_not_available_as_real_replay_pass": false,
+  "truth_disclosure": "Gate G5 verifies a 180-shot SYNTHETIC timeline stress fixture (PASS). The optional historical company dataset 'projects/why_knights_could_actually' is not present on this host, so historical_180_real_replay is reported strictly as NOT_AVAILABLE and is NEVER counted as a real historical replay PASS."
+}

@@ -246,17 +246,29 @@ def compile_environment_to_render_args(
     args = copy.deepcopy(shot_args)
 
     if pack == "squire":
-        args["bg"] = env.ground_type
-        args["time"] = env.time_of_day
+        if args.get("bg") == "lab":
+            args["seed"] = env.seed
+            bg_opts = args.setdefault("bgOpts", {})
+            bg_opts["seed"] = env.seed
+            return args
+
+        preserve_mud = (args.get("bg") == "mud")
+        args["bg"] = "mud" if preserve_mud else env.ground_type
+        args["time"] = args.get("time", env.time_of_day) if preserve_mud else env.time_of_day
         args["seed"] = env.seed
 
         bg_opts = args.setdefault("bgOpts", {})
-        bg_opts["time"] = env.time_of_day
+        bg_opts["time"] = args["time"]
         bg_opts["seed"] = env.seed
         bg_opts["groundY"] = env.ground_y
 
         for k, v in env.terrain_props.items():
-            bg_opts[k] = v
+            if preserve_mud and k == "mud":
+                bg_opts["mud"] = True
+            else:
+                bg_opts[k] = v
+        if preserve_mud:
+            bg_opts["wet"] = bg_opts.get("wet", True)
 
         if env.weather.get("dust"):
             fx_list = args.setdefault("fx", [])

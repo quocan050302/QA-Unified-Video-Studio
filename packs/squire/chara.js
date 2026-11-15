@@ -554,7 +554,7 @@ export const POSES = {
   scratch: [12, 6, 140, 150], hug: [70, 60, 70, 60], hand: [12, 6, 50, 30],
   pass_object: [30, 45, 75, 40], receive_object: [45, 60, 45, 60], equip: [55, 75, 45, 80],
   raise_shield: [60, 85, 30, 40], react: [25, 30, 85, 45], turn_head: [15, 10, 15, 10], hammer: [30, 60, 120, 80],
-  winch: [50, 60, 50, 60], crank: [50, 60, 50, 60], load: [45, 50, 65, 45], fire_signal: [25, 30, 110, 15],
+  winch: [50, 60, 50, 60], crank: [50, 60, 50, 60], load: [45, 50, 65, 45], fire_signal: [35, 60, 162, 14], raise_standard: [35, 60, 165, 10],
   hammer_down: [20, 25, 40, 10], hammer_up: [45, 80, 140, 70],
 };
 const D2R = Math.PI / 180;

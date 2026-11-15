@@ -1,0 +1,179 @@
+{
+  "schema_version": "14.7.5",
+  "run_id": "v14_7_5_val_1794737666",
+  "status": "PASS",
+  "execution_mode": "disposable_subprocess_monkeypatch",
+  "unit_suite_returncode": 0,
+  "all_mutations_killed": true,
+  "total_mutations": 4,
+  "killed_mutations": 4,
+  "mutations": [
+    {
+      "detector": "audit_camera_snap_keyframes",
+      "probe_id": "audit_camera_snap_keyframes",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_camera_snap_keyframes"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_camera_snap_keyframes",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 0.32,
+      "output_diff": [
+        "--- audit_camera_snap_keyframes:normal",
+        "+++ audit_camera_snap_keyframes:mutant",
+        "@@ -1,8 +1,6 @@",
+        " {",
+        "   \"detector_id\": \"audit_camera_snap_keyframes\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"diagnostics\": [",
+        "-    \"Camera snap detected between keyframes 1->2: dt=0.040s, dx=0.65, dy=0.00, dz=0.00\"",
+        "-  ]",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"diagnostics\": []",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/failure_logs/mutation_audit_camera_snap_keyframes.log"
+    },
+    {
+      "detector": "inspect_media_file::silent_audio_guard",
+      "probe_id": "inspect_media_file_silent_audio",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "inspect_media_file_silent_audio"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "inspect_media_file_silent_audio",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 0.454,
+      "output_diff": [
+        "--- inspect_media_file_silent_audio:normal",
+        "+++ inspect_media_file_silent_audio:mutant",
+        "@@ -1,9 +1,7 @@",
+        " {",
+        "   \"detector_id\": \"inspect_media_file_silent_audio\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"max_volume_db\": -91.0,",
+        "-  \"errors\": [",
+        "-    \"Audio is silent (max_volume=-91.0 dB)\"",
+        "-  ]",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"max_volume_db\": null,",
+        "+  \"errors\": []",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/failure_logs/mutation_inspect_media_file_silent_audio.log"
+    },
+    {
+      "detector": "validate_cache_hit::fingerprint_mismatch",
+      "probe_id": "validate_cache_hit_stale_receipt",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "validate_cache_hit_stale_receipt"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "validate_cache_hit_stale_receipt",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 0.658,
+      "output_diff": [
+        "--- validate_cache_hit_stale_receipt:normal",
+        "+++ validate_cache_hit_stale_receipt:mutant",
+        "@@ -1,7 +1,7 @@",
+        " {",
+        "   \"detector_id\": \"validate_cache_hit_stale_receipt\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"cache_status\": \"CACHE_INVALIDATED\",",
+        "-  \"reason\": \"Input fingerprint mismatch: code, storyboard, voice, or assets modified. Recorded=953b7e22cdc0, Current=8c638d9cddf5\"",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"cache_status\": \"CACHE_HIT_VERIFIED\",",
+        "+  \"reason\": \"MUTATED_BLIND_CACHE_HIT\"",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/failure_logs/mutation_validate_cache_hit_stale_receipt.log"
+    },
+    {
+      "detector": "audit_temporal_continuity::sudden_disappearance",
+      "probe_id": "audit_temporal_continuity_disappearance",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_temporal_continuity_disappearance"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_temporal_continuity_disappearance",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 0.647,
+      "output_diff": [
+        "--- audit_temporal_continuity_disappearance:normal",
+        "+++ audit_temporal_continuity_disappearance:mutant",
+        "@@ -1,8 +1,6 @@",
+        " {",
+        "   \"detector_id\": \"audit_temporal_continuity_disappearance\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"diagnostics\": [",
+        "-    \"Temporal defect: Actor suddenly disappeared at t=1.00s without shot cut\"",
+        "-  ]",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"diagnostics\": []",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/failure_logs/mutation_audit_temporal_continuity_disappearance.log"
+    }
+  ],
+  "negative_fixtures_summary": {
+    "all_passed": true,
+    "total_fixtures": 15,
+    "passed_fixtures": 15
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "14.7.5",
+  "run_id": "v14_7_5_val_1794737666",
+  "timestamp": "2026-11-15T10:14:28Z",
+  "status": "PASS",
+  "current_branch": "fix/Image-Shot",
+  "mandatory_branch": "fix/Image-Shot",
+  "baseline_sha": "35f071a29b50327ebfc0ad5bb56f58e6f8278a54",
+  "local_head_sha": "35f071a29b50327ebfc0ad5bb56f58e6f8278a54",
+  "baseline_is_ancestor": true,
+  "remote_fix_image_shot_sha": "35f071a29b50327ebfc0ad5bb56f58e6f8278a54",
+  "remote_production_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_invariant_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_untouched": true,
+  "resource_preflight": {
+    "status": "PASS",
+    "healthy": true,
+    "message": "OK",
+    "disk_free_gb": 19.23,
+    "disk_min_reserve_gb": 6.0,
+    "disk_required_gb": 7.5,
+    "estimated_scratch_gb": 0.5,
+    "extra_margin_gb": 1.0,
+    "free_inodes": 201636000,
+    "ram_available_gb": 3.153,
+    "ram_total_gb": 16.0,
+    "ram_min_reserve_gb": 0.6,
+    "cpu_count": 8,
+    "timestamp": 1794737668.652756
+  }
+}

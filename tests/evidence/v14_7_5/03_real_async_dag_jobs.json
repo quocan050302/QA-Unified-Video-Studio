@@ -1,0 +1,400 @@
+{
+  "schema_version": "14.7.5",
+  "run_id": "v14_7_5_val_1794737666",
+  "status": "PASS",
+  "all_succeeded": true,
+  "elapsed_sec": 391.4785,
+  "total_jobs": 8,
+  "passed_jobs": 8,
+  "failed_jobs": 0,
+  "blocked_jobs": 0,
+  "not_verified_jobs": 0,
+  "max_active_workers": 3,
+  "edges": [
+    {
+      "from": "branch_and_resource_preflight",
+      "to": "mutation_and_negative_suite"
+    },
+    {
+      "from": "branch_and_resource_preflight",
+      "to": "old_films_preservation"
+    },
+    {
+      "from": "branch_and_resource_preflight",
+      "to": "unit_scheduler_and_fingerprint"
+    },
+    {
+      "from": "mutation_and_negative_suite",
+      "to": "e2e_regression_full"
+    },
+    {
+      "from": "old_films_preservation",
+      "to": "e2e_regression_full"
+    },
+    {
+      "from": "unit_scheduler_and_fingerprint",
+      "to": "e2e_regression_full"
+    },
+    {
+      "from": "e2e_regression_full",
+      "to": "eagle_fog_verify_and_sheets"
+    },
+    {
+      "from": "eagle_fog_verify_and_sheets",
+      "to": "shot_repair_real_video"
+    },
+    {
+      "from": "shot_repair_real_video",
+      "to": "speed_serial_vs_parallel"
+    }
+  ],
+  "concurrency_proof": {
+    "overlapping_pairs_count": 3,
+    "max_overlap_sec": 8.0137,
+    "overlapping_pairs": [
+      {
+        "job_a": "mutation_and_negative_suite",
+        "job_b": "old_films_preservation",
+        "overlap_sec": 8.0137
+      },
+      {
+        "job_a": "mutation_and_negative_suite",
+        "job_b": "unit_scheduler_and_fingerprint",
+        "overlap_sec": 1.3137
+      },
+      {
+        "job_a": "old_films_preservation",
+        "job_b": "unit_scheduler_and_fingerprint",
+        "overlap_sec": 1.3137
+      }
+    ],
+    "overlapping_job_pairs_count": 3
+  },
+  "jobs": [
+    {
+      "id": "branch_and_resource_preflight",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794737666.9659,
+      "started_iso": "2026-11-15T10:14:26.965945+00:00",
+      "ended_at": 1794737668.6574,
+      "ended_iso": "2026-11-15T10:14:28.657448+00:00",
+      "elapsed_sec": 1.6915,
+      "peak_rss_mb": 82.42,
+      "disk_min_gb": 19.23,
+      "process_tree": {
+        "root_pid": 7149,
+        "parent_rss_mb": 82.42,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 82.42,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/01_branch_integrity.json"
+      ],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "mutation_and_negative_suite",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [
+        "branch_and_resource_preflight"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794737668.6578,
+      "started_iso": "2026-11-15T10:14:28.657842+00:00",
+      "ended_at": 1794737679.3776,
+      "ended_iso": "2026-11-15T10:14:39.377641+00:00",
+      "elapsed_sec": 10.7197,
+      "peak_rss_mb": 208.38,
+      "disk_min_gb": 19.228,
+      "process_tree": {
+        "root_pid": 7149,
+        "parent_rss_mb": 208.38,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 208.38,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/04_mutation_actual_execution.json"
+      ],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "old_films_preservation",
+      "job_profile": "visual_decode",
+      "mandatory": true,
+      "deps": [
+        "branch_and_resource_preflight"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794737668.6579,
+      "started_iso": "2026-11-15T10:14:28.657938+00:00",
+      "ended_at": 1794737676.6716,
+      "ended_iso": "2026-11-15T10:14:36.671624+00:00",
+      "elapsed_sec": 8.0136,
+      "peak_rss_mb": 98.16,
+      "disk_min_gb": 19.228,
+      "process_tree": {
+        "root_pid": 7149,
+        "parent_rss_mb": 60.58,
+        "children_rss_mb": 37.58,
+        "tree_rss_mb": 98.16,
+        "child_count": 1,
+        "children": [
+          {
+            "pid": 7321,
+            "name": "Python",
+            "rss_mb": 37.58
+          }
+        ]
+      },
+      "evidence_paths": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/08_old_films_preservation.json"
+      ],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "unit_scheduler_and_fingerprint",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [
+        "branch_and_resource_preflight"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794737668.658,
+      "started_iso": "2026-11-15T10:14:28.658033+00:00",
+      "ended_at": 1794737669.9717,
+      "ended_iso": "2026-11-15T10:14:29.971732+00:00",
+      "elapsed_sec": 1.3137,
+      "peak_rss_mb": 52.38,
+      "disk_min_gb": 19.23,
+      "process_tree": {
+        "root_pid": 7173,
+        "parent_rss_mb": 26.23,
+        "children_rss_mb": 26.14,
+        "tree_rss_mb": 52.38,
+        "child_count": 2,
+        "children": [
+          {
+            "pid": 7183,
+            "name": "Python",
+            "rss_mb": 14.88
+          },
+          {
+            "pid": 7184,
+            "name": "Python",
+            "rss_mb": 11.27
+          }
+        ]
+      },
+      "evidence_paths": [],
+      "cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "-m",
+        "unittest",
+        "-v",
+        "tests/test_qa_scheduler_v14_7_5.py"
+      ],
+      "stdout_tail": "",
+      "stderr_tail": "mismatch_rejected (tests.test_qa_scheduler_v14_7_5.TestQASchedulerV1475.test_04_command_key_mismatch_rejected)\nNon-canonical 'command' key is rejected in both build_dependency_dag and run_isolated_job. ... ok\ntest_05_callable_none_or_unstructured_not_pass (tests.test_qa_scheduler_v14_7_5.TestQASchedulerV1475.test_05_callable_none_or_unstructured_not_pass)\nCallable returning None or dict without status/valid/passed returns NOT_VERIFIED, never PASS. ... ok\ntest_06_missing_expected_artifact_fails_even_if_exit_zero (tests.test_qa_scheduler_v14_7_5.TestQASchedulerV1475.test_06_missing_expected_artifact_fails_even_if_exit_zero)\nSubprocess exiting 0 fails when expected_artifacts are missing or empty. ... ok\ntest_07_timeout_kills_child_process_tree (tests.test_qa_scheduler_v14_7_5.TestQASchedulerV1475.test_07_timeout_kills_child_process_tree)\nSubprocess timeout terminates both parent subprocess and its spawned grandchild process. ... ok\ntest_08_low_disk_floor_blocks (tests.test_qa_scheduler_v14_7_5.TestQASchedulerV1475.test_08_low_disk_floor_blocks)\nDisk below reserve floor triggers BLOCKED_RESOURCE without executing jobs. ... ok\ntest_09_low_ram_floor_blocks_and_terminates_breaching_worker (tests.test_qa_scheduler_v14_7_5.TestQASchedulerV1475.test_09_low_ram_floor_blocks_and_terminates_breaching_worker)\nLow RAM blocks DAG and heavy_render caps to 1 when RAM < 4 GiB; mid-run breach terminates child. ... ok\ntest_10_zero_job_dag_does_not_succeed (tests.test_qa_scheduler_v14_7_5.TestQASchedulerV1475.test_10_zero_job_dag_does_not_succeed)\nEmpty / zero-job DAG fails closed and never reports all_succeeded=True. ... ok\ntest_11_atomic_evidence_schema_and_duplicate_claim_guard (tests.test_qa_scheduler_v14_7_5.TestQASchedulerV1475.test_11_atomic_evidence_schema_and_duplicate_claim_guard)\npublish_atomic_evidence validates required keys and prevents duplicate job claims in one run. ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 1.241s\n\nOK\n",
+      "error": null
+    },
+    {
+      "id": "e2e_regression_full",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "mutation_and_negative_suite",
+        "old_films_preservation",
+        "unit_scheduler_and_fingerprint"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794737679.3782,
+      "started_iso": "2026-11-15T10:14:39.378153+00:00",
+      "ended_at": 1794738007.7955,
+      "ended_iso": "2026-11-15T10:20:07.795450+00:00",
+      "elapsed_sec": 328.4009,
+      "peak_rss_mb": 29.08,
+      "disk_min_gb": 19.273,
+      "process_tree": {
+        "root_pid": 7149,
+        "parent_rss_mb": 29.08,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 29.08,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/05_e2e_regression_full.json",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/06_historical_backtest_truth.json"
+      ],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "eagle_fog_verify_and_sheets",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "e2e_regression_full"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794738007.7968,
+      "started_iso": "2026-11-15T10:20:07.796846+00:00",
+      "ended_at": 1794738021.327,
+      "ended_iso": "2026-11-15T10:20:21.326989+00:00",
+      "elapsed_sec": 13.53,
+      "peak_rss_mb": 41.84,
+      "disk_min_gb": 19.271,
+      "process_tree": {
+        "root_pid": 7149,
+        "parent_rss_mb": 41.84,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 41.84,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/09_eagle_fog_media_provenance.json",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/11_voice_timing_measured.json",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/contact_sheet_full.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/contact_sheet_hook.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/contact_sheet_action.png"
+      ],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "shot_repair_real_video",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "eagle_fog_verify_and_sheets"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794738021.3274,
+      "started_iso": "2026-11-15T10:20:21.327351+00:00",
+      "ended_at": 1794738054.9665,
+      "ended_iso": "2026-11-15T10:20:54.966538+00:00",
+      "elapsed_sec": 33.6389,
+      "peak_rss_mb": 1553.58,
+      "disk_min_gb": 19.212,
+      "process_tree": {
+        "root_pid": 9844,
+        "parent_rss_mb": 339.12,
+        "children_rss_mb": 1214.45,
+        "tree_rss_mb": 1553.58,
+        "child_count": 6,
+        "children": [
+          {
+            "pid": 9904,
+            "name": "node",
+            "rss_mb": 130.7
+          },
+          {
+            "pid": 9905,
+            "name": "headless_shell",
+            "rss_mb": 78.16
+          },
+          {
+            "pid": 9917,
+            "name": "ffmpeg",
+            "rss_mb": 543.97
+          },
+          {
+            "pid": 9906,
+            "name": "headless_shell",
+            "rss_mb": 86.0
+          },
+          {
+            "pid": 9907,
+            "name": "headless_shell",
+            "rss_mb": 39.02
+          },
+          {
+            "pid": 9909,
+            "name": "headless_shell",
+            "rss_mb": 336.61
+          }
+        ]
+      },
+      "evidence_paths": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/07_repair_loop_real_video.json"
+      ],
+      "cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "tools/shot_repair.py",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/07_repair_loop_real_video.json"
+      ],
+      "stdout_tail": "render_mode\": \"FULL_RERENDER_FALLBACK\",\n        \"selective_segment_supported\": false,\n        \"full_rerender_fallback\": true,\n        \"reason\": \"Continuous camera and audio-visual timeline synchronization require full timeline rerender\",\n        \"output_mp4_path\": \"/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/shot_repair_v1475_27gig6p8/out/disposable_repair_test.mp4\",\n        \"render_returncode\": 0,\n        \"elapsed_sec\": 9.032,\n        \"audio_muxed\": true,\n        \"audio_source\": \"/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/shot_repair_v1475_27gig6p8/timeline/voice.wav\",\n        \"output_sha256\": \"4ec9d5142c5436ed48c0d94b6fdb458568be19643e796475b49eb56027d8c9f1\",\n        \"receipt_path\": \"/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/shot_repair_v1475_27gig6p8/build/render_receipt.json\",\n        \"receipt_verified\": true,\n        \"media_inspection\": {\n          \"valid\": true,\n          \"error\": null,\n          \"errors\": [],\n          \"duration\": 5.4,\n          \"file_size\": 800146,\n          \"width\": 1920,\n          \"height\": 1080,\n          \"fps\": 24.0,\n          \"video_codec\": \"h264\",\n          \"audio_codec\": \"aac\",\n          \"has_video\": true,\n          \"has_audio\": true,\n          \"decode_clean\": true,\n          \"max_volume_db\": -5.5,\n          \"mean_volume_db\": -23.5,\n          \"integrated_lufs\": null,\n          \"true_peak_dbtp\": null,\n          \"sha256\": \"4ec9d5142c5436ed48c0d94b6fdb458568be19643e796475b49eb56027d8c9f1\"\n        },\n        \"success\": true\n      },\n      \"qa_targeted\": {\n        \"status\": \"PASS\",\n        \"impacted_shots\": [\n          \"s02\",\n          \"s03\"\n        ],\n        \"targeted_issues_count\": 0,\n        \"targeted_issues\": [],\n        \"missing_or_unverified_shots\": []\n      },\n      \"qa_final\": {\n        \"verdict\": \"VISUAL_TECH_PASS\",\n        \"passed_shots\": 3,\n        \"total_shots\": 3,\n        \"issues_count\": 0,\n        \"issues\": []\n      }\n    }\n  ]\n}\n",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "speed_serial_vs_parallel",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [
+        "shot_repair_real_video"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794738054.9672,
+      "started_iso": "2026-11-15T10:20:54.967205+00:00",
+      "ended_at": 1794738058.4475,
+      "ended_iso": "2026-11-15T10:20:58.447511+00:00",
+      "elapsed_sec": 3.4803,
+      "peak_rss_mb": 37.75,
+      "disk_min_gb": 19.28,
+      "process_tree": {
+        "root_pid": 7149,
+        "parent_rss_mb": 37.75,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 37.75,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5/12_speed_serial_vs_parallel.json"
+      ],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    }
+  ]
+}

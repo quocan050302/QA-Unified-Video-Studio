@@ -1,0 +1,172 @@
+{
+  "test_status": "PASS",
+  "elapsed_sec": 33.374,
+  "render_mode": "FULL_RERENDER_FALLBACK",
+  "selective_segment_supported": false,
+  "initial_verdict": "FAIL",
+  "final_verdict": "VISUAL_TECH_PASS",
+  "attempts_used": 1,
+  "before_mp4_sha256": "a70ca6bba22cbac31d99ab506691595f9f02ad9f70a1317df511c53375fad2bf",
+  "after_mp4_sha256": "4ec9d5142c5436ed48c0d94b6fdb458568be19643e796475b49eb56027d8c9f1",
+  "mp4_rebuilt_and_changed": true,
+  "receipt_verified": true,
+  "manual_locked_s01_hash_before": "341a4e4054e89883383b7b4507f10350ae29b175bd6b44f295d4b73b4f20c6b5",
+  "manual_locked_s01_hash_after": "341a4e4054e89883383b7b4507f10350ae29b175bd6b44f295d4b73b4f20c6b5",
+  "manual_locked_preserved": true,
+  "locked_defect_status": "BLOCKED_MANUAL_REVIEW",
+  "locked_defect_hash_preserved": true,
+  "final_media_inspection": {
+    "valid": true,
+    "duration": 5.4,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "mean_volume_db": -23.5
+  },
+  "ledger": [
+    {
+      "attempt": 1,
+      "classified": [
+        {
+          "shot_id": "s02",
+          "category": "blank_frame",
+          "categories": [
+            "blank_frame",
+            "actor_preset",
+            "prop",
+            "pose"
+          ],
+          "verdict": "FAIL",
+          "manual_locked": false,
+          "diagnostics": [
+            "Blank/black frame at t=1.84s (mean=25.4, std=5.8)",
+            "UNKNOWN_ACTOR_PRESET: corrupted_blue_peasant",
+            "DUPLICATE_HELD_OBJECT: Actor 'decimus' has duplicate weapon2='spear' alongside primary/preset weapon",
+            "Actor undetected in shot s02 (confidence=0.00) - safe framing NOT_VERIFIED",
+            "Actor undetected for action 'ADVANCE' - acting posture NOT_VERIFIED"
+          ]
+        }
+      ],
+      "impacted": [
+        "s02",
+        "s03"
+      ],
+      "plan": {
+        "timestamp": 1794738034.154856,
+        "project_id": "shot_repair_v1475_27gig6p8",
+        "parent_hash": "e284d01900fd03ae5596a10fe56c59132d889a71e532f6e30d4f7108dc613abf",
+        "total_patches": 4,
+        "patches": [
+          {
+            "shot_id": "s02",
+            "category": "blank_frame",
+            "action": "restore_non_blank_scene",
+            "reason": "Blank/black frame at t=1.84s (mean=25.4, std=5.8)",
+            "changes": {
+              "tpl": "scene",
+              "bg": "plain",
+              "clear_dark": true
+            }
+          },
+          {
+            "shot_id": "s02",
+            "category": "actor_preset",
+            "action": "fix_actor_preset",
+            "reason": "Blank/black frame at t=1.84s (mean=25.4, std=5.8)",
+            "changes": {
+              "preset": "legionary",
+              "body": "roman"
+            }
+          },
+          {
+            "shot_id": "s02",
+            "category": "prop",
+            "action": "remove_duplicate_prop",
+            "reason": "Blank/black frame at t=1.84s (mean=25.4, std=5.8)",
+            "changes": {
+              "weapon2": null,
+              "shield2": null
+            }
+          },
+          {
+            "shot_id": "s02",
+            "category": "pose",
+            "action": "ground_actor_posture",
+            "reason": "Blank/black frame at t=1.84s (mean=25.4, std=5.8)",
+            "changes": {
+              "y": 0.88,
+              "pose": "brace"
+            }
+          }
+        ]
+      },
+      "apply_success": true,
+      "apply_logs": [
+        "Shot s02: restored non-blank scene content",
+        "Shot s02: repaired actor preset to 'legionary'",
+        "Shot s02: enforced single-held-prop exclusivity",
+        "Shot s02: grounded BRACE actor posture"
+      ],
+      "render_result": {
+        "timestamp": 1794738034.155658,
+        "project_id": "shot_repair_v1475_27gig6p8",
+        "impacted_ids": [
+          "s02",
+          "s03"
+        ],
+        "render_mode": "FULL_RERENDER_FALLBACK",
+        "selective_segment_supported": false,
+        "full_rerender_fallback": true,
+        "reason": "Continuous camera and audio-visual timeline synchronization require full timeline rerender",
+        "output_mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/shot_repair_v1475_27gig6p8/out/disposable_repair_test.mp4",
+        "render_returncode": 0,
+        "elapsed_sec": 9.032,
+        "audio_muxed": true,
+        "audio_source": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/shot_repair_v1475_27gig6p8/timeline/voice.wav",
+        "output_sha256": "4ec9d5142c5436ed48c0d94b6fdb458568be19643e796475b49eb56027d8c9f1",
+        "receipt_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/shot_repair_v1475_27gig6p8/build/render_receipt.json",
+        "receipt_verified": true,
+        "media_inspection": {
+          "valid": true,
+          "error": null,
+          "errors": [],
+          "duration": 5.4,
+          "file_size": 800146,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "has_video": true,
+          "has_audio": true,
+          "decode_clean": true,
+          "max_volume_db": -5.5,
+          "mean_volume_db": -23.5,
+          "integrated_lufs": null,
+          "true_peak_dbtp": null,
+          "sha256": "4ec9d5142c5436ed48c0d94b6fdb458568be19643e796475b49eb56027d8c9f1"
+        },
+        "success": true
+      },
+      "qa_targeted": {
+        "status": "PASS",
+        "impacted_shots": [
+          "s02",
+          "s03"
+        ],
+        "targeted_issues_count": 0,
+        "targeted_issues": [],
+        "missing_or_unverified_shots": []
+      },
+      "qa_final": {
+        "verdict": "VISUAL_TECH_PASS",
+        "passed_shots": 3,
+        "total_shots": 3,
+        "issues_count": 0,
+        "issues": []
+      }
+    }
+  ]
+}

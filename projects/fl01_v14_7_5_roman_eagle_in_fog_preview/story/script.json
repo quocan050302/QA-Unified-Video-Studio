@@ -1,0 +1,126 @@
+{
+  "title": "THE EAGLE IN THE FOG — A ROMAN STANDARD RESCUE",
+  "subtitle": "Illustrative Fictional Reconstruction",
+  "beats": [
+    {
+      "id": "s01",
+      "act": "I_HOOK_DISORIENTATION",
+      "dur": 3.875,
+      "action": "STAND",
+      "text": "Cold valley fog swallowed the cohort as their gilded standard tilted.",
+      "causal_cut_reason": "opening_hook",
+      "start": 0.0,
+      "end": 3.875
+    },
+    {
+      "id": "s02",
+      "act": "I_HOOK_DISORIENTATION",
+      "dur": 4.5,
+      "action": "WITHDRAW",
+      "text": "Along the stony pass, skirmishers pressed from the misty ridge.",
+      "causal_cut_reason": "wide_spatial_establish",
+      "start": 3.875,
+      "end": 8.375
+    },
+    {
+      "id": "s03",
+      "act": "I_HOOK_DISORIENTATION",
+      "dur": 4.5,
+      "action": "SLIP",
+      "text": "On slick slate, Gaius slipped, dropping the eagle onto stone.",
+      "causal_cut_reason": "inciting_physical_slip",
+      "start": 8.375,
+      "end": 12.875
+    },
+    {
+      "id": "s04",
+      "act": "II_DISCOVERY_COMMAND",
+      "dur": 4.125,
+      "action": "STAND",
+      "text": "Through drifting mist, Centurion Marcus spotted the fallen emblem.",
+      "causal_cut_reason": "reaction_closeup",
+      "start": 12.875,
+      "end": 17.0
+    },
+    {
+      "id": "s05",
+      "act": "II_DISCOVERY_COMMAND",
+      "dur": 4.5,
+      "action": "SIGNAL",
+      "text": "Raising a bright torch, Marcus sent a two-man rescue forward.",
+      "causal_cut_reason": "command_signal_action",
+      "start": 17.0,
+      "end": 21.5
+    },
+    {
+      "id": "s06",
+      "act": "II_DISCOVERY_COMMAND",
+      "dur": 4.75,
+      "action": "STAND",
+      "text": "Flank shields locked an anchor corridor as two legionaries dashed out.",
+      "causal_cut_reason": "tactical_schematic_cutaway",
+      "start": 21.5,
+      "end": 26.25
+    },
+    {
+      "id": "s07",
+      "act": "III_RESCUE_UNDER_COVER",
+      "dur": 4.5,
+      "action": "RESCUE_DASH",
+      "text": "Decimus and Lucius sprinted across wet stone toward Gaius.",
+      "causal_cut_reason": "tactical_to_ground_execution",
+      "start": 26.25,
+      "end": 30.75
+    },
+    {
+      "id": "s08",
+      "act": "III_RESCUE_UNDER_COVER",
+      "dur": 4.625,
+      "action": "BRACE",
+      "text": "Behind them, front ranks braced curved scuta against flying shafts.",
+      "causal_cut_reason": "parallel_shield_cover",
+      "start": 30.75,
+      "end": 35.375
+    },
+    {
+      "id": "s09",
+      "act": "III_RESCUE_UNDER_COVER",
+      "dur": 4.625,
+      "action": "LIFT_STANDARD",
+      "text": "Together they hauled Gaius upright and gripped the bronze shaft.",
+      "causal_cut_reason": "physical_standard_recovery",
+      "start": 35.375,
+      "end": 40.0
+    },
+    {
+      "id": "s10",
+      "act": "IV_WITHDRAWAL_RECOVERY",
+      "dur": 4.5,
+      "action": "WITHDRAW",
+      "text": "Step by step, the team withdrew safely behind Roman shields.",
+      "causal_cut_reason": "coordinated_withdrawal",
+      "start": 40.0,
+      "end": 44.5
+    },
+    {
+      "id": "s11",
+      "act": "IV_WITHDRAWAL_RECOVERY",
+      "dur": 4.5,
+      "action": "REFORM",
+      "text": "The cohort closed its interval, restoring an unbroken iron wall.",
+      "causal_cut_reason": "wide_cohort_reform",
+      "start": 44.5,
+      "end": 49.0
+    },
+    {
+      "id": "s12",
+      "act": "IV_WITHDRAWAL_RECOVERY",
+      "dur": 4.875,
+      "action": "RAISE_STANDARD",
+      "text": "Above parting fog, discipline and cohesion held the eagle high.",
+      "causal_cut_reason": "heroic_payoff_summary",
+      "start": 49.0,
+      "end": 53.875
+    }
+  ]
+}

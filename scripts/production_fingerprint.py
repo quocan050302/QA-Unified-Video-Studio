@@ -25,6 +25,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 
 RENDERER_CORE_MODULES = [
     ROOT_DIR / "render.mjs",
+    ROOT_DIR / "engine" / "core.js",
     ROOT_DIR / "engine" / "canonical_hash.js",
     ROOT_DIR / "tools" / "ai_director.py",
     ROOT_DIR / "tools" / "cinematic_camera.py",
@@ -87,6 +88,8 @@ def collect_render_inputs(project_path: Path | str, render_options: Optional[Dic
 
     candidate_rel_paths = [
         "story/shots.json",
+        "story/storyboard.json",
+        "story/script.json",
         "story/director_plan.json",
         "story/character_bible.json",
         "story/claims_manifest.json",
@@ -96,14 +99,29 @@ def collect_render_inputs(project_path: Path | str, render_options: Optional[Dic
         "timeline/transcript.txt",
         "timeline/voice.wav",
         "timeline/voice_manifest.json",
+        "timeline/voice_events.json",
+        "timeline/timeline_voice_events.json",
+        "build/voice_events.json",
+        "build/audio_plan.json",
+        "build/voice_track.wav",
+        "build/soundtrack_mixed.wav",
         "input/voice_script.txt",
         "input/voice_source.wav",
+        "input/01-PHIM.txt",
     ]
 
     for rel in candidate_rel_paths:
         fp = proj / rel
         if fp.is_file():
             tracked_files[rel] = sha256_file(fp)
+
+    # Track voice/audio segment files if present
+    for seg_sub in ("timeline/segments", "build/segments", "audio/segments"):
+        seg_dir = proj / seg_sub
+        if seg_dir.is_dir():
+            for seg_f in sorted(seg_dir.glob("*.*")):
+                if seg_f.is_file() and seg_f.suffix.lower() in (".wav", ".mp3", ".aac", ".m4a", ".ogg", ".json"):
+                    tracked_files[str(seg_f.relative_to(proj))] = sha256_file(seg_f)
 
     # Track scenes directory JS files
     scenes_dir = proj / "scenes"
@@ -127,11 +145,11 @@ def collect_render_inputs(project_path: Path | str, render_options: Optional[Dic
         if mod.is_file():
             code_modules[str(mod.relative_to(ROOT_DIR))] = sha256_file(mod)
 
-    # Pack-specific code files
+    # Pack-specific code files (JS visual/diagram modules + Python audio packs)
     pack_dir = ROOT_DIR / "packs" / pack
     if pack_dir.is_dir():
-        for pf in sorted(pack_dir.glob("*.js")):
-            if pf.is_file():
+        for pf in sorted(pack_dir.glob("*.*")):
+            if pf.is_file() and pf.suffix.lower() in (".js", ".mjs", ".py"):
                 code_modules[str(pf.relative_to(ROOT_DIR))] = sha256_file(pf)
 
     # 4. Normalized render options
@@ -169,6 +187,7 @@ def inspect_media_file(
     expected_specs: Optional[Dict[str, Any]] = None,
     require_audio: bool = False,
     full_decode: bool = False,
+    require_video: bool = True,
 ) -> Dict[str, Any]:
     """
     Run ffprobe and optional FFmpeg full decode on an MP4 file.
@@ -222,7 +241,7 @@ def inspect_media_file(
     has_audio = a_stream is not None
 
     errors: List[str] = []
-    if not has_video:
+    if require_video and not has_video:
         errors.append("No video stream found in media file")
     if duration <= 0.0:
         errors.append(f"Invalid duration: {duration}s <= 0")
@@ -249,7 +268,7 @@ def inspect_media_file(
             errors.append(f"FPS mismatch: expected {expected_specs['fps']}, got {fps}")
 
     decode_clean = True
-    if full_decode and has_video:
+    if full_decode and (has_video or has_audio):
         dec_cmd = ["ffmpeg", "-v", "error", "-i", str(p), "-f", "null", "-"]
         dec_res = subprocess.run(dec_cmd, capture_output=True, text=True)
         if dec_res.returncode != 0 or dec_res.stderr.strip():
@@ -257,18 +276,51 @@ def inspect_media_file(
             errors.append(f"Full ffmpeg decode failed: {dec_res.stderr.strip()[:200]}")
 
     max_volume_db = None
+    mean_volume_db = None
+    integrated_lufs = None
+    true_peak_dbtp = None
     if has_audio and (require_audio or (expected_specs and expected_specs.get("check_volume"))):
         vol_cmd = ["ffmpeg", "-i", str(p), "-af", "volumedetect", "-f", "null", "-"]
         vol_res = subprocess.run(vol_cmd, capture_output=True, text=True)
         import re
         m_max = re.search(r"max_volume:\s+([-\d.]+)\s+dB", vol_res.stderr)
+        m_mean = re.search(r"mean_volume:\s+([-\d.]+)\s+dB", vol_res.stderr)
+        if m_mean:
+            try:
+                mean_volume_db = float(m_mean.group(1))
+            except ValueError:
+                pass
         if m_max:
             try:
                 max_volume_db = float(m_max.group(1))
                 if max_volume_db <= -60.0:
                     errors.append(f"Audio is silent (max_volume={max_volume_db} dB)")
+                if expected_specs and expected_specs.get("reject_clipping") and max_volume_db >= 0.0:
+                    errors.append(f"Audio clipping detected (max_volume={max_volume_db} dB >= 0.0 dB)")
             except ValueError:
                 pass
+        else:
+            errors.append("Failed to measure audio max_volume via volumedetect")
+
+        if expected_specs and (expected_specs.get("measure_loudness") or "max_true_peak_dbtp" in expected_specs):
+            ebur_cmd = ["ffmpeg", "-nostats", "-i", str(p), "-filter_complex", "ebur128=peak=true", "-f", "null", "-"]
+            ebur_res = subprocess.run(ebur_cmd, capture_output=True, text=True)
+            m_lufs = re.findall(r"I:\s+([-\d.]+)\s+LUFS", ebur_res.stderr)
+            m_tp = re.findall(r"Peak:\s+([-\d.]+)\s+dBFS", ebur_res.stderr)
+            if m_lufs:
+                try:
+                    integrated_lufs = float(m_lufs[-1])
+                except ValueError:
+                    pass
+            if m_tp:
+                try:
+                    true_peak_dbtp = float(m_tp[-1])
+                    if "max_true_peak_dbtp" in expected_specs and true_peak_dbtp > float(expected_specs["max_true_peak_dbtp"]):
+                        errors.append(
+                            f"Audio true peak {true_peak_dbtp:.2f} dBTP exceeds limit {expected_specs['max_true_peak_dbtp']} dBTP"
+                        )
+                except ValueError:
+                    pass
 
     sha_val = sha256_file(p)
 
@@ -284,9 +336,12 @@ def inspect_media_file(
         "video_codec": v_codec,
         "audio_codec": a_codec,
         "has_video": has_video,
-        "has_audio": has_audio,
+        "has_audio": a_stream is not None,
         "decode_clean": decode_clean,
         "max_volume_db": max_volume_db,
+        "mean_volume_db": mean_volume_db,
+        "integrated_lufs": integrated_lufs,
+        "true_peak_dbtp": true_peak_dbtp,
         "sha256": sha_val,
     }
 
@@ -337,21 +392,34 @@ def write_render_receipt_atomic(
             "action": metadata.get("action", "render") if metadata else "render",
             "wall_sec": metadata.get("wall_sec", 0.0) if metadata else 0.0,
             "force_rebuild": metadata.get("force_rebuild", False) if metadata else False,
+            "render_mode": metadata.get("render_mode", "REAL_RENDER") if metadata else "REAL_RENDER",
+            "ai_director_mode": metadata.get("ai_director_mode", "OFFLINE_ONLY") if metadata else "OFFLINE_ONLY",
+            "ai_director_live_used": bool(metadata.get("ai_director_live_used", False)) if metadata else False,
+            "version": metadata.get("version", "14.7.5") if metadata else "14.7.5",
         },
     }
 
-    # Write atomically
+    # Write atomically with fsync
     receipt_path = build_dir / "render_receipt.json"
     temp_fd, temp_path = tempfile.mkstemp(dir=build_dir, prefix="rcpt_", suffix=".tmp")
     with open(temp_fd, "w", encoding="utf-8") as f:
         json.dump(receipt, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+        f.flush()
+        os.fsync(f.fileno())
     os.replace(temp_path, receipt_path)
 
-    # Also write alongside output file if in out/ directory
+    # Also write alongside output file if in out/ or build/ directory atomically
     if out_p.parent.name == "out" or out_p.parent.name == "build":
         sidecar = out_p.with_suffix(".receipt.json")
         try:
-            shutil.copyfile(receipt_path, sidecar)
+            s_fd, s_tmp = tempfile.mkstemp(dir=out_p.parent, prefix="sidecar_", suffix=".tmp")
+            with open(s_fd, "w", encoding="utf-8") as sf:
+                json.dump(receipt, sf, indent=2, ensure_ascii=False)
+                sf.write("\n")
+                sf.flush()
+                os.fsync(sf.fileno())
+            os.replace(s_tmp, sidecar)
         except Exception:
             pass
 
@@ -435,8 +503,31 @@ def validate_cache_hit(
             "media_info": None,
         }
 
-    # Inspect media file & verify file sha256
-    media_info = inspect_media_file(out_p)
+    # Inspect media file with full decode & audio requirement, and verify file sha256
+    req_audio = (manifest.get("render_options", {}).get("audio_mode") == "voice_sfx")
+    spec_filter = {
+        k: v
+        for k, v in (expected_specs or {}).items()
+        if k in (
+            "width",
+            "height",
+            "video_codec",
+            "audio_codec",
+            "min_duration",
+            "max_duration",
+            "fps",
+            "check_volume",
+            "reject_clipping",
+            "measure_loudness",
+            "max_true_peak_dbtp",
+        )
+    }
+    media_info = inspect_media_file(
+        out_p,
+        expected_specs=spec_filter if spec_filter else None,
+        require_audio=req_audio,
+        full_decode=True,
+    )
     if not media_info.get("valid"):
         return {
             "hit": False,

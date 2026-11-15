@@ -115,6 +115,8 @@ def get_canonical_sfx_name(raw_name: str, sfx_lib: Dict[str, Any]) -> Optional[s
     if raw_name in sfx_lib:
         return raw_name
 
+    step_target = "external_gravel_step" if "external_gravel_step" in sfx_lib else "mud_step"
+
     # Explicit canonical aliases
     aliases = {
         "armor": "armor_clank",
@@ -123,11 +125,12 @@ def get_canonical_sfx_name(raw_name: str, sfx_lib: Dict[str, Any]) -> Optional[s
         "mail": "chainmail",
         "chain": "chainmail",
         "mud": "mud_step",
-        "step": "single_footstep",
-        "steps": "single_footstep",
-        "footstep": "single_footstep",
-        "single_step": "single_footstep",
-        "run": "single_footstep",
+        "single_footstep": step_target,
+        "step": step_target,
+        "steps": step_target,
+        "footstep": step_target,
+        "single_step": step_target,
+        "run": step_target,
         "footsteps_loop": "footsteps",
         "sword": "sword_draw",
         "shield": "shield_bash",

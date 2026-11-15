@@ -203,3 +203,47 @@ export function sparks(g, x, y, s, t, at = 0) {
   const k = clamp((t - at) / 0.35); if (k <= 0 || k >= 1) return;
   for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4 + 0.3, d = s * (0.3 + k * 0.9); line(g, [[x + Math.cos(a) * d * 0.5, y + Math.sin(a) * d * 0.5], [x + Math.cos(a) * d, y + Math.sin(a) * d]], { lw: s * 0.06, ink: '#ffd34d', a: 1 - k }); }
 }
+
+// suong mu thung lung (fogBank): nhieu lop suong lanh troi muot, ho tro parting (vach suong khi ket phim)
+export function fogBank(g, t, o = {}) {
+  const r = rng(o.seed || 73);
+  const density = clamp(o.density ?? 0.32, 0.05, 0.72);
+  const speed = o.speed ?? 1.0;
+  const col = o.color || '#dce6ee';
+  const y0 = o.y0 ?? 0.28;
+  const y1 = o.y1 ?? 0.94;
+  const partK = o.parting ? ease.inOut(clamp((t - (o.partAt ?? 0.3)) / (o.partDur ?? 2.6))) : 0;
+
+  g.save();
+  const layers = o.n || 10;
+  for (let i = 0; i < layers; i++) {
+    const baseRx = (0.20 + r() * 0.22) * E.W;
+    const baseRy = (0.055 + r() * 0.065) * E.H;
+    const rawX = ((r() * (E.W + baseRx * 2) + t * (26 + i * 4.5) * speed * (i % 2 === 0 ? 1 : 0.65)) % (E.W + baseRx * 2)) - baseRx;
+    const py = E.H * (y0 + r() * (y1 - y0)) + Math.sin(t * 0.6 + i * 1.3) * E.H * 0.015;
+    let px = rawX;
+    if (partK > 0) {
+      const side = px < E.W * 0.5 ? -1 : 1;
+      px += side * partK * E.W * 0.24;
+    }
+    const bandAlpha = density * (0.45 + 0.45 * (i / layers)) * (1 - partK * 0.42);
+    const gr = g.createRadialGradient(px, py, baseRy * 0.15, px, py, baseRx);
+    gr.addColorStop(0, alpha(col, bandAlpha));
+    gr.addColorStop(0.58, alpha(col, bandAlpha * 0.52));
+    gr.addColorStop(1, alpha(col, 0));
+    g.fillStyle = gr;
+    g.beginPath();
+    g.ellipse(px, py, baseRx, baseRy, 0, 0, Math.PI * 2);
+    g.fill();
+  }
+
+  // Hat suong lanh bay nhe trong gio
+  const motes = o.motes ?? 16;
+  for (let m = 0; m < motes; m++) {
+    const mx = ((r() * E.W + t * (48 + (m % 5) * 11) * speed) % (E.W + 80)) - 40;
+    const my = E.H * (0.18 + r() * 0.72) + Math.sin(t * 1.4 + m) * 10;
+    const mr = Math.max(1.5, E.H * (0.0022 + (m % 3) * 0.001));
+    circ(g, mx, my, mr, { fill: alpha('#f2f7fb', density * 0.75 * (1 - partK * 0.3)), lw: 0 });
+  }
+  g.restore();
+}

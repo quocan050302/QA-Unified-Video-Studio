@@ -1,0 +1,62 @@
+{
+  "schema_version": "14.7.5",
+  "run_id": "v14_7_5_val_1794737666",
+  "status": "PASS",
+  "workload_description": "4 independent ffprobe + 3-frame rawvideo RGB24 decode + SHA256 jobs across 1080p MP4s",
+  "iterations": 3,
+  "serial_wall_times_sec": [
+    0.7334,
+    0.7096,
+    0.6952
+  ],
+  "parallel_wall_times_sec": [
+    0.4581,
+    0.4344,
+    0.4375
+  ],
+  "mean_serial_sec": 0.7127,
+  "mean_parallel_sec": 0.4433,
+  "median_serial_sec": 0.7096,
+  "median_parallel_sec": 0.4375,
+  "mean_speedup_ratio": 1.608,
+  "median_speedup_ratio": 1.622,
+  "all_output_digests_identical": true,
+  "runs": [
+    {
+      "iteration": 1,
+      "serial_sec": 0.7334,
+      "parallel_sec": 0.4581,
+      "speedup_ratio": 1.601,
+      "serial_max_workers": 1,
+      "parallel_max_workers": 4,
+      "parallel_overlapping_pairs": 6,
+      "serial_peak_rss_mb": 60.89,
+      "parallel_peak_rss_mb": 543.06,
+      "output_digests_identical": true
+    },
+    {
+      "iteration": 2,
+      "serial_sec": 0.7096,
+      "parallel_sec": 0.4344,
+      "speedup_ratio": 1.634,
+      "serial_max_workers": 1,
+      "parallel_max_workers": 4,
+      "parallel_overlapping_pairs": 6,
+      "serial_peak_rss_mb": 109.8,
+      "parallel_peak_rss_mb": 540.78,
+      "output_digests_identical": true
+    },
+    {
+      "iteration": 3,
+      "serial_sec": 0.6952,
+      "parallel_sec": 0.4375,
+      "speedup_ratio": 1.589,
+      "serial_max_workers": 1,
+      "parallel_max_workers": 4,
+      "parallel_overlapping_pairs": 6,
+      "serial_peak_rss_mb": 159.02,
+      "parallel_peak_rss_mb": 541.36,
+      "output_digests_identical": true
+    }
+  ]
+}

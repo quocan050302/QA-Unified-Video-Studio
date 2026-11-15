@@ -593,9 +593,42 @@ def compile_director_plan_to_visuals(
             cp_view = cp_plan.get("viewpoint", "front") if isinstance(cp_plan, dict) else "front"
             cp_scale = cp_plan.get("scale", "medium") if isinstance(cp_plan, dict) else "medium"
 
+            existing_tpl = s.get("tpl") or s.get("template")
+            existing_args = s.get("args") if isinstance(s.get("args"), dict) else {}
+            existing_people = existing_args.get("people") if isinstance(existing_args.get("people"), list) else []
+            existing_props = (
+                (existing_args.get("props") if isinstance(existing_args.get("props"), list) else [])
+                + (existing_args.get("things") if isinstance(existing_args.get("things"), list) else [])
+            )
+            is_specialized_tpl = (
+                pack == "squire"
+                and existing_tpl in ("board", "map", "item", "split", "xray", "plan", "title", "black")
+            )
+            has_grounded_scene_choreo = (
+                pack == "squire"
+                and existing_tpl == "scene"
+                and (
+                    existing_args.get("bg") == "lab"
+                    or any(
+                        isinstance(p, dict)
+                        and (
+                            p.get("pose") == "lying"
+                            or p.get("in_place")
+                            or p.get("moveMode") == "in_place"
+                            or "getUp" in p
+                            or "riseDur" in p
+                        )
+                        for p in existing_people
+                    )
+                    or any(isinstance(pr, dict) and pr.get("kind") == "treadmill" for pr in existing_props)
+                )
+            )
+
             # Map camera intent and viewpoint to template based on pack
             if pack == "squire":
-                if cp_view == "top_down" or cam == "top" or bm in ("relief", "encircle"):
+                if is_specialized_tpl or has_grounded_scene_choreo:
+                    chosen_tpl = existing_tpl
+                elif cp_view == "top_down" or cam == "top" or bm in ("relief", "encircle"):
                     chosen_tpl = "top"
                     s["camera"] = "in"
                 elif cp_scale in ("close", "extreme_close") or (cam == "close" and not cp_view.startswith("profile")):
@@ -605,31 +638,36 @@ def compile_director_plan_to_visuals(
                     chosen_tpl = "army"
                     s["camera"] = "right"
                 else:
-                    chosen_tpl = s.get("tpl") or s.get("template") or "scene"
+                    chosen_tpl = existing_tpl or "scene"
             else:
                 # DEM / other pack
-                chosen_tpl = s.get("tpl") or s.get("template") or "scene"
+                chosen_tpl = existing_tpl or "scene"
                 
             s["tpl"] = chosen_tpl
             s["template"] = chosen_tpl
             
             # Build real executable animation args
             args = copy.deepcopy(s.get("args") or {})
-            if cp_plan and isinstance(cp_plan, dict):
+            if cp_plan and isinstance(cp_plan, dict) and not is_specialized_tpl:
                 compiled_cam = compile_camera_keyframes(
                     CinematicShotPlan(**cp_plan),
                     dur=dur,
                     aspect=cfg.get("aspect", aspect),
                 )
                 args["cameraRig"] = compiled_cam["cameraRig"]
-                args["view"] = cp_view
+                args["view"] = "front" if has_grounded_scene_choreo else cp_view
                 args["move"] = compiled_cam["move"]
                 args["moveAmt"] = compiled_cam["moveAmt"]
             if pack == "squire":
-                args["bg"] = args.get("bg", "plain")
-                args["time"] = args.get("time", "golden")
+                if is_specialized_tpl or has_grounded_scene_choreo:
+                    pass
+                else:
+                    args["bg"] = args.get("bg", "plain")
+                    args["time"] = args.get("time", "golden")
                 
-                if chosen_tpl == "top":
+                if is_specialized_tpl or has_grounded_scene_choreo:
+                    pass
+                elif chosen_tpl == "top":
                     # Tactical bird's-eye blocks with paths and continuous kinematics
                     blocks = []
                     # Blue ally block
@@ -973,6 +1011,8 @@ def compile_director_plan_to_visuals(
             for sh in shots:
                 sid = sh.get("id") or sh.get("shot_id")
                 if sh.get("manual") is True or sh.get("visual_source") == "manual":
+                    continue
+                if ctx.pack == "squire" and sh.get("tpl") in ("board", "map", "item", "split", "xray", "plan", "title", "black"):
                     continue
                 if sid in env_plans:
                     sh["args"] = compile_environment_to_render_args(env_plans[sid], sh.get("args", {}), pack=ctx.pack)

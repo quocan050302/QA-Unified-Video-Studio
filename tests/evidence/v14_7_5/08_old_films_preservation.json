@@ -1,0 +1,132 @@
+{
+  "schema_version": "14.7.5",
+  "run_id": "v14_7_5_val_1794737666",
+  "status": "PASS",
+  "all_preserved_intact": true,
+  "preserved_count": 8,
+  "artifacts": [
+    {
+      "path": "projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 14085487,
+      "actual_size": 14085487,
+      "expected_sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+      "actual_sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 53.0,
+        "resolution": "1920x1080",
+        "video_codec": "h264",
+        "audio_codec": "aac"
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_1_bridge_before_enemy_preview/out/FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 11681291,
+      "actual_size": 11681291,
+      "expected_sha256": "3bda2c3a1aa4583bfec783de154343548cec993b21442699d596abe041f808e6",
+      "actual_sha256": "3bda2c3a1aa4583bfec783de154343548cec993b21442699d596abe041f808e6",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 52.0,
+        "resolution": "1920x1080",
+        "video_codec": "h264",
+        "audio_codec": "aac"
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_2_ballista_preview/out/FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 13189209,
+      "actual_size": 13189209,
+      "expected_sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+      "actual_sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 51.5,
+        "resolution": "1920x1080",
+        "video_codec": "h264",
+        "audio_codec": "aac"
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_3_ROMAN_CONTINUITY_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 13078836,
+      "actual_size": 13078836,
+      "expected_sha256": "111d153d0a37a8e985323074438666b6388d9cddf027bad0fcfadac3a43c28cf",
+      "actual_sha256": "111d153d0a37a8e985323074438666b6388d9cddf027bad0fcfadac3a43c28cf",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 52.5,
+        "resolution": "1920x1080",
+        "video_codec": "h264",
+        "audio_codec": "aac"
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4",
+      "exists": true,
+      "expected_size": 13602474,
+      "actual_size": 13602474,
+      "expected_sha256": "c04f01ae0463fd32ca83f7f9575121eeae9bcd86429e90eaf8cc66a3a03ce841",
+      "actual_sha256": "c04f01ae0463fd32ca83f7f9575121eeae9bcd86429e90eaf8cc66a3a03ce841",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 53.992,
+        "resolution": "1920x1080",
+        "video_codec": "h264",
+        "audio_codec": "aac"
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 11543182,
+      "actual_size": 11543182,
+      "expected_sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878",
+      "actual_sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 54.0,
+        "resolution": "1920x1080",
+        "video_codec": "h264",
+        "audio_codec": "aac"
+      }
+    },
+    {
+      "path": "projects/v14_6_action_demo/out/V14_6_Visual_Storytelling_Acting_Demo_1080p.mp4",
+      "exists": true,
+      "expected_size": 16513932,
+      "actual_size": 16513932,
+      "expected_sha256": "f774b9dc3d21d6ff1ec1ad986587a86dc955a0e943c30fe6b09da28c31cbac48",
+      "actual_sha256": "f774b9dc3d21d6ff1ec1ad986587a86dc955a0e943c30fe6b09da28c31cbac48",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 57.875,
+        "resolution": "1920x1080",
+        "video_codec": "h264",
+        "audio_codec": "aac"
+      }
+    },
+    {
+      "path": "projects/squire-mau/config.json",
+      "exists": true,
+      "expected_size": 372,
+      "actual_size": 372,
+      "expected_sha256": "2c62f70b502f81be10cda5c6fae6cbbec0d088cc080451a1cb4604b55bb86214",
+      "actual_sha256": "2c62f70b502f81be10cda5c6fae6cbbec0d088cc080451a1cb4604b55bb86214",
+      "byte_identical": true,
+      "media_probe": null
+    }
+  ],
+  "historical_diagnostic_note": "All 7 historical preview MP4s and user project configs remain 100% byte-identical on disk. Truthful diagnostic: V14.7.4 preserved MP4s had blank diagram frames on s05 (Arrow Storm) and s09 (Repaired Continuity) because historical shots.json used 'type'/'scale' while templates.js only read 'kind'/'s'. V14.7.5 fixed templates.js ('kind || type' and 's ?? scale') for all new renders without touching or re-encoding preserved historical MP4 files."
+}

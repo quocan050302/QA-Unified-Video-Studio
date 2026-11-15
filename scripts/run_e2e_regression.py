@@ -15,6 +15,7 @@ import asyncio
 import hashlib
 import json
 import os
+os.environ.setdefault("QA_STUDIO_TEST_MODE", "1")
 import re
 import shutil
 import subprocess
@@ -3692,7 +3693,7 @@ async def main():
     print(f"Root: {REPO_ROOT}")
     print("=" * 75)
 
-    ok, msg, res = check_resources(REPO_ROOT, min_disk_gb=4.0)
+    ok, msg, res = check_resources(REPO_ROOT, min_disk_gb=6.0)
     if not ok:
         print(f"[ResourceGuard BLOCKED] {msg}", file=sys.stderr)
         sys.exit(1)
@@ -3702,7 +3703,7 @@ async def main():
     EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
 
     global ACTIVE_MONITOR
-    monitor = ResourceMonitor(str(REPO_ROOT), min_disk_gb=4.0, interval_sec=1.0)
+    monitor = ResourceMonitor(str(REPO_ROOT), min_disk_gb=6.0, interval_sec=1.0)
     ACTIVE_MONITOR = monitor
     monitor.start()
 
@@ -3912,9 +3913,20 @@ async def main():
         "results": results,
     }
 
-    # Write latest-summary.json
+    # Write latest-summary.json atomically and optional --out-summary per-run artifact
     summary_json_path = EVIDENCE_DIR / "latest-summary.json"
-    summary_json_path.write_text(json.dumps(summary_data, indent=2, ensure_ascii=False), encoding="utf-8")
+    summary_tmp = summary_json_path.with_suffix(f".{os.getpid()}.tmp")
+    summary_tmp.write_text(json.dumps(summary_data, indent=2, ensure_ascii=False), encoding="utf-8")
+    os.replace(summary_tmp, summary_json_path)
+
+    if "--out-summary" in sys.argv:
+        idx_out = sys.argv.index("--out-summary")
+        if idx_out + 1 < len(sys.argv):
+            out_sum_p = Path(sys.argv[idx_out + 1]).resolve()
+            out_sum_p.parent.mkdir(parents=True, exist_ok=True)
+            out_sum_tmp = out_sum_p.with_suffix(f".{os.getpid()}.tmp")
+            out_sum_tmp.write_text(json.dumps(summary_data, indent=2, ensure_ascii=False), encoding="utf-8")
+            os.replace(out_sum_tmp, out_sum_p)
 
     current_branch = r0["details"]["git_branch"]
 
