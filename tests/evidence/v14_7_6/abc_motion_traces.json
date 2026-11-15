@@ -1,0 +1,622 @@
+{
+  "schema_version": "14.7.6",
+  "seed": 1476,
+  "duration_sec": 8.0,
+  "rigby_track_count": 3,
+  "natural_motion_foot_plant": {
+    "status": "FAIL",
+    "max_median_planted_foot_drift_norm": 0.5,
+    "max_peak_planted_foot_drift_norm": 0.5,
+    "max_stationary_foot_move_norm": 0.13253,
+    "pixel_tracking_confidence": "NOT_PROVIDED",
+    "pixel_checks": [],
+    "violations": [
+      "C02_aelia: median_planted_foot_drift_norm=0.5000 > 0.03",
+      "C02_aelia: peak_planted_foot_drift_norm=0.5000 > 0.08",
+      "C02_felix: median_planted_foot_drift_norm=0.0929 > 0.03",
+      "C02_felix: peak_planted_foot_drift_norm=0.2175 > 0.08",
+      "C02_felix: planted foot moved 0.1325 while root stationary (> 0.025)"
+    ],
+    "track_reports": [
+      {
+        "track_id": "C01_aelia",
+        "shot_id": "C01",
+        "actor_id": "aelia",
+        "median_planted_foot_drift_norm": 0,
+        "peak_planted_foot_drift_norm": 0,
+        "peak_hand_grip_dist_norm": 0,
+        "max_adjacent_joint_jump_norm": 0.0742,
+        "max_stationary_foot_move_norm": 0,
+        "max_grip_hand_jump_norm": 0.000456,
+        "trace_passed": false,
+        "violations": [],
+        "sample_frames": [
+          {
+            "frameIndex": 0,
+            "t": 0,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4,
+              0.84
+            ],
+            "speed": 0,
+            "leftFootWorld": [
+              0.38180000000000003,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4182,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38801026743472844,
+              0.7596105282699631
+            ],
+            "rightHandWorld": [
+              0.4323902674347284,
+              0.7450505282699631
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0
+          },
+          {
+            "frameIndex": 1,
+            "t": 0.041667,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4,
+              0.84
+            ],
+            "speed": 0,
+            "leftFootWorld": [
+              0.38180000000000003,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4182,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38801026743472844,
+              0.7600068009061965
+            ],
+            "rightHandWorld": [
+              0.4323902674347284,
+              0.7454468009061965
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00142
+          },
+          {
+            "frameIndex": 2,
+            "t": 0.083333,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4,
+              0.84
+            ],
+            "speed": 0,
+            "leftFootWorld": [
+              0.38180000000000003,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4182,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38801026743472844,
+              0.7604292797877368
+            ],
+            "rightHandWorld": [
+              0.4323902674347284,
+              0.7458692797877368
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00151
+          },
+          {
+            "frameIndex": 3,
+            "t": 0.125,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4,
+              0.84
+            ],
+            "speed": 0,
+            "leftFootWorld": [
+              0.38180000000000003,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4182,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38801026743472844,
+              0.7608178310779493
+            ],
+            "rightHandWorld": [
+              0.4323902674347284,
+              0.7462578310779493
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00139
+          },
+          {
+            "frameIndex": 4,
+            "t": 0.166667,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4,
+              0.84
+            ],
+            "speed": 0,
+            "leftFootWorld": [
+              0.38180000000000003,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4182,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38801026743472844,
+              0.7611171215571105
+            ],
+            "rightHandWorld": [
+              0.4323902674347284,
+              0.7465571215571105
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00107
+          },
+          {
+            "frameIndex": 5,
+            "t": 0.208333,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4,
+              0.84
+            ],
+            "speed": 0,
+            "leftFootWorld": [
+              0.38180000000000003,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4182,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38801026743472844,
+              0.7612845351035795
+            ],
+            "rightHandWorld": [
+              0.4323902674347284,
+              0.7467245351035795
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.0006
+          }
+        ]
+      },
+      {
+        "track_id": "C02_aelia",
+        "shot_id": "C02",
+        "actor_id": "aelia",
+        "median_planted_foot_drift_norm": 0.5,
+        "peak_planted_foot_drift_norm": 0.5,
+        "peak_hand_grip_dist_norm": 0,
+        "max_adjacent_joint_jump_norm": 0.06047,
+        "max_stationary_foot_move_norm": 0.003599,
+        "max_grip_hand_jump_norm": 0.002433,
+        "trace_passed": false,
+        "violations": [
+          "median_planted_foot_drift_norm=0.5 > 0.03",
+          "peak_planted_foot_drift_norm=0.5 > 0.08"
+        ],
+        "sample_frames": [
+          {
+            "frameIndex": 0,
+            "t": 4,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4,
+              0.84
+            ],
+            "speed": 0,
+            "leftFootWorld": [
+              0.38180000000000003,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4182,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38801026743472844,
+              0.764476572206552
+            ],
+            "rightHandWorld": [
+              0.4323902674347284,
+              0.749916572206552
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0
+          },
+          {
+            "frameIndex": 1,
+            "t": 4.041667,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4000015018027752,
+              0.84
+            ],
+            "speed": 0.00015,
+            "leftFootWorld": [
+              0.3818015018027752,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4182015018027752,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38801176923750363,
+              0.7644593370392205
+            ],
+            "rightHandWorld": [
+              0.4323917692375036,
+              0.7498993370392205
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 6e-05
+          },
+          {
+            "frameIndex": 2,
+            "t": 4.083333,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4000240276910484,
+              0.84
+            ],
+            "speed": 0.00116,
+            "leftFootWorld": [
+              0.3818240276910484,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4182240276910484,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.3880342951257768,
+              0.7645997986306883
+            ],
+            "rightHandWorld": [
+              0.4324142951257768,
+              0.7500397986306883
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00051
+          },
+          {
+            "frameIndex": 3,
+            "t": 4.125,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4001216421321947,
+              0.84
+            ],
+            "speed": 0.0039,
+            "leftFootWorld": [
+              0.3819216421321947,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4183216421321947,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.3881319095669231,
+              0.7648779642789202
+            ],
+            "rightHandWorld": [
+              0.4325119095669231,
+              0.7503179642789202
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00105
+          },
+          {
+            "frameIndex": 4,
+            "t": 4.166667,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.4003844522835268,
+              0.84
+            ],
+            "speed": 0.00923,
+            "leftFootWorld": [
+              0.3821844522835268,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4185844522835268,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38839471971825523,
+              0.7652542263692638
+            ],
+            "rightHandWorld": [
+              0.4327747197182552,
+              0.7506942263692638
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00164
+          },
+          {
+            "frameIndex": 5,
+            "t": 4.208333,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.40093859069202853,
+              0.84
+            ],
+            "speed": 0.01803,
+            "leftFootWorld": [
+              0.38273859069202854,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.4191385906920285,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.38894885812675695,
+              0.7656750013657055
+            ],
+            "rightHandWorld": [
+              0.4333288581267569,
+              0.7511150013657055
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00248
+          }
+        ]
+      },
+      {
+        "track_id": "C02_felix",
+        "shot_id": "C02",
+        "actor_id": "felix",
+        "median_planted_foot_drift_norm": 0.09286,
+        "peak_planted_foot_drift_norm": 0.21751,
+        "peak_hand_grip_dist_norm": 0,
+        "max_adjacent_joint_jump_norm": 0.23329,
+        "max_stationary_foot_move_norm": 0.132535,
+        "max_grip_hand_jump_norm": 0.000126,
+        "trace_passed": false,
+        "violations": [
+          "median_planted_foot_drift_norm=0.09286 > 0.03",
+          "peak_planted_foot_drift_norm=0.21751 > 0.08"
+        ],
+        "sample_frames": [
+          {
+            "frameIndex": 0,
+            "t": 4,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.62,
+              0.84
+            ],
+            "speed": 0,
+            "leftFootWorld": [
+              0.6522,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.6158,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.6319897325652716,
+              0.764476572206552
+            ],
+            "rightHandWorld": [
+              0.5876097325652716,
+              0.749916572206552
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0
+          },
+          {
+            "frameIndex": 1,
+            "t": 4.041667,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.6200003191741552,
+              0.84
+            ],
+            "speed": 3e-05,
+            "leftFootWorld": [
+              0.6522,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.6158,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.6319900517394268,
+              0.7644593370392205
+            ],
+            "rightHandWorld": [
+              0.5876100517394268,
+              0.7498993370392205
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 6e-05
+          },
+          {
+            "frameIndex": 2,
+            "t": 4.083333,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.6200051065413649,
+              0.84
+            ],
+            "speed": 0.00025,
+            "leftFootWorld": [
+              0.6522,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.6158,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.6319948391066365,
+              0.7645997986306883
+            ],
+            "rightHandWorld": [
+              0.5876148391066365,
+              0.7500397986306883
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.0005
+          },
+          {
+            "frameIndex": 3,
+            "t": 4.125,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.6200258522792935,
+              0.84
+            ],
+            "speed": 0.00083,
+            "leftFootWorld": [
+              0.6522,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.6158,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.6320155848445651,
+              0.7648779642789202
+            ],
+            "rightHandWorld": [
+              0.5876355848445651,
+              0.7503179642789202
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.001
+          },
+          {
+            "frameIndex": 4,
+            "t": 4.166667,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.620081706622775,
+              0.84
+            ],
+            "speed": 0.00196,
+            "leftFootWorld": [
+              0.6522,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.6158,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.6320714391880465,
+              0.7652542263692638
+            ],
+            "rightHandWorld": [
+              0.5876914391880466,
+              0.7506942263692638
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00136
+          },
+          {
+            "frameIndex": 5,
+            "t": 4.208333,
+            "phase": "ANTICIPATE",
+            "root": [
+              0.6201994761870319,
+              0.84
+            ],
+            "speed": 0.00383,
+            "leftFootWorld": [
+              0.6522,
+              0.84
+            ],
+            "rightFootWorld": [
+              0.6158,
+              0.84
+            ],
+            "leftPlanted": true,
+            "rightPlanted": true,
+            "leftHandWorld": [
+              0.6321892087523034,
+              0.7656750013657055
+            ],
+            "rightHandWorld": [
+              0.5878092087523035,
+              0.7511150013657055
+            ],
+            "gripDistNorm": null,
+            "maxJointJumpNorm": 0.00157
+          }
+        ]
+      }
+    ]
+  },
+  "natural_motion_hand_contact": {
+    "status": "PASS",
+    "plan_valid": true,
+    "peak_hand_grip_dist_norm": 0.0,
+    "max_grip_hand_jump_norm": 0.00243,
+    "frame_strips": [],
+    "violations": []
+  }
+}

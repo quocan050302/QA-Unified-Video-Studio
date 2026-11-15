@@ -1,0 +1,59 @@
+{
+  "evidence_schema_version": "14.7.6",
+  "source_commit": "2f88740c2e9330f17c618b6b546179126eed2203",
+  "run_id": "v14_7_6_val_1794762344",
+  "command_or_function": "pytest tests/motion_v14_7_6/test_claude_fx_determinism.py + adapter.js clock/alpha probe",
+  "file_paths": [
+    "integrations/claude_motion/adapter.js",
+    "integrations/claude_motion/SOURCE_PROVENANCE.json",
+    "integrations/claude_motion/LICENSE"
+  ],
+  "start_time": "2026-11-15T17:05:56.925232+00:00",
+  "end_time": "2026-11-15T17:05:57.774973+00:00",
+  "elapsed_sec": 0.8497,
+  "exit_code": 0,
+  "original_input_sha256": "3cda134b33651c61d6123e2f6e2693b1100e444c42cc1c9e042acde95bac5264",
+  "output_sha256": "7d4bfdfb5e942c11e2a8b0f7ab30bb427ae4f14305eadccd7d49522b4cfb7e86",
+  "measured_resources": {
+    "disk_free_gb": 16.267,
+    "ram_available_gb": 2.533,
+    "cpu_count": 8,
+    "free_inodes": 170568120,
+    "process_tree_rss_mb": 249.81,
+    "healthy": true
+  },
+  "status": "PASS",
+  "error_reason": null,
+  "pytest_exit_code": 0,
+  "log_path": "tests/evidence/v14_7_6/logs/w1_claude_fx_determinism.log",
+  "source_provenance": {
+    "schema_version": "14.7.6",
+    "upstream_repository": "https://github.com/buildwithhanif/claude-animation-skill",
+    "upstream_branch": "main",
+    "upstream_commit_sha": "4ddb8c80fdec96dc9f55d4b9bdee60bde6f0134b",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2026 Hanif (@hanifproduktif)",
+    "license_file": "integrations/claude_motion/LICENSE",
+    "adapted_sources": [
+      "plugins/claude-animation/skills/claude-animation/lib/fx.mjs (timeWarp, burstParticles, landDust, ring, afterimages)",
+      "plugins/claude-animation/skills/claude-animation/lib/core.mjs (clamp, lerp, ss, hash, rng, eOut, eIn, eIO, eBack)",
+      "plugins/claude-animation/skills/claude-animation/references/motion.md (snap-then-hold, anticipation, staggered overlap, ones/twos exposure, separated action vs real time)",
+      "plugins/claude-animation/skills/claude-animation/templates/beat-sheet.md (informative cut rule, middle-of-shot beat placement, contact sound cue alignment)"
+    ],
+    "excluded_standalone_pipeline": [
+      "plugins/claude-animation/skills/claude-animation/lib/film.mjs",
+      "examples/*"
+    ],
+    "demo_characters_copied": false
+  },
+  "determinism_and_clock_separation": {
+    "seedIdentical": true,
+    "alphaValid": true,
+    "voiceTimeUnwarpedAt3s": true,
+    "cameraTimeUnwarpedAt3s": true,
+    "actionBoundaryContinuousAt3s": true,
+    "actionHoldPlateaus": true,
+    "soundCueRealTimeAt2s": 2.08
+  },
+  "honesty_disclosure": "Claude Animation Skill helpers are strictly secondary sparse interaction FX (dust, gust embers, relight ring, subtle hit-stop action clock) gated by `fx_profile='claude_selective'`. Primary natural acting comes from MotionPlan + Natural Motion IK, never particle presets."
+}

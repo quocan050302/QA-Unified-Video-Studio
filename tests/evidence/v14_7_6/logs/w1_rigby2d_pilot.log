@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.0, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio
+plugins: anyio-4.15.1
+collecting ... collected 4 items
+
+tests/motion_v14_7_6/test_rigby_pilot.py::test_rigby_runtime_capabilities_and_fail_closed PASSED [ 25%]
+tests/motion_v14_7_6/test_rigby_pilot.py::test_convert_motion_plan_to_rigby_tracks_loads_cleanly PASSED [ 50%]
+tests/motion_v14_7_6/test_rigby_pilot.py::test_rigby_browser_webgl_to_canvas_compositing_and_determinism PASSED [ 75%]
+tests/motion_v14_7_6/test_rigby_pilot.py::test_compare_rigby_vs_canvas_8s_render PASSED [100%]
+
+============================== 4 passed in 7.34s ===============================
+

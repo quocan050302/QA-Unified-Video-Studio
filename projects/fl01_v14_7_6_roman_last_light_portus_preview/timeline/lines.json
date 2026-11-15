@@ -1,0 +1,50 @@
+[
+  {
+    "start": 0.16,
+    "end": 1.6177,
+    "text": "The harbor light went dark.",
+    "shot_id": "S01"
+  },
+  {
+    "start": 3.16,
+    "end": 5.5053,
+    "text": "A merchant ship was heading straight for the rocks.",
+    "shot_id": "S02"
+  },
+  {
+    "start": 6.66,
+    "end": 8.8892,
+    "text": "Aelia grabbed the last burning lantern.",
+    "shot_id": "S03"
+  },
+  {
+    "start": 10.16,
+    "end": 12.6633,
+    "text": "She ran for the tower. Felix caught the rope.",
+    "shot_id": "S04"
+  },
+  {
+    "start": 14.16,
+    "end": 16.2954,
+    "text": "The wind nearly pulled it from her hands.",
+    "shot_id": "S05"
+  },
+  {
+    "start": 18.16,
+    "end": 20.5078,
+    "text": "Together, they raised the flame above the storm.",
+    "shot_id": "S06"
+  },
+  {
+    "start": 22.66,
+    "end": 25.0749,
+    "text": "Its glow showed the sailors a safe way home.",
+    "shot_id": "S07"
+  },
+  {
+    "start": 26.66,
+    "end": 27.8898,
+    "text": "The ship made it through.",
+    "shot_id": "S08"
+  }
+]

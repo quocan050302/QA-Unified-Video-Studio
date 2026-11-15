@@ -1,0 +1,16 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.0, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio
+plugins: anyio-4.15.1
+collecting ... collected 6 items
+
+tests/motion_v14_7_6/test_motion_plan_generalization.py::test_unseen_script_a_citizen_slips_and_steadies_basket PASSED [ 16%]
+tests/motion_v14_7_6/test_motion_plan_generalization.py::test_unseen_script_b_merchant_lifts_amphora_with_another_person PASSED [ 33%]
+tests/motion_v14_7_6/test_motion_plan_generalization.py::test_unseen_script_c_child_walks_toward_lantern_then_ducks_from_wind PASSED [ 50%]
+tests/motion_v14_7_6/test_motion_plan_generalization.py::test_idle_speech_distinction_and_unsupported_action_safe_fallback PASSED [ 66%]
+tests/motion_v14_7_6/test_motion_plan_generalization.py::test_narrative_action_and_character_acting_shared_plan_and_manual_locks PASSED [ 83%]
+tests/motion_v14_7_6/test_motion_plan_generalization.py::test_validate_motion_plan_rejects_all_mandatory_defect_classes PASSED [100%]
+
+============================== 6 passed in 0.12s ===============================
+

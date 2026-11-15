@@ -1,0 +1,48 @@
+{
+  "schema_version": "14.7.6",
+  "project_id": "fl01_v14_7_6_roman_last_light_portus_preview",
+  "title": "THE LAST LIGHT OF PORTUS — A ROMAN HARBOR STORY",
+  "subtitle": "A fictional Roman harbor drama at twilight; stylized 2D reconstruction, not a documented historical incident.",
+  "visual_generation_mode": "100%_PROCEDURAL_HTML5_CANVAS_2D_VECTOR_MOTION_PLAN",
+  "prior_preview_derived_visual_inputs": 0,
+  "external_raster_images_count": 0,
+  "rigby_demo_mascots_copied": 0,
+  "claude_skill_demo_characters_copied": 0,
+  "military_battlefield_props_count": 0,
+  "authored_files": [
+    {
+      "path": "packs/squire/harbor/portus_light.js",
+      "sha256": "c79ea86a6656f3830d354ee9a80c493177b4f40155c3903f9aa8ce59b7db2f72"
+    },
+    {
+      "path": "projects/fl01_v14_7_6_roman_last_light_portus_preview/scenes/shots/portus_shots.js",
+      "sha256": "2987c80ad00fa80b90f2750a591ca27ca0f05c79fe61f2403884ccb0cce2b65e"
+    },
+    {
+      "path": "packs/squire/motion_engine.js",
+      "sha256": "d64a514377793067dbf45a583f7c54d3f141866d3d87b0ffc8c2aaaee69c7429"
+    },
+    {
+      "path": "integrations/claude_motion/adapter.js",
+      "sha256": "7d4bfdfb5e942c11e2a8b0f7ab30bb427ae4f14305eadccd7d49522b4cfb7e86"
+    }
+  ],
+  "procedural_modules": {
+    "packs/squire/harbor/portus_light.js": "c79ea86a6656f3830d354ee9a80c493177b4f40155c3903f9aa8ce59b7db2f72",
+    "projects/fl01_v14_7_6_roman_last_light_portus_preview/scenes/shots/portus_shots.js": "2987c80ad00fa80b90f2750a591ca27ca0f05c79fe61f2403884ccb0cce2b65e",
+    "packs/squire/motion_engine.js": "d64a514377793067dbf45a583f7c54d3f141866d3d87b0ffc8c2aaaee69c7429",
+    "integrations/claude_motion/adapter.js": "7d4bfdfb5e942c11e2a8b0f7ab30bb427ae4f14305eadccd7d49522b4cfb7e86"
+  },
+  "newly_authored_visual_primitives": [
+    "drawTwilightStormHarborSky",
+    "drawRomanMerchantShip",
+    "drawHarborSeaShoalsAndShip",
+    "drawAncientBronzeOilLantern",
+    "drawHarborMoleAndWatchtower",
+    "drawHarborActorFromMotionPlan",
+    "drawAuthoredGripInsert",
+    "drawAuthoredLowWatchtowerView",
+    "drawPortusEndCard"
+  ],
+  "audio_generation_mode": "MACOS_SAY_DANIEL_VOICE_PLUS_PROCEDURAL_HARBOR_FOLEY_SCORE"
+}

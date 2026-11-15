@@ -1,0 +1,67 @@
+{
+  "evidence_schema_version": "14.7.6",
+  "source_commit": "2f88740c2e9330f17c618b6b546179126eed2203",
+  "run_id": "v14_7_6_val_1794762344",
+  "command_or_function": "tools.produce_fl01_v14_7_6_roman_portus_preview::produce_abc_8s_comparison",
+  "file_paths": [
+    "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/abc_comparison_8s/A_v14_7_5_1_procedural_baseline_8s.mp4",
+    "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/abc_comparison_8s/B_v14_7_6_motion_plan_rigby2d_8s.mp4",
+    "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/abc_comparison_8s/C_v14_7_6_rigby2d_plus_claude_fx_8s.mp4",
+    "tests/evidence/v14_7_6/contact_sheet_abc_comparison.png",
+    "tests/evidence/v14_7_6/abc_motion_traces.json"
+  ],
+  "start_time": "2026-11-15T17:06:53.916551+00:00",
+  "end_time": "2026-11-15T17:07:30.298833+00:00",
+  "elapsed_sec": 36.3823,
+  "exit_code": 0,
+  "original_input_sha256": "db5b5a18e3e32985cea623d7fdc03be8c0763a9574724e79dede3ee86cafc9d2",
+  "output_sha256": "2188f3aa9a6c9bf09b690ac339c33e19a1ece9bc117cae125cab06245e04f0f2",
+  "measured_resources": {
+    "disk_free_gb": 16.278,
+    "ram_available_gb": 2.669,
+    "cpu_count": 8,
+    "free_inodes": 170690360,
+    "process_tree_rss_mb": 117.06,
+    "healthy": true
+  },
+  "status": "PASS",
+  "error_reason": null,
+  "distinct_three_mp4_hashes": true,
+  "rigby2d_backend_used_in_B_and_C": "rigby2d_webgl_0.5.1",
+  "clip_A_baseline_v14_7_5_1": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/abc_comparison_8s/A_v14_7_5_1_procedural_baseline_8s.mp4",
+    "mp4_sha256": "57844f5569e333da8ada209a53d9cf48c0bf5f1621c8768c5d8f13d368093a30",
+    "size_bytes": 948410,
+    "render_wall_sec": 8.649,
+    "decoded_video_frames": 192,
+    "valid": true
+  },
+  "clip_B_motion_plan_rigby2d": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/abc_comparison_8s/B_v14_7_6_motion_plan_rigby2d_8s.mp4",
+    "mp4_sha256": "700f46e7cc40c9612e644bb96198634a877defcc75c6dd36ea0bd111385f465a",
+    "size_bytes": 1072710,
+    "render_wall_sec": 10.091,
+    "decoded_video_frames": 192,
+    "valid": true
+  },
+  "clip_C_rigby2d_plus_claude_fx": {
+    "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/abc_comparison_8s/C_v14_7_6_rigby2d_plus_claude_fx_8s.mp4",
+    "mp4_sha256": "2d6a82e79e66be6dbb0d7af0ddcbc0120325d34fb17a79cdede2b7b754c5c777",
+    "size_bytes": 1077321,
+    "render_wall_sec": 10.428,
+    "decoded_video_frames": 192,
+    "valid": true
+  },
+  "contact_sheet": {
+    "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/abc_comparison_8s/contact_sheet_abc_comparison.png",
+    "sha256": "2188f3aa9a6c9bf09b690ac339c33e19a1ece9bc117cae125cab06245e04f0f2"
+  },
+  "motion_trace_json": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/abc_comparison_8s/abc_motion_traces.json",
+  "foot_plant_metrics": {
+    "max_median_planted_foot_drift_norm": 0.5,
+    "max_peak_planted_foot_drift_norm": 0.5
+  },
+  "hand_contact_metrics": {
+    "peak_hand_grip_dist_norm": 0.0
+  }
+}

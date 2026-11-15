@@ -1,0 +1,14 @@
+{
+  "schema_version": "14.7.6",
+  "title": "THE LAST LIGHT OF PORTUS — A ROMAN HARBOR STORY",
+  "subtitle": "A fictional Roman harbor drama at twilight; stylized 2D reconstruction, not a documented historical incident.",
+  "historical_claim_mode": "FICTIONAL_ROMAN_HARBOR_DRAMA_AT_TWILIGHT",
+  "documented_historical_event": false,
+  "claims_archaeological_portus_equipment_precision": false,
+  "uses_modern_fresnel_rotating_optics": false,
+  "claims_dawn_transition": false,
+  "period_plausibility_notes": [
+    "Open olive-oil / resin wick flame in a bronze-and-horn hoist lantern raised into a sheltered stone watchtower alcove",
+    "Manual hemp rope and wooden sheave pulley operated cooperatively by two harbor workers during a twilight squall"
+  ]
+}

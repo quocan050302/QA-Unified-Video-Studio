@@ -7,6 +7,7 @@ import { soldier, bust, shield, weapon, charge, CAST, hand, head, arrowStuck, ST
 import { horse } from './horse.js';
 import { bg, tree, bush, tent, flag, castle, cloud, TIMES } from './world.js';
 import { formation, standard, topGround, topBlock, dustPuff, rain, volley, stuckArrows, dust, javelins, smoke, sparks, arrowFly, fogBank } from './army.js';
+import { evaluateMotionTrackAt, evaluateMultiActorInteraction } from './motion_engine.js';
 import { loadWorld, drawMap, projector, VIEWS } from '../doodle/map.js';
 export { loadWorld };
 
@@ -20,6 +21,47 @@ const vert = () => E.H > E.W;
 // ---------- may quay: move in|out|left|right|up|down|still, moveAmt, zoom [x, y, z, tu, keo_dai], shake, cameraRig (V14.1 / V14.5)
 export function camera(g, lt, info, fn) {
   const a = info.args || {};
+  // V14.7.6: Optional script-driven internal multi-angle cameraSegments (continuous action/world time across cuts)
+  if (Array.isArray(a.cameraSegments) && a.cameraSegments.length > 0) {
+    const segs = a.cameraSegments;
+    let activeSeg = segs[segs.length - 1];
+    for (let i = 0; i < segs.length; i++) {
+      const s0 = Number(segs[i].local_start ?? 0);
+      const s1 = Number(segs[i].local_end ?? info.dur);
+      if (lt >= s0 - 1e-6 && (lt < s1 - 1e-6 || i === segs.length - 1)) {
+        activeSeg = segs[i];
+        break;
+      }
+    }
+    const s0 = Number(activeSeg.local_start ?? 0);
+    const s1 = Number(activeSeg.local_end ?? info.dur);
+    const u = ease.inOut(clamp((lt - s0) / Math.max(0.01, s1 - s0)));
+    const zRaw = lerp(Number(activeSeg.zoom_from ?? 1.0), Number(activeSeg.zoom_to ?? 1.04), u);
+    const z = Math.max(1.0, Math.min(2.6, Number.isFinite(zRaw) ? zRaw : 1.0));
+    const cf = Array.isArray(activeSeg.center_from) ? activeSeg.center_from : [0.5, 0.5];
+    const ct = Array.isArray(activeSeg.center_to) ? activeSeg.center_to : cf;
+    let cx = lerp(Number(cf[0] ?? 0.5), Number(ct[0] ?? 0.5), u) * E.W;
+    let cy = lerp(Number(cf[1] ?? 0.5), Number(ct[1] ?? 0.5), u) * E.H;
+    let dx = 0, dy = 0;
+    if (a.shake) {
+      const st0 = at(info, a.shakeAt, 0);
+      const sDur = Number(a.shakeDur ?? 0.5);
+      const s = a.shake * Math.max(0, 1 - (lt - st0) / Math.max(0.1, sDur)) * (lt >= st0 ? 1 : 0);
+      dx += Math.sin(lt * 52) * 10 * s;
+      dy += Math.cos(lt * 44) * 7 * s;
+    }
+    const hw = E.W / (2 * z), hh = E.H / (2 * z);
+    cx = clamp(cx + dx, hw, E.W - hw) - dx;
+    cy = clamp(cy + dy, hh, E.H - hh) - dy;
+    info._activeCameraSegment = activeSeg;
+    g.save();
+    g.translate(E.W / 2, E.H / 2);
+    g.scale(z, z);
+    g.translate(-cx - dx, -cy - dy);
+    fn();
+    g.restore();
+    return;
+  }
   // V14.1 / V14.5: Robust keyframe cameraRig path (supports canonical t,x,y,z and local_sec,x_center,y_center,zoom)
   if (a.cameraRig && a.cameraRig.keyframes && a.cameraRig.keyframes.length > 0) {
     const kfs = a.cameraRig.keyframes;
@@ -92,6 +134,50 @@ function listAt(info, lt, list, def) { let v = def; for (const [tt, f] of list |
 export function person(g, lt, info, p, gy = 0.93, dh = 0.5) {
   const a0 = at(info, p.at, 0); if (lt < a0) return;
   if (p.exit !== undefined && lt > at(info, p.exit, 1e9) + 0.4) return;
+  const mTrack =
+    p.motionTrack ||
+    (Array.isArray(info?.args?.motionTracks) && p.id
+      ? info.args.motionTracks.find((tr) => tr.actor_id === p.id)
+      : null);
+  if (mTrack) {
+    const absT = Number.isFinite(info?.globalT) ? info.globalT : ((info?.start || 0) + lt);
+    const allTracks = Array.isArray(info?.args?.motionTracks) ? info.args.motionTracks : [mTrack];
+    const wState = info?.args?.worldState || {};
+    const resolvedObjects = evaluateMultiActorInteraction(allTracks, absT, wState);
+    const me = evaluateMotionTrackAt(mTrack, absT, wState, {
+      resolvedObjects,
+      seed: info?.args?.motionPlan?.seed ?? p.seed ?? 1476,
+      cameraScale: info?._activeCameraSegment?.scale || 'medium',
+    });
+    const h = fs(p.h ?? mTrack.height_norm, dh);
+    const x = me.root[0] * E.W;
+    const y = me.root[1] * E.H;
+    const flip = p.flip !== undefined ? p.flip : me.facing < 0;
+    const talk = p.talk
+      ? talkAmount(
+          info.globalT,
+          info.start + at(info, p.talkFrom, 0),
+          info.start + (p.talkTo !== undefined ? at(info, p.talkTo, info.dur) : info.dur),
+        )
+      : 0;
+    const o = {
+      ...p,
+      t: absT + (p.seed || 0) * 0.37,
+      pose: p.pose || (me.phaseName === 'APPROACH' ? (String(mTrack.motion_type || '').includes('RUN') ? 'run' : 'walk') : 'stand'),
+      face: p.face || listAt(info, lt, p.faceAt, me.faceExpression || 'neutral'),
+      look: p.look ?? me.headLook,
+      talk,
+      flip,
+      walkMode: me.phaseName === 'APPROACH' ? 'side' : null,
+      walk: me.phaseName === 'APPROACH',
+      lw: p.lw,
+      _motionEval: me,
+    };
+    g.save();
+    soldier(g, x, y, h, o);
+    g.restore();
+    return;
+  }
   const h = fs(p.h, dh); let x = fx(p.x, 0.5), y = fy(p.y, gy);
   // --- di chuyen: chan cham dat that. walk: true -> tu di ngang theo huong mat; to -> di toi diem; walk: 'front' -> buoc tai cho
   const pose0 = listAt(info, lt, p.poseAt, p.pose || 'stand'), run = pose0 === 'run';

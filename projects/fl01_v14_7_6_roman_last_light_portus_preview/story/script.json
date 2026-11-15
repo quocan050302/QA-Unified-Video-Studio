@@ -1,0 +1,63 @@
+{
+  "title": "THE LAST LIGHT OF PORTUS — A ROMAN HARBOR STORY",
+  "subtitle": "A fictional Roman harbor drama at twilight; stylized 2D reconstruction, not a documented historical incident.",
+  "duration": 30.0,
+  "beats": [
+    {
+      "id": "S01",
+      "start": 0.0,
+      "end": 3.0,
+      "dur": 3.0,
+      "text": "The harbor light went dark."
+    },
+    {
+      "id": "S02",
+      "start": 3.0,
+      "end": 6.5,
+      "dur": 3.5,
+      "text": "A merchant ship was heading straight for the rocks."
+    },
+    {
+      "id": "S03",
+      "start": 6.5,
+      "end": 10.0,
+      "dur": 3.5,
+      "text": "Aelia grabbed the last burning lantern."
+    },
+    {
+      "id": "S04",
+      "start": 10.0,
+      "end": 14.0,
+      "dur": 4.0,
+      "text": "She ran for the tower. Felix caught the rope."
+    },
+    {
+      "id": "S05",
+      "start": 14.0,
+      "end": 18.0,
+      "dur": 4.0,
+      "text": "The wind nearly pulled it from her hands."
+    },
+    {
+      "id": "S06",
+      "start": 18.0,
+      "end": 22.5,
+      "dur": 4.5,
+      "text": "Together, they raised the flame above the storm."
+    },
+    {
+      "id": "S07",
+      "start": 22.5,
+      "end": 26.5,
+      "dur": 4.0,
+      "text": "Its glow showed the sailors a safe way home."
+    },
+    {
+      "id": "S08",
+      "start": 26.5,
+      "end": 30.0,
+      "dur": 3.5,
+      "text": "The ship made it through."
+    }
+  ]
+}

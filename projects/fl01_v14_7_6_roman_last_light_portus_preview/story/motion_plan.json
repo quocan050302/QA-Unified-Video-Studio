@@ -1,0 +1,5476 @@
+{
+  "schema_version": "14.7.6",
+  "project_id": "fl01_v14_7_6_roman_last_light_portus_preview",
+  "pack": "squire",
+  "genre": "harbor",
+  "routing_mode": "OFFLINE_ONLY",
+  "provider_trace_id": null,
+  "fx_profile": "claude_selective",
+  "seed": 1476,
+  "script_sha256": "5d6332b0bdebce5a0421fc9d10263754c5452726ca3de80763283a3cc0076ccf",
+  "script_span": "The harbor light went dark.\nA merchant ship was heading straight for the rocks.\nAelia grabbed the last burning lantern.\nShe ran for the tower.\nFelix caught the rope.\nThe wind nearly pulled it from her hands.\nTogether they raised the flame above the storm.\nIts glow showed the sailors a safe way home.\nThe ship made it through.",
+  "start_sec": 0.0,
+  "end_sec": 30.0,
+  "actor_ids": [
+    "aelia",
+    "felix"
+  ],
+  "object_ids": [
+    "flame",
+    "ladder",
+    "lantern",
+    "pulley",
+    "rail",
+    "rocks",
+    "rope",
+    "ship",
+    "tower"
+  ],
+  "desired_state_before": {},
+  "desired_state_after": {},
+  "motion_type": "SEQUENCE_PLAN",
+  "physical_target": null,
+  "world_start": [
+    0.0,
+    0.0
+  ],
+  "world_end": [
+    1.0,
+    1.0
+  ],
+  "intensity": 0.6,
+  "source_confidence": 0.9,
+  "visible_end_condition": "all actor and world objectives satisfied",
+  "sound_cue": null,
+  "intents": [
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S01_I01",
+      "shot_id": "S01",
+      "script_span": "The harbor light went dark.",
+      "start_sec": 0.0,
+      "end_sec": 3.0,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "The",
+          "start": 0.08,
+          "end": 0.473
+        },
+        {
+          "index": 1,
+          "word": "harbor",
+          "start": 0.473,
+          "end": 1.16
+        },
+        {
+          "index": 2,
+          "word": "light",
+          "start": 1.16,
+          "end": 1.749
+        },
+        {
+          "index": 3,
+          "word": "went",
+          "start": 1.749,
+          "end": 2.239
+        },
+        {
+          "index": 4,
+          "word": "dark",
+          "start": 2.239,
+          "end": 2.73
+        }
+      ],
+      "actor_ids": [],
+      "object_ids": [],
+      "desired_state_before": {
+        "actor_pos": [
+          0.5,
+          0.6
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.5,
+          0.6
+        ]
+      },
+      "motion_type": "EXTINGUISH",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "alarm",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.6
+      ],
+      "world_end": [
+        0.5,
+        0.6
+      ],
+      "intensity": 0.75,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S01 extinguish completed",
+      "sound_cue": "flame_gust"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S02_I01",
+      "shot_id": "S02",
+      "script_span": "A merchant ship was heading straight for the rocks.",
+      "start_sec": 3.0,
+      "end_sec": 6.5,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "A",
+          "start": 3.08,
+          "end": 3.204
+        },
+        {
+          "index": 1,
+          "word": "merchant",
+          "start": 3.204,
+          "end": 3.759
+        },
+        {
+          "index": 2,
+          "word": "ship",
+          "start": 3.759,
+          "end": 4.068
+        },
+        {
+          "index": 3,
+          "word": "was",
+          "start": 4.068,
+          "end": 4.315
+        },
+        {
+          "index": 4,
+          "word": "heading",
+          "start": 4.315,
+          "end": 4.809
+        },
+        {
+          "index": 5,
+          "word": "straight",
+          "start": 4.809,
+          "end": 5.365
+        },
+        {
+          "index": 6,
+          "word": "for",
+          "start": 5.365,
+          "end": 5.612
+        },
+        {
+          "index": 7,
+          "word": "the",
+          "start": 5.612,
+          "end": 5.859
+        },
+        {
+          "index": 8,
+          "word": "rocks",
+          "start": 5.859,
+          "end": 6.23
+        }
+      ],
+      "actor_ids": [],
+      "object_ids": [
+        "ship",
+        "rocks"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.36,
+          0.62
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.36,
+          0.62
+        ]
+      },
+      "motion_type": "SAIL_TURN",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "tense",
+      "physical_target": "ship",
+      "world_start": [
+        0.36,
+        0.62
+      ],
+      "world_end": [
+        0.36,
+        0.62
+      ],
+      "intensity": 0.66,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S02 sail_turn completed",
+      "sound_cue": "wave_crash"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S03_I01",
+      "shot_id": "S03",
+      "script_span": "Aelia grabbed the last burning lantern.",
+      "start_sec": 6.5,
+      "end_sec": 10.0,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Aelia",
+          "start": 6.58,
+          "end": 7.065
+        },
+        {
+          "index": 1,
+          "word": "grabbed",
+          "start": 7.065,
+          "end": 7.711
+        },
+        {
+          "index": 2,
+          "word": "the",
+          "start": 7.711,
+          "end": 8.034
+        },
+        {
+          "index": 3,
+          "word": "last",
+          "start": 8.034,
+          "end": 8.438
+        },
+        {
+          "index": 4,
+          "word": "burning",
+          "start": 8.438,
+          "end": 9.084
+        },
+        {
+          "index": 5,
+          "word": "lantern",
+          "start": 9.084,
+          "end": 9.73
+        }
+      ],
+      "actor_ids": [
+        "aelia"
+      ],
+      "object_ids": [
+        "lantern"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.4,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.44,
+          0.84
+        ],
+        "gripping": "lantern"
+      },
+      "motion_type": "GRAB",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "urgent",
+      "physical_target": "lantern",
+      "world_start": [
+        0.4,
+        0.84
+      ],
+      "world_end": [
+        0.44,
+        0.84
+      ],
+      "intensity": 0.74,
+      "source_confidence": 0.94,
+      "visible_end_condition": "aelia hand locked on lantern",
+      "sound_cue": "lantern_grab"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S04_I01",
+      "shot_id": "S04",
+      "script_span": "She ran for the tower.",
+      "start_sec": 10.0,
+      "end_sec": 12.0,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "She",
+          "start": 10.08,
+          "end": 10.412
+        },
+        {
+          "index": 1,
+          "word": "ran",
+          "start": 10.412,
+          "end": 10.744
+        },
+        {
+          "index": 2,
+          "word": "for",
+          "start": 10.744,
+          "end": 11.075
+        },
+        {
+          "index": 3,
+          "word": "the",
+          "start": 11.075,
+          "end": 11.407
+        },
+        {
+          "index": 4,
+          "word": "tower",
+          "start": 11.407,
+          "end": 11.905
+        },
+        {
+          "index": 5,
+          "word": "Felix",
+          "start": 11.905,
+          "end": 12.403
+        }
+      ],
+      "actor_ids": [
+        "aelia"
+      ],
+      "object_ids": [
+        "tower"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.44,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "motion_type": "RUN",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "urgent",
+      "physical_target": "tower",
+      "world_start": [
+        0.44,
+        0.84
+      ],
+      "world_end": [
+        0.518,
+        0.84
+      ],
+      "intensity": 0.84,
+      "source_confidence": 0.94,
+      "visible_end_condition": "aelia arrives at x=0.518 with planted stance",
+      "sound_cue": "stone_footsteps"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S04_I02",
+      "shot_id": "S04",
+      "script_span": "Felix caught the rope.",
+      "start_sec": 12.0,
+      "end_sec": 14.0,
+      "narration_word_timestamps": [
+        {
+          "index": 5,
+          "word": "Felix",
+          "start": 11.905,
+          "end": 12.403
+        },
+        {
+          "index": 6,
+          "word": "caught",
+          "start": 12.403,
+          "end": 12.983
+        },
+        {
+          "index": 7,
+          "word": "the",
+          "start": 12.983,
+          "end": 13.315
+        },
+        {
+          "index": 8,
+          "word": "rope",
+          "start": 13.315,
+          "end": 13.73
+        }
+      ],
+      "actor_ids": [
+        "felix"
+      ],
+      "object_ids": [
+        "rope"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.62,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.62,
+          0.84
+        ],
+        "gripping": "rope"
+      },
+      "motion_type": "BRACE_ROPE",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "determined",
+      "physical_target": "rope",
+      "world_start": [
+        0.62,
+        0.84
+      ],
+      "world_end": [
+        0.62,
+        0.84
+      ],
+      "intensity": 0.76,
+      "source_confidence": 0.94,
+      "visible_end_condition": "felix hand locked on rope",
+      "sound_cue": "rope_creak"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S05_I01",
+      "shot_id": "S05",
+      "script_span": "The wind nearly pulled it from her hands.",
+      "start_sec": 14.0,
+      "end_sec": 18.0,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "The",
+          "start": 14.08,
+          "end": 14.436
+        },
+        {
+          "index": 1,
+          "word": "wind",
+          "start": 14.436,
+          "end": 14.881
+        },
+        {
+          "index": 2,
+          "word": "nearly",
+          "start": 14.881,
+          "end": 15.504
+        },
+        {
+          "index": 3,
+          "word": "pulled",
+          "start": 15.504,
+          "end": 16.128
+        },
+        {
+          "index": 4,
+          "word": "it",
+          "start": 16.128,
+          "end": 16.395
+        },
+        {
+          "index": 5,
+          "word": "from",
+          "start": 16.395,
+          "end": 16.84
+        },
+        {
+          "index": 6,
+          "word": "her",
+          "start": 16.84,
+          "end": 17.196
+        },
+        {
+          "index": 7,
+          "word": "hands",
+          "start": 17.196,
+          "end": 17.73
+        }
+      ],
+      "actor_ids": [
+        "aelia"
+      ],
+      "object_ids": [
+        "rope"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ],
+        "balance": "recovering_from_slip"
+      },
+      "motion_type": "SLIP",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "startled",
+      "physical_target": "rope",
+      "world_start": [
+        0.518,
+        0.84
+      ],
+      "world_end": [
+        0.518,
+        0.84
+      ],
+      "intensity": 0.78,
+      "source_confidence": 0.94,
+      "visible_end_condition": "aelia foot slips then catches balance",
+      "sound_cue": "ladder_rattle"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S06_I01",
+      "shot_id": "S06",
+      "script_span": "Together they raised the flame above the storm.",
+      "start_sec": 18.0,
+      "end_sec": 22.5,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Together",
+          "start": 18.08,
+          "end": 18.875
+        },
+        {
+          "index": 1,
+          "word": "they",
+          "start": 18.875,
+          "end": 19.316
+        },
+        {
+          "index": 2,
+          "word": "raised",
+          "start": 19.316,
+          "end": 19.934
+        },
+        {
+          "index": 3,
+          "word": "the",
+          "start": 19.934,
+          "end": 20.287
+        },
+        {
+          "index": 4,
+          "word": "flame",
+          "start": 20.287,
+          "end": 20.817
+        },
+        {
+          "index": 5,
+          "word": "above",
+          "start": 20.817,
+          "end": 21.347
+        },
+        {
+          "index": 6,
+          "word": "the",
+          "start": 21.347,
+          "end": 21.7
+        },
+        {
+          "index": 7,
+          "word": "storm",
+          "start": 21.7,
+          "end": 22.23
+        }
+      ],
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ],
+        "object_pos": [
+          0.58,
+          0.7
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ],
+        "object_pos": [
+          0.58,
+          0.73
+        ],
+        "hoisted_object_pos": [
+          0.58,
+          0.46
+        ],
+        "hoisted_into_alcove": true
+      },
+      "motion_type": "HAUL_ROPE",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "strained_determined",
+      "physical_target": "flame",
+      "world_start": [
+        0.518,
+        0.84
+      ],
+      "world_end": [
+        0.518,
+        0.84
+      ],
+      "intensity": 0.85,
+      "source_confidence": 0.94,
+      "visible_end_condition": "flame raised smoothly via taut rope to y=0.46",
+      "sound_cue": "pulley_load"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S07_I01",
+      "shot_id": "S07",
+      "script_span": "Its glow showed the sailors a safe way home.",
+      "start_sec": 22.5,
+      "end_sec": 26.5,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Its",
+          "start": 22.58,
+          "end": 22.912
+        },
+        {
+          "index": 1,
+          "word": "glow",
+          "start": 22.912,
+          "end": 23.327
+        },
+        {
+          "index": 2,
+          "word": "showed",
+          "start": 23.327,
+          "end": 23.907
+        },
+        {
+          "index": 3,
+          "word": "the",
+          "start": 23.907,
+          "end": 24.239
+        },
+        {
+          "index": 4,
+          "word": "sailors",
+          "start": 24.239,
+          "end": 24.903
+        },
+        {
+          "index": 5,
+          "word": "a",
+          "start": 24.903,
+          "end": 25.069
+        },
+        {
+          "index": 6,
+          "word": "safe",
+          "start": 25.069,
+          "end": 25.483
+        },
+        {
+          "index": 7,
+          "word": "way",
+          "start": 25.483,
+          "end": 25.815
+        },
+        {
+          "index": 8,
+          "word": "home",
+          "start": 25.815,
+          "end": 26.23
+        }
+      ],
+      "actor_ids": [],
+      "object_ids": [],
+      "desired_state_before": {
+        "actor_pos": [
+          0.5,
+          0.6
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.5,
+          0.6
+        ]
+      },
+      "motion_type": "ILLUMINATE",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "hopeful",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.6
+      ],
+      "world_end": [
+        0.5,
+        0.6
+      ],
+      "intensity": 0.65,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S07 illuminate completed",
+      "sound_cue": "sail_wind"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S08_I01",
+      "shot_id": "S08",
+      "script_span": "The ship made it through.",
+      "start_sec": 26.5,
+      "end_sec": 30.0,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "The",
+          "start": 26.58,
+          "end": 27.084
+        },
+        {
+          "index": 1,
+          "word": "ship",
+          "start": 27.084,
+          "end": 27.714
+        },
+        {
+          "index": 2,
+          "word": "made",
+          "start": 27.714,
+          "end": 28.344
+        },
+        {
+          "index": 3,
+          "word": "it",
+          "start": 28.344,
+          "end": 28.722
+        },
+        {
+          "index": 4,
+          "word": "through",
+          "start": 28.722,
+          "end": 29.73
+        }
+      ],
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "ship"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "motion_type": "RELIEF_EXHALE",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "relieved",
+      "physical_target": "ship",
+      "world_start": [
+        0.518,
+        0.84
+      ],
+      "world_end": [
+        0.518,
+        0.84
+      ],
+      "intensity": 0.42,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S08 relief_exhale completed",
+      "sound_cue": "relief_chord"
+    }
+  ],
+  "tracks": [
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S03_aelia",
+      "shot_id": "S03",
+      "actor_id": "aelia",
+      "actor_ids": [
+        "aelia"
+      ],
+      "object_ids": [
+        "lantern"
+      ],
+      "preset": "lady",
+      "role": "lamp_keeper",
+      "script_span": "Aelia grabbed the last burning lantern.",
+      "start_sec": 6.5,
+      "end_sec": 10.0,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": 1,
+      "facing_end": 1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.4,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.44,
+          0.84
+        ],
+        "gripping": "lantern"
+      },
+      "motion_type": "GRAB",
+      "is_idle_or_speech_only": false,
+      "physical_target": "lantern",
+      "world_start": [
+        0.4,
+        0.84
+      ],
+      "world_end": [
+        0.4,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Aelia grabbed the last burning lantern.",
+          "start_sec": 6.5,
+          "end_sec": 6.99,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "lantern"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "lantern",
+          "world_start": [
+            0.4,
+            0.84
+          ],
+          "world_end": [
+            0.4,
+            0.84
+          ],
+          "posture_state": "coil_for_reach",
+          "torso_lean": 0.08,
+          "head_look": 0.8,
+          "knee_flex": 0.08,
+          "arm_reach": 0.35,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.481,
+          "source_confidence": 0.94,
+          "visible_end_condition": "aelia lowers center of mass toward lantern",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACH",
+          "script_span": "Aelia grabbed the last burning lantern.",
+          "start_sec": 6.99,
+          "end_sec": 7.55,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "lantern"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "lantern",
+          "world_start": [
+            0.4,
+            0.84
+          ],
+          "world_end": [
+            0.4,
+            0.84
+          ],
+          "posture_state": "extend_hands_to_target",
+          "torso_lean": 0.14,
+          "head_look": 0.9,
+          "knee_flex": 0.1,
+          "arm_reach": 0.88,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.592,
+          "source_confidence": 0.94,
+          "visible_end_condition": "hands close distance onto lantern grip_primary",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "CONTACT",
+          "script_span": "Aelia grabbed the last burning lantern.",
+          "start_sec": 7.55,
+          "end_sec": 7.97,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "lantern"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "lantern",
+          "world_start": [
+            0.4,
+            0.84
+          ],
+          "world_end": [
+            0.4,
+            0.84
+          ],
+          "posture_state": "grip_locked",
+          "torso_lean": 0.12,
+          "head_look": 0.9,
+          "knee_flex": 0.11,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.666,
+          "source_confidence": 0.94,
+          "visible_end_condition": "zero-hover grip established on lantern",
+          "sound_cue": "lantern_grab"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "EXERT",
+          "script_span": "Aelia grabbed the last burning lantern.",
+          "start_sec": 7.97,
+          "end_sec": 9.16,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "lantern"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "lantern",
+          "world_start": [
+            0.4,
+            0.84
+          ],
+          "world_end": [
+            0.4,
+            0.84
+          ],
+          "posture_state": "drive_through_legs_and_arms",
+          "torso_lean": 0.06,
+          "head_look": 0.85,
+          "knee_flex": 0.16,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.74,
+          "source_confidence": 0.94,
+          "visible_end_condition": "force transmitted cleanly into lantern",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Aelia grabbed the last burning lantern.",
+          "start_sec": 9.16,
+          "end_sec": 9.65,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "lantern"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "lantern",
+          "world_start": [
+            0.4,
+            0.84
+          ],
+          "world_end": [
+            0.4,
+            0.84
+          ],
+          "posture_state": "absorb_inertia",
+          "torso_lean": 0.04,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.518,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lantern oscillation damps while grip holds",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Aelia grabbed the last burning lantern.",
+          "start_sec": 9.65,
+          "end_sec": 10.0,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "lantern"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "lantern",
+          "world_start": [
+            0.4,
+            0.84
+          ],
+          "world_end": [
+            0.4,
+            0.84
+          ],
+          "posture_state": "secure_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.75,
+          "knee_flex": 0.06,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.37,
+          "source_confidence": 0.94,
+          "visible_end_condition": "aelia hand locked on lantern",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [
+        {
+          "schema_version": "14.7.6",
+          "constraint_id": "S03_I01_aelia_lantern",
+          "script_span": "Aelia grabbed the last burning lantern.",
+          "start_sec": 6.99,
+          "end_sec": 10.0,
+          "actor_id": "aelia",
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_id": "lantern",
+          "object_ids": [
+            "lantern"
+          ],
+          "hand": "right",
+          "anchor_name": "grip_primary",
+          "anchor_local": [
+            0.0,
+            0.0
+          ],
+          "desired_state_before": {
+            "gripped": false,
+            "object_pos": [
+              0.5,
+              0.7
+            ]
+          },
+          "desired_state_after": {
+            "gripped": true,
+            "object_pos": [
+              0.5,
+              0.7
+            ]
+          },
+          "motion_type": "GRAB",
+          "physical_target": "lantern",
+          "world_start": [
+            0.5,
+            0.7
+          ],
+          "world_end": [
+            0.5,
+            0.7
+          ],
+          "exclusive": true,
+          "shared_group_id": null,
+          "drives_object": true,
+          "intensity": 0.74,
+          "source_confidence": 0.94,
+          "visible_end_condition": "aelia hand locked to lantern:grip_primary",
+          "sound_cue": "lantern_grab"
+        }
+      ],
+      "emotion": "urgent",
+      "intensity": 0.74,
+      "source_confidence": 0.94,
+      "visible_end_condition": "aelia hand locked on lantern",
+      "sound_cue": "lantern_grab",
+      "sound_cues": [
+        {
+          "kind": "lantern_grab",
+          "at": 0.49
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S04_aelia",
+      "shot_id": "S04",
+      "actor_id": "aelia",
+      "actor_ids": [
+        "aelia"
+      ],
+      "object_ids": [
+        "tower"
+      ],
+      "preset": "lady",
+      "role": "lamp_keeper",
+      "script_span": "She ran for the tower.",
+      "start_sec": 10.0,
+      "end_sec": 14.0,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": 1,
+      "facing_end": 1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.44,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "motion_type": "RUN",
+      "is_idle_or_speech_only": false,
+      "physical_target": "tower",
+      "world_start": [
+        0.4,
+        0.84
+      ],
+      "world_end": [
+        0.518,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "She ran for the tower.",
+          "start_sec": 10.0,
+          "end_sec": 10.28,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "tower"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RUN",
+          "physical_target": "tower",
+          "world_start": [
+            0.4,
+            0.84
+          ],
+          "world_end": [
+            0.4047,
+            0.84
+          ],
+          "posture_state": "lean_into_stride",
+          "torso_lean": 0.12,
+          "head_look": 0.75,
+          "knee_flex": 0.14,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.588,
+          "source_confidence": 0.94,
+          "visible_end_condition": "weight shifts forward onto lead foot",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "APPROACH",
+          "script_span": "She ran for the tower.",
+          "start_sec": 10.28,
+          "end_sec": 11.68,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "tower"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RUN",
+          "physical_target": "tower",
+          "world_start": [
+            0.4047,
+            0.84
+          ],
+          "world_end": [
+            0.5133,
+            0.84
+          ],
+          "posture_state": "run_drive",
+          "torso_lean": 0.16,
+          "head_look": 0.8,
+          "knee_flex": 0.18,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": false,
+          "foot_planted_right": false,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.84,
+          "source_confidence": 0.94,
+          "visible_end_condition": "distance-coupled stride advances root smoothly",
+          "sound_cue": "stone_footsteps"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "She ran for the tower.",
+          "start_sec": 11.68,
+          "end_sec": 12.0,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "tower"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RUN",
+          "physical_target": "tower",
+          "world_start": [
+            0.5133,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "decelerate_plant",
+          "torso_lean": 0.03,
+          "head_look": 0.65,
+          "knee_flex": 0.05,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.42,
+          "source_confidence": 0.94,
+          "visible_end_condition": "aelia arrives at x=0.518 with planted stance",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "urgent",
+      "intensity": 0.84,
+      "source_confidence": 0.94,
+      "visible_end_condition": "aelia arrives at x=0.518 with planted stance",
+      "sound_cue": "stone_footsteps",
+      "sound_cues": [
+        {
+          "kind": "stone_footsteps",
+          "at": 0.28
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S04_felix",
+      "shot_id": "S04",
+      "actor_id": "felix",
+      "actor_ids": [
+        "felix"
+      ],
+      "object_ids": [
+        "rope"
+      ],
+      "preset": "peasant",
+      "role": "rope_worker",
+      "script_span": "Felix caught the rope.",
+      "start_sec": 10.0,
+      "end_sec": 14.0,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.62,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.62,
+          0.84
+        ],
+        "gripping": "rope"
+      },
+      "motion_type": "BRACE_ROPE",
+      "is_idle_or_speech_only": false,
+      "physical_target": "rope",
+      "world_start": [
+        0.62,
+        0.84
+      ],
+      "world_end": [
+        0.62,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Felix caught the rope.",
+          "start_sec": 12.0,
+          "end_sec": 12.28,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "rope",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "coil_for_reach",
+          "torso_lean": 0.08,
+          "head_look": 0.8,
+          "knee_flex": 0.08,
+          "arm_reach": 0.35,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.49400000000000005,
+          "source_confidence": 0.94,
+          "visible_end_condition": "felix lowers center of mass toward rope",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACH",
+          "script_span": "Felix caught the rope.",
+          "start_sec": 12.28,
+          "end_sec": 12.6,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "rope",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "extend_hands_to_target",
+          "torso_lean": 0.14,
+          "head_look": 0.9,
+          "knee_flex": 0.1,
+          "arm_reach": 0.88,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.6080000000000001,
+          "source_confidence": 0.94,
+          "visible_end_condition": "hands close distance onto rope grip_primary",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "CONTACT",
+          "script_span": "Felix caught the rope.",
+          "start_sec": 12.6,
+          "end_sec": 12.84,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "rope",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "grip_locked",
+          "torso_lean": 0.12,
+          "head_look": 0.9,
+          "knee_flex": 0.11,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.684,
+          "source_confidence": 0.94,
+          "visible_end_condition": "zero-hover grip established on rope",
+          "sound_cue": "rope_creak"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "EXERT",
+          "script_span": "Felix caught the rope.",
+          "start_sec": 12.84,
+          "end_sec": 13.52,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "rope",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "drive_through_legs_and_arms",
+          "torso_lean": -0.1,
+          "head_look": 0.85,
+          "knee_flex": 0.16,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.76,
+          "source_confidence": 0.94,
+          "visible_end_condition": "force transmitted cleanly into rope",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Felix caught the rope.",
+          "start_sec": 13.52,
+          "end_sec": 13.8,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "rope",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "absorb_inertia",
+          "torso_lean": -0.04,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.5319999999999999,
+          "source_confidence": 0.94,
+          "visible_end_condition": "rope oscillation damps while grip holds",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Felix caught the rope.",
+          "start_sec": 13.8,
+          "end_sec": 14.0,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "rope",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "secure_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.75,
+          "knee_flex": 0.06,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.38,
+          "source_confidence": 0.94,
+          "visible_end_condition": "felix hand locked on rope",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [
+        {
+          "schema_version": "14.7.6",
+          "constraint_id": "S04_I02_felix_rope",
+          "script_span": "Felix caught the rope.",
+          "start_sec": 12.28,
+          "end_sec": 14.0,
+          "actor_id": "felix",
+          "actor_ids": [
+            "felix"
+          ],
+          "object_id": "rope",
+          "object_ids": [
+            "rope"
+          ],
+          "hand": "both",
+          "anchor_name": "grip_primary",
+          "anchor_local": [
+            0.0,
+            0.0
+          ],
+          "desired_state_before": {
+            "gripped": false,
+            "object_pos": [
+              0.64,
+              0.7
+            ]
+          },
+          "desired_state_after": {
+            "gripped": true,
+            "object_pos": [
+              0.64,
+              0.7
+            ]
+          },
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "rope",
+          "world_start": [
+            0.64,
+            0.7
+          ],
+          "world_end": [
+            0.64,
+            0.7
+          ],
+          "exclusive": true,
+          "shared_group_id": null,
+          "drives_object": false,
+          "intensity": 0.76,
+          "source_confidence": 0.94,
+          "visible_end_condition": "felix hand locked to rope:grip_primary",
+          "sound_cue": "rope_creak"
+        }
+      ],
+      "emotion": "determined",
+      "intensity": 0.76,
+      "source_confidence": 0.94,
+      "visible_end_condition": "felix hand locked on rope",
+      "sound_cue": "rope_creak",
+      "sound_cues": [
+        {
+          "kind": "rope_creak",
+          "at": 2.28
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S05_aelia",
+      "shot_id": "S05",
+      "actor_id": "aelia",
+      "actor_ids": [
+        "aelia"
+      ],
+      "object_ids": [
+        "rope"
+      ],
+      "preset": "lady",
+      "role": "lamp_keeper",
+      "script_span": "The wind nearly pulled it from her hands.",
+      "start_sec": 14.0,
+      "end_sec": 18.0,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": 1,
+      "facing_end": 1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ],
+        "balance": "recovering_from_slip"
+      },
+      "motion_type": "SLIP",
+      "is_idle_or_speech_only": false,
+      "physical_target": "rope",
+      "world_start": [
+        0.518,
+        0.84
+      ],
+      "world_end": [
+        0.518,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "The wind nearly pulled it from her hands.",
+          "start_sec": 14.0,
+          "end_sec": 14.72,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "SLIP",
+          "physical_target": "rope",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "step_onto_slick_surface",
+          "torso_lean": 0.05,
+          "head_look": 0.5,
+          "knee_flex": 0.06,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": false,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.55,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lead foot touches wet stone/rung",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACT",
+          "script_span": "The wind nearly pulled it from her hands.",
+          "start_sec": 14.72,
+          "end_sec": 16.24,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "SLIP",
+          "physical_target": "rope",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "slip_jolt",
+          "torso_lean": -0.16,
+          "head_look": 0.35,
+          "knee_flex": 0.26,
+          "arm_reach": 0.65,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": false,
+          "slip_foot": "right",
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.78,
+          "source_confidence": 0.94,
+          "visible_end_condition": "right foot skids forward while knees drop to catch balance",
+          "sound_cue": "ladder_rattle"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "The wind nearly pulled it from her hands.",
+          "start_sec": 16.24,
+          "end_sec": 17.28,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "SLIP",
+          "physical_target": "rope",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "counterbalance_arms",
+          "torso_lean": 0.09,
+          "head_look": 0.65,
+          "knee_flex": 0.18,
+          "arm_reach": 0.5,
+          "hand_anchor_id": null,
+          "foot_planted_left": false,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.65,
+          "source_confidence": 0.94,
+          "visible_end_condition": "feet replant wide to arrest slip",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "The wind nearly pulled it from her hands.",
+          "start_sec": 17.28,
+          "end_sec": 18.0,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "rope"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "SLIP",
+          "physical_target": "rope",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "stabilized_wide_stance",
+          "torso_lean": 0.04,
+          "head_look": 0.7,
+          "knee_flex": 0.1,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.4,
+          "source_confidence": 0.94,
+          "visible_end_condition": "aelia foot slips then catches balance",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "startled",
+      "intensity": 0.78,
+      "source_confidence": 0.94,
+      "visible_end_condition": "aelia foot slips then catches balance",
+      "sound_cue": "ladder_rattle",
+      "sound_cues": [
+        {
+          "kind": "ladder_rattle",
+          "at": 0.72
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S06_aelia",
+      "shot_id": "S06",
+      "actor_id": "aelia",
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame"
+      ],
+      "preset": "lady",
+      "role": "lamp_keeper",
+      "script_span": "Together they raised the flame above the storm.",
+      "start_sec": 18.0,
+      "end_sec": 22.5,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": 1,
+      "facing_end": 1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ],
+        "object_pos": [
+          0.58,
+          0.7
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ],
+        "object_pos": [
+          0.58,
+          0.73
+        ],
+        "hoisted_object_pos": [
+          0.58,
+          0.46
+        ],
+        "hoisted_into_alcove": true
+      },
+      "motion_type": "HAUL_ROPE",
+      "is_idle_or_speech_only": false,
+      "physical_target": "flame",
+      "world_start": [
+        0.518,
+        0.84
+      ],
+      "world_end": [
+        0.518,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 18.0,
+          "end_sec": 18.63,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "coil_for_reach",
+          "torso_lean": 0.08,
+          "head_look": 0.8,
+          "knee_flex": 0.16,
+          "arm_reach": 0.35,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.5525,
+          "source_confidence": 0.94,
+          "visible_end_condition": "aelia lowers center of mass toward flame",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACH",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 18.63,
+          "end_sec": 19.35,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "extend_hands_to_target",
+          "torso_lean": 0.14,
+          "head_look": 0.9,
+          "knee_flex": 0.1,
+          "arm_reach": 0.88,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.68,
+          "source_confidence": 0.94,
+          "visible_end_condition": "hands close distance onto flame handle_1",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "CONTACT",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 19.35,
+          "end_sec": 19.89,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "grip_locked",
+          "torso_lean": 0.12,
+          "head_look": 0.9,
+          "knee_flex": 0.11,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.765,
+          "source_confidence": 0.94,
+          "visible_end_condition": "zero-hover grip established on flame",
+          "sound_cue": "pulley_load"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "EXERT",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 19.89,
+          "end_sec": 21.42,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "drive_through_legs_and_arms",
+          "torso_lean": -0.1,
+          "head_look": 0.85,
+          "knee_flex": 0.16,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.85,
+          "source_confidence": 0.94,
+          "visible_end_condition": "force transmitted cleanly into flame",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 21.42,
+          "end_sec": 22.05,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "absorb_inertia",
+          "torso_lean": -0.04,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.595,
+          "source_confidence": 0.94,
+          "visible_end_condition": "flame oscillation damps while grip holds",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 22.05,
+          "end_sec": 22.5,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "secure_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.75,
+          "knee_flex": 0.06,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.425,
+          "source_confidence": 0.94,
+          "visible_end_condition": "flame raised smoothly via taut rope to y=0.46",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [
+        {
+          "schema_version": "14.7.6",
+          "constraint_id": "S06_I01_aelia_flame",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 18.63,
+          "end_sec": 22.5,
+          "actor_id": "aelia",
+          "actor_ids": [
+            "aelia",
+            "felix"
+          ],
+          "object_id": "flame",
+          "object_ids": [
+            "flame"
+          ],
+          "hand": "both",
+          "anchor_name": "handle_1",
+          "anchor_local": [
+            -0.035,
+            0.0
+          ],
+          "desired_state_before": {
+            "gripped": false,
+            "object_pos": [
+              0.58,
+              0.7
+            ]
+          },
+          "desired_state_after": {
+            "gripped": true,
+            "object_pos": [
+              0.58,
+              0.73
+            ]
+          },
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.545,
+            0.7
+          ],
+          "world_end": [
+            0.545,
+            0.73
+          ],
+          "exclusive": false,
+          "shared_group_id": "S06_I01_shared_flame",
+          "drives_object": true,
+          "intensity": 0.85,
+          "source_confidence": 0.94,
+          "visible_end_condition": "aelia hand locked to flame:handle_1",
+          "sound_cue": "pulley_load"
+        }
+      ],
+      "emotion": "strained_determined",
+      "intensity": 0.85,
+      "source_confidence": 0.94,
+      "visible_end_condition": "flame raised smoothly via taut rope to y=0.46",
+      "sound_cue": "pulley_load",
+      "sound_cues": [
+        {
+          "kind": "pulley_load",
+          "at": 0.63
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S06_felix",
+      "shot_id": "S06",
+      "actor_id": "felix",
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame"
+      ],
+      "preset": "peasant",
+      "role": "rope_worker",
+      "script_span": "Together they raised the flame above the storm.",
+      "start_sec": 18.0,
+      "end_sec": 22.5,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ],
+        "object_pos": [
+          0.58,
+          0.7
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ],
+        "object_pos": [
+          0.58,
+          0.73
+        ],
+        "hoisted_object_pos": [
+          0.58,
+          0.46
+        ],
+        "hoisted_into_alcove": true
+      },
+      "motion_type": "HAUL_ROPE",
+      "is_idle_or_speech_only": false,
+      "physical_target": "flame",
+      "world_start": [
+        0.62,
+        0.84
+      ],
+      "world_end": [
+        0.62,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 18.0,
+          "end_sec": 18.673,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "coil_for_reach",
+          "torso_lean": 0.08,
+          "head_look": 0.8,
+          "knee_flex": 0.16,
+          "arm_reach": 0.35,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.5525,
+          "source_confidence": 0.94,
+          "visible_end_condition": "felix lowers center of mass toward flame",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACH",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 18.673,
+          "end_sec": 19.385,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "extend_hands_to_target",
+          "torso_lean": 0.14,
+          "head_look": 0.9,
+          "knee_flex": 0.1,
+          "arm_reach": 0.88,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.68,
+          "source_confidence": 0.94,
+          "visible_end_condition": "hands close distance onto flame handle_2",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "CONTACT",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 19.385,
+          "end_sec": 19.919,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "grip_locked",
+          "torso_lean": 0.12,
+          "head_look": 0.9,
+          "knee_flex": 0.11,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.765,
+          "source_confidence": 0.94,
+          "visible_end_condition": "zero-hover grip established on flame",
+          "sound_cue": "pulley_load"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "EXERT",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 19.919,
+          "end_sec": 21.432,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "drive_through_legs_and_arms",
+          "torso_lean": -0.1,
+          "head_look": 0.85,
+          "knee_flex": 0.16,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.85,
+          "source_confidence": 0.94,
+          "visible_end_condition": "force transmitted cleanly into flame",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 21.432,
+          "end_sec": 22.055,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "absorb_inertia",
+          "torso_lean": -0.04,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.595,
+          "source_confidence": 0.94,
+          "visible_end_condition": "flame oscillation damps while grip holds",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 22.055,
+          "end_sec": 22.5,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "flame"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "secure_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.75,
+          "knee_flex": 0.06,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.425,
+          "source_confidence": 0.94,
+          "visible_end_condition": "flame raised smoothly via taut rope to y=0.46",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [
+        {
+          "schema_version": "14.7.6",
+          "constraint_id": "S06_I01_felix_flame",
+          "script_span": "Together they raised the flame above the storm.",
+          "start_sec": 18.673,
+          "end_sec": 22.5,
+          "actor_id": "felix",
+          "actor_ids": [
+            "aelia",
+            "felix"
+          ],
+          "object_id": "flame",
+          "object_ids": [
+            "flame"
+          ],
+          "hand": "both",
+          "anchor_name": "handle_2",
+          "anchor_local": [
+            0.035,
+            0.0
+          ],
+          "desired_state_before": {
+            "gripped": false,
+            "object_pos": [
+              0.58,
+              0.7
+            ]
+          },
+          "desired_state_after": {
+            "gripped": true,
+            "object_pos": [
+              0.58,
+              0.73
+            ]
+          },
+          "motion_type": "HAUL_ROPE",
+          "physical_target": "flame",
+          "world_start": [
+            0.615,
+            0.7
+          ],
+          "world_end": [
+            0.615,
+            0.73
+          ],
+          "exclusive": false,
+          "shared_group_id": "S06_I01_shared_flame",
+          "drives_object": false,
+          "intensity": 0.85,
+          "source_confidence": 0.94,
+          "visible_end_condition": "felix hand locked to flame:handle_2",
+          "sound_cue": "pulley_load"
+        }
+      ],
+      "emotion": "strained_determined",
+      "intensity": 0.85,
+      "source_confidence": 0.94,
+      "visible_end_condition": "flame raised smoothly via taut rope to y=0.46",
+      "sound_cue": "pulley_load",
+      "sound_cues": [
+        {
+          "kind": "pulley_load",
+          "at": 0.673
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S08_aelia",
+      "shot_id": "S08",
+      "actor_id": "aelia",
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "ship"
+      ],
+      "preset": "lady",
+      "role": "lamp_keeper",
+      "script_span": "The ship made it through.",
+      "start_sec": 26.5,
+      "end_sec": 30.0,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "motion_type": "RELIEF_EXHALE",
+      "is_idle_or_speech_only": false,
+      "physical_target": "ship",
+      "world_start": [
+        0.518,
+        0.84
+      ],
+      "world_end": [
+        0.518,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "The ship made it through.",
+          "start_sec": 26.5,
+          "end_sec": 27.27,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "ship"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RELIEF_EXHALE",
+          "physical_target": "ship",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "breath_intake",
+          "torso_lean": -0.03,
+          "head_look": 0.5,
+          "knee_flex": 0.04,
+          "arm_reach": 0.15,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.252,
+          "source_confidence": 0.94,
+          "visible_end_condition": "subtle weight shift before gesture",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ACT",
+          "script_span": "The ship made it through.",
+          "start_sec": 27.27,
+          "end_sec": 28.88,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "ship"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RELIEF_EXHALE",
+          "physical_target": "ship",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "relief_exhale",
+          "torso_lean": 0.02,
+          "head_look": 0.6,
+          "knee_flex": 0.05,
+          "arm_reach": 0.22,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.42,
+          "source_confidence": 0.94,
+          "visible_end_condition": "primary gesture reaches clear apex",
+          "sound_cue": "relief_chord"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "The ship made it through.",
+          "start_sec": 28.88,
+          "end_sec": 30.0,
+          "actor_ids": [
+            "aelia"
+          ],
+          "object_ids": [
+            "ship"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RELIEF_EXHALE",
+          "physical_target": "ship",
+          "world_start": [
+            0.518,
+            0.84
+          ],
+          "world_end": [
+            0.518,
+            0.84
+          ],
+          "posture_state": "settle_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.72,
+          "knee_flex": 0.04,
+          "arm_reach": 0.12,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.21,
+          "source_confidence": 0.94,
+          "visible_end_condition": "S08 relief_exhale completed",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "relieved",
+      "intensity": 0.42,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S08 relief_exhale completed",
+      "sound_cue": "relief_chord",
+      "sound_cues": [
+        {
+          "kind": "relief_chord",
+          "at": 0.77
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S08_felix",
+      "shot_id": "S08",
+      "actor_id": "felix",
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "ship"
+      ],
+      "preset": "peasant",
+      "role": "rope_worker",
+      "script_span": "The ship made it through.",
+      "start_sec": 26.5,
+      "end_sec": 30.0,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.518,
+          0.84
+        ]
+      },
+      "motion_type": "RELIEF_EXHALE",
+      "is_idle_or_speech_only": false,
+      "physical_target": "ship",
+      "world_start": [
+        0.62,
+        0.84
+      ],
+      "world_end": [
+        0.62,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "The ship made it through.",
+          "start_sec": 26.5,
+          "end_sec": 27.309,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "ship"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RELIEF_EXHALE",
+          "physical_target": "ship",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "breath_intake",
+          "torso_lean": -0.03,
+          "head_look": 0.5,
+          "knee_flex": 0.04,
+          "arm_reach": 0.15,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.252,
+          "source_confidence": 0.94,
+          "visible_end_condition": "subtle weight shift before gesture",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ACT",
+          "script_span": "The ship made it through.",
+          "start_sec": 27.309,
+          "end_sec": 28.896,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "ship"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RELIEF_EXHALE",
+          "physical_target": "ship",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "relief_exhale",
+          "torso_lean": 0.02,
+          "head_look": 0.6,
+          "knee_flex": 0.05,
+          "arm_reach": 0.22,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.42,
+          "source_confidence": 0.94,
+          "visible_end_condition": "primary gesture reaches clear apex",
+          "sound_cue": "relief_chord"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "The ship made it through.",
+          "start_sec": 28.896,
+          "end_sec": 30.0,
+          "actor_ids": [
+            "felix"
+          ],
+          "object_ids": [
+            "ship"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RELIEF_EXHALE",
+          "physical_target": "ship",
+          "world_start": [
+            0.62,
+            0.84
+          ],
+          "world_end": [
+            0.62,
+            0.84
+          ],
+          "posture_state": "settle_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.72,
+          "knee_flex": 0.04,
+          "arm_reach": 0.12,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.21,
+          "source_confidence": 0.94,
+          "visible_end_condition": "S08 relief_exhale completed",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "relieved",
+      "intensity": 0.42,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S08 relief_exhale completed",
+      "sound_cue": "relief_chord",
+      "sound_cues": [
+        {
+          "kind": "relief_chord",
+          "at": 0.809
+        }
+      ]
+    }
+  ],
+  "world_states": [
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S01",
+      "script_span": "The harbor light went dark.",
+      "timestamp_sec": 3.0,
+      "start_sec": 0.0,
+      "end_sec": 3.0,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame",
+        "ladder",
+        "lantern",
+        "pulley",
+        "rail",
+        "rocks",
+        "rope",
+        "ship",
+        "tower"
+      ],
+      "actors": {
+        "aelia": {
+          "x": 0.4,
+          "y": 0.84,
+          "facing": 1
+        },
+        "felix": {
+          "x": 0.62,
+          "y": 0.84,
+          "facing": -1
+        }
+      },
+      "objects": {
+        "lantern": {
+          "x": 0.5,
+          "y": 0.7,
+          "state": "lit_on_rack"
+        },
+        "flame": {
+          "x": 0.58,
+          "y": 0.7,
+          "state": "protected_oil_wick"
+        },
+        "tower": {
+          "x": 0.6,
+          "y": 0.7,
+          "state": "beacon_dark"
+        },
+        "rope": {
+          "x": 0.64,
+          "y": 0.7,
+          "state": "slack"
+        },
+        "rail": {
+          "x": 0.57,
+          "y": 0.72,
+          "state": "fixed_iron"
+        },
+        "ladder": {
+          "x": 0.66,
+          "y": 0.72,
+          "state": "leaning"
+        },
+        "pulley": {
+          "x": 0.65,
+          "y": 0.4,
+          "state": "ready"
+        },
+        "ship": {
+          "x": 0.36,
+          "y": 0.62,
+          "state": "approaching_shoals"
+        },
+        "rocks": {
+          "x": 0.58,
+          "y": 0.64,
+          "state": "hazard"
+        }
+      },
+      "environment": {
+        "location": "portus_harbor_mole",
+        "time_of_day": "twilight_storm",
+        "wind": 0.72,
+        "sea_direction": "left_to_right",
+        "beacon_lit": false,
+        "lighting": "cold_storm"
+      },
+      "desired_state_before": {
+        "actors": {
+          "aelia": {
+            "x": 0.4,
+            "y": 0.84,
+            "facing": 1
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "lit_on_rack"
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack"
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.36,
+            "y": 0.62,
+            "state": "approaching_shoals"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "aelia": {
+            "x": 0.4,
+            "y": 0.84,
+            "facing": 1
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "lit_on_rack"
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack"
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.36,
+            "y": 0.62,
+            "state": "approaching_shoals"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S02",
+      "script_span": "A merchant ship was heading straight for the rocks.",
+      "timestamp_sec": 6.5,
+      "start_sec": 3.0,
+      "end_sec": 6.5,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame",
+        "ladder",
+        "lantern",
+        "pulley",
+        "rail",
+        "rocks",
+        "rope",
+        "ship",
+        "tower"
+      ],
+      "actors": {
+        "aelia": {
+          "x": 0.4,
+          "y": 0.84,
+          "facing": 1
+        },
+        "felix": {
+          "x": 0.62,
+          "y": 0.84,
+          "facing": -1
+        }
+      },
+      "objects": {
+        "lantern": {
+          "x": 0.5,
+          "y": 0.7,
+          "state": "lit_on_rack"
+        },
+        "flame": {
+          "x": 0.58,
+          "y": 0.7,
+          "state": "protected_oil_wick"
+        },
+        "tower": {
+          "x": 0.6,
+          "y": 0.7,
+          "state": "beacon_dark"
+        },
+        "rope": {
+          "x": 0.64,
+          "y": 0.7,
+          "state": "slack"
+        },
+        "rail": {
+          "x": 0.57,
+          "y": 0.72,
+          "state": "fixed_iron"
+        },
+        "ladder": {
+          "x": 0.66,
+          "y": 0.72,
+          "state": "leaning"
+        },
+        "pulley": {
+          "x": 0.65,
+          "y": 0.4,
+          "state": "ready"
+        },
+        "ship": {
+          "x": 0.4,
+          "y": 0.62,
+          "state": "approaching_hazard"
+        },
+        "rocks": {
+          "x": 0.58,
+          "y": 0.64,
+          "state": "hazard"
+        }
+      },
+      "environment": {
+        "location": "portus_harbor_mole",
+        "time_of_day": "twilight_storm",
+        "wind": 0.72,
+        "sea_direction": "left_to_right",
+        "beacon_lit": false,
+        "lighting": "cold_storm"
+      },
+      "desired_state_before": {
+        "actors": {
+          "aelia": {
+            "x": 0.4,
+            "y": 0.84,
+            "facing": 1
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "lit_on_rack"
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack"
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.36,
+            "y": 0.62,
+            "state": "approaching_shoals"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "aelia": {
+            "x": 0.4,
+            "y": 0.84,
+            "facing": 1
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "lit_on_rack"
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack"
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S03",
+      "script_span": "Aelia grabbed the last burning lantern.",
+      "timestamp_sec": 10.0,
+      "start_sec": 6.5,
+      "end_sec": 10.0,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame",
+        "ladder",
+        "lantern",
+        "pulley",
+        "rail",
+        "rocks",
+        "rope",
+        "ship",
+        "tower"
+      ],
+      "actors": {
+        "aelia": {
+          "x": 0.4,
+          "y": 0.84,
+          "facing": 1,
+          "motion_type": "GRAB",
+          "holding": "lantern"
+        },
+        "felix": {
+          "x": 0.62,
+          "y": 0.84,
+          "facing": -1
+        }
+      },
+      "objects": {
+        "lantern": {
+          "x": 0.5,
+          "y": 0.7,
+          "state": "moved_by_actor",
+          "held_by": [
+            "aelia"
+          ]
+        },
+        "flame": {
+          "x": 0.58,
+          "y": 0.7,
+          "state": "protected_oil_wick"
+        },
+        "tower": {
+          "x": 0.6,
+          "y": 0.7,
+          "state": "beacon_dark"
+        },
+        "rope": {
+          "x": 0.64,
+          "y": 0.7,
+          "state": "slack"
+        },
+        "rail": {
+          "x": 0.57,
+          "y": 0.72,
+          "state": "fixed_iron"
+        },
+        "ladder": {
+          "x": 0.66,
+          "y": 0.72,
+          "state": "leaning"
+        },
+        "pulley": {
+          "x": 0.65,
+          "y": 0.4,
+          "state": "ready"
+        },
+        "ship": {
+          "x": 0.4,
+          "y": 0.62,
+          "state": "approaching_hazard"
+        },
+        "rocks": {
+          "x": 0.58,
+          "y": 0.64,
+          "state": "hazard"
+        }
+      },
+      "environment": {
+        "location": "portus_harbor_mole",
+        "time_of_day": "twilight_storm",
+        "wind": 0.72,
+        "sea_direction": "left_to_right",
+        "beacon_lit": false,
+        "lighting": "cold_storm"
+      },
+      "desired_state_before": {
+        "actors": {
+          "aelia": {
+            "x": 0.4,
+            "y": 0.84,
+            "facing": 1
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "lit_on_rack"
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack"
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "aelia": {
+            "x": 0.4,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "GRAB",
+            "holding": "lantern"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack"
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "lantern",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S04",
+      "script_span": "She ran for the tower. Felix caught the rope.",
+      "timestamp_sec": 14.0,
+      "start_sec": 10.0,
+      "end_sec": 14.0,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame",
+        "ladder",
+        "lantern",
+        "pulley",
+        "rail",
+        "rocks",
+        "rope",
+        "ship",
+        "tower"
+      ],
+      "actors": {
+        "aelia": {
+          "x": 0.518,
+          "y": 0.84,
+          "facing": 1,
+          "motion_type": "RUN",
+          "holding": "lantern"
+        },
+        "felix": {
+          "x": 0.62,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "BRACE_ROPE",
+          "holding": "rope"
+        }
+      },
+      "objects": {
+        "lantern": {
+          "x": 0.5,
+          "y": 0.7,
+          "state": "moved_by_actor",
+          "held_by": [
+            "aelia"
+          ]
+        },
+        "flame": {
+          "x": 0.58,
+          "y": 0.7,
+          "state": "protected_oil_wick"
+        },
+        "tower": {
+          "x": 0.6,
+          "y": 0.7,
+          "state": "beacon_dark"
+        },
+        "rope": {
+          "x": 0.64,
+          "y": 0.7,
+          "state": "slack",
+          "held_by": [
+            "felix"
+          ]
+        },
+        "rail": {
+          "x": 0.57,
+          "y": 0.72,
+          "state": "fixed_iron"
+        },
+        "ladder": {
+          "x": 0.66,
+          "y": 0.72,
+          "state": "leaning"
+        },
+        "pulley": {
+          "x": 0.65,
+          "y": 0.4,
+          "state": "ready"
+        },
+        "ship": {
+          "x": 0.4,
+          "y": 0.62,
+          "state": "approaching_hazard"
+        },
+        "rocks": {
+          "x": 0.58,
+          "y": 0.64,
+          "state": "hazard"
+        }
+      },
+      "environment": {
+        "location": "portus_harbor_mole",
+        "time_of_day": "twilight_storm",
+        "wind": 0.72,
+        "sea_direction": "left_to_right",
+        "beacon_lit": false,
+        "lighting": "cold_storm"
+      },
+      "desired_state_before": {
+        "actors": {
+          "aelia": {
+            "x": 0.4,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "GRAB",
+            "holding": "lantern"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack"
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "aelia": {
+            "x": 0.518,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "RUN",
+            "holding": "lantern"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "rope"
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack",
+            "held_by": [
+              "felix"
+            ]
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "tower",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S05",
+      "script_span": "The wind nearly pulled it from her hands.",
+      "timestamp_sec": 18.0,
+      "start_sec": 14.0,
+      "end_sec": 18.0,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame",
+        "ladder",
+        "lantern",
+        "pulley",
+        "rail",
+        "rocks",
+        "rope",
+        "ship",
+        "tower"
+      ],
+      "actors": {
+        "aelia": {
+          "x": 0.518,
+          "y": 0.84,
+          "facing": 1,
+          "motion_type": "SLIP",
+          "holding": "lantern"
+        },
+        "felix": {
+          "x": 0.62,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "BRACE_ROPE",
+          "holding": "rope"
+        }
+      },
+      "objects": {
+        "lantern": {
+          "x": 0.5,
+          "y": 0.7,
+          "state": "moved_by_actor",
+          "held_by": [
+            "aelia"
+          ]
+        },
+        "flame": {
+          "x": 0.58,
+          "y": 0.7,
+          "state": "protected_oil_wick"
+        },
+        "tower": {
+          "x": 0.6,
+          "y": 0.7,
+          "state": "beacon_dark"
+        },
+        "rope": {
+          "x": 0.64,
+          "y": 0.7,
+          "state": "slack",
+          "held_by": [
+            "felix"
+          ]
+        },
+        "rail": {
+          "x": 0.57,
+          "y": 0.72,
+          "state": "fixed_iron"
+        },
+        "ladder": {
+          "x": 0.66,
+          "y": 0.72,
+          "state": "leaning"
+        },
+        "pulley": {
+          "x": 0.65,
+          "y": 0.4,
+          "state": "ready"
+        },
+        "ship": {
+          "x": 0.4,
+          "y": 0.62,
+          "state": "approaching_hazard"
+        },
+        "rocks": {
+          "x": 0.58,
+          "y": 0.64,
+          "state": "hazard"
+        }
+      },
+      "environment": {
+        "location": "portus_harbor_mole",
+        "time_of_day": "twilight_storm",
+        "wind": 0.72,
+        "sea_direction": "left_to_right",
+        "beacon_lit": false,
+        "lighting": "cold_storm"
+      },
+      "desired_state_before": {
+        "actors": {
+          "aelia": {
+            "x": 0.518,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "RUN",
+            "holding": "lantern"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "rope"
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack",
+            "held_by": [
+              "felix"
+            ]
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "aelia": {
+            "x": 0.518,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "SLIP",
+            "holding": "lantern"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "rope"
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack",
+            "held_by": [
+              "felix"
+            ]
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "rope",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S06",
+      "script_span": "Together they raised the flame above the storm.",
+      "timestamp_sec": 22.5,
+      "start_sec": 18.0,
+      "end_sec": 22.5,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame",
+        "ladder",
+        "lantern",
+        "pulley",
+        "rail",
+        "rocks",
+        "rope",
+        "ship",
+        "tower"
+      ],
+      "actors": {
+        "aelia": {
+          "x": 0.518,
+          "y": 0.84,
+          "facing": 1,
+          "motion_type": "HAUL_ROPE",
+          "holding": "flame"
+        },
+        "felix": {
+          "x": 0.62,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "HAUL_ROPE",
+          "holding": "flame"
+        }
+      },
+      "objects": {
+        "lantern": {
+          "x": 0.5,
+          "y": 0.7,
+          "state": "moved_by_actor",
+          "held_by": [
+            "aelia"
+          ]
+        },
+        "flame": {
+          "x": 0.5800000000000001,
+          "y": 0.73,
+          "state": "moved_by_actor",
+          "held_by": [
+            "aelia",
+            "felix"
+          ]
+        },
+        "tower": {
+          "x": 0.6,
+          "y": 0.7,
+          "state": "beacon_dark"
+        },
+        "rope": {
+          "x": 0.64,
+          "y": 0.7,
+          "state": "slack",
+          "held_by": [
+            "felix"
+          ]
+        },
+        "rail": {
+          "x": 0.57,
+          "y": 0.72,
+          "state": "fixed_iron"
+        },
+        "ladder": {
+          "x": 0.66,
+          "y": 0.72,
+          "state": "leaning"
+        },
+        "pulley": {
+          "x": 0.65,
+          "y": 0.4,
+          "state": "ready"
+        },
+        "ship": {
+          "x": 0.4,
+          "y": 0.62,
+          "state": "approaching_hazard"
+        },
+        "rocks": {
+          "x": 0.58,
+          "y": 0.64,
+          "state": "hazard"
+        }
+      },
+      "environment": {
+        "location": "portus_harbor_mole",
+        "time_of_day": "twilight_storm",
+        "wind": 0.72,
+        "sea_direction": "left_to_right",
+        "beacon_lit": false,
+        "lighting": "cold_storm"
+      },
+      "desired_state_before": {
+        "actors": {
+          "aelia": {
+            "x": 0.518,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "SLIP",
+            "holding": "lantern"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "rope"
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.58,
+            "y": 0.7,
+            "state": "protected_oil_wick"
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack",
+            "held_by": [
+              "felix"
+            ]
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "aelia": {
+            "x": 0.518,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "HAUL_ROPE",
+            "holding": "flame"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "HAUL_ROPE",
+            "holding": "flame"
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.5800000000000001,
+            "y": 0.73,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia",
+              "felix"
+            ]
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack",
+            "held_by": [
+              "felix"
+            ]
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "flame",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S07",
+      "script_span": "Its glow showed the sailors a safe way home.",
+      "timestamp_sec": 26.5,
+      "start_sec": 22.5,
+      "end_sec": 26.5,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame",
+        "ladder",
+        "lantern",
+        "pulley",
+        "rail",
+        "rocks",
+        "rope",
+        "ship",
+        "tower"
+      ],
+      "actors": {
+        "aelia": {
+          "x": 0.518,
+          "y": 0.84,
+          "facing": 1,
+          "motion_type": "HAUL_ROPE",
+          "holding": "flame"
+        },
+        "felix": {
+          "x": 0.62,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "HAUL_ROPE",
+          "holding": "flame"
+        }
+      },
+      "objects": {
+        "lantern": {
+          "x": 0.5,
+          "y": 0.7,
+          "state": "moved_by_actor",
+          "held_by": [
+            "aelia"
+          ]
+        },
+        "flame": {
+          "x": 0.5800000000000001,
+          "y": 0.73,
+          "state": "moved_by_actor",
+          "held_by": [
+            "aelia",
+            "felix"
+          ]
+        },
+        "tower": {
+          "x": 0.6,
+          "y": 0.7,
+          "state": "beacon_dark"
+        },
+        "rope": {
+          "x": 0.64,
+          "y": 0.7,
+          "state": "slack",
+          "held_by": [
+            "felix"
+          ]
+        },
+        "rail": {
+          "x": 0.57,
+          "y": 0.72,
+          "state": "fixed_iron"
+        },
+        "ladder": {
+          "x": 0.66,
+          "y": 0.72,
+          "state": "leaning"
+        },
+        "pulley": {
+          "x": 0.65,
+          "y": 0.4,
+          "state": "ready"
+        },
+        "ship": {
+          "x": 0.58,
+          "y": 0.62,
+          "state": "turning_to_safe_channel"
+        },
+        "rocks": {
+          "x": 0.58,
+          "y": 0.64,
+          "state": "hazard"
+        }
+      },
+      "environment": {
+        "location": "portus_harbor_mole",
+        "time_of_day": "twilight_storm",
+        "wind": 0.72,
+        "sea_direction": "left_to_right",
+        "beacon_lit": true,
+        "lighting": "warm_guided_beam"
+      },
+      "desired_state_before": {
+        "actors": {
+          "aelia": {
+            "x": 0.518,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "HAUL_ROPE",
+            "holding": "flame"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "HAUL_ROPE",
+            "holding": "flame"
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.5800000000000001,
+            "y": 0.73,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia",
+              "felix"
+            ]
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack",
+            "held_by": [
+              "felix"
+            ]
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.4,
+            "y": 0.62,
+            "state": "approaching_hazard"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "aelia": {
+            "x": 0.518,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "HAUL_ROPE",
+            "holding": "flame"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "HAUL_ROPE",
+            "holding": "flame"
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.5800000000000001,
+            "y": 0.73,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia",
+              "felix"
+            ]
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack",
+            "held_by": [
+              "felix"
+            ]
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.58,
+            "y": 0.62,
+            "state": "turning_to_safe_channel"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S08",
+      "script_span": "The ship made it through.",
+      "timestamp_sec": 30.0,
+      "start_sec": 26.5,
+      "end_sec": 30.0,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame",
+        "ladder",
+        "lantern",
+        "pulley",
+        "rail",
+        "rocks",
+        "rope",
+        "ship",
+        "tower"
+      ],
+      "actors": {
+        "aelia": {
+          "x": 0.518,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "RELIEF_EXHALE",
+          "holding": "flame"
+        },
+        "felix": {
+          "x": 0.62,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "RELIEF_EXHALE",
+          "holding": "flame"
+        }
+      },
+      "objects": {
+        "lantern": {
+          "x": 0.5,
+          "y": 0.7,
+          "state": "moved_by_actor",
+          "held_by": [
+            "aelia"
+          ]
+        },
+        "flame": {
+          "x": 0.5800000000000001,
+          "y": 0.73,
+          "state": "moved_by_actor",
+          "held_by": [
+            "aelia",
+            "felix"
+          ]
+        },
+        "tower": {
+          "x": 0.6,
+          "y": 0.7,
+          "state": "beacon_dark"
+        },
+        "rope": {
+          "x": 0.64,
+          "y": 0.7,
+          "state": "slack",
+          "held_by": [
+            "felix"
+          ]
+        },
+        "rail": {
+          "x": 0.57,
+          "y": 0.72,
+          "state": "fixed_iron"
+        },
+        "ladder": {
+          "x": 0.66,
+          "y": 0.72,
+          "state": "leaning"
+        },
+        "pulley": {
+          "x": 0.65,
+          "y": 0.4,
+          "state": "ready"
+        },
+        "ship": {
+          "x": 0.58,
+          "y": 0.62,
+          "state": "turning_to_safe_channel"
+        },
+        "rocks": {
+          "x": 0.58,
+          "y": 0.64,
+          "state": "hazard"
+        }
+      },
+      "environment": {
+        "location": "portus_harbor_mole",
+        "time_of_day": "twilight_storm",
+        "wind": 0.72,
+        "sea_direction": "left_to_right",
+        "beacon_lit": true,
+        "lighting": "warm_guided_beam"
+      },
+      "desired_state_before": {
+        "actors": {
+          "aelia": {
+            "x": 0.518,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "HAUL_ROPE",
+            "holding": "flame"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "HAUL_ROPE",
+            "holding": "flame"
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.5800000000000001,
+            "y": 0.73,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia",
+              "felix"
+            ]
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack",
+            "held_by": [
+              "felix"
+            ]
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.58,
+            "y": 0.62,
+            "state": "turning_to_safe_channel"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "aelia": {
+            "x": 0.518,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "RELIEF_EXHALE",
+            "holding": "flame"
+          },
+          "felix": {
+            "x": 0.62,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "RELIEF_EXHALE",
+            "holding": "flame"
+          }
+        },
+        "objects": {
+          "lantern": {
+            "x": 0.5,
+            "y": 0.7,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia"
+            ]
+          },
+          "flame": {
+            "x": 0.5800000000000001,
+            "y": 0.73,
+            "state": "moved_by_actor",
+            "held_by": [
+              "aelia",
+              "felix"
+            ]
+          },
+          "tower": {
+            "x": 0.6,
+            "y": 0.7,
+            "state": "beacon_dark"
+          },
+          "rope": {
+            "x": 0.64,
+            "y": 0.7,
+            "state": "slack",
+            "held_by": [
+              "felix"
+            ]
+          },
+          "rail": {
+            "x": 0.57,
+            "y": 0.72,
+            "state": "fixed_iron"
+          },
+          "ladder": {
+            "x": 0.66,
+            "y": 0.72,
+            "state": "leaning"
+          },
+          "pulley": {
+            "x": 0.65,
+            "y": 0.4,
+            "state": "ready"
+          },
+          "ship": {
+            "x": 0.58,
+            "y": 0.62,
+            "state": "turning_to_safe_channel"
+          },
+          "rocks": {
+            "x": 0.58,
+            "y": 0.64,
+            "state": "hazard"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "ship",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    }
+  ],
+  "camera_beats": [
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S01_cam_01",
+      "shot_id": "S01",
+      "segment_index": 0,
+      "script_span": "The harbor light went dark.",
+      "start_sec": 0.0,
+      "end_sec": 3.0,
+      "actor_ids": [],
+      "object_ids": [],
+      "scale": "wide",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.04,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "continuous_single_angle_take"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S02_cam_01",
+      "shot_id": "S02",
+      "segment_index": 0,
+      "script_span": "A merchant ship was heading straight for the rocks.",
+      "start_sec": 3.0,
+      "end_sec": 6.5,
+      "actor_ids": [],
+      "object_ids": [],
+      "scale": "wide",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.04,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "continuous_single_angle_take"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S03_cam_01",
+      "shot_id": "S03",
+      "segment_index": 0,
+      "script_span": "Aelia grabbed the last burning lantern.",
+      "start_sec": 6.5,
+      "end_sec": 8.18,
+      "actor_ids": [
+        "aelia"
+      ],
+      "object_ids": [
+        "lantern"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.05,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "establish_actor_approach_and_reach"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S03_cam_02",
+      "shot_id": "S03",
+      "segment_index": 1,
+      "script_span": "Aelia grabbed the last burning lantern.",
+      "start_sec": 8.18,
+      "end_sec": 10.0,
+      "actor_ids": [
+        "aelia"
+      ],
+      "object_ids": [
+        "lantern"
+      ],
+      "scale": "insert",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.18,
+      "zoom_to": 1.22,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "verify_physical_grip_and_exertion"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S04_cam_01",
+      "shot_id": "S04",
+      "segment_index": 0,
+      "script_span": "She ran for the tower. Felix caught the rope.",
+      "start_sec": 10.0,
+      "end_sec": 11.92,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "tower",
+        "rope"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.05,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "establish_actor_approach_and_reach"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S04_cam_02",
+      "shot_id": "S04",
+      "segment_index": 1,
+      "script_span": "She ran for the tower. Felix caught the rope.",
+      "start_sec": 11.92,
+      "end_sec": 14.0,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "tower",
+        "rope"
+      ],
+      "scale": "insert",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.18,
+      "zoom_to": 1.22,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "verify_physical_grip_and_exertion"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S05_cam_01",
+      "shot_id": "S05",
+      "segment_index": 0,
+      "script_span": "The wind nearly pulled it from her hands.",
+      "start_sec": 14.0,
+      "end_sec": 18.0,
+      "actor_ids": [
+        "aelia"
+      ],
+      "object_ids": [
+        "rope"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.04,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "continuous_single_angle_take"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S06_cam_01",
+      "shot_id": "S06",
+      "segment_index": 0,
+      "script_span": "Together they raised the flame above the storm.",
+      "start_sec": 18.0,
+      "end_sec": 20.16,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.05,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "establish_actor_approach_and_reach"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S06_cam_02",
+      "shot_id": "S06",
+      "segment_index": 1,
+      "script_span": "Together they raised the flame above the storm.",
+      "start_sec": 20.16,
+      "end_sec": 22.5,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "flame"
+      ],
+      "scale": "insert",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.18,
+      "zoom_to": 1.22,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "verify_physical_grip_and_exertion"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S07_cam_01",
+      "shot_id": "S07",
+      "segment_index": 0,
+      "script_span": "Its glow showed the sailors a safe way home.",
+      "start_sec": 22.5,
+      "end_sec": 26.5,
+      "actor_ids": [],
+      "object_ids": [],
+      "scale": "wide",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.04,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "continuous_single_angle_take"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S08_cam_01",
+      "shot_id": "S08",
+      "segment_index": 0,
+      "script_span": "The ship made it through.",
+      "start_sec": 26.5,
+      "end_sec": 30.0,
+      "actor_ids": [
+        "aelia",
+        "felix"
+      ],
+      "object_ids": [
+        "ship"
+      ],
+      "scale": "wide",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.04,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "continuous_single_angle_take"
+    }
+  ],
+  "unsupported_actions": [],
+  "validation_errors": [],
+  "is_valid": true
+}

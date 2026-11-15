@@ -1,0 +1,17 @@
+{
+  "name": "@qa-studio/rigby2d-pilot",
+  "version": "0.5.1-v14.7.6",
+  "private": true,
+  "type": "module",
+  "license": "MIT OR Apache-2.0",
+  "description": "Isolated Rigby2D runtime pilot adapter for FL-01 V14.7.6 (pinned to jaisurya-dev-art/rigby2d develop SHA 130562a94e76a19986aa8b737f998a89c1270bb8; zero proprietary demo assets).",
+  "upstream": {
+    "repository": "https://github.com/jaisurya-dev-art/rigby2d",
+    "branch": "develop",
+    "commit_sha": "130562a94e76a19986aa8b737f998a89c1270bb8",
+    "version": "0.5.1",
+    "license": "MIT OR Apache-2.0",
+    "demo_assets_copied": false
+  },
+  "dependencies": {}
+}

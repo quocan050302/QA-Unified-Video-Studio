@@ -1,0 +1,20 @@
+{
+  "name": "fl01_v14_7_6_roman_last_light_portus_preview",
+  "title": "THE LAST LIGHT OF PORTUS — A ROMAN HARBOR STORY",
+  "subtitle": "A fictional Roman harbor drama at twilight; stylized 2D reconstruction, not a documented historical incident.",
+  "pack": "squire",
+  "genre": "harbor",
+  "aspect": "16:9",
+  "resolution": "1080p",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "bars": "none",
+  "captions": false,
+  "ai_director_mode": "OFFLINE_ONLY",
+  "code_dependencies": [
+    "packs/squire/harbor/portus_light.js",
+    "packs/squire/motion_engine.js",
+    "integrations/claude_motion/adapter.js"
+  ]
+}

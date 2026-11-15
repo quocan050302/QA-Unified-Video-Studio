@@ -697,6 +697,20 @@ export function ik2(hx, hy, fx, fy, L1, L2, bend = 1) {
   return [[hx, hy], [hx + Math.cos(th) * L1, hy + Math.sin(th) * L1], [fx, fy]];
 }
 export function walkInfo(o) {
+  if (o._motionEval) {
+    const me = o._motionEval;
+    if (me.phaseName !== 'APPROACH') return null;
+    const isRun = String(o.pose || '').includes('run') || me.speed > 0.14;
+    const stepLen = Math.max(0.04, me.heightNorm * (isRun ? 0.34 : 0.24));
+    const f = (((me.accumulatedDistance / (2 * stepLen)) % 1) + 1) % 1;
+    return {
+      mode: 'side',
+      f,
+      run: isRun,
+      bob: (me.hipWorld[1] - (me.root[1] - me.heightNorm * 0.32)) * 100 / Math.max(0.1, me.heightNorm),
+      swing: Math.sin(2 * Math.PI * f),
+    };
+  }
   const mode = o.walkMode || (o.walk || ['walk', 'march', 'run'].includes(o.pose) ? (o.pose === 'march' ? 'front' : 'front') : null);
   if (!mode) return null;
   const run = o.pose === 'run';
@@ -716,7 +730,24 @@ function legs(g, u, o, lw, t) {
   const W = o._walk;
   const bc = kind === 'plate' ? PAL.steel : o.boots || (kind === 'bare' ? PAL.leather : PAL.brownDark);
   const legsList = []; // {pts, side: 'L'|'R', shoe: 'front'|'side', far}
-  if (W && W.mode === 'side') {
+  if (o._motionEval && o._rootPx) {
+    const me = o._motionEval;
+    const [rxPx, ryPx] = o._rootPx;
+    const flipSign = o.flip ? -1 : 1;
+    const toLocal = (pt) => [(pt[0] * E.W - rxPx) * flipSign, pt[1] * E.H - ryPx - 3.2 * u];
+    legsList.push({
+      pts: me.leftLegWorld.map(toLocal),
+      shoe: me.phaseName === 'APPROACH' || me.postureState?.includes('slip') ? 'side' : 'front',
+      far: true,
+      s: -1,
+    });
+    legsList.push({
+      pts: me.rightLegWorld.map(toLocal),
+      shoe: me.phaseName === 'APPROACH' || me.postureState?.includes('slip') ? 'side' : 'front',
+      far: false,
+      s: 1,
+    });
+  } else if (W && W.mode === 'side') {
     const S = (W.run ? 1.5 : 1) * STEP * u, lift = (W.run ? 9 : 5.5) * u;
     for (const [off, far] of [[0.5, true], [0, false]]) {
       const [fx, fyy] = footSide((W.f + off) % 1, S, lift);
@@ -797,7 +828,25 @@ function hiliteC(c, pts, u) { c.save(); c.globalAlpha = 0.6; line(c, pts, { lw: 
 
 function arm(g, u, o, lw, s, sh, el, held) {
   const sx = s * 12.2 * u, sy = -54 * u, Lseg = 12.5 * u;
-  const [S, Eb, H, ang] = armPts(sx, sy, s, sh, el, u, Lseg);
+  let [S, Eb, H, ang] = armPts(sx, sy, s, sh, el, u, Lseg);
+  if (o._motionEval && o._rootPx && o._motionEval.activeContactId) {
+    const me = o._motionEval;
+    const [rxPx, ryPx] = o._rootPx;
+    const flipSign = o.flip ? -1 : 1;
+    const brPx = o._brPx || 0;
+    const worldChain = s < 0 ? me.leftArmWorld : me.rightArmWorld;
+    if (Array.isArray(worldChain) && worldChain.length === 3) {
+      const targetLocal = [
+        (worldChain[2][0] * E.W - rxPx) * flipSign,
+        worldChain[2][1] * E.H - ryPx - brPx,
+      ];
+      const solved = ik2(sx, sy, targetLocal[0], targetLocal[1], Lseg, Lseg, -1);
+      S = solved[0];
+      Eb = solved[1];
+      H = solved[2];
+      ang = Math.atan2((H[0] - Eb[0]) * s, H[1] - Eb[1]);
+    }
+  }
   const kind = o.arms || (o.body === 'plate' ? 'plate' : o.body === 'mail' || o.mail ? 'mail' : 'cloth');
   const col = kind === 'plate' ? PAL.steel : kind === 'mail' ? PAL.mail : (o.sleeve || (o.body === 'roman' || o.body === 'toga' ? (o.skin || PAL.skin) : ({ gambeson: o.tunicColor || '#e3d9c2', uniform: o.tunicColor || PAL.olive, robe: o.tunicColor || PAL.brown, samurai: o.lacing || PAL.red, sailor: PAL.white, dress: o.tunicColor || PAL.blue }[o.body] || o.tunicColor || PAL.green)));
   if (held && held.before) held.before(H, ang);
@@ -1421,7 +1470,9 @@ export function soldier(g, x, y, h, o = {}) {
   if (o.lod === 'low' || (o.lod !== 'high' && h < 70)) return soldierLow(g, x, y, h, o);
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;
   const pose = POSES[o.pose] ? o.pose : 'stand';
-  let [lsh, lel, rsh, rel] = Array.isArray(o.armsAng) ? o.armsAng : (POSES[pose] || [12, 6, 12, 6]);
+  let [lsh, lel, rsh, rel] = Array.isArray(o.armsAng)
+    ? o.armsAng
+    : (o._motionEval?.squireArmsAng || POSES[pose] || [12, 6, 12, 6]);
   // Dynamic arm physics for acting and tool manipulation
   if (!Array.isArray(o.armsAng)) {
     if (pose === 'hammer') {
@@ -1459,7 +1510,10 @@ export function soldier(g, x, y, h, o = {}) {
   if (W && !o.noSwing) { const k = W.swing * (W.mode === 'side' ? 20 : 9) * (W.run ? 1.6 : 1); lsh += k; rsh -= k; }
   if (o.gesture) { const k = Math.sin(t * 2.2) * 6; rsh += k; rel -= k * 0.5; }
   const br = (W ? W.bob : Math.sin(t * 1.7 + (o.seed || 0)) * 0.6) * u;
-  g.save(); g.translate(x, y); if (o.flip) g.scale(-1, 1); if (o.rot) g.rotate(o.rot); if (W && W.mode === 'side') g.rotate(W.run ? 0.09 : 0.035); if (['push', 'lunge'].includes(o.pose)) g.rotate(0.13); if (o.pose === 'brace') g.rotate(-0.06);
+  o._rootPx = [x, y];
+  o._brPx = br;
+  const motionLeanRad = o._motionEval ? o._motionEval.torsoLeanRad * 0.55 : 0;
+  g.save(); g.translate(x, y); if (o.flip) g.scale(-1, 1); if (o.rot || motionLeanRad) g.rotate((o.rot || 0) + motionLeanRad); if (!o._motionEval && W && W.mode === 'side') g.rotate(W.run ? 0.09 : 0.035); if (!o._motionEval && ['push', 'lunge'].includes(o.pose)) g.rotate(0.13); if (!o._motionEval && o.pose === 'brace') g.rotate(-0.06);
   if (o.kid) g.scale(0.78, 0.78);
   // khien deo sau lung / kiem ben hong
   const sh = o.shield, wp = o.weapon;

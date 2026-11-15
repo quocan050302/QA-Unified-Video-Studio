@@ -1,0 +1,143 @@
+{
+  "evidence_schema_version": "14.7.6",
+  "source_commit": "2f88740c2e9330f17c618b6b546179126eed2203",
+  "run_id": "v14_7_6_val_1794762344",
+  "command_or_function": "tools.produce_fl01_v14_7_6_roman_portus_preview::produce_three_unseen_short_generalization_clips",
+  "file_paths": [
+    "tools/motion_performance.py",
+    "tests/motion_v14_7_6/test_motion_plan_generalization.py",
+    "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/unseen_generalization_clips/unseen_a_citizen_basket.mp4",
+    "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/unseen_generalization_clips/unseen_b_merchant_amphora.mp4",
+    "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/unseen_generalization_clips/unseen_c_child_lantern_duck.mp4"
+  ],
+  "start_time": "2026-11-15T17:07:30.319935+00:00",
+  "end_time": "2026-11-15T17:07:47.725253+00:00",
+  "elapsed_sec": 17.4053,
+  "exit_code": 0,
+  "original_input_sha256": "9a94e867b57ec9cc3d2c3cfd290fbb147a1203abd77fd1132944783e3002e8f7",
+  "output_sha256": "5b58961e902c1014374f506bf974922e67243a1ebdb52e4bb07d5e3958e22d05",
+  "measured_resources": {
+    "disk_free_gb": 16.277,
+    "ram_available_gb": 2.83,
+    "cpu_count": 8,
+    "free_inodes": 170679080,
+    "process_tree_rss_mb": 35.5,
+    "healthy": true
+  },
+  "status": "PASS",
+  "error_reason": null,
+  "ai_routing_mode": "OFFLINE_ONLY",
+  "provider_trace_id": null,
+  "routing_disclosure": "MotionPlan semantic extraction ran deterministically in OFFLINE_ONLY mode; no live external LLM inference is claimed.",
+  "unit_and_wording_variation": {
+    "status": "PASS",
+    "pytest_exit_code": 0,
+    "log_path": "tests/evidence/v14_7_6/logs/w1_motion_plan_unit.log",
+    "wording_variation_test": {
+      "status": "PASS",
+      "canonical_script_sha256": "1b93447a53b58a95490fea1abc318d05b6cd28001e8dfbd7fd6feb14dcd1a8b1",
+      "variation_script_sha256": "a4bde926077c639c04d6154f2fc61b8886e7bb33bdf1ca7c7551af2ee0df2cfc",
+      "canonical_shot_actions": [
+        "EXTINGUISH",
+        "SAIL_TURN",
+        "GRAB",
+        "RUN",
+        "SLIP",
+        "HAUL_ROPE",
+        "ILLUMINATE",
+        "RELIEF_EXHALE"
+      ],
+      "variation_shot_actions": [
+        "EXTINGUISH",
+        "SAIL_TURN",
+        "WALK",
+        "POINT",
+        "DUCK",
+        "LIFT_SHARED",
+        "ILLUMINATE",
+        "RELIEF_EXHALE"
+      ],
+      "s03_canonical_actors": [
+        "aelia"
+      ],
+      "s03_variation_actors": [
+        "felix"
+      ],
+      "s03_canonical_camera_segments": 2,
+      "s03_variation_camera_segments": 1
+    },
+    "elapsed_sec": 0.5483
+  },
+  "three_unseen_rendered_cases": {
+    "status": "PASS",
+    "cases_count": 3,
+    "cases": [
+      {
+        "case_id": "unseen_a_citizen_basket",
+        "script": "A citizen slips on the wet stone and steadies a woven basket.",
+        "extracted_motion_types": [
+          "SLIP",
+          "STEADY_PROP"
+        ],
+        "extracted_actors": [
+          "citizen_1"
+        ],
+        "plan_valid": true,
+        "foot_plant_status": "PASS",
+        "hand_contact_status": "PASS",
+        "render": {
+          "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/unseen_generalization_clips/unseen_a_citizen_basket.mp4",
+          "mp4_sha256": "cc5e75b0ecf2e5f8c695f7be0e0d73bfccf6f7780c370882ab3a6368ff56585b",
+          "size_bytes": 528917,
+          "render_wall_sec": 4.68,
+          "decoded_video_frames": 96,
+          "valid": true
+        }
+      },
+      {
+        "case_id": "unseen_b_merchant_amphora",
+        "script": "A merchant lifts a heavy amphora with another person.",
+        "extracted_motion_types": [
+          "LIFT_SHARED"
+        ],
+        "extracted_actors": [
+          "merchant_1",
+          "helper_1"
+        ],
+        "plan_valid": true,
+        "foot_plant_status": "PASS",
+        "hand_contact_status": "PASS",
+        "render": {
+          "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/unseen_generalization_clips/unseen_b_merchant_amphora.mp4",
+          "mp4_sha256": "51c57c699e8863858c3b57e565427d46084575e1a09b672065ba7e392150420e",
+          "size_bytes": 585707,
+          "render_wall_sec": 4.568,
+          "decoded_video_frames": 96,
+          "valid": true
+        }
+      },
+      {
+        "case_id": "unseen_c_child_lantern_duck",
+        "script": "A child walks toward the lantern, then ducks from the wind.",
+        "extracted_motion_types": [
+          "WALK",
+          "DUCK"
+        ],
+        "extracted_actors": [
+          "child_1"
+        ],
+        "plan_valid": true,
+        "foot_plant_status": "PASS",
+        "hand_contact_status": "PASS",
+        "render": {
+          "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_6_roman_last_light_portus_preview/out/unseen_generalization_clips/unseen_c_child_lantern_duck.mp4",
+          "mp4_sha256": "55666a4ec53c5e08caf8e6fcdd6ec00e8b3a9625486a5969fc60d026bac1aa61",
+          "size_bytes": 515055,
+          "render_wall_sec": 4.594,
+          "decoded_video_frames": 96,
+          "valid": true
+        }
+      }
+    ]
+  }
+}

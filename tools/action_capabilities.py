@@ -91,6 +91,55 @@ CAPABILITY_REGISTRY: Dict[str, Dict[str, PackCapabilityProfile]] = {
             supports_multi_actor_contact=True,
             supports_silent_beatboard=False,
         ),
+        "civic": PackCapabilityProfile(
+            pack="squire",
+            genre="civic",
+            supported_actions={
+                "STAND", "WALK", "RUN", "APPROACH", "MOVE_TO", "STOP", "TURN",
+                "REACH", "GRAB", "CARRY", "SLIP", "CATCH_RAIL", "STEADY_PROP",
+                "LIFT_SHARED", "DUCK", "BRACE", "BRACE_ROPE", "HAUL_ROPE",
+                "CONTACT", "SIGNAL", "POINT", "OBSERVE", "WAIT", "RELIEF_EXHALE",
+                "IDLE_BREATHE", "SPEECH_GESTURE", "CAMERA_REVEAL",
+            },
+            supported_viewpoints={
+                "front", "front_three_quarter_left", "front_three_quarter_right",
+                "profile_left", "profile_right", "high_angle", "low_angle", "insert",
+            },
+            supported_templates={"scene", "close", "board"},
+            supported_props={
+                "basket", "amphora", "lantern", "rope", "pulley", "ladder",
+                "rail", "wheel", "gate", "scroll", "crate", "dust",
+            },
+            supports_formation_actions=False,
+            supports_motion_rig=True,
+            supports_multi_actor_contact=True,
+            supports_silent_beatboard=False,
+        ),
+        "harbor": PackCapabilityProfile(
+            pack="squire",
+            genre="harbor",
+            supported_actions={
+                "STAND", "WALK", "RUN", "APPROACH", "MOVE_TO", "STOP", "TURN",
+                "REACH", "GRAB", "CARRY", "SLIP", "CATCH_RAIL", "STEADY_PROP",
+                "LIFT_SHARED", "DUCK", "BRACE", "BRACE_ROPE", "HAUL_ROPE",
+                "CONTACT", "SIGNAL", "POINT", "OBSERVE", "WAIT", "RELIEF_EXHALE",
+                "EXTINGUISH", "ILLUMINATE", "SAIL_TURN", "IDLE_BREATHE",
+                "SPEECH_GESTURE", "CAMERA_REVEAL",
+            },
+            supported_viewpoints={
+                "front", "front_three_quarter_left", "front_three_quarter_right",
+                "profile_left", "profile_right", "high_angle", "low_angle", "insert",
+            },
+            supported_templates={"scene", "close", "board"},
+            supported_props={
+                "lantern", "beacon", "rope", "pulley", "ladder", "rail",
+                "bracket", "ship", "sail", "rocks", "basket", "amphora",
+            },
+            supports_formation_actions=False,
+            supports_motion_rig=True,
+            supports_multi_actor_contact=True,
+            supports_silent_beatboard=False,
+        ),
     },
     "dem": {
         "selfimprove": PackCapabilityProfile(
@@ -210,4 +259,78 @@ def resolve_event_capabilities(
         "supported": supported,
         "simplified": simplified,
         "unsupported": unsupported,
+    }
+
+
+def resolve_motion_intent_capabilities(
+    intents: List[Any],
+    pack: str = "squire",
+    genre: Optional[str] = None,
+) -> Dict[str, Any]:
+    """
+    Validate generic MotionIntent items against pack/genre capabilities without
+    silently mapping unknown physical actions to military combat presets.
+    """
+    norm_genre = genre
+    if pack == "squire" and genre in ("roman_harbor", "roman_harbor_drama", "maritime"):
+        norm_genre = "harbor"
+    elif pack == "squire" and genre in ("roman_civic", "roman_civic_engineering_reconstruction", "civilian"):
+        norm_genre = "civic"
+    cap = get_pack_capabilities(pack, norm_genre)
+
+    supported: List[Dict[str, Any]] = []
+    fallback_applied: List[Dict[str, Any]] = []
+    unsupported: List[Dict[str, Any]] = []
+
+    for it in intents:
+        iid = getattr(it, "intent_id", None) or (it.get("intent_id") if isinstance(it, dict) else "unknown")
+        sid = getattr(it, "shot_id", None) or (it.get("shot_id") if isinstance(it, dict) else "S01")
+        mtype = getattr(it, "motion_type", None) or (it.get("motion_type") if isinstance(it, dict) else "STAND")
+        flagged_unsupported = bool(
+            getattr(it, "unsupported_action", False)
+            if not isinstance(it, dict)
+            else it.get("unsupported_action", False)
+        )
+        fb = getattr(it, "fallback_motion_type", None) if not isinstance(it, dict) else it.get("fallback_motion_type")
+
+        if not flagged_unsupported and mtype in cap.supported_actions:
+            supported.append({"intent_id": iid, "shot_id": sid, "motion_type": mtype, "status": "SUPPORTED_DIRECT"})
+        elif pack == "dem" and mtype in ("WALK", "REACH", "GRAB", "STAND", "IDLE_BREATHE", "SPEECH_GESTURE"):
+            mapped = "PICK_UP" if mtype in ("REACH", "GRAB") else ("MOVE_TO" if mtype == "WALK" else "OBSERVE")
+            fallback_applied.append({
+                "intent_id": iid,
+                "shot_id": sid,
+                "motion_type": mtype,
+                "mapped_to": mapped,
+                "status": "SUPPORTED_ADAPTED",
+                "reason": f"DEM pack adapts {mtype} to {mapped}",
+            })
+        elif fb and fb in cap.supported_actions:
+            unsupported.append({
+                "intent_id": iid,
+                "shot_id": sid,
+                "motion_type": mtype,
+                "fallback_motion_type": fb,
+                "status": "UNSUPPORTED_WITH_SAFE_FALLBACK",
+                "reason": f"Action '{mtype}' unsupported in {pack}/{cap.genre}; safe fallback '{fb}' recorded",
+            })
+        else:
+            unsupported.append({
+                "intent_id": iid,
+                "shot_id": sid,
+                "motion_type": mtype,
+                "fallback_motion_type": None,
+                "status": "UNSUPPORTED_NO_FALLBACK",
+                "reason": f"Action '{mtype}' unsupported in {pack}/{cap.genre} and lacks valid fallback",
+            })
+
+    hard_failures = [u for u in unsupported if u["status"] == "UNSUPPORTED_NO_FALLBACK"]
+    return {
+        "valid": len(hard_failures) == 0,
+        "pack": pack,
+        "genre": cap.genre,
+        "supported": supported,
+        "adapted": fallback_applied,
+        "unsupported": unsupported,
+        "hard_failure_count": len(hard_failures),
     }

@@ -1,0 +1,13 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.0, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio
+plugins: anyio-4.15.1
+collecting ... collected 3 items
+
+tests/motion_v14_7_6/test_claude_fx_determinism.py::test_claude_provenance_and_license_present PASSED [ 33%]
+tests/motion_v14_7_6/test_claude_fx_determinism.py::test_claude_seed_determinism_alpha_bounds_and_feature_flag PASSED [ 66%]
+tests/motion_v14_7_6/test_claude_fx_determinism.py::test_separated_action_timewarp_never_freezes_voice_or_camera_cuts PASSED [100%]
+
+============================== 3 passed in 0.43s ===============================
+

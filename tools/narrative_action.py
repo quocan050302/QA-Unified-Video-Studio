@@ -65,6 +65,7 @@ class ActionChoreography(BaseModel):
     world_timeline: WorldTimeline = Field(default_factory=WorldTimeline)
     shot_action_plans: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
     causal_trace: List[Dict[str, Any]] = Field(default_factory=list)
+    motion_plan: Optional[Dict[str, Any]] = None
     is_valid: bool = False
     validation_errors: List[str] = Field(default_factory=list)
 
@@ -164,13 +165,64 @@ def parse_action_intents(
     ctx: ActionContext,
     director_plan: Optional[Dict[str, Any]] = None,
     source: str = "offline",
+    motion_plan: Optional[Any] = None,
 ) -> List[GroundedEventNode]:
-    """Parse grounded event intents from narrative context and optional director plan."""
+    """Parse grounded event intents from narrative context and optional director/motion plan."""
     sg = build_narrative_scene_graph(ctx.project_path, ctx.shots)
     eg = infer_grounded_event_graph(sg, director_output=director_plan, shots=ctx.shots)
-    cap_res = resolve_event_capabilities(eg.events, pack=ctx.pack, genre=ctx.genre)
-    
-    # Filter or flag unsupported events
+    _cap_res = resolve_event_capabilities(eg.events, pack=ctx.pack, genre=ctx.genre)
+
+    if motion_plan is not None:
+        mp_intents = getattr(motion_plan, "intents", None) or (
+            motion_plan.get("intents", []) if isinstance(motion_plan, dict) else []
+        )
+        if mp_intents:
+            mapped_nodes: List[GroundedEventNode] = []
+            motion_to_grounded: Dict[str, ActionKind] = {
+                "WALK": "MOVE_TO",
+                "RUN": "APPROACH",
+                "APPROACH": "APPROACH",
+                "MOVE_TO": "MOVE_TO",
+                "GRAB": "PICK_UP",
+                "CARRY": "MOVE_TO",
+                "SLIP": "IMPACT_RECOIL",
+                "STEADY_PROP": "CONTACT",
+                "CATCH_RAIL": "CONTACT",
+                "LIFT_SHARED": "CONTACT",
+                "BRACE_ROPE": "BRACE",
+                "HAUL_ROPE": "CONTACT",
+                "DUCK": "DEFEND",
+                "POINT": "SIGNAL",
+                "TURN": "TURN",
+                "RELIEF_EXHALE": "OBSERVE",
+                "IDLE_BREATHE": "WAIT",
+                "SPEECH_GESTURE": "OBSERVE",
+            }
+            for idx, it in enumerate(mp_intents):
+                mtype = getattr(it, "motion_type", None) or (it.get("motion_type") if isinstance(it, dict) else "OBSERVE")
+                unsup = bool(getattr(it, "unsupported_action", False) if not isinstance(it, dict) else it.get("unsupported_action", False))
+                sid = str(getattr(it, "shot_id", None) or (it.get("shot_id") if isinstance(it, dict) else f"S{idx+1:02d}"))
+                a_ids = list(getattr(it, "actor_ids", None) or (it.get("actor_ids", []) if isinstance(it, dict) else []))
+                o_ids = list(getattr(it, "object_ids", None) or (it.get("object_ids", []) if isinstance(it, dict) else []))
+                s0 = float(getattr(it, "start_sec", 0.0) if not isinstance(it, dict) else it.get("start_sec", 0.0))
+                s1 = float(getattr(it, "end_sec", 1.0) if not isinstance(it, dict) else it.get("end_sec", 1.0))
+                span = str(getattr(it, "script_span", "") if not isinstance(it, dict) else it.get("script_span", ""))
+                mapped_nodes.append(
+                    GroundedEventNode(
+                        event_id=f"mp_{sid}_{idx+1:02d}",
+                        action_kind=motion_to_grounded.get(str(mtype), "OBSERVE"),
+                        shot_id=sid,
+                        actor_ids=a_ids,
+                        target_ids=o_ids,
+                        start_sec=s0,
+                        end_sec=s1,
+                        evidence_text=span,
+                        grounding="UNSUPPORTED" if unsup else "NARRATED_FACT",
+                        confidence=0.45 if unsup else 0.92,
+                    )
+                )
+            return mapped_nodes
+
     valid_events: List[GroundedEventNode] = []
     for ev in eg.events:
         valid_events.append(ev)
@@ -437,6 +489,13 @@ def resolve_actor_preset(
             return "cornicen"
         return "legionary"
 
+    if genre in ("civic", "harbor", "roman_harbor", "roman_civic", "roman_civic_engineering_reconstruction"):
+        if any(w in aid for w in ("aelia", "livia", "keeper", "lady", "woman", "girl")):
+            return "lady"
+        if any(w in aid for w in ("merchant", "citizen", "senator")):
+            return "senator"
+        return "peasant"
+
     # Generic or unknown genre: strictly fail closed / avoid Roman equipment bleed
     return "peasant"
 
@@ -452,10 +511,12 @@ def plan_action_beats(
     pack: str = "squire",
     genre: str = "roman",
     project_id: str = "planned_project",
+    motion_plan: Optional[Any] = None,
 ) -> ActionChoreography:
     """
     Plan causal, smooth actor state transitions and continuous paths across events.
-    Enforces causal order: lane opening -> withdrawal -> reserve advance -> shield close.
+    Enforces causal order: lane opening -> withdrawal -> reserve advance -> shield close,
+    or delegates directly to shared `MotionPlan` when provided.
     """
     choreo = ActionChoreography(
         project_id=project_id,
@@ -464,6 +525,92 @@ def plan_action_beats(
         events=events,
         world_timeline=world,
     )
+
+    if motion_plan is not None:
+        from tools.motion_performance import MotionPlan, validate_motion_plan
+
+        mp_obj = motion_plan if isinstance(motion_plan, MotionPlan) else MotionPlan.model_validate(motion_plan)
+        val_mp = validate_motion_plan(mp_obj)
+        cur_actors = copy.deepcopy(world.actors)
+        shot_plans: Dict[str, Dict[str, Any]] = {}
+        causal_trace: List[Dict[str, Any]] = []
+
+        tracks_by_shot: Dict[str, List[Any]] = {}
+        for tr in mp_obj.tracks:
+            tracks_by_shot.setdefault(tr.shot_id, []).append(tr)
+
+        for ws in mp_obj.world_states:
+            sid = ws.shot_id
+            s_tracks = tracks_by_shot.get(sid, [])
+            actors_dict: Dict[str, Any] = {}
+            sfx_list: List[Dict[str, Any]] = []
+            for tr in s_tracks:
+                if tr.actor_id not in cur_actors:
+                    cur_actors[tr.actor_id] = ActorState(
+                        actor_id=tr.actor_id,
+                        character_id=tr.actor_id,
+                        faction="protagonist",
+                        costume_id=tr.preset,
+                        x=tr.world_start[0],
+                        y=tr.world_start[1],
+                        facing=tr.facing_start,
+                    )
+                cur_actors[tr.actor_id].x = tr.world_end[0]
+                cur_actors[tr.actor_id].y = tr.world_end[1]
+                cur_actors[tr.actor_id].facing = tr.facing_end
+                cur_actors[tr.actor_id].pose = "stand" if tr.is_idle_or_speech_only else "walk"
+                a_entry: Dict[str, Any] = {
+                    "x": tr.world_start[0],
+                    "y": tr.world_start[1],
+                    "facing": tr.facing_start,
+                    "pose": "stand" if tr.is_idle_or_speech_only else ("run" if "RUN" in tr.motion_type else "walk" if "WALK" in tr.motion_type else "brace"),
+                    "preset": tr.preset,
+                    "motionTrack": tr.model_dump(),
+                }
+                if abs(tr.world_end[0] - tr.world_start[0]) > 1e-4:
+                    a_entry["from_x"] = tr.world_start[0]
+                    a_entry["to_x"] = tr.world_end[0]
+                    a_entry["dur"] = round(max(0.25, tr.end_sec - tr.start_sec), 3)
+                    a_entry["moveAt"] = 0.0
+                actors_dict[tr.actor_id] = a_entry
+                sfx_list.extend(tr.sound_cues)
+
+            shot_plans[sid] = {
+                "event_id": f"mp_{sid}",
+                "action": s_tracks[0].motion_type if s_tracks else ws.motion_type,
+                "start": ws.start_sec,
+                "end": ws.end_sec,
+                "dur": max(0.25, ws.end_sec - ws.start_sec),
+                "actors": actors_dict,
+                "formation_action": None,
+                "sound_cues": sfx_list,
+                "world_state": ws.model_dump(),
+            }
+            choreo.world_timeline.snapshots.append(
+                WorldStateSnapshot(
+                    timestamp_sec=ws.end_sec,
+                    actors=copy.deepcopy(cur_actors),
+                    formation_slots=copy.deepcopy(world.formation_slots),
+                    lanes_open=copy.deepcopy(world.lanes),
+                )
+            )
+            causal_trace.append({
+                "shot_id": sid,
+                "action": shot_plans[sid]["action"],
+                "start": ws.start_sec,
+                "end": ws.end_sec,
+                "actor_ids": [tr.actor_id for tr in s_tracks],
+                "object_ids": ws.object_ids,
+                "contacts": [c.constraint_id for tr in s_tracks for c in tr.contacts],
+            })
+
+        choreo.world_timeline.actors = cur_actors
+        choreo.shot_action_plans = shot_plans
+        choreo.causal_trace = causal_trace
+        choreo.motion_plan = mp_obj.model_dump()
+        choreo.validation_errors = list(val_mp["errors"])
+        choreo.is_valid = bool(val_mp["valid"])
+        return choreo
 
     shot_plans: Dict[str, Dict[str, Any]] = {}
     causal_trace: List[Dict[str, Any]] = []
@@ -895,12 +1042,21 @@ def plan_action_beats(
 def compile_action_choreography_to_shots(
     shots: List[Dict[str, Any]],
     choreo: ActionChoreography,
+    motion_plan: Optional[Any] = None,
 ) -> Tuple[List[Dict[str, Any]], int]:
     """
     Compile physical action choreography into storyboard shot args.
     Manual protected shots (manual: true, visual_source: manual) are strictly preserved byte-for-byte.
     Returns (revised_shots, modified_count).
     """
+    active_mp = motion_plan if motion_plan is not None else choreo.motion_plan
+    if active_mp is not None:
+        from tools.motion_performance import MotionPlan, compile_motion_plan_to_legacy_shot_args
+
+        mp_obj = active_mp if isinstance(active_mp, MotionPlan) else MotionPlan.model_validate(active_mp)
+        compiled_mp = compile_motion_plan_to_legacy_shot_args(mp_obj, shots=shots)
+        shots = compiled_mp["shots"]
+
     revised: List[Dict[str, Any]] = []
     modified_count = 0
 
@@ -953,6 +1109,8 @@ def compile_action_choreography_to_shots(
                 entry["moveAt"] = a_cfg.get("moveAt", 0.0)
             if a_cfg.get("shake"):
                 entry["shake"] = True
+            if a_cfg.get("motionTrack"):
+                entry["motionTrack"] = a_cfg["motionTrack"]
             action_actors.append(entry)
 
         if action_actors:
@@ -1017,7 +1175,10 @@ def compile_action_choreography_to_shots(
 # Causality & Trace Validation
 # ---------------------------------------------------------------------------
 
-def validate_action_causality(choreo: ActionChoreography) -> Dict[str, Any]:
+def validate_action_causality(
+    choreo: ActionChoreography,
+    motion_plan: Optional[Any] = None,
+) -> Dict[str, Any]:
     """
     Validate causality invariants across all planned events:
     - Lane opening must precede withdrawal and passage.
@@ -1025,8 +1186,18 @@ def validate_action_causality(choreo: ActionChoreography) -> Dict[str, Any]:
     - Impact contact requires prior spatial approach.
     - Shield close requires occupied front slots.
     - No teleports or faction switches.
+    - When `motion_plan` is present, also validates phases, contact constraints, and continuity.
     """
     errors: List[str] = list(choreo.validation_errors)
+    active_mp = motion_plan if motion_plan is not None else choreo.motion_plan
+    if active_mp is not None:
+        from tools.motion_performance import MotionPlan, validate_motion_plan
+
+        mp_obj = active_mp if isinstance(active_mp, MotionPlan) else MotionPlan.model_validate(active_mp)
+        mp_val = validate_motion_plan(mp_obj)
+        for err in mp_val["errors"]:
+            if err not in errors:
+                errors.append(err)
     trace = choreo.causal_trace
 
     lane_opened_at: Optional[int] = None

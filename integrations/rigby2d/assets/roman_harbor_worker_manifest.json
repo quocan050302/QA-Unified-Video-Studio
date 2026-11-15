@@ -1,0 +1,94 @@
+{
+  "schema_version": "14.7.6",
+  "character_id": "roman_harbor_worker",
+  "origin": "100% newly authored procedural PIL sprite layers + Spine 3.8 / Rigby2D JSON rig for V14.7.6",
+  "demo_assets_copied": false,
+  "prior_preview_assets_reused": false,
+  "height_units": 210.0,
+  "setup_targets": {
+    "ik_foot_l_target": {
+      "x": 10.0,
+      "y": 6.0
+    },
+    "ik_foot_r_target": {
+      "x": -8.0,
+      "y": 6.0
+    },
+    "ik_hand_l_target": {
+      "x": 28.0,
+      "y": 98.0
+    },
+    "ik_hand_r_target": {
+      "x": 24.0,
+      "y": 94.0
+    }
+  },
+  "bone_names": [
+    "root",
+    "pelvis",
+    "torso",
+    "cloak",
+    "head",
+    "upper_arm_l",
+    "lower_arm_l",
+    "hand_l",
+    "upper_arm_r",
+    "lower_arm_r",
+    "hand_r",
+    "upper_leg_l",
+    "lower_leg_l",
+    "foot_l",
+    "upper_leg_r",
+    "lower_leg_r",
+    "foot_r",
+    "ik_foot_l_target",
+    "ik_foot_r_target",
+    "ik_hand_l_target",
+    "ik_hand_r_target"
+  ],
+  "slot_names": [
+    "cloak_back",
+    "upper_arm_l",
+    "lower_arm_l",
+    "hand_l",
+    "upper_leg_l",
+    "lower_leg_l",
+    "sandal_l",
+    "upper_leg_r",
+    "lower_leg_r",
+    "sandal_r",
+    "torso_tunic",
+    "head",
+    "upper_arm_r",
+    "lower_arm_r",
+    "hand_r"
+  ],
+  "ik_constraints": [
+    "ik_leg_l",
+    "ik_leg_r",
+    "ik_arm_l",
+    "ik_arm_r"
+  ],
+  "base_animations": [
+    "haul_rope",
+    "hold_lantern",
+    "idle",
+    "walk"
+  ],
+  "files": {
+    "texture_png": {
+      "path": "integrations/rigby2d/assets/roman_harbor_worker.png",
+      "sha256": "76df5b964ebdd80c1c4a2e92750e3a6264e164b0108a16a8cc14aff5dada9c89",
+      "width": 512,
+      "height": 512
+    },
+    "atlas": {
+      "path": "integrations/rigby2d/assets/roman_harbor_worker.atlas",
+      "sha256": "8bc7d14dbf7234ea854751645e32b947510473192e7673801226b83e5d9fd8af"
+    },
+    "skeleton_json": {
+      "path": "integrations/rigby2d/assets/roman_harbor_worker.json",
+      "sha256": "be16d63a824f1b40659988b6681057c8b0b440ce3f76bb5c83c50b0444964778"
+    }
+  }
+}

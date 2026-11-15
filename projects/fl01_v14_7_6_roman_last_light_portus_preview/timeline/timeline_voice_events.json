@@ -1,0 +1,464 @@
+{
+  "schema_version": "14.7.6",
+  "status": "PASS",
+  "speech_provider": "macos_say:Daniel",
+  "total_timeline_duration_sec": 30.0,
+  "voice_wav_duration_sec": 30.0,
+  "beats_count": 8,
+  "measured_overlap_ms": 0.0,
+  "min_tail_margin_sec": 0.9947,
+  "max_tail_margin_sec": 2.1102,
+  "all_beats_meet_0_35s_target": true,
+  "last_spoken_phrase": "The ship made it through.",
+  "last_spoken_end_sec": 27.8898,
+  "atempo_used_anywhere": false,
+  "events": [
+    {
+      "shot_id": "S01",
+      "act": "I_HOOK_DARK_HARBOR",
+      "shot_start": 0.0,
+      "shot_end": 3.0,
+      "shot_dur": 3.0,
+      "spoken_start": 0.16,
+      "spoken_end": 1.6177,
+      "natural_speech_dur": 1.4577,
+      "lead_in_sec": 0.16,
+      "tail_margin_sec": 1.3823,
+      "meets_target_0_35s_margin": true,
+      "atempo_applied": false,
+      "speech_provider": "macos_say:Daniel",
+      "text": "The harbor light went dark.",
+      "word_timestamps": [
+        {
+          "w": "The",
+          "start": 0.16,
+          "end": 0.356
+        },
+        {
+          "w": "harbor",
+          "start": 0.356,
+          "end": 0.84
+        },
+        {
+          "w": "light",
+          "start": 0.84,
+          "end": 1.181
+        },
+        {
+          "w": "went",
+          "start": 1.181,
+          "end": 1.43
+        },
+        {
+          "w": "dark.",
+          "start": 1.43,
+          "end": 1.618
+        }
+      ],
+      "wav_file": "build/portus_voice_S01.wav"
+    },
+    {
+      "shot_id": "S02",
+      "act": "I_STAKES_SHOALS",
+      "shot_start": 3.0,
+      "shot_end": 6.5,
+      "shot_dur": 3.5,
+      "spoken_start": 3.16,
+      "spoken_end": 5.5053,
+      "natural_speech_dur": 2.3453,
+      "lead_in_sec": 0.16,
+      "tail_margin_sec": 0.9947,
+      "meets_target_0_35s_margin": true,
+      "atempo_applied": false,
+      "speech_provider": "macos_say:Daniel",
+      "text": "A merchant ship was heading straight for the rocks.",
+      "word_timestamps": [
+        {
+          "w": "A",
+          "start": 3.16,
+          "end": 3.243
+        },
+        {
+          "w": "merchant",
+          "start": 3.243,
+          "end": 3.706
+        },
+        {
+          "w": "ship",
+          "start": 3.706,
+          "end": 3.916
+        },
+        {
+          "w": "was",
+          "start": 3.916,
+          "end": 4.09
+        },
+        {
+          "w": "heading",
+          "start": 4.09,
+          "end": 4.498
+        },
+        {
+          "w": "straight",
+          "start": 4.498,
+          "end": 4.96
+        },
+        {
+          "w": "for",
+          "start": 4.96,
+          "end": 5.159
+        },
+        {
+          "w": "the",
+          "start": 5.159,
+          "end": 5.301
+        },
+        {
+          "w": "rocks.",
+          "start": 5.301,
+          "end": 5.505
+        }
+      ],
+      "wav_file": "build/portus_voice_S02.wav"
+    },
+    {
+      "shot_id": "S03",
+      "act": "II_DISCOVERY_LANTERN",
+      "shot_start": 6.5,
+      "shot_end": 10.0,
+      "shot_dur": 3.5,
+      "spoken_start": 6.66,
+      "spoken_end": 8.8892,
+      "natural_speech_dur": 2.2292,
+      "lead_in_sec": 0.16,
+      "tail_margin_sec": 1.1108,
+      "meets_target_0_35s_margin": true,
+      "atempo_applied": false,
+      "speech_provider": "macos_say:Daniel",
+      "text": "Aelia grabbed the last burning lantern.",
+      "word_timestamps": [
+        {
+          "w": "Aelia",
+          "start": 6.66,
+          "end": 7.061
+        },
+        {
+          "w": "grabbed",
+          "start": 7.061,
+          "end": 7.533
+        },
+        {
+          "w": "the",
+          "start": 7.533,
+          "end": 7.767
+        },
+        {
+          "w": "last",
+          "start": 7.767,
+          "end": 8.002
+        },
+        {
+          "w": "burning",
+          "start": 8.002,
+          "end": 8.521
+        },
+        {
+          "w": "lantern.",
+          "start": 8.521,
+          "end": 8.889
+        }
+      ],
+      "wav_file": "build/portus_voice_S03.wav"
+    },
+    {
+      "shot_id": "S04",
+      "act": "II_PLAN_STEPS_ROPE",
+      "shot_start": 10.0,
+      "shot_end": 14.0,
+      "shot_dur": 4.0,
+      "spoken_start": 10.16,
+      "spoken_end": 12.6633,
+      "natural_speech_dur": 2.5033,
+      "lead_in_sec": 0.16,
+      "tail_margin_sec": 1.3367,
+      "meets_target_0_35s_margin": true,
+      "atempo_applied": false,
+      "speech_provider": "macos_say:Daniel",
+      "text": "She ran for the tower. Felix caught the rope.",
+      "word_timestamps": [
+        {
+          "w": "She",
+          "start": 10.16,
+          "end": 10.391
+        },
+        {
+          "w": "ran",
+          "start": 10.391,
+          "end": 10.656
+        },
+        {
+          "w": "for",
+          "start": 10.656,
+          "end": 10.876
+        },
+        {
+          "w": "the",
+          "start": 10.876,
+          "end": 11.098
+        },
+        {
+          "w": "tower.",
+          "start": 11.098,
+          "end": 11.393
+        },
+        {
+          "w": "Felix",
+          "start": 11.393,
+          "end": 11.761
+        },
+        {
+          "w": "caught",
+          "start": 11.761,
+          "end": 12.189
+        },
+        {
+          "w": "the",
+          "start": 12.189,
+          "end": 12.435
+        },
+        {
+          "w": "rope.",
+          "start": 12.435,
+          "end": 12.663
+        }
+      ],
+      "wav_file": "build/portus_voice_S04.wav"
+    },
+    {
+      "shot_id": "S05",
+      "act": "III_SETBACK_GUST_SLIP",
+      "shot_start": 14.0,
+      "shot_end": 18.0,
+      "shot_dur": 4.0,
+      "spoken_start": 14.16,
+      "spoken_end": 16.2954,
+      "natural_speech_dur": 2.1354,
+      "lead_in_sec": 0.16,
+      "tail_margin_sec": 1.7046,
+      "meets_target_0_35s_margin": true,
+      "atempo_applied": false,
+      "speech_provider": "macos_say:Daniel",
+      "text": "The wind nearly pulled it from her hands.",
+      "word_timestamps": [
+        {
+          "w": "The",
+          "start": 14.16,
+          "end": 14.365
+        },
+        {
+          "w": "wind",
+          "start": 14.365,
+          "end": 14.648
+        },
+        {
+          "w": "nearly",
+          "start": 14.648,
+          "end": 15.096
+        },
+        {
+          "w": "pulled",
+          "start": 15.096,
+          "end": 15.511
+        },
+        {
+          "w": "it",
+          "start": 15.511,
+          "end": 15.644
+        },
+        {
+          "w": "from",
+          "start": 15.644,
+          "end": 15.908
+        },
+        {
+          "w": "her",
+          "start": 15.908,
+          "end": 16.06
+        },
+        {
+          "w": "hands.",
+          "start": 16.06,
+          "end": 16.295
+        }
+      ],
+      "wav_file": "build/portus_voice_S05.wav"
+    },
+    {
+      "shot_id": "S06",
+      "act": "III_CLIMAX_SHARED_HOIST",
+      "shot_start": 18.0,
+      "shot_end": 22.5,
+      "shot_dur": 4.5,
+      "spoken_start": 18.16,
+      "spoken_end": 20.5078,
+      "natural_speech_dur": 2.3478,
+      "lead_in_sec": 0.16,
+      "tail_margin_sec": 1.9922,
+      "meets_target_0_35s_margin": true,
+      "atempo_applied": false,
+      "speech_provider": "macos_say:Daniel",
+      "text": "Together, they raised the flame above the storm.",
+      "word_timestamps": [
+        {
+          "w": "Together,",
+          "start": 18.16,
+          "end": 18.624
+        },
+        {
+          "w": "they",
+          "start": 18.624,
+          "end": 18.787
+        },
+        {
+          "w": "raised",
+          "start": 18.787,
+          "end": 19.242
+        },
+        {
+          "w": "the",
+          "start": 19.242,
+          "end": 19.414
+        },
+        {
+          "w": "flame",
+          "start": 19.414,
+          "end": 19.777
+        },
+        {
+          "w": "above",
+          "start": 19.777,
+          "end": 20.094
+        },
+        {
+          "w": "the",
+          "start": 20.094,
+          "end": 20.284
+        },
+        {
+          "w": "storm.",
+          "start": 20.284,
+          "end": 20.508
+        }
+      ],
+      "wav_file": "build/portus_voice_S06.wav"
+    },
+    {
+      "shot_id": "S07",
+      "act": "IV_PAYOFF_SAFE_CHANNEL",
+      "shot_start": 22.5,
+      "shot_end": 26.5,
+      "shot_dur": 4.0,
+      "spoken_start": 22.66,
+      "spoken_end": 25.0749,
+      "natural_speech_dur": 2.4149,
+      "lead_in_sec": 0.16,
+      "tail_margin_sec": 1.4251,
+      "meets_target_0_35s_margin": true,
+      "atempo_applied": false,
+      "speech_provider": "macos_say:Daniel",
+      "text": "Its glow showed the sailors a safe way home.",
+      "word_timestamps": [
+        {
+          "w": "Its",
+          "start": 22.66,
+          "end": 22.852
+        },
+        {
+          "w": "glow",
+          "start": 22.852,
+          "end": 23.146
+        },
+        {
+          "w": "showed",
+          "start": 23.146,
+          "end": 23.567
+        },
+        {
+          "w": "the",
+          "start": 23.567,
+          "end": 23.788
+        },
+        {
+          "w": "sailors",
+          "start": 23.788,
+          "end": 24.298
+        },
+        {
+          "w": "a",
+          "start": 24.298,
+          "end": 24.388
+        },
+        {
+          "w": "safe",
+          "start": 24.388,
+          "end": 24.686
+        },
+        {
+          "w": "way",
+          "start": 24.686,
+          "end": 24.878
+        },
+        {
+          "w": "home.",
+          "start": 24.878,
+          "end": 25.075
+        }
+      ],
+      "wav_file": "build/portus_voice_S07.wav"
+    },
+    {
+      "shot_id": "S08",
+      "act": "IV_RESOLUTION_PASSAGE",
+      "shot_start": 26.5,
+      "shot_end": 30.0,
+      "shot_dur": 3.5,
+      "spoken_start": 26.66,
+      "spoken_end": 27.8898,
+      "natural_speech_dur": 1.2298,
+      "lead_in_sec": 0.16,
+      "tail_margin_sec": 2.1102,
+      "meets_target_0_35s_margin": true,
+      "atempo_applied": false,
+      "speech_provider": "macos_say:Daniel",
+      "text": "The ship made it through.",
+      "word_timestamps": [
+        {
+          "w": "The",
+          "start": 26.66,
+          "end": 26.845
+        },
+        {
+          "w": "ship",
+          "start": 26.845,
+          "end": 27.1
+        },
+        {
+          "w": "made",
+          "start": 27.1,
+          "end": 27.397
+        },
+        {
+          "w": "it",
+          "start": 27.397,
+          "end": 27.491
+        },
+        {
+          "w": "through.",
+          "start": 27.491,
+          "end": 27.89
+        }
+      ],
+      "wav_file": "build/portus_voice_S08.wav"
+    }
+  ]
+}

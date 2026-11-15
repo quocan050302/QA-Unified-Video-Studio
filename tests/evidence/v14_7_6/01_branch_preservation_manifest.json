@@ -1,0 +1,273 @@
+{
+  "evidence_schema_version": "14.7.6",
+  "source_commit": "2f88740c2e9330f17c618b6b546179126eed2203",
+  "run_id": "v14_7_6_val_1794762344",
+  "command_or_function": "scripts.run_fl01_v14_7_6_validation::job_w0_branch_preservation",
+  "file_paths": [
+    "projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4",
+    "projects/fl01_v14_7_1_bridge_before_enemy_preview/out/FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4",
+    "projects/fl01_v14_7_2_ballista_preview/out/FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4",
+    "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_3_ROMAN_CONTINUITY_FRESH_PREVIEW_1080P.mp4",
+    "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4",
+    "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_CORRECTED_V14_7_5_1_1080P.mp4",
+    "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_FRESH_PREVIEW_1080P.mp4",
+    "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_CORRECTED_V14_7_5_1_1080P.mp4",
+    "projects/fl01_v14_7_5_roman_eagle_in_fog_preview/out/FL01_V14_7_5_ROMAN_EAGLE_IN_FOG_FRESH_PREVIEW_1080P.mp4",
+    "projects/fl01_v14_7_5_1_roman_water_gate_preview/out/FL01_V14_7_5_1_ROMAN_WATER_GATE_ORIGINAL_30S_1080P.mp4",
+    "projects/v14_6_action_demo/out/V14_6_Visual_Storytelling_Acting_Demo_1080p.mp4",
+    "projects/squire-mau/config.json",
+    "packs/squire/civic/water_gate.js",
+    "tests/evidence/v14_7_5/00_master_acceptance.json",
+    "tests/evidence/v14_7_5_1/00_acceptance.json"
+  ],
+  "start_time": "2026-11-15T17:05:44.727274+00:00",
+  "end_time": "2026-11-15T17:05:56.897144+00:00",
+  "elapsed_sec": 12.1699,
+  "exit_code": 0,
+  "original_input_sha256": "fdc4cfa63d4c79a09bcafe17126c5c72aec641076752e7bcf2bc685c70aba1a0",
+  "output_sha256": "6502b4a2107b6112056222c0141a7132de65396558807295ad0cca80177350cd",
+  "measured_resources": {
+    "disk_free_gb": 16.267,
+    "ram_available_gb": 2.554,
+    "cpu_count": 8,
+    "free_inodes": 170568960,
+    "process_tree_rss_mb": 39.44,
+    "healthy": true
+  },
+  "status": "PASS",
+  "error_reason": null,
+  "current_branch": "fix/Image-Shot",
+  "mandatory_branch": "fix/Image-Shot",
+  "head_sha_at_validation": "2f88740c2e9330f17c618b6b546179126eed2203",
+  "verified_base_sha": "2f88740c2e9330f17c618b6b546179126eed2203",
+  "base_is_ancestor": true,
+  "remote_fix_image_shot_sha_pre_push": "2f88740c2e9330f17c618b6b546179126eed2203",
+  "remote_production_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_invariant_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_unchanged": true,
+  "preflight_resource_budget": {
+    "status": "PASS",
+    "healthy": true,
+    "message": "OK",
+    "disk_free_gb": 16.267,
+    "disk_min_reserve_gb": 6.0,
+    "disk_required_gb": 8.5,
+    "estimated_scratch_gb": 1.5,
+    "extra_margin_gb": 1.0,
+    "free_inodes": 170568400,
+    "ram_available_gb": 2.583,
+    "ram_total_gb": 16.0,
+    "ram_min_reserve_gb": 1.0,
+    "cpu_count": 8,
+    "timestamp": 1794762345.969324
+  },
+  "all_preserved_intact": true,
+  "preserved_count": 15,
+  "artifacts": [
+    {
+      "path": "projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 14085487,
+      "actual_size": 14085487,
+      "expected_sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+      "actual_sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 53.0,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_1_bridge_before_enemy_preview/out/FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 11681291,
+      "actual_size": 11681291,
+      "expected_sha256": "3bda2c3a1aa4583bfec783de154343548cec993b21442699d596abe041f808e6",
+      "actual_sha256": "3bda2c3a1aa4583bfec783de154343548cec993b21442699d596abe041f808e6",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 52.0,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_2_ballista_preview/out/FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 13189209,
+      "actual_size": 13189209,
+      "expected_sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+      "actual_sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 51.5,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_3_ROMAN_CONTINUITY_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 13078836,
+      "actual_size": 13078836,
+      "expected_sha256": "111d153d0a37a8e985323074438666b6388d9cddf027bad0fcfadac3a43c28cf",
+      "actual_sha256": "111d153d0a37a8e985323074438666b6388d9cddf027bad0fcfadac3a43c28cf",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 52.5,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4",
+      "exists": true,
+      "expected_size": 13602474,
+      "actual_size": 13602474,
+      "expected_sha256": "c04f01ae0463fd32ca83f7f9575121eeae9bcd86429e90eaf8cc66a3a03ce841",
+      "actual_sha256": "c04f01ae0463fd32ca83f7f9575121eeae9bcd86429e90eaf8cc66a3a03ce841",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 53.992,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_CORRECTED_V14_7_5_1_1080P.mp4",
+      "exists": true,
+      "expected_size": 14688646,
+      "actual_size": 14688646,
+      "expected_sha256": "8bab8e86a9203c22e2c8b41a7edf8038e2fca21dfb68af557c02f7ba6c46282e",
+      "actual_sha256": "8bab8e86a9203c22e2c8b41a7edf8038e2fca21dfb68af557c02f7ba6c46282e",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 53.992,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 11543182,
+      "actual_size": 11543182,
+      "expected_sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878",
+      "actual_sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 54.0,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_CORRECTED_V14_7_5_1_1080P.mp4",
+      "exists": true,
+      "expected_size": 12489305,
+      "actual_size": 12489305,
+      "expected_sha256": "b24af5ffc2c12700a141a9720a0263c53619a469cc9b019cb2ded703b3ecb5cf",
+      "actual_sha256": "b24af5ffc2c12700a141a9720a0263c53619a469cc9b019cb2ded703b3ecb5cf",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 54.0,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_5_roman_eagle_in_fog_preview/out/FL01_V14_7_5_ROMAN_EAGLE_IN_FOG_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 16923383,
+      "actual_size": 16923383,
+      "expected_sha256": "5276bb238384541139e59a04d8457d683d39f883abb480a523171da25ae51421",
+      "actual_sha256": "5276bb238384541139e59a04d8457d683d39f883abb480a523171da25ae51421",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 53.851,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_5_1_roman_water_gate_preview/out/FL01_V14_7_5_1_ROMAN_WATER_GATE_ORIGINAL_30S_1080P.mp4",
+      "exists": true,
+      "expected_size": 6878811,
+      "actual_size": 6878811,
+      "expected_sha256": "62e64088fb0b2d33e9c3382707b3fde9aaca9558c90941e100d4b6f676c7b603",
+      "actual_sha256": "62e64088fb0b2d33e9c3382707b3fde9aaca9558c90941e100d4b6f676c7b603",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 30.0,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/v14_6_action_demo/out/V14_6_Visual_Storytelling_Acting_Demo_1080p.mp4",
+      "exists": true,
+      "expected_size": 16513932,
+      "actual_size": 16513932,
+      "expected_sha256": "f774b9dc3d21d6ff1ec1ad986587a86dc955a0e943c30fe6b09da28c31cbac48",
+      "actual_sha256": "f774b9dc3d21d6ff1ec1ad986587a86dc955a0e943c30fe6b09da28c31cbac48",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 57.875,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/squire-mau/config.json",
+      "exists": true,
+      "expected_size": 372,
+      "actual_size": 372,
+      "expected_sha256": "2c62f70b502f81be10cda5c6fae6cbbec0d088cc080451a1cb4604b55bb86214",
+      "actual_sha256": "2c62f70b502f81be10cda5c6fae6cbbec0d088cc080451a1cb4604b55bb86214",
+      "byte_identical": true,
+      "media_probe": null
+    },
+    {
+      "path": "packs/squire/civic/water_gate.js",
+      "exists": true,
+      "expected_size": 34005,
+      "actual_size": 34005,
+      "expected_sha256": "aaeae7b18f8e48b38901631ad3f2a05bd54a79c429c8fae3fde85107d102cfa1",
+      "actual_sha256": "aaeae7b18f8e48b38901631ad3f2a05bd54a79c429c8fae3fde85107d102cfa1",
+      "byte_identical": true,
+      "media_probe": null
+    },
+    {
+      "path": "tests/evidence/v14_7_5/00_master_acceptance.json",
+      "exists": true,
+      "expected_size": 9023,
+      "actual_size": 9023,
+      "expected_sha256": "2083f2bc0625bdb7b4c8565bf2ffb5901d93cfe8e64339f68dbf320d2270455e",
+      "actual_sha256": "2083f2bc0625bdb7b4c8565bf2ffb5901d93cfe8e64339f68dbf320d2270455e",
+      "byte_identical": true,
+      "media_probe": null
+    },
+    {
+      "path": "tests/evidence/v14_7_5_1/00_acceptance.json",
+      "exists": true,
+      "expected_size": 18764,
+      "actual_size": 18764,
+      "expected_sha256": "138ce640c7f4e502b34d06d71e4d72a5fdb25970f12e11b2f0d15fb15d41e915",
+      "actual_sha256": "138ce640c7f4e502b34d06d71e4d72a5fdb25970f12e11b2f0d15fb15d41e915",
+      "byte_identical": true,
+      "media_probe": null
+    }
+  ]
+}

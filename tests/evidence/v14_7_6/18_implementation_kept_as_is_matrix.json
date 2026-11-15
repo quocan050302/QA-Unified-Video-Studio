@@ -1,0 +1,378 @@
+{
+  "evidence_schema_version": "14.7.6",
+  "source_commit": "2f88740c2e9330f17c618b6b546179126eed2203",
+  "run_id": "v14_7_6_val_1794762344",
+  "command_or_function": "scripts.run_fl01_v14_7_6_validation::job_w0_implementation_matrix",
+  "file_paths": [
+    "tools/motion_performance.py",
+    "tools/action_capabilities.py",
+    "tools/narrative_action.py",
+    "tools/character_acting.py",
+    "packs/squire/motion_engine.js",
+    "packs/squire/chara.js",
+    "packs/squire/templates.js",
+    "packs/squire/pack.js",
+    "integrations/rigby2d/adapter.js",
+    "integrations/rigby2d/pilot.py",
+    "integrations/claude_motion/adapter.js",
+    "tools/cinematic_camera.py",
+    "tools/temporal_visual_qa.py",
+    "packs/squire/harbor/portus_light.js",
+    "tools/produce_fl01_v14_7_6_roman_portus_preview.py",
+    "app.py",
+    "render.mjs",
+    "engine/core.js",
+    "tools/visual_storytelling.py",
+    "tools/shot_repair.py",
+    "scripts/qa_scheduler.py",
+    "scripts/run_e2e_regression.py",
+    "scripts/production_fingerprint.py",
+    "packs/squire/civic/water_gate.js",
+    "packs/dem/pack.js",
+    "packs/dem/templates.js",
+    "tests/evidence/v14_7_5/00_master_acceptance.json",
+    "tests/evidence/v14_7_5_1/00_acceptance.json"
+  ],
+  "start_time": "2026-11-15T17:05:44.727143+00:00",
+  "end_time": "2026-11-15T17:05:44.922680+00:00",
+  "elapsed_sec": 0.1955,
+  "exit_code": 0,
+  "original_input_sha256": "2f88740c2e9330f17c618b6b546179126eed2203",
+  "output_sha256": "55272092616f0d7e41b1cfa7e49e06247ed167cb943d1d5094aa0519afbc5294",
+  "measured_resources": {
+    "disk_free_gb": 16.267,
+    "ram_available_gb": 2.645,
+    "cpu_count": 8,
+    "free_inodes": 170568560,
+    "process_tree_rss_mb": 69.84,
+    "healthy": true
+  },
+  "status": "PASS",
+  "error_reason": null,
+  "fl01_architecture_unchanged": true,
+  "added_or_modified_count": 15,
+  "kept_as_is_count": 13,
+  "missing_modified_files": [],
+  "unexpectedly_dirty_kept_files": [],
+  "added_or_modified_modules": [
+    {
+      "path": "tools/motion_performance.py",
+      "change_type": "ADDED",
+      "phase": "Phase A",
+      "functions": [
+        "extract_semantic_motion_intents",
+        "plan_actor_motion_phases",
+        "build_shared_motion_timeline",
+        "validate_motion_plan",
+        "compile_motion_plan_to_legacy_shot_args"
+      ],
+      "purpose": "Typed Pydantic V14.7.6 MotionPlan schema, script->phase planner, world-state timeline, validator, and additive legacy shot compiler.",
+      "exists": true,
+      "sha256": "9a94e867b57ec9cc3d2c3cfd290fbb147a1203abd77fd1132944783e3002e8f7",
+      "size_bytes": 94025
+    },
+    {
+      "path": "tools/action_capabilities.py",
+      "change_type": "MODIFIED_ADDITIVE",
+      "phase": "Phase A",
+      "functions": [
+        "get_pack_capabilities",
+        "resolve_supported_action"
+      ],
+      "purpose": "Added harbor/civic physical interaction capabilities (`HAUL_ROPE`, `BRACE_ROPE`, `SLIP`, `STEADY_PROP`, `LIFT_SHARED`, `DUCK`) while preserving legacy Squire & DEM military capabilities.",
+      "exists": true,
+      "sha256": "360565718974f8073c274f196b8691a3a3af174d8b717b9648cf9d9ed48e6548",
+      "size_bytes": 14640
+    },
+    {
+      "path": "tools/narrative_action.py",
+      "change_type": "MODIFIED_ADDITIVE",
+      "phase": "Phase A",
+      "functions": [
+        "parse_action_intents",
+        "plan_action_beats",
+        "compile_action_choreography_to_shots",
+        "validate_action_causality"
+      ],
+      "purpose": "Integrated shared MotionPlan attachment & causality checks without changing public legacy signatures.",
+      "exists": true,
+      "sha256": "b0eb701b59865ed5e056ca88131bebcddc82e9c46e44b09db81e103962291f51",
+      "size_bytes": 50036
+    },
+    {
+      "path": "tools/character_acting.py",
+      "change_type": "MODIFIED_ADDITIVE",
+      "phase": "Phase A",
+      "functions": [
+        "plan_actor_performance",
+        "compile_actor_performance_to_rig",
+        "validate_actor_performance"
+      ],
+      "purpose": "Uses generic actor IDs and phase timelines from shared MotionPlan when present, keeping legacy Roman presets strictly backward-compatible.",
+      "exists": true,
+      "sha256": "98aaf2d69144f05729b4d5209d790cebc47a76673224211ce1d86001bd59ab6a",
+      "size_bytes": 27648
+    },
+    {
+      "path": "packs/squire/motion_engine.js",
+      "change_type": "ADDED",
+      "phase": "Phase B",
+      "functions": [
+        "evaluateMotionTrackAt",
+        "rootMotionAt",
+        "solveFootPlantIK",
+        "solveHandPropContact",
+        "blendActorPose",
+        "applySecondaryMotion",
+        "evaluateMultiActorInteraction",
+        "validateMotionFrameTrace"
+      ],
+      "purpose": "Pure deterministic frame-order-invariant 2D natural motion engine with root-displacement gait coupling, stance foot lock, object-bound hand IK, and multi-actor shared prop force.",
+      "exists": true,
+      "sha256": "d64a514377793067dbf45a583f7c54d3f141866d3d87b0ffc8c2aaaee69c7429",
+      "size_bytes": 38445
+    },
+    {
+      "path": "packs/squire/chara.js",
+      "change_type": "MODIFIED_ADDITIVE",
+      "phase": "Phase B",
+      "functions": [
+        "walkInfo",
+        "soldier"
+      ],
+      "purpose": "Optional `_motionEval` / `motionTrack` IK target override inside existing Canvas character renderer; 100% legacy behavior when omitted.",
+      "exists": true,
+      "sha256": "325be3cabe59f9e73468dc53453375cf0282e55d9ee5f68c27be2ac538344f54",
+      "size_bytes": 141392
+    },
+    {
+      "path": "packs/squire/templates.js",
+      "change_type": "MODIFIED_ADDITIVE",
+      "phase": "Phase B & E",
+      "functions": [
+        "person",
+        "applyCameraSegments"
+      ],
+      "purpose": "Evaluates optional `motionPlan`/`motionTracks` and `cameraSegments` inside existing Squire scene template.",
+      "exists": true,
+      "sha256": "53f70276eb0e0a2f1f3e2ce49877cea3853e89c731d078e53a21cdb16ab27a63",
+      "size_bytes": 73805
+    },
+    {
+      "path": "packs/squire/pack.js",
+      "change_type": "MODIFIED_ADDITIVE",
+      "phase": "Phase B & C",
+      "functions": [
+        "pack registration"
+      ],
+      "purpose": "Exposes optional motion engine & harbor helpers cleanly to Squire scenes.",
+      "exists": true,
+      "sha256": "c664b4c795adc50304e6b4a5422a729b5f4166acceecce20c9b005783773ffff",
+      "size_bytes": 8727
+    },
+    {
+      "path": "integrations/rigby2d/adapter.js",
+      "change_type": "ADDED",
+      "phase": "Phase C",
+      "functions": [
+        "inspectRigbyRuntimeCapabilities",
+        "convertMotionPlanToRigbyTracks",
+        "loadBrowserRigbyAsset",
+        "renderRigbyActorToCanvas"
+      ],
+      "purpose": "Isolated Rigby2D 0.5.1 (pinned SHA 130562a94e76a19986aa8b737f998a89c1270bb8, MIT OR Apache-2.0) Spine 3.8 WebGL -> 2D Canvas compositor with newly authored Roman civilian rig.",
+      "exists": true,
+      "sha256": "6d913b66fa14b7738c03edfde20104441f05843f781264eae92becfdc1a7b4f7",
+      "size_bytes": 14862
+    },
+    {
+      "path": "integrations/rigby2d/pilot.py",
+      "change_type": "ADDED",
+      "phase": "Phase C",
+      "functions": [
+        "inspect_rigby_runtime_capabilities",
+        "convert_motion_plan_to_rigby_tracks",
+        "verify_rigby_browser_compositing",
+        "compare_rigby_vs_canvas"
+      ],
+      "purpose": "Real Node/Chromium runtime capability probe and 8s Rigby2D WebGL vs Canvas Natural Motion FL-01 benchmark.",
+      "exists": true,
+      "sha256": "efaee34deb79cf0d8f515b8a0704ff4cd54ddba500bda463423207e2f3c3e791",
+      "size_bytes": 24135
+    },
+    {
+      "path": "integrations/claude_motion/adapter.js",
+      "change_type": "ADDED",
+      "phase": "Phase D",
+      "functions": [
+        "createSeparatedActionClock",
+        "rng",
+        "landDust",
+        "burstParticles",
+        "ring",
+        "renderMotivatedHarborFx"
+      ],
+      "purpose": "Selective MIT helpers adapted from buildwithhanif/claude-animation-skill (SHA 4ddb8c80fdec96dc9f55d4b9bdee60bde6f0134b) with strict action-clock vs voice/camera-clock separation.",
+      "exists": true,
+      "sha256": "7d4bfdfb5e942c11e2a8b0f7ab30bb427ae4f14305eadccd7d49522b4cfb7e86",
+      "size_bytes": 13197
+    },
+    {
+      "path": "tools/cinematic_camera.py",
+      "change_type": "MODIFIED_ADDITIVE",
+      "phase": "Phase E",
+      "functions": [
+        "plan_multi_angle_action",
+        "validate_camera_segments",
+        "compile_camera_segments_to_renderer"
+      ],
+      "purpose": "Script-driven optional internal multi-angle camera segments within a single logical shot while preserving continuous world/action clocks and 180-degree axis rules.",
+      "exists": true,
+      "sha256": "eaf75fbf232d9fc764fa9f147bb4781efadf7f7609b3357f0f2cb90ee58e856a",
+      "size_bytes": 48547
+    },
+    {
+      "path": "tools/temporal_visual_qa.py",
+      "change_type": "MODIFIED_ADDITIVE",
+      "phase": "Phase E & QA",
+      "functions": [
+        "audit_motion_performance",
+        "audit_foot_plant",
+        "audit_hand_prop_contact",
+        "audit_internal_camera_cuts",
+        "run_v14_7_6_mandatory_mutations"
+      ],
+      "purpose": "Decoded pixel + trace motion QA, +/-0.25s grip/slip strips, 100% internal camera-cut boundary checks, and 10 V14.7.6 mandatory defect mutations.",
+      "exists": true,
+      "sha256": "ccd41e77a21a9cde655471325aa1f6980ee86f832844247e213a7bb16f9f72e9",
+      "size_bytes": 140829
+    },
+    {
+      "path": "packs/squire/harbor/portus_light.js",
+      "change_type": "ADDED",
+      "phase": "Section 9",
+      "functions": [
+        "registerPortusShots",
+        "ensureHarborRigbyAssetLoaded"
+      ],
+      "purpose": "Wholly original procedural harbor lighthouse, stormy sea, rolling merchant corbita, pulley hoist, oil flame, and multi-angle insert views for Portus.",
+      "exists": true,
+      "sha256": "c79ea86a6656f3830d354ee9a80c493177b4f40155c3903f9aa8ce59b7db2f72",
+      "size_bytes": 47323
+    },
+    {
+      "path": "tools/produce_fl01_v14_7_6_roman_portus_preview.py",
+      "change_type": "ADDED",
+      "phase": "Section 9",
+      "functions": [
+        "build_portus_storyboard",
+        "construct_portus_project",
+        "build_portus_original_assets",
+        "generate_portus_measured_voice",
+        "build_portus_event_soundtrack",
+        "produce_portus_preview",
+        "inspect_portus_preview",
+        "generate_portus_contact_sheets",
+        "produce_abc_8s_comparison",
+        "produce_three_unseen_short_generalization_clips"
+      ],
+      "purpose": "Script-driven FL-01 producer for the original 30.000s / 720-frame 1080p24 Portus film, wording-variation proof, 8s A/B/C comparison, and 3 unseen short renders.",
+      "exists": true,
+      "sha256": "db5b5a18e3e32985cea623d7fdc03be8c0763a9574724e79dede3ee86cafc9d2",
+      "size_bytes": 90886
+    }
+  ],
+  "kept_as_is_modules": [
+    {
+      "path": "app.py",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "ef326c2b06e500ddf04e81ce57284f45d160c86ed1595c5d49582c1868750a9f"
+    },
+    {
+      "path": "render.mjs",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "59e47c8f8a7f2faef814c5830a5144711e6859d1daf519244446c11ddc08cea9"
+    },
+    {
+      "path": "engine/core.js",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "535d237a3b9885f16ce0f26f36dcf3d648b78a8e62792ecac59b1695ef03f300"
+    },
+    {
+      "path": "tools/visual_storytelling.py",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "b354d77e091a4839b8513372720f4e561c8bbcad73f06d21922bc76e3282437a"
+    },
+    {
+      "path": "tools/shot_repair.py",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "7b238c2f2c350d30d9a9af0ad934519cc9cfa5424123760aaf406c1d9aecbf6f"
+    },
+    {
+      "path": "scripts/qa_scheduler.py",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "bdd1a9cff6fed71a134b06b2d415c92545fb49b6de14de9da7bde4a2fccc499b"
+    },
+    {
+      "path": "scripts/run_e2e_regression.py",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "a55a510f22e2954e34df24819be0a6b13db499437b6df6d430a8c0679129231b"
+    },
+    {
+      "path": "scripts/production_fingerprint.py",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "a0e503d10702d24d64436f5c49cd44fc7510fca45ceae9fc5655cd604a1b196e"
+    },
+    {
+      "path": "packs/squire/civic/water_gate.js",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "aaeae7b18f8e48b38901631ad3f2a05bd54a79c429c8fae3fde85107d102cfa1"
+    },
+    {
+      "path": "packs/dem/pack.js",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "7b3ba027d3a29024751a20fcbd2432769ac552deb42369de24356cadfeaabec7"
+    },
+    {
+      "path": "packs/dem/templates.js",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "7f91c98750bf05018066fe26e91371f5d01f69fd979da817861c04132df655cd"
+    },
+    {
+      "path": "tests/evidence/v14_7_5/00_master_acceptance.json",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "2083f2bc0625bdb7b4c8565bf2ffb5901d93cfe8e64339f68dbf320d2270455e"
+    },
+    {
+      "path": "tests/evidence/v14_7_5_1/00_acceptance.json",
+      "disposition": "KEPT AS IS",
+      "exists": true,
+      "git_untouched_vs_base": true,
+      "sha256": "138ce640c7f4e502b34d06d71e4d72a5fdb25970f12e11b2f0d15fb15d41e915"
+    }
+  ]
+}

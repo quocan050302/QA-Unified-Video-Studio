@@ -1,0 +1,24 @@
+{
+  "schema_version": "14.7.6",
+  "historical_framing": "A fictional Roman harbor drama at twilight; stylized 2D reconstruction, not a documented historical incident.",
+  "characters": {
+    "aelia": {
+      "name": "Aelia",
+      "preset": "lady",
+      "role": "lamp_keeper",
+      "x": 0.4,
+      "y": 0.84,
+      "facing": 1,
+      "silhouette_markers": "Russet-crimson wool tunic, ochre sash, dark tied bun, oil lantern keeper"
+    },
+    "felix": {
+      "name": "Felix",
+      "preset": "peasant",
+      "role": "rope_worker",
+      "x": 0.62,
+      "y": 0.84,
+      "facing": -1,
+      "silhouette_markers": "Olive-slate harbor tunic, terracotta belt, pulley rope worker"
+    }
+  }
+}

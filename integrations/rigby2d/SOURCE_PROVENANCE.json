@@ -1,0 +1,55 @@
+{
+  "schema_version": "14.7.6",
+  "upstream_repository": "https://github.com/jaisurya-dev-art/rigby2d",
+  "upstream_branch": "develop",
+  "upstream_commit_sha": "130562a94e76a19986aa8b737f998a89c1270bb8",
+  "upstream_package_version": "0.5.1",
+  "runtime_license": "MIT OR Apache-2.0",
+  "license_files": [
+    "integrations/rigby2d/LICENSE-MIT",
+    "integrations/rigby2d/LICENSE-APACHE"
+  ],
+  "proprietary_demo_mascots_excluded": [
+    "NILA",
+    "Rigbytron",
+    "examples/*"
+  ],
+  "original_character_rig_manifest": "integrations/rigby2d/assets/roman_harbor_worker_manifest.json",
+  "vendored_runtime_sha256": {
+    "vendor/core/animation.js": "5833a82edbcbdcabdc894d700b9cf705ca1ec3219c0e12ddb00ce6a1361d2e9c",
+    "vendor/core/atlas.js": "1d352a9cd6a4f3f87c56bc790040b64d9070da654450f6b3a98d88305a4f256c",
+    "vendor/core/autorig.js": "b54345bd5c6b8550541c0f9d4c36ba659bd724f47c86d4214f1ea03eadc48522",
+    "vendor/core/binary.js": "f72502207f2dcb9210f36d235f111ed7fe1188b18c3877529e876f4fa2e0fdbb",
+    "vendor/core/bodyparts.js": "3d7ff96039ea77ee25526fb8bbde8662c95bff42af19f561294e0063ed2ae6b6",
+    "vendor/core/clipping.js": "a5f316b4f430729eb724ac888efa32b95140d4f201dd5af773552611055f560a",
+    "vendor/core/constraintdata.js": "e45ca6e889e3c813bc84634e3d0d53aa0e0cf5d1574ca28bc725f259c206202e",
+    "vendor/core/constraintkeys.js": "4f05a01ba64ecb4a1b08b9e1b97da935066e79138eef19815d24239884a06068",
+    "vendor/core/constraints.js": "61766d7aca9605ed420693a3f983f6e12bad7d769e2119f0568f741727a688b9",
+    "vendor/core/curve.js": "031654025e87b8368014192b37f9d3b64f5907401fb3052634fc417a8aeb31d4",
+    "vendor/core/draw.js": "d59f57b88f76779fab3857bea46a75324409cee18e19a146e50147b6824f4c44",
+    "vendor/core/filmfx.js": "8359158e2f9c08fcecacb4fdb91cf7525543340cba6f357b1b1b8e2dacc02a2c",
+    "vendor/core/index.js": "9469e74745bd1323a2045fe5c606226a90fea5076001569e28227d79bf85dc9f",
+    "vendor/core/interop.js": "ab5e6058065d174c2648e54b8549bc501d15d935d4a68f8fffabdd2721c78900",
+    "vendor/core/keying.js": "798d89763b21ba863619e7e2dfb0ceee3bcbdbd410bce7ac51644656c510a3b3",
+    "vendor/core/lipsync.js": "8200075565a2cae91a0f0bd656559045cb0732f73a27e1ee644ece2cbb28420e",
+    "vendor/core/math.js": "53c55e79d8cae3379e6e344f10c21b1420fab1584c020b94d680f05f013b04d3",
+    "vendor/core/meshgen.js": "bc72120e1dd2c463a79e4c68f8f7595bfb827f9bf305c1e5bf912feaeb470f6f",
+    "vendor/core/meshgeom.js": "0cb74872728b51eb60478527113935bac83e744b45e881edd8f538ea6a63d40c",
+    "vendor/core/model.js": "218f85dbe4dee684778023d8568f77bd0446f7589f6eca5749cc573b3bc02403",
+    "vendor/core/pose.js": "78c5e55b8332428534983ccb56a5c7dec5a74130321e16c72f9007475abd2cf4",
+    "vendor/core/poses.js": "c421a099c0ebd9883b9537e2b70ddf568df1d288afaa8164523bdc491fdbb6f6",
+    "vendor/core/retarget.js": "e88aca2407979eaa8f5bf30f2a8f6846e1317e0be17af96278d9edd1ea2486a8",
+    "vendor/core/scene.js": "64e8de1a8f979859bc48db5baacd18c66a130550aab87e15a5a938e9cdb2df7a",
+    "vendor/core/sequence.js": "47e6b675826ffc7dcce3a09e6dfebba3abf0534068bab879c7dcee58633a796b",
+    "vendor/core/state.js": "e18e4533b7eeaf5e9da242f146abd0c934ef4d56bca25679bb462c589a9b38d1",
+    "vendor/webgl/filmdraw.js": "49402de1e56541c5628b0a7db66930fb1a9e0111cb859a8d57847f4b5446f743",
+    "vendor/webgl/pixelgrid.js": "dee1901a3933bb385701835e9cb068ebb1d9070bcd86f20e6baf258ef3183677",
+    "vendor/webgl/post.js": "fef47644f78f7142ad97c9fc5702a44ad0c859c1ea86558c58b82aaf01dc7bb1",
+    "vendor/webgl/renderer.js": "0b1f6949203088db53a66b3fca13e42478892775533118cac66f2f9cbd611078"
+  },
+  "original_rig_assets_sha256": {
+    "texture_png": "76df5b964ebdd80c1c4a2e92750e3a6264e164b0108a16a8cc14aff5dada9c89",
+    "atlas": "8bc7d14dbf7234ea854751645e32b947510473192e7673801226b83e5d9fd8af",
+    "skeleton_json": "be16d63a824f1b40659988b6681057c8b0b440ce3f76bb5c83c50b0444964778"
+  }
+}

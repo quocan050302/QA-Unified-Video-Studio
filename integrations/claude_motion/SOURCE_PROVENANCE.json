@@ -1,0 +1,20 @@
+{
+  "schema_version": "14.7.6",
+  "upstream_repository": "https://github.com/buildwithhanif/claude-animation-skill",
+  "upstream_branch": "main",
+  "upstream_commit_sha": "4ddb8c80fdec96dc9f55d4b9bdee60bde6f0134b",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 Hanif (@hanifproduktif)",
+  "license_file": "integrations/claude_motion/LICENSE",
+  "adapted_sources": [
+    "plugins/claude-animation/skills/claude-animation/lib/fx.mjs (timeWarp, burstParticles, landDust, ring, afterimages)",
+    "plugins/claude-animation/skills/claude-animation/lib/core.mjs (clamp, lerp, ss, hash, rng, eOut, eIn, eIO, eBack)",
+    "plugins/claude-animation/skills/claude-animation/references/motion.md (snap-then-hold, anticipation, staggered overlap, ones/twos exposure, separated action vs real time)",
+    "plugins/claude-animation/skills/claude-animation/templates/beat-sheet.md (informative cut rule, middle-of-shot beat placement, contact sound cue alignment)"
+  ],
+  "excluded_standalone_pipeline": [
+    "plugins/claude-animation/skills/claude-animation/lib/film.mjs",
+    "examples/*"
+  ],
+  "demo_characters_copied": false
+}

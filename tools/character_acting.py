@@ -34,6 +34,9 @@ class ActorPerformanceBeat(BaseModel):
     stamina: float = 1.0  # 1.0 = rested, 0.2 = exhausted
     shake: bool = False
     depth_layer: Literal["foreground", "midground", "background"] = "midground"
+    motion_track: Optional[Dict[str, Any]] = None
+    phases: List[Dict[str, Any]] = Field(default_factory=list)
+    contacts: List[Dict[str, Any]] = Field(default_factory=list)
 
 
 # Canonical acting presets defining distinctive joint angles [left_sh, left_el, right_sh, right_el]
@@ -60,14 +63,58 @@ def plan_actor_performance(
     capabilities: Optional[PackCapabilityProfile] = None,
     pack: str = "squire",
     genre: str = "roman",
+    motion_plan: Optional[Any] = None,
 ) -> Dict[str, List[ActorPerformanceBeat]]:
     """
     Plan expressive character performances for all actors in each shot based on
-    scene objectives, physical causality, and pack-specific genre vocabulary.
+    shared `MotionPlan` (when supplied) or scene objectives, physical causality,
+    and pack-specific genre vocabulary.
     Returns {shot_id: [ActorPerformanceBeat, ...]}.
     """
     caps = capabilities or get_pack_capabilities(pack, genre)
     performances_by_shot: Dict[str, List[ActorPerformanceBeat]] = {}
+
+    if motion_plan is not None:
+        from tools.motion_performance import MotionPlan
+
+        mp_obj = motion_plan if isinstance(motion_plan, MotionPlan) else MotionPlan.model_validate(motion_plan)
+        tracks_by_shot: Dict[str, List[Any]] = {}
+        for tr in mp_obj.tracks:
+            tracks_by_shot.setdefault(tr.shot_id, []).append(tr)
+
+        shot_ids = [o.shot_id for o in objectives] if objectives else sorted({tr.shot_id for tr in mp_obj.tracks})
+        for sid in shot_ids:
+            beats: List[ActorPerformanceBeat] = []
+            for tr in tracks_by_shot.get(sid, []):
+                peak_lean = max((ph.torso_lean for ph in tr.phases), key=lambda v: abs(v), default=0.0)
+                clamped_lean = max(-0.35, min(0.35, peak_lean))
+                peak_look = max((ph.head_look for ph in tr.phases), default=0.5)
+                cues = [ph.visible_end_condition for ph in tr.phases if ph.visible_end_condition]
+                beats.append(
+                    ActorPerformanceBeat(
+                        actor_id=tr.actor_id,
+                        shot_id=sid,
+                        start_t=tr.start_sec,
+                        end_t=tr.end_sec,
+                        action=tr.motion_type,
+                        posture=tr.phases[1].posture_state if len(tr.phases) > 1 else (tr.phases[0].posture_state if tr.phases else "upright"),
+                        arm_gesture="contact_locked" if tr.contacts else ("subtle_gesture" if tr.is_idle_or_speech_only else "active_reach"),
+                        leg_stance="planted_idle" if tr.is_idle_or_speech_only else ("stride_coupled" if "WALK" in tr.motion_type or "RUN" in tr.motion_type else "planted_athletic"),
+                        shield_tilt=0.0,
+                        torso_lean=clamped_lean,
+                        head_look=peak_look,
+                        face_expression=tr.emotion,
+                        observable_cues=cues or [tr.visible_end_condition],
+                        weight_shift=round(tr.world_end[0] - tr.world_start[0], 4),
+                        stamina=max(0.35, round(1.0 - 0.3 * tr.intensity, 2)),
+                        shake=False,
+                        motion_track=tr.model_dump(),
+                        phases=[ph.model_dump() for ph in tr.phases],
+                        contacts=[c.model_dump() for c in tr.contacts],
+                    )
+                )
+            performances_by_shot[sid] = beats
+        return performances_by_shot
 
     for obj in objectives:
         sid = obj.shot_id
@@ -365,6 +412,23 @@ def plan_actor_performance(
                         stamina=0.9,
                     )
                 )
+            else:
+                # Generic Squire civilian / harbor / non-military acting fallback using world_timeline actors
+                wt_actors = list(getattr(world_timeline, "actors", {}).keys()) if world_timeline is not None else []
+                primary_aid = wt_actors[0] if wt_actors else "civilian_a"
+                beats.append(
+                    ActorPerformanceBeat(
+                        actor_id=primary_aid,
+                        shot_id=sid,
+                        action=act or "OBSERVE",
+                        posture="active_civic" if act not in ("STAND", "OBSERVE", "WAIT") else "upright",
+                        torso_lean=0.06 if act not in ("STAND", "OBSERVE", "WAIT") else 0.0,
+                        head_look=0.7,
+                        face_expression="focused",
+                        observable_cues=[f"civic action {act or 'OBSERVE'}"],
+                        stamina=0.95,
+                    )
+                )
 
         elif pack == "dem":
             # DEM Self-improvement subtle acting
@@ -442,10 +506,20 @@ def compile_actor_performance_to_rig(
             pose_name = "march"
         elif performance.action in ("SHIELD_CLOSE",):
             pose_name = "brace"
+        elif "RUN" in performance.action:
+            pose_name = "lunge"
+        elif "WALK" in performance.action:
+            pose_name = "march"
+        elif any(k in performance.action for k in ("GRAB", "STEADY", "LIFT", "HAUL", "BRACE_ROPE", "CATCH")):
+            pose_name = "brace"
+        elif "DUCK" in performance.action or "SLIP" in performance.action:
+            pose_name = "impact_recoil"
+        elif "POINT" in performance.action:
+            pose_name = "signal"
 
         arm_angles = ACTING_ARM_ANGLES.get(pose_name, ACTING_ARM_ANGLES["stand"])
 
-        return {
+        compiled: Dict[str, Any] = {
             "pose": pose_name,
             "armsAng": arm_angles,
             "lean": round(performance.torso_lean * 100, 2),
@@ -463,6 +537,11 @@ def compile_actor_performance_to_rig(
                 "observable_cues": performance.observable_cues,
             },
         }
+        if performance.motion_track is not None:
+            compiled["motionTrack"] = performance.motion_track
+            compiled["performanceRig"]["phases"] = performance.phases
+            compiled["performanceRig"]["contacts"] = performance.contacts
+        return compiled
 
     elif pack == "dem":
         dem_pose = "stand"
@@ -491,6 +570,7 @@ def compile_actor_performance_to_rig(
 def validate_actor_performance(
     performances: Dict[str, List[ActorPerformanceBeat]],
     character_bible: Optional[Dict[str, Any]] = None,
+    motion_plan: Optional[Any] = None,
 ) -> Dict[str, Any]:
     """
     Validate that actor performances:
@@ -501,6 +581,13 @@ def validate_actor_performance(
     errors: List[str] = []
     warnings: List[str] = []
     distinct_poses_found: Set[str] = set()
+
+    if motion_plan is not None:
+        from tools.motion_performance import MotionPlan, validate_motion_plan
+
+        mp_obj = motion_plan if isinstance(motion_plan, MotionPlan) else MotionPlan.model_validate(motion_plan)
+        mp_val = validate_motion_plan(mp_obj)
+        errors.extend(mp_val["errors"])
 
     for sid, p_list in performances.items():
         if not p_list:
@@ -518,11 +605,13 @@ def validate_actor_performance(
             if abs(p.shield_tilt) > 0.45:
                 errors.append(f"Shot {sid} actor {p.actor_id}: excessive shield tilt {p.shield_tilt}")
 
-    # Verify that distinct tactical actions were planned
-    expected_actions = {"BRACE", "FATIGUE", "SIGNAL"}
-    missing = expected_actions - distinct_poses_found
-    if len(missing) == len(expected_actions):
-        warnings.append("Performance plan lacks distinctive physical postures (BRACE, FATIGUE, SIGNAL).")
+    # Verify that distinct physical actions were planned (tactical OR general physical acting)
+    expressive_tokens = (
+        "BRACE", "FATIGUE", "SIGNAL", "SLIP", "STEADY", "LIFT", "DUCK", "GRAB", "HAUL", "RUN", "WALK", "CATCH", "POINT"
+    )
+    has_expressive = any(any(tok in act_name for tok in expressive_tokens) for act_name in distinct_poses_found)
+    if not has_expressive:
+        warnings.append("Performance plan lacks distinctive physical postures.")
 
     return {
         "valid": len(errors) == 0,

@@ -668,3 +668,518 @@ def camera_plan_digest(camera_plans: List[CinematicShotPlan]) -> str:
     ]
     canonical_str = json.dumps(dumped, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canonical_str.encode("utf-8")).hexdigest()[:16]
+
+
+# ==============================================================================
+# V14.7.6 PHASE E — MULTI-ANGLE CAMERA SEGMENTS INSIDE ONE LOGICAL SHOT
+# ==============================================================================
+
+ProjectionMode = Literal[
+    "continuous_2d_canvas",
+    "authored_2d_insert",
+    "authored_2d_low_angle",
+    "authored_2d_high_angle",
+    "crop_zoom",
+]
+
+
+class CameraSegment(BaseModel):
+    schema_version: str = "14.7.6"
+    segment_id: str
+    shot_id: str
+    segment_index: int = 0
+    local_start: float = 0.0
+    local_end: float = 3.0
+    global_start: float = 0.0
+    global_end: float = 3.0
+    scale: CameraScale = "medium"
+    viewpoint: CinematicViewpoint = "front"
+    projection_mode: ProjectionMode = "continuous_2d_canvas"
+    center_from: Tuple[float, float] = (0.5, 0.54)
+    center_to: Tuple[float, float] = (0.5, 0.54)
+    zoom_from: float = 1.0
+    zoom_to: float = 1.04
+    axis: Literal["left_to_right", "right_to_left", "neutral"] = "left_to_right"
+    focus_actor_ids: List[str] = Field(default_factory=list)
+    focus_object_ids: List[str] = Field(default_factory=list)
+    action_phase_at_entry: str = "IDLE"
+    action_phase_at_exit: str = "SETTLE"
+    adds_information_reason: str = "establish_primary_action"
+    resets_action_time: bool = False
+    world_state_anchor: Dict[str, Any] = Field(default_factory=dict)
+
+
+def _axis_for_view(viewpoint: str, fallback: str = "left_to_right") -> Literal["left_to_right", "right_to_left", "neutral"]:
+    neutral = {"top_down", "high_angle", "low_angle", "rear", "front", "map"}
+    left_v = {"profile_left", "front_three_quarter_left", "over_shoulder_left", "rear_three_quarter_left"}
+    right_v = {"profile_right", "front_three_quarter_right", "over_shoulder_right", "rear_three_quarter_right"}
+    if viewpoint in neutral:
+        return "neutral"
+    if viewpoint in left_v:
+        return "left_to_right"
+    if viewpoint in right_v:
+        return "right_to_left"
+    return "left_to_right" if fallback != "right_to_left" else "right_to_left"
+
+
+def _snap_to_frame(t: float, fps: float = 24.0) -> float:
+    return round(round(t * fps) / fps, 4)
+
+
+def plan_multi_angle_action(
+    logical_shot: Dict[str, Any],
+    motion_plan: Optional[Any] = None,
+    world_state: Optional[Dict[str, Any]] = None,
+    fps: float = 24.0,
+) -> List[CameraSegment]:
+    """
+    Plan 1..3 contiguous script-driven camera segments within a single logical shot:
+    - 1 segment for short (< 3.0s) or single-beat shots (continuous tracking take).
+    - 2–3 segments ONLY when shot duration and physical phase transitions justify an edit
+      (e.g., flame close -> wide harbor; medium reaction -> hand/prop grip insert;
+      wide cooperative brace -> rope grip insert -> low-angle tower lift).
+    - Never resets action/world time across segments (`resets_action_time = False`).
+    - Never claims crop/zoom creates a reverse/rear angle (`authored_2d_*` or same-axis framing).
+    """
+    sid = str(logical_shot.get("id") or logical_shot.get("shot_id") or "S01")
+    g_start = float(logical_shot.get("start", 0.0))
+    dur = float(logical_shot.get("dur", max(0.4, float(logical_shot.get("end", g_start + 3.0)) - g_start)))
+    g_end = round(g_start + dur, 4)
+    line_low = f"{logical_shot.get('line', '')} {logical_shot.get('desc', '')}".lower()
+
+    mp_dict = (
+        motion_plan.model_dump()
+        if hasattr(motion_plan, "model_dump")
+        else (dict(motion_plan) if isinstance(motion_plan, dict) else {})
+    )
+    all_tracks = mp_dict.get("tracks") or mp_dict.get("actor_tracks") or []
+    shot_tracks = [tr for tr in all_tracks if str(tr.get("shot_id")) == sid]
+    shot_intents = [it for it in (mp_dict.get("intents") or []) if str(it.get("shot_id")) == sid]
+
+    actor_ids: List[str] = []
+    object_ids: List[str] = []
+    contact_times_local: List[float] = []
+    exert_times_local: List[float] = []
+    has_slip = False
+    has_extinguish = any(it.get("motion_type") == "EXTINGUISH" for it in shot_intents) or (
+        "went dark" in line_low or "extinguish" in line_low or "snuffs" in line_low
+    )
+
+    for tr in shot_tracks:
+        aid = str(tr.get("actor_id", ""))
+        if aid and aid not in actor_ids:
+            actor_ids.append(aid)
+        for oid in tr.get("object_ids") or []:
+            if oid not in object_ids:
+                object_ids.append(str(oid))
+        for ph in tr.get("phases") or []:
+            p_name = str(ph.get("phase_name", ""))
+            p_local = max(0.0, float(ph.get("start_sec", g_start)) - g_start)
+            if p_name == "CONTACT":
+                contact_times_local.append(p_local)
+            elif p_name in ("EXERT", "ACT"):
+                exert_times_local.append(p_local)
+            if ph.get("motion_type") == "SLIP" or ph.get("slip_foot"):
+                has_slip = True
+
+    ws = dict(world_state or {})
+    if not ws and mp_dict.get("world_states"):
+        for w_entry in mp_dict["world_states"]:
+            if str(w_entry.get("shot_id")) == sid:
+                ws = dict(w_entry)
+                break
+
+    primary_focus_x = 0.50
+    primary_focus_y = 0.56
+    if shot_tracks:
+        ws_pt = shot_tracks[0].get("world_end") or shot_tracks[0].get("world_start") or [0.46, 0.78]
+        primary_focus_x = float(clamp_val := max(0.24, min(0.76, float(ws_pt[0]))))
+        primary_focus_y = max(0.38, min(0.70, float(ws_pt[1]) - 0.14))
+
+    def _anchor_state() -> Dict[str, Any]:
+        return {
+            "actors": sorted(actor_ids),
+            "objects": sorted(object_ids),
+            "continuous_world_clock": True,
+        }
+
+    # Case 1: Short shot (< 3.0s) or no multi-phase justification -> single continuous segment
+    if dur < 2.95:
+        return [
+            CameraSegment(
+                segment_id=f"{sid}_seg01",
+                shot_id=sid,
+                segment_index=0,
+                local_start=0.0,
+                local_end=round(dur, 4),
+                global_start=g_start,
+                global_end=g_end,
+                scale="medium",
+                viewpoint="front_three_quarter_left",
+                projection_mode="continuous_2d_canvas",
+                center_from=(round(primary_focus_x, 3), round(primary_focus_y, 3)),
+                center_to=(round(primary_focus_x, 3), round(max(0.35, primary_focus_y - 0.02), 3)),
+                zoom_from=1.02,
+                zoom_to=1.06,
+                axis="left_to_right",
+                focus_actor_ids=actor_ids,
+                focus_object_ids=object_ids,
+                action_phase_at_entry="ANTICIPATE" if shot_tracks else "ESTABLISH",
+                action_phase_at_exit="SETTLE",
+                adds_information_reason="continuous_single_beat_tracking",
+                world_state_anchor=_anchor_state(),
+            )
+        ]
+
+    # Case 2: 3-segment cooperative climax (>= 4.0s, >= 2 actors + shared haul/lift objective)
+    is_shared_climax = any(k in line_low for k in ("together", "raised", "haul", "both", "lift"))
+    if dur >= 4.0 and len(actor_ids) >= 2 and contact_times_local and is_shared_climax:
+        c1 = _snap_to_frame(max(1.20, min(dur * 0.36, (min(contact_times_local) or dur * 0.34) + 0.12)), fps)
+        c2 = _snap_to_frame(max(c1 + 1.15, min(dur - 1.10, dur * 0.68)), fps)
+        if c2 - c1 >= 0.95 and dur - c2 >= 0.95:
+            return [
+                CameraSegment(
+                    segment_id=f"{sid}_seg01",
+                    shot_id=sid,
+                    segment_index=0,
+                    local_start=0.0,
+                    local_end=c1,
+                    global_start=g_start,
+                    global_end=round(g_start + c1, 4),
+                    scale="wide",
+                    viewpoint="front_three_quarter_left",
+                    projection_mode="continuous_2d_canvas",
+                    center_from=(0.50, 0.56),
+                    center_to=(0.52, 0.54),
+                    zoom_from=1.00,
+                    zoom_to=1.05,
+                    axis="left_to_right",
+                    focus_actor_ids=actor_ids,
+                    focus_object_ids=object_ids,
+                    action_phase_at_entry="ANTICIPATE",
+                    action_phase_at_exit="CONTACT",
+                    adds_information_reason="establish_two_actor_spatial_coordination_and_pulley_geometry",
+                    world_state_anchor=_anchor_state(),
+                ),
+                CameraSegment(
+                    segment_id=f"{sid}_seg02",
+                    shot_id=sid,
+                    segment_index=1,
+                    local_start=c1,
+                    local_end=c2,
+                    global_start=round(g_start + c1, 4),
+                    global_end=round(g_start + c2, 4),
+                    scale="detail",
+                    viewpoint="profile_left",
+                    projection_mode="authored_2d_insert",
+                    center_from=(0.56, 0.55),
+                    center_to=(0.56, 0.50),
+                    zoom_from=1.24,
+                    zoom_to=1.30,
+                    axis="left_to_right",
+                    focus_actor_ids=actor_ids,
+                    focus_object_ids=object_ids or ["rope", "lantern"],
+                    action_phase_at_entry="CONTACT",
+                    action_phase_at_exit="EXERT",
+                    adds_information_reason="reveal_locked_hands_on_taut_rope_and_rising_lantern_bracket",
+                    world_state_anchor=_anchor_state(),
+                ),
+                CameraSegment(
+                    segment_id=f"{sid}_seg03",
+                    shot_id=sid,
+                    segment_index=2,
+                    local_start=c2,
+                    local_end=round(dur, 4),
+                    global_start=round(g_start + c2, 4),
+                    global_end=g_end,
+                    scale="medium_wide",
+                    viewpoint="low_angle",
+                    projection_mode="authored_2d_low_angle",
+                    center_from=(0.52, 0.44),
+                    center_to=(0.50, 0.40),
+                    zoom_from=1.08,
+                    zoom_to=1.03,
+                    axis="neutral",
+                    focus_actor_ids=actor_ids,
+                    focus_object_ids=object_ids or ["lantern", "tower"],
+                    action_phase_at_entry="EXERT",
+                    action_phase_at_exit="SETTLE",
+                    adds_information_reason="confirm_lantern_seated_inside_upper_watchtower_alcove_above_storm",
+                    world_state_anchor=_anchor_state(),
+                ),
+            ]
+
+    # Case 3: 2-segment dramatic extinguish hook (close flame -> wide dark harbor hazard)
+    if has_extinguish and dur >= 2.95:
+        c1 = _snap_to_frame(min(dur - 1.25, max(1.10, dur * 0.42)), fps)
+        return [
+            CameraSegment(
+                segment_id=f"{sid}_seg01",
+                shot_id=sid,
+                segment_index=0,
+                local_start=0.0,
+                local_end=c1,
+                global_start=g_start,
+                global_end=round(g_start + c1, 4),
+                scale="close",
+                viewpoint="front_three_quarter_left",
+                projection_mode="authored_2d_insert",
+                center_from=(0.34, 0.36),
+                center_to=(0.35, 0.36),
+                zoom_from=1.28,
+                zoom_to=1.34,
+                axis="left_to_right",
+                focus_actor_ids=actor_ids,
+                focus_object_ids=["beacon", "lantern"],
+                action_phase_at_entry="ESTABLISH",
+                action_phase_at_exit="REACT",
+                adds_information_reason="show_squall_gust_snuffing_the_beacon_flame_up_close",
+                world_state_anchor=_anchor_state(),
+            ),
+            CameraSegment(
+                segment_id=f"{sid}_seg02",
+                shot_id=sid,
+                segment_index=1,
+                local_start=c1,
+                local_end=round(dur, 4),
+                global_start=round(g_start + c1, 4),
+                global_end=g_end,
+                scale="wide",
+                viewpoint="high_angle",
+                projection_mode="continuous_2d_canvas",
+                center_from=(0.52, 0.52),
+                center_to=(0.55, 0.52),
+                zoom_from=1.02,
+                zoom_to=1.00,
+                axis="neutral",
+                focus_actor_ids=actor_ids,
+                focus_object_ids=["ship", "rocks", "beacon"],
+                action_phase_at_entry="REACT",
+                action_phase_at_exit="SETTLE",
+                adds_information_reason="reveal_merchant_vessel_drifting_toward_dark_shoal_rocks",
+                world_state_anchor=_anchor_state(),
+            ),
+        ]
+
+    # Case 4: 2-segment physical grip / discovery (medium actor reaction -> close hand/prop contact insert)
+    if dur >= 3.2 and contact_times_local and not has_slip and len(actor_ids) == 1:
+        raw_cut = max(1.25, min(dur - 1.15, min(contact_times_local)))
+        c1 = _snap_to_frame(raw_cut, fps)
+        return [
+            CameraSegment(
+                segment_id=f"{sid}_seg01",
+                shot_id=sid,
+                segment_index=0,
+                local_start=0.0,
+                local_end=c1,
+                global_start=g_start,
+                global_end=round(g_start + c1, 4),
+                scale="medium",
+                viewpoint="front_three_quarter_left",
+                projection_mode="continuous_2d_canvas",
+                center_from=(round(primary_focus_x, 3), round(primary_focus_y, 3)),
+                center_to=(round(primary_focus_x + 0.02, 3), round(primary_focus_y, 3)),
+                zoom_from=1.04,
+                zoom_to=1.10,
+                axis="left_to_right",
+                focus_actor_ids=actor_ids,
+                focus_object_ids=object_ids,
+                action_phase_at_entry="ANTICIPATE",
+                action_phase_at_exit="REACH",
+                adds_information_reason="capture_facial_alarm_head_turn_and_reach_initiation",
+                world_state_anchor=_anchor_state(),
+            ),
+            CameraSegment(
+                segment_id=f"{sid}_seg02",
+                shot_id=sid,
+                segment_index=1,
+                local_start=c1,
+                local_end=round(dur, 4),
+                global_start=round(g_start + c1, 4),
+                global_end=g_end,
+                scale="detail",
+                viewpoint="profile_left",
+                projection_mode="authored_2d_insert",
+                center_from=(round(min(0.76, primary_focus_x + 0.05), 3), round(min(0.72, primary_focus_y + 0.04), 3)),
+                center_to=(round(min(0.76, primary_focus_x + 0.05), 3), round(primary_focus_y + 0.01, 3)),
+                zoom_from=1.26,
+                zoom_to=1.32,
+                axis="left_to_right",
+                focus_actor_ids=actor_ids,
+                focus_object_ids=object_ids or ["lantern"],
+                action_phase_at_entry="CONTACT",
+                action_phase_at_exit="SETTLE",
+                adds_information_reason="prove_tactile_hand_grip_on_spare_oil_lantern_handle",
+                world_state_anchor=_anchor_state(),
+            ),
+        ]
+
+    # Default: 1 continuous tracking segment (do NOT force multi-angle cuts on shots that read best unbroken)
+    default_scale: CameraScale = (
+        "wide"
+        if any(w in line_low for w in ("harbor", "ship", "rocks", "recove", "made it through", "safe way"))
+        else ("medium_wide" if has_slip or len(actor_ids) >= 2 else "medium")
+    )
+    default_view: CinematicViewpoint = "profile_left" if has_slip else "front_three_quarter_left"
+    return [
+        CameraSegment(
+            segment_id=f"{sid}_seg01",
+            shot_id=sid,
+            segment_index=0,
+            local_start=0.0,
+            local_end=round(dur, 4),
+            global_start=g_start,
+            global_end=g_end,
+            scale=default_scale,
+            viewpoint=default_view,
+            projection_mode="continuous_2d_canvas",
+            center_from=(round(primary_focus_x, 3), round(primary_focus_y, 3)),
+            center_to=(round(min(0.74, primary_focus_x + 0.03), 3), round(max(0.38, primary_focus_y - 0.02), 3)),
+            zoom_from=1.00 if default_scale == "wide" else 1.04,
+            zoom_to=1.05 if default_scale == "wide" else 1.10,
+            axis=_axis_for_view(default_view),
+            focus_actor_ids=actor_ids,
+            focus_object_ids=object_ids,
+            action_phase_at_entry="ANTICIPATE" if shot_tracks else "ESTABLISH",
+            action_phase_at_exit="SETTLE",
+            adds_information_reason="unbroken_continuous_staging_for_clear_spatial_readability",
+            world_state_anchor=_anchor_state(),
+        )
+    ]
+
+
+def validate_camera_segments(
+    segments: List[CameraSegment],
+    logical_shot: Dict[str, Any],
+    motion_plan: Optional[Any] = None,
+) -> Tuple[bool, List[str]]:
+    """
+    Validate internal multi-angle camera segments against Section 8 invariants:
+    1. Non-empty segment list and every segment has strictly positive duration (>= 0.12s).
+    2. Contiguous local timeline covering [0.0, shot_dur] with zero gaps/overlaps.
+    3. 180-degree spatial axis preserved across internal cuts unless bridged via neutral view.
+    4. No fake reverse/rear angle claimed via mere crop/zoom (`projection_mode == 'crop_zoom'`).
+    5. Every internal cut must add new visual information (distinct scale/viewpoint/reason).
+    6. Action clock & world/prop state never reset or teleport across internal segment cuts.
+    """
+    errors: List[str] = []
+    sid = str(logical_shot.get("id") or logical_shot.get("shot_id") or "S01")
+    g_start = float(logical_shot.get("start", 0.0))
+    dur = float(logical_shot.get("dur", max(0.2, float(logical_shot.get("end", g_start + 3.0)) - g_start)))
+
+    if not segments:
+        return False, [f"Shot {sid}: camera segments list is empty"]
+
+    if abs(segments[0].local_start - 0.0) > 1e-3:
+        errors.append(f"Shot {sid}: first segment must start at 0.0s (got {segments[0].local_start})")
+    if abs(segments[-1].local_end - dur) > 1e-2:
+        errors.append(f"Shot {sid}: last segment must end at {dur:.4f}s (got {segments[-1].local_end:.4f}s)")
+
+    for i, seg in enumerate(segments):
+        seg_dur = seg.local_end - seg.local_start
+        if seg_dur < 0.12:
+            errors.append(f"Shot {sid} {seg.segment_id}: empty or sub-3-frame segment duration ({seg_dur:.4f}s)")
+        if seg.viewpoint not in SUPPORTED_2D_VIEWPOINTS:
+            errors.append(f"Shot {sid} {seg.segment_id}: unsupported viewpoint '{seg.viewpoint}'")
+        if seg.resets_action_time:
+            errors.append(f"Shot {sid} {seg.segment_id}: camera segment resets action time (forbidden)")
+        if seg.projection_mode == "crop_zoom" and seg.viewpoint in (
+            "rear",
+            "rear_three_quarter_left",
+            "rear_three_quarter_right",
+            "over_shoulder_left",
+            "over_shoulder_right",
+        ):
+            errors.append(
+                f"Shot {sid} {seg.segment_id}: fake reverse/rear angle '{seg.viewpoint}' via crop_zoom is forbidden"
+            )
+        if not (0.8 <= seg.zoom_from <= 2.6 and 0.8 <= seg.zoom_to <= 2.6):
+            errors.append(f"Shot {sid} {seg.segment_id}: zoom [{seg.zoom_from}, {seg.zoom_to}] outside [0.8, 2.6]")
+        for cx, cy in (seg.center_from, seg.center_to):
+            if not (0.08 <= cx <= 0.92 and 0.08 <= cy <= 0.92):
+                errors.append(f"Shot {sid} {seg.segment_id}: center ({cx}, {cy}) outside safe bounds [0.08, 0.92]")
+
+        if i > 0:
+            prev = segments[i - 1]
+            gap = abs(seg.local_start - prev.local_end)
+            if gap > 1e-3:
+                errors.append(
+                    f"Shot {sid}: non-contiguous cut {prev.segment_id}->{seg.segment_id} "
+                    f"(prev_end={prev.local_end:.4f}, next_start={seg.local_start:.4f})"
+                )
+            if (
+                prev.axis in ("left_to_right", "right_to_left")
+                and seg.axis in ("left_to_right", "right_to_left")
+                and prev.axis != seg.axis
+            ):
+                errors.append(
+                    f"Shot {sid}: 180-degree axis violation across internal cut "
+                    f"{prev.segment_id} ({prev.axis}) -> {seg.segment_id} ({seg.axis})"
+                )
+            if (
+                prev.scale == seg.scale
+                and prev.viewpoint == seg.viewpoint
+                and prev.focus_object_ids == seg.focus_object_ids
+            ):
+                errors.append(
+                    f"Shot {sid}: unmotivated internal cut {prev.segment_id}->{seg.segment_id} adds no new information"
+                )
+            if prev.world_state_anchor and seg.world_state_anchor:
+                if prev.world_state_anchor.get("objects") and seg.world_state_anchor.get("objects"):
+                    # Ensure held props don't vanish arbitrarily across internal edit unless explicitly explained
+                    if prev.world_state_anchor.get("continuous_world_clock") is not True or (
+                        seg.world_state_anchor.get("continuous_world_clock") is not True
+                    ):
+                        errors.append(f"Shot {sid}: world clock continuity broken across {prev.segment_id}->{seg.segment_id}")
+
+    return len(errors) == 0, errors
+
+
+def compile_camera_segments_to_renderer(
+    segments: List[CameraSegment],
+    aspect: str = "16:9",
+) -> Dict[str, Any]:
+    """
+    Compile `CameraSegment` list into renderer-ready `args.cameraSegments` while preserving
+    backward-compatible `cameraRig`, `move`, and `moveAmt` fields for legacy consumers.
+    """
+    if not segments:
+        return {}
+    seg_dicts = [seg.model_dump() for seg in segments]
+    first = segments[0]
+    last = segments[-1]
+    dur = max(0.2, float(last.local_end - first.local_start))
+
+    # For single-segment shots, emit smooth 2-keyframe cameraRig matching the segment
+    # For multi-segment shots, `packs/squire/templates.js::camera` executes `args.cameraSegments`
+    # with hard intentional cuts at `local_start`/`local_end` (no mid-cut interpolation blur!).
+    kfs = [
+        {
+            "t": round(first.local_start, 3),
+            "x": round(first.center_from[0], 3),
+            "y": round(first.center_from[1], 3),
+            "z": round(first.zoom_from, 3),
+            "ease": "sine",
+        },
+        {
+            "t": round(dur, 3),
+            "x": round(first.center_to[0], 3),
+            "y": round(first.center_to[1], 3),
+            "z": round(first.zoom_to, 3),
+            "ease": "sine",
+        },
+    ]
+    legacy_move = "in" if first.zoom_to >= first.zoom_from else "out"
+    return {
+        "cameraSegments": seg_dicts,
+        "cameraRig": {
+            "viewpoint": first.viewpoint,
+            "scale": first.scale,
+            "keyframes": kfs,
+            "aspect": aspect,
+            "internal_segment_count": len(segments),
+        },
+        "move": legacy_move,
+        "moveAmt": round(max(0.02, abs(first.zoom_to - first.zoom_from)), 3),
+    }
+

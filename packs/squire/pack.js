@@ -14,6 +14,7 @@ export * from './world.js';
 export * from './horse.js';
 export * from './army.js';
 export * from './templates.js';
+export * from './motion_engine.js';
 export { E } from '/engine/core.js';
 
 function css(href) { return new Promise((r) => { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; l.onload = r; l.onerror = r; document.head.appendChild(l); }); }

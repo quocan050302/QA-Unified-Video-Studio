@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "pytest_exit_code": 0,
+  "log_path": "tests/evidence/v14_7_6/logs/w1_motion_plan_unit.log",
+  "wording_variation_test": {
+    "status": "PASS",
+    "canonical_script_sha256": "1b93447a53b58a95490fea1abc318d05b6cd28001e8dfbd7fd6feb14dcd1a8b1",
+    "variation_script_sha256": "a4bde926077c639c04d6154f2fc61b8886e7bb33bdf1ca7c7551af2ee0df2cfc",
+    "canonical_shot_actions": [
+      "EXTINGUISH",
+      "SAIL_TURN",
+      "GRAB",
+      "RUN",
+      "SLIP",
+      "HAUL_ROPE",
+      "ILLUMINATE",
+      "RELIEF_EXHALE"
+    ],
+    "variation_shot_actions": [
+      "EXTINGUISH",
+      "SAIL_TURN",
+      "WALK",
+      "POINT",
+      "DUCK",
+      "LIFT_SHARED",
+      "ILLUMINATE",
+      "RELIEF_EXHALE"
+    ],
+    "s03_canonical_actors": [
+      "aelia"
+    ],
+    "s03_variation_actors": [
+      "felix"
+    ],
+    "s03_canonical_camera_segments": 2,
+    "s03_variation_camera_segments": 1
+  },
+  "elapsed_sec": 0.5483
+}
