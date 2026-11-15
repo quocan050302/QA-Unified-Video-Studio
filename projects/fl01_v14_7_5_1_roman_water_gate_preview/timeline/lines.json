@@ -1,0 +1,50 @@
+[
+  {
+    "start": 0.18,
+    "end": 1.4549,
+    "text": "The aqueduct cracked.",
+    "shot_id": "S01"
+  },
+  {
+    "start": 3.18,
+    "end": 5.711,
+    "text": "Below it, a crowded street stood in danger.",
+    "shot_id": "S02"
+  },
+  {
+    "start": 7.18,
+    "end": 9.3163,
+    "text": "Livia saw the stone begin to give way.",
+    "shot_id": "S03"
+  },
+  {
+    "start": 11.18,
+    "end": 13.2866,
+    "text": "She shouted, Close the upper gate!",
+    "shot_id": "S04"
+  },
+  {
+    "start": 15.18,
+    "end": 17.6405,
+    "text": "The wheel jammed. Two workers pushed together.",
+    "shot_id": "S05"
+  },
+  {
+    "start": 19.18,
+    "end": 21.5485,
+    "text": "At last, the gate dropped into place.",
+    "shot_id": "S06"
+  },
+  {
+    "start": 23.18,
+    "end": 25.269,
+    "text": "The torrent turned toward the overflow channel.",
+    "shot_id": "S07"
+  },
+  {
+    "start": 27.18,
+    "end": 28.3634,
+    "text": "The street was safe.",
+    "shot_id": "S08"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "evidence_schema_version": "14.7.5.1",
+  "run_id": "v14_7_5_1_val_1794743976",
+  "phase": "pre_push_verified_awaiting_code_commit_push",
+  "timestamp": "2026-11-15T12:12:40Z",
+  "mandatory_work_branch": "fix/Image-Shot",
+  "baseline_sha": "a0813bd0b7a4428f9563d80e65f6cff6c6ef50a6",
+  "pre_push_remote_fix_image_shot_sha": "a0813bd0b7a4428f9563d80e65f6cff6c6ef50a6",
+  "attested_code_commit_sha": null,
+  "final_remote_branch_sha": null,
+  "remote_production_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_invariant_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_unchanged": true
+}

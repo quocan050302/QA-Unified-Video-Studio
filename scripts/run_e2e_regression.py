@@ -83,8 +83,23 @@ from test_v10_opening import (
     save_contact_sheet,
 )
 
+def _resolve_e2e_max_concurrency() -> int:
+    raw = os.environ.get("QA_E2E_MAX_CONCURRENCY", "").strip()
+    if "--max-concurrency" in sys.argv:
+        idx = sys.argv.index("--max-concurrency")
+        if idx + 1 < len(sys.argv):
+            raw = sys.argv[idx + 1].strip()
+    if raw:
+        try:
+            return max(1, min(4, int(raw)))
+        except ValueError:
+            pass
+    return 2
+
+
+E2E_MAX_CONCURRENCY = _resolve_e2e_max_concurrency()
 # Concurrency semaphore for heavy browser/FFmpeg render processes
-CONCURRENCY_SEMAPHORE = asyncio.Semaphore(2)
+CONCURRENCY_SEMAPHORE = asyncio.Semaphore(E2E_MAX_CONCURRENCY)
 ACTIVE_MONITOR: ResourceMonitor | None = None
 
 
@@ -219,7 +234,7 @@ def save_compressed_proof(src_img: Path, dest_img: Path, width: int = 480):
 # -----------------------------------------------------------------------------
 
 async def g00_baseline() -> dict:
-    ok, msg, res_info = check_resources(REPO_ROOT, min_disk_gb=4.0, min_ram_gb=0.8)
+    ok, msg, res_info = check_resources(REPO_ROOT, min_disk_gb=6.0, min_ram_gb=1.0)
     git_branch_code, git_branch, _, _ = run_sync(["git", "branch", "--show-current"])
     git_head_code, git_head, _, _ = run_sync(["git", "rev-parse", "HEAD"])
     git_prod_code, git_prod, _, _ = run_sync(["git", "rev-parse", "Production"])
@@ -3693,7 +3708,7 @@ async def main():
     print(f"Root: {REPO_ROOT}")
     print("=" * 75)
 
-    ok, msg, res = check_resources(REPO_ROOT, min_disk_gb=6.0)
+    ok, msg, res = check_resources(REPO_ROOT, min_disk_gb=6.0, min_ram_gb=1.0)
     if not ok:
         print(f"[ResourceGuard BLOCKED] {msg}", file=sys.stderr)
         sys.exit(1)
@@ -3703,7 +3718,7 @@ async def main():
     EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
 
     global ACTIVE_MONITOR
-    monitor = ResourceMonitor(str(REPO_ROOT), min_disk_gb=6.0, interval_sec=1.0)
+    monitor = ResourceMonitor(str(REPO_ROOT), min_disk_gb=6.0, min_ram_gb=1.0, interval_sec=1.0)
     ACTIVE_MONITOR = monitor
     monitor.start()
 

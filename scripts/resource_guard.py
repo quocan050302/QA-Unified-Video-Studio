@@ -145,7 +145,7 @@ class ResourceMonitor:
         min_disk_gb: float = DEFAULT_MIN_DISK_GB,
         min_disk_free_gb: Optional[float] = None,
         min_ram_gb: float = DEFAULT_MIN_RAM_GB,
-        min_ram_avail_mb: float = 300.0,
+        min_ram_avail_mb: Optional[float] = None,
         max_ram_percent: float = 95.0,
         interval_sec: float = 0.5,
         sample_interval_sec: Optional[float] = None,
@@ -155,14 +155,19 @@ class ResourceMonitor:
         self.target_path = Path(target).resolve()
         self.workspace = str(self.target_path)
         
-        # Unify arguments
+        # Unify arguments and enforce >=6.0 GiB disk & >=1.0 GiB RAM floor by default
         self.sample_interval_sec = min(1.0, max(0.1, sample_interval_sec or interval_sec))
         self.interval_sec = self.sample_interval_sec
-        self.min_disk_free_gb = min_disk_free_gb if min_disk_free_gb is not None else min_disk_gb
+        raw_disk_floor = min_disk_free_gb if min_disk_free_gb is not None else min_disk_gb
+        self.min_disk_free_gb = float(raw_disk_floor)
         self.min_disk_gb = self.min_disk_free_gb
         self.max_ram_percent = max_ram_percent
-        self.min_ram_avail_mb = min_ram_avail_mb
-        self.min_ram_gb = min_ram_gb
+        self.min_ram_gb = float(min_ram_gb)
+        self.min_ram_avail_mb = (
+            float(min_ram_avail_mb)
+            if min_ram_avail_mb is not None
+            else round(self.min_ram_gb * 1024.0, 1)
+        )
         self.enforce_limits = enforce_limits
 
         self.stop_event = threading.Event()

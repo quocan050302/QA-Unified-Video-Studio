@@ -1,0 +1,63 @@
+{
+  "title": "THE WATER GATE — THIRTY SECONDS TO SAVE THE STREET",
+  "subtitle": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+  "duration": 30.0,
+  "beats": [
+    {
+      "id": "S01",
+      "start": 0.0,
+      "end": 3.0,
+      "dur": 3.0,
+      "text": "The aqueduct cracked."
+    },
+    {
+      "id": "S02",
+      "start": 3.0,
+      "end": 7.0,
+      "dur": 4.0,
+      "text": "Below it, a crowded street stood in danger."
+    },
+    {
+      "id": "S03",
+      "start": 7.0,
+      "end": 11.0,
+      "dur": 4.0,
+      "text": "Livia saw the stone begin to give way."
+    },
+    {
+      "id": "S04",
+      "start": 11.0,
+      "end": 15.0,
+      "dur": 4.0,
+      "text": "She shouted, Close the upper gate!"
+    },
+    {
+      "id": "S05",
+      "start": 15.0,
+      "end": 19.0,
+      "dur": 4.0,
+      "text": "The wheel jammed. Two workers pushed together."
+    },
+    {
+      "id": "S06",
+      "start": 19.0,
+      "end": 23.0,
+      "dur": 4.0,
+      "text": "At last, the gate dropped into place."
+    },
+    {
+      "id": "S07",
+      "start": 23.0,
+      "end": 27.0,
+      "dur": 4.0,
+      "text": "The torrent turned toward the overflow channel."
+    },
+    {
+      "id": "S08",
+      "start": 27.0,
+      "end": 30.0,
+      "dur": 3.0,
+      "text": "The street was safe."
+    }
+  ]
+}

@@ -93,6 +93,7 @@ def collect_render_inputs(project_path: Path | str, render_options: Optional[Dic
         "story/director_plan.json",
         "story/character_bible.json",
         "story/claims_manifest.json",
+        "story/asset_source_manifest.json",
         "timeline/lines.json",
         "timeline/words.json",
         "timeline/blocks.json",
@@ -152,8 +153,22 @@ def collect_render_inputs(project_path: Path | str, render_options: Optional[Dic
             if pf.is_file() and pf.suffix.lower() in (".js", ".mjs", ".py"):
                 code_modules[str(pf.relative_to(ROOT_DIR))] = sha256_file(pf)
 
+    # Optional explicit project code_dependencies (e.g. packs/squire/civic/water_gate.js)
+    raw_code_deps = options.get("code_dependencies")
+    if raw_code_deps is None:
+        raw_code_deps = cfg_data.get("code_dependencies")
+    extra_code_deps: List[str] = []
+    if isinstance(raw_code_deps, list) and len(raw_code_deps) > 0:
+        for dep_rel in sorted({str(d).strip().lstrip("/") for d in raw_code_deps if str(d).strip()}):
+            dep_path = (ROOT_DIR / dep_rel).resolve()
+            if not dep_path.is_file():
+                raise FileNotFoundError(f"Declared code_dependency missing: {dep_rel} ({dep_path})")
+            rel_norm = str(dep_path.relative_to(ROOT_DIR)) if dep_path.is_relative_to(ROOT_DIR) else dep_rel
+            code_modules[rel_norm] = sha256_file(dep_path)
+            extra_code_deps.append(rel_norm)
+
     # 4. Normalized render options
-    norm_options = {
+    norm_options: Dict[str, Any] = {
         "pack": pack,
         "genre": genre,
         "resolution": resolution,
@@ -165,6 +180,8 @@ def collect_render_inputs(project_path: Path | str, render_options: Optional[Dic
         "scale": float(options.get("scale", 1.0)),
         "audio_mode": options.get("audio_mode", "silent" if pack == "dem" else "voice_sfx"),
     }
+    if extra_code_deps:
+        norm_options["code_dependencies"] = extra_code_deps
 
     manifest = {
         "schema_version": "1.0",
@@ -268,12 +285,42 @@ def inspect_media_file(
             errors.append(f"FPS mismatch: expected {expected_specs['fps']}, got {fps}")
 
     decode_clean = True
+    decoded_video_frames: Optional[int] = None
+    video_stream_duration = float(v_stream.get("duration")) if (v_stream and v_stream.get("duration") is not None) else None
+    audio_stream_duration = float(a_stream.get("duration")) if (a_stream and a_stream.get("duration") is not None) else None
+
     if full_decode and (has_video or has_audio):
         dec_cmd = ["ffmpeg", "-v", "error", "-i", str(p), "-f", "null", "-"]
         dec_res = subprocess.run(dec_cmd, capture_output=True, text=True)
         if dec_res.returncode != 0 or dec_res.stderr.strip():
             decode_clean = False
             errors.append(f"Full ffmpeg decode failed: {dec_res.stderr.strip()[:200]}")
+
+    if has_video and (full_decode or (expected_specs and "exact_video_frames" in expected_specs)):
+        fc_cmd = [
+            "ffprobe",
+            "-v",
+            "error",
+            "-count_frames",
+            "-select_streams",
+            "v:0",
+            "-show_entries",
+            "stream=nb_read_frames",
+            "-of",
+            "default=nokey=1:noprint_wrappers=1",
+            str(p),
+        ]
+        fc_res = subprocess.run(fc_cmd, capture_output=True, text=True)
+        if fc_res.returncode == 0 and fc_res.stdout.strip().isdigit():
+            decoded_video_frames = int(fc_res.stdout.strip())
+            if expected_specs and "exact_video_frames" in expected_specs:
+                exp_vf = int(expected_specs["exact_video_frames"])
+                if decoded_video_frames != exp_vf:
+                    errors.append(
+                        f"Decoded video frame count mismatch: expected exact {exp_vf}, got {decoded_video_frames}"
+                    )
+        elif expected_specs and "exact_video_frames" in expected_specs:
+            errors.append("Failed to count decoded video frames via ffprobe -count_frames")
 
     max_volume_db = None
     mean_volume_db = None
@@ -329,6 +376,9 @@ def inspect_media_file(
         "error": "; ".join(errors) if errors else None,
         "errors": errors,
         "duration": duration,
+        "video_stream_duration": video_stream_duration,
+        "audio_stream_duration": audio_stream_duration,
+        "decoded_video_frames": decoded_video_frames,
         "file_size": file_size,
         "width": width,
         "height": height,
@@ -364,7 +414,12 @@ def write_render_receipt_atomic(
         raise FileNotFoundError(f"Cannot write receipt for nonexistent output: {out_p}")
 
     req_audio = (manifest.get("render_options", {}).get("audio_mode") == "voice_sfx")
-    media_info = inspect_media_file(out_p, require_audio=req_audio, full_decode=True)
+    media_info = inspect_media_file(
+        out_p,
+        expected_specs={"measure_loudness": True} if req_audio else None,
+        require_audio=req_audio,
+        full_decode=True,
+    )
     if not media_info.get("valid"):
         raise ValueError(f"Cannot write receipt for invalid media: {media_info.get('error')}")
 
@@ -491,14 +546,33 @@ def validate_cache_hit(
             "media_info": None,
         }
 
-    # Verify input fingerprint match
+    # Verify input fingerprint match (fail closed on null, empty, or non-64-hex values)
     current_fingerprint = compute_render_fingerprint(manifest)
     recorded_fingerprint = receipt.get("input_fingerprint")
+    if not isinstance(recorded_fingerprint, str) or len(recorded_fingerprint.strip()) < 64:
+        return {
+            "hit": False,
+            "status": "CACHE_INVALIDATED",
+            "reason": f"Missing, null, or malformed input_fingerprint in receipt: {recorded_fingerprint!r}",
+            "receipt": receipt,
+            "media_info": None,
+        }
+    recorded_fingerprint = recorded_fingerprint.strip()
     if current_fingerprint != recorded_fingerprint:
         return {
             "hit": False,
             "status": "CACHE_INVALIDATED",
             "reason": f"Input fingerprint mismatch: code, storyboard, voice, or assets modified. Recorded={recorded_fingerprint[:12]}, Current={current_fingerprint[:12]}",
+            "receipt": receipt,
+            "media_info": None,
+        }
+
+    recorded_out_sha = receipt.get("output_sha256")
+    if not isinstance(recorded_out_sha, str) or len(recorded_out_sha.strip()) < 64:
+        return {
+            "hit": False,
+            "status": "CACHE_INVALIDATED",
+            "reason": f"Missing, null, or malformed output_sha256 in receipt: {recorded_out_sha!r}",
             "receipt": receipt,
             "media_info": None,
         }
@@ -516,6 +590,7 @@ def validate_cache_hit(
             "min_duration",
             "max_duration",
             "fps",
+            "exact_video_frames",
             "check_volume",
             "reject_clipping",
             "measure_loudness",
@@ -537,11 +612,11 @@ def validate_cache_hit(
             "media_info": media_info,
         }
 
-    if media_info["sha256"] != receipt.get("output_sha256"):
+    if media_info["sha256"] != recorded_out_sha.strip():
         return {
             "hit": False,
             "status": "CACHE_INVALIDATED",
-            "reason": f"Output artifact content SHA256 mismatch: file on disk was modified or corrupted.",
+            "reason": "Output artifact content SHA256 mismatch: file on disk was modified or corrupted.",
             "receipt": receipt,
             "media_info": media_info,
         }
@@ -579,6 +654,199 @@ def validate_cache_hit(
         "reason": "Cryptographically verified cache hit (matching input manifest, output SHA256, and valid media streams).",
         "receipt": receipt,
         "media_info": media_info,
+    }
+
+
+def _is_valid_hex64(val: Any) -> bool:
+    if not isinstance(val, str):
+        return False
+    s = val.strip().lower()
+    return len(s) == 64 and all(c in "0123456789abcdef" for c in s)
+
+
+def extract_receipt_lineage_fields(receipt: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Explicit versioned receipt field adapter (supports schema_version '1.0' and '0.9-legacy').
+    Never guesses arbitrary fields and never treats null/empty values as valid.
+    """
+    if not isinstance(receipt, dict):
+        return {
+            "valid_schema": False,
+            "schema_version": None,
+            "input_fingerprint": None,
+            "output_sha256": None,
+            "stored_render_options": None,
+            "error": "Receipt is missing or not a JSON object",
+        }
+    ver = str(receipt.get("schema_version") or "")
+    if ver == "1.0":
+        inp_fp = receipt.get("input_fingerprint")
+        out_sha = receipt.get("output_sha256")
+        man = receipt.get("input_manifest")
+        opts = man.get("render_options") if isinstance(man, dict) else None
+    elif ver == "0.9-legacy":
+        inp_fp = receipt.get("legacy_input_sha256")
+        out_sha = receipt.get("legacy_output_sha256")
+        opts = receipt.get("legacy_render_options")
+    else:
+        return {
+            "valid_schema": False,
+            "schema_version": ver or None,
+            "input_fingerprint": None,
+            "output_sha256": None,
+            "stored_render_options": None,
+            "error": f"Unsupported or missing receipt schema_version: {ver!r}",
+        }
+
+    if not _is_valid_hex64(inp_fp):
+        return {
+            "valid_schema": False,
+            "schema_version": ver,
+            "input_fingerprint": None,
+            "output_sha256": out_sha if _is_valid_hex64(out_sha) else None,
+            "stored_render_options": opts if isinstance(opts, dict) else None,
+            "error": f"Receipt input_fingerprint is null, empty, or invalid 64-hex: {inp_fp!r}",
+        }
+    if not _is_valid_hex64(out_sha):
+        return {
+            "valid_schema": False,
+            "schema_version": ver,
+            "input_fingerprint": inp_fp.strip(),
+            "output_sha256": None,
+            "stored_render_options": opts if isinstance(opts, dict) else None,
+            "error": f"Receipt output_sha256 is null, empty, or invalid 64-hex: {out_sha!r}",
+        }
+    if not isinstance(opts, dict):
+        return {
+            "valid_schema": False,
+            "schema_version": ver,
+            "input_fingerprint": inp_fp.strip(),
+            "output_sha256": out_sha.strip(),
+            "stored_render_options": None,
+            "error": "Receipt missing stored input_manifest.render_options dict",
+        }
+
+    return {
+        "valid_schema": True,
+        "schema_version": ver,
+        "input_fingerprint": inp_fp.strip(),
+        "output_sha256": out_sha.strip(),
+        "stored_render_options": dict(opts),
+        "error": None,
+    }
+
+
+def verify_receipt_and_lineage(
+    project_path: Path | str,
+    output_path: Path | str,
+    expected_specs: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """
+    Strict fail-closed provenance, input_fingerprint, output_sha256, and cache-hit verifier (V14.7.5.1).
+    Recomputes fresh `collect_render_inputs(project_path, exact_stored_render_options)` and verifies:
+      1. Receipt exists and passes versioned schema validation (no null/empty hashes).
+      2. Recomputed fresh `input_fingerprint == receipt.input_fingerprint`.
+      3. Current disk MP4 `sha256 == receipt.output_sha256`.
+      4. `validate_cache_hit(project_path, output_path, fresh_manifest, expected_specs).hit is True`.
+    """
+    proj = Path(project_path).resolve()
+    out_p = Path(output_path).resolve()
+    errors: List[str] = []
+
+    receipt_p = proj / "build" / "render_receipt.json"
+    sidecar_p = out_p.with_suffix(".receipt.json")
+    chosen_receipt_p = receipt_p if receipt_p.is_file() else (sidecar_p if sidecar_p.is_file() else None)
+
+    receipt: Optional[Dict[str, Any]] = None
+    if chosen_receipt_p is None:
+        errors.append("Missing build/render_receipt.json and sidecar receipt")
+    else:
+        try:
+            receipt = json.loads(chosen_receipt_p.read_text(encoding="utf-8"))
+        except Exception as exc:
+            errors.append(f"Corrupted receipt JSON: {exc}")
+
+    adapted = extract_receipt_lineage_fields(receipt)
+    if not adapted["valid_schema"]:
+        errors.append(str(adapted["error"]))
+
+    stored_opts = adapted["stored_render_options"]
+    recorded_fp = adapted["input_fingerprint"]
+    recorded_out_sha = adapted["output_sha256"]
+
+    recomputed_fp: Optional[str] = None
+    fresh_manifest: Optional[Dict[str, Any]] = None
+    if proj.is_dir() and isinstance(stored_opts, dict):
+        try:
+            fresh_manifest = collect_render_inputs(proj, stored_opts)
+            recomputed_fp = compute_render_fingerprint(fresh_manifest)
+        except Exception as exc:
+            errors.append(f"Failed to recompute fresh render inputs: {exc}")
+
+    live_out_sha: Optional[str] = None
+    if out_p.is_file():
+        live_out_sha = sha256_file(out_p)
+    else:
+        errors.append(f"Output MP4 missing on disk: {out_p}")
+
+    fp_match = bool(
+        recorded_fp is not None
+        and recomputed_fp is not None
+        and recorded_fp == recomputed_fp
+    )
+    if not fp_match and recorded_fp is not None and recomputed_fp is not None:
+        errors.append(
+            f"input_fingerprint mismatch: receipt={recorded_fp[:16]} != recomputed={recomputed_fp[:16]}"
+        )
+
+    out_sha_match = bool(
+        recorded_out_sha is not None
+        and live_out_sha is not None
+        and recorded_out_sha == live_out_sha
+    )
+    if not out_sha_match and recorded_out_sha is not None and live_out_sha is not None:
+        errors.append(
+            f"output_sha256 mismatch: receipt={recorded_out_sha[:16]} != disk={live_out_sha[:16]}"
+        )
+
+    cache_res: Dict[str, Any] = {"hit": False, "status": "NOT_RUN", "reason": "Skipped due to invalid manifest", "media_info": None}
+    if fresh_manifest is not None and out_p.is_file():
+        cache_res = validate_cache_hit(proj, out_p, fresh_manifest, expected_specs=expected_specs)
+        if not cache_res.get("hit"):
+            errors.append(f"validate_cache_hit rejected artifact: {cache_res.get('reason')}")
+
+    media_info = cache_res.get("media_info")
+    media_decode_verified = bool(
+        isinstance(media_info, dict)
+        and media_info.get("valid") is True
+        and media_info.get("decode_clean") is True
+    )
+    receipt_verified = bool(adapted["valid_schema"] and fp_match and out_sha_match)
+    cache_verified = bool(cache_res.get("hit") is True)
+    all_ok = bool(receipt_verified and cache_verified and media_decode_verified and len(errors) == 0)
+
+    return {
+        "evidence_schema_version": "14.7.5.1",
+        "status": "PASS" if all_ok else "FAIL",
+        "project_id": proj.name,
+        "receipt_path": str(chosen_receipt_p.relative_to(ROOT_DIR)) if (chosen_receipt_p and chosen_receipt_p.is_relative_to(ROOT_DIR)) else (str(chosen_receipt_p) if chosen_receipt_p else None),
+        "output_path": str(out_p.relative_to(ROOT_DIR)) if out_p.is_relative_to(ROOT_DIR) else str(out_p),
+        "input_fingerprint": recorded_fp,
+        "recomputed_input_fingerprint": recomputed_fp,
+        "fingerprint_match": fp_match,
+        "output_sha256": live_out_sha,
+        "recorded_output_sha256": recorded_out_sha,
+        "output_sha_match": out_sha_match,
+        "receipt_verified": receipt_verified,
+        "cache_verified": cache_verified,
+        "cache_status": cache_res.get("status"),
+        "media_decode_verified": media_decode_verified,
+        "stored_render_options": stored_opts,
+        "tracked_files_count": len((fresh_manifest or {}).get("tracked_files", {})),
+        "code_modules_count": len((fresh_manifest or {}).get("code_modules", {})),
+        "media_info": media_info,
+        "provenance": (receipt or {}).get("provenance", {}),
+        "errors": errors,
     }
 
 

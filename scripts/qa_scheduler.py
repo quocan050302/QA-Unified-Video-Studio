@@ -88,8 +88,11 @@ def inspect_resource_budget(
 ) -> Dict[str, Any]:
     """
     Inspect current host resource budget: disk free space, free inodes, available RAM, and CPU cores.
+    Enforces non-negotiable minimum floors: min_disk_gb >= 6.0 GiB and min_ram_gb >= 1.0 GiB.
     Preflight floor requires free >= min_disk_gb + estimated_scratch_gb + extra_margin_gb.
     """
+    eff_min_disk_gb = max(DISK_MIN_RESERVE_GB, float(min_disk_gb))
+    eff_min_ram_gb = max(RAM_MIN_RESERVE_GB, float(min_ram_gb))
     check_dir = Path(target_path) if target_path else ROOT_DIR
     if not check_dir.exists():
         check_dir = ROOT_DIR
@@ -112,7 +115,7 @@ def inspect_resource_budget(
     free_inodes = _get_free_inodes(check_dir)
 
     required_disk_gb = round(
-        float(min_disk_gb) + max(0.0, float(estimated_scratch_gb)) + max(0.0, float(extra_margin_gb)),
+        eff_min_disk_gb + max(0.0, float(estimated_scratch_gb)) + max(0.0, float(extra_margin_gb)),
         3,
     )
 
@@ -120,11 +123,11 @@ def inspect_resource_budget(
     if disk_free_gb < required_disk_gb:
         reasons.append(
             f"Disk free ({disk_free_gb:.2f} GiB) < required reserve ({required_disk_gb:.2f} GiB = "
-            f"floor {min_disk_gb:.2f} + scratch {estimated_scratch_gb:.2f} + margin {extra_margin_gb:.2f})"
+            f"floor {eff_min_disk_gb:.2f} + scratch {estimated_scratch_gb:.2f} + margin {extra_margin_gb:.2f})"
         )
-    if ram_avail_gb < min_ram_gb:
+    if ram_avail_gb < eff_min_ram_gb:
         reasons.append(
-            f"Available RAM ({ram_avail_gb:.2f} GiB) < minimum reserve ({min_ram_gb:.2f} GiB)"
+            f"Available RAM ({ram_avail_gb:.2f} GiB) < minimum reserve ({eff_min_ram_gb:.2f} GiB)"
         )
     if free_inodes is not None and free_inodes < 10000:
         reasons.append(f"Free inodes critically low ({free_inodes} < 10000)")
@@ -135,14 +138,14 @@ def inspect_resource_budget(
         "healthy": healthy,
         "message": "OK" if healthy else "; ".join(reasons),
         "disk_free_gb": disk_free_gb,
-        "disk_min_reserve_gb": float(min_disk_gb),
+        "disk_min_reserve_gb": eff_min_disk_gb,
         "disk_required_gb": required_disk_gb,
         "estimated_scratch_gb": float(estimated_scratch_gb),
         "extra_margin_gb": float(extra_margin_gb),
         "free_inodes": free_inodes,
         "ram_available_gb": ram_avail_gb,
         "ram_total_gb": ram_total_gb,
-        "ram_min_reserve_gb": float(min_ram_gb),
+        "ram_min_reserve_gb": eff_min_ram_gb,
         "cpu_count": cpu_count,
         "timestamp": time.time(),
     }
@@ -298,11 +301,12 @@ class TelemetrySampler:
         budget_inspector: Optional[Callable[[], Dict[str, Any]]] = None,
     ):
         self.interval_sec = max(0.05, float(interval_sec))
-        self.min_disk_gb = float(min_disk_gb)
-        self.min_ram_gb = float(min_ram_gb)
+        self.min_disk_gb = max(DISK_MIN_RESERVE_GB, float(min_disk_gb))
+        self.min_ram_gb = max(RAM_MIN_RESERVE_GB, float(min_ram_gb))
         self.max_samples = max(100, int(max_samples))
         self.target_path = Path(target_path) if target_path else ROOT_DIR
         self._budget_inspector = budget_inspector
+        self.spawned_pids: Set[int] = set()
 
         self.samples: List[Dict[str, Any]] = []
         self.total_samples_recorded: int = 0
@@ -330,6 +334,7 @@ class TelemetrySampler:
     def register_process(self, proc: subprocess.Popen) -> None:
         with self._proc_lock:
             self._active_procs[proc.pid] = proc
+            self.spawned_pids.add(proc.pid)
 
     def unregister_process(self, proc: subprocess.Popen) -> None:
         with self._proc_lock:
@@ -682,6 +687,26 @@ def run_isolated_job(
             error=f"Resource floor breached prior to job dispatch: {sampler.breach_reason}",
         )
 
+    prof = normalize_job_profile(job.get("job_profile") or job.get("kind"))
+    pre_launch_inspector = job.get("budget_inspector") or (sampler._budget_inspector if sampler is not None else None)
+    if prof == "heavy_render" or pre_launch_inspector is not None:
+        if callable(pre_launch_inspector):
+            pre_b = pre_launch_inspector()
+        else:
+            pre_b = inspect_resource_budget(
+                min_disk_gb=sampler.min_disk_gb if sampler is not None else DISK_MIN_RESERVE_GB,
+                min_ram_gb=sampler.min_ram_gb if sampler is not None else RAM_MIN_RESERVE_GB,
+                estimated_scratch_gb=float(job.get("estimated_scratch_gb", 0.5 if prof == "heavy_render" else 0.0)),
+                extra_margin_gb=1.0 if prof == "heavy_render" else 0.0,
+            )
+        if not pre_b.get("healthy", False):
+            return _finish(
+                status="BLOCKED_RESOURCE",
+                returncode=-3,
+                disk_min_gb=pre_b.get("disk_free_gb"),
+                error=f"Pre-launch resource guard blocked job '{jid}': {pre_b.get('message', 'resource floor breach')}",
+            )
+
     # Path A: Python callable job
     if callable(job.get("fn")):
         fn = job["fn"]
@@ -949,6 +974,23 @@ def compute_concurrency_overlap(job_results: List[Dict[str, Any]]) -> Dict[str, 
     }
 
 
+def _is_safe_run_owned_scratch_dir(scratch_dir: Path) -> bool:
+    resolved = scratch_dir.resolve()
+    safe_roots = [
+        (ROOT_DIR / ".test-runs").resolve(),
+        (ROOT_DIR / "tests" / "evidence").resolve(),
+        Path(tempfile.gettempdir()).resolve(),
+    ]
+    for sr in safe_roots:
+        try:
+            resolved.relative_to(sr)
+            if resolved != sr:
+                return True
+        except ValueError:
+            continue
+    return False
+
+
 def run_dag(
     stages: List[List[Dict[str, Any]]],
     max_workers: int = 4,
@@ -958,11 +1000,15 @@ def run_dag(
     extra_margin_gb: float = 0.0,
     run_id: Optional[str] = None,
     budget_inspector: Optional[Callable[[], Dict[str, Any]]] = None,
+    scratch_dir: Optional[Path | str] = None,
 ) -> Dict[str, Any]:
     """
     Execute topological DAG waves with bounded concurrency, live resource telemetry,
     prerequisite failure propagation, and zero-job fail-closed protection.
+    Enforces min_disk_gb >= 6.0 GiB and min_ram_gb >= 1.0 GiB.
     """
+    min_disk_gb = max(DISK_MIN_RESERVE_GB, float(min_disk_gb))
+    min_ram_gb = max(RAM_MIN_RESERVE_GB, float(min_ram_gb))
     dag_run_id = run_id or f"dag_{int(time.time())}_{os.getpid()}"
     dag_t0 = time.perf_counter()
     started_ts = time.time()
@@ -1185,6 +1231,22 @@ def run_dag(
     else:
         dag_status = "PASS"
 
+    scratch_cleaned = False
+    if resource_blocked and scratch_dir is not None:
+        s_path = Path(scratch_dir)
+        if s_path.exists() and _is_safe_run_owned_scratch_dir(s_path):
+            shutil.rmtree(s_path, ignore_errors=True)
+            scratch_cleaned = True
+
+    orphan_pids: List[int] = []
+    for spid in sorted(sampler.spawned_pids):
+        try:
+            proc_check = psutil.Process(spid)
+            if proc_check.is_running() and proc_check.status() != psutil.STATUS_ZOMBIE:
+                orphan_pids.append(spid)
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            continue
+
     concurrency_proof = compute_concurrency_overlap(ordered_jobs)
     elapsed_total = round(time.perf_counter() - dag_t0, 4)
 
@@ -1204,6 +1266,11 @@ def run_dag(
         "not_verified_jobs": not_verified_jobs,
         "mandatory_non_pass_ids": mandatory_non_pass,
         "max_active_workers": max_active_workers,
+        "orphan_worker_processes_after_run": len(orphan_pids),
+        "orphan_worker_pids": orphan_pids,
+        "scratch_cleaned_on_breach": scratch_cleaned,
+        "min_disk_reserve_gb": min_disk_gb,
+        "min_ram_reserve_gb": min_ram_gb,
         "edges": edges,
         "concurrency_proof": concurrency_proof,
         "results": results,

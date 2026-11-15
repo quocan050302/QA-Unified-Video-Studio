@@ -1,0 +1,20 @@
+=== NORMAL CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector inspect_media_file_silent_audio (rc=0) ===
+{
+  "detector_id": "inspect_media_file_silent_audio",
+  "mutated": false,
+  "defect_detected": true,
+  "max_volume_db": -91.0,
+  "errors": [
+    "Audio is silent (max_volume=-91.0 dB)"
+  ]
+}
+
+
+=== MUTANT CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector inspect_media_file_silent_audio --mutate (rc=2) ===
+{
+  "detector_id": "inspect_media_file_silent_audio",
+  "mutated": true,
+  "defect_detected": false,
+  "max_volume_db": null,
+  "errors": []
+}

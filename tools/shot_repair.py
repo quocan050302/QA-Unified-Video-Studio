@@ -112,15 +112,27 @@ def _normalize_qa_report(qa_report: Any) -> Dict[str, Any]:
     if issues is None:
         issues = raw.get("issues", [])
 
+    expected_cuts = int(raw.get("expected_cut_count", max(0, total_shots - 1)))
+    audited_cuts = int(raw.get("audited_cut_count", expected_cuts if "full_boundary_coverage" not in raw else 0))
+    full_boundary = bool(raw.get("full_boundary_coverage", audited_cuts == expected_cuts))
+    global_issues = list(raw.get("global_issues", []))
+    if "full_boundary_coverage" in raw and not full_boundary:
+        if verdict == "VISUAL_TECH_PASS":
+            verdict = "COVERAGE_INCOMPLETE"
+        global_issues.append(f"Cut boundary coverage incomplete: {audited_cuts}/{expected_cuts}")
+
     return {
         "valid_report": True,
         "technical_verdict": verdict,
         "total_shots": total_shots,
         "passed_shots": int(raw.get("passed_shots", 0)),
         "all_passed": bool(raw.get("all_passed", False)),
+        "expected_cut_count": expected_cuts,
+        "audited_cut_count": audited_cuts,
+        "full_boundary_coverage": full_boundary,
         "shot_audits": shot_audits,
         "temporal_issues": list(issues) if isinstance(issues, list) else [],
-        "global_issues": list(raw.get("global_issues", [])),
+        "global_issues": global_issues,
     }
 
 

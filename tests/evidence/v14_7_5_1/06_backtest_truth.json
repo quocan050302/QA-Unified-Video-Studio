@@ -1,0 +1,33 @@
+{
+  "evidence_schema_version": "14.7.5.1",
+  "run_id": "20261115_190043",
+  "dag_run_id": "v14_7_5_1_val_1794743976",
+  "status": "PASS",
+  "synthetic_180_stress_gate_g5": "PASS",
+  "synthetic_180_details": {
+    "synthetic_replay_status": "PASS_SYNTHETIC",
+    "old_bug_detected_by_preflight": true,
+    "missing_ids_before_fix": 180,
+    "visuals_assigned_ok": true,
+    "validator_after_fix_status": "PASS",
+    "fast_check_duration_sec": 6.95,
+    "fast_check_stdout": "Card do hoa dang dung: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)\nPASS: 0 loi trong 541 khung kiem tra (180 shots hop le, che do fast).",
+    "proof_saved": "tests/evidence/proof_g5_replay.jpg"
+  },
+  "medium_20_shot_real_render_g5b": "PASS",
+  "medium_20_shot_details": {
+    "output_file": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/.test-runs/20261115_190043/g5b_medium_continuity/out/Medieval Chronicle Medium E2E.mp4",
+    "output_sha256": "ab0db83e117fa5dac98b60b65807aecd21142391ac547d8d884c87ea591c084a",
+    "shots_count": 27,
+    "duration_sec": 89.58,
+    "resolution": "1280x720",
+    "render_wall_sec": 42.82,
+    "full_decode_verified": true,
+    "proof_saved": "tests/evidence/proof_g5b_medium_continuity.jpg"
+  },
+  "historical_180_real_replay": "NOT_AVAILABLE",
+  "historical_180_raw_gate_status": "NOT_RUN_OPTIONAL_MISSING_FIXTURE",
+  "historical_180_fixture_path": "projects/why_knights_could_actually",
+  "counted_not_available_as_real_replay_pass": false,
+  "truth_disclosure": "G5 verifies a 180-shot SYNTHETIC timeline stress fixture (PASS) and G5b verifies a 20-shot REAL render fixture (PASS). The optional company dataset 'projects/why_knights_could_actually' is absent on this host, so G5c is reported strictly as NOT_AVAILABLE and NEVER counted as a real replay PASS."
+}

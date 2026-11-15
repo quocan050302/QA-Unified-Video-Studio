@@ -1,0 +1,25 @@
+{
+  "schema_version": "14.7.5.1",
+  "project_id": "fl01_v14_7_5_1_roman_water_gate_preview",
+  "title": "THE WATER GATE — THIRTY SECONDS TO SAVE THE STREET",
+  "subtitle": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+  "visual_generation_mode": "100%_PROCEDURAL_HTML5_CANVAS_2D_VECTOR",
+  "prior_preview_derived_visual_inputs": 0,
+  "external_raster_images_count": 0,
+  "military_battlefield_props_count": 0,
+  "procedural_modules": {
+    "packs/squire/civic/water_gate.js": "aaeae7b18f8e48b38901631ad3f2a05bd54a79c429c8fae3fde85107d102cfa1",
+    "scenes/shots/water_gate_shots.js": "9ac688eb7be48a1d0464857895b690b802a06f1a845cd6e4eb1a039f7ec1615b"
+  },
+  "newly_authored_visual_primitives": [
+    "drawMediterraneanSkyAndHills",
+    "drawRomanMarketStreet",
+    "drawAqueductMasonry",
+    "drawStoneFissureAndJet",
+    "drawSluiceMechanism",
+    "drawOverflowBasin",
+    "drawCivicPerson",
+    "drawHighContrastCivicBadge"
+  ],
+  "audio_generation_mode": "MACOS_SAY_DANIEL_VOICE_PLUS_PROCEDURAL_HYDRAULIC_FOLEY_SCORE"
+}

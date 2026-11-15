@@ -65,6 +65,63 @@ DYNAMIC_ACTION_KEYWORDS = (
     "LIFT",
     "REFORM",
     "RAISE",
+    "PUSH",
+    "ROTATE",
+    "DIVERT",
+    "DROP",
+    "FLOW",
+    "POINT",
+    "INSPECT",
+)
+
+ALLOWLISTED_DIAGRAM_CUT_REASONS = {
+    "insert_diagram",
+    "diagram_insert",
+    "tactical_schematic_cutaway",
+    "tactical_to_ground_execution",
+    "diagram_to_scene",
+    "return_from_insert",
+    "scene_to_diagram",
+    "title_card_transition",
+    "summary_card_cutaway",
+    "heroic_payoff_summary",
+}
+
+ALLOWLISTED_FRAMING_OR_SPACE_CUT_REASONS = {
+    "opening_hook",
+    "wide_spatial_establish",
+    "insert_closeup",
+    "reaction_closeup",
+    "mechanism_closeup",
+    "mechanism_cutaway",
+    "upstream_mechanism_cut",
+    "parallel_action_cutaway",
+    "parallel_shield_cover",
+    "wide_cohort_reform",
+    "camera_angle_reverse",
+    "action_reaction_reverse_angle",
+    "spatial_cutaway",
+    "act_transition",
+    "temporal_ellipsis",
+    "overhead_reveal",
+    "overflow_payoff_track",
+    "resolution_wide_crane",
+}
+
+ALLOWLISTED_SAME_SPACE_PROGRESSION_REASONS = {
+    "inciting_physical_slip",
+    "command_signal_action",
+    "physical_standard_recovery",
+    "coordinated_withdrawal",
+    "same_space_action_beat",
+    "mechanical_torque_jam",
+    "causal_gate_release",
+}
+
+ALLOWLISTED_INTENTIONAL_CUT_REASONS = (
+    ALLOWLISTED_DIAGRAM_CUT_REASONS
+    | ALLOWLISTED_FRAMING_OR_SPACE_CUT_REASONS
+    | ALLOWLISTED_SAME_SPACE_PROGRESSION_REASONS
 )
 
 
@@ -99,7 +156,7 @@ class TemporalShotAudit(BaseModel):
 
 
 class TemporalQAReport(BaseModel):
-    version: str = "14.7.5"
+    version: str = "14.7.5.1"
     project_id: str
     mp4_path: str
     generated_at: float = Field(default_factory=time.time)
@@ -115,6 +172,11 @@ class TemporalQAReport(BaseModel):
     extraction_mode: str = "batched_stream_cache"
     extraction_elapsed_sec: float = 0.0
     total_frames_sampled: int = 0
+    expected_cut_count: int = 0
+    audited_cut_count: int = 0
+    unaudited_cuts: List[str] = Field(default_factory=list)
+    full_boundary_coverage: bool = False
+    boundary_evidence: List[Dict[str, Any]] = Field(default_factory=list)
     shot_audits: Dict[str, TemporalShotAudit] = Field(default_factory=dict)
     temporal_issues: List[Dict[str, Any]] = Field(default_factory=list)
     cross_cut_boundary_audits: List[Dict[str, Any]] = Field(default_factory=list)
@@ -123,10 +185,10 @@ class TemporalQAReport(BaseModel):
 
 
 def determine_expected_subject(shot: Dict[str, Any]) -> str:
-    """Classify expected subject to prevent false actor classifications on maps/diagrams."""
+    """Classify expected subject to prevent false actor classifications on maps/diagrams/titles."""
     explicit = shot.get("expected_subject")
-    if explicit in ("map", "diagram", "prop", "none", "actor"):
-        return "map" if explicit == "diagram" else str(explicit)
+    if explicit in ("map", "diagram", "title", "prop", "none", "actor"):
+        return "map" if explicit in ("diagram", "title") else str(explicit)
 
     tpl = str(shot.get("tpl", "scene")).lower()
     args = shot.get("args", {}) if isinstance(shot.get("args"), dict) else {}
@@ -134,7 +196,7 @@ def determine_expected_subject(shot: Dict[str, Any]) -> str:
     desc = str(shot.get("desc", "")).lower()
     people = shot.get("people") or args.get("people") or []
 
-    if tpl in ("map", "diagram", "schematic", "plan", "board", "title") or bg in ("map", "diagram", "parchment"):
+    if tpl in ("map", "diagram", "schematic", "plan", "board", "title", "chapter", "card") or bg in ("map", "diagram", "parchment"):
         return "map"
     if ("map" in desc or "diagram" in desc or "schematic" in desc) and not people:
         return "map"
@@ -202,6 +264,95 @@ def build_shot_sample_timestamps(
     return dedup, coverage_complete
 
 
+def _is_valid_rgb_png(path: Path) -> bool:
+    """Verify a cached/extracted PNG is non-empty and decodable without corruption."""
+    if not path.is_file() or path.stat().st_size < 100:
+        return False
+    try:
+        with Image.open(path) as im:
+            im.verify()
+        return True
+    except Exception:
+        return False
+
+
+def _load_rgb_png_verified(path: Path) -> Optional[np.ndarray]:
+    """Load an RGB PNG into a numpy array, returning None on missing or corrupted data."""
+    if not _is_valid_rgb_png(path):
+        return None
+    try:
+        with Image.open(path) as im:
+            arr = np.array(im.convert("RGB"))
+        if arr.ndim != 3 or arr.shape[0] < 16 or arr.shape[1] < 16:
+            return None
+        return arr
+    except Exception:
+        return None
+
+
+def build_cut_boundary_frame_plan(
+    shots: List[Dict[str, Any]],
+    fps: float = 24.0,
+) -> List[Dict[str, Any]]:
+    """
+    Build deterministic frame-exact cut boundary sample plan for all N-1 transitions.
+    Matches engine/player.js `t = f / fps; t < shot.end` semantics so pre_2/pre_1 are
+    strictly inside `shots[k]` and post_1/post_2 are strictly inside `shots[k+1]`.
+    """
+    plans: List[Dict[str, Any]] = []
+    if len(shots) < 2:
+        return plans
+
+    safe_fps = max(1.0, float(fps))
+    cur_t = 0.0
+    norm_bounds: List[Tuple[str, float, float, Dict[str, Any]]] = []
+    for idx_s, s in enumerate(shots):
+        sid = str(s.get("id") or s.get("shot_id") or f"s{idx_s+1:02d}")
+        st = float(s.get("start", cur_t))
+        dur = float(s.get("dur", max(0.2, float(s.get("end", st + 3.0)) - st)))
+        et = float(s.get("end", st + dur))
+        cur_t = et
+        norm_bounds.append((sid, st, et, s))
+
+    for cut_idx in range(len(norm_bounds) - 1):
+        id_cur, st_cur, et_cur, s_cur = norm_bounds[cut_idx]
+        id_nxt, st_nxt, et_nxt, s_nxt = norm_bounds[cut_idx + 1]
+        t_cut = et_cur
+        # Exact first 0-based frame where f / fps >= t_cut
+        first_post_f = max(1, int(math.ceil(t_cut * safe_fps - 1e-9)))
+        min_cur_f = max(0, int(math.ceil(st_cur * safe_fps - 1e-9)))
+        last_nxt_f = max(first_post_f, int(math.ceil(et_nxt * safe_fps - 1e-9)) - 1)
+
+        f_pre1 = max(min_cur_f, first_post_f - 1)
+        f_pre2 = max(min_cur_f, first_post_f - 2)
+        f_post1 = first_post_f
+        f_post2 = min(last_nxt_f, first_post_f + 1)
+
+        frame_indices = {
+            "pre_2": int(f_pre2),
+            "pre_1": int(f_pre1),
+            "post_1": int(f_post1),
+            "post_2": int(f_post2),
+        }
+        requested_times = {
+            role: round(fidx / safe_fps, 4) for role, fidx in frame_indices.items()
+        }
+        plans.append({
+            "cut_index": cut_idx,
+            "cut": f"{id_cur}->{id_nxt}",
+            "from_shot_id": id_cur,
+            "to_shot_id": id_nxt,
+            "shot_ids": [id_cur, id_nxt],
+            "cut_time_sec": round(t_cut, 4),
+            "requested_times": requested_times,
+            "extracted_frame_indices": frame_indices,
+            "from_shot": s_cur,
+            "to_shot": s_nxt,
+            "artifact_paths": {},
+        })
+    return plans
+
+
 def extract_frames_batched_cached(
     mp4_file: Path,
     shot_requests: List[Tuple[str, List[float]]],
@@ -209,16 +360,19 @@ def extract_frames_batched_cached(
     width: int,
     height: int,
     fps: float,
+    boundary_plans: Optional[List[Dict[str, Any]]] = None,
 ) -> Tuple[Dict[str, List[Path]], str]:
     """
     Content-addressed + single-pass FFmpeg rawvideo stream frame extractor.
-    Guarantees identical decoded RGB frames without spawning N separate ffmpeg processes.
+    Guarantees identical decoded RGB frames without spawning N separate ffmpeg processes,
+    and extracts exact integer cut-boundary frames (-2, -1, +1, +2) without timestamp rounding drift.
     """
     ev_frames_dir.mkdir(parents=True, exist_ok=True)
     mp4_hash12 = sha256_file(mp4_file)[:12]
 
     # Map frame_index -> list of target output paths
     needed_by_frame_idx: Dict[int, List[Path]] = {}
+    boundary_only_paths: set[Path] = set()
     shot_paths: Dict[str, List[Path]] = {}
     missing_count = 0
 
@@ -228,10 +382,22 @@ def extract_frames_batched_cached(
             f_idx = max(0, int(round(ts * fps)))
             out_png = ev_frames_dir / f"{mp4_hash12}_{sid}_f{f_idx:05d}_{ts:.2f}s.png"
             paths_for_shot.append(out_png)
-            if not (out_png.is_file() and out_png.stat().st_size > 100):
+            if not _is_valid_rgb_png(out_png):
                 missing_count += 1
                 needed_by_frame_idx.setdefault(f_idx, []).append(out_png)
         shot_paths[sid] = paths_for_shot
+
+    for bplan in (boundary_plans or []):
+        cidx = int(bplan["cut_index"])
+        art_paths: Dict[str, Path] = {}
+        for role, f_idx in bplan["extracted_frame_indices"].items():
+            b_png = ev_frames_dir / f"{mp4_hash12}_cut{cidx:02d}_{role}_f{int(f_idx):05d}.png"
+            art_paths[role] = b_png
+            if not _is_valid_rgb_png(b_png):
+                missing_count += 1
+                needed_by_frame_idx.setdefault(int(f_idx), []).append(b_png)
+                boundary_only_paths.add(b_png)
+        bplan["artifact_paths"] = art_paths
 
     if missing_count == 0:
         return shot_paths, "cache_hit_content_addressed"
@@ -267,8 +433,7 @@ def extract_frames_batched_cached(
                 arr = np.frombuffer(buf, dtype=np.uint8).reshape((height, width, 3))
                 img = Image.fromarray(arr, mode="RGB")
                 for target_p in needed_by_frame_idx[cur_idx]:
-                    if not target_p.is_file():
-                        img.save(target_p, format="PNG", compress_level=1)
+                    img.save(target_p, format="PNG", compress_level=1)
             cur_idx += 1
     finally:
         try:
@@ -290,23 +455,390 @@ def extract_frames_batched_cached(
             except Exception:
                 pass
 
-    # Handle edge case where timestamp rounded 1-4 frames past video stream EOF due to audio container tail
+    # Handle edge case where within-shot sample timestamp rounded 1-4 frames past video EOF
+    # NEVER synthesize or pad boundary_only_paths past decoded video EOF (fail closed if truncated!)
     if last_buf is not None:
         last_arr = np.frombuffer(last_buf, dtype=np.uint8).reshape((height, width, 3))
         img_last = Image.fromarray(last_arr, mode="RGB")
         for f_idx, targets in needed_by_frame_idx.items():
             if f_idx >= cur_idx and (f_idx - cur_idx) <= 5:
                 for target_p in targets:
-                    if not target_p.is_file():
+                    if target_p not in boundary_only_paths and not _is_valid_rgb_png(target_p):
                         img_last.save(target_p, format="PNG", compress_level=1)
 
-    # Fallback single-frame extraction for any still-missing frame
+    # Fallback single-frame extraction ONLY for non-boundary shot samples
     for sid, ts_list in shot_requests:
         for out_png, ts in zip(shot_paths[sid], ts_list):
-            if not (out_png.is_file() and out_png.stat().st_size > 100):
+            if not _is_valid_rgb_png(out_png):
                 extract_frame_at_time(mp4_file, ts, out_png)
 
     return shot_paths, "batched_rawvideo_stream"
+
+
+def _classify_cut_type(sub_cur: str, sub_nxt: str, s_cur: Dict[str, Any], s_nxt: Dict[str, Any]) -> str:
+    if sub_cur == "map" and sub_nxt == "map":
+        return "diagram_to_diagram"
+    if sub_cur != "map" and sub_nxt == "map":
+        return f"{sub_cur}_to_diagram"
+    if sub_cur == "map" and sub_nxt != "map":
+        return f"diagram_to_{sub_nxt}"
+    if sub_cur != "actor" or sub_nxt != "actor":
+        return f"{sub_cur}_to_{sub_nxt}"
+    tpl_c = str(s_cur.get("tpl", "scene"))
+    tpl_n = str(s_nxt.get("tpl", "scene"))
+    if tpl_c != tpl_n:
+        return f"framing_tpl_{tpl_c}_to_{tpl_n}"
+    zc = (s_cur.get("world_state") or {}).get("zone") or (s_cur.get("args") or {}).get("zone") or (s_cur.get("args") or {}).get("bg", "default")
+    zn = (s_nxt.get("world_state") or {}).get("zone") or (s_nxt.get("args") or {}).get("zone") or (s_nxt.get("args") or {}).get("bg", "default")
+    if zc != zn:
+        return "spatial_zone_cut"
+    return "same_space_actor_cut"
+
+
+def audit_single_cut_boundary(
+    bplan: Dict[str, Any],
+    total_video_duration: float = 0.0,
+    character_bible: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """
+    Audit a single adjacent shot cut boundary using exact decoded frames (-2, -1, +1, +2).
+    Never skips map/diagram/title/prop shots. Fails closed (`NOT_VERIFIED` or `FAIL`) on:
+    - missing/corrupted boundary frames or pre_1 >= post_1 index collision
+    - blank/black frame or blank/unreadable diagram at the cut boundary
+    - unallowlisted `intentional_cut_reason` / `causal_cut_reason` or reason-evidence mismatch
+    - unallowlisted same-space persisting actor teleport across the cut
+    """
+    s_cur = bplan["from_shot"]
+    s_nxt = bplan["to_shot"]
+    id_cur = bplan["from_shot_id"]
+    id_nxt = bplan["to_shot_id"]
+    sub_cur = determine_expected_subject(s_cur)
+    sub_nxt = determine_expected_subject(s_nxt)
+    tpl_cur = str(s_cur.get("tpl", "scene"))
+    tpl_nxt = str(s_nxt.get("tpl", "scene"))
+    cut_type = _classify_cut_type(sub_cur, sub_nxt, s_cur, s_nxt)
+
+    raw_reason = s_nxt.get("intentional_cut_reason")
+    if raw_reason is None:
+        raw_reason = s_nxt.get("causal_cut_reason")
+    reason_str = str(raw_reason).strip() if raw_reason is not None and str(raw_reason).strip() else None
+
+    f_indices = dict(bplan["extracted_frame_indices"])
+    req_times = dict(bplan["requested_times"])
+    art_paths_raw: Dict[str, Path] = bplan.get("artifact_paths") or {}
+
+    diags: List[str] = []
+    decoded_imgs: Dict[str, np.ndarray] = {}
+    art_shas: Dict[str, Optional[str]] = {}
+    art_paths_str: Dict[str, Optional[str]] = {}
+    missing_roles: List[str] = []
+
+    for role in ("pre_2", "pre_1", "post_1", "post_2"):
+        p = art_paths_raw.get(role)
+        art_paths_str[role] = str(p) if p is not None else None
+        if p is None:
+            missing_roles.append(role)
+            art_shas[role] = None
+            continue
+        arr = _load_rgb_png_verified(p)
+        if arr is None:
+            missing_roles.append(role)
+            art_shas[role] = None
+        else:
+            decoded_imgs[role] = arr
+            art_shas[role] = sha256_file(p)
+
+    # Guard against frame-index rounding onto the same side of the cut
+    if int(f_indices.get("pre_1", 0)) >= int(f_indices.get("post_1", 0)):
+        diags.append(
+            f"Cut frame index collision: pre_1={f_indices.get('pre_1')} >= post_1={f_indices.get('post_1')}"
+        )
+        missing_roles.append("index_collision")
+
+    if missing_roles:
+        diags.append(f"Missing or undecodable boundary frames for roles: {missing_roles}")
+        return {
+            "cut_index": int(bplan["cut_index"]),
+            "cut": bplan["cut"],
+            "from_shot_id": id_cur,
+            "to_shot_id": id_nxt,
+            "shot_ids": [id_cur, id_nxt],
+            "from_subject": sub_cur,
+            "to_subject": sub_nxt,
+            "cut_time_sec": bplan["cut_time_sec"],
+            "requested_times": req_times,
+            "extracted_frame_indices": f_indices,
+            "artifact_paths": art_paths_str,
+            "artifact_shas": art_shas,
+            "pixel_mean_abs_delta": None,
+            "pre_internal_delta": None,
+            "post_internal_delta": None,
+            "geometric_centroid": {"from": "NOT_VERIFIED", "to": "NOT_VERIFIED"},
+            "actor_centroid_dx": "NOT_APPLICABLE" if (sub_cur != "actor" or sub_nxt != "actor") else None,
+            "cut_type": cut_type,
+            "intentional_cut_reason": reason_str,
+            "reason_allowlisted": bool(reason_str in ALLOWLISTED_INTENTIONAL_CUT_REASONS) if reason_str else True,
+            "reason_evidence_valid": False,
+            "same_bg": (s_cur.get("args", {}) or {}).get("bg") == (s_nxt.get("args", {}) or {}).get("bg"),
+            "causal_cut_declared": bool(reason_str or tpl_cur != tpl_nxt),
+            "world_continuity_checked": False,
+            "world_continuity_violations": [],
+            "coverage_complete": False,
+            "status": "NOT_VERIFIED",
+            "diagnostics": diags,
+        }
+
+    img_pre2 = decoded_imgs["pre_2"]
+    img_pre1 = decoded_imgs["pre_1"]
+    img_post1 = decoded_imgs["post_1"]
+    img_post2 = decoded_imgs["post_2"]
+
+    pixel_delta = round(float(np.mean(np.abs(img_post1.astype(float) - img_pre1.astype(float)))), 3)
+    pre_internal_delta = round(float(np.mean(np.abs(img_pre1.astype(float) - img_pre2.astype(float)))), 3)
+    post_internal_delta = round(float(np.mean(np.abs(img_post2.astype(float) - img_post1.astype(float)))), 3)
+
+    status = "PASS"
+
+    # Check boundary frames for accidental blank/black frames (outside global fade edges)
+    for role, arr in (("pre_1", img_pre1), ("post_1", img_post1)):
+        ts_r = float(req_times[role])
+        if total_video_duration > 2.5 and (ts_r < 0.25 or ts_r > total_video_duration - 0.35):
+            continue
+        m_val = float(np.mean(arr))
+        s_val = float(np.std(arr))
+        if m_val < 5.0 or s_val < 6.0:
+            status = "FAIL"
+            diags.append(
+                f"Blank/flat boundary frame at {bplan['cut']} ({role}, t={ts_r:.3f}s, mean={m_val:.1f}, std={s_val:.1f})"
+            )
+
+    # Check diagram/map readability right at the cut boundary so blank diagram mutations fail closed
+    if sub_cur == "map" and tpl_cur != "black":
+        ok_m_pre, d_m_pre = audit_tactical_labels_mobile(img_pre1)
+        if not ok_m_pre:
+            status = "FAIL"
+            diags.append(f"Pre-cut diagram/map frame unreadable at {bplan['cut']}: {d_m_pre}")
+    if sub_nxt == "map" and tpl_nxt != "black":
+        ok_m_post, d_m_post = audit_tactical_labels_mobile(img_post1)
+        if not ok_m_post:
+            status = "FAIL"
+            diags.append(f"Post-cut diagram/map frame unreadable at {bplan['cut']}: {d_m_post}")
+
+    # Geometric centroid tracking when applicable; NOT_APPLICABLE when shot has no actor subject
+    b_end: Optional[ActorBoundingBox] = None
+    b_start: Optional[ActorBoundingBox] = None
+    if sub_cur == "actor":
+        b_end = track_actor_instances_full_frame(img_pre1, tpl=tpl_cur)
+        from_cent: Any = (
+            {"x": round(b_end.mass_x, 4), "y": round(b_end.mass_y, 4)} if b_end.detected else "UNDETECTED"
+        )
+    else:
+        from_cent = "NOT_APPLICABLE"
+
+    if sub_nxt == "actor":
+        b_start = track_actor_instances_full_frame(img_post1, tpl=tpl_nxt)
+        to_cent: Any = (
+            {"x": round(b_start.mass_x, 4), "y": round(b_start.mass_y, 4)} if b_start.detected else "UNDETECTED"
+        )
+    else:
+        to_cent = "NOT_APPLICABLE"
+
+    if sub_cur == "actor" and sub_nxt == "actor" and b_end and b_start and b_end.detected and b_start.detected:
+        actor_centroid_dx: Any = round(abs(b_start.mass_x - b_end.mass_x), 4)
+    else:
+        actor_centroid_dx = "NOT_APPLICABLE"
+
+    # Validate intentional_cut_reason against strict allowlist + structural evidence
+    reason_allowlisted = True
+    reason_evidence_valid = True
+    if reason_str is not None:
+        if reason_str not in ALLOWLISTED_INTENTIONAL_CUT_REASONS:
+            reason_allowlisted = False
+            reason_evidence_valid = False
+            status = "FAIL"
+            diags.append(
+                f"Unallowlisted intentional_cut_reason '{reason_str}' on {bplan['cut']} (arbitrary strings cannot bypass continuity)"
+            )
+        elif reason_str in (ALLOWLISTED_DIAGRAM_CUT_REASONS - {"heroic_payoff_summary"}):
+            if sub_cur != "map" and sub_nxt != "map" and tpl_cur == tpl_nxt:
+                reason_evidence_valid = False
+                status = "FAIL"
+                diags.append(
+                    f"Reason '{reason_str}' requires diagram/map/title transition evidence on {bplan['cut']}, got {sub_cur}->{sub_nxt}"
+                )
+
+    # Cross-cut actor identity & world-state continuity check (checked across ALL cuts when world_state is present)
+    world_violations: List[str] = []
+    ws_cur = s_cur.get("world_state", {}) if isinstance(s_cur.get("world_state"), dict) else {}
+    ws_nxt = s_nxt.get("world_state", {}) if isinstance(s_nxt.get("world_state"), dict) else {}
+    shared_ws_keys = sorted(set(ws_cur.keys()) & set(ws_nxt.keys()) - {"zone"})
+    allowed_changed_keys = set(s_nxt.get("state_changed_keys") or [])
+    allow_ws_change = bool(s_nxt.get("allow_world_state_change", False) or s_nxt.get("allow_direction_change", False))
+    for inv_key in shared_ws_keys:
+        if ws_cur[inv_key] != ws_nxt[inv_key] and not allow_ws_change and inv_key not in allowed_changed_keys:
+            msg = (
+                f"World continuity violation on {bplan['cut']}: '{inv_key}' flipped from "
+                f"'{ws_cur[inv_key]}' to '{ws_nxt[inv_key]}'"
+            )
+            world_violations.append(msg)
+            diags.append(msg)
+            status = "FAIL"
+
+    world_checked = bool((sub_cur == "actor" and sub_nxt == "actor") or shared_ws_keys)
+    if sub_cur == "actor" and sub_nxt == "actor":
+        args_cur = s_cur.get("args", {}) if isinstance(s_cur.get("args"), dict) else {}
+        args_nxt = s_nxt.get("args", {}) if isinstance(s_nxt.get("args"), dict) else {}
+
+        zone_cur = ws_cur.get("zone") or args_cur.get("zone") or args_cur.get("bg") or "default"
+        zone_nxt = ws_nxt.get("zone") or args_nxt.get("zone") or args_nxt.get("bg") or "default"
+        same_continuous_space = (zone_cur == zone_nxt) and (tpl_cur == tpl_nxt)
+
+        ppl_cur = {
+            str(p["id"]): p
+            for p in (args_cur.get("people") or [])
+            if isinstance(p, dict) and p.get("id")
+        }
+        ppl_nxt = {
+            str(p["id"]): p
+            for p in (args_nxt.get("people") or [])
+            if isinstance(p, dict) and p.get("id")
+        }
+        common_actors = sorted(set(ppl_cur.keys()) & set(ppl_nxt.keys()))
+        bible_chars = (character_bible or {}).get("characters", {}) if isinstance(character_bible, dict) else {}
+
+        for aid in common_actors:
+            pc = ppl_cur[aid]
+            pn = ppl_nxt[aid]
+            # Character bible preset consistency across adjacent cut
+            if aid in bible_chars and isinstance(bible_chars[aid], dict):
+                expected_preset = bible_chars[aid].get("preset")
+                if expected_preset and (pc.get("preset") != expected_preset or pn.get("preset") != expected_preset):
+                    msg = (
+                        f"Character bible preset drift across {bplan['cut']} for '{aid}': "
+                        f"{pc.get('preset')}->{pn.get('preset')} (expected {expected_preset})"
+                    )
+                    world_violations.append(msg)
+                    diags.append(msg)
+                    status = "FAIL"
+
+            xc = float(pc.get("to", pc.get("x", 0.5)))
+            xn = float(pn.get("from", pn.get("x", 0.5)))
+            hc = float(pc.get("h", 0.5))
+            hn = float(pn.get("h", 0.5))
+            dx = abs(xn - xc)
+            scale_shift = abs(hn - hc) >= 0.08
+
+            framing_reframe_legit = (
+                reason_str in ALLOWLISTED_FRAMING_OR_SPACE_CUT_REASONS
+                and reason_allowlisted
+                and reason_evidence_valid
+                and (scale_shift or not same_continuous_space)
+            )
+            if same_continuous_space and (not framing_reframe_legit) and dx > 0.42:
+                msg = (
+                    f"Cross-cut actor teleport on {bplan['cut']}: persisting actor '{aid}' jumped "
+                    f"dx={dx:.3f} in continuous space '{zone_cur}' (reason={reason_str!r})"
+                )
+                world_violations.append(msg)
+                diags.append(msg)
+                status = "FAIL"
+
+        # Decoded single-actor pixel centroid jump guard when no people array coordinates hid a rendered jump
+        if (
+            same_continuous_space
+            and len(ppl_cur) == 1
+            and len(ppl_nxt) == 1
+            and len(common_actors) == 1
+            and isinstance(actor_centroid_dx, float)
+            and actor_centroid_dx > 0.48
+        ):
+            aid0 = common_actors[0]
+            hc0 = float(ppl_cur[aid0].get("h", 0.5))
+            hn0 = float(ppl_nxt[aid0].get("h", 0.5))
+            if abs(hn0 - hc0) < 0.08:
+                msg = (
+                    f"Decoded pixel centroid teleport on {bplan['cut']}: actor '{aid0}' centroid jumped "
+                    f"dx={actor_centroid_dx:.3f} in continuous space '{zone_cur}'"
+                )
+                world_violations.append(msg)
+                diags.append(msg)
+                status = "FAIL"
+
+    return {
+        "cut_index": int(bplan["cut_index"]),
+        "cut": bplan["cut"],
+        "from_shot_id": id_cur,
+        "to_shot_id": id_nxt,
+        "shot_ids": [id_cur, id_nxt],
+        "from_subject": sub_cur,
+        "to_subject": sub_nxt,
+        "cut_time_sec": bplan["cut_time_sec"],
+        "requested_times": req_times,
+        "extracted_frame_indices": f_indices,
+        "artifact_paths": art_paths_str,
+        "artifact_shas": art_shas,
+        "pixel_mean_abs_delta": pixel_delta,
+        "pre_internal_delta": pre_internal_delta,
+        "post_internal_delta": post_internal_delta,
+        "geometric_centroid": {"from": from_cent, "to": to_cent},
+        "actor_centroid_dx": actor_centroid_dx,
+        "cut_type": cut_type,
+        "intentional_cut_reason": reason_str,
+        "reason_allowlisted": reason_allowlisted,
+        "reason_evidence_valid": reason_evidence_valid,
+        "same_bg": (s_cur.get("args", {}) or {}).get("bg") == (s_nxt.get("args", {}) or {}).get("bg"),
+        "causal_cut_declared": bool(reason_str or tpl_cur != tpl_nxt),
+        "world_continuity_checked": world_checked,
+        "world_continuity_violations": world_violations,
+        "coverage_complete": True,
+        "status": status,
+        "diagnostics": diags,
+    }
+
+
+def audit_cut_boundaries_all(
+    boundary_plans: List[Dict[str, Any]],
+    expected_cut_count: int,
+    total_video_duration: float = 0.0,
+    character_bible: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """
+    Audit all N-1 cut boundaries and compute fail-closed coverage summary.
+    """
+    evidence: List[Dict[str, Any]] = []
+    unaudited: List[str] = []
+    failed: List[str] = []
+
+    for bplan in boundary_plans:
+        entry = audit_single_cut_boundary(
+            bplan,
+            total_video_duration=total_video_duration,
+            character_bible=character_bible,
+        )
+        evidence.append(entry)
+        if not entry.get("coverage_complete", False) or entry.get("status") == "NOT_VERIFIED":
+            unaudited.append(entry["cut"])
+        elif entry.get("status") != "PASS":
+            failed.append(entry["cut"])
+
+    audited_count = sum(1 for e in evidence if e.get("coverage_complete") is True)
+    seen_cuts = [e["cut"] for e in evidence]
+    no_duplicates = len(seen_cuts) == len(set(seen_cuts))
+    full_cov = (
+        audited_count == expected_cut_count
+        and len(evidence) == expected_cut_count
+        and len(unaudited) == 0
+        and no_duplicates
+    )
+    return {
+        "expected_cut_count": expected_cut_count,
+        "audited_cut_count": audited_count,
+        "unaudited_cuts": unaudited,
+        "failed_cuts": failed,
+        "full_boundary_coverage": full_cov,
+        "all_cuts_passed": full_cov and len(failed) == 0,
+        "boundary_evidence": evidence,
+    }
 
 
 def audit_acting_posture_temporal(
@@ -640,7 +1172,27 @@ def audit_project_temporal_visual(
         report.technical_verdict = "FAIL"
         return report
 
+    # Normalize cumulative start/end/dur matching engine/player.js semantics
+    norm_shots: List[Dict[str, Any]] = []
+    cur_timeline_t = 0.0
+    for idx_s, raw_s in enumerate(shots):
+        sc = dict(raw_s)
+        st_v = float(sc["start"]) if isinstance(sc.get("start"), (int, float)) else cur_timeline_t
+        if isinstance(sc.get("end"), (int, float)):
+            et_v = float(sc["end"])
+            dur_v = float(sc.get("dur", max(0.2, et_v - st_v)))
+        else:
+            dur_v = float(sc.get("dur", 3.0))
+            et_v = st_v + dur_v
+        sc["start"] = round(st_v, 4)
+        sc["end"] = round(et_v, 4)
+        sc["dur"] = round(et_v - st_v, 4)
+        cur_timeline_t = et_v
+        norm_shots.append(sc)
+    shots = norm_shots
+
     report.total_shots = len(shots)
+    report.expected_cut_count = max(0, len(shots) - 1)
     total_dur = float(media_info.get("duration") or (shots[-1].get("end", 0.0) if shots else 0.0))
 
     pack_name = "squire"
@@ -651,7 +1203,15 @@ def audit_project_temporal_visual(
         except Exception:
             pass
 
-    # Build adaptive timestamp plan for all shots upfront
+    character_bible: Optional[Dict[str, Any]] = None
+    bible_file = p_path / "story" / "character_bible.json"
+    if bible_file.is_file():
+        try:
+            character_bible = json.loads(bible_file.read_text(encoding="utf-8"))
+        except Exception:
+            character_bible = None
+
+    # Build adaptive timestamp plan for all shots + exact N-1 cut boundary frame plan upfront
     shot_requests: List[Tuple[str, List[float]]] = []
     shot_coverage_ok: Dict[str, bool] = {}
     for idx_s, s in enumerate(shots):
@@ -664,6 +1224,8 @@ def audit_project_temporal_visual(
         shot_requests.append((sid, ts_list))
         shot_coverage_ok[sid] = cov_ok
 
+    boundary_plans = build_cut_boundary_frame_plan(shots, fps=fps)
+
     t_ext0 = time.perf_counter()
     shot_frame_paths, ext_mode = extract_frames_batched_cached(
         mp4_file=mp4_file,
@@ -672,14 +1234,13 @@ def audit_project_temporal_visual(
         width=width,
         height=height,
         fps=fps,
+        boundary_plans=boundary_plans,
     )
     report.extraction_mode = ext_mode
     report.extraction_elapsed_sec = round(time.perf_counter() - t_ext0, 3)
 
     passed_count = 0
     coverage_incomplete_any = False
-    boundary_end_frames: Dict[str, Tuple[np.ndarray, ActorBoundingBox, Dict[str, Any]]] = {}
-    boundary_start_frames: Dict[str, Tuple[np.ndarray, ActorBoundingBox, Dict[str, Any]]] = {}
 
     for idx_s, s in enumerate(shots):
         sid = str(s.get("id") or s.get("shot_id") or f"s{idx_s+1:02d}")
@@ -716,12 +1277,12 @@ def audit_project_temporal_visual(
         all_frames_ok = True
 
         for fp in f_paths:
-            if not fp.is_file() or fp.stat().st_size < 100:
+            arr_loaded = _load_rgb_png_verified(fp)
+            if arr_loaded is None:
                 all_frames_ok = False
                 break
             sample_paths.append(str(fp))
-            with Image.open(fp) as pil_im:
-                sample_imgs.append(np.array(pil_im.convert("RGB")))
+            sample_imgs.append(arr_loaded)
 
         if not all_frames_ok or len(sample_imgs) < 3:
             audit.diagnostics.append("Failed to extract sufficient temporal frame samples (fail-closed)")
@@ -803,11 +1364,6 @@ def audit_project_temporal_visual(
             audit.subject_detected = bounds.detected
             audit.detection_confidence = bounds.confidence
 
-            b_first = track_actor_instances_full_frame(sample_imgs[0], tpl=tpl)
-            b_last = track_actor_instances_full_frame(sample_imgs[-1], tpl=tpl)
-            boundary_start_frames[sid] = (sample_imgs[0], b_first, s)
-            boundary_end_frames[sid] = (sample_imgs[-1], b_last, s)
-
             safe, head_clip, feet_clip, f_diags = audit_safe_framing(mid_img, bounds, tpl, action, sid)
             audit.safe_framing = safe
             audit.head_clipped = head_clip
@@ -868,29 +1424,41 @@ def audit_project_temporal_visual(
 
         report.shot_audits[sid] = audit
 
-    # Cross-cut boundary pixel & centroid audit between consecutive shots
-    for idx_s in range(len(shots) - 1):
-        s_cur = shots[idx_s]
-        s_nxt = shots[idx_s + 1]
-        id_cur = str(s_cur.get("id") or f"s{idx_s+1:02d}")
-        id_nxt = str(s_nxt.get("id") or f"s{idx_s+2:02d}")
-        if id_cur in boundary_end_frames and id_nxt in boundary_start_frames:
-            img_end, b_end, _ = boundary_end_frames[id_cur]
-            img_start, b_start, _ = boundary_start_frames[id_nxt]
-            cut_luma_delta = round(float(np.mean(np.abs(img_start.astype(float) - img_end.astype(float)))), 2)
-            centroid_dx = (
-                round(abs(b_start.mass_x - b_end.mass_x), 3)
-                if (b_end.detected and b_start.detected)
-                else None
-            )
-            report.cross_cut_boundary_audits.append({
-                "cut": f"{id_cur}->{id_nxt}",
-                "cut_time_sec": round(float(s_cur.get("end", 0.0)), 3),
-                "pixel_mean_abs_delta": cut_luma_delta,
-                "actor_centroid_dx": centroid_dx,
-                "same_bg": (s_cur.get("args", {}) or {}).get("bg") == (s_nxt.get("args", {}) or {}).get("bg"),
-                "causal_cut_declared": bool(s_nxt.get("causal_cut_reason") or s_cur.get("tpl") != s_nxt.get("tpl")),
-            })
+    # 100% Cut-Boundary Temporal QA Invariant: N valid shots -> exactly N-1 audited transitions
+    cut_summary = audit_cut_boundaries_all(
+        boundary_plans=boundary_plans,
+        expected_cut_count=report.expected_cut_count,
+        total_video_duration=total_dur,
+        character_bible=character_bible,
+    )
+    report.audited_cut_count = int(cut_summary["audited_cut_count"])
+    report.unaudited_cuts = list(cut_summary["unaudited_cuts"])
+    report.full_boundary_coverage = bool(cut_summary["full_boundary_coverage"])
+    report.boundary_evidence = list(cut_summary["boundary_evidence"])
+    report.cross_cut_boundary_audits = list(cut_summary["boundary_evidence"])
+    report.total_frames_sampled += 4 * report.audited_cut_count
+
+    boundary_unverified = False
+    if not report.full_boundary_coverage:
+        boundary_unverified = True
+        report.global_issues.append(
+            f"Incomplete cut boundary coverage: audited {report.audited_cut_count}/{report.expected_cut_count} "
+            f"(unaudited={report.unaudited_cuts})"
+        )
+    if cut_summary["failed_cuts"]:
+        for fc in report.boundary_evidence:
+            if fc.get("status") == "FAIL":
+                report.global_issues.append(
+                    f"Cut boundary FAIL on {fc['cut']}: {fc.get('diagnostics')}"
+                )
+                report.temporal_issues.append({
+                    "shot_id": fc["cut"],
+                    "type": "WORLD_CONTINUITY_VIOLATION" if fc.get("world_continuity_violations") else "CUT_BOUNDARY_DEFECT",
+                    "action": "CUT_BOUNDARY",
+                    "expected_subject": f"{fc['from_subject']}->{fc['to_subject']}",
+                    "verdict": "FAIL",
+                    "diagnostics": fc.get("diagnostics", []),
+                })
 
     if run_negative_suite:
         neg_results = run_negative_fixtures_tests()
@@ -900,15 +1468,19 @@ def audit_project_temporal_visual(
             report.global_issues.append("Negative fixtures test suite encountered failures")
 
     report.passed_shots = passed_count
-    if report.total_frames_sampled == 0:
+    if report.total_frames_sampled == 0 or boundary_unverified:
         report.all_passed = False
-        report.technical_verdict = "NOT_VERIFIED"
+        report.technical_verdict = "NOT_VERIFIED" if boundary_unverified and not cut_summary["failed_cuts"] else "FAIL"
     elif coverage_incomplete_any:
         report.all_passed = False
         report.technical_verdict = "COVERAGE_INCOMPLETE"
     elif (
         passed_count == report.total_shots
         and report.total_shots > 0
+        and report.full_boundary_coverage
+        and report.audited_cut_count == report.expected_cut_count
+        and len(report.unaudited_cuts) == 0
+        and len(cut_summary["failed_cuts"]) == 0
         and len(report.global_issues) == 0
         and report.negative_fixtures_passed
     ):
@@ -919,11 +1491,36 @@ def audit_project_temporal_visual(
         has_unverified = any(a.technical_verdict == "NOT_VERIFIED" for a in report.shot_audits.values())
         report.technical_verdict = "NOT_VERIFIED" if (has_unverified and not report.global_issues) else "FAIL"
 
+    # Persist temporal_issues.json and boundary_coverage_matrix.json atomically
     out_json = ev_dir / "temporal_issues.json"
     out_json.parent.mkdir(parents=True, exist_ok=True)
     tmp_json = out_json.with_suffix(f".{os.getpid()}.tmp")
     tmp_json.write_text(report.model_dump_json(indent=2), encoding="utf-8")
     os.replace(tmp_json, out_json)
+
+    matrix_json = ev_dir / "boundary_coverage_matrix.json"
+    tmp_mat = matrix_json.with_suffix(f".{os.getpid()}.tmp")
+    tmp_mat.write_text(
+        json.dumps(
+            {
+                "version": "14.7.5.1",
+                "project_id": report.project_id,
+                "mp4_path": report.mp4_path,
+                "total_shots": report.total_shots,
+                "expected_cut_count": report.expected_cut_count,
+                "audited_cut_count": report.audited_cut_count,
+                "unaudited_cuts": report.unaudited_cuts,
+                "full_boundary_coverage": report.full_boundary_coverage,
+                "all_cuts_passed": cut_summary["all_cuts_passed"],
+                "boundary_evidence": report.boundary_evidence,
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    os.replace(tmp_mat, matrix_json)
 
     return report
 
@@ -1307,13 +1904,95 @@ def run_single_detector_assertion(detector_id: str, mutate: bool = False) -> Dic
             "diagnostics": diags,
         }
 
+    if detector_id == "audit_cut_boundary_missing_cut":
+        this_mod = sys.modules[__name__]
+        if mutate:
+            # Simulate the historical V14.7.5 bug: skipping diagram/map boundaries while claiming full coverage
+            setattr(
+                this_mod,
+                "audit_cut_boundaries_all",
+                lambda boundary_plans, expected_cut_count, total_video_duration=0.0, character_bible=None: {
+                    "expected_cut_count": expected_cut_count,
+                    "audited_cut_count": expected_cut_count,
+                    "unaudited_cuts": [],
+                    "failed_cuts": [],
+                    "full_boundary_coverage": True,
+                    "all_cuts_passed": True,
+                    "boundary_evidence": [],
+                },
+            )
+        with tempfile.TemporaryDirectory() as tmp_d:
+            tp = Path(tmp_d)
+            shots_4 = [
+                {"id": "s01", "start": 0.0, "end": 1.0, "dur": 1.0, "tpl": "scene", "args": {"bg": "field", "people": [{"id": "a1", "preset": "legionary", "x": 0.4}]}},
+                {"id": "s02", "start": 1.0, "end": 2.0, "dur": 1.0, "tpl": "map", "intentional_cut_reason": "insert_diagram", "args": {"bg": "parchment"}},
+                {"id": "s03", "start": 2.0, "end": 3.0, "dur": 1.0, "tpl": "title", "intentional_cut_reason": "title_card_transition", "args": {"bg": "parchment"}},
+                {"id": "s04", "start": 3.0, "end": 4.0, "dur": 1.0, "tpl": "scene", "intentional_cut_reason": "diagram_to_scene", "args": {"bg": "field", "people": [{"id": "a1", "preset": "legionary", "x": 0.45}]}},
+            ]
+            plans = build_cut_boundary_frame_plan(shots_4, fps=24.0)
+            # Populate valid frames for cut 0 and cut 2, but leave cut 1 (diagram->title) missing post_1
+            valid_img = np.full((240, 320, 3), (120, 150, 180), dtype=np.uint8)
+            valid_img[60:180, 80:240] = (30, 30, 30)
+            for idx_p, bp in enumerate(plans):
+                ap: Dict[str, Path] = {}
+                for role in ("pre_2", "pre_1", "post_1", "post_2"):
+                    p_png = tp / f"c{idx_p}_{role}.png"
+                    if not (idx_p == 1 and role == "post_1"):
+                        Image.fromarray(valid_img, mode="RGB").save(p_png, format="PNG")
+                    ap[role] = p_png
+                bp["artifact_paths"] = ap
+
+            fn_cut_all = getattr(this_mod, "audit_cut_boundaries_all")
+            res_cut = fn_cut_all(plans, expected_cut_count=3, total_video_duration=4.0)
+            caught = (not res_cut.get("full_boundary_coverage", True)) and ("s02->s03" in res_cut.get("unaudited_cuts", []))
+            return {
+                "detector_id": detector_id,
+                "mutated": mutate,
+                "defect_detected": bool(caught),
+                "audited_cut_count": res_cut.get("audited_cut_count"),
+                "expected_cut_count": res_cut.get("expected_cut_count"),
+                "unaudited_cuts": res_cut.get("unaudited_cuts"),
+            }
+
+    if detector_id == "audit_diagram_blank_readability":
+        this_mod = sys.modules[__name__]
+        if mutate:
+            setattr(this_mod, "audit_tactical_labels_mobile", lambda img_arr: (True, []))
+        with tempfile.TemporaryDirectory() as tmp_d:
+            tp = Path(tmp_d)
+            shots_2 = [
+                {"id": "s01", "start": 0.0, "end": 1.5, "dur": 1.5, "tpl": "scene", "args": {"bg": "field", "people": [{"id": "a1", "preset": "legionary", "x": 0.4}]}},
+                {"id": "s02", "start": 1.5, "end": 3.0, "dur": 1.5, "tpl": "map", "intentional_cut_reason": "insert_diagram", "args": {"bg": "parchment"}},
+            ]
+            plans = build_cut_boundary_frame_plan(shots_2, fps=24.0)
+            actor_img = np.full((360, 640, 3), (120, 150, 180), dtype=np.uint8)
+            actor_img[100:300, 260:380] = (180, 30, 30)
+            # Blank parchment diagram with faint non-zero noise so std > 6 but zero legible tactical features
+            rng = np.random.default_rng(7)
+            blank_diag = np.clip(215 + rng.normal(0, 7.5, size=(360, 640, 3)), 0, 255).astype(np.uint8)
+            ap = {}
+            for role, arr_src in (("pre_2", actor_img), ("pre_1", actor_img), ("post_1", blank_diag), ("post_2", blank_diag)):
+                p_png = tp / f"diag_{role}.png"
+                Image.fromarray(arr_src, mode="RGB").save(p_png, format="PNG")
+                ap[role] = p_png
+            plans[0]["artifact_paths"] = ap
+            entry = audit_single_cut_boundary(plans[0], total_video_duration=3.0)
+            caught = entry.get("status") == "FAIL" and any("diagram" in d.lower() or "unreadable" in d.lower() for d in entry.get("diagnostics", []))
+            return {
+                "detector_id": detector_id,
+                "mutated": mutate,
+                "defect_detected": bool(caught),
+                "boundary_status": entry.get("status"),
+                "diagnostics": entry.get("diagnostics", []),
+            }
+
     raise ValueError(f"Unknown detector_id for mutation probe: {detector_id}")
 
 
 def run_mutation_tests(failure_logs_dir: Optional[Path | str] = None) -> Dict[str, Any]:
     """
     Execute real mutation tests in isolated disposable subprocesses (zero hardcoded booleans).
-    For each of the 4 production detectors:
+    For each of the 6 production detectors:
       1) Run unmutated subprocess probe -> must detect negative fixture defect and exit 0.
       2) Run mutated subprocess probe (--mutate) -> monkeypatches production checker inside child
          process -> must FAIL to detect defect and exit non-zero (code 2), killing the mutant.
@@ -1323,6 +2002,8 @@ def run_mutation_tests(failure_logs_dir: Optional[Path | str] = None) -> Dict[st
         ("inspect_media_file_silent_audio", "inspect_media_file::silent_audio_guard"),
         ("validate_cache_hit_stale_receipt", "validate_cache_hit::fingerprint_mismatch"),
         ("audit_temporal_continuity_disappearance", "audit_temporal_continuity::sudden_disappearance"),
+        ("audit_cut_boundary_missing_cut", "audit_cut_boundaries_all::missing_diagram_cut"),
+        ("audit_diagram_blank_readability", "audit_single_cut_boundary::blank_diagram_guard"),
     ]
 
     log_dir = Path(failure_logs_dir) if failure_logs_dir else None

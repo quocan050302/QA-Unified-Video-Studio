@@ -1,0 +1,22 @@
+=== NORMAL CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector audit_cut_boundary_missing_cut (rc=0) ===
+{
+  "detector_id": "audit_cut_boundary_missing_cut",
+  "mutated": false,
+  "defect_detected": true,
+  "audited_cut_count": 2,
+  "expected_cut_count": 3,
+  "unaudited_cuts": [
+    "s02->s03"
+  ]
+}
+
+
+=== MUTANT CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector audit_cut_boundary_missing_cut --mutate (rc=2) ===
+{
+  "detector_id": "audit_cut_boundary_missing_cut",
+  "mutated": true,
+  "defect_detected": false,
+  "audited_cut_count": 3,
+  "expected_cut_count": 3,
+  "unaudited_cuts": []
+}

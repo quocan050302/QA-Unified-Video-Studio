@@ -1,0 +1,147 @@
+{
+  "schema_version": "14.7.5.1",
+  "project": "QA-Unified-Video-Studio",
+  "branch": "fix/Image-Shot",
+  "base_sha": "a0813bd0b7a4428f9563d80e65f6cff6c6ef50a6",
+  "protected_production_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "matrix": [
+    {
+      "section": "02",
+      "requirement": "100% cut-boundary temporal QA invariant (N valid shots -> N-1 audited cuts including actor->diagram, diagram->actor, title, prop) with exact -2/-1/+1/+2 decoded frame indices, typed allowlisted intentional_cut_reason, world-state continuity check, and fail-closed TemporalQAReport fields",
+      "exact_functions": [
+        "tools/temporal_visual_qa.py::TemporalQAReport",
+        "tools/temporal_visual_qa.py::build_cut_boundary_frame_plan",
+        "tools/temporal_visual_qa.py::extract_frames_batched_cached",
+        "tools/temporal_visual_qa.py::audit_single_cut_boundary",
+        "tools/temporal_visual_qa.py::audit_project_temporal_visual",
+        "tools/temporal_visual_qa.py::run_mutation_tests"
+      ],
+      "new_tests": [
+        "tests/test_v14_7_5_1_verification_gaps.py::test_four_shot_actor_map_title_actor_full_boundary_coverage",
+        "tests/test_v14_7_5_1_verification_gaps.py::test_corrupted_or_deleted_boundary_frame_fails_closed",
+        "tests/test_v14_7_5_1_verification_gaps.py::test_world_continuity_teleport_rejected_even_with_arbitrary_reason",
+        "tests/test_v14_7_5_1_verification_gaps.py::test_legitimate_insert_with_allowlisted_reason_passes",
+        "tools/temporal_visual_qa.py::run_mutation_tests (6 real subprocess mutants including missing_cut and blank_diagram)"
+      ],
+      "generated_evidence": [
+        "tests/evidence/v14_7_5_1/07_cut_boundary_coverage.json",
+        "tests/evidence/v14_7_5_1/04_mutation_negative_real.json",
+        "tests/evidence/v14_7_5_1/11_water_gate_temporal.json"
+      ],
+      "pass_condition": "Eagle 12 shots -> 11/11 audited cuts; Water Gate 8 shots -> 7/7 audited cuts; full_boundary_coverage == True; unaudited_cuts == []; all 6 real subprocess mutants killed"
+    },
+    {
+      "section": "03",
+      "requirement": "Provenance & fingerprint contract without null fields: explicit input_fingerprint, recomputed fresh fingerprint from collect_render_inputs(project_path, exact stored render_options), output_sha256 match, validate_cache_hit.hit == True, fail-closed on null/empty/tampered receipt",
+      "exact_functions": [
+        "scripts/production_fingerprint.py::collect_render_inputs",
+        "scripts/production_fingerprint.py::validate_cache_hit",
+        "scripts/production_fingerprint.py::verify_receipt_and_lineage"
+      ],
+      "new_tests": [
+        "tests/test_v14_7_5_1_verification_gaps.py::test_null_fingerprint_receipt_fails_closed",
+        "tests/test_v14_7_5_1_verification_gaps.py::test_stale_manifest_and_swapped_mp4_fail_closed",
+        "tests/test_v14_7_5_1_verification_gaps.py::test_eagle_and_water_gate_receipt_integrity"
+      ],
+      "generated_evidence": [
+        "tests/evidence/v14_7_5_1/08_fingerprint_receipt_integrity.json",
+        "tests/evidence/v14_7_5_1/10_water_gate_media.json"
+      ],
+      "pass_condition": "input_fingerprint non-null 64-hex matching fresh recomputed fingerprint; receipt_verified == True; cache_verified == True; media_decode_verified == True; historical V14.7.5 files untouched"
+    },
+    {
+      "section": "04",
+      "requirement": "Mandatory resource safety floor >= 6.0 GiB disk (+ scratch + 1.0 GiB preflight margin) and >= 1.0 GiB RAM across preflight, waves, TelemetrySampler, subprocess launch guard, run_e2e_regression.py, and acceptance; bounded nested concurrency",
+      "exact_functions": [
+        "scripts/qa_scheduler.py::inspect_resource_budget",
+        "scripts/qa_scheduler.py::choose_bounded_parallelism",
+        "scripts/qa_scheduler.py::TelemetrySampler",
+        "scripts/qa_scheduler.py::run_isolated_job",
+        "scripts/qa_scheduler.py::run_dag",
+        "scripts/run_e2e_regression.py::g00_baseline",
+        "scripts/run_e2e_regression.py::main"
+      ],
+      "new_tests": [
+        "tests/test_v14_7_5_1_verification_gaps.py::test_low_ram_0_7gb_and_low_disk_5_9gb_fail_closed",
+        "tests/test_v14_7_5_1_verification_gaps.py::test_nested_heavy_render_contention_serialized",
+        "tests/test_v14_7_5_1_verification_gaps.py::test_hanging_worker_crash_and_dependent_job_blocking"
+      ],
+      "generated_evidence": [
+        "tests/evidence/v14_7_5_1/02_resource_timeseries.json",
+        "tests/evidence/v14_7_5_1/03_async_real_jobs.json"
+      ],
+      "pass_condition": "min_disk_free_gb >= 6.0 and min_ram_available_gb >= 1.0 across entire monitored run; 0 orphan worker processes; simulated breaches fail closed as BLOCKED_RESOURCE"
+    },
+    {
+      "section": "05",
+      "requirement": "Full real E2E regression (81/81 required gates), G5 synthetic 180-shot stress, G5b 20-shot real render, G5c honest NOT_AVAILABLE, 15+ negative fixtures + 6 subprocess mutants, and separate microbenchmark vs cold/warm 30s E2E render timing",
+      "exact_functions": [
+        "scripts/run_e2e_regression.py::main",
+        "tools/shot_repair.py::run_full_final_qa",
+        "scripts/run_fl01_v14_7_5_1_validation.py::job_e2e_full_regression",
+        "scripts/run_fl01_v14_7_5_1_validation.py::job_speed_micro_and_e2e"
+      ],
+      "new_tests": [
+        "scripts/run_e2e_regression.py (81 required gates)",
+        "tools/shot_repair.py::test_defect_injection_and_repair"
+      ],
+      "generated_evidence": [
+        "tests/evidence/v14_7_5_1/05_e2e_full_regression.json",
+        "tests/evidence/v14_7_5_1/06_backtest_truth.json",
+        "tests/evidence/v14_7_5_1/09_shot_repair_video.json",
+        "tests/evidence/v14_7_5_1/13_speed_micro_and_e2e.json"
+      ],
+      "pass_condition": "81/81 required E2E gates PASS (FLOW_READY); G5c reported as NOT_AVAILABLE (never counted as real replay PASS); microbenchmark n>=3 digests identical; cold vs warm 30s render measured separately"
+    },
+    {
+      "section": "06",
+      "requirement": "Completely original 30.000s / 720-frame 1080p24 film 'THE WATER GATE — THIRTY SECONDS TO SAVE THE STREET' with 0 prior visual inputs, 8 newly authored procedural shots, spoken English voice, -14 LUFS mix, and causality corruption test",
+      "exact_functions": [
+        "packs/squire/civic/water_gate.js::registerWaterGateTemplates",
+        "tools/produce_fl01_v14_7_5_1_roman_water_gate_preview.py::build_water_gate_storyboard",
+        "tools/produce_fl01_v14_7_5_1_roman_water_gate_preview.py::build_water_gate_assets",
+        "tools/produce_fl01_v14_7_5_1_roman_water_gate_preview.py::construct_water_gate_project",
+        "tools/produce_fl01_v14_7_5_1_roman_water_gate_preview.py::generate_water_gate_voice",
+        "tools/produce_fl01_v14_7_5_1_roman_water_gate_preview.py::build_water_gate_soundtrack",
+        "tools/produce_fl01_v14_7_5_1_roman_water_gate_preview.py::produce_water_gate_preview",
+        "tools/produce_fl01_v14_7_5_1_roman_water_gate_preview.py::inspect_water_gate_preview",
+        "tools/produce_fl01_v14_7_5_1_roman_water_gate_preview.py::generate_water_gate_contact_sheets",
+        "tools/produce_fl01_v14_7_5_1_roman_water_gate_preview.py::verify_water_gate_causality"
+      ],
+      "new_tests": [
+        "tests/test_water_gate_primitives_v14_7_5_1.py::test_water_gate_js_primitives_and_causality_corruption"
+      ],
+      "generated_evidence": [
+        "tests/evidence/v14_7_5_1/10_water_gate_media.json",
+        "tests/evidence/v14_7_5_1/11_water_gate_temporal.json",
+        "tests/evidence/v14_7_5_1/12_voice_and_audio_metrics.json",
+        "tests/evidence/v14_7_5_1/14_new_visual_asset_lineage.json",
+        "tests/evidence/v14_7_5_1/contact_sheet_full.png",
+        "tests/evidence/v14_7_5_1/contact_sheet_hook.png",
+        "tests/evidence/v14_7_5_1/contact_sheet_action.png"
+      ],
+      "pass_condition": "Exact 720 decoded frames (30.000s @ 24fps), 1920x1080 H.264/AAC, prior_preview_derived_visual_inputs == 0, 0.0 ms overlap, tail margin >= 0.25s, -14 LUFS +/- 1.0 LU, peak <= -1.0 dBTP, 7/7 cut boundaries PASS"
+    },
+    {
+      "section": "07-09",
+      "requirement": "Preserve all prior MP4s byte-for-byte, render versioned corrected V14.7.4 schematic outputs in isolated temp clones if resource-safe, run R1-R8 + J13 acceptance & cross-evidence consistency, and commit/push with non-circular attestation",
+      "exact_functions": [
+        "scripts/test_v14_7_5_acceptance.py::check_r1, check_r3, check_r7, check_r8",
+        "scripts/test_v14_7_5_1_acceptance.py::run_v14_7_5_1_acceptance_suite",
+        "scripts/run_fl01_v14_7_5_1_validation.py::verify_cross_evidence_consistency, main"
+      ],
+      "new_tests": [
+        "scripts/test_v14_7_5_1_acceptance.py"
+      ],
+      "generated_evidence": [
+        "tests/evidence/v14_7_5_1/00_acceptance.json",
+        "tests/evidence/v14_7_5_1/01_branch_and_preservation.json",
+        "tests/evidence/v14_7_5_1/15_old_video_corrections_status.json",
+        "tests/evidence/v14_7_5_1/16_post_push_git_attestation.json",
+        "tests/evidence/v14_7_5_1/FL01_V14_7_5_1_ACCEPTANCE_REPORT.md",
+        "tests/evidence/v14_7_5_1/EDITORIAL_REVIEW_PACKET.md"
+      ],
+      "pass_condition": "R1-R8 == PASS, J13 == EDITORIAL_REVIEW_PENDING, master_status == TECH_VERIFIED_PENDING_EDITORIAL, 0 cross-evidence contradictions, all 8 prior MP4 SHAs unchanged, Production SHA == 80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+    }
+  ]
+}

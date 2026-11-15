@@ -1,0 +1,360 @@
+{
+  "evidence_schema_version": "14.7.5.1",
+  "run_id": "v14_7_5_1_val_1794743976",
+  "status": "PASS",
+  "execution_mode": "disposable_subprocess_monkeypatch",
+  "all_mutations_killed": true,
+  "killed_mutations": 6,
+  "total_mutations": 6,
+  "mutations": [
+    {
+      "detector": "audit_camera_snap_keyframes",
+      "probe_id": "audit_camera_snap_keyframes",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_camera_snap_keyframes"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_camera_snap_keyframes",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 0.878,
+      "output_diff": [
+        "--- audit_camera_snap_keyframes:normal",
+        "+++ audit_camera_snap_keyframes:mutant",
+        "@@ -1,8 +1,6 @@",
+        " {",
+        "   \"detector_id\": \"audit_camera_snap_keyframes\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"diagnostics\": [",
+        "-    \"Camera snap detected between keyframes 1->2: dt=0.040s, dx=0.65, dy=0.00, dz=0.00\"",
+        "-  ]",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"diagnostics\": []",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/logs/mutation_logs/mutation_audit_camera_snap_keyframes.log"
+    },
+    {
+      "detector": "inspect_media_file::silent_audio_guard",
+      "probe_id": "inspect_media_file_silent_audio",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "inspect_media_file_silent_audio"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "inspect_media_file_silent_audio",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 0.852,
+      "output_diff": [
+        "--- inspect_media_file_silent_audio:normal",
+        "+++ inspect_media_file_silent_audio:mutant",
+        "@@ -1,9 +1,7 @@",
+        " {",
+        "   \"detector_id\": \"inspect_media_file_silent_audio\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"max_volume_db\": -91.0,",
+        "-  \"errors\": [",
+        "-    \"Audio is silent (max_volume=-91.0 dB)\"",
+        "-  ]",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"max_volume_db\": null,",
+        "+  \"errors\": []",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/logs/mutation_logs/mutation_inspect_media_file_silent_audio.log"
+    },
+    {
+      "detector": "validate_cache_hit::fingerprint_mismatch",
+      "probe_id": "validate_cache_hit_stale_receipt",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "validate_cache_hit_stale_receipt"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "validate_cache_hit_stale_receipt",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 1.646,
+      "output_diff": [
+        "--- validate_cache_hit_stale_receipt:normal",
+        "+++ validate_cache_hit_stale_receipt:mutant",
+        "@@ -1,7 +1,7 @@",
+        " {",
+        "   \"detector_id\": \"validate_cache_hit_stale_receipt\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"cache_status\": \"CACHE_INVALIDATED\",",
+        "-  \"reason\": \"Input fingerprint mismatch: code, storyboard, voice, or assets modified. Recorded=d84f96390b79, Current=337d9f41fbac\"",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"cache_status\": \"CACHE_HIT_VERIFIED\",",
+        "+  \"reason\": \"MUTATED_BLIND_CACHE_HIT\"",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/logs/mutation_logs/mutation_validate_cache_hit_stale_receipt.log"
+    },
+    {
+      "detector": "audit_temporal_continuity::sudden_disappearance",
+      "probe_id": "audit_temporal_continuity_disappearance",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_temporal_continuity_disappearance"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_temporal_continuity_disappearance",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 0.467,
+      "output_diff": [
+        "--- audit_temporal_continuity_disappearance:normal",
+        "+++ audit_temporal_continuity_disappearance:mutant",
+        "@@ -1,8 +1,6 @@",
+        " {",
+        "   \"detector_id\": \"audit_temporal_continuity_disappearance\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"diagnostics\": [",
+        "-    \"Temporal defect: Actor suddenly disappeared at t=1.00s without shot cut\"",
+        "-  ]",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"diagnostics\": []",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/logs/mutation_logs/mutation_audit_temporal_continuity_disappearance.log"
+    },
+    {
+      "detector": "audit_cut_boundaries_all::missing_diagram_cut",
+      "probe_id": "audit_cut_boundary_missing_cut",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_cut_boundary_missing_cut"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_cut_boundary_missing_cut",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 0.787,
+      "output_diff": [
+        "--- audit_cut_boundary_missing_cut:normal",
+        "+++ audit_cut_boundary_missing_cut:mutant",
+        "@@ -1,10 +1,8 @@",
+        " {",
+        "   \"detector_id\": \"audit_cut_boundary_missing_cut\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"audited_cut_count\": 2,",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"audited_cut_count\": 3,",
+        "   \"expected_cut_count\": 3,",
+        "-  \"unaudited_cuts\": [",
+        "-    \"s02->s03\"",
+        "-  ]",
+        "+  \"unaudited_cuts\": []",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/logs/mutation_logs/mutation_audit_cut_boundary_missing_cut.log"
+    },
+    {
+      "detector": "audit_single_cut_boundary::blank_diagram_guard",
+      "probe_id": "audit_diagram_blank_readability",
+      "normal_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_diagram_blank_readability"
+      ],
+      "mutant_cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py",
+        "--probe-detector",
+        "audit_diagram_blank_readability",
+        "--mutate"
+      ],
+      "normal_exit_code": 0,
+      "mutant_exit_code": 2,
+      "normal_detected": true,
+      "mutated_detected": false,
+      "mutation_killed": true,
+      "elapsed_sec": 0.949,
+      "output_diff": [
+        "--- audit_diagram_blank_readability:normal",
+        "+++ audit_diagram_blank_readability:mutant",
+        "@@ -1,9 +1,7 @@",
+        " {",
+        "   \"detector_id\": \"audit_diagram_blank_readability\",",
+        "-  \"mutated\": false,",
+        "-  \"defect_detected\": true,",
+        "-  \"boundary_status\": \"FAIL\",",
+        "-  \"diagnostics\": [",
+        "-    \"Post-cut diagram/map frame unreadable at s01->s02: ['Mobile downscale test: Missing high-contrast label badges (found 0 px)']\"",
+        "-  ]",
+        "+  \"mutated\": true,",
+        "+  \"defect_detected\": false,",
+        "+  \"boundary_status\": \"PASS\",",
+        "+  \"diagnostics\": []",
+        " }"
+      ],
+      "failure_log_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/logs/mutation_logs/mutation_audit_diagram_blank_readability.log"
+    }
+  ],
+  "negative_fixtures_all_passed": true,
+  "negative_fixtures_passed_count": 15,
+  "negative_fixtures_total_count": 15,
+  "negative_fixtures": {
+    "blank_frame": {
+      "description": "Pure black frame must be detected as blank and fail",
+      "expected_failure_caught": true,
+      "passed": true
+    },
+    "map_false_actor": {
+      "description": "Tactical map lines must NOT be falsely identified as human actor",
+      "expected_subject": "map",
+      "passed": true
+    },
+    "actor_disappearance": {
+      "description": "Actor suddenly missing mid-shot must trigger disappearance defect",
+      "detected": true,
+      "passed": true
+    },
+    "teleport_mid_shot": {
+      "description": "Instantaneous 1300px lateral jump within 0.5s must be flagged as teleport defect",
+      "teleport_flagged": true,
+      "jump_px": 1300.0,
+      "passed": true
+    },
+    "camera_snap": {
+      "description": "Abrupt 1-frame camera transform snap must be flagged by camera auditor",
+      "snap_caught": true,
+      "diagnostics": [
+        "Camera snap detected between keyframes 1->2: dt=0.040s, dx=0.65, dy=0.00, dz=0.00"
+      ],
+      "passed": true
+    },
+    "duplicate_held_object": {
+      "description": "Duplicate weapon or shield in actor configuration must be rejected by production validator",
+      "diagnostics": [
+        "DUPLICATE_HELD_OBJECT: Actor 'dup_actor' has duplicate weapon2='spear' alongside primary/preset weapon",
+        "DUPLICATE_HELD_OBJECT: Actor 'dup_actor' has duplicate shield2='buckler' alongside primary/preset shield"
+      ],
+      "passed": true
+    },
+    "wrong_preset": {
+      "description": "Unknown actor preset must fail production validateCastPreset with UNKNOWN_ACTOR_PRESET diagnostic",
+      "diagnostic": "UNKNOWN_ACTOR_PRESET: unknown_peasant_xyz",
+      "passed": true
+    },
+    "bad_cut": {
+      "description": "Successive identical framing shots must be flagged as repetition/bad cut defect",
+      "passed": true
+    },
+    "stale_receipt": {
+      "description": "Valid receipt hits initially, then input or output byte tamper invalidates cache",
+      "initial_hit": true,
+      "tampered_input_hit": false,
+      "tampered_bytes_hit": false,
+      "status": "CACHE_INVALIDATED",
+      "reason": "Input fingerprint mismatch: code, storyboard, voice, or assets modified. Recorded=dd4804eaf83f, Current=c930161ebe2e",
+      "passed": true
+    },
+    "failed_extract": {
+      "description": "Extracting frame from nonexistent media must fail closed",
+      "extract_result": false,
+      "passed": true
+    },
+    "silent_audio": {
+      "description": "Media with completely silent audio track must fail closed on measured volume",
+      "valid": false,
+      "max_volume_db": -91.0,
+      "errors": [
+        "Audio is silent (max_volume=-91.0 dB)"
+      ],
+      "passed": true
+    },
+    "empty_map": {
+      "description": "Blank tactical map canvas with no contrast features must fail mobile readability",
+      "readability_ok": false,
+      "diagnostics": [
+        "Mobile downscale test: Missing high-contrast label badges (found 0 px)"
+      ],
+      "passed": true
+    },
+    "unexpected_pose": {
+      "description": "Actor with high center of mass must fail BRACE posture check",
+      "posture_ok": false,
+      "pose_detected": "brace",
+      "diagnostics": [
+        "BRACE acting posture: center of mass too high (0.277)"
+      ],
+      "passed": true
+    },
+    "legitimate_cut": {
+      "description": "Legitimate cut or diagram transition must NOT falsely flag teleportation",
+      "teleport_flagged": false,
+      "passed": true
+    },
+    "torsion_diagram_as_roman": {
+      "description": "Torsion catapult spring diagram used for Roman formation must fail validation",
+      "valid": false,
+      "diagnostic": "MISMATCHED_DIAGRAM: Torsion catapult spring used for Roman formation!",
+      "passed": true
+    }
+  }
+}

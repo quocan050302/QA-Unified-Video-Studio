@@ -25,7 +25,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from scripts.production_fingerprint import inspect_media_file, sha256_file
+from scripts.production_fingerprint import inspect_media_file, sha256_file, verify_receipt_and_lineage
 from scripts.qa_scheduler import (
     build_dependency_dag,
     inspect_resource_budget,
@@ -404,6 +404,11 @@ def job_e2e_regression_full(run_id: str) -> Dict[str, Any]:
 def job_eagle_fog_verify_and_sheets(run_id: str) -> Dict[str, Any]:
     prod_res = produce_eagle_in_fog_preview(force_rebuild=False, workers=1)
     insp = inspect_eagle_preview(EAGLE_PROJECT_DIR, EAGLE_MP4_PATH)
+    lineage = verify_receipt_and_lineage(
+        EAGLE_PROJECT_DIR,
+        EAGLE_MP4_PATH,
+        expected_specs={"width": 1920, "height": 1080, "fps": 24.0, "min_duration": 50.0, "max_duration": 58.0, "require_audio": True},
+    )
     mi = insp.get("media_info", {})
     rcpt = insp.get("receipt") or {}
 
@@ -423,6 +428,10 @@ def job_eagle_fog_verify_and_sheets(run_id: str) -> Dict[str, Any]:
 
     ok = (
         insp.get("valid") is True
+        and lineage.get("status") == "PASS"
+        and lineage.get("receipt_verified") is True
+        and lineage.get("cache_verified") is True
+        and lineage.get("media_decode_verified") is True
         and len(copied_sheets) == 3
         and recomputed_overlap_ms == 0.0
         and min(recomputed_tails) >= 0.25
@@ -430,7 +439,8 @@ def job_eagle_fog_verify_and_sheets(run_id: str) -> Dict[str, Any]:
     )
 
     prov_payload = {
-        "schema_version": "14.7.5",
+        "evidence_schema_version": "14.7.5.1",
+        "schema_version": "14.7.5.1",
         "run_id": run_id,
         "status": "PASS" if ok else "FAIL",
         "title": FILM_TITLE,
@@ -439,9 +449,15 @@ def job_eagle_fog_verify_and_sheets(run_id: str) -> Dict[str, Any]:
         "output_mp4": str(EAGLE_MP4_PATH.relative_to(ROOT_DIR)),
         "producer_status": prod_res.get("status"),
         "cache_status": insp.get("cache_status"),
+        "input_fingerprint": lineage.get("input_fingerprint"),
+        "recomputed_input_fingerprint": lineage.get("recomputed_input_fingerprint"),
+        "fingerprint_match": lineage.get("fingerprint_match"),
+        "output_sha256": lineage.get("output_sha256"),
+        "receipt_verified": lineage.get("receipt_verified"),
+        "cache_verified": lineage.get("cache_verified"),
+        "media_decode_verified": lineage.get("media_decode_verified"),
         "media_info": mi,
         "provenance": rcpt.get("provenance", {}),
-        "fingerprint": rcpt.get("fingerprint"),
         "contact_sheets_published": copied_sheets,
     }
     publish_atomic_evidence(
@@ -527,12 +543,12 @@ def job_speed_serial_vs_parallel(run_id: str) -> Dict[str, Any]:
 
             ser_stages = build_dependency_dag(_build_benchmark_workload_jobs(ser_dir))
             t_s0 = time.perf_counter()
-            ser_rep = run_dag(ser_stages, max_workers=1, min_disk_gb=6.0, min_ram_gb=0.5, run_id=f"bench_ser_{it}")
+            ser_rep = run_dag(ser_stages, max_workers=1, min_disk_gb=6.0, min_ram_gb=1.0, run_id=f"bench_ser_{it}")
             t_ser = round(time.perf_counter() - t_s0, 4)
 
             par_stages = build_dependency_dag(_build_benchmark_workload_jobs(par_dir))
             t_p0 = time.perf_counter()
-            par_rep = run_dag(par_stages, max_workers=4, min_disk_gb=6.0, min_ram_gb=0.5, run_id=f"bench_par_{it}")
+            par_rep = run_dag(par_stages, max_workers=4, min_disk_gb=6.0, min_ram_gb=1.0, run_id=f"bench_par_{it}")
             t_par = round(time.perf_counter() - t_p0, 4)
 
             ser_hashes = {
@@ -727,14 +743,18 @@ def verify_cross_evidence_consistency(ev_dir: Path) -> Dict[str, Any]:
         errors.append("J13 editorial_status must remain EDITORIAL_REVIEW_PENDING")
     if d03.get("total_jobs", 0) < 6 or not d03.get("all_succeeded"):
         errors.append("DAG 03_real_async_dag_jobs must have >=6 jobs and all_succeeded=True")
-    if m04.get("killed_mutations") != 4:
-        errors.append("04_mutation_actual_execution killed_mutations != 4")
+    if m04.get("killed_mutations", 0) < 4:
+        errors.append("04_mutation_actual_execution killed_mutations < 4")
     if e05.get("verdict") != "FLOW_READY" or e05.get("exit_code") != 0:
         errors.append("05_e2e_regression_full must be FLOW_READY with exit_code=0")
     if h06.get("counted_not_available_as_real_replay_pass") is not False:
         errors.append("06_historical_backtest_truth must set counted_not_available_as_real_replay_pass=False")
     if t10.get("passed_shots") != t10.get("total_shots") or t10.get("technical_verdict") != "VISUAL_TECH_PASS":
         errors.append("10_eagle_fog_temporal_qa must pass all 12/12 shots with VISUAL_TECH_PASS")
+    if not t10.get("full_boundary_coverage"):
+        errors.append("10_eagle_fog_temporal_qa must have full_boundary_coverage=True")
+    if not p09.get("input_fingerprint") or not p09.get("receipt_verified") or not p09.get("cache_verified"):
+        errors.append("09_eagle_fog_media_provenance must have non-null input_fingerprint and verified receipt/cache")
     if v11.get("recomputed_total_overlap_ms") != 0.0:
         errors.append("11_voice_timing_measured overlap must be 0.0 ms")
     sha_mp4 = (p09.get("media_info") or {}).get("sha256", "")
@@ -839,7 +859,7 @@ def main() -> int:
         stages=stages,
         max_workers=3,
         min_disk_gb=6.0,
-        min_ram_gb=0.6,
+        min_ram_gb=1.0,
         estimated_scratch_gb=0.5,
         extra_margin_gb=1.0,
         run_id=run_id,

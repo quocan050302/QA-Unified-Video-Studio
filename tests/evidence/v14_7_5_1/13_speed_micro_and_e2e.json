@@ -1,0 +1,61 @@
+{
+  "evidence_schema_version": "14.7.5.1",
+  "run_id": "v14_7_5_1_val_1794743976",
+  "status": "PASS",
+  "scope_separation_note": "Lightweight QA microbenchmark speedup applies strictly to parallel ffprobe/rawvideo decode tasks (n=3) and is NEVER claimed as whole-renderer speedup. Heavy 1080p Chromium rendering is intentionally serialized on this 16GB host to guarantee >=1.0 GiB available RAM.",
+  "microbenchmark": {
+    "workload": "4 independent ffprobe + 3-frame RGB24 decode + SHA256 tasks across 1080p MP4s",
+    "iterations": 3,
+    "serial_wall_times_sec": [
+      0.7213,
+      0.6683,
+      0.673
+    ],
+    "parallel_wall_times_sec": [
+      0.4461,
+      0.3791,
+      0.4174
+    ],
+    "mean_serial_sec": 0.6875,
+    "mean_parallel_sec": 0.4142,
+    "median_serial_sec": 0.673,
+    "median_parallel_sec": 0.4174,
+    "mean_speedup_ratio": 1.66,
+    "all_output_digests_identical": true,
+    "runs": [
+      {
+        "iteration": 1,
+        "serial_sec": 0.7213,
+        "parallel_sec": 0.4461,
+        "speedup_ratio": 1.617,
+        "parallel_overlapping_pairs": 6,
+        "output_digests_identical": true
+      },
+      {
+        "iteration": 2,
+        "serial_sec": 0.6683,
+        "parallel_sec": 0.3791,
+        "speedup_ratio": 1.763,
+        "parallel_overlapping_pairs": 6,
+        "output_digests_identical": true
+      },
+      {
+        "iteration": 3,
+        "serial_sec": 0.673,
+        "parallel_sec": 0.4174,
+        "speedup_ratio": 1.612,
+        "parallel_overlapping_pairs": 6,
+        "output_digests_identical": true
+      }
+    ]
+  },
+  "end_to_end_pipeline_measurements": {
+    "water_gate_30s_cold_render_total_wall_sec": 44.16,
+    "water_gate_30s_cold_render_only_wall_sec": 19.177,
+    "water_gate_30s_warm_cache_wall_sec": 9.501,
+    "water_gate_30s_temporal_decode_qa_wall_sec": 24.142,
+    "cold_render_sample_count": 1,
+    "cold_render_sample_status": "SMALL_SAMPLE",
+    "e2e_full_regression_81_gates_wall_sec": 351.325
+  }
+}

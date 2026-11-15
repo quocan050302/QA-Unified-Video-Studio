@@ -1,0 +1,5 @@
+  Card do hoa dang dung: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)
+Render 720 khung (30.0 giay) 1920x1080 @24fps, 1 luong (CRF 20, maxrate 8M)
+  605/720 khung  40.33 khung/giay  da chay 0p15s  con lai ~0 phut
+
+Xong: /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_5_1_roman_water_gate_preview/build/video_silent.mp4  (0.3 phut). Buoc tiep: python tools/mix.py --project /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_5_1_roman_water_gate_preview

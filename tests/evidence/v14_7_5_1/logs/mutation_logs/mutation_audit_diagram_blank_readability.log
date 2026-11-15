@@ -1,0 +1,20 @@
+=== NORMAL CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector audit_diagram_blank_readability (rc=0) ===
+{
+  "detector_id": "audit_diagram_blank_readability",
+  "mutated": false,
+  "defect_detected": true,
+  "boundary_status": "FAIL",
+  "diagnostics": [
+    "Post-cut diagram/map frame unreadable at s01->s02: ['Mobile downscale test: Missing high-contrast label badges (found 0 px)']"
+  ]
+}
+
+
+=== MUTANT CMD: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tools/temporal_visual_qa.py --probe-detector audit_diagram_blank_readability --mutate (rc=2) ===
+{
+  "detector_id": "audit_diagram_blank_readability",
+  "mutated": true,
+  "defect_detected": false,
+  "boundary_status": "PASS",
+  "diagnostics": []
+}

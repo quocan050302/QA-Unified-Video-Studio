@@ -1,0 +1,30 @@
+{
+  "schema_version": "14.7.5.1",
+  "historical_framing": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+  "characters": {
+    "livia": {
+      "name": "Engineer Livia",
+      "preset": "lady",
+      "role": "Roman Civic Hydraulic Engineer",
+      "silhouette_markers": "Ochre tunic, crimson-trimmed stole, slate headband, rolled surveyor scroll"
+    },
+    "titus": {
+      "name": "Worker Titus",
+      "preset": "smith",
+      "role": "Lead Aqueduct Sluice Worker",
+      "silhouette_markers": "Terracotta work tunic, leather belt, muscular forearm grip on bronze spokes"
+    },
+    "cassius": {
+      "name": "Worker Cassius",
+      "preset": "peasant",
+      "role": "Second Aqueduct Sluice Worker",
+      "silhouette_markers": "Slate-blue work tunic, crimson sash, bracing sandals"
+    },
+    "citizen_a": {
+      "name": "Market Townsman",
+      "preset": "senator",
+      "role": "Street Merchant Below Arch",
+      "silhouette_markers": "Warm ochre civic tunic beside market awning and amphorae"
+    }
+  }
+}

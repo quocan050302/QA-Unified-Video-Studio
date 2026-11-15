@@ -1,0 +1,18 @@
+{
+  "name": "fl01_v14_7_5_1_roman_water_gate_preview",
+  "title": "THE WATER GATE — THIRTY SECONDS TO SAVE THE STREET",
+  "subtitle": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+  "pack": "squire",
+  "genre": "roman_civic_engineering_reconstruction",
+  "aspect": "16:9",
+  "resolution": "1080p",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "bars": "none",
+  "captions": false,
+  "ai_director_mode": "OFFLINE_ONLY",
+  "code_dependencies": [
+    "packs/squire/civic/water_gate.js"
+  ]
+}

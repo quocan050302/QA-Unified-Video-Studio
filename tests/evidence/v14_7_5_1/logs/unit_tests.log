@@ -1,0 +1,29 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.0, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio
+plugins: anyio-4.15.1
+collecting ... collected 20 items
+
+tests/test_v14_7_5_1_verification_gaps.py::TestV14751VerificationGaps::test_4shot_actor_map_title_actor_full_boundary_coverage PASSED [  5%]
+tests/test_v14_7_5_1_verification_gaps.py::TestV14751VerificationGaps::test_arbitrary_cut_reason_rejected_vs_allowlisted_insert PASSED [ 10%]
+tests/test_v14_7_5_1_verification_gaps.py::TestV14751VerificationGaps::test_eagle_in_fog_12_shots_11_cuts_complete PASSED [ 15%]
+tests/test_v14_7_5_1_verification_gaps.py::TestV14751VerificationGaps::test_fingerprint_null_stale_swapped_tampered_fail_closed PASSED [ 20%]
+tests/test_v14_7_5_1_verification_gaps.py::TestV14751VerificationGaps::test_heavy_render_contention_timeout_crash_and_dep_blocking PASSED [ 25%]
+tests/test_v14_7_5_1_verification_gaps.py::TestV14751VerificationGaps::test_low_ram_and_low_disk_floors_enforced_and_scratch_cleaned PASSED [ 30%]
+tests/test_water_gate_primitives_v14_7_5_1.py::TestWaterGatePrimitivesV14751::test_assets_and_project_construction_zero_prior_inputs PASSED [ 35%]
+tests/test_water_gate_primitives_v14_7_5_1.py::TestWaterGatePrimitivesV14751::test_causality_corruptions_fail_closed PASSED [ 40%]
+tests/test_water_gate_primitives_v14_7_5_1.py::TestWaterGatePrimitivesV14751::test_storyboard_exact_30s_720_frames_and_causality_pass PASSED [ 45%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_01_concurrent_jobs_measured_interval_overlap PASSED [ 50%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_02_prerequisite_fail_blocks_dependent PASSED [ 55%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_03_unknown_dep_duplicate_and_cycle_rejected PASSED [ 60%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_04_command_key_mismatch_rejected PASSED [ 65%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_05_callable_none_or_unstructured_not_pass PASSED [ 70%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_06_missing_expected_artifact_fails_even_if_exit_zero PASSED [ 75%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_07_timeout_kills_child_process_tree PASSED [ 80%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_08_low_disk_floor_blocks PASSED [ 85%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_09_low_ram_floor_blocks_and_terminates_breaching_worker PASSED [ 90%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_10_zero_job_dag_does_not_succeed PASSED [ 95%]
+tests/test_qa_scheduler_v14_7_5.py::TestQASchedulerV1475::test_11_atomic_evidence_schema_and_duplicate_claim_guard PASSED [100%]
+
+============================= 20 passed in 53.17s ==============================

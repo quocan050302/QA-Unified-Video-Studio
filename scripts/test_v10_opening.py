@@ -1215,7 +1215,7 @@ async def run_v10_suite() -> List[Dict[str, Any]]:
     print(f"Run ID: {RUN_ID}")
     print("=" * 75)
 
-    ok, msg, res = check_resources(REPO_ROOT, min_disk_gb=4.0)
+    ok, msg, res = check_resources(REPO_ROOT, min_disk_gb=6.0, min_ram_gb=1.0)
     if not ok:
         sys.exit(f"[ResourceGuard BLOCKED] {msg}")
 
@@ -1223,7 +1223,7 @@ async def run_v10_suite() -> List[Dict[str, Any]]:
     CURRENT_RUN_DIR.mkdir(parents=True, exist_ok=True)
 
     global ACTIVE_MONITOR
-    monitor = ResourceMonitor(str(REPO_ROOT), min_disk_gb=4.0, interval_sec=1.0)
+    monitor = ResourceMonitor(str(REPO_ROOT), min_disk_gb=6.0, min_ram_gb=1.0, interval_sec=1.0)
     ACTIVE_MONITOR = monitor
     monitor.start()
 

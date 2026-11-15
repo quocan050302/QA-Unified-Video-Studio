@@ -1,0 +1,58 @@
+{
+  "evidence_schema_version": "14.7.5.1",
+  "run_id": "v14_7_5_1_val_1794743976",
+  "status": "PASS",
+  "preserved_historical_artifacts_intact": true,
+  "corrections": {
+    "arrow_storm_v14_7_4": {
+      "status": "CORRECTED_VERSIONED_PASS",
+      "wall_sec": 85.183,
+      "archived_historical_mp4": "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_FRESH_PREVIEW_1080P.mp4",
+      "archived_historical_sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878",
+      "corrected_versioned_mp4": "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_CORRECTED_V14_7_5_1_1080P.mp4",
+      "corrected_versioned_sha256": "b24af5ffc2c12700a141a9720a0263c53619a469cc9b019cb2ded703b3ecb5cf",
+      "corrected_sidecar_receipt": "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_CORRECTED_V14_7_5_1_1080P.receipt.json",
+      "duration_sec": 54.0,
+      "decoded_video_frames": 1296,
+      "schematic_shot_pixel_audit": {
+        "shot_id": "s05",
+        "timestamp_sec": 24.3,
+        "historical_std_luma": 36.53,
+        "historical_mobile_legible": false,
+        "historical_diagnostics": [
+          "Mobile downscale test: Missing high-contrast label badges (found 0 px)"
+        ],
+        "corrected_std_luma": 72.52,
+        "corrected_mobile_legible": true,
+        "corrected_diagnostics": [],
+        "center_roi_mean_abs_pixel_delta": 113.07,
+        "schematic_visibly_rendered": true
+      }
+    },
+    "roman_continuity_repaired_v14_7_4": {
+      "status": "CORRECTED_VERSIONED_PASS",
+      "wall_sec": 89.77,
+      "archived_historical_mp4": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4",
+      "archived_historical_sha256": "c04f01ae0463fd32ca83f7f9575121eeae9bcd86429e90eaf8cc66a3a03ce841",
+      "corrected_versioned_mp4": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_CORRECTED_V14_7_5_1_1080P.mp4",
+      "corrected_versioned_sha256": "8bab8e86a9203c22e2c8b41a7edf8038e2fca21dfb68af557c02f7ba6c46282e",
+      "corrected_sidecar_receipt": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_CORRECTED_V14_7_5_1_1080P.receipt.json",
+      "duration_sec": 53.992,
+      "decoded_video_frames": 1295,
+      "schematic_shot_pixel_audit": {
+        "shot_id": "s09",
+        "timestamp_sec": 45.9,
+        "historical_std_luma": 36.67,
+        "historical_mobile_legible": false,
+        "historical_diagnostics": [
+          "Mobile downscale test: Missing high-contrast label badges (found 0 px)"
+        ],
+        "corrected_std_luma": 68.09,
+        "corrected_mobile_legible": true,
+        "corrected_diagnostics": [],
+        "center_roi_mean_abs_pixel_delta": 108.74,
+        "schematic_visibly_rendered": true
+      }
+    }
+  }
+}

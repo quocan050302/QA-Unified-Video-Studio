@@ -1,0 +1,494 @@
+{
+  "evidence_schema_version": "14.7.5.1",
+  "release": "V14.7.5.1",
+  "fl_initiative": "FL-01",
+  "run_id": "v14_7_5_1_val_1794743976",
+  "title": "THE WATER GATE — THIRTY SECONDS TO SAVE THE STREET",
+  "subtitle": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+  "timestamp": "2026-11-15T12:12:39Z",
+  "elapsed_sec": 15.133,
+  "master_status": "TECH_VERIFIED_PENDING_EDITORIAL",
+  "tech_all_passed": true,
+  "editorial_status": "EDITORIAL_REVIEW_PENDING",
+  "total_gates": 9,
+  "mandatory_technical_gates_total": 8,
+  "mandatory_technical_gates_passed": 8,
+  "failed_or_unverified_gates": [],
+  "failure_injection_self_checks": {
+    "all_self_checks_passed": true,
+    "overlap_corruption_caught": true,
+    "empty_events_not_verified": true,
+    "camera_snap_caught": true,
+    "unknown_preset_caught": true
+  },
+  "gates": [
+    {
+      "gate_id": "R1",
+      "name": "NO_UNINTENDED_TELEPORT_AND_FULL_CUT_COVERAGE",
+      "status": "PASS",
+      "command_or_function": "scripts/test_v14_7_5_1_acceptance.py::check_r1",
+      "exit_code": 0,
+      "started_at": "2026-11-15T12:12:24Z",
+      "ended_at": "2026-11-15T12:12:24Z",
+      "measured_duration_sec": 0.0015,
+      "input_sha256": "f38afe70864831dbeb41dda0c12dec5c241da1f815326d472342bb8822fbd0cb",
+      "output_sha256": "ee8dd00fd7c5046fc528ff5ed4d12699d7f660bd8045b6564d42d09a16f33918",
+      "evaluator_evidence_paths": [
+        "tests/evidence/v14_7_5_1/07_cut_boundary_coverage.json",
+        "tests/evidence/v14_7_5_1/11_water_gate_temporal.json"
+      ],
+      "details": {
+        "water_gate": {
+          "verdict": "VISUAL_TECH_PASS",
+          "shots_passed": "8/8",
+          "expected_cut_count": 7,
+          "audited_cut_count": 7,
+          "unaudited_cuts": [],
+          "full_boundary_coverage": true,
+          "within_shot_teleports": []
+        },
+        "eagle_in_fog": {
+          "verdict": "VISUAL_TECH_PASS",
+          "shots_passed": "12/12",
+          "expected_cut_count": 11,
+          "audited_cut_count": 11,
+          "unaudited_cuts": [],
+          "full_boundary_coverage": true,
+          "within_shot_teleports": []
+        }
+      },
+      "error": null
+    },
+    {
+      "gate_id": "R2",
+      "name": "ACTOR_ID_APPEARANCE_RATIO_POSITION",
+      "status": "PASS",
+      "command_or_function": "scripts/test_v14_7_5_1_acceptance.py::check_r2",
+      "exit_code": 0,
+      "started_at": "2026-11-15T12:12:24Z",
+      "ended_at": "2026-11-15T12:12:24Z",
+      "measured_duration_sec": 0.0035,
+      "input_sha256": "f38afe70864831dbeb41dda0c12dec5c241da1f815326d472342bb8822fbd0cb",
+      "output_sha256": "d15c52f215d20492b62b91277ebfb5336fe882f548e4b46255aefc8e174e4b71",
+      "evaluator_evidence_paths": [
+        "projects/fl01_v14_7_5_1_roman_water_gate_preview/story/character_bible.json",
+        "tests/evidence/v14_7_5_1/11_water_gate_temporal.json"
+      ],
+      "details": {
+        "water_gate_actors": {
+          "characters": [
+            "livia",
+            "titus",
+            "cassius",
+            "citizen_a"
+          ],
+          "invalid_presets": [],
+          "preset_drift": [],
+          "decoded_actor_height_ratios": {
+            "S02": 0.573,
+            "S03": 0.625,
+            "S04": 0.431,
+            "S05": 0.521,
+            "S06": 0.534,
+            "S07": 0.609,
+            "S08": 0.519
+          },
+          "ratio_outliers": [],
+          "no_clipped_heads": true,
+          "framing_safe_all": true,
+          "valid": true
+        },
+        "eagle_actors": {
+          "characters": [
+            "marcus",
+            "gaius",
+            "decimus",
+            "lucius"
+          ],
+          "invalid_presets": [],
+          "preset_drift": [],
+          "decoded_actor_height_ratios": {
+            "s01": 0.495,
+            "s02": 0.536,
+            "s03": 0.457,
+            "s04": 0.511,
+            "s05": 0.756,
+            "s07": 0.73,
+            "s08": 0.515,
+            "s09": 0.645,
+            "s10": 0.737,
+            "s11": 0.783,
+            "s12": 0.881
+          },
+          "ratio_outliers": [],
+          "no_clipped_heads": true,
+          "framing_safe_all": true,
+          "valid": true
+        },
+        "manual_facial_resemblance_disclosure": "2D procedural vector actors maintain deterministic tunic palettes, headbands, scrolls, and height ratios; fine facial expression and emotional nuance remain subject to J13 human editorial review."
+      },
+      "error": null
+    },
+    {
+      "gate_id": "R3",
+      "name": "CAMERA_CUT_VALIDITY_AND_BOUNDARY_SAMPLES",
+      "status": "PASS",
+      "command_or_function": "scripts/test_v14_7_5_1_acceptance.py::check_r3",
+      "exit_code": 0,
+      "started_at": "2026-11-15T12:12:24Z",
+      "ended_at": "2026-11-15T12:12:24Z",
+      "measured_duration_sec": 0.0026,
+      "input_sha256": "f38afe70864831dbeb41dda0c12dec5c241da1f815326d472342bb8822fbd0cb",
+      "output_sha256": "3882de06a192e2a475fe443f4f0a4e33bd97c079be84e723a4704bd71d8512ac",
+      "evaluator_evidence_paths": [
+        "tests/evidence/v14_7_5_1/07_cut_boundary_coverage.json",
+        "tests/evidence/v14_7_5_1/11_water_gate_temporal.json"
+      ],
+      "details": {
+        "water_gate_camera": {
+          "shots_count": 8,
+          "expected_cuts": 7,
+          "audited_cuts": 7,
+          "boundary_frame_samples_decoded": 28,
+          "complete_4frame_windows": true,
+          "within_shot_snaps": [],
+          "camera_sequence_valid": true,
+          "diverse_grammar_verified": true,
+          "frozen_cuts": [],
+          "invalid_cut_reasons": [],
+          "valid": true
+        },
+        "eagle_camera": {
+          "shots_count": 12,
+          "expected_cuts": 11,
+          "audited_cuts": 11,
+          "boundary_frame_samples_decoded": 44,
+          "complete_4frame_windows": true,
+          "within_shot_snaps": [],
+          "camera_sequence_valid": true,
+          "diverse_grammar_verified": true,
+          "frozen_cuts": [],
+          "invalid_cut_reasons": [],
+          "valid": true
+        },
+        "negative_1frame_snap_caught": true
+      },
+      "error": null
+    },
+    {
+      "gate_id": "R4",
+      "name": "NARRATION_ACTION_ALIGNMENT_CAUSALITY",
+      "status": "PASS",
+      "command_or_function": "scripts/test_v14_7_5_1_acceptance.py::check_r4",
+      "exit_code": 0,
+      "started_at": "2026-11-15T12:12:24Z",
+      "ended_at": "2026-11-15T12:12:24Z",
+      "measured_duration_sec": 0.5904,
+      "input_sha256": "f38afe70864831dbeb41dda0c12dec5c241da1f815326d472342bb8822fbd0cb",
+      "output_sha256": "66c642e0734a74bd6bef42b97e3781f7d64bd5830d75e5c83a8fbcde4f4eef2e",
+      "evaluator_evidence_paths": [
+        "tests/evidence/v14_7_5_1/12_voice_and_audio_metrics.json",
+        "projects/fl01_v14_7_5_1_roman_water_gate_preview/timeline/timeline_voice_events.json"
+      ],
+      "details": {
+        "water_gate_voice": {
+          "valid": true,
+          "status": "PASS",
+          "recomputed_overlap_ms": 0.0,
+          "min_tail_margin_sec": 1.289,
+          "max_tail_margin_sec": 1.731,
+          "min_lead_in_sec": 0.18,
+          "atempo_used_anywhere": false
+        },
+        "water_gate_last_spoken_end_sec": 28.3634,
+        "eagle_voice": {
+          "valid": true,
+          "status": "PASS",
+          "recomputed_overlap_ms": 0.0,
+          "min_tail_margin_sec": 0.575,
+          "max_tail_margin_sec": 1.777,
+          "min_lead_in_sec": 0.24,
+          "atempo_used_anywhere": false
+        },
+        "water_gate_causality": {
+          "valid": true,
+          "status": "PASS",
+          "errors": []
+        },
+        "corrupted_causality_rejected": true,
+        "decoded_pixel_causality": {
+          "s06_sluice_mechanism_mean_abs_delta": 32.804,
+          "overflow_basin_blue_fraction_s07": 0.26128,
+          "pixel_causality_confirmed": true
+        }
+      },
+      "error": null
+    },
+    {
+      "gate_id": "R5",
+      "name": "NO_PLACEHOLDER_OR_HIDDEN_RENDER_ERROR",
+      "status": "PASS",
+      "command_or_function": "scripts/test_v14_7_5_1_acceptance.py::check_r5",
+      "exit_code": 0,
+      "started_at": "2026-11-15T12:12:24Z",
+      "ended_at": "2026-11-15T12:12:25Z",
+      "measured_duration_sec": 0.6886,
+      "input_sha256": "f38afe70864831dbeb41dda0c12dec5c241da1f815326d472342bb8822fbd0cb",
+      "output_sha256": "8218c9acc2ced9d2b25b630a71f7897d01dd89f4c11ef4945e72e67765656c33",
+      "evaluator_evidence_paths": [
+        "projects/fl01_v14_7_5_1_roman_water_gate_preview/build/render.log",
+        "tests/evidence/v14_7_5_1/10_water_gate_media.json"
+      ],
+      "details": {
+        "water_gate_render_log_bytes": 575,
+        "eagle_render_log_bytes": 846,
+        "water_gate_forbidden_tokens": [],
+        "eagle_forbidden_tokens": [],
+        "water_gate_all_shots_non_empty": true,
+        "eagle_all_shots_non_empty": true,
+        "decoded_pixel_checks": {
+          "wg_s01_hook_badge": {
+            "timestamp_sec": 1.5,
+            "mean_luma": 175.82,
+            "std_luma": 39.42,
+            "verified": true,
+            "diagnostics": []
+          },
+          "wg_s06_sluice_gate": {
+            "timestamp_sec": 21.2,
+            "mean_luma": 176.31,
+            "std_luma": 46.48,
+            "verified": true,
+            "diagnostics": []
+          },
+          "wg_s08_end_card": {
+            "timestamp_sec": 28.5,
+            "mean_luma": 170.83,
+            "std_luma": 46.79,
+            "verified": true,
+            "diagnostics": []
+          },
+          "eagle_s06_diagram": {
+            "timestamp_sec": 25.0,
+            "mean_luma": 56.64,
+            "std_luma": 58.17,
+            "verified": true,
+            "diagnostics": []
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "gate_id": "R6",
+      "name": "GEMINI_FALLBACK_PROVENANCE",
+      "status": "PASS",
+      "command_or_function": "scripts/test_v14_7_5_1_acceptance.py::check_r6",
+      "exit_code": 0,
+      "started_at": "2026-11-15T12:12:25Z",
+      "ended_at": "2026-11-15T12:12:26Z",
+      "measured_duration_sec": 0.8829,
+      "input_sha256": "f38afe70864831dbeb41dda0c12dec5c241da1f815326d472342bb8822fbd0cb",
+      "output_sha256": "131d8273b2ec469459dc291479954d1d73c2687f5847d5588ed8897f00b6fe53",
+      "evaluator_evidence_paths": [
+        "tests/evidence/v14_7_5_1/08_fingerprint_receipt_integrity.json",
+        "tests/evidence/v14_7_5_1/10_water_gate_media.json"
+      ],
+      "details": {
+        "water_gate_provenance": {
+          "node_version": "v22.22.3",
+          "python_version": "3.13.0",
+          "action": "produce_water_gate_preview",
+          "wall_sec": 31.233,
+          "force_rebuild": true,
+          "render_mode": "REAL_RENDER",
+          "ai_director_mode": "OFFLINE_ONLY",
+          "ai_director_live_used": false,
+          "version": "14.7.5.1"
+        },
+        "eagle_provenance": {
+          "node_version": "v22.22.3",
+          "python_version": "3.13.0",
+          "action": "produce_eagle_in_fog_preview",
+          "wall_sec": 101.492,
+          "force_rebuild": false,
+          "render_mode": "REAL_RENDER",
+          "ai_director_mode": "OFFLINE_ONLY",
+          "ai_director_live_used": false,
+          "version": "14.7.5"
+        },
+        "policy_matrix": {
+          "OFFLINE_ONLY": "OFFLINE_ONLY",
+          "LIVE_REQUIRED_NO_KEY": true,
+          "CLI_LIVE_REQUIRED_FAIL_CLOSED": true
+        }
+      },
+      "error": null
+    },
+    {
+      "gate_id": "R7",
+      "name": "VERIFIED_NEW_30S_MP4_LINEAGE_ORIGINALITY_AND_SHEETS",
+      "status": "PASS",
+      "command_or_function": "scripts/test_v14_7_5_1_acceptance.py::check_r7",
+      "exit_code": 0,
+      "started_at": "2026-11-15T12:12:26Z",
+      "ended_at": "2026-11-15T12:12:39Z",
+      "measured_duration_sec": 12.9369,
+      "input_sha256": "f38afe70864831dbeb41dda0c12dec5c241da1f815326d472342bb8822fbd0cb",
+      "output_sha256": "8dee58c4a368956b931edae6deccd85aa6ae1e8d39f8fd6f7a7d94ce62ffcadd",
+      "evaluator_evidence_paths": [
+        "tests/evidence/v14_7_5_1/08_fingerprint_receipt_integrity.json",
+        "tests/evidence/v14_7_5_1/10_water_gate_media.json",
+        "tests/evidence/v14_7_5_1/14_new_visual_asset_lineage.json"
+      ],
+      "details": {
+        "evidence_schema_version": "14.7.5.1",
+        "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_5_1_roman_water_gate_preview/out/FL01_V14_7_5_1_ROMAN_WATER_GATE_ORIGINAL_30S_1080P.mp4",
+        "decoded_video_frames": 720,
+        "duration_sec": 30.0,
+        "video_stream_duration_sec": 30.0,
+        "audio_stream_duration_sec": 30.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "integrated_lufs": -14.5,
+        "true_peak_dbtp": -1.0,
+        "final_line_mean_db": -15.2,
+        "final_line_audible": true,
+        "input_fingerprint": "e716fa1d938f4fde9f1261dae705be37bdfc423441fd44382981bf2ca054dafd",
+        "recomputed_input_fingerprint": "e716fa1d938f4fde9f1261dae705be37bdfc423441fd44382981bf2ca054dafd",
+        "fingerprint_match": true,
+        "output_sha256": "62e64088fb0b2d33e9c3382707b3fde9aaca9558c90941e100d4b6f676c7b603",
+        "receipt_verified": true,
+        "cache_verified": true,
+        "media_decode_verified": true,
+        "prior_preview_derived_visual_inputs": 0,
+        "eagle_receipt_lineage_status": "PASS",
+        "eagle_input_fingerprint": "b8051914461fc1f1c40a17ef8761c32455a2bfc5cd01f47fa9bf2caa005c6423",
+        "contact_sheets": {
+          "contact_sheet_full.png": {
+            "exists": true,
+            "size_bytes": 409258,
+            "sha256": "533563fa77dcec26a87ab9013307a7451caec52cde0b01935fb00b82dfe48107",
+            "dimensions": [
+              2000,
+              710
+            ],
+            "std_luma": 74.59
+          },
+          "contact_sheet_hook.png": {
+            "exists": true,
+            "size_bytes": 286170,
+            "sha256": "ae8a40b04ab3004bd286445320bdc7f9745fc2e1d1536e622f2d87042acf52c6",
+            "dimensions": [
+              1504,
+              710
+            ],
+            "std_luma": 70.13
+          },
+          "contact_sheet_action.png": {
+            "exists": true,
+            "size_bytes": 320881,
+            "sha256": "bd107a8a33cd57ffa568a41424847e5f8a076fd1da6c73e06a53b284790cabfc",
+            "dimensions": [
+              1504,
+              710
+            ],
+            "std_luma": 76.31
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "gate_id": "R8",
+      "name": "FULL_REGRESSION_BACKTEST_MUTATION_RESOURCE_PRESERVATION",
+      "status": "PASS",
+      "command_or_function": "scripts/test_v14_7_5_1_acceptance.py::check_r8",
+      "exit_code": 0,
+      "started_at": "2026-11-15T12:12:39Z",
+      "ended_at": "2026-11-15T12:12:39Z",
+      "measured_duration_sec": 0.0091,
+      "input_sha256": "f38afe70864831dbeb41dda0c12dec5c241da1f815326d472342bb8822fbd0cb",
+      "output_sha256": "b89e6b08885eeb02c953ea48a84997428c34fc14c496b3a105d92a57a96c4ccc",
+      "evaluator_evidence_paths": [
+        "tests/evidence/v14_7_5_1/01_branch_and_preservation.json",
+        "tests/evidence/v14_7_5_1/02_resource_timeseries.json",
+        "tests/evidence/v14_7_5_1/03_async_real_jobs.json",
+        "tests/evidence/v14_7_5_1/04_mutation_negative_real.json",
+        "tests/evidence/v14_7_5_1/05_e2e_full_regression.json",
+        "tests/evidence/v14_7_5_1/06_backtest_truth.json",
+        "tests/evidence/v14_7_5_1/09_shot_repair_video.json",
+        "tests/evidence/v14_7_5_1/13_speed_micro_and_e2e.json"
+      ],
+      "details": {
+        "live_resource_budget": {
+          "status": "PASS",
+          "healthy": true,
+          "message": "OK",
+          "disk_free_gb": 18.027,
+          "disk_min_reserve_gb": 6.0,
+          "disk_required_gb": 6.0,
+          "estimated_scratch_gb": 0.0,
+          "extra_margin_gb": 0.0,
+          "free_inodes": 189022480,
+          "ram_available_gb": 3.028,
+          "ram_total_gb": 16.0,
+          "ram_min_reserve_gb": 1.0,
+          "cpu_count": 8,
+          "timestamp": 1794744759.250516
+        },
+        "runtime_min_disk_free_gb": 17.739,
+        "runtime_min_ram_available_gb": 2.205,
+        "runtime_peak_rss_mb": 3182.36,
+        "dag_total_jobs": 12,
+        "dag_overlapping_pairs": 4,
+        "orphan_worker_processes_after_run": 0,
+        "mutations_killed": "6/6",
+        "negative_fixtures": "15/15",
+        "e2e_run_id": "20261115_190043",
+        "e2e_verdict": "FLOW_READY",
+        "e2e_required_passed": "81/81",
+        "synthetic_180_stress_g5": "PASS",
+        "medium_20_shot_real_g5b": "PASS",
+        "historical_180_real_replay_g5c": "NOT_AVAILABLE",
+        "counted_not_available_as_real_replay_pass": false,
+        "shot_repair_status": "PASS",
+        "preserved_historical_artifacts_intact": true,
+        "microbenchmark_digests_identical": true
+      },
+      "error": null
+    },
+    {
+      "gate_id": "J13",
+      "name": "EDITORIAL_HUMAN_REVIEW",
+      "status": "EDITORIAL_REVIEW_PENDING",
+      "command_or_function": "scripts/test_v14_7_5_1_acceptance.py::check_j13",
+      "exit_code": 0,
+      "started_at": "2026-11-15T12:12:39Z",
+      "ended_at": "2026-11-15T12:12:39Z",
+      "measured_duration_sec": 0.0,
+      "input_sha256": "f38afe70864831dbeb41dda0c12dec5c241da1f815326d472342bb8822fbd0cb",
+      "output_sha256": "43c46fc90461e6be251caaaf35137c3e4bbb284e72732251683a6ba975d25670",
+      "evaluator_evidence_paths": [
+        "tests/evidence/v14_7_5_1/EDITORIAL_REVIEW_PACKET.md"
+      ],
+      "details": {
+        "reviewer": "USER / Human Editorial Director",
+        "verdict": "EDITORIAL_REVIEW_PENDING",
+        "note": "Machine verification attests technical, frame-exact cut continuity, audio loudness, and lineage truth only. Dramatic emotion, pacing feel, and audience engagement require human watch sign-off.",
+        "film": {
+          "title": "THE WATER GATE — THIRTY SECONDS TO SAVE THE STREET",
+          "subtitle": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+          "path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_5_1_roman_water_gate_preview/out/FL01_V14_7_5_1_ROMAN_WATER_GATE_ORIGINAL_30S_1080P.mp4",
+          "nominal_duration_sec": 30.0,
+          "decoded_video_frames": 720,
+          "launch_command": "open \"/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_5_1_roman_water_gate_preview/out/FL01_V14_7_5_1_ROMAN_WATER_GATE_ORIGINAL_30S_1080P.mp4\""
+        }
+      },
+      "error": null
+    }
+  ]
+}

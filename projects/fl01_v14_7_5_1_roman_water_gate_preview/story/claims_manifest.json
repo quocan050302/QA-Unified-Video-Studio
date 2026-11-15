@@ -1,0 +1,12 @@
+{
+  "schema_version": "14.7.5.1",
+  "title": "THE WATER GATE — THIRTY SECONDS TO SAVE THE STREET",
+  "subtitle": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+  "historical_claim_mode": "FICTIONAL_STYLIZED_RECONSTRUCTION",
+  "documented_historical_event": false,
+  "disclaimer": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+  "engineering_plausibility_notes": [
+    "Elevated Roman stone aqueduct channel (specus) carrying gravity-fed flow above civic streets",
+    "Manual bronze spoked screw/gear wheel raising and lowering a timber sluice gate (cataracta) into an overflow basin (castellum)"
+  ]
+}

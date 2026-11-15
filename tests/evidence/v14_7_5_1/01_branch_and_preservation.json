@@ -1,0 +1,164 @@
+{
+  "evidence_schema_version": "14.7.5.1",
+  "run_id": "v14_7_5_1_val_1794743976",
+  "status": "PASS",
+  "current_branch": "fix/Image-Shot",
+  "mandatory_branch": "fix/Image-Shot",
+  "head_sha_at_validation": "a0813bd0b7a4428f9563d80e65f6cff6c6ef50a6",
+  "baseline_sha": "a0813bd0b7a4428f9563d80e65f6cff6c6ef50a6",
+  "baseline_is_ancestor": true,
+  "remote_fix_image_shot_sha_pre_push": "a0813bd0b7a4428f9563d80e65f6cff6c6ef50a6",
+  "remote_production_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_invariant_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "production_unchanged": true,
+  "preflight_resource_budget": {
+    "status": "PASS",
+    "healthy": true,
+    "message": "OK",
+    "disk_free_gb": 18.029,
+    "disk_min_reserve_gb": 6.0,
+    "disk_required_gb": 8.5,
+    "estimated_scratch_gb": 1.5,
+    "extra_margin_gb": 1.0,
+    "free_inodes": 189044400,
+    "ram_available_gb": 3.114,
+    "ram_total_gb": 16.0,
+    "ram_min_reserve_gb": 1.0,
+    "cpu_count": 8,
+    "timestamp": 1794744734.4596732
+  },
+  "all_preserved_intact": true,
+  "preserved_count": 9,
+  "artifacts": [
+    {
+      "path": "projects/fl01_v14_7_night_warning_preview/out/FL01_V14_7_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 14085487,
+      "actual_size": 14085487,
+      "expected_sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+      "actual_sha256": "6db2c5862917f987c417198a31297a4ba89d007d5d0434d8362eea65837df818",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 53.0,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_1_bridge_before_enemy_preview/out/FL01_V14_7_1_BRIDGE_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 11681291,
+      "actual_size": 11681291,
+      "expected_sha256": "3bda2c3a1aa4583bfec783de154343548cec993b21442699d596abe041f808e6",
+      "actual_sha256": "3bda2c3a1aa4583bfec783de154343548cec993b21442699d596abe041f808e6",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 52.0,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_2_ballista_preview/out/FL01_V14_7_2_BALLISTA_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 13189209,
+      "actual_size": 13189209,
+      "expected_sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+      "actual_sha256": "9a8ee0fa05821c553a626b764ee2b622330abe81196d3238e99c0d459e542aa8",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 51.5,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_3_ROMAN_CONTINUITY_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 13078836,
+      "actual_size": 13078836,
+      "expected_sha256": "111d153d0a37a8e985323074438666b6388d9cddf027bad0fcfadac3a43c28cf",
+      "actual_sha256": "111d153d0a37a8e985323074438666b6388d9cddf027bad0fcfadac3a43c28cf",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 52.5,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_3_roman_continuity_benchmark/out/FL01_V14_7_4_ROMAN_CONTINUITY_REPAIRED_1080P.mp4",
+      "exists": true,
+      "expected_size": 13602474,
+      "actual_size": 13602474,
+      "expected_sha256": "c04f01ae0463fd32ca83f7f9575121eeae9bcd86429e90eaf8cc66a3a03ce841",
+      "actual_sha256": "c04f01ae0463fd32ca83f7f9575121eeae9bcd86429e90eaf8cc66a3a03ce841",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 53.992,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_4_roman_arrow_storm_preview/out/FL01_V14_7_4_ROMAN_ARROW_STORM_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 11543182,
+      "actual_size": 11543182,
+      "expected_sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878",
+      "actual_sha256": "0f5279f8cf9344365a1149d0e2ba122b9b042f67d397b5c7c28aae3fb30b0878",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 54.0,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/fl01_v14_7_5_roman_eagle_in_fog_preview/out/FL01_V14_7_5_ROMAN_EAGLE_IN_FOG_FRESH_PREVIEW_1080P.mp4",
+      "exists": true,
+      "expected_size": 16923383,
+      "actual_size": 16923383,
+      "expected_sha256": "5276bb238384541139e59a04d8457d683d39f883abb480a523171da25ae51421",
+      "actual_sha256": "5276bb238384541139e59a04d8457d683d39f883abb480a523171da25ae51421",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 53.851,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/v14_6_action_demo/out/V14_6_Visual_Storytelling_Acting_Demo_1080p.mp4",
+      "exists": true,
+      "expected_size": 16513932,
+      "actual_size": 16513932,
+      "expected_sha256": "f774b9dc3d21d6ff1ec1ad986587a86dc955a0e943c30fe6b09da28c31cbac48",
+      "actual_sha256": "f774b9dc3d21d6ff1ec1ad986587a86dc955a0e943c30fe6b09da28c31cbac48",
+      "byte_identical": true,
+      "media_probe": {
+        "valid": true,
+        "duration": 57.875,
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    {
+      "path": "projects/squire-mau/config.json",
+      "exists": true,
+      "expected_size": 372,
+      "actual_size": 372,
+      "expected_sha256": "2c62f70b502f81be10cda5c6fae6cbbec0d088cc080451a1cb4604b55bb86214",
+      "actual_sha256": "2c62f70b502f81be10cda5c6fae6cbbec0d088cc080451a1cb4604b55bb86214",
+      "byte_identical": true,
+      "media_probe": null
+    }
+  ]
+}

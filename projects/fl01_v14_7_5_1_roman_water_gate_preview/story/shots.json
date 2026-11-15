@@ -1,0 +1,1267 @@
+{
+  "schema_version": "14.7.5.1",
+  "title": "THE WATER GATE — THIRTY SECONDS TO SAVE THE STREET",
+  "subtitle": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+  "historical_framing": "A fictional Roman engineering rescue; stylized reconstruction, NOT a documented historical event.",
+  "pack": "squire",
+  "aspect": "16:9",
+  "fps": 24,
+  "duration": 30.0,
+  "total_duration": 30.0,
+  "expected_video_frames": 720,
+  "shots": [
+    {
+      "id": "S01",
+      "act": "I_FRACTURE_HOOK",
+      "start": 0.0,
+      "end": 3.0,
+      "dur": 3.0,
+      "action": "CRACK_BURST",
+      "action_kind": "CRACK_BURST",
+      "expected_subject": "prop",
+      "line": "The aqueduct cracked.",
+      "intentional_cut_reason": "opening_hook",
+      "causal_cut_reason": "opening_hook",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "desc": "Upper Roman travertine aqueduct pier splits along a jagged seam as pressurized water bursts outward with ONE CRACK badge",
+      "world_state": {
+        "zone": "upper_aqueduct_pier",
+        "water_flow_dir": "left_to_right",
+        "crack_side": "left_pier",
+        "gate_side": "upper_right_sluice",
+        "gate_closed": false,
+        "diversion_open": false
+      },
+      "mechanics": {
+        "fissure_start": 0.28,
+        "fissure_end": 1.0,
+        "leak_jet_start": 0.25,
+        "leak_jet_end": 1.0,
+        "wheel_angle_start": 0.0,
+        "wheel_angle_end": 0.0,
+        "gate_drop_start": 0.0,
+        "gate_drop_end": 0.0,
+        "overflow_flow_start": 0.0,
+        "overflow_flow_end": 0.0,
+        "stream_layer_order": [
+          "masonry_wall",
+          "stone_fissure",
+          "water_jet",
+          "badge"
+        ]
+      },
+      "args": {
+        "bg": "aqueduct_pier",
+        "zone": "upper_aqueduct_pier",
+        "shake": 0.35,
+        "shakeAt": 0.15,
+        "shakeDur": 0.85,
+        "people": [],
+        "props": [
+          {
+            "kind": "civic_badge",
+            "title": "ONE CRACK"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.47,
+              "y": 0.49,
+              "z": 1.02
+            },
+            {
+              "t": 3.0,
+              "x": 0.45,
+              "y": 0.47,
+              "z": 1.12
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "S01",
+        "source_span": "The aqueduct cracked.",
+        "source_start_sec": 0.0,
+        "source_end_sec": 3.0,
+        "shot_purpose": "establishing",
+        "narrative_role": "hook",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "wide",
+        "viewpoint": "profile_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.52,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 3.0,
+            "x_center": 0.48,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "CRACK_BURST",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "The aqueduct cracked.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "S02",
+      "act": "I_FRACTURE_HOOK",
+      "start": 3.0,
+      "end": 7.0,
+      "dur": 4.0,
+      "action": "INSPECT",
+      "action_kind": "INSPECT",
+      "expected_subject": "actor",
+      "line": "Below it, a crowded street stood in danger.",
+      "intentional_cut_reason": "wide_spatial_establish",
+      "causal_cut_reason": "wide_spatial_establish",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "desc": "Wide two-tier Roman stone aqueduct spanning above a sunlit cobbled market street as Engineer Livia inspects the leaking pier",
+      "world_state": {
+        "zone": "aqueduct_over_market_wide",
+        "water_flow_dir": "left_to_right",
+        "crack_side": "left_pier",
+        "gate_side": "upper_right_sluice",
+        "gate_closed": false,
+        "diversion_open": false
+      },
+      "mechanics": {
+        "fissure_start": 1.0,
+        "fissure_end": 1.0,
+        "leak_jet_start": 0.92,
+        "leak_jet_end": 0.92,
+        "wheel_angle_start": 0.0,
+        "wheel_angle_end": 0.0,
+        "gate_drop_start": 0.0,
+        "gate_drop_end": 0.0,
+        "overflow_flow_start": 0.0,
+        "overflow_flow_end": 0.0,
+        "stream_layer_order": [
+          "market_street",
+          "aqueduct_masonry",
+          "water_jet",
+          "civic_actors"
+        ]
+      },
+      "args": {
+        "bg": "aqueduct_market",
+        "zone": "aqueduct_over_market_wide",
+        "people": [
+          {
+            "id": "livia",
+            "preset": "lady",
+            "from": 0.35,
+            "to": 0.41,
+            "y": 0.36,
+            "h": 0.22
+          },
+          {
+            "id": "citizen_a",
+            "preset": "senator",
+            "x": 0.44,
+            "y": 0.86,
+            "h": 0.3
+          },
+          {
+            "id": "cassius",
+            "preset": "peasant",
+            "x": 0.68,
+            "y": 0.86,
+            "h": 0.29
+          }
+        ],
+        "props": [],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.5,
+              "z": 1.0
+            },
+            {
+              "t": 4.0,
+              "x": 0.48,
+              "y": 0.49,
+              "z": 1.05
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "S02",
+        "source_span": "Below it, a crowded street stood in danger.",
+        "source_start_sec": 3.0,
+        "source_end_sec": 7.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "hook",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "rear",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.0,
+            "x_center": 0.5,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "INSPECT",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Below it, a crowded street stood in danger.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "S03",
+      "act": "II_DECISION_UPSTREAM",
+      "start": 7.0,
+      "end": 11.0,
+      "dur": 4.0,
+      "action": "SIGNAL",
+      "action_kind": "SIGNAL",
+      "expected_subject": "actor",
+      "line": "Livia saw the stone begin to give way.",
+      "intentional_cut_reason": "reaction_closeup",
+      "causal_cut_reason": "reaction_closeup",
+      "visual_source": "generated",
+      "tpl": "close",
+      "desc": "Medium-close on Engineer Livia on the upper stone catwalk raising her surveyor scroll to order the upstream sluice shut",
+      "world_state": {
+        "zone": "catwalk_closeup",
+        "water_flow_dir": "left_to_right",
+        "crack_side": "left_pier",
+        "gate_side": "upper_right_sluice",
+        "gate_closed": false,
+        "diversion_open": false
+      },
+      "mechanics": {
+        "fissure_start": 1.0,
+        "fissure_end": 1.0,
+        "leak_jet_start": 0.88,
+        "leak_jet_end": 0.88,
+        "wheel_angle_start": 0.0,
+        "wheel_angle_end": 0.0,
+        "gate_drop_start": 0.0,
+        "gate_drop_end": 0.0,
+        "overflow_flow_start": 0.0,
+        "overflow_flow_end": 0.0,
+        "stream_layer_order": [
+          "aqueduct_masonry",
+          "water_jet",
+          "livia_signal"
+        ]
+      },
+      "args": {
+        "bg": "aqueduct_catwalk",
+        "zone": "catwalk_closeup",
+        "people": [
+          {
+            "id": "livia",
+            "preset": "lady",
+            "from": 0.47,
+            "to": 0.5,
+            "y": 0.84,
+            "h": 0.52
+          }
+        ],
+        "props": [
+          {
+            "kind": "surveyor_scroll"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.49,
+              "y": 0.5,
+              "z": 1.02
+            },
+            {
+              "t": 4.0,
+              "x": 0.51,
+              "y": 0.48,
+              "z": 1.09
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "S03",
+        "source_span": "Livia saw the stone begin to give way.",
+        "source_start_sec": 7.0,
+        "source_end_sec": 11.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "rear_three_quarter_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.45,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.0,
+            "x_center": 0.42,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "SIGNAL",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "Livia saw the stone begin to give way.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "S04",
+      "act": "II_DECISION_UPSTREAM",
+      "start": 11.0,
+      "end": 15.0,
+      "dur": 4.0,
+      "action": "LOAD",
+      "action_kind": "LOAD",
+      "expected_subject": "actor",
+      "line": "She shouted, Close the upper gate!",
+      "intentional_cut_reason": "upstream_mechanism_cut",
+      "causal_cut_reason": "upstream_mechanism_cut",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "desc": "Upstream sluice tower: rushing open aqueduct channel, bronze spoked handwheel, meshed gear, rope, and raised timber gate as Titus approaches",
+      "world_state": {
+        "zone": "sluice_tower_deck",
+        "water_flow_dir": "left_to_right",
+        "crack_side": "left_pier",
+        "gate_side": "upper_right_sluice",
+        "gate_closed": false,
+        "diversion_open": false
+      },
+      "mechanics": {
+        "fissure_start": 1.0,
+        "fissure_end": 1.0,
+        "leak_jet_start": 0.88,
+        "leak_jet_end": 0.88,
+        "wheel_angle_start": 0.0,
+        "wheel_angle_end": 0.0,
+        "gate_drop_start": 0.02,
+        "gate_drop_end": 0.02,
+        "overflow_flow_start": 0.0,
+        "overflow_flow_end": 0.0,
+        "stream_layer_order": [
+          "sluice_frame",
+          "channel_water",
+          "timber_gate",
+          "bronze_wheel",
+          "civic_actors"
+        ]
+      },
+      "args": {
+        "bg": "sluice_deck",
+        "zone": "sluice_tower_deck",
+        "people": [
+          {
+            "id": "titus",
+            "preset": "smith",
+            "from": 0.34,
+            "to": 0.4,
+            "y": 0.84,
+            "h": 0.45
+          }
+        ],
+        "props": [
+          {
+            "kind": "bronze_sluice_wheel"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.5,
+              "z": 1.01
+            },
+            {
+              "t": 4.0,
+              "x": 0.53,
+              "y": 0.5,
+              "z": 1.07
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "S04",
+        "source_span": "She shouted, Close the upper gate!",
+        "source_start_sec": 11.0,
+        "source_end_sec": 15.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "profile_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.48,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.0,
+            "x_center": 0.52,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "LOAD",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "She shouted, Close the upper gate!",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "S05",
+      "act": "III_MECHANICAL_STRUGGLE",
+      "start": 15.0,
+      "end": 19.0,
+      "dur": 4.0,
+      "action": "BRACE",
+      "action_kind": "BRACE",
+      "expected_subject": "actor",
+      "line": "The wheel jammed. Two workers pushed together.",
+      "intentional_cut_reason": "mechanical_torque_jam",
+      "causal_cut_reason": "mechanical_torque_jam",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "desc": "Titus braces his sandals hard against the stone curb as hydraulic pressure jams the shuddering bronze wheel; Livia and Cassius rush in",
+      "world_state": {
+        "zone": "sluice_tower_deck",
+        "water_flow_dir": "left_to_right",
+        "crack_side": "left_pier",
+        "gate_side": "upper_right_sluice",
+        "gate_closed": false,
+        "diversion_open": false
+      },
+      "mechanics": {
+        "fissure_start": 1.0,
+        "fissure_end": 1.0,
+        "leak_jet_start": 0.88,
+        "leak_jet_end": 0.88,
+        "wheel_angle_start": 0.02,
+        "wheel_angle_end": 0.14,
+        "gate_drop_start": 0.04,
+        "gate_drop_end": 0.04,
+        "overflow_flow_start": 0.0,
+        "overflow_flow_end": 0.0,
+        "stream_layer_order": [
+          "sluice_frame",
+          "channel_water",
+          "timber_gate",
+          "bronze_wheel",
+          "civic_actors"
+        ]
+      },
+      "args": {
+        "bg": "sluice_deck",
+        "zone": "sluice_tower_deck",
+        "shake": 0.16,
+        "shakeAt": 0.4,
+        "shakeDur": 1.2,
+        "people": [
+          {
+            "id": "titus",
+            "preset": "smith",
+            "from": 0.41,
+            "to": 0.41,
+            "y": 0.85,
+            "h": 0.45
+          },
+          {
+            "id": "livia",
+            "preset": "lady",
+            "from": 0.18,
+            "to": 0.25,
+            "y": 0.85,
+            "h": 0.44
+          },
+          {
+            "id": "cassius",
+            "preset": "peasant",
+            "from": 0.84,
+            "to": 0.74,
+            "y": 0.85,
+            "h": 0.45
+          }
+        ],
+        "props": [
+          {
+            "kind": "bronze_sluice_wheel"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.51,
+              "y": 0.51,
+              "z": 1.04
+            },
+            {
+              "t": 4.0,
+              "x": 0.52,
+              "y": 0.5,
+              "z": 1.1
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "S05",
+        "source_span": "The wheel jammed. Two workers pushed together.",
+        "source_start_sec": 15.0,
+        "source_end_sec": 19.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "front_three_quarter_right",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "right_to_left"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.48,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.0,
+            "x_center": 0.52,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "BRACE",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "The wheel jammed. Two workers pushed together.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "S06",
+      "act": "III_MECHANICAL_STRUGGLE",
+      "start": 19.0,
+      "end": 23.0,
+      "dur": 4.0,
+      "action": "WINCH",
+      "action_kind": "WINCH",
+      "expected_subject": "actor",
+      "line": "At last, the gate dropped into place.",
+      "intentional_cut_reason": "same_space_action_beat",
+      "causal_cut_reason": "same_space_action_beat",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "state_changed_keys": [
+        "gate_closed",
+        "diversion_open"
+      ],
+      "desc": "Titus and Cassius heave together on the bronze spokes while Livia releases the iron pawl; gears mesh, rope pays out, and the timber gate drops shut",
+      "world_state": {
+        "zone": "sluice_tower_deck",
+        "water_flow_dir": "left_to_right",
+        "crack_side": "left_pier",
+        "gate_side": "upper_right_sluice",
+        "gate_closed": true,
+        "diversion_open": true
+      },
+      "mechanics": {
+        "fissure_start": 1.0,
+        "fissure_end": 1.0,
+        "leak_jet_start": 0.85,
+        "leak_jet_end": 0.62,
+        "wheel_angle_start": 0.16,
+        "wheel_angle_end": 3.95,
+        "gate_drop_start": 0.06,
+        "gate_drop_end": 0.98,
+        "gate_direction": "downward",
+        "overflow_flow_start": 0.05,
+        "overflow_flow_end": 0.32,
+        "stream_layer_order": [
+          "sluice_frame",
+          "channel_water",
+          "timber_gate",
+          "bronze_wheel",
+          "civic_actors"
+        ]
+      },
+      "args": {
+        "bg": "sluice_deck",
+        "zone": "sluice_tower_deck",
+        "people": [
+          {
+            "id": "livia",
+            "preset": "lady",
+            "from": 0.24,
+            "to": 0.24,
+            "y": 0.85,
+            "h": 0.44
+          },
+          {
+            "id": "titus",
+            "preset": "smith",
+            "from": 0.4,
+            "to": 0.4,
+            "y": 0.85,
+            "h": 0.46
+          },
+          {
+            "id": "cassius",
+            "preset": "peasant",
+            "from": 0.56,
+            "to": 0.56,
+            "y": 0.85,
+            "h": 0.45
+          }
+        ],
+        "props": [
+          {
+            "kind": "bronze_sluice_wheel"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.49,
+              "y": 0.5,
+              "z": 1.02
+            },
+            {
+              "t": 4.0,
+              "x": 0.52,
+              "y": 0.5,
+              "z": 1.08
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "S06",
+        "source_span": "At last, the gate dropped into place.",
+        "source_start_sec": 19.0,
+        "source_end_sec": 23.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "rear_three_quarter_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.55,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.0,
+            "x_center": 0.58,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": false,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "WINCH",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "At last, the gate dropped into place.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "S07",
+      "act": "IV_DIVERSION_RESOLUTION",
+      "start": 23.0,
+      "end": 27.0,
+      "dur": 4.0,
+      "action": "WINCH",
+      "action_kind": "WINCH",
+      "expected_subject": "actor",
+      "line": "The torrent turned toward the overflow channel.",
+      "intentional_cut_reason": "overflow_payoff_track",
+      "causal_cut_reason": "overflow_payoff_track",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "desc": "Hydraulic payoff: with the upstream gate sealed, the roaring current diverts down the stepped stone overflow basin while the pier crack leak subsides",
+      "world_state": {
+        "zone": "overflow_basin_terrace",
+        "water_flow_dir": "left_to_right",
+        "crack_side": "left_pier",
+        "gate_side": "upper_right_sluice",
+        "gate_closed": true,
+        "diversion_open": true
+      },
+      "mechanics": {
+        "fissure_start": 1.0,
+        "fissure_end": 1.0,
+        "leak_jet_start": 0.62,
+        "leak_jet_end": 0.04,
+        "wheel_angle_start": 3.95,
+        "wheel_angle_end": 3.95,
+        "gate_drop_start": 1.0,
+        "gate_drop_end": 1.0,
+        "overflow_flow_start": 0.32,
+        "overflow_flow_end": 1.0,
+        "stream_layer_order": [
+          "aqueduct_masonry",
+          "overflow_basin",
+          "diverted_stream",
+          "civic_actors"
+        ]
+      },
+      "args": {
+        "bg": "overflow_basin",
+        "zone": "overflow_basin_terrace",
+        "people": [
+          {
+            "id": "livia",
+            "preset": "lady",
+            "from": 0.43,
+            "to": 0.47,
+            "y": 0.44,
+            "h": 0.25
+          },
+          {
+            "id": "titus",
+            "preset": "smith",
+            "from": 0.34,
+            "to": 0.37,
+            "y": 0.44,
+            "h": 0.25
+          }
+        ],
+        "props": [
+          {
+            "kind": "overflow_basin"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.48,
+              "y": 0.5,
+              "z": 1.02
+            },
+            {
+              "t": 4.0,
+              "x": 0.53,
+              "y": 0.51,
+              "z": 1.06
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "S07",
+        "source_span": "The torrent turned toward the overflow channel.",
+        "source_start_sec": 23.0,
+        "source_end_sec": 27.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium",
+        "viewpoint": "profile_left",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.52,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 4.0,
+            "x_center": 0.48,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "WINCH",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "The torrent turned toward the overflow channel.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    },
+    {
+      "id": "S08",
+      "act": "IV_DIVERSION_RESOLUTION",
+      "start": 27.0,
+      "end": 30.0,
+      "dur": 3.0,
+      "action": "REFORM",
+      "action_kind": "REFORM",
+      "expected_subject": "actor",
+      "line": "The street was safe.",
+      "intentional_cut_reason": "resolution_wide_crane",
+      "causal_cut_reason": "resolution_wide_crane",
+      "visual_source": "generated",
+      "tpl": "scene",
+      "desc": "Golden-hour resolution: dry market street below the intact Roman arch as Livia, Titus, and Cassius stand above under ONE DECISION. A CITY SPARED.",
+      "world_state": {
+        "zone": "aqueduct_over_market_wide",
+        "water_flow_dir": "left_to_right",
+        "crack_side": "left_pier",
+        "gate_side": "upper_right_sluice",
+        "gate_closed": true,
+        "diversion_open": true
+      },
+      "mechanics": {
+        "fissure_start": 1.0,
+        "fissure_end": 1.0,
+        "leak_jet_start": 0.02,
+        "leak_jet_end": 0.0,
+        "wheel_angle_start": 3.95,
+        "wheel_angle_end": 3.95,
+        "gate_drop_start": 1.0,
+        "gate_drop_end": 1.0,
+        "overflow_flow_start": 0.85,
+        "overflow_flow_end": 0.8,
+        "stream_layer_order": [
+          "market_street",
+          "aqueduct_masonry",
+          "civic_actors",
+          "top_plaque"
+        ]
+      },
+      "args": {
+        "bg": "aqueduct_market",
+        "zone": "aqueduct_over_market_wide",
+        "people": [
+          {
+            "id": "livia",
+            "preset": "lady",
+            "x": 0.48,
+            "y": 0.42,
+            "h": 0.21
+          },
+          {
+            "id": "titus",
+            "preset": "smith",
+            "x": 0.39,
+            "y": 0.42,
+            "h": 0.21
+          },
+          {
+            "id": "cassius",
+            "preset": "peasant",
+            "x": 0.57,
+            "y": 0.42,
+            "h": 0.21
+          },
+          {
+            "id": "citizen_a",
+            "preset": "senator",
+            "x": 0.38,
+            "y": 0.87,
+            "h": 0.31
+          }
+        ],
+        "props": [
+          {
+            "kind": "civic_summary_plaque",
+            "title": "ONE DECISION. A CITY SPARED.",
+            "subtitle": "ROMAN CIVIC ENGINEERING • STYLIZED RECONSTRUCTION"
+          }
+        ],
+        "cameraRig": {
+          "keyframes": [
+            {
+              "t": 0.0,
+              "x": 0.5,
+              "y": 0.5,
+              "z": 1.04
+            },
+            {
+              "t": 3.0,
+              "x": 0.5,
+              "y": 0.5,
+              "z": 1.0
+            }
+          ]
+        }
+      },
+      "camera": {
+        "shot_id": "S08",
+        "source_span": "The street was safe.",
+        "source_start_sec": 27.0,
+        "source_end_sec": 30.0,
+        "shot_purpose": "explanation",
+        "narrative_role": "setup",
+        "subject_ids": [
+          "roman"
+        ],
+        "actor_side": "roman",
+        "look_target": null,
+        "focus_actor_id": "roman",
+        "foreground_actor_id": null,
+        "scale": "medium_wide",
+        "viewpoint": "rear",
+        "view_geometry": "FLAT_2D_ILLUSTRATED",
+        "composition": {
+          "subject_position_normalized": [
+            0.5,
+            0.5
+          ],
+          "safe_top": 0.05,
+          "safe_bottom": 0.12,
+          "screen_direction": "left_to_right"
+        },
+        "camera_path": [
+          {
+            "local_sec": 0.0,
+            "x_center": 0.5,
+            "y_center": 0.59,
+            "zoom": 1.0,
+            "easing": "sine",
+            "tracking_actor_id": null
+          },
+          {
+            "local_sec": 3.0,
+            "x_center": 0.5,
+            "y_center": 0.57,
+            "zoom": 1.04,
+            "easing": "sine",
+            "tracking_actor_id": null
+          }
+        ],
+        "cut": {
+          "type": "cut",
+          "matches_previous_axis": true,
+          "continuity_anchor": "roman"
+        },
+        "depth": {
+          "parallax_mid": true,
+          "parallax_foreground": false
+        },
+        "action_sync": {
+          "action": "REFORM",
+          "expected_motion": true
+        },
+        "semantic_grounding": {
+          "quote": "The street was safe.",
+          "polarity": "AFFIRMED"
+        },
+        "sound_focus": {
+          "sfx_intents": []
+        },
+        "generation_source": "cinematic_camera_director_v14_1",
+        "model_used": null,
+        "compiled_status": "COMPILED",
+        "fallback_reason": null,
+        "manual_locked": false
+      }
+    }
+  ]
+}

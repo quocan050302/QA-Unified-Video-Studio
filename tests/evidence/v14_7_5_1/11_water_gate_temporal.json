@@ -1,0 +1,1469 @@
+{
+  "version": "14.7.5.1",
+  "project_id": "fl01_v14_7_5_1_roman_water_gate_preview",
+  "mp4_path": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/projects/fl01_v14_7_5_1_roman_water_gate_preview/out/FL01_V14_7_5_1_ROMAN_WATER_GATE_ORIGINAL_30S_1080P.mp4",
+  "generated_at": 1794744452.81474,
+  "total_shots": 8,
+  "passed_shots": 8,
+  "all_passed": true,
+  "technical_verdict": "VISUAL_TECH_PASS",
+  "framing_safe_all": true,
+  "no_clipped_heads": true,
+  "motion_verified_all": true,
+  "acting_verified_all": true,
+  "negative_fixtures_passed": true,
+  "extraction_mode": "batched_rawvideo_stream",
+  "extraction_elapsed_sec": 8.357,
+  "total_frames_sampled": 154,
+  "expected_cut_count": 7,
+  "audited_cut_count": 7,
+  "unaudited_cuts": [],
+  "full_boundary_coverage": true,
+  "boundary_evidence": [
+    {
+      "cut_index": 0,
+      "cut": "S01->S02",
+      "from_shot_id": "S01",
+      "to_shot_id": "S02",
+      "shot_ids": [
+        "S01",
+        "S02"
+      ],
+      "from_subject": "prop",
+      "to_subject": "actor",
+      "cut_time_sec": 3.0,
+      "requested_times": {
+        "pre_2": 2.9167,
+        "pre_1": 2.9583,
+        "post_1": 3.0,
+        "post_2": 3.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 70,
+        "pre_1": 71,
+        "post_1": 72,
+        "post_2": 73
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut00_pre_2_f00070.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut00_pre_1_f00071.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut00_post_1_f00072.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut00_post_2_f00073.png"
+      },
+      "artifact_shas": {
+        "pre_2": "7e1e443a0fe98ec9b343b25b91644bbccd002bf6a72fcbbea4526a97d03b14db",
+        "pre_1": "44b9b89f3561aefb5ffd333387634fa90240ae6ed6a03f2875359421a5f122ab",
+        "post_1": "0a1ada759ffa43c742bad7f6dd322f2d05ff88b25e34a43a4079c209494dfd58",
+        "post_2": "a81cc2a62232ee6c4e9237eecdc15a30a2ebd77f9c46fc1a8be30e141dbce6ee"
+      },
+      "pixel_mean_abs_delta": 38.205,
+      "pre_internal_delta": 0.519,
+      "post_internal_delta": 0.348,
+      "geometric_centroid": {
+        "from": "NOT_APPLICABLE",
+        "to": {
+          "x": 0.7903,
+          "y": 0.6185
+        }
+      },
+      "actor_centroid_dx": "NOT_APPLICABLE",
+      "cut_type": "prop_to_actor",
+      "intentional_cut_reason": "wide_spatial_establish",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 1,
+      "cut": "S02->S03",
+      "from_shot_id": "S02",
+      "to_shot_id": "S03",
+      "shot_ids": [
+        "S02",
+        "S03"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 7.0,
+      "requested_times": {
+        "pre_2": 6.9167,
+        "pre_1": 6.9583,
+        "post_1": 7.0,
+        "post_2": 7.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 166,
+        "pre_1": 167,
+        "post_1": 168,
+        "post_2": 169
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut01_pre_2_f00166.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut01_pre_1_f00167.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut01_post_1_f00168.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut01_post_2_f00169.png"
+      },
+      "artifact_shas": {
+        "pre_2": "6d6072f122a24bec81418dd172afcfb13260b9c798e77fd7cb918dc9db826a2a",
+        "pre_1": "a9ec3b42e4d6930cc2c326cef782f8afcc0fcc76e9ad54a66536a5addf7fba44",
+        "post_1": "81485134b6044618bf8f66d442db9b7185d755ca6339e482299368cdc7493eb8",
+        "post_2": "3154434e48c1acad8c9ac428f475f153182600bfaecd7bd71ad313ffb2b0a047"
+      },
+      "pixel_mean_abs_delta": 31.604,
+      "pre_internal_delta": 0.369,
+      "post_internal_delta": 0.562,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.7709,
+          "y": 0.6701
+        },
+        "to": {
+          "x": 0.4795,
+          "y": 0.6351
+        }
+      },
+      "actor_centroid_dx": 0.2914,
+      "cut_type": "framing_tpl_scene_to_close",
+      "intentional_cut_reason": "reaction_closeup",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 2,
+      "cut": "S03->S04",
+      "from_shot_id": "S03",
+      "to_shot_id": "S04",
+      "shot_ids": [
+        "S03",
+        "S04"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 11.0,
+      "requested_times": {
+        "pre_2": 10.9167,
+        "pre_1": 10.9583,
+        "post_1": 11.0,
+        "post_2": 11.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 262,
+        "pre_1": 263,
+        "post_1": 264,
+        "post_2": 265
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut02_pre_2_f00262.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut02_pre_1_f00263.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut02_post_1_f00264.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut02_post_2_f00265.png"
+      },
+      "artifact_shas": {
+        "pre_2": "37acf398424af816703520104358fcfe6be4ccc8974740e6d4fa0ff052035583",
+        "pre_1": "de6c102cdf50728a6a760f4800408701562e96bff6948cd510a413d6eaa308f7",
+        "post_1": "232ae3131501c89e9f7bd17a670c16a503c3acd951bf0b0b9fe5252c6fe25fef",
+        "post_2": "64b2e7da2bac6b28f90a42ca9f9785180607ce1d273ca98d4540dce508c68172"
+      },
+      "pixel_mean_abs_delta": 20.487,
+      "pre_internal_delta": 0.276,
+      "post_internal_delta": 0.377,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.5113,
+          "y": 0.6611
+        },
+        "to": {
+          "x": 0.4091,
+          "y": 0.6383
+        }
+      },
+      "actor_centroid_dx": 0.1022,
+      "cut_type": "framing_tpl_close_to_scene",
+      "intentional_cut_reason": "upstream_mechanism_cut",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 3,
+      "cut": "S04->S05",
+      "from_shot_id": "S04",
+      "to_shot_id": "S05",
+      "shot_ids": [
+        "S04",
+        "S05"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 15.0,
+      "requested_times": {
+        "pre_2": 14.9167,
+        "pre_1": 14.9583,
+        "post_1": 15.0,
+        "post_2": 15.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 358,
+        "pre_1": 359,
+        "post_1": 360,
+        "post_2": 361
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut03_pre_2_f00358.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut03_pre_1_f00359.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut03_post_1_f00360.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut03_post_2_f00361.png"
+      },
+      "artifact_shas": {
+        "pre_2": "67da02cff8d0ac1824a97403aa9e858ad1de37657d83c8ff417bf301e11e843c",
+        "pre_1": "3a5b16ee299b74b1fe5d0aa877651afaa244e454cc3e151437640dbba15d895e",
+        "post_1": "0719b08f7c7a79ac576b0aa58d6123c317f1c23ddbe57472308c41dfa04293d7",
+        "post_2": "7f8af25265e89bdd3c8876971c8dbc9790a5e83a46cc29e75a995dfedb44013e"
+      },
+      "pixel_mean_abs_delta": 18.755,
+      "pre_internal_delta": 0.256,
+      "post_internal_delta": 2.935,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.4051,
+          "y": 0.6428
+        },
+        "to": {
+          "x": 0.3361,
+          "y": 0.6592
+        }
+      },
+      "actor_centroid_dx": 0.069,
+      "cut_type": "same_space_actor_cut",
+      "intentional_cut_reason": "mechanical_torque_jam",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": true,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 4,
+      "cut": "S05->S06",
+      "from_shot_id": "S05",
+      "to_shot_id": "S06",
+      "shot_ids": [
+        "S05",
+        "S06"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 19.0,
+      "requested_times": {
+        "pre_2": 18.9167,
+        "pre_1": 18.9583,
+        "post_1": 19.0,
+        "post_2": 19.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 454,
+        "pre_1": 455,
+        "post_1": 456,
+        "post_2": 457
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut04_pre_2_f00454.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut04_pre_1_f00455.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut04_post_1_f00456.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut04_post_2_f00457.png"
+      },
+      "artifact_shas": {
+        "pre_2": "d2583690eefff3777270f29e99e4728f1cc0b4c22de86fe67328a5351bd7389e",
+        "pre_1": "85455b7299f80d5189c615aa28e2e6049db5464014a553354f1762b518602e5a",
+        "post_1": "2256616cb4e30096a0196b751bb4fc1f90eb3964eea151515e01ff6eb068d7e0",
+        "post_2": "dc9ee24f30b0a46bb9e403b7e12a91eba1bdb339ef87483a6954b9f02ee93231"
+      },
+      "pixel_mean_abs_delta": 22.615,
+      "pre_internal_delta": 1.111,
+      "post_internal_delta": 1.882,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.2639,
+          "y": 0.668
+        },
+        "to": {
+          "x": 0.3142,
+          "y": 0.6558
+        }
+      },
+      "actor_centroid_dx": 0.0503,
+      "cut_type": "same_space_actor_cut",
+      "intentional_cut_reason": "same_space_action_beat",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": true,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 5,
+      "cut": "S06->S07",
+      "from_shot_id": "S06",
+      "to_shot_id": "S07",
+      "shot_ids": [
+        "S06",
+        "S07"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 23.0,
+      "requested_times": {
+        "pre_2": 22.9167,
+        "pre_1": 22.9583,
+        "post_1": 23.0,
+        "post_2": 23.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 550,
+        "pre_1": 551,
+        "post_1": 552,
+        "post_2": 553
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut05_pre_2_f00550.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut05_pre_1_f00551.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut05_post_1_f00552.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut05_post_2_f00553.png"
+      },
+      "artifact_shas": {
+        "pre_2": "7460158d918fa6ae36608462e5564a0e8ace4de7594da1dc0e8d5b565c8c3a69",
+        "pre_1": "384f6c2f93e516b21ce56dbbf53bc3ceb08c8f190753479fa832e9722a18ed65",
+        "post_1": "5b595572cc38cbccb59ae44c753fdf9782d3bd52b93b787e8c8a730145a64ef4",
+        "post_2": "8eea7c59d6e4252585f84414baaef61a04505e8a7b354aca7764a29eaebb6d08"
+      },
+      "pixel_mean_abs_delta": 34.859,
+      "pre_internal_delta": 1.664,
+      "post_internal_delta": 0.446,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.2612,
+          "y": 0.6653
+        },
+        "to": {
+          "x": 0.0807,
+          "y": 0.7457
+        }
+      },
+      "actor_centroid_dx": 0.1805,
+      "cut_type": "spatial_zone_cut",
+      "intentional_cut_reason": "overflow_payoff_track",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 6,
+      "cut": "S07->S08",
+      "from_shot_id": "S07",
+      "to_shot_id": "S08",
+      "shot_ids": [
+        "S07",
+        "S08"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 27.0,
+      "requested_times": {
+        "pre_2": 26.9167,
+        "pre_1": 26.9583,
+        "post_1": 27.0,
+        "post_2": 27.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 646,
+        "pre_1": 647,
+        "post_1": 648,
+        "post_2": 649
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut06_pre_2_f00646.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut06_pre_1_f00647.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut06_post_1_f00648.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut06_post_2_f00649.png"
+      },
+      "artifact_shas": {
+        "pre_2": "2854d8e8e0258f49df680f1242e187be2e40af352b2420f09e953d9348cab398",
+        "pre_1": "0c7ad1de09b5a9431601461057e5a6568f3d78f69c6e7fddb969f7ba47edd249",
+        "post_1": "b0c7e2f7bf4182c5caf2221da0a82c334c880a3739776667f2f4364fe785c16d",
+        "post_2": "02109c8ccf23962fed4352dea97085ea52ca03715a2e9e5b7b0dfc58c9ce0934"
+      },
+      "pixel_mean_abs_delta": 30.52,
+      "pre_internal_delta": 0.255,
+      "post_internal_delta": 0.179,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.0676,
+          "y": 0.7144
+        },
+        "to": {
+          "x": 0.0925,
+          "y": 0.6505
+        }
+      },
+      "actor_centroid_dx": 0.0249,
+      "cut_type": "spatial_zone_cut",
+      "intentional_cut_reason": "resolution_wide_crane",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    }
+  ],
+  "shot_audits": {
+    "S01": {
+      "shot_id": "S01",
+      "action_kind": "CRACK_BURST",
+      "tpl": "scene",
+      "expected_subject": "prop",
+      "duration": 3.0,
+      "start_time": 0.0,
+      "end_time": 3.0,
+      "passed": true,
+      "non_empty_content": true,
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "motion_verified": true,
+      "performance_readability": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "diagnostics": [],
+      "temporal_samples": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S01_f00001_0.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S01_f00002_0.08s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S01_f00018_0.75s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S01_f00036_1.50s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S01_f00054_2.25s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S01_f00070_2.92s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S01_f00071_2.96s.png"
+      ],
+      "sample_timestamps": [
+        0.042,
+        0.083,
+        0.75,
+        1.5,
+        2.25,
+        2.917,
+        2.958
+      ],
+      "sampling_fps_achieved": 2.33,
+      "bounds": {
+        "ymin": 0.14444444444444443,
+        "ymax": 0.6601851851851852,
+        "xmin": 0.55,
+        "xmax": 0.7994791666666666,
+        "mass_x": 0.6708510095308843,
+        "mass_y": 0.2239790727307842,
+        "detected": true,
+        "confidence": 1.0
+      },
+      "subject_motion_px": 161.84,
+      "net_motion_px": 0.0,
+      "detected_acting_pose": "subject_prop",
+      "teleport_detected": false,
+      "sudden_disappearance": false
+    },
+    "S02": {
+      "shot_id": "S02",
+      "action_kind": "INSPECT",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "duration": 4.0,
+      "start_time": 3.0,
+      "end_time": 7.0,
+      "passed": true,
+      "non_empty_content": true,
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "motion_verified": true,
+      "performance_readability": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "diagnostics": [],
+      "temporal_samples": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00073_3.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00074_3.08s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00078_3.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00083_3.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00087_3.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00092_3.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00096_4.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00097_4.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00102_4.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00107_4.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00111_4.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00116_4.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00120_5.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00121_5.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00126_5.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00131_5.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00135_5.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00140_5.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00144_6.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00145_6.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00150_6.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00155_6.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00159_6.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00164_6.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00166_6.92s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S02_f00167_6.96s.png"
+      ],
+      "sample_timestamps": [
+        3.042,
+        3.083,
+        3.242,
+        3.442,
+        3.642,
+        3.842,
+        4.0,
+        4.042,
+        4.242,
+        4.442,
+        4.642,
+        4.842,
+        5.0,
+        5.042,
+        5.242,
+        5.442,
+        5.642,
+        5.842,
+        6.0,
+        6.042,
+        6.242,
+        6.442,
+        6.642,
+        6.842,
+        6.917,
+        6.958
+      ],
+      "sampling_fps_achieved": 6.5,
+      "bounds": {
+        "ymin": 0.30092592592592593,
+        "ymax": 0.8740740740740741,
+        "xmin": 0.019791666666666666,
+        "xmax": 0.24947916666666667,
+        "mass_x": 0.11536123900321056,
+        "mass_y": 0.6630852197344853,
+        "detected": true,
+        "confidence": 1.0
+      },
+      "subject_motion_px": 18.41,
+      "net_motion_px": 230.4,
+      "detected_acting_pose": "standard",
+      "teleport_detected": false,
+      "sudden_disappearance": false
+    },
+    "S03": {
+      "shot_id": "S03",
+      "action_kind": "SIGNAL",
+      "tpl": "close",
+      "expected_subject": "actor",
+      "duration": 4.0,
+      "start_time": 7.0,
+      "end_time": 11.0,
+      "passed": true,
+      "non_empty_content": true,
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "motion_verified": true,
+      "performance_readability": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "diagnostics": [],
+      "temporal_samples": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S03_f00169_7.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S03_f00170_7.08s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S03_f00192_8.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S03_f00216_9.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S03_f00240_10.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S03_f00262_10.92s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S03_f00263_10.96s.png"
+      ],
+      "sample_timestamps": [
+        7.042,
+        7.083,
+        8.0,
+        9.0,
+        10.0,
+        10.917,
+        10.958
+      ],
+      "sampling_fps_achieved": 1.75,
+      "bounds": {
+        "ymin": 0.2490740740740741,
+        "ymax": 0.8740740740740741,
+        "xmin": 0.4,
+        "xmax": 0.6494791666666667,
+        "mass_x": 0.5101213533050198,
+        "mass_y": 0.6471423772390051,
+        "detected": true,
+        "confidence": 1.0
+      },
+      "subject_motion_px": 14.48,
+      "net_motion_px": 3.83,
+      "detected_acting_pose": "signal",
+      "teleport_detected": false,
+      "sudden_disappearance": false
+    },
+    "S04": {
+      "shot_id": "S04",
+      "action_kind": "LOAD",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "duration": 4.0,
+      "start_time": 11.0,
+      "end_time": 15.0,
+      "passed": true,
+      "non_empty_content": true,
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "motion_verified": true,
+      "performance_readability": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "diagnostics": [],
+      "temporal_samples": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S04_f00265_11.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S04_f00266_11.08s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S04_f00288_12.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S04_f00312_13.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S04_f00336_14.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S04_f00358_14.92s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S04_f00359_14.96s.png"
+      ],
+      "sample_timestamps": [
+        11.042,
+        11.083,
+        12.0,
+        13.0,
+        14.0,
+        14.917,
+        14.958
+      ],
+      "sampling_fps_achieved": 1.75,
+      "bounds": {
+        "ymin": 0.42592592592592593,
+        "ymax": 0.8564814814814815,
+        "xmin": 0.3,
+        "xmax": 0.5494791666666666,
+        "mass_x": 0.41116528910284955,
+        "mass_y": 0.6355738064810408,
+        "detected": true,
+        "confidence": 1.0
+      },
+      "subject_motion_px": 14.62,
+      "net_motion_px": 10.37,
+      "detected_acting_pose": "load",
+      "teleport_detected": false,
+      "sudden_disappearance": false
+    },
+    "S05": {
+      "shot_id": "S05",
+      "action_kind": "BRACE",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "duration": 4.0,
+      "start_time": 15.0,
+      "end_time": 19.0,
+      "passed": true,
+      "non_empty_content": true,
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "motion_verified": true,
+      "performance_readability": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "diagnostics": [],
+      "temporal_samples": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S05_f00361_15.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S05_f00362_15.08s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S05_f00384_16.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S05_f00408_17.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S05_f00432_18.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S05_f00454_18.92s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S05_f00455_18.96s.png"
+      ],
+      "sample_timestamps": [
+        15.042,
+        15.083,
+        16.0,
+        17.0,
+        18.0,
+        18.917,
+        18.958
+      ],
+      "sampling_fps_achieved": 1.75,
+      "bounds": {
+        "ymin": 0.4388888888888889,
+        "ymax": 0.9601851851851851,
+        "xmin": 0.15,
+        "xmax": 0.39947916666666666,
+        "mass_x": 0.26531695200558364,
+        "mass_y": 0.661385330705752,
+        "detected": true,
+        "confidence": 1.0
+      },
+      "subject_motion_px": 21.94,
+      "net_motion_px": 105.74,
+      "detected_acting_pose": "brace",
+      "teleport_detected": false,
+      "sudden_disappearance": false
+    },
+    "S06": {
+      "shot_id": "S06",
+      "action_kind": "WINCH",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "duration": 4.0,
+      "start_time": 19.0,
+      "end_time": 23.0,
+      "passed": true,
+      "non_empty_content": true,
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "motion_verified": true,
+      "performance_readability": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "diagnostics": [],
+      "temporal_samples": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00457_19.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00458_19.08s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00462_19.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00467_19.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00471_19.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00476_19.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00480_20.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00481_20.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00486_20.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00491_20.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00495_20.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00500_20.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00504_21.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00505_21.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00510_21.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00515_21.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00519_21.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00524_21.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00528_22.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00529_22.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00534_22.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00539_22.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00543_22.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00548_22.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00550_22.92s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S06_f00551_22.96s.png"
+      ],
+      "sample_timestamps": [
+        19.042,
+        19.083,
+        19.242,
+        19.442,
+        19.642,
+        19.842,
+        20.0,
+        20.042,
+        20.242,
+        20.442,
+        20.642,
+        20.842,
+        21.0,
+        21.042,
+        21.242,
+        21.442,
+        21.642,
+        21.842,
+        22.0,
+        22.042,
+        22.242,
+        22.442,
+        22.642,
+        22.842,
+        22.917,
+        22.958
+      ],
+      "sampling_fps_achieved": 6.5,
+      "bounds": {
+        "ymin": 0.4444444444444444,
+        "ymax": 0.9787037037037037,
+        "xmin": 0.1,
+        "xmax": 0.3494791666666667,
+        "mass_x": 0.23751101482962392,
+        "mass_y": 0.6732224724604168,
+        "detected": true,
+        "confidence": 1.0
+      },
+      "subject_motion_px": 20.86,
+      "net_motion_px": 230.4,
+      "detected_acting_pose": "winch",
+      "teleport_detected": false,
+      "sudden_disappearance": false
+    },
+    "S07": {
+      "shot_id": "S07",
+      "action_kind": "WINCH",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "duration": 4.0,
+      "start_time": 23.0,
+      "end_time": 27.0,
+      "passed": true,
+      "non_empty_content": true,
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "motion_verified": true,
+      "performance_readability": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "diagnostics": [],
+      "temporal_samples": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00553_23.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00554_23.08s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00558_23.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00563_23.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00567_23.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00572_23.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00576_24.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00577_24.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00582_24.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00587_24.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00591_24.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00596_24.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00600_25.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00601_25.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00606_25.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00611_25.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00615_25.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00620_25.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00624_26.00s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00625_26.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00630_26.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00635_26.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00639_26.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00644_26.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00646_26.92s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S07_f00647_26.96s.png"
+      ],
+      "sample_timestamps": [
+        23.042,
+        23.083,
+        23.242,
+        23.442,
+        23.642,
+        23.842,
+        24.0,
+        24.042,
+        24.242,
+        24.442,
+        24.642,
+        24.842,
+        25.0,
+        25.042,
+        25.242,
+        25.442,
+        25.642,
+        25.842,
+        26.0,
+        26.042,
+        26.242,
+        26.442,
+        26.642,
+        26.842,
+        26.917,
+        26.958
+      ],
+      "sampling_fps_achieved": 6.5,
+      "bounds": {
+        "ymin": 0.36944444444444446,
+        "ymax": 0.9787037037037037,
+        "xmin": 0.019791666666666666,
+        "xmax": 0.14947916666666666,
+        "mass_x": 0.07462165571273278,
+        "mass_y": 0.7348816508959685,
+        "detected": true,
+        "confidence": 1.0
+      },
+      "subject_motion_px": 14.41,
+      "net_motion_px": 3.92,
+      "detected_acting_pose": "winch",
+      "teleport_detected": false,
+      "sudden_disappearance": false
+    },
+    "S08": {
+      "shot_id": "S08",
+      "action_kind": "REFORM",
+      "tpl": "scene",
+      "expected_subject": "actor",
+      "duration": 3.0,
+      "start_time": 27.0,
+      "end_time": 30.0,
+      "passed": true,
+      "non_empty_content": true,
+      "safe_framing": true,
+      "head_clipped": false,
+      "feet_clipped": false,
+      "motion_verified": true,
+      "performance_readability": true,
+      "subject_detected": true,
+      "detection_confidence": 1.0,
+      "technical_verdict": "VISUAL_TECH_PASS",
+      "diagnostics": [],
+      "temporal_samples": [
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00649_27.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00650_27.08s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00654_27.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00659_27.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00663_27.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00666_27.75s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00668_27.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00673_28.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00678_28.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00683_28.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00684_28.50s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00687_28.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00692_28.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00697_29.04s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00702_29.24s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00707_29.44s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00711_29.64s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00716_29.84s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00718_29.92s.png",
+        "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_S08_f00719_29.96s.png"
+      ],
+      "sample_timestamps": [
+        27.042,
+        27.083,
+        27.242,
+        27.442,
+        27.642,
+        27.75,
+        27.842,
+        28.042,
+        28.242,
+        28.442,
+        28.5,
+        28.642,
+        28.842,
+        29.042,
+        29.242,
+        29.442,
+        29.642,
+        29.842,
+        29.917,
+        29.958
+      ],
+      "sampling_fps_achieved": 6.67,
+      "bounds": {
+        "ymin": 0.3574074074074074,
+        "ymax": 0.8759259259259259,
+        "xmin": 0.019791666666666666,
+        "xmax": 0.19947916666666668,
+        "mass_x": 0.0965762408113075,
+        "mass_y": 0.6480995678161541,
+        "detected": true,
+        "confidence": 1.0
+      },
+      "subject_motion_px": 168.13,
+      "net_motion_px": 710.7,
+      "detected_acting_pose": "reform",
+      "teleport_detected": false,
+      "sudden_disappearance": false
+    }
+  },
+  "temporal_issues": [],
+  "cross_cut_boundary_audits": [
+    {
+      "cut_index": 0,
+      "cut": "S01->S02",
+      "from_shot_id": "S01",
+      "to_shot_id": "S02",
+      "shot_ids": [
+        "S01",
+        "S02"
+      ],
+      "from_subject": "prop",
+      "to_subject": "actor",
+      "cut_time_sec": 3.0,
+      "requested_times": {
+        "pre_2": 2.9167,
+        "pre_1": 2.9583,
+        "post_1": 3.0,
+        "post_2": 3.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 70,
+        "pre_1": 71,
+        "post_1": 72,
+        "post_2": 73
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut00_pre_2_f00070.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut00_pre_1_f00071.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut00_post_1_f00072.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut00_post_2_f00073.png"
+      },
+      "artifact_shas": {
+        "pre_2": "7e1e443a0fe98ec9b343b25b91644bbccd002bf6a72fcbbea4526a97d03b14db",
+        "pre_1": "44b9b89f3561aefb5ffd333387634fa90240ae6ed6a03f2875359421a5f122ab",
+        "post_1": "0a1ada759ffa43c742bad7f6dd322f2d05ff88b25e34a43a4079c209494dfd58",
+        "post_2": "a81cc2a62232ee6c4e9237eecdc15a30a2ebd77f9c46fc1a8be30e141dbce6ee"
+      },
+      "pixel_mean_abs_delta": 38.205,
+      "pre_internal_delta": 0.519,
+      "post_internal_delta": 0.348,
+      "geometric_centroid": {
+        "from": "NOT_APPLICABLE",
+        "to": {
+          "x": 0.7903,
+          "y": 0.6185
+        }
+      },
+      "actor_centroid_dx": "NOT_APPLICABLE",
+      "cut_type": "prop_to_actor",
+      "intentional_cut_reason": "wide_spatial_establish",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 1,
+      "cut": "S02->S03",
+      "from_shot_id": "S02",
+      "to_shot_id": "S03",
+      "shot_ids": [
+        "S02",
+        "S03"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 7.0,
+      "requested_times": {
+        "pre_2": 6.9167,
+        "pre_1": 6.9583,
+        "post_1": 7.0,
+        "post_2": 7.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 166,
+        "pre_1": 167,
+        "post_1": 168,
+        "post_2": 169
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut01_pre_2_f00166.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut01_pre_1_f00167.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut01_post_1_f00168.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut01_post_2_f00169.png"
+      },
+      "artifact_shas": {
+        "pre_2": "6d6072f122a24bec81418dd172afcfb13260b9c798e77fd7cb918dc9db826a2a",
+        "pre_1": "a9ec3b42e4d6930cc2c326cef782f8afcc0fcc76e9ad54a66536a5addf7fba44",
+        "post_1": "81485134b6044618bf8f66d442db9b7185d755ca6339e482299368cdc7493eb8",
+        "post_2": "3154434e48c1acad8c9ac428f475f153182600bfaecd7bd71ad313ffb2b0a047"
+      },
+      "pixel_mean_abs_delta": 31.604,
+      "pre_internal_delta": 0.369,
+      "post_internal_delta": 0.562,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.7709,
+          "y": 0.6701
+        },
+        "to": {
+          "x": 0.4795,
+          "y": 0.6351
+        }
+      },
+      "actor_centroid_dx": 0.2914,
+      "cut_type": "framing_tpl_scene_to_close",
+      "intentional_cut_reason": "reaction_closeup",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 2,
+      "cut": "S03->S04",
+      "from_shot_id": "S03",
+      "to_shot_id": "S04",
+      "shot_ids": [
+        "S03",
+        "S04"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 11.0,
+      "requested_times": {
+        "pre_2": 10.9167,
+        "pre_1": 10.9583,
+        "post_1": 11.0,
+        "post_2": 11.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 262,
+        "pre_1": 263,
+        "post_1": 264,
+        "post_2": 265
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut02_pre_2_f00262.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut02_pre_1_f00263.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut02_post_1_f00264.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut02_post_2_f00265.png"
+      },
+      "artifact_shas": {
+        "pre_2": "37acf398424af816703520104358fcfe6be4ccc8974740e6d4fa0ff052035583",
+        "pre_1": "de6c102cdf50728a6a760f4800408701562e96bff6948cd510a413d6eaa308f7",
+        "post_1": "232ae3131501c89e9f7bd17a670c16a503c3acd951bf0b0b9fe5252c6fe25fef",
+        "post_2": "64b2e7da2bac6b28f90a42ca9f9785180607ce1d273ca98d4540dce508c68172"
+      },
+      "pixel_mean_abs_delta": 20.487,
+      "pre_internal_delta": 0.276,
+      "post_internal_delta": 0.377,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.5113,
+          "y": 0.6611
+        },
+        "to": {
+          "x": 0.4091,
+          "y": 0.6383
+        }
+      },
+      "actor_centroid_dx": 0.1022,
+      "cut_type": "framing_tpl_close_to_scene",
+      "intentional_cut_reason": "upstream_mechanism_cut",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 3,
+      "cut": "S04->S05",
+      "from_shot_id": "S04",
+      "to_shot_id": "S05",
+      "shot_ids": [
+        "S04",
+        "S05"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 15.0,
+      "requested_times": {
+        "pre_2": 14.9167,
+        "pre_1": 14.9583,
+        "post_1": 15.0,
+        "post_2": 15.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 358,
+        "pre_1": 359,
+        "post_1": 360,
+        "post_2": 361
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut03_pre_2_f00358.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut03_pre_1_f00359.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut03_post_1_f00360.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut03_post_2_f00361.png"
+      },
+      "artifact_shas": {
+        "pre_2": "67da02cff8d0ac1824a97403aa9e858ad1de37657d83c8ff417bf301e11e843c",
+        "pre_1": "3a5b16ee299b74b1fe5d0aa877651afaa244e454cc3e151437640dbba15d895e",
+        "post_1": "0719b08f7c7a79ac576b0aa58d6123c317f1c23ddbe57472308c41dfa04293d7",
+        "post_2": "7f8af25265e89bdd3c8876971c8dbc9790a5e83a46cc29e75a995dfedb44013e"
+      },
+      "pixel_mean_abs_delta": 18.755,
+      "pre_internal_delta": 0.256,
+      "post_internal_delta": 2.935,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.4051,
+          "y": 0.6428
+        },
+        "to": {
+          "x": 0.3361,
+          "y": 0.6592
+        }
+      },
+      "actor_centroid_dx": 0.069,
+      "cut_type": "same_space_actor_cut",
+      "intentional_cut_reason": "mechanical_torque_jam",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": true,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 4,
+      "cut": "S05->S06",
+      "from_shot_id": "S05",
+      "to_shot_id": "S06",
+      "shot_ids": [
+        "S05",
+        "S06"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 19.0,
+      "requested_times": {
+        "pre_2": 18.9167,
+        "pre_1": 18.9583,
+        "post_1": 19.0,
+        "post_2": 19.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 454,
+        "pre_1": 455,
+        "post_1": 456,
+        "post_2": 457
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut04_pre_2_f00454.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut04_pre_1_f00455.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut04_post_1_f00456.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut04_post_2_f00457.png"
+      },
+      "artifact_shas": {
+        "pre_2": "d2583690eefff3777270f29e99e4728f1cc0b4c22de86fe67328a5351bd7389e",
+        "pre_1": "85455b7299f80d5189c615aa28e2e6049db5464014a553354f1762b518602e5a",
+        "post_1": "2256616cb4e30096a0196b751bb4fc1f90eb3964eea151515e01ff6eb068d7e0",
+        "post_2": "dc9ee24f30b0a46bb9e403b7e12a91eba1bdb339ef87483a6954b9f02ee93231"
+      },
+      "pixel_mean_abs_delta": 22.615,
+      "pre_internal_delta": 1.111,
+      "post_internal_delta": 1.882,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.2639,
+          "y": 0.668
+        },
+        "to": {
+          "x": 0.3142,
+          "y": 0.6558
+        }
+      },
+      "actor_centroid_dx": 0.0503,
+      "cut_type": "same_space_actor_cut",
+      "intentional_cut_reason": "same_space_action_beat",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": true,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 5,
+      "cut": "S06->S07",
+      "from_shot_id": "S06",
+      "to_shot_id": "S07",
+      "shot_ids": [
+        "S06",
+        "S07"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 23.0,
+      "requested_times": {
+        "pre_2": 22.9167,
+        "pre_1": 22.9583,
+        "post_1": 23.0,
+        "post_2": 23.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 550,
+        "pre_1": 551,
+        "post_1": 552,
+        "post_2": 553
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut05_pre_2_f00550.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut05_pre_1_f00551.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut05_post_1_f00552.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut05_post_2_f00553.png"
+      },
+      "artifact_shas": {
+        "pre_2": "7460158d918fa6ae36608462e5564a0e8ace4de7594da1dc0e8d5b565c8c3a69",
+        "pre_1": "384f6c2f93e516b21ce56dbbf53bc3ceb08c8f190753479fa832e9722a18ed65",
+        "post_1": "5b595572cc38cbccb59ae44c753fdf9782d3bd52b93b787e8c8a730145a64ef4",
+        "post_2": "8eea7c59d6e4252585f84414baaef61a04505e8a7b354aca7764a29eaebb6d08"
+      },
+      "pixel_mean_abs_delta": 34.859,
+      "pre_internal_delta": 1.664,
+      "post_internal_delta": 0.446,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.2612,
+          "y": 0.6653
+        },
+        "to": {
+          "x": 0.0807,
+          "y": 0.7457
+        }
+      },
+      "actor_centroid_dx": 0.1805,
+      "cut_type": "spatial_zone_cut",
+      "intentional_cut_reason": "overflow_payoff_track",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    },
+    {
+      "cut_index": 6,
+      "cut": "S07->S08",
+      "from_shot_id": "S07",
+      "to_shot_id": "S08",
+      "shot_ids": [
+        "S07",
+        "S08"
+      ],
+      "from_subject": "actor",
+      "to_subject": "actor",
+      "cut_time_sec": 27.0,
+      "requested_times": {
+        "pre_2": 26.9167,
+        "pre_1": 26.9583,
+        "post_1": 27.0,
+        "post_2": 27.0417
+      },
+      "extracted_frame_indices": {
+        "pre_2": 646,
+        "pre_1": 647,
+        "post_1": 648,
+        "post_2": 649
+      },
+      "artifact_paths": {
+        "pre_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut06_pre_2_f00646.png",
+        "pre_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut06_pre_1_f00647.png",
+        "post_1": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut06_post_1_f00648.png",
+        "post_2": "/Users/macbook/Documents/Project_Github/QA-Unified-Video-Studio/tests/evidence/v14_7_5_1/_tmp_wg_decode_work/temporal_frames/62e64088fb0b_cut06_post_2_f00649.png"
+      },
+      "artifact_shas": {
+        "pre_2": "2854d8e8e0258f49df680f1242e187be2e40af352b2420f09e953d9348cab398",
+        "pre_1": "0c7ad1de09b5a9431601461057e5a6568f3d78f69c6e7fddb969f7ba47edd249",
+        "post_1": "b0c7e2f7bf4182c5caf2221da0a82c334c880a3739776667f2f4364fe785c16d",
+        "post_2": "02109c8ccf23962fed4352dea97085ea52ca03715a2e9e5b7b0dfc58c9ce0934"
+      },
+      "pixel_mean_abs_delta": 30.52,
+      "pre_internal_delta": 0.255,
+      "post_internal_delta": 0.179,
+      "geometric_centroid": {
+        "from": {
+          "x": 0.0676,
+          "y": 0.7144
+        },
+        "to": {
+          "x": 0.0925,
+          "y": 0.6505
+        }
+      },
+      "actor_centroid_dx": 0.0249,
+      "cut_type": "spatial_zone_cut",
+      "intentional_cut_reason": "resolution_wide_crane",
+      "reason_allowlisted": true,
+      "reason_evidence_valid": true,
+      "same_bg": false,
+      "causal_cut_declared": true,
+      "world_continuity_checked": true,
+      "world_continuity_violations": [],
+      "coverage_complete": true,
+      "status": "PASS",
+      "diagnostics": []
+    }
+  ],
+  "negative_fixtures_results": {},
+  "global_issues": [],
+  "evidence_schema_version": "14.7.5.1",
+  "run_id": "v14_7_5_1_val_1794743976",
+  "decode_audit_wall_sec": 24.142,
+  "status": "PASS"
+}

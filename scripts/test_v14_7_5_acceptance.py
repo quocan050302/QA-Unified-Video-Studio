@@ -39,6 +39,7 @@ from scripts.production_fingerprint import (
     inspect_media_file,
     sha256_file,
     validate_cache_hit,
+    verify_receipt_and_lineage,
 )
 from scripts.qa_scheduler import inspect_resource_budget
 from tools.ai_director import resolve_ai_director_policy
@@ -247,6 +248,10 @@ def run_v14_7_5_acceptance_suite(evidence_dir: Path = EVIDENCE_DIR) -> Dict[str,
             "passed_shots": temporal_report.passed_shots,
             "total_shots": temporal_report.total_shots,
             "total_frames_sampled": temporal_report.total_frames_sampled,
+            "expected_cut_count": temporal_report.expected_cut_count,
+            "audited_cut_count": temporal_report.audited_cut_count,
+            "unaudited_cuts": temporal_report.unaudited_cuts,
+            "full_boundary_coverage": temporal_report.full_boundary_coverage,
             "dynamic_shot_sampling_fps": dynamic_densities,
             "within_shot_teleports": within_shot_teleports,
             "within_shot_disappearances": within_shot_disappearances,
@@ -257,6 +262,9 @@ def run_v14_7_5_acceptance_suite(evidence_dir: Path = EVIDENCE_DIR) -> Dict[str,
             return "NOT_VERIFIED", details, "Temporal Visual QA returned NOT_VERIFIED"
         if (
             temporal_report.technical_verdict != "VISUAL_TECH_PASS"
+            or not temporal_report.full_boundary_coverage
+            or temporal_report.audited_cut_count != max(0, len(shots) - 1)
+            or temporal_report.unaudited_cuts
             or cross_shot_violations
             or within_shot_teleports
             or within_shot_disappearances
@@ -360,12 +368,17 @@ def run_v14_7_5_acceptance_suite(evidence_dir: Path = EVIDENCE_DIR) -> Dict[str,
             "sequence_errors": seq_errors,
             "unique_viewpoints": grammar_rep.get("unique_viewpoints"),
             "diverse_grammar_verified": grammar_rep.get("diverse_grammar_verified"),
+            "expected_cut_count": max(0, len(shots) - 1),
             "decoded_cut_boundaries_checked": len(boundary_audits),
+            "full_boundary_coverage": temporal_report.full_boundary_coverage,
+            "unaudited_cuts": temporal_report.unaudited_cuts,
             "frozen_cuts": frozen_cuts,
             "negative_snap_control_caught": bool(neg_snap_caught),
         }
-        if len(boundary_audits) == 0:
-            return "NOT_VERIFIED", details, "No decoded cross-cut boundary frames audited"
+        if len(boundary_audits) < max(0, len(shots) - 1) or not temporal_report.full_boundary_coverage:
+            return "FAIL" if len(boundary_audits) > 0 else "NOT_VERIFIED", details, (
+                f"Incomplete cut-boundary coverage: {len(boundary_audits)}/{max(0, len(shots) - 1)} cuts audited"
+            )
         if (
             snap_violations
             or not valid_seq
@@ -591,6 +604,11 @@ def run_v14_7_5_acceptance_suite(evidence_dir: Path = EVIDENCE_DIR) -> Dict[str,
             return "NOT_VERIFIED", {}, f"Missing {EAGLE_MP4_PATH}"
 
         eagle_check = inspect_eagle_preview(EAGLE_PROJECT_DIR, EAGLE_MP4_PATH)
+        lineage = verify_receipt_and_lineage(
+            EAGLE_PROJECT_DIR,
+            EAGLE_MP4_PATH,
+            expected_specs={"width": 1920, "height": 1080, "fps": 24.0, "min_duration": 50.0, "max_duration": 58.0, "require_audio": True},
+        )
         mi = eagle_check.get("media_info", {})
         lufs = mi.get("integrated_lufs")
         tp = mi.get("true_peak_dbtp")
@@ -645,9 +663,17 @@ def run_v14_7_5_acceptance_suite(evidence_dir: Path = EVIDENCE_DIR) -> Dict[str,
                         sheets_ok = False
 
         details = {
+            "evidence_schema_version": lineage.get("evidence_schema_version"),
             "mp4_path": str(EAGLE_MP4_PATH),
             "valid": eagle_check.get("valid"),
             "cache_status": eagle_check.get("cache_status"),
+            "input_fingerprint": lineage.get("input_fingerprint"),
+            "recomputed_input_fingerprint": lineage.get("recomputed_input_fingerprint"),
+            "fingerprint_match": lineage.get("fingerprint_match"),
+            "output_sha256": lineage.get("output_sha256"),
+            "receipt_verified": lineage.get("receipt_verified"),
+            "cache_verified": lineage.get("cache_verified"),
+            "media_decode_verified": lineage.get("media_decode_verified"),
             "duration_sec": mi.get("duration"),
             "width": mi.get("width"),
             "height": mi.get("height"),
@@ -664,6 +690,10 @@ def run_v14_7_5_acceptance_suite(evidence_dir: Path = EVIDENCE_DIR) -> Dict[str,
         }
         if (
             not eagle_check.get("valid")
+            or lineage.get("status") != "PASS"
+            or not lineage.get("receipt_verified")
+            or not lineage.get("cache_verified")
+            or not lineage.get("media_decode_verified")
             or not loudness_ok
             or not tp_ok
             or not final_line_audible
@@ -678,7 +708,7 @@ def run_v14_7_5_acceptance_suite(evidence_dir: Path = EVIDENCE_DIR) -> Dict[str,
     # Gate R8: FULL_REGRESSION_BACKTEST_RESOURCE
     # =========================================================================
     def check_r8() -> Tuple[str, Dict[str, Any], Optional[str]]:
-        budget = inspect_resource_budget(min_disk_gb=6.0, min_ram_gb=0.5)
+        budget = inspect_resource_budget(min_disk_gb=6.0, min_ram_gb=1.0)
         if not budget["healthy"]:
             return "BLOCKED", budget, f"Host resource safety floor breached: {budget['message']}"
 
@@ -721,7 +751,7 @@ def run_v14_7_5_acceptance_suite(evidence_dir: Path = EVIDENCE_DIR) -> Dict[str,
         )
         mut_ok = (
             mut_ev.get("all_mutations_killed") is True
-            and int(mut_ev.get("killed_mutations", 0)) == 4
+            and int(mut_ev.get("killed_mutations", 0)) >= 4
             and str(mut_ev.get("execution_mode", "")).startswith("disposable_subprocess")
         )
         rep_ok = (
