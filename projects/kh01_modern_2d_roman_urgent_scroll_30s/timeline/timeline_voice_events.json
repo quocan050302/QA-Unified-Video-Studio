@@ -1,0 +1,98 @@
+[
+  {
+    "shot_id": "S01",
+    "line": "Rome had one urgent message.",
+    "slot_start": 0.0,
+    "slot_end": 2.625,
+    "spoken_start": 0.14,
+    "spoken_end": 1.796,
+    "measured_tts_sec": 1.6556,
+    "breathing_tail_sec": 0.829,
+    "voice_name": "Microsoft David Desktop",
+    "source_wav_sha256": "303fe2587c33cfb4363faf6843f9b6f89f8734b529d10ed51e26d3289545172f"
+  },
+  {
+    "shot_id": "S02",
+    "line": "And one courier who could not lose it.",
+    "slot_start": 2.625,
+    "slot_end": 6.25,
+    "spoken_start": 2.745,
+    "spoken_end": 4.531,
+    "measured_tts_sec": 1.7865,
+    "breathing_tail_sec": 1.719,
+    "voice_name": "Microsoft David Desktop",
+    "source_wav_sha256": "2c747558d66f927ea5a19edc20784607f4bc940bfd56f75506ac2fa13482ebd7"
+  },
+  {
+    "shot_id": "S03",
+    "line": "But the wind had other plans.",
+    "slot_start": 6.25,
+    "slot_end": 10.25,
+    "spoken_start": 6.37,
+    "spoken_end": 7.917,
+    "measured_tts_sec": 1.5473,
+    "breathing_tail_sec": 2.333,
+    "voice_name": "Microsoft David Desktop",
+    "source_wav_sha256": "47be2272d792db2f70797406f52c460105448ec4528fb50fa9cf82634f9e72b4"
+  },
+  {
+    "shot_id": "S04",
+    "line": "He vanished beneath the market awnings.",
+    "slot_start": 10.25,
+    "slot_end": 13.75,
+    "spoken_start": 10.37,
+    "spoken_end": 12.303,
+    "measured_tts_sec": 1.9328,
+    "breathing_tail_sec": 1.447,
+    "voice_name": "Microsoft David Desktop",
+    "source_wav_sha256": "f552dd81ec40e7b4620f1197cbcf8338fdbec38c74db90d2e180390aab39d948"
+  },
+  {
+    "shot_id": "S05",
+    "line": "A runaway cart offered one last chance.",
+    "slot_start": 13.75,
+    "slot_end": 17.25,
+    "spoken_start": 13.87,
+    "spoken_end": 16.297,
+    "measured_tts_sec": 2.4272,
+    "breathing_tail_sec": 0.953,
+    "voice_name": "Microsoft David Desktop",
+    "source_wav_sha256": "563c5df8da1c32b8b69071fb262748c696d1f457ea2e29ead197a4ca12aaa436"
+  },
+  {
+    "shot_id": "S06",
+    "line": "He caught the scroll beside the fountain.",
+    "slot_start": 17.25,
+    "slot_end": 21.625,
+    "spoken_start": 17.37,
+    "spoken_end": 19.276,
+    "measured_tts_sec": 1.9061,
+    "breathing_tail_sec": 2.349,
+    "voice_name": "Microsoft David Desktop",
+    "source_wav_sha256": "5d641b8690b4b664948d215430c5b8681bba9ceec300062b5cc455b6d431a564"
+  },
+  {
+    "shot_id": "S07",
+    "line": "Then he finally read the emperor's order.",
+    "slot_start": 21.625,
+    "slot_end": 26.0,
+    "spoken_start": 21.745,
+    "spoken_end": 23.8,
+    "measured_tts_sec": 2.0555,
+    "breathing_tail_sec": 2.2,
+    "voice_name": "Microsoft David Desktop",
+    "source_wav_sha256": "b09df1304ac1c0631eede2ef9275dc2d6d0d997aebff724d4fdc0a4f4b062e04"
+  },
+  {
+    "shot_id": "S08",
+    "line": "The meeting... was tomorrow.",
+    "slot_start": 26.0,
+    "slot_end": 30.0,
+    "spoken_start": 26.12,
+    "spoken_end": 27.804,
+    "measured_tts_sec": 1.6839,
+    "breathing_tail_sec": 2.196,
+    "voice_name": "Microsoft David Desktop",
+    "source_wav_sha256": "4d76ccd8c0738675f593bdf122728cd06fee225639c062f4185cf565336b0f67"
+  }
+]

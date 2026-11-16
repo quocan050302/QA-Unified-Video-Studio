@@ -1,0 +1,574 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "scripts.qa_scheduler::run_dag(kh01_w1_to_w3)",
+  "started_iso": "2026-11-16T06:10:02.423173+00:00",
+  "ended_iso": "2026-11-16T06:23:58.860900+00:00",
+  "elapsed_sec": 836.4377,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "scripts/run_kh01_validation.py"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/03_async_parallel_dag.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.466,
+    "ram_available_gb": 9.533,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "dag_status": "PASS",
+  "total_jobs": 13,
+  "passed_jobs": 13,
+  "failed_jobs": 0,
+  "max_active_workers": 3,
+  "concurrency_proof": {
+    "overlapping_pairs_count": 6,
+    "max_overlap_sec": 18.7006,
+    "overlapping_pairs": [
+      {
+        "job_a": "w1_rigby_new_hero_runtime",
+        "job_b": "w1_style_bible_and_contracts",
+        "overlap_sec": 14.2391
+      },
+      {
+        "job_a": "w1_rigby_new_hero_runtime",
+        "job_b": "w1_v14_7_6_reconciliation",
+        "overlap_sec": 14.2391
+      },
+      {
+        "job_a": "w1_style_bible_and_contracts",
+        "job_b": "w1_v14_7_6_reconciliation",
+        "overlap_sec": 18.7006
+      },
+      {
+        "job_a": "w3_film_qa_and_editorial_packet",
+        "job_b": "w3_negative_mutations",
+        "overlap_sec": 13.3116
+      },
+      {
+        "job_a": "w3_film_qa_and_editorial_packet",
+        "job_b": "w3_speed_benchmark",
+        "overlap_sec": 6.8999
+      },
+      {
+        "job_a": "w3_negative_mutations",
+        "job_b": "w3_speed_benchmark",
+        "overlap_sec": 6.8999
+      }
+    ]
+  },
+  "edges": [
+    {
+      "from": "w1_rigby_new_hero_runtime",
+      "to": "w2_visual_style_poc"
+    },
+    {
+      "from": "w1_style_bible_and_contracts",
+      "to": "w2_visual_style_poc"
+    },
+    {
+      "from": "w1_v14_7_6_reconciliation",
+      "to": "w2_visual_style_poc"
+    },
+    {
+      "from": "w2_visual_style_poc",
+      "to": "w2_acting_and_abcd"
+    },
+    {
+      "from": "w2_acting_and_abcd",
+      "to": "w2_multicamera_continuous"
+    },
+    {
+      "from": "w2_multicamera_continuous",
+      "to": "w2_four_niche_generalization"
+    },
+    {
+      "from": "w2_four_niche_generalization",
+      "to": "w2_flagship_30s_roman_film"
+    },
+    {
+      "from": "w2_flagship_30s_roman_film",
+      "to": "w3_film_qa_and_editorial_packet"
+    },
+    {
+      "from": "w2_flagship_30s_roman_film",
+      "to": "w3_negative_mutations"
+    },
+    {
+      "from": "w2_flagship_30s_roman_film",
+      "to": "w3_speed_benchmark"
+    },
+    {
+      "from": "w3_film_qa_and_editorial_packet",
+      "to": "w3_shot_repair"
+    },
+    {
+      "from": "w3_negative_mutations",
+      "to": "w3_shot_repair"
+    },
+    {
+      "from": "w3_speed_benchmark",
+      "to": "w3_shot_repair"
+    },
+    {
+      "from": "w3_shot_repair",
+      "to": "w3_full_e2e_and_backtests"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "w1_rigby_new_hero_runtime",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809405.2991,
+      "started_iso": "2026-11-16T06:10:05.299128+00:00",
+      "ended_at": 1794809419.5382,
+      "ended_iso": "2026-11-16T06:10:19.538212+00:00",
+      "elapsed_sec": 14.2397,
+      "peak_rss_mb": 210.15,
+      "disk_min_gb": 54.53,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 57.96,
+        "children_rss_mb": 152.19,
+        "tree_rss_mb": 210.15,
+        "child_count": 3,
+        "children": [
+          {
+            "pid": 1332,
+            "name": "python.exe",
+            "rss_mb": 67.39
+          },
+          {
+            "pid": 12016,
+            "name": "node.exe",
+            "rss_mb": 69.86
+          },
+          {
+            "pid": 20676,
+            "name": "ffmpeg.exe",
+            "rss_mb": 14.95
+          }
+        ]
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w1_style_bible_and_contracts",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809405.2991,
+      "started_iso": "2026-11-16T06:10:05.299128+00:00",
+      "ended_at": 1794809434.0426,
+      "ended_iso": "2026-11-16T06:10:34.042562+00:00",
+      "elapsed_sec": 28.7489,
+      "peak_rss_mb": 57.72,
+      "disk_min_gb": 54.53,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 57.72,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 57.72,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w1_v14_7_6_reconciliation",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809405.2991,
+      "started_iso": "2026-11-16T06:10:05.299128+00:00",
+      "ended_at": 1794809423.9997,
+      "ended_iso": "2026-11-16T06:10:23.999718+00:00",
+      "elapsed_sec": 18.7001,
+      "peak_rss_mb": 178.7,
+      "disk_min_gb": 54.53,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 57.88,
+        "children_rss_mb": 120.82,
+        "tree_rss_mb": 178.7,
+        "child_count": 2,
+        "children": [
+          {
+            "pid": 1332,
+            "name": "python.exe",
+            "rss_mb": 67.89
+          },
+          {
+            "pid": 2204,
+            "name": "ffmpeg.exe",
+            "rss_mb": 52.92
+          }
+        ]
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w2_visual_style_poc",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "w1_rigby_new_hero_runtime",
+        "w1_style_bible_and_contracts",
+        "w1_v14_7_6_reconciliation"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809434.0492,
+      "started_iso": "2026-11-16T06:10:34.049207+00:00",
+      "ended_at": 1794809440.3459,
+      "ended_iso": "2026-11-16T06:10:40.345896+00:00",
+      "elapsed_sec": 6.2974,
+      "peak_rss_mb": 57.48,
+      "disk_min_gb": 54.53,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 57.48,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 57.48,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w2_acting_and_abcd",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "w2_visual_style_poc"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809440.3469,
+      "started_iso": "2026-11-16T06:10:40.346902+00:00",
+      "ended_at": 1794809491.2335,
+      "ended_iso": "2026-11-16T06:11:31.233479+00:00",
+      "elapsed_sec": 50.8865,
+      "peak_rss_mb": 59.23,
+      "disk_min_gb": 54.53,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 59.23,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 59.23,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w2_multicamera_continuous",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "w2_acting_and_abcd"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809491.2345,
+      "started_iso": "2026-11-16T06:11:31.234482+00:00",
+      "ended_at": 1794809501.8289,
+      "ended_iso": "2026-11-16T06:11:41.828864+00:00",
+      "elapsed_sec": 10.6017,
+      "peak_rss_mb": 58.9,
+      "disk_min_gb": 54.53,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 58.9,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 58.9,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w2_four_niche_generalization",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "w2_multicamera_continuous"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809501.8289,
+      "started_iso": "2026-11-16T06:11:41.828864+00:00",
+      "ended_at": 1794809537.5852,
+      "ended_iso": "2026-11-16T06:12:17.585185+00:00",
+      "elapsed_sec": 35.7486,
+      "peak_rss_mb": 59.06,
+      "disk_min_gb": 54.53,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 59.06,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 59.06,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w2_flagship_30s_roman_film",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "w2_four_niche_generalization"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809537.5862,
+      "started_iso": "2026-11-16T06:12:17.586186+00:00",
+      "ended_at": 1794809588.2091,
+      "ended_iso": "2026-11-16T06:13:08.209146+00:00",
+      "elapsed_sec": 50.6231,
+      "peak_rss_mb": 59.98,
+      "disk_min_gb": 54.514,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 59.98,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 59.98,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w3_film_qa_and_editorial_packet",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [
+        "w2_flagship_30s_roman_film"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809588.2091,
+      "started_iso": "2026-11-16T06:13:08.209146+00:00",
+      "ended_at": 1794809628.1489,
+      "ended_iso": "2026-11-16T06:13:48.148865+00:00",
+      "elapsed_sec": 39.9365,
+      "peak_rss_mb": 63.77,
+      "disk_min_gb": 54.467,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 63.77,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 63.77,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w3_negative_mutations",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [
+        "w2_flagship_30s_roman_film"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809588.2091,
+      "started_iso": "2026-11-16T06:13:08.209146+00:00",
+      "ended_at": 1794809601.5207,
+      "ended_iso": "2026-11-16T06:13:21.520742+00:00",
+      "elapsed_sec": 13.3033,
+      "peak_rss_mb": 322.55,
+      "disk_min_gb": 54.5,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 78.84,
+        "children_rss_mb": 243.72,
+        "tree_rss_mb": 322.55,
+        "child_count": 1,
+        "children": [
+          {
+            "pid": 25828,
+            "name": "ffmpeg.exe",
+            "rss_mb": 243.72
+          }
+        ]
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w3_speed_benchmark",
+      "job_profile": "light_cpu",
+      "mandatory": true,
+      "deps": [
+        "w2_flagship_30s_roman_film"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809588.2091,
+      "started_iso": "2026-11-16T06:13:08.209146+00:00",
+      "ended_at": 1794809595.109,
+      "ended_iso": "2026-11-16T06:13:15.109021+00:00",
+      "elapsed_sec": 6.8914,
+      "peak_rss_mb": 379.57,
+      "disk_min_gb": 54.514,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 89.22,
+        "children_rss_mb": 290.34,
+        "tree_rss_mb": 379.57,
+        "child_count": 2,
+        "children": [
+          {
+            "pid": 13756,
+            "name": "ffmpeg.exe",
+            "rss_mb": 237.15
+          },
+          {
+            "pid": 33728,
+            "name": "ffmpeg.exe",
+            "rss_mb": 53.19
+          }
+        ]
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w3_shot_repair",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "w3_film_qa_and_editorial_packet",
+        "w3_negative_mutations",
+        "w3_speed_benchmark"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809628.1489,
+      "started_iso": "2026-11-16T06:13:48.148865+00:00",
+      "ended_at": 1794809680.5289,
+      "ended_iso": "2026-11-16T06:14:40.528916+00:00",
+      "elapsed_sec": 52.3738,
+      "peak_rss_mb": 65.55,
+      "disk_min_gb": 54.467,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 65.55,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 65.55,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    },
+    {
+      "id": "w3_full_e2e_and_backtests",
+      "job_profile": "heavy_render",
+      "mandatory": true,
+      "deps": [
+        "w3_shot_repair"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": 1794809680.5289,
+      "started_iso": "2026-11-16T06:14:40.528916+00:00",
+      "ended_at": 1794810238.2711,
+      "ended_iso": "2026-11-16T06:23:58.271076+00:00",
+      "elapsed_sec": 557.7419,
+      "peak_rss_mb": 61.73,
+      "disk_min_gb": 54.467,
+      "process_tree": {
+        "root_pid": 16016,
+        "parent_rss_mb": 61.73,
+        "children_rss_mb": 0.0,
+        "tree_rss_mb": 61.73,
+        "child_count": 0,
+        "children": []
+      },
+      "evidence_paths": [],
+      "cmd": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "error": null
+    }
+  ]
+}

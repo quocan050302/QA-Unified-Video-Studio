@@ -141,8 +141,22 @@ console.log(JSON.stringify(compiled));
     return json.loads(proc.stdout.strip())
 
 
-def verify_rigby_browser_compositing() -> Dict[str, Any]:
+def verify_rigby_browser_compositing(
+    skeleton_path: Optional[Path] = None,
+    atlas_path: Optional[Path] = None,
+    texture_path: Optional[Path] = None,
+    manifest_path: Optional[Path] = None,
+) -> Dict[str, Any]:
     """Launch headless Chromium, run WebGLRenderer -> 2D Canvas alpha compositing, check coordinates & determinism."""
+    load_opts: Dict[str, Any] = {}
+    is_custom_rig = skeleton_path is not None
+    if skeleton_path is not None and atlas_path is not None and texture_path is not None:
+        load_opts = {
+            "skeletonUrl": "/" + Path(skeleton_path).resolve().relative_to(REPO_ROOT).as_posix(),
+            "atlasUrl": "/" + Path(atlas_path).resolve().relative_to(REPO_ROOT).as_posix(),
+            "textureUrl": "/" + Path(texture_path).resolve().relative_to(REPO_ROOT).as_posix(),
+            "manifestUrl": "/" + Path(manifest_path or skeleton_path).resolve().relative_to(REPO_ROOT).as_posix(),
+        }
     js = """
 import http from 'node:http';
 import fs from 'node:fs';
@@ -151,7 +165,7 @@ import crypto from 'node:crypto';
 import { chromium } from 'playwright';
 
 const ROOT = process.cwd();
-const MIME = { '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.html': 'text/html' };
+const MIME = { '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.atlas': 'text/plain', '.html': 'text/html' };
 
 const server = http.createServer((req, res) => {
   const u = new URL(req.url, 'http://127.0.0.1');
@@ -170,15 +184,26 @@ const server = http.createServer((req, res) => {
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const port = server.address().port;
 
-const browser = await chromium.launch({ args: ['--disable-dev-shm-usage'] });
+async function launchBrowser() {
+  if (process.platform === 'win32') {
+    for (const channel of ['msedge', 'chrome', 'chromium']) {
+      try {
+        return await chromium.launch({ channel, args: ['--disable-dev-shm-usage', '--use-angle=d3d11'] });
+      } catch {}
+    }
+  }
+  return await chromium.launch({ args: ['--disable-dev-shm-usage'] });
+}
+
+const browser = await launchBrowser();
 try {
   const page = await browser.newPage();
   await page.goto(`http://127.0.0.1:${port}/pilot.html`);
   const report = await page.evaluate(async () => {
     const mod = await import('/integrations/rigby2d/adapter.js');
-    const asset = await mod.loadBrowserRigbyAsset({});
+    const asset = await mod.loadBrowserRigbyAsset(__LOAD_OPTS__);
     const cv = document.getElementById('c');
-    const ctx = cv.getContext('2d');
+    const ctx = cv.getContext('2d', { willReadFrequently: true });
 
     const evalTimes = [0.0, 0.35, 0.75, 1.15];
     const renderSnapshot = (times) => {
@@ -190,6 +215,7 @@ try {
           animationName: 'haul_rope',
           actorHeight: 190,
           loop: false,
+          slotAttachments: t >= 0.7 ? __SLOT_OVERRIDE__ : null,
         });
         const img = ctx.getImageData(0, 0, cv.width, cv.height);
         const data = img.data;
@@ -242,6 +268,10 @@ try {
   server.close();
 }
 """
+    js = js.replace("__LOAD_OPTS__", json.dumps(load_opts)).replace(
+        "__SLOT_OVERRIDE__",
+        "{ head: 'head_wide_shock', hand_r: 'hand_r_grip' }" if is_custom_rig else "null",
+    )
     proc = subprocess.run(
         ["node", "--input-type=module", "-e", js],
         cwd=str(REPO_ROOT),
@@ -258,11 +288,13 @@ try {
     deterministic = res["serial"] == res["reversed"] == res["shuffled"]
     distinct_frames = len(set(res["serial"].values())) >= 3
     alpha = res["alphaStats"]
+    min_y_lo, min_y_hi = (55, 185) if is_custom_rig else (95, 165)
+    max_y_lo, max_y_hi = (280, 352) if is_custom_rig else (295, 332)
     upright_valid = (
         alpha["nonZeroAlpha"] >= 1500
         and alpha["outsideAlpha"] == 0
-        and 95 <= alpha["bbox"]["minY"] <= 165
-        and 295 <= alpha["bbox"]["maxY"] <= 332
+        and min_y_lo <= alpha["bbox"]["minY"] <= min_y_hi
+        and max_y_lo <= alpha["bbox"]["maxY"] <= max_y_hi
     )
     res["deterministic_order_invariant"] = deterministic
     res["distinct_animated_frames"] = distinct_frames

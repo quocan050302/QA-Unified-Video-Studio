@@ -1,0 +1,190 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "tools.shot_repair::test_defect_injection_and_repair",
+  "started_iso": "2026-11-16T06:13:48.148865+00:00",
+  "ended_iso": "2026-11-16T06:14:40.428877+00:00",
+  "elapsed_sec": 52.28,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "tools/shot_repair.py"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/17_repair_before_after.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.467,
+    "ram_available_gb": 8.676,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "shot_repair_closed_loop": {
+    "test_status": "PASS",
+    "elapsed_sec": 52.249,
+    "render_mode": "FULL_RERENDER_FALLBACK",
+    "selective_segment_supported": false,
+    "initial_verdict": "FAIL",
+    "final_verdict": "VISUAL_TECH_PASS",
+    "attempts_used": 1,
+    "before_mp4_sha256": "b754e5d38f5f8237e48f9c6f84ef28ff6b79a78e5195be4aded1b3bd0b6b7e33",
+    "after_mp4_sha256": "c570b031d637dbd949e7881f4ae4fe26ea1608f0f8ae82eaff366c441d09af94",
+    "mp4_rebuilt_and_changed": true,
+    "receipt_verified": true,
+    "manual_locked_s01_hash_before": "341a4e4054e89883383b7b4507f10350ae29b175bd6b44f295d4b73b4f20c6b5",
+    "manual_locked_s01_hash_after": "341a4e4054e89883383b7b4507f10350ae29b175bd6b44f295d4b73b4f20c6b5",
+    "manual_locked_preserved": true,
+    "locked_defect_status": "BLOCKED_MANUAL_REVIEW",
+    "locked_defect_hash_preserved": true,
+    "final_media_inspection": {
+      "valid": true,
+      "duration": 5.4,
+      "width": 1920,
+      "height": 1080,
+      "fps": 24.0,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "mean_volume_db": -24.3
+    },
+    "ledger": [
+      {
+        "attempt": 1,
+        "classified": [
+          {
+            "shot_id": "s02",
+            "category": "blank_frame",
+            "categories": [
+              "blank_frame",
+              "actor_preset",
+              "prop"
+            ],
+            "verdict": "FAIL",
+            "manual_locked": false,
+            "diagnostics": [
+              "UNKNOWN_ACTOR_PRESET: corrupted_blue_peasant",
+              "DUPLICATE_HELD_OBJECT: Actor 'decimus' has duplicate weapon2='spear' alongside primary/preset weapon",
+              "Head/helmet clipped out of frame top (top_ink=71040 px, ymin=0.040)",
+              "Subject feet pushed against/below bottom frame margin (bot_ink=32640 px, ymax=0.979)"
+            ]
+          }
+        ],
+        "impacted": [
+          "s02",
+          "s03"
+        ],
+        "plan": {
+          "timestamp": 1794809646.527496,
+          "project_id": "shot_repair_v1475_5l4c85yr",
+          "parent_hash": "a23fc99475814601a0e82ccfcf1fb7841f136b9fdd3d79b4bed7319706318443",
+          "total_patches": 3,
+          "patches": [
+            {
+              "shot_id": "s02",
+              "category": "blank_frame",
+              "action": "restore_non_blank_scene",
+              "reason": "UNKNOWN_ACTOR_PRESET: corrupted_blue_peasant",
+              "changes": {
+                "tpl": "scene",
+                "bg": "plain",
+                "clear_dark": true
+              }
+            },
+            {
+              "shot_id": "s02",
+              "category": "actor_preset",
+              "action": "fix_actor_preset",
+              "reason": "UNKNOWN_ACTOR_PRESET: corrupted_blue_peasant",
+              "changes": {
+                "preset": "legionary",
+                "body": "roman"
+              }
+            },
+            {
+              "shot_id": "s02",
+              "category": "prop",
+              "action": "remove_duplicate_prop",
+              "reason": "UNKNOWN_ACTOR_PRESET: corrupted_blue_peasant",
+              "changes": {
+                "weapon2": null,
+                "shield2": null
+              }
+            }
+          ]
+        },
+        "apply_success": true,
+        "apply_logs": [
+          "Shot s02: restored non-blank scene content",
+          "Shot s02: repaired actor preset to 'legionary'",
+          "Shot s02: enforced single-held-prop exclusivity"
+        ],
+        "render_result": {
+          "timestamp": 1794809646.540873,
+          "project_id": "shot_repair_v1475_5l4c85yr",
+          "impacted_ids": [
+            "s02",
+            "s03"
+          ],
+          "render_mode": "FULL_RERENDER_FALLBACK",
+          "selective_segment_supported": false,
+          "full_rerender_fallback": true,
+          "reason": "Continuous camera and audio-visual timeline synchronization require full timeline rerender",
+          "output_mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\shot_repair_v1475_5l4c85yr\\out\\disposable_repair_test.mp4",
+          "render_returncode": 0,
+          "elapsed_sec": 11.381,
+          "audio_muxed": true,
+          "audio_source": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\shot_repair_v1475_5l4c85yr\\timeline\\voice.wav",
+          "output_sha256": "c570b031d637dbd949e7881f4ae4fe26ea1608f0f8ae82eaff366c441d09af94",
+          "receipt_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\shot_repair_v1475_5l4c85yr\\build\\render_receipt.json",
+          "receipt_verified": true,
+          "media_inspection": {
+            "valid": true,
+            "error": null,
+            "errors": [],
+            "duration": 5.4,
+            "video_stream_duration": 5.375,
+            "audio_stream_duration": 5.4,
+            "decoded_video_frames": 129,
+            "file_size": 928615,
+            "width": 1920,
+            "height": 1080,
+            "fps": 24.0,
+            "video_codec": "h264",
+            "audio_codec": "aac",
+            "has_video": true,
+            "has_audio": true,
+            "decode_clean": true,
+            "max_volume_db": -3.4,
+            "mean_volume_db": -24.3,
+            "integrated_lufs": null,
+            "true_peak_dbtp": null,
+            "sha256": "c570b031d637dbd949e7881f4ae4fe26ea1608f0f8ae82eaff366c441d09af94"
+          },
+          "success": true
+        },
+        "qa_targeted": {
+          "status": "PASS",
+          "impacted_shots": [
+            "s02",
+            "s03"
+          ],
+          "targeted_issues_count": 0,
+          "targeted_issues": [],
+          "missing_or_unverified_shots": []
+        },
+        "qa_final": {
+          "verdict": "VISUAL_TECH_PASS",
+          "passed_shots": 3,
+          "total_shots": 3,
+          "issues_count": 0,
+          "issues": []
+        }
+      }
+    ]
+  }
+}

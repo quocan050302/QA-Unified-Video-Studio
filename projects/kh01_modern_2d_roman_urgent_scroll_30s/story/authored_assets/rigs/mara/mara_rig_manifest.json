@@ -1,0 +1,123 @@
+{
+  "schema_version": "kh01.rig_manifest.v1",
+  "character_id": "mara",
+  "name": "Mara",
+  "niche": "roman_forum",
+  "style_id": "modern_expressive_2d.v1",
+  "spine_format_version": "3.8.99",
+  "height_units": 210.0,
+  "setup_targets": {
+    "ik_foot_l_target": {
+      "x": 10.0,
+      "y": 6.0
+    },
+    "ik_foot_r_target": {
+      "x": -8.0,
+      "y": 6.0
+    },
+    "ik_hand_l_target": {
+      "x": 28.0,
+      "y": 98.0
+    },
+    "ik_hand_r_target": {
+      "x": 24.0,
+      "y": 94.0
+    }
+  },
+  "bones": [
+    "root",
+    "pelvis",
+    "torso",
+    "cloak",
+    "head",
+    "upper_arm_l",
+    "lower_arm_l",
+    "hand_l",
+    "upper_arm_r",
+    "lower_arm_r",
+    "hand_r",
+    "upper_leg_l",
+    "lower_leg_l",
+    "foot_l",
+    "upper_leg_r",
+    "lower_leg_r",
+    "foot_r",
+    "ik_foot_l_target",
+    "ik_foot_r_target",
+    "ik_hand_l_target",
+    "ik_hand_r_target"
+  ],
+  "slots": [
+    "cloak_back",
+    "upper_arm_l",
+    "lower_arm_l",
+    "hand_l",
+    "upper_leg_l",
+    "lower_leg_l",
+    "sandal_l",
+    "torso_tunic",
+    "upper_leg_r",
+    "lower_leg_r",
+    "sandal_r",
+    "head",
+    "upper_arm_r",
+    "lower_arm_r",
+    "hand_r"
+  ],
+  "ik_constraints": [
+    "ik_leg_l",
+    "ik_leg_r",
+    "ik_arm_l",
+    "ik_arm_r"
+  ],
+  "supported_views": [
+    "front",
+    "three_quarter",
+    "profile",
+    "rear_three_quarter"
+  ],
+  "view_art_mapping": {
+    "front": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_front.png",
+    "three_quarter": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_three_quarter.png",
+    "profile": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_profile.png",
+    "rear_three_quarter": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_rear_three_quarter.png"
+  },
+  "expression_attachments": {
+    "neutral_attentive": "head_neutral_attentive",
+    "wide_shock": "head_wide_shock",
+    "strained_exertion": "head_strained_exertion",
+    "determined_focus": "head_determined_focus",
+    "joyful_laugh": "head_joyful_laugh",
+    "deadpan_disbelief": "head_deadpan_disbelief"
+  },
+  "hand_attachments": {
+    "open": "hand_r",
+    "locked_grip": "hand_r_grip"
+  },
+  "viseme_mapping": {
+    "closed_rest": "head_neutral_attentive",
+    "open_ah": "head_wide_shock",
+    "teeth_grit": "head_strained_exertion",
+    "wide_laugh": "head_joyful_laugh"
+  },
+  "files": {
+    "skeleton_json": {
+      "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara.json",
+      "sha256": "d6bd018c4321c9566c3d25a80dae059b3bb66ea734d8cd974cec25e9c8cb34a1"
+    },
+    "atlas": {
+      "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara.atlas",
+      "sha256": "20ff7ee5ea4e50cce94030c83b6038fa66a913febdef405a8c376a833103656b"
+    },
+    "texture_png": {
+      "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara.png",
+      "sha256": "cb52d0cc1a4ad8bed9f7069d8536f1cda1fb8b1992e3850dec50423d071ee75a",
+      "dimensions": [
+        1024,
+        1024
+      ]
+    }
+  },
+  "rigby_demo_assets_copied": false,
+  "reference_frames_reused": 0
+}

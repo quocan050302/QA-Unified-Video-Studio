@@ -1,0 +1,152 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "scripts.run_kh01_validation::run_w0_preflight(matrix)",
+  "started_iso": "2026-11-16T06:10:05.163444+00:00",
+  "ended_iso": "2026-11-16T06:10:05.163444+00:00",
+  "elapsed_sec": 0.0,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "app.py",
+    "render.mjs",
+    "scripts/qa_scheduler.py"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/20_changed_vs_kept_as_is.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.532,
+    "ram_available_gb": 8.499,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "kept_as_is_modules": [
+    "app.py",
+    "render.mjs",
+    "player.html",
+    "engine/core.js",
+    "engine/player.js",
+    "packs/squire/templates.js",
+    "packs/squire/chara.js",
+    "packs/squire/civic/water_gate.js",
+    "packs/squire/harbor/portus_light.js",
+    "packs/dem/pack.js",
+    "integrations/claude_motion/adapter.js",
+    "scripts/qa_scheduler.py",
+    "scripts/run_e2e_regression.py",
+    "scripts/production_fingerprint.py",
+    "scripts/tts_helper.py",
+    "tools/narrative_action.py",
+    "tools/action_capabilities.py",
+    "tests/evidence/v14_7_5/*",
+    "tests/evidence/v14_7_5_1/*",
+    "tests/evidence/v14_7_6/*"
+  ],
+  "modified_existing_modules": [
+    {
+      "module": "tools/visual_storytelling.py",
+      "functions": [
+        "StoryContext (additive niche, style_id)",
+        "infer_niche_from_script",
+        "build_story_context"
+      ],
+      "mode": "BACKWARD_COMPATIBLE_OPT_IN"
+    },
+    {
+      "module": "tools/motion_performance.py",
+      "functions": [
+        "KNOWN_ROLE_NOUNS",
+        "KNOWN_PROPS",
+        "STOPWORD_NAMES",
+        "_compile_intent_phases (APPROACH step before planted grip, cooperative shared contact)"
+      ],
+      "mode": "P0_SKATING_FIX_AND_MULTI_NICHE_LEXICON"
+    },
+    {
+      "module": "packs/squire/motion_engine.js",
+      "functions": [
+        "evaluateMotionTrackAt (stationary planted foot lock, locomotion-only vx flip, modernExpression/handShape)",
+        "validateMotionFrameTrace (passed alias)"
+      ],
+      "mode": "P0_QA_AND_ACTING_EXTENSION"
+    },
+    {
+      "module": "tools/character_acting.py",
+      "functions": [
+        "compile_actor_performance_to_rig (additive styleAssetBinding)"
+      ],
+      "mode": "BACKWARD_COMPATIBLE_OPT_IN"
+    },
+    {
+      "module": "tools/cinematic_camera.py",
+      "functions": [
+        "link_camera_to_asset_views"
+      ],
+      "mode": "ADDITIVE_NEW_FUNCTION"
+    },
+    {
+      "module": "tools/temporal_visual_qa.py",
+      "functions": [
+        "_evaluate_js_motion_traces",
+        "audit_foot_plant (fail-closed track aggregation + ground-ROI pixel check + NOT_VERIFIED separation)",
+        "_extract_exact_frame (-fps_mode passthrough)"
+      ],
+      "mode": "P0_FAIL_CLOSED_QA_REPAIR"
+    },
+    {
+      "module": "tools/produce_fl01_v14_7_6_roman_portus_preview.py",
+      "functions": [
+        "produce_abc_8s_comparison (requires foot_qa & hand_qa PASS)"
+      ],
+      "mode": "P0_FAIL_CLOSED_AGGREGATION"
+    },
+    {
+      "module": "integrations/rigby2d/adapter.js",
+      "functions": [
+        "renderRigbyActorToCanvas (pose.resetPhysics, slotAttachments, gl.flush)"
+      ],
+      "mode": "EXPRESSION_GRIP_SLOT_SUPPORT"
+    },
+    {
+      "module": "integrations/rigby2d/pilot.py",
+      "functions": [
+        "_launch_gpu_chromium (Windows Edge/Chrome channel fallback)",
+        "verify_rigby_browser_compositing (willReadFrequently)"
+      ],
+      "mode": "CROSS_PLATFORM_WEBGL_FIX"
+    },
+    {
+      "module": "packs/squire/pack.js",
+      "functions": [
+        "init (conditional initModernExpressive2D hook)"
+      ],
+      "mode": "OPT_IN_STYLE_HOOK"
+    },
+    {
+      "module": "tools/shot_repair.py",
+      "functions": [
+        "_synthesize_spoken_test_wav (Windows SAPI fallback via tts_helper)"
+      ],
+      "mode": "CROSS_PLATFORM_TTS_FALLBACK"
+    }
+  ],
+  "newly_added_kh01_modules": [
+    "visual_styles/modern_expressive_2d/v1/style_bible.json",
+    "tools/visual_style_director.py",
+    "tools/character_design.py",
+    "tools/environment_factory.py",
+    "tools/visual_style_qa.py",
+    "packs/squire/modern2d/style_renderer.js",
+    "tools/kh01_poc_and_pilots.py",
+    "tools/produce_kh01_original_roman_30s.py",
+    "tests/kh01_modern_2d/test_kh01_contracts.py",
+    "scripts/run_kh01_validation.py"
+  ]
+}

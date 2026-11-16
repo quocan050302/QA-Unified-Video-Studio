@@ -1,0 +1,123 @@
+{
+  "schema_version": "kh01.rig_manifest.v1",
+  "character_id": "lucius",
+  "name": "Lucius",
+  "niche": "roman_forum",
+  "style_id": "modern_expressive_2d.v1",
+  "spine_format_version": "3.8.99",
+  "height_units": 210.0,
+  "setup_targets": {
+    "ik_foot_l_target": {
+      "x": 10.0,
+      "y": 6.0
+    },
+    "ik_foot_r_target": {
+      "x": -8.0,
+      "y": 6.0
+    },
+    "ik_hand_l_target": {
+      "x": 28.0,
+      "y": 98.0
+    },
+    "ik_hand_r_target": {
+      "x": 24.0,
+      "y": 94.0
+    }
+  },
+  "bones": [
+    "root",
+    "pelvis",
+    "torso",
+    "cloak",
+    "head",
+    "upper_arm_l",
+    "lower_arm_l",
+    "hand_l",
+    "upper_arm_r",
+    "lower_arm_r",
+    "hand_r",
+    "upper_leg_l",
+    "lower_leg_l",
+    "foot_l",
+    "upper_leg_r",
+    "lower_leg_r",
+    "foot_r",
+    "ik_foot_l_target",
+    "ik_foot_r_target",
+    "ik_hand_l_target",
+    "ik_hand_r_target"
+  ],
+  "slots": [
+    "cloak_back",
+    "upper_arm_l",
+    "lower_arm_l",
+    "hand_l",
+    "upper_leg_l",
+    "lower_leg_l",
+    "sandal_l",
+    "torso_tunic",
+    "upper_leg_r",
+    "lower_leg_r",
+    "sandal_r",
+    "head",
+    "upper_arm_r",
+    "lower_arm_r",
+    "hand_r"
+  ],
+  "ik_constraints": [
+    "ik_leg_l",
+    "ik_leg_r",
+    "ik_arm_l",
+    "ik_arm_r"
+  ],
+  "supported_views": [
+    "front",
+    "three_quarter",
+    "profile",
+    "rear_three_quarter"
+  ],
+  "view_art_mapping": {
+    "front": "tests/evidence/kh01_20261116_015100Z/style_poc/characters/lucius/lucius_view_front.png",
+    "three_quarter": "tests/evidence/kh01_20261116_015100Z/style_poc/characters/lucius/lucius_view_three_quarter.png",
+    "profile": "tests/evidence/kh01_20261116_015100Z/style_poc/characters/lucius/lucius_view_profile.png",
+    "rear_three_quarter": "tests/evidence/kh01_20261116_015100Z/style_poc/characters/lucius/lucius_view_rear_three_quarter.png"
+  },
+  "expression_attachments": {
+    "neutral_attentive": "head_neutral_attentive",
+    "wide_shock": "head_wide_shock",
+    "strained_exertion": "head_strained_exertion",
+    "determined_focus": "head_determined_focus",
+    "joyful_laugh": "head_joyful_laugh",
+    "deadpan_disbelief": "head_deadpan_disbelief"
+  },
+  "hand_attachments": {
+    "open": "hand_r",
+    "locked_grip": "hand_r_grip"
+  },
+  "viseme_mapping": {
+    "closed_rest": "head_neutral_attentive",
+    "open_ah": "head_wide_shock",
+    "teeth_grit": "head_strained_exertion",
+    "wide_laugh": "head_joyful_laugh"
+  },
+  "files": {
+    "skeleton_json": {
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/rigs/lucius/lucius.json",
+      "sha256": "d6b4469d9eb90ffd2e23011b0e68a844a1ac8bb15f1d265293dd887f5a1d72db"
+    },
+    "atlas": {
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/rigs/lucius/lucius.atlas",
+      "sha256": "abad4e744f1ed4087829298e0558ca4623037ba476bbbfcb8c3c9ac61eae7adb"
+    },
+    "texture_png": {
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/rigs/lucius/lucius.png",
+      "sha256": "77f5e4fe401613eab55e48123a721fb94eb336c555d3db91dad03e60904a49c5",
+      "dimensions": [
+        1024,
+        1024
+      ]
+    }
+  },
+  "rigby_demo_assets_copied": false,
+  "reference_frames_reused": 0
+}

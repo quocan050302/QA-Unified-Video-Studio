@@ -415,8 +415,8 @@ def extract_frames_batched_cached(
         "rawvideo",
         "-pix_fmt",
         "rgb24",
-        "-vsync",
-        "0",
+        "-fps_mode",
+        "passthrough",
         "-",
     ]
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -1728,17 +1728,18 @@ console.log(JSON.stringify(validateCastPreset('unknown_peasant_xyz')));
     }
 
     # 11. Silent Audio Inspection Fixture (creates genuine silent MP4 and runs real inspect_media_file)
-    with tempfile.NamedTemporaryFile(suffix=".mp4") as f_silent:
+    with tempfile.TemporaryDirectory() as _sil_td:
+        f_silent_path = Path(_sil_td) / "silent_fixture.mp4"
         cmd_sil = [
             "ffmpeg", "-y",
             "-f", "lavfi", "-i", "testsrc=duration=1:size=320x240:rate=24",
             "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
             "-t", "1",
             "-c:v", "libx264", "-c:a", "aac",
-            f_silent.name,
+            str(f_silent_path),
         ]
         subprocess.run(cmd_sil, check=True, capture_output=True)
-        aud_res = prod_fp.inspect_media_file(Path(f_silent.name), require_audio=True)
+        aud_res = prod_fp.inspect_media_file(f_silent_path, require_audio=True)
         silent_caught = (not aud_res.get("valid", False)) and any(
             "silent" in str(e).lower() for e in aud_res.get("errors", [])
         )
@@ -2248,7 +2249,7 @@ for (const tr of tracks) {
     max_adjacent_joint_jump_norm: rep.max_adjacent_joint_jump_norm,
     max_stationary_foot_move_norm: +maxStationaryFootMoveNorm.toFixed(6),
     max_grip_hand_jump_norm: +maxGripHandJumpNorm.toFixed(6),
-    trace_passed: Boolean(rep.passed),
+    trace_passed: Boolean(rep.valid ?? rep.passed),
     violations: rep.violations || [],
     sample_frames: rep.frames ? rep.frames.slice(0, 6) : [],
   });
@@ -2274,12 +2275,15 @@ def audit_foot_plant(
     mp4_path: Optional[Path] = None,
     ev_dir: Optional[Path] = None,
     fps: float = 24.0,
+    require_pixel_verification: bool = False,
 ) -> Dict[str, Any]:
     """
     Audit planted-foot world drift and stationary-root skate across all actor tracks,
-    plus decoded MP4 ground-ROI pixel verification when `mp4_path` is provided.
-    Never claims pixel tracking PASS when actor ground ROI lacks observable contrast;
-    labels pixel confidence `REVIEW_REQUIRED` truthfully while enforcing strict trace bounds.
+    plus decoded MP4 ground-ROI multi-frame pixel verification when `mp4_path` is provided.
+    Fail-closed rules (KH-01.0):
+    - ANY track with `trace_passed == False` or non-empty `violations` fails `trace_qa_status` and `status`.
+    - `pixel_tracking_confidence == 'NOT_PROVIDED'` NEVER becomes `pixel_qa_status == 'PASS'` (reported as `'NOT_VERIFIED'`).
+    - When `require_pixel_verification=True`, `status` is `'PASS'` ONLY if both `trace_qa_status == 'PASS'` AND `pixel_qa_status == 'PASS'`.
     """
     mp_dict = motion_plan.model_dump() if hasattr(motion_plan, "model_dump") else dict(motion_plan or {})
     js_eval = _evaluate_js_motion_traces(mp_dict, fps=fps)
@@ -2287,6 +2291,8 @@ def audit_foot_plant(
     if not tracks:
         return {
             "status": "NOT_VERIFIED",
+            "trace_qa_status": "NOT_VERIFIED",
+            "pixel_qa_status": "NOT_VERIFIED",
             "reason": "zero_actor_tracks_in_motion_plan",
             "track_reports": [],
         }
@@ -2295,62 +2301,147 @@ def audit_foot_plant(
     max_median_drift = 0.0
     max_peak_drift = 0.0
     max_stat_skate = 0.0
+    failed_track_ids: List[str] = []
     for tr in tracks:
+        tid = str(tr.get("track_id") or f"{tr.get('shot_id')}_{tr.get('actor_id')}")
         med = float(tr["median_planted_foot_drift_norm"])
         pk = float(tr["peak_planted_foot_drift_norm"])
         st_move = float(tr["max_stationary_foot_move_norm"])
         max_median_drift = max(max_median_drift, med)
         max_peak_drift = max(max_peak_drift, pk)
         max_stat_skate = max(max_stat_skate, st_move)
+        tr_failed = False
         if med > 0.03:
-            violations.append(f"{tr['track_id']}: median_planted_foot_drift_norm={med:.4f} > 0.03")
+            violations.append(f"{tid}: median_planted_foot_drift_norm={med:.4f} > 0.03")
+            tr_failed = True
         if pk > 0.08:
-            violations.append(f"{tr['track_id']}: peak_planted_foot_drift_norm={pk:.4f} > 0.08")
+            violations.append(f"{tid}: peak_planted_foot_drift_norm={pk:.4f} > 0.08")
+            tr_failed = True
         if st_move > 0.025:
-            violations.append(f"{tr['track_id']}: planted foot moved {st_move:.4f} while root stationary (> 0.025)")
+            violations.append(f"{tid}: planted foot moved {st_move:.4f} while root stationary (> 0.025)")
+            tr_failed = True
+        for tv in tr.get("violations") or []:
+            msg = f"{tid}: {tv}"
+            if msg not in violations:
+                violations.append(msg)
+            tr_failed = True
+        if not bool(tr.get("trace_passed", False)):
+            tr_failed = True
+            if not any(v.startswith(f"{tid}:") for v in violations):
+                violations.append(f"{tid}: trace_passed is False")
+        if tr_failed:
+            failed_track_ids.append(tid)
+
+    trace_qa_status = "FAIL" if (violations or failed_track_ids) else "PASS"
 
     pixel_checks: List[Dict[str, Any]] = []
     pixel_confidence = "NOT_PROVIDED"
+    pixel_qa_status = "NOT_VERIFIED"
     if mp4_path and Path(mp4_path).exists():
         out_frames = Path(ev_dir) / "foot_plant_frames" if ev_dir else Path(mp4_path).parent / "_qa_foot_frames"
         out_frames.mkdir(parents=True, exist_ok=True)
         raw_tracks = mp_dict.get("tracks") or mp_dict.get("actor_tracks") or []
         req_list: List[Tuple[str, List[float]]] = []
-        for rt in raw_tracks[:6]:
-            s0 = float(rt.get("start_sec", 0.0))
-            s1 = float(rt.get("end_sec", s0 + 2.0))
-            mid = round(0.5 * (s0 + s1), 3)
-            req_list.append((str(rt.get("shot_id", "S01")), [round(min(s1 - 0.05, s0 + 0.2), 3), mid]))
+        track_sample_windows: Dict[str, Tuple[List[float], float, float, float]] = {}
+        total_mp4_dur = max((float(rt.get("end_sec", 3.0)) for rt in raw_tracks), default=3.0)
+        for rt in raw_tracks[:8]:
+            tid = str(rt.get("track_id") or f"{rt.get('shot_id')}_{rt.get('actor_id')}")
+            # Find longest stationary planted phase window for pixel foot-anchor verification
+            best_win: Optional[Tuple[float, float, float, float]] = None
+            for ph in rt.get("phases") or []:
+                fl = bool(ph.get("foot_planted_left", True))
+                fr = bool(ph.get("foot_planted_right", True))
+                ws_pt = ph.get("world_start") or rt.get("world_start") or [0.5, 0.84]
+                we_pt = ph.get("world_end") or rt.get("world_end") or ws_pt
+                disp_ph = math.hypot(float(we_pt[0]) - float(ws_pt[0]), float(we_pt[1]) - float(ws_pt[1]))
+                p0 = float(ph.get("start_sec", rt.get("start_sec", 0.0)))
+                p1 = float(ph.get("end_sec", p0 + 0.5))
+                if fl and fr and disp_ph < 0.015 and (p1 - p0) >= 0.20:
+                    if best_win is None or (p1 - p0) > (best_win[1] - best_win[0]):
+                        best_win = (p0, p1, float(we_pt[0]), float(we_pt[1]))
+            if best_win is None:
+                s0 = float(rt.get("start_sec", 0.0))
+                s1 = float(rt.get("end_sec", s0 + 1.0))
+                we_pt = rt.get("world_end") or rt.get("world_start") or [0.5, 0.84]
+                best_win = (max(s0, s1 - 0.5), s1, float(we_pt[0]), float(we_pt[1]))
+            w0, w1, rx, ry = best_win
+            # Avoid sampling inside engine global fade-in (0..0.42s) or global fade-out (end-0.55s..end)
+            lo_bound = max(w0 + 0.06, 0.45 if w0 < 0.40 and w1 > 0.65 else w0 + 0.06)
+            hi_bound = min(w1 - 0.06, (total_mp4_dur - 0.58) if (total_mp4_dur - w1) < 0.45 and (total_mp4_dur - 0.58) > lo_bound + 0.12 else w1 - 0.06)
+            if hi_bound <= lo_bound:
+                hi_bound = max(lo_bound + 0.05, w1 - 0.05)
+            t_a = round(lo_bound, 3)
+            t_b = round(0.5 * (lo_bound + hi_bound), 3)
+            t_c = round(hi_bound, 3)
+            ts_pair = sorted({max(0.0, t_a), max(0.0, t_b), max(0.0, t_c)})
+            req_list.append((tid, ts_pair))
+            track_sample_windows[tid] = (ts_pair, rx, ry, float(rt.get("height_norm", 0.28)))
+
         w_vid, h_vid = _probe_mp4_dims(Path(mp4_path))
         shot_paths_map, _ = extract_frames_batched_cached(Path(mp4_path), req_list, out_frames, w_vid, h_vid, fps)
         low_conf = 0
-        for rt in raw_tracks[:6]:
-            sid = str(rt.get("shot_id", "S01"))
-            p_list = shot_paths_map.get(sid, [])
-            arr = _load_rgb_png_verified(p_list[0]) if p_list else None
-            rx = float((rt.get("world_end") or rt.get("world_start") or [0.5, 0.8])[0])
-            ry = float((rt.get("world_end") or rt.get("world_start") or [0.5, 0.8])[1])
-            if arr is not None:
-                h_px, w_px = arr.shape[:2]
-                x0 = max(0, int((rx - 0.09) * w_px))
-                x1 = min(w_px, int((rx + 0.09) * w_px))
-                y0 = max(0, int((ry - 0.14) * h_px))
-                y1 = min(h_px, int((ry + 0.04) * h_px))
-                patch = arr[y0:y1, x0:x1]
-                contrast_std = float(np.std(patch)) if patch.size > 0 else 0.0
+        pixel_drift_failures = 0
+        for rt in raw_tracks[:8]:
+            tid = str(rt.get("track_id") or f"{rt.get('shot_id')}_{rt.get('actor_id')}")
+            p_list = shot_paths_map.get(tid, [])
+            _, rx, ry, h_norm = track_sample_windows[tid]
+            arrs = [a for a in (_load_rgb_png_verified(p) for p in p_list) if a is not None]
+            if arrs:
+                h_px, w_px = arrs[0].shape[:2]
+                x0 = max(0, int((rx - 0.10) * w_px))
+                x1 = min(w_px, int((rx + 0.10) * w_px))
+                y0 = max(0, int((ry - 0.12) * h_px))
+                y1 = min(h_px, int((ry + 0.03) * h_px))
+                patch0 = arrs[0][y0:y1, x0:x1]
+                contrast_std = float(np.std(patch0)) if patch0.size > 0 else 0.0
                 observable = contrast_std >= 8.0
+                centroids_x: List[float] = []
+                for ar in arrs:
+                    pt = ar[y0:y1, x0:x1].astype(np.float32)
+                    if pt.shape[1] >= 4 and pt.shape[0] >= 4:
+                        gx = np.abs(np.diff(np.mean(pt, axis=2), axis=1))
+                        col_energy = np.mean(gx, axis=0)
+                        tot_e = float(np.sum(col_energy))
+                        if tot_e > 1e-3:
+                            xs_idx = np.arange(col_energy.shape[0], dtype=np.float32)
+                            centroids_x.append(float(np.sum(xs_idx * col_energy) / tot_e))
+                px_drift_norm = 0.0
+                if len(centroids_x) >= 2:
+                    actor_h_px = max(24.0, h_norm * h_px)
+                    px_drift_norm = (max(centroids_x) - min(centroids_x)) / actor_h_px
                 if not observable:
                     low_conf += 1
+                if observable and px_drift_norm > 0.12:
+                    pixel_drift_failures += 1
+                    violations.append(
+                        f"{tid}: decoded pixel ground-ROI foot centroid drifted {px_drift_norm:.4f} (> 0.12) during planted stance"
+                    )
                 pixel_checks.append({
-                    "track_id": rt.get("track_id"),
+                    "track_id": tid,
+                    "frames_compared": len(arrs),
                     "roi_contrast_std": round(contrast_std, 2),
                     "pixel_roi_observable": observable,
+                    "measured_pixel_foot_drift_norm": round(px_drift_norm, 5),
                 })
-        pixel_confidence = "OBSERVABLE" if (pixel_checks and low_conf == 0) else "REVIEW_REQUIRED"
+        if pixel_drift_failures > 0:
+            pixel_confidence = "OBSERVABLE"
+            pixel_qa_status = "FAIL"
+        elif pixel_checks and low_conf == 0:
+            pixel_confidence = "OBSERVABLE"
+            pixel_qa_status = "PASS"
+        else:
+            pixel_confidence = "REVIEW_REQUIRED"
+            pixel_qa_status = "NOT_VERIFIED"
 
-    status = "FAIL" if violations else "PASS"
+    if require_pixel_verification and pixel_qa_status != "PASS":
+        violations.append(f"pixel_qa_status={pixel_qa_status} (confidence={pixel_confidence}) cannot satisfy require_pixel_verification=True")
+
+    status = "FAIL" if (violations or trace_qa_status != "PASS" or pixel_qa_status == "FAIL") else "PASS"
     return {
         "status": status,
+        "trace_qa_status": trace_qa_status,
+        "pixel_qa_status": pixel_qa_status,
+        "failed_track_ids": failed_track_ids,
         "max_median_planted_foot_drift_norm": round(max_median_drift, 5),
         "max_peak_planted_foot_drift_norm": round(max_peak_drift, 5),
         "max_stationary_foot_move_norm": round(max_stat_skate, 5),

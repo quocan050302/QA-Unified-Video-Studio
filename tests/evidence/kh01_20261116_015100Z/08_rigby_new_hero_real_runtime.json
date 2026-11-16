@@ -1,0 +1,366 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "integrations.rigby2d.pilot::verify_rigby_browser_compositing(lucius_1024_rig)",
+  "started_iso": "2026-11-16T06:10:05.299128+00:00",
+  "ended_iso": "2026-11-16T06:10:19.364315+00:00",
+  "elapsed_sec": 14.0652,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/rigby_new_hero_probe/rig/lucius_rig_manifest.json",
+    "integrations/rigby2d/adapter.js"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/08_rigby_new_hero_real_runtime.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": "77f5e4fe401613eab55e48123a721fb94eb336c555d3db91dad03e60904a49c5",
+  "measured_resources": {
+    "disk_free_gb": 54.53,
+    "ram_available_gb": 8.179,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 3
+  },
+  "failure_details": null,
+  "candidate_policy_status": "PILOT_RUNTIME_VERIFIED_CANDIDATE_NOT_REPLACING_FL01_DEFAULT",
+  "new_hero_rig_manifest": {
+    "schema_version": "kh01.rig_manifest.v1",
+    "character_id": "lucius",
+    "name": "Lucius",
+    "niche": "roman_forum",
+    "style_id": "modern_expressive_2d.v1",
+    "spine_format_version": "3.8.99",
+    "height_units": 210.0,
+    "setup_targets": {
+      "ik_foot_l_target": {
+        "x": 10.0,
+        "y": 6.0
+      },
+      "ik_foot_r_target": {
+        "x": -8.0,
+        "y": 6.0
+      },
+      "ik_hand_l_target": {
+        "x": 28.0,
+        "y": 98.0
+      },
+      "ik_hand_r_target": {
+        "x": 24.0,
+        "y": 94.0
+      }
+    },
+    "bones": [
+      "root",
+      "pelvis",
+      "torso",
+      "cloak",
+      "head",
+      "upper_arm_l",
+      "lower_arm_l",
+      "hand_l",
+      "upper_arm_r",
+      "lower_arm_r",
+      "hand_r",
+      "upper_leg_l",
+      "lower_leg_l",
+      "foot_l",
+      "upper_leg_r",
+      "lower_leg_r",
+      "foot_r",
+      "ik_foot_l_target",
+      "ik_foot_r_target",
+      "ik_hand_l_target",
+      "ik_hand_r_target"
+    ],
+    "slots": [
+      "cloak_back",
+      "upper_arm_l",
+      "lower_arm_l",
+      "hand_l",
+      "upper_leg_l",
+      "lower_leg_l",
+      "sandal_l",
+      "torso_tunic",
+      "upper_leg_r",
+      "lower_leg_r",
+      "sandal_r",
+      "head",
+      "upper_arm_r",
+      "lower_arm_r",
+      "hand_r"
+    ],
+    "ik_constraints": [
+      "ik_leg_l",
+      "ik_leg_r",
+      "ik_arm_l",
+      "ik_arm_r"
+    ],
+    "supported_views": [
+      "front",
+      "three_quarter",
+      "profile",
+      "rear_three_quarter"
+    ],
+    "view_art_mapping": {
+      "front": "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/rigby_new_hero_probe/char/lucius_view_front.png",
+      "three_quarter": "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/rigby_new_hero_probe/char/lucius_view_three_quarter.png",
+      "profile": "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/rigby_new_hero_probe/char/lucius_view_profile.png",
+      "rear_three_quarter": "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/rigby_new_hero_probe/char/lucius_view_rear_three_quarter.png"
+    },
+    "expression_attachments": {
+      "neutral_attentive": "head_neutral_attentive",
+      "wide_shock": "head_wide_shock",
+      "strained_exertion": "head_strained_exertion",
+      "determined_focus": "head_determined_focus",
+      "joyful_laugh": "head_joyful_laugh",
+      "deadpan_disbelief": "head_deadpan_disbelief"
+    },
+    "hand_attachments": {
+      "open": "hand_r",
+      "locked_grip": "hand_r_grip"
+    },
+    "viseme_mapping": {
+      "closed_rest": "head_neutral_attentive",
+      "open_ah": "head_wide_shock",
+      "teeth_grit": "head_strained_exertion",
+      "wide_laugh": "head_joyful_laugh"
+    },
+    "files": {
+      "skeleton_json": {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/rigby_new_hero_probe/rig/lucius.json",
+        "sha256": "d6b4469d9eb90ffd2e23011b0e68a844a1ac8bb15f1d265293dd887f5a1d72db"
+      },
+      "atlas": {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/rigby_new_hero_probe/rig/lucius.atlas",
+        "sha256": "abad4e744f1ed4087829298e0558ca4623037ba476bbbfcb8c3c9ac61eae7adb"
+      },
+      "texture_png": {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/rigby_new_hero_probe/rig/lucius.png",
+        "sha256": "77f5e4fe401613eab55e48123a721fb94eb336c555d3db91dad03e60904a49c5",
+        "dimensions": [
+          1024,
+          1024
+        ]
+      }
+    },
+    "rigby_demo_assets_copied": false,
+    "reference_frames_reused": 0,
+    "manifest_path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/rigby_new_hero_probe/rig/lucius_rig_manifest.json"
+  },
+  "runtime_capabilities": {
+    "status": "RUNTIME_VERIFIED",
+    "package_name": "rigby2d",
+    "version": "0.5.1",
+    "repository": "https://github.com/jaisurya-dev-art/rigby2d",
+    "branch": "develop",
+    "commit_sha": "130562a94e76a19986aa8b737f998a89c1270bb8",
+    "license": "MIT OR Apache-2.0",
+    "demo_assets_copied": false,
+    "webgl_renderer_exported": true,
+    "character_id": "lucius",
+    "spine_format_version": "3.8.99",
+    "bone_count": 21,
+    "bones": [
+      "root",
+      "pelvis",
+      "torso",
+      "cloak",
+      "head",
+      "upper_arm_l",
+      "lower_arm_l",
+      "hand_l",
+      "upper_arm_r",
+      "lower_arm_r",
+      "hand_r",
+      "upper_leg_l",
+      "lower_leg_l",
+      "foot_l",
+      "upper_leg_r",
+      "lower_leg_r",
+      "foot_r",
+      "ik_foot_l_target",
+      "ik_foot_r_target",
+      "ik_hand_l_target",
+      "ik_hand_r_target"
+    ],
+    "slot_count": 15,
+    "slots": [
+      "cloak_back",
+      "upper_arm_l",
+      "lower_arm_l",
+      "hand_l",
+      "upper_leg_l",
+      "lower_leg_l",
+      "sandal_l",
+      "torso_tunic",
+      "upper_leg_r",
+      "lower_leg_r",
+      "sandal_r",
+      "head",
+      "upper_arm_r",
+      "lower_arm_r",
+      "hand_r"
+    ],
+    "ik_constraint_count": 4,
+    "ik_constraints": [
+      {
+        "name": "ik_leg_l",
+        "bones": [
+          "upper_leg_l",
+          "lower_leg_l"
+        ],
+        "target": "ik_foot_l_target",
+        "bendPositive": false,
+        "mix": 1
+      },
+      {
+        "name": "ik_leg_r",
+        "bones": [
+          "upper_leg_r",
+          "lower_leg_r"
+        ],
+        "target": "ik_foot_r_target",
+        "bendPositive": false,
+        "mix": 1
+      },
+      {
+        "name": "ik_arm_l",
+        "bones": [
+          "upper_arm_l",
+          "lower_arm_l"
+        ],
+        "target": "ik_hand_l_target",
+        "bendPositive": true,
+        "mix": 1
+      },
+      {
+        "name": "ik_arm_r",
+        "bones": [
+          "upper_arm_r",
+          "lower_arm_r"
+        ],
+        "target": "ik_hand_r_target",
+        "bendPositive": true,
+        "mix": 1
+      }
+    ],
+    "animations": [
+      {
+        "name": "idle",
+        "duration": 1.2
+      },
+      {
+        "name": "catch_scroll",
+        "duration": 1.2
+      }
+    ],
+    "atlas_pages": [
+      {
+        "name": "lucius.png",
+        "width": 1024,
+        "height": 1024,
+        "region_count": 22,
+        "regions": [
+          "torso_tunic",
+          "cloak_back",
+          "upper_arm_r",
+          "lower_arm_r",
+          "hand_r",
+          "hand_r_grip",
+          "upper_arm_l",
+          "lower_arm_l",
+          "hand_l",
+          "upper_leg_r",
+          "lower_leg_r",
+          "sandal_r",
+          "upper_leg_l",
+          "lower_leg_l",
+          "sandal_l",
+          "head_neutral_attentive",
+          "head_wide_shock",
+          "head_strained_exertion",
+          "head_determined_focus",
+          "head_joyful_laugh",
+          "head_deadpan_disbelief",
+          "head"
+        ]
+      }
+    ],
+    "emitted_attachments": 15,
+    "emitted_triangles": 30,
+    "warnings": [],
+    "provenance_manifest_exists": true,
+    "texture_exists": true,
+    "texture_sha256": "76df5b964ebdd80c1c4a2e92750e3a6264e164b0108a16a8cc14aff5dada9c89"
+  },
+  "chromium_webgl_compositing": {
+    "backend": "rigby2d_webgl_0.5.1",
+    "warnings": [],
+    "serial": {
+      "0.00": "88d14564",
+      "0.35": "fee7663c",
+      "0.75": "d42fd1d0",
+      "1.15": "6d208f79"
+    },
+    "reversed": {
+      "1.15": "6d208f79",
+      "0.75": "d42fd1d0",
+      "0.35": "fee7663c",
+      "0.00": "88d14564"
+    },
+    "shuffled": {
+      "0.75": "d42fd1d0",
+      "0.00": "88d14564",
+      "1.15": "6d208f79",
+      "0.35": "fee7663c"
+    },
+    "alphaStats": {
+      "nonZeroAlpha": 12713,
+      "outsideAlpha": 0,
+      "bbox": {
+        "minX": 277,
+        "maxX": 360,
+        "minY": 97,
+        "maxY": 321
+      }
+    },
+    "deterministic_order_invariant": true,
+    "distinct_animated_frames": true,
+    "alpha_and_upright_valid": true,
+    "status": "PASS"
+  },
+  "rigby_vs_canvas_benchmark": {
+    "schema_version": "14.7.6",
+    "pilot_status": "PILOT_WORKING",
+    "distinct_backend_outputs": true,
+    "upstream_sha": "130562a94e76a19986aa8b737f998a89c1270bb8",
+    "rigby2d": {
+      "backend_label": "rigby2d_webgl_0.5.1",
+      "status": "PASS",
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\rigby_vs_canvas\\pilot_8s_rigby2d.mp4",
+      "sha256": "cb3f748772e77da06ca917a9723cf0cfa45cfb4b89698b3f6322d83f56dd13b9",
+      "size_bytes": 348137,
+      "wall_sec": 4.888,
+      "width": 960,
+      "height": 540,
+      "frames": 192,
+      "duration_sec": 8.0
+    },
+    "canvas": {
+      "backend_label": "canvas_natural_motion_14.7.6",
+      "status": "PASS",
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\rigby_vs_canvas\\pilot_8s_canvas.mp4",
+      "sha256": "9abf9b140d42c958cfabd4f11040867bed3bf93513a3b13958c78e8521bc62ac",
+      "size_bytes": 336549,
+      "wall_sec": 6.14,
+      "width": 960,
+      "height": 540,
+      "frames": 192,
+      "duration_sec": 8.0
+    }
+  }
+}

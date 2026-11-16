@@ -1,0 +1,447 @@
+{
+  "schema_version": "kh01.character_bible.v1",
+  "style_id": "modern_expressive_2d.v1",
+  "fictional_framing": "A fictional Roman marketplace comedy; original Modern Expressive 2D animation, not a documented historical incident.",
+  "characters": {
+    "lucius": {
+      "schema_version": "kh01.character_spec.v1",
+      "actor_id": "lucius",
+      "name": "Lucius",
+      "role": "courier",
+      "niche": "roman_forum",
+      "style_id": "modern_expressive_2d.v1",
+      "personality": "earnest",
+      "archetype": "agile_youth",
+      "proportions": {
+        "head_to_height_ratio": 0.215,
+        "shoulder_to_head_width": 1.38,
+        "torso_to_height_ratio": 0.29,
+        "leg_to_height_ratio": 0.44,
+        "cranium_shape": "rounded_tapered_jaw",
+        "height_norm": 0.31
+      },
+      "skin_palette": {
+        "name": "warm_olive",
+        "base": "#E3AE88",
+        "shadow": "#BD825D",
+        "rim": "#FCE0C5",
+        "blush": "#DF7362"
+      },
+      "hair_palette": {
+        "name": "espresso_chestnut",
+        "base": "#3B261E",
+        "shadow": "#221410",
+        "highlight": "#6E4A3A"
+      },
+      "hair_style": "windswept_tuft",
+      "has_glasses": false,
+      "wardrobe": {
+        "outfit_id": "royal_courier_tunic_satchel",
+        "garment_kind": "pleated_tunic_with_scarf_and_satchel",
+        "primary_hex": "#C84B31",
+        "primary_shadow_hex": "#8e362c",
+        "primary_rim_hex": "#fd5f36",
+        "secondary_hex": "#F3E5AB",
+        "secondary_shadow_hex": "#b9b18c",
+        "trim_hex": "#D99B26",
+        "accessory_hex": "#6E4228",
+        "footwear": "laced_leather_caligae",
+        "accessories": [
+          "wax_scroll_satchel",
+          "courier_bronze_brooch",
+          "flowing_neck_scarf"
+        ]
+      },
+      "wardrobe_timeline": [
+        {
+          "from_shot": "S01",
+          "outfit_id": "royal_courier_tunic_satchel",
+          "reason": "initial_character_establishment"
+        }
+      ],
+      "supported_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "rear_three_quarter"
+      ],
+      "supported_expressions": [
+        "neutral_attentive",
+        "wide_shock",
+        "strained_exertion",
+        "determined_focus",
+        "joyful_laugh",
+        "deadpan_disbelief"
+      ],
+      "has_hand_insert": true,
+      "mood_arc": [
+        "neutral_attentive",
+        "wide_shock",
+        "determined_focus",
+        "strained_exertion",
+        "joyful_laugh"
+      ],
+      "ink_outer_hex": "#191210",
+      "ink_inner_hex": "#2A1F1B"
+    },
+    "mara": {
+      "schema_version": "kh01.character_spec.v1",
+      "actor_id": "mara",
+      "name": "Mara",
+      "role": "vendor",
+      "niche": "roman_forum",
+      "style_id": "modern_expressive_2d.v1",
+      "personality": "witty",
+      "archetype": "grounded_artisan",
+      "proportions": {
+        "head_to_height_ratio": 0.21,
+        "shoulder_to_head_width": 1.52,
+        "torso_to_height_ratio": 0.31,
+        "leg_to_height_ratio": 0.42,
+        "cranium_shape": "warm_broad_cheek",
+        "height_norm": 0.31
+      },
+      "skin_palette": {
+        "name": "golden_tan",
+        "base": "#D5996F",
+        "shadow": "#A96E48",
+        "rim": "#F6CFAF",
+        "blush": "#CF6656"
+      },
+      "hair_palette": {
+        "name": "copper_auburn",
+        "base": "#7E3722",
+        "shadow": "#522012",
+        "highlight": "#B55B3C"
+      },
+      "hair_style": "braided_kerchief_updo",
+      "has_glasses": false,
+      "wardrobe": {
+        "outfit_id": "forum_vendor_stola_apron",
+        "garment_kind": "layered_stola_and_striped_apron",
+        "primary_hex": "#2B6E78",
+        "primary_shadow_hex": "#1a4f61",
+        "primary_rim_hex": "#3a8a8e",
+        "secondary_hex": "#E6A13B",
+        "secondary_shadow_hex": "#af7c34",
+        "trim_hex": "#F7EFE2",
+        "accessory_hex": "#9E422D",
+        "footwear": "strapped_market_sandals",
+        "accessories": [
+          "saffron_head_kerchief",
+          "striped_linen_apron",
+          "coin_pouch"
+        ]
+      },
+      "wardrobe_timeline": [
+        {
+          "from_shot": "S01",
+          "outfit_id": "forum_vendor_stola_apron",
+          "reason": "initial_character_establishment"
+        }
+      ],
+      "supported_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "rear_three_quarter"
+      ],
+      "supported_expressions": [
+        "neutral_attentive",
+        "wide_shock",
+        "strained_exertion",
+        "determined_focus",
+        "joyful_laugh",
+        "deadpan_disbelief"
+      ],
+      "has_hand_insert": true,
+      "mood_arc": [
+        "neutral_attentive",
+        "wide_shock",
+        "determined_focus",
+        "strained_exertion",
+        "joyful_laugh"
+      ],
+      "ink_outer_hex": "#191210",
+      "ink_inner_hex": "#2A1F1B"
+    }
+  },
+  "rig_manifests": {
+    "lucius": {
+      "schema_version": "kh01.rig_manifest.v1",
+      "character_id": "lucius",
+      "name": "Lucius",
+      "niche": "roman_forum",
+      "style_id": "modern_expressive_2d.v1",
+      "spine_format_version": "3.8.99",
+      "height_units": 210.0,
+      "setup_targets": {
+        "ik_foot_l_target": {
+          "x": 10.0,
+          "y": 6.0
+        },
+        "ik_foot_r_target": {
+          "x": -8.0,
+          "y": 6.0
+        },
+        "ik_hand_l_target": {
+          "x": 28.0,
+          "y": 98.0
+        },
+        "ik_hand_r_target": {
+          "x": 24.0,
+          "y": 94.0
+        }
+      },
+      "bones": [
+        "root",
+        "pelvis",
+        "torso",
+        "cloak",
+        "head",
+        "upper_arm_l",
+        "lower_arm_l",
+        "hand_l",
+        "upper_arm_r",
+        "lower_arm_r",
+        "hand_r",
+        "upper_leg_l",
+        "lower_leg_l",
+        "foot_l",
+        "upper_leg_r",
+        "lower_leg_r",
+        "foot_r",
+        "ik_foot_l_target",
+        "ik_foot_r_target",
+        "ik_hand_l_target",
+        "ik_hand_r_target"
+      ],
+      "slots": [
+        "cloak_back",
+        "upper_arm_l",
+        "lower_arm_l",
+        "hand_l",
+        "upper_leg_l",
+        "lower_leg_l",
+        "sandal_l",
+        "torso_tunic",
+        "upper_leg_r",
+        "lower_leg_r",
+        "sandal_r",
+        "head",
+        "upper_arm_r",
+        "lower_arm_r",
+        "hand_r"
+      ],
+      "ik_constraints": [
+        "ik_leg_l",
+        "ik_leg_r",
+        "ik_arm_l",
+        "ik_arm_r"
+      ],
+      "supported_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "rear_three_quarter"
+      ],
+      "view_art_mapping": {
+        "front": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_view_front.png",
+        "three_quarter": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_view_three_quarter.png",
+        "profile": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_view_profile.png",
+        "rear_three_quarter": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_view_rear_three_quarter.png"
+      },
+      "expression_attachments": {
+        "neutral_attentive": "head_neutral_attentive",
+        "wide_shock": "head_wide_shock",
+        "strained_exertion": "head_strained_exertion",
+        "determined_focus": "head_determined_focus",
+        "joyful_laugh": "head_joyful_laugh",
+        "deadpan_disbelief": "head_deadpan_disbelief"
+      },
+      "hand_attachments": {
+        "open": "hand_r",
+        "locked_grip": "hand_r_grip"
+      },
+      "viseme_mapping": {
+        "closed_rest": "head_neutral_attentive",
+        "open_ah": "head_wide_shock",
+        "teeth_grit": "head_strained_exertion",
+        "wide_laugh": "head_joyful_laugh"
+      },
+      "files": {
+        "skeleton_json": {
+          "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/lucius/lucius.json",
+          "sha256": "d6b4469d9eb90ffd2e23011b0e68a844a1ac8bb15f1d265293dd887f5a1d72db"
+        },
+        "atlas": {
+          "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/lucius/lucius.atlas",
+          "sha256": "abad4e744f1ed4087829298e0558ca4623037ba476bbbfcb8c3c9ac61eae7adb"
+        },
+        "texture_png": {
+          "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/lucius/lucius.png",
+          "sha256": "77f5e4fe401613eab55e48123a721fb94eb336c555d3db91dad03e60904a49c5",
+          "dimensions": [
+            1024,
+            1024
+          ]
+        }
+      },
+      "rigby_demo_assets_copied": false,
+      "reference_frames_reused": 0,
+      "manifest_path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/lucius/lucius_rig_manifest.json"
+    },
+    "mara": {
+      "schema_version": "kh01.rig_manifest.v1",
+      "character_id": "mara",
+      "name": "Mara",
+      "niche": "roman_forum",
+      "style_id": "modern_expressive_2d.v1",
+      "spine_format_version": "3.8.99",
+      "height_units": 210.0,
+      "setup_targets": {
+        "ik_foot_l_target": {
+          "x": 10.0,
+          "y": 6.0
+        },
+        "ik_foot_r_target": {
+          "x": -8.0,
+          "y": 6.0
+        },
+        "ik_hand_l_target": {
+          "x": 28.0,
+          "y": 98.0
+        },
+        "ik_hand_r_target": {
+          "x": 24.0,
+          "y": 94.0
+        }
+      },
+      "bones": [
+        "root",
+        "pelvis",
+        "torso",
+        "cloak",
+        "head",
+        "upper_arm_l",
+        "lower_arm_l",
+        "hand_l",
+        "upper_arm_r",
+        "lower_arm_r",
+        "hand_r",
+        "upper_leg_l",
+        "lower_leg_l",
+        "foot_l",
+        "upper_leg_r",
+        "lower_leg_r",
+        "foot_r",
+        "ik_foot_l_target",
+        "ik_foot_r_target",
+        "ik_hand_l_target",
+        "ik_hand_r_target"
+      ],
+      "slots": [
+        "cloak_back",
+        "upper_arm_l",
+        "lower_arm_l",
+        "hand_l",
+        "upper_leg_l",
+        "lower_leg_l",
+        "sandal_l",
+        "torso_tunic",
+        "upper_leg_r",
+        "lower_leg_r",
+        "sandal_r",
+        "head",
+        "upper_arm_r",
+        "lower_arm_r",
+        "hand_r"
+      ],
+      "ik_constraints": [
+        "ik_leg_l",
+        "ik_leg_r",
+        "ik_arm_l",
+        "ik_arm_r"
+      ],
+      "supported_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "rear_three_quarter"
+      ],
+      "view_art_mapping": {
+        "front": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_front.png",
+        "three_quarter": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_three_quarter.png",
+        "profile": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_profile.png",
+        "rear_three_quarter": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_rear_three_quarter.png"
+      },
+      "expression_attachments": {
+        "neutral_attentive": "head_neutral_attentive",
+        "wide_shock": "head_wide_shock",
+        "strained_exertion": "head_strained_exertion",
+        "determined_focus": "head_determined_focus",
+        "joyful_laugh": "head_joyful_laugh",
+        "deadpan_disbelief": "head_deadpan_disbelief"
+      },
+      "hand_attachments": {
+        "open": "hand_r",
+        "locked_grip": "hand_r_grip"
+      },
+      "viseme_mapping": {
+        "closed_rest": "head_neutral_attentive",
+        "open_ah": "head_wide_shock",
+        "teeth_grit": "head_strained_exertion",
+        "wide_laugh": "head_joyful_laugh"
+      },
+      "files": {
+        "skeleton_json": {
+          "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara.json",
+          "sha256": "d6bd018c4321c9566c3d25a80dae059b3bb66ea734d8cd974cec25e9c8cb34a1"
+        },
+        "atlas": {
+          "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara.atlas",
+          "sha256": "20ff7ee5ea4e50cce94030c83b6038fa66a913febdef405a8c376a833103656b"
+        },
+        "texture_png": {
+          "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara.png",
+          "sha256": "cb52d0cc1a4ad8bed9f7069d8536f1cda1fb8b1992e3850dec50423d071ee75a",
+          "dimensions": [
+            1024,
+            1024
+          ]
+        }
+      },
+      "rigby_demo_assets_copied": false,
+      "reference_frames_reused": 0,
+      "manifest_path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara_rig_manifest.json"
+    }
+  },
+  "model_sheets": {
+    "lucius": {
+      "gate_id": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE",
+      "editorial_status": "HUMAN_REVIEW_PENDING",
+      "actor_id": "lucius",
+      "model_sheet_path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/VQ02_MODEL_SHEET_lucius.png",
+      "model_sheet_sha256": "8c11bcbcf45ff7979ab09659fffcd8f8981a1980cd4e96537c44b74fff3a9794",
+      "dimensions": [
+        2400,
+        1600
+      ],
+      "unique_view_hashes": 3,
+      "unique_expression_hashes": 6
+    },
+    "mara": {
+      "gate_id": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE",
+      "editorial_status": "HUMAN_REVIEW_PENDING",
+      "actor_id": "mara",
+      "model_sheet_path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/VQ02_MODEL_SHEET_mara.png",
+      "model_sheet_sha256": "9e96f147b31755df7eed67da2094b5ad9938b2fc4ba9c480753781ca1cbf1b37",
+      "dimensions": [
+        2400,
+        1600
+      ],
+      "unique_view_hashes": 3,
+      "unique_expression_hashes": 6
+    }
+  }
+}

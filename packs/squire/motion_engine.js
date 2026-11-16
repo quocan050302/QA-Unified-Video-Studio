@@ -708,18 +708,20 @@ export function evaluateMotionTrackAt(track, absoluteT, worldState = {}, options
     }
   }
 
+  const mTypeUpper = String(track?.motion_type || '').toUpperCase();
+  const isPureLocomotion = ['WALK', 'RUN', 'MOVE_TO', 'APPROACH'].some((k) => mTypeUpper.includes(k));
   const facing =
-    Math.abs(root.vx) > 0.015
+    isPureLocomotion && Math.abs(root.vx) > 0.015
       ? root.vx < 0
         ? -1
         : 1
       : Number(track?.facing_end ?? track?.facing_start ?? 1);
-  const isRun = String(track?.motion_type || '').includes('RUN');
+  const isRun = mTypeUpper.includes('RUN');
 
   // If actor has an active contact whose anchor is slightly beyond natural arm reach,
-  // lean/shift upper body subtly so shoulder stays within anatomical reach of the prop!
+  // lean/shift upper body (pelvis/shoulders) subtly while keeping planted ground feet world-locked!
   const worldObjects = options.resolvedObjects || evaluateMultiActorInteraction([track], absoluteT, worldState);
-  let effectiveRootX = root.x;
+  let upperBodyReachShiftX = 0;
   for (const c of track?.contacts || []) {
     if (absoluteT >= Number(c.start_sec) - 1e-4 && absoluteT <= Number(c.end_sec) + 1e-4) {
       const obj = worldObjects?.[c.object_id];
@@ -740,7 +742,7 @@ export function evaluateMotionTrackAt(track, absoluteT, worldState = {}, options
       const dy = ay - shoulderApproxY;
       const maxArmSpan = h * 0.285;
       const maxHoriz = Math.sqrt(Math.max(0.0004, maxArmSpan * maxArmSpan - dy * dy)) * 0.92;
-      const dx = ax - effectiveRootX;
+      const dx = ax - root.x;
       if (Math.abs(dx) > maxHoriz) {
         const pullW =
           curPh?.phase_name === 'ANTICIPATE'
@@ -748,14 +750,14 @@ export function evaluateMotionTrackAt(track, absoluteT, worldState = {}, options
             : curPh?.phase_name === 'REACH'
               ? smooth01(root.phaseProgress)
               : 1.0;
-        effectiveRootX = lerp(effectiveRootX, ax - Math.sign(dx) * maxHoriz, pullW);
+        upperBodyReachShiftX = (ax - Math.sign(dx) * maxHoriz - root.x) * pullW;
       }
       break;
     }
   }
 
   const legsIK = solveFootPlantIK({
-    rootX: effectiveRootX,
+    rootX: root.x,
     rootY: root.y,
     groundY,
     heightNorm: h,
@@ -766,7 +768,7 @@ export function evaluateMotionTrackAt(track, absoluteT, worldState = {}, options
     activePhase: curPh,
     phaseProgress: root.phaseProgress,
     blendedPose: blended,
-    trackStartX: Number(track?.world_start?.[0] ?? effectiveRootX),
+    trackStartX: Number(track?.world_start?.[0] ?? root.x),
   });
 
   const secondary = applySecondaryMotion({
@@ -782,8 +784,9 @@ export function evaluateMotionTrackAt(track, absoluteT, worldState = {}, options
 
   const leanRad = clamp(blended.torsoLean, -0.35, 0.35);
   const torsoLen = h * 0.24;
+  const pelvisCenter = [legsIK.hipCenter[0] + clamp(upperBodyReachShiftX * 0.35, -h * 0.04, h * 0.04), legsIK.hipCenter[1]];
   const neckWorld = [
-    legsIK.hipCenter[0] + Math.sin(leanRad) * torsoLen * facing,
+    legsIK.hipCenter[0] + upperBodyReachShiftX + Math.sin(leanRad) * torsoLen * facing,
     legsIK.hipCenter[1] - Math.cos(leanRad) * torsoLen + secondary.breathOffsetNorm,
   ];
   const shoulderLeft = [neckWorld[0] - facing * h * 0.042, neckWorld[1] + h * 0.025];
@@ -836,6 +839,46 @@ export function evaluateMotionTrackAt(track, absoluteT, worldState = {}, options
     focused: 'determined',
   };
 
+  const modernExprMap = {
+    startled: 'wide_shock',
+    shock: 'wide_shock',
+    wide_shock: 'wide_shock',
+    strained: 'strained_exertion',
+    strained_cooperative: 'strained_exertion',
+    strained_determined: 'strained_exertion',
+    strained_exertion: 'strained_exertion',
+    urgent: 'determined_focus',
+    determined: 'determined_focus',
+    determined_focus: 'determined_focus',
+    focused: 'determined_focus',
+    relieved: 'joyful_laugh',
+    hopeful: 'joyful_laugh',
+    laugh: 'joyful_laugh',
+    joyful_laugh: 'joyful_laugh',
+    deadpan: 'deadpan_disbelief',
+    deadpan_disbelief: 'deadpan_disbelief',
+    alarm: 'wide_shock',
+    curious: 'neutral_attentive',
+    calm: 'neutral_attentive',
+    neutral_attentive: 'neutral_attentive',
+  };
+  const activeHandGrip = Boolean(handsIK.activeContactId && !['ANTICIPATE'].includes(curPh?.phase_name || ''));
+  const handShapeRight = activeHandGrip
+    ? 'locked_grip'
+    : curPh?.phase_name === 'REACH'
+      ? 'open_reach'
+      : track?.emotion === 'startled' || track?.emotion === 'shock'
+        ? 'spread_shock'
+        : String(track?.motion_type || '').includes('POINT')
+          ? 'pointing'
+          : 'relaxed';
+  const handShapeLeft =
+    activeHandGrip && (track?.contacts?.[0]?.hand === 'both' || track?.contacts?.[0]?.hand === 'left')
+      ? 'locked_grip'
+      : handShapeRight === 'spread_shock'
+        ? 'spread_shock'
+        : 'relaxed';
+
   return {
     actorId: track?.actor_id || 'actor',
     absoluteT,
@@ -844,7 +887,8 @@ export function evaluateMotionTrackAt(track, absoluteT, worldState = {}, options
     facing,
     heightNorm: h,
     groundY,
-    root: [effectiveRootX, root.y],
+    root: [root.x, root.y],
+    pelvisCenter,
     velocity: [root.vx, root.vy],
     speed: root.speed,
     accumulatedDistance: root.accumulatedDistance,
@@ -855,6 +899,10 @@ export function evaluateMotionTrackAt(track, absoluteT, worldState = {}, options
     headLook: blended.headLook,
     kneeFlex: blended.kneeFlex,
     faceExpression: exprMap[track?.emotion] || 'neutral',
+    modernExpression: modernExprMap[track?.emotion] || 'neutral_attentive',
+    handShapeLeft,
+    handShapeRight,
+    hairSwayRad: clamp(-root.vx * 0.22 + (secondary.clothSwayNorm / h) * 1.4, -0.26, 0.26),
     leftLegWorld: legsIK.leftLeg,
     rightLegWorld: legsIK.rightLeg,
     leftFootWorld: legsIK.leftFootWorld,
@@ -992,6 +1040,7 @@ export function validateMotionFrameTrace(track, worldState = {}, options = {}) {
 
   return {
     valid: violations.length === 0,
+    passed: violations.length === 0,
     actorId: track?.actor_id || 'actor',
     shotId: track?.shot_id || 'S01',
     frameCount: frames.length,

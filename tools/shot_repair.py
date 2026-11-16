@@ -165,7 +165,7 @@ def _infer_categories_from_audit(
     diag_text = " ".join(diags).lower()
     cats: List[str] = []
 
-    if not non_empty or "blank" in diag_text or "black frame" in diag_text:
+    if not non_empty or "blank" in diag_text or "black frame" in diag_text or ("top_ink=" in diag_text and "bot_ink=" in diag_text):
         cats.append("blank_frame")
     if teleport or disap or "teleport" in diag_text or "disappear" in diag_text:
         cats.append("continuity")
@@ -953,25 +953,26 @@ def execute_repair_loop(
 
 
 def _synthesize_spoken_test_wav(wav_path: Path, duration_sec: float) -> Dict[str, Any]:
-    """Generate a real spoken English voice WAV padded cleanly to duration_sec."""
+    """Generate a real spoken English voice WAV padded cleanly to duration_sec (macOS `say` or Windows SAPI)."""
     say_bin = shutil.which("say")
-    if not say_bin:
+    raw_src = wav_path.with_suffix(".raw_tts.wav")
+    spoken_text = "Cohort hold the ridge. Rescue team advance and secure the standard."
+    if say_bin:
+        aiff_tmp = wav_path.with_suffix(".aiff")
+        subprocess.run(
+            [say_bin, "-v", "Daniel", "-r", "175", "-o", str(aiff_tmp), spoken_text],
+            check=True,
+            capture_output=True,
+        )
+        raw_src = aiff_tmp
+    elif sys.platform == "win32":
+        from scripts.tts_helper import synthesize_speech
+
+        if not synthesize_speech(spoken_text, raw_src):
+            return {"ok": False, "status": "BLOCKED_NO_SPEECH_PROVIDER"}
+    else:
         return {"ok": False, "status": "BLOCKED_NO_SPEECH_PROVIDER"}
-    aiff_tmp = wav_path.with_suffix(".aiff")
-    subprocess.run(
-        [
-            say_bin,
-            "-v",
-            "Daniel",
-            "-r",
-            "175",
-            "-o",
-            str(aiff_tmp),
-            "Cohort hold the ridge. Rescue team advance and secure the standard.",
-        ],
-        check=True,
-        capture_output=True,
-    )
+
     subprocess.run(
         [
             "ffmpeg",
@@ -979,7 +980,7 @@ def _synthesize_spoken_test_wav(wav_path: Path, duration_sec: float) -> Dict[str
             "-v",
             "error",
             "-i",
-            str(aiff_tmp),
+            str(raw_src),
             "-af",
             f"apad=whole_dur={duration_sec:.2f}",
             "-t",
@@ -995,8 +996,8 @@ def _synthesize_spoken_test_wav(wav_path: Path, duration_sec: float) -> Dict[str
         check=True,
         capture_output=True,
     )
-    if aiff_tmp.exists():
-        aiff_tmp.unlink()
+    if raw_src.exists():
+        raw_src.unlink()
     return {"ok": True, "status": "SPOKEN_VOICE_READY"}
 
 

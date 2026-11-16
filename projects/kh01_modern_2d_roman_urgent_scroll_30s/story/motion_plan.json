@@ -1,0 +1,5705 @@
+{
+  "schema_version": "14.7.6",
+  "project_id": "kh01_modern_2d_roman_urgent_scroll_30s",
+  "pack": "squire",
+  "genre": "roman_forum",
+  "routing_mode": "OFFLINE_ONLY",
+  "provider_trace_id": null,
+  "fx_profile": "claude_selective",
+  "seed": 20261116,
+  "script_sha256": "d8fcefa94507c34317bbcf9c3c98873c81e99beb5c71d12a2417e7e54a9f0c5c",
+  "script_span": "Lucius observes the scroll on the counter.\nLucius walks toward the scroll\nreaches for the scroll.\nLucius runs toward the fountain.\nLucius ducks beneath the awning while Mara observes.\nTogether Lucius and Mara braced the cart.\nLucius grabbed the scroll beside the fountain.\nLucius steadies the scroll.\nLucius stands still while Mara laughs.",
+  "start_sec": 0.0,
+  "end_sec": 30.0,
+  "actor_ids": [
+    "lucius",
+    "mara"
+  ],
+  "object_ids": [
+    "awning",
+    "cart",
+    "counter",
+    "fountain",
+    "scroll"
+  ],
+  "desired_state_before": {},
+  "desired_state_after": {},
+  "motion_type": "SEQUENCE_PLAN",
+  "physical_target": null,
+  "world_start": [
+    0.0,
+    0.0
+  ],
+  "world_end": [
+    1.0,
+    1.0
+  ],
+  "intensity": 0.6,
+  "source_confidence": 0.9,
+  "visible_end_condition": "all actor and world objectives satisfied",
+  "sound_cue": null,
+  "intents": [
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S01_I01",
+      "shot_id": "S01",
+      "script_span": "Lucius observes the scroll on the counter.",
+      "start_sec": 0.0,
+      "end_sec": 2.625,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Lucius",
+          "start": 0.08,
+          "end": 0.459
+        },
+        {
+          "index": 1,
+          "word": "observes",
+          "start": 0.459,
+          "end": 0.947
+        },
+        {
+          "index": 2,
+          "word": "the",
+          "start": 0.947,
+          "end": 1.163
+        },
+        {
+          "index": 3,
+          "word": "scroll",
+          "start": 1.163,
+          "end": 1.542
+        },
+        {
+          "index": 4,
+          "word": "on",
+          "start": 1.542,
+          "end": 1.705
+        },
+        {
+          "index": 5,
+          "word": "the",
+          "start": 1.705,
+          "end": 1.922
+        },
+        {
+          "index": 6,
+          "word": "counter",
+          "start": 1.922,
+          "end": 2.355
+        }
+      ],
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "counter",
+        "scroll"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.34,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.34,
+          0.84
+        ]
+      },
+      "motion_type": "IDLE_BREATHE",
+      "is_idle_or_speech_only": true,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "calm",
+      "physical_target": "counter",
+      "world_start": [
+        0.34,
+        0.84
+      ],
+      "world_end": [
+        0.34,
+        0.84
+      ],
+      "intensity": 0.2,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S01 idle_breathe completed",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S02_I01",
+      "shot_id": "S02",
+      "script_span": "Lucius walks toward the scroll",
+      "start_sec": 2.625,
+      "end_sec": 4.438,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Lucius",
+          "start": 2.705,
+          "end": 3.1
+        },
+        {
+          "index": 1,
+          "word": "walks",
+          "start": 3.1,
+          "end": 3.439
+        },
+        {
+          "index": 2,
+          "word": "toward",
+          "start": 3.439,
+          "end": 3.834
+        },
+        {
+          "index": 3,
+          "word": "the",
+          "start": 3.834,
+          "end": 4.06
+        },
+        {
+          "index": 4,
+          "word": "scroll",
+          "start": 4.06,
+          "end": 4.455
+        },
+        {
+          "index": 5,
+          "word": "and",
+          "start": 4.455,
+          "end": 4.681
+        }
+      ],
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.34,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.366,
+          0.84
+        ]
+      },
+      "motion_type": "WALK",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "curious",
+      "physical_target": "scroll",
+      "world_start": [
+        0.34,
+        0.84
+      ],
+      "world_end": [
+        0.366,
+        0.84
+      ],
+      "intensity": 0.55,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius arrives at x=0.366 with planted stance",
+      "sound_cue": "soft_footsteps"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S02_I02",
+      "shot_id": "S02",
+      "script_span": "reaches for the scroll.",
+      "start_sec": 4.438,
+      "end_sec": 6.25,
+      "narration_word_timestamps": [
+        {
+          "index": 4,
+          "word": "scroll",
+          "start": 4.06,
+          "end": 4.455
+        },
+        {
+          "index": 5,
+          "word": "and",
+          "start": 4.455,
+          "end": 4.681
+        },
+        {
+          "index": 6,
+          "word": "reaches",
+          "start": 4.681,
+          "end": 5.133
+        },
+        {
+          "index": 7,
+          "word": "for",
+          "start": 5.133,
+          "end": 5.359
+        },
+        {
+          "index": 8,
+          "word": "the",
+          "start": 5.359,
+          "end": 5.585
+        },
+        {
+          "index": 9,
+          "word": "scroll",
+          "start": 5.585,
+          "end": 5.98
+        }
+      ],
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.366,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.366,
+          0.84
+        ],
+        "gripping": "scroll"
+      },
+      "motion_type": "GRAB",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "urgent",
+      "physical_target": "scroll",
+      "world_start": [
+        0.366,
+        0.84
+      ],
+      "world_end": [
+        0.366,
+        0.84
+      ],
+      "intensity": 0.74,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius hand locked on scroll",
+      "sound_cue": "lantern_grab"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S03_I01",
+      "shot_id": "S03",
+      "script_span": "Lucius runs toward the fountain.",
+      "start_sec": 6.25,
+      "end_sec": 10.25,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Lucius",
+          "start": 6.33,
+          "end": 7.128
+        },
+        {
+          "index": 1,
+          "word": "runs",
+          "start": 7.128,
+          "end": 7.699
+        },
+        {
+          "index": 2,
+          "word": "toward",
+          "start": 7.699,
+          "end": 8.497
+        },
+        {
+          "index": 3,
+          "word": "the",
+          "start": 8.497,
+          "end": 8.953
+        },
+        {
+          "index": 4,
+          "word": "fountain",
+          "start": 8.953,
+          "end": 9.98
+        }
+      ],
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "fountain"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.366,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "motion_type": "RUN",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "urgent",
+      "physical_target": "fountain",
+      "world_start": [
+        0.366,
+        0.84
+      ],
+      "world_end": [
+        0.627,
+        0.84
+      ],
+      "intensity": 0.84,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius arrives at x=0.627 with planted stance",
+      "sound_cue": "stone_footsteps"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S04_I01",
+      "shot_id": "S04",
+      "script_span": "Lucius ducks beneath the awning while Mara observes.",
+      "start_sec": 10.25,
+      "end_sec": 13.75,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Lucius",
+          "start": 10.33,
+          "end": 10.754
+        },
+        {
+          "index": 1,
+          "word": "ducks",
+          "start": 10.754,
+          "end": 11.117
+        },
+        {
+          "index": 2,
+          "word": "beneath",
+          "start": 11.117,
+          "end": 11.602
+        },
+        {
+          "index": 3,
+          "word": "the",
+          "start": 11.602,
+          "end": 11.844
+        },
+        {
+          "index": 4,
+          "word": "awning",
+          "start": 11.844,
+          "end": 12.268
+        },
+        {
+          "index": 5,
+          "word": "while",
+          "start": 12.268,
+          "end": 12.632
+        },
+        {
+          "index": 6,
+          "word": "Mara",
+          "start": 12.632,
+          "end": 12.935
+        },
+        {
+          "index": 7,
+          "word": "observes",
+          "start": 12.935,
+          "end": 13.48
+        }
+      ],
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ],
+        "posture": "crouched_shielded"
+      },
+      "motion_type": "DUCK",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "startled",
+      "physical_target": "awning",
+      "world_start": [
+        0.627,
+        0.84
+      ],
+      "world_end": [
+        0.627,
+        0.84
+      ],
+      "intensity": 0.68,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius crouched cleanly below wind gust",
+      "sound_cue": "flame_gust"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S05_I01",
+      "shot_id": "S05",
+      "script_span": "Together Lucius and Mara braced the cart.",
+      "start_sec": 13.75,
+      "end_sec": 17.25,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Together",
+          "start": 13.83,
+          "end": 14.521
+        },
+        {
+          "index": 1,
+          "word": "Lucius",
+          "start": 14.521,
+          "end": 15.059
+        },
+        {
+          "index": 2,
+          "word": "and",
+          "start": 15.059,
+          "end": 15.367
+        },
+        {
+          "index": 3,
+          "word": "Mara",
+          "start": 15.367,
+          "end": 15.751
+        },
+        {
+          "index": 4,
+          "word": "braced",
+          "start": 15.751,
+          "end": 16.289
+        },
+        {
+          "index": 5,
+          "word": "the",
+          "start": 16.289,
+          "end": 16.596
+        },
+        {
+          "index": 6,
+          "word": "cart",
+          "start": 16.596,
+          "end": 16.98
+        }
+      ],
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "cart"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ],
+        "gripping": "cart"
+      },
+      "motion_type": "BRACE_ROPE",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "determined",
+      "physical_target": "cart",
+      "world_start": [
+        0.627,
+        0.84
+      ],
+      "world_end": [
+        0.627,
+        0.84
+      ],
+      "intensity": 0.76,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius hand locked on cart",
+      "sound_cue": "rope_creak"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S06_I01",
+      "shot_id": "S06",
+      "script_span": "Lucius grabbed the scroll beside the fountain.",
+      "start_sec": 17.25,
+      "end_sec": 21.625,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Lucius",
+          "start": 17.33,
+          "end": 17.942
+        },
+        {
+          "index": 1,
+          "word": "grabbed",
+          "start": 17.942,
+          "end": 18.642
+        },
+        {
+          "index": 2,
+          "word": "the",
+          "start": 18.642,
+          "end": 18.992
+        },
+        {
+          "index": 3,
+          "word": "scroll",
+          "start": 18.992,
+          "end": 19.605
+        },
+        {
+          "index": 4,
+          "word": "beside",
+          "start": 19.605,
+          "end": 20.218
+        },
+        {
+          "index": 5,
+          "word": "the",
+          "start": 20.218,
+          "end": 20.568
+        },
+        {
+          "index": 6,
+          "word": "fountain",
+          "start": 20.568,
+          "end": 21.355
+        }
+      ],
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll",
+        "fountain"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ],
+        "gripping": "scroll"
+      },
+      "motion_type": "GRAB",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "urgent",
+      "physical_target": "scroll",
+      "world_start": [
+        0.627,
+        0.84
+      ],
+      "world_end": [
+        0.5,
+        0.84
+      ],
+      "intensity": 0.74,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius hand locked on scroll",
+      "sound_cue": "lantern_grab"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S07_I01",
+      "shot_id": "S07",
+      "script_span": "Lucius steadies the scroll.",
+      "start_sec": 21.625,
+      "end_sec": 26.0,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Lucius",
+          "start": 21.705,
+          "end": 22.749
+        },
+        {
+          "index": 1,
+          "word": "steadies",
+          "start": 22.749,
+          "end": 24.09
+        },
+        {
+          "index": 2,
+          "word": "the",
+          "start": 24.09,
+          "end": 24.686
+        },
+        {
+          "index": 3,
+          "word": "scroll",
+          "start": 24.686,
+          "end": 25.73
+        }
+      ],
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll"
+      ],
+      "desired_state_before": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ],
+        "gripping": "scroll"
+      },
+      "motion_type": "STEADY_PROP",
+      "is_idle_or_speech_only": false,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "focused",
+      "physical_target": "scroll",
+      "world_start": [
+        0.5,
+        0.84
+      ],
+      "world_end": [
+        0.5,
+        0.84
+      ],
+      "intensity": 0.72,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius hand locked on scroll",
+      "sound_cue": "rope_creak"
+    },
+    {
+      "schema_version": "14.7.6",
+      "intent_id": "S08_I01",
+      "shot_id": "S08",
+      "script_span": "Lucius stands still while Mara laughs.",
+      "start_sec": 26.0,
+      "end_sec": 30.0,
+      "narration_word_timestamps": [
+        {
+          "index": 0,
+          "word": "Lucius",
+          "start": 26.08,
+          "end": 26.752
+        },
+        {
+          "index": 1,
+          "word": "stands",
+          "start": 26.752,
+          "end": 27.425
+        },
+        {
+          "index": 2,
+          "word": "still",
+          "start": 27.425,
+          "end": 28.001
+        },
+        {
+          "index": 3,
+          "word": "while",
+          "start": 28.001,
+          "end": 28.577
+        },
+        {
+          "index": 4,
+          "word": "Mara",
+          "start": 28.577,
+          "end": 29.058
+        },
+        {
+          "index": 5,
+          "word": "laughs",
+          "start": 29.058,
+          "end": 29.73
+        }
+      ],
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [],
+      "desired_state_before": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ]
+      },
+      "motion_type": "IDLE_BREATHE",
+      "is_idle_or_speech_only": true,
+      "unsupported_action": false,
+      "unsupported_evidence": null,
+      "fallback_motion_type": null,
+      "emotion": "calm",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.84
+      ],
+      "world_end": [
+        0.5,
+        0.84
+      ],
+      "intensity": 0.2,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S08 idle_breathe completed",
+      "sound_cue": null
+    }
+  ],
+  "tracks": [
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S01_lucius",
+      "shot_id": "S01",
+      "actor_id": "lucius",
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "counter",
+        "scroll"
+      ],
+      "preset": "peasant",
+      "role": "courier",
+      "script_span": "Lucius observes the scroll on the counter.",
+      "start_sec": 0.0,
+      "end_sec": 2.625,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.34,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.34,
+          0.84
+        ]
+      },
+      "motion_type": "IDLE_BREATHE",
+      "is_idle_or_speech_only": true,
+      "physical_target": "counter",
+      "world_start": [
+        0.34,
+        0.84
+      ],
+      "world_end": [
+        0.34,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "IDLE",
+          "script_span": "Lucius observes the scroll on the counter.",
+          "start_sec": 0.0,
+          "end_sec": 2.625,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "counter",
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "IDLE_BREATHE",
+          "physical_target": "counter",
+          "world_start": [
+            0.34,
+            0.84
+          ],
+          "world_end": [
+            0.34,
+            0.84
+          ],
+          "posture_state": "idle_breathe",
+          "torso_lean": 0.0,
+          "head_look": 0.55,
+          "knee_flex": 0.02,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.2,
+          "source_confidence": 0.94,
+          "visible_end_condition": "S01 idle_breathe completed",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "calm",
+      "intensity": 0.2,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S01 idle_breathe completed",
+      "sound_cue": null,
+      "sound_cues": []
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S02_lucius",
+      "shot_id": "S02",
+      "actor_id": "lucius",
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll"
+      ],
+      "preset": "peasant",
+      "role": "courier",
+      "script_span": "Lucius walks toward the scroll; reaches for the scroll.",
+      "start_sec": 2.625,
+      "end_sec": 6.25,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": 1,
+      "facing_end": 1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.34,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.366,
+          0.84
+        ],
+        "gripping": "scroll"
+      },
+      "motion_type": "WALK_THEN_GRAB",
+      "is_idle_or_speech_only": false,
+      "physical_target": "scroll",
+      "world_start": [
+        0.34,
+        0.84
+      ],
+      "world_end": [
+        0.366,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Lucius walks toward the scroll",
+          "start_sec": 2.625,
+          "end_sec": 2.8788,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "WALK",
+          "physical_target": "scroll",
+          "world_start": [
+            0.34,
+            0.84
+          ],
+          "world_end": [
+            0.341,
+            0.84
+          ],
+          "posture_state": "lean_into_stride",
+          "torso_lean": 0.06,
+          "head_look": 0.75,
+          "knee_flex": 0.07,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.385,
+          "source_confidence": 0.94,
+          "visible_end_condition": "weight shifts forward onto lead foot",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "APPROACH",
+          "script_span": "Lucius walks toward the scroll",
+          "start_sec": 2.8788,
+          "end_sec": 4.1479,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "WALK",
+          "physical_target": "scroll",
+          "world_start": [
+            0.341,
+            0.84
+          ],
+          "world_end": [
+            0.365,
+            0.84
+          ],
+          "posture_state": "walk_stride",
+          "torso_lean": 0.07,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": false,
+          "foot_planted_right": false,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.55,
+          "source_confidence": 0.94,
+          "visible_end_condition": "distance-coupled stride advances root smoothly",
+          "sound_cue": "soft_footsteps"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Lucius walks toward the scroll",
+          "start_sec": 4.1479,
+          "end_sec": 4.438,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "WALK",
+          "physical_target": "scroll",
+          "world_start": [
+            0.365,
+            0.84
+          ],
+          "world_end": [
+            0.366,
+            0.84
+          ],
+          "posture_state": "decelerate_plant",
+          "torso_lean": 0.03,
+          "head_look": 0.65,
+          "knee_flex": 0.05,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.275,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius arrives at x=0.366 with planted stance",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "reaches for the scroll.",
+          "start_sec": 4.438,
+          "end_sec": 4.6917,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.366,
+            0.84
+          ],
+          "world_end": [
+            0.366,
+            0.84
+          ],
+          "posture_state": "coil_for_reach",
+          "torso_lean": 0.08,
+          "head_look": 0.8,
+          "knee_flex": 0.08,
+          "arm_reach": 0.35,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.481,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius lowers center of mass toward scroll",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACH",
+          "script_span": "reaches for the scroll.",
+          "start_sec": 4.6917,
+          "end_sec": 4.9816,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.366,
+            0.84
+          ],
+          "world_end": [
+            0.366,
+            0.84
+          ],
+          "posture_state": "extend_hands_to_target",
+          "torso_lean": 0.14,
+          "head_look": 0.9,
+          "knee_flex": 0.1,
+          "arm_reach": 0.88,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.592,
+          "source_confidence": 0.94,
+          "visible_end_condition": "hands close distance onto scroll grip_primary",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "CONTACT",
+          "script_span": "reaches for the scroll.",
+          "start_sec": 4.9816,
+          "end_sec": 5.199,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.366,
+            0.84
+          ],
+          "world_end": [
+            0.366,
+            0.84
+          ],
+          "posture_state": "grip_locked",
+          "torso_lean": 0.12,
+          "head_look": 0.9,
+          "knee_flex": 0.11,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.666,
+          "source_confidence": 0.94,
+          "visible_end_condition": "zero-hover grip established on scroll",
+          "sound_cue": "lantern_grab"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "EXERT",
+          "script_span": "reaches for the scroll.",
+          "start_sec": 5.199,
+          "end_sec": 5.8151,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.366,
+            0.84
+          ],
+          "world_end": [
+            0.366,
+            0.84
+          ],
+          "posture_state": "drive_through_legs_and_arms",
+          "torso_lean": 0.06,
+          "head_look": 0.85,
+          "knee_flex": 0.16,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.74,
+          "source_confidence": 0.94,
+          "visible_end_condition": "force transmitted cleanly into scroll",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "reaches for the scroll.",
+          "start_sec": 5.8151,
+          "end_sec": 6.0688,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.366,
+            0.84
+          ],
+          "world_end": [
+            0.366,
+            0.84
+          ],
+          "posture_state": "absorb_inertia",
+          "torso_lean": 0.04,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.518,
+          "source_confidence": 0.94,
+          "visible_end_condition": "scroll oscillation damps while grip holds",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "reaches for the scroll.",
+          "start_sec": 6.0688,
+          "end_sec": 6.25,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.366,
+            0.84
+          ],
+          "world_end": [
+            0.366,
+            0.84
+          ],
+          "posture_state": "secure_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.75,
+          "knee_flex": 0.06,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.37,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius hand locked on scroll",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [
+        {
+          "schema_version": "14.7.6",
+          "constraint_id": "S02_I02_lucius_scroll",
+          "script_span": "reaches for the scroll.",
+          "start_sec": 4.6917,
+          "end_sec": 6.25,
+          "actor_id": "lucius",
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_id": "scroll",
+          "object_ids": [
+            "scroll"
+          ],
+          "hand": "right",
+          "anchor_name": "grip_primary",
+          "anchor_local": [
+            0.0,
+            0.0
+          ],
+          "desired_state_before": {
+            "gripped": false,
+            "object_pos": [
+              0.44,
+              0.66
+            ]
+          },
+          "desired_state_after": {
+            "gripped": true,
+            "object_pos": [
+              0.44,
+              0.66
+            ]
+          },
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.44,
+            0.66
+          ],
+          "world_end": [
+            0.44,
+            0.66
+          ],
+          "exclusive": true,
+          "shared_group_id": null,
+          "drives_object": true,
+          "intensity": 0.74,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius hand locked to scroll:grip_primary",
+          "sound_cue": "lantern_grab"
+        }
+      ],
+      "emotion": "curious",
+      "intensity": 0.74,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius hand locked on scroll",
+      "sound_cue": "lantern_grab",
+      "sound_cues": [
+        {
+          "kind": "soft_footsteps",
+          "at": 0.254
+        },
+        {
+          "kind": "lantern_grab",
+          "at": 2.067
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S03_lucius",
+      "shot_id": "S03",
+      "actor_id": "lucius",
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "fountain"
+      ],
+      "preset": "peasant",
+      "role": "courier",
+      "script_span": "Lucius runs toward the fountain.",
+      "start_sec": 6.25,
+      "end_sec": 10.25,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": 1,
+      "facing_end": 1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.366,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "motion_type": "RUN",
+      "is_idle_or_speech_only": false,
+      "physical_target": "fountain",
+      "world_start": [
+        0.366,
+        0.84
+      ],
+      "world_end": [
+        0.627,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Lucius runs toward the fountain.",
+          "start_sec": 6.25,
+          "end_sec": 6.81,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "fountain"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RUN",
+          "physical_target": "fountain",
+          "world_start": [
+            0.366,
+            0.84
+          ],
+          "world_end": [
+            0.3764,
+            0.84
+          ],
+          "posture_state": "lean_into_stride",
+          "torso_lean": 0.12,
+          "head_look": 0.75,
+          "knee_flex": 0.14,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.588,
+          "source_confidence": 0.94,
+          "visible_end_condition": "weight shifts forward onto lead foot",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "APPROACH",
+          "script_span": "Lucius runs toward the fountain.",
+          "start_sec": 6.81,
+          "end_sec": 9.61,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "fountain"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RUN",
+          "physical_target": "fountain",
+          "world_start": [
+            0.3764,
+            0.84
+          ],
+          "world_end": [
+            0.6166,
+            0.84
+          ],
+          "posture_state": "run_drive",
+          "torso_lean": 0.16,
+          "head_look": 0.8,
+          "knee_flex": 0.18,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": false,
+          "foot_planted_right": false,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.84,
+          "source_confidence": 0.94,
+          "visible_end_condition": "distance-coupled stride advances root smoothly",
+          "sound_cue": "stone_footsteps"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Lucius runs toward the fountain.",
+          "start_sec": 9.61,
+          "end_sec": 10.25,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "fountain"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "RUN",
+          "physical_target": "fountain",
+          "world_start": [
+            0.6166,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "decelerate_plant",
+          "torso_lean": 0.03,
+          "head_look": 0.65,
+          "knee_flex": 0.05,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.42,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius arrives at x=0.627 with planted stance",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "urgent",
+      "intensity": 0.84,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius arrives at x=0.627 with planted stance",
+      "sound_cue": "stone_footsteps",
+      "sound_cues": [
+        {
+          "kind": "stone_footsteps",
+          "at": 0.56
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S04_lucius",
+      "shot_id": "S04",
+      "actor_id": "lucius",
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning"
+      ],
+      "preset": "peasant",
+      "role": "courier",
+      "script_span": "Lucius ducks beneath the awning while Mara observes.",
+      "start_sec": 10.25,
+      "end_sec": 13.75,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ],
+        "posture": "crouched_shielded"
+      },
+      "motion_type": "DUCK",
+      "is_idle_or_speech_only": false,
+      "physical_target": "awning",
+      "world_start": [
+        0.627,
+        0.84
+      ],
+      "world_end": [
+        0.627,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Lucius ducks beneath the awning while Mara observes.",
+          "start_sec": 10.25,
+          "end_sec": 10.88,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "awning"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "DUCK",
+          "physical_target": "awning",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "sense_gust_flinch",
+          "torso_lean": -0.05,
+          "head_look": 0.8,
+          "knee_flex": 0.06,
+          "arm_reach": 0.25,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.5,
+          "source_confidence": 0.94,
+          "visible_end_condition": "head turns toward incoming gust",
+          "sound_cue": "flame_gust"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACT",
+          "script_span": "Lucius ducks beneath the awning while Mara observes.",
+          "start_sec": 10.88,
+          "end_sec": 12.28,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "awning"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "DUCK",
+          "physical_target": "awning",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "duck_low_guard",
+          "torso_lean": 0.22,
+          "head_look": 0.25,
+          "knee_flex": 0.32,
+          "arm_reach": 0.72,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.68,
+          "source_confidence": 0.94,
+          "visible_end_condition": "knees flex and forearm shields face",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Lucius ducks beneath the awning while Mara observes.",
+          "start_sec": 12.28,
+          "end_sec": 13.12,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "awning"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "DUCK",
+          "physical_target": "awning",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "hold_crouch_against_wind",
+          "torso_lean": 0.18,
+          "head_look": 0.35,
+          "knee_flex": 0.26,
+          "arm_reach": 0.6,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.544,
+          "source_confidence": 0.94,
+          "visible_end_condition": "cloth trails wind while crouch holds firm",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Lucius ducks beneath the awning while Mara observes.",
+          "start_sec": 13.12,
+          "end_sec": 13.75,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "awning"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "DUCK",
+          "physical_target": "awning",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "cautious_rise",
+          "torso_lean": 0.1,
+          "head_look": 0.55,
+          "knee_flex": 0.14,
+          "arm_reach": 0.35,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.4,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius crouched cleanly below wind gust",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "startled",
+      "intensity": 0.68,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius crouched cleanly below wind gust",
+      "sound_cue": "flame_gust",
+      "sound_cues": [
+        {
+          "kind": "flame_gust",
+          "at": 0.63
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S04_mara",
+      "shot_id": "S04",
+      "actor_id": "mara",
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning"
+      ],
+      "preset": "lady",
+      "role": "vendor",
+      "script_span": "Lucius ducks beneath the awning while Mara observes.",
+      "start_sec": 10.25,
+      "end_sec": 13.75,
+      "ground_y": 0.84,
+      "height_norm": 0.27,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ],
+        "posture": "crouched_shielded"
+      },
+      "motion_type": "DUCK",
+      "is_idle_or_speech_only": false,
+      "physical_target": "awning",
+      "world_start": [
+        0.64,
+        0.84
+      ],
+      "world_end": [
+        0.64,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Lucius ducks beneath the awning while Mara observes.",
+          "start_sec": 10.25,
+          "end_sec": 10.921,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "awning"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "DUCK",
+          "physical_target": "awning",
+          "world_start": [
+            0.64,
+            0.84
+          ],
+          "world_end": [
+            0.64,
+            0.84
+          ],
+          "posture_state": "sense_gust_flinch",
+          "torso_lean": -0.05,
+          "head_look": 0.8,
+          "knee_flex": 0.06,
+          "arm_reach": 0.25,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.5,
+          "source_confidence": 0.94,
+          "visible_end_condition": "head turns toward incoming gust",
+          "sound_cue": "flame_gust"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACT",
+          "script_span": "Lucius ducks beneath the awning while Mara observes.",
+          "start_sec": 10.921,
+          "end_sec": 12.301,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "awning"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "DUCK",
+          "physical_target": "awning",
+          "world_start": [
+            0.64,
+            0.84
+          ],
+          "world_end": [
+            0.64,
+            0.84
+          ],
+          "posture_state": "duck_low_guard",
+          "torso_lean": 0.22,
+          "head_look": 0.25,
+          "knee_flex": 0.32,
+          "arm_reach": 0.72,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.68,
+          "source_confidence": 0.94,
+          "visible_end_condition": "knees flex and forearm shields face",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Lucius ducks beneath the awning while Mara observes.",
+          "start_sec": 12.301,
+          "end_sec": 13.129,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "awning"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "DUCK",
+          "physical_target": "awning",
+          "world_start": [
+            0.64,
+            0.84
+          ],
+          "world_end": [
+            0.64,
+            0.84
+          ],
+          "posture_state": "hold_crouch_against_wind",
+          "torso_lean": 0.18,
+          "head_look": 0.35,
+          "knee_flex": 0.26,
+          "arm_reach": 0.6,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.544,
+          "source_confidence": 0.94,
+          "visible_end_condition": "cloth trails wind while crouch holds firm",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Lucius ducks beneath the awning while Mara observes.",
+          "start_sec": 13.129,
+          "end_sec": 13.75,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "awning"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "DUCK",
+          "physical_target": "awning",
+          "world_start": [
+            0.64,
+            0.84
+          ],
+          "world_end": [
+            0.64,
+            0.84
+          ],
+          "posture_state": "cautious_rise",
+          "torso_lean": 0.1,
+          "head_look": 0.55,
+          "knee_flex": 0.14,
+          "arm_reach": 0.35,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.4,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius crouched cleanly below wind gust",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "startled",
+      "intensity": 0.68,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius crouched cleanly below wind gust",
+      "sound_cue": "flame_gust",
+      "sound_cues": [
+        {
+          "kind": "flame_gust",
+          "at": 0.671
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S05_lucius",
+      "shot_id": "S05",
+      "actor_id": "lucius",
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "cart"
+      ],
+      "preset": "peasant",
+      "role": "courier",
+      "script_span": "Together Lucius and Mara braced the cart.",
+      "start_sec": 13.75,
+      "end_sec": 17.25,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ],
+        "gripping": "cart"
+      },
+      "motion_type": "BRACE_ROPE",
+      "is_idle_or_speech_only": false,
+      "physical_target": "cart",
+      "world_start": [
+        0.627,
+        0.84
+      ],
+      "world_end": [
+        0.627,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 13.75,
+          "end_sec": 14.24,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "coil_for_reach",
+          "torso_lean": 0.08,
+          "head_look": 0.8,
+          "knee_flex": 0.08,
+          "arm_reach": 0.35,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.49400000000000005,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius lowers center of mass toward cart",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACH",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 14.24,
+          "end_sec": 14.8,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "extend_hands_to_target",
+          "torso_lean": 0.14,
+          "head_look": 0.9,
+          "knee_flex": 0.1,
+          "arm_reach": 0.88,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.6080000000000001,
+          "source_confidence": 0.94,
+          "visible_end_condition": "hands close distance onto cart handle_1",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "CONTACT",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 14.8,
+          "end_sec": 15.22,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "grip_locked",
+          "torso_lean": 0.12,
+          "head_look": 0.9,
+          "knee_flex": 0.11,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.684,
+          "source_confidence": 0.94,
+          "visible_end_condition": "zero-hover grip established on cart",
+          "sound_cue": "rope_creak"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "EXERT",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 15.22,
+          "end_sec": 16.41,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "drive_through_legs_and_arms",
+          "torso_lean": -0.1,
+          "head_look": 0.85,
+          "knee_flex": 0.16,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.76,
+          "source_confidence": 0.94,
+          "visible_end_condition": "force transmitted cleanly into cart",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 16.41,
+          "end_sec": 16.9,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "absorb_inertia",
+          "torso_lean": -0.04,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.5319999999999999,
+          "source_confidence": 0.94,
+          "visible_end_condition": "cart oscillation damps while grip holds",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 16.9,
+          "end_sec": 17.25,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "secure_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.75,
+          "knee_flex": 0.06,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_1",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.38,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius hand locked on cart",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [
+        {
+          "schema_version": "14.7.6",
+          "constraint_id": "S05_I01_lucius_cart",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 14.24,
+          "end_sec": 17.25,
+          "actor_id": "lucius",
+          "actor_ids": [
+            "lucius",
+            "mara"
+          ],
+          "object_id": "cart",
+          "object_ids": [
+            "cart"
+          ],
+          "hand": "both",
+          "anchor_name": "handle_1",
+          "anchor_local": [
+            -0.035,
+            0.0
+          ],
+          "desired_state_before": {
+            "gripped": false,
+            "object_pos": [
+              0.54,
+              0.75
+            ]
+          },
+          "desired_state_after": {
+            "gripped": true,
+            "object_pos": [
+              0.54,
+              0.75
+            ]
+          },
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.505,
+            0.75
+          ],
+          "world_end": [
+            0.505,
+            0.75
+          ],
+          "exclusive": false,
+          "shared_group_id": "S05_I01_shared_cart",
+          "drives_object": false,
+          "intensity": 0.76,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius hand locked to cart:handle_1",
+          "sound_cue": "rope_creak"
+        }
+      ],
+      "emotion": "determined",
+      "intensity": 0.76,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius hand locked on cart",
+      "sound_cue": "rope_creak",
+      "sound_cues": [
+        {
+          "kind": "rope_creak",
+          "at": 0.49
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S05_mara",
+      "shot_id": "S05",
+      "actor_id": "mara",
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "cart"
+      ],
+      "preset": "lady",
+      "role": "vendor",
+      "script_span": "Together Lucius and Mara braced the cart.",
+      "start_sec": 13.75,
+      "end_sec": 17.25,
+      "ground_y": 0.84,
+      "height_norm": 0.27,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ],
+        "gripping": "cart"
+      },
+      "motion_type": "BRACE_ROPE",
+      "is_idle_or_speech_only": false,
+      "physical_target": "cart",
+      "world_start": [
+        0.64,
+        0.84
+      ],
+      "world_end": [
+        0.6,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 13.75,
+          "end_sec": 14.145,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.64,
+            0.84
+          ],
+          "world_end": [
+            0.64,
+            0.84
+          ],
+          "posture_state": "coil_for_step",
+          "torso_lean": 0.07,
+          "head_look": 0.8,
+          "knee_flex": 0.12,
+          "arm_reach": 0.2,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.49400000000000005,
+          "source_confidence": 0.94,
+          "visible_end_condition": "mara shifts weight to step toward cart",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "APPROACH",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 14.145,
+          "end_sec": 14.628,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.64,
+            0.84
+          ],
+          "world_end": [
+            0.6,
+            0.84
+          ],
+          "posture_state": "step_to_grip_stance",
+          "torso_lean": 0.1,
+          "head_look": 0.85,
+          "knee_flex": 0.14,
+          "arm_reach": 0.45,
+          "hand_anchor_id": null,
+          "foot_planted_left": false,
+          "foot_planted_right": false,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.5700000000000001,
+          "source_confidence": 0.94,
+          "visible_end_condition": "mara steps cleanly into stance beside cart",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACH",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 14.628,
+          "end_sec": 14.9385,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.6,
+            0.84
+          ],
+          "world_end": [
+            0.6,
+            0.84
+          ],
+          "posture_state": "extend_hands_to_target",
+          "torso_lean": 0.14,
+          "head_look": 0.9,
+          "knee_flex": 0.1,
+          "arm_reach": 0.88,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.6080000000000001,
+          "source_confidence": 0.94,
+          "visible_end_condition": "hands close distance onto cart handle_2",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "CONTACT",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 14.9385,
+          "end_sec": 15.318,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.6,
+            0.84
+          ],
+          "world_end": [
+            0.6,
+            0.84
+          ],
+          "posture_state": "grip_locked",
+          "torso_lean": 0.12,
+          "head_look": 0.9,
+          "knee_flex": 0.11,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.684,
+          "source_confidence": 0.94,
+          "visible_end_condition": "zero-hover grip established on cart",
+          "sound_cue": "rope_creak"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "EXERT",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 15.318,
+          "end_sec": 16.4565,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.6,
+            0.84
+          ],
+          "world_end": [
+            0.6,
+            0.84
+          ],
+          "posture_state": "drive_through_legs_and_arms",
+          "torso_lean": -0.1,
+          "head_look": 0.85,
+          "knee_flex": 0.16,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.76,
+          "source_confidence": 0.94,
+          "visible_end_condition": "force transmitted cleanly into cart",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 16.4565,
+          "end_sec": 16.905,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.6,
+            0.84
+          ],
+          "world_end": [
+            0.6,
+            0.84
+          ],
+          "posture_state": "absorb_inertia",
+          "torso_lean": -0.04,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.5319999999999999,
+          "source_confidence": 0.94,
+          "visible_end_condition": "cart oscillation damps while grip holds",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 16.905,
+          "end_sec": 17.25,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [
+            "cart"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.6,
+            0.84
+          ],
+          "world_end": [
+            0.6,
+            0.84
+          ],
+          "posture_state": "secure_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.75,
+          "knee_flex": 0.06,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "handle_2",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.38,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius hand locked on cart",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [
+        {
+          "schema_version": "14.7.6",
+          "constraint_id": "S05_I01_mara_cart",
+          "script_span": "Together Lucius and Mara braced the cart.",
+          "start_sec": 14.628,
+          "end_sec": 17.25,
+          "actor_id": "mara",
+          "actor_ids": [
+            "lucius",
+            "mara"
+          ],
+          "object_id": "cart",
+          "object_ids": [
+            "cart"
+          ],
+          "hand": "both",
+          "anchor_name": "handle_2",
+          "anchor_local": [
+            0.035,
+            0.0
+          ],
+          "desired_state_before": {
+            "gripped": false,
+            "object_pos": [
+              0.54,
+              0.75
+            ]
+          },
+          "desired_state_after": {
+            "gripped": true,
+            "object_pos": [
+              0.54,
+              0.75
+            ]
+          },
+          "motion_type": "BRACE_ROPE",
+          "physical_target": "cart",
+          "world_start": [
+            0.575,
+            0.75
+          ],
+          "world_end": [
+            0.575,
+            0.75
+          ],
+          "exclusive": false,
+          "shared_group_id": "S05_I01_shared_cart",
+          "drives_object": false,
+          "intensity": 0.76,
+          "source_confidence": 0.94,
+          "visible_end_condition": "mara hand locked to cart:handle_2",
+          "sound_cue": "rope_creak"
+        }
+      ],
+      "emotion": "determined",
+      "intensity": 0.76,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius hand locked on cart",
+      "sound_cue": "rope_creak",
+      "sound_cues": [
+        {
+          "kind": "rope_creak",
+          "at": 0.395
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S06_lucius",
+      "shot_id": "S06",
+      "actor_id": "lucius",
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll",
+        "fountain"
+      ],
+      "preset": "peasant",
+      "role": "courier",
+      "script_span": "Lucius grabbed the scroll beside the fountain.",
+      "start_sec": 17.25,
+      "end_sec": 21.625,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.627,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ],
+        "gripping": "scroll"
+      },
+      "motion_type": "GRAB",
+      "is_idle_or_speech_only": false,
+      "physical_target": "scroll",
+      "world_start": [
+        0.627,
+        0.84
+      ],
+      "world_end": [
+        0.5,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Lucius grabbed the scroll beside the fountain.",
+          "start_sec": 17.25,
+          "end_sec": 17.6875,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.627,
+            0.84
+          ],
+          "posture_state": "coil_for_step",
+          "torso_lean": 0.07,
+          "head_look": 0.8,
+          "knee_flex": 0.12,
+          "arm_reach": 0.2,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.481,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius shifts weight to step toward scroll",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "APPROACH",
+          "script_span": "Lucius grabbed the scroll beside the fountain.",
+          "start_sec": 17.6875,
+          "end_sec": 18.3,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.627,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "step_to_grip_stance",
+          "torso_lean": 0.1,
+          "head_look": 0.85,
+          "knee_flex": 0.14,
+          "arm_reach": 0.45,
+          "hand_anchor_id": null,
+          "foot_planted_left": false,
+          "foot_planted_right": false,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.5549999999999999,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius steps cleanly into stance beside scroll",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACH",
+          "script_span": "Lucius grabbed the scroll beside the fountain.",
+          "start_sec": 18.3,
+          "end_sec": 18.6938,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "extend_hands_to_target",
+          "torso_lean": 0.14,
+          "head_look": 0.9,
+          "knee_flex": 0.1,
+          "arm_reach": 0.88,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.592,
+          "source_confidence": 0.94,
+          "visible_end_condition": "hands close distance onto scroll grip_primary",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "CONTACT",
+          "script_span": "Lucius grabbed the scroll beside the fountain.",
+          "start_sec": 18.6938,
+          "end_sec": 19.175,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "grip_locked",
+          "torso_lean": 0.12,
+          "head_look": 0.9,
+          "knee_flex": 0.11,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.666,
+          "source_confidence": 0.94,
+          "visible_end_condition": "zero-hover grip established on scroll",
+          "sound_cue": "lantern_grab"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "EXERT",
+          "script_span": "Lucius grabbed the scroll beside the fountain.",
+          "start_sec": 19.175,
+          "end_sec": 20.6187,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "drive_through_legs_and_arms",
+          "torso_lean": 0.06,
+          "head_look": 0.85,
+          "knee_flex": 0.16,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.74,
+          "source_confidence": 0.94,
+          "visible_end_condition": "force transmitted cleanly into scroll",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Lucius grabbed the scroll beside the fountain.",
+          "start_sec": 20.6187,
+          "end_sec": 21.1875,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "absorb_inertia",
+          "torso_lean": 0.04,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.518,
+          "source_confidence": 0.94,
+          "visible_end_condition": "scroll oscillation damps while grip holds",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Lucius grabbed the scroll beside the fountain.",
+          "start_sec": 21.1875,
+          "end_sec": 21.625,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "secure_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.75,
+          "knee_flex": 0.06,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.37,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius hand locked on scroll",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [
+        {
+          "schema_version": "14.7.6",
+          "constraint_id": "S06_I01_lucius_scroll",
+          "script_span": "Lucius grabbed the scroll beside the fountain.",
+          "start_sec": 18.3,
+          "end_sec": 21.625,
+          "actor_id": "lucius",
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_id": "scroll",
+          "object_ids": [
+            "scroll"
+          ],
+          "hand": "right",
+          "anchor_name": "grip_primary",
+          "anchor_local": [
+            0.0,
+            0.0
+          ],
+          "desired_state_before": {
+            "gripped": false,
+            "object_pos": [
+              0.44,
+              0.66
+            ]
+          },
+          "desired_state_after": {
+            "gripped": true,
+            "object_pos": [
+              0.44,
+              0.66
+            ]
+          },
+          "motion_type": "GRAB",
+          "physical_target": "scroll",
+          "world_start": [
+            0.44,
+            0.66
+          ],
+          "world_end": [
+            0.44,
+            0.66
+          ],
+          "exclusive": true,
+          "shared_group_id": null,
+          "drives_object": true,
+          "intensity": 0.74,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius hand locked to scroll:grip_primary",
+          "sound_cue": "lantern_grab"
+        }
+      ],
+      "emotion": "urgent",
+      "intensity": 0.74,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius hand locked on scroll",
+      "sound_cue": "lantern_grab",
+      "sound_cues": [
+        {
+          "kind": "lantern_grab",
+          "at": 0.438
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S07_lucius",
+      "shot_id": "S07",
+      "actor_id": "lucius",
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll"
+      ],
+      "preset": "peasant",
+      "role": "courier",
+      "script_span": "Lucius steadies the scroll.",
+      "start_sec": 21.625,
+      "end_sec": 26.0,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ],
+        "gripping": "scroll"
+      },
+      "motion_type": "STEADY_PROP",
+      "is_idle_or_speech_only": false,
+      "physical_target": "scroll",
+      "world_start": [
+        0.5,
+        0.84
+      ],
+      "world_end": [
+        0.5,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "ANTICIPATE",
+          "script_span": "Lucius steadies the scroll.",
+          "start_sec": 21.625,
+          "end_sec": 22.2375,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "STEADY_PROP",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "coil_for_reach",
+          "torso_lean": 0.08,
+          "head_look": 0.8,
+          "knee_flex": 0.08,
+          "arm_reach": 0.35,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in",
+          "intensity": 0.46799999999999997,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius lowers center of mass toward scroll",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "REACH",
+          "script_span": "Lucius steadies the scroll.",
+          "start_sec": 22.2375,
+          "end_sec": 22.9375,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "STEADY_PROP",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "extend_hands_to_target",
+          "torso_lean": 0.14,
+          "head_look": 0.9,
+          "knee_flex": 0.1,
+          "arm_reach": 0.88,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.576,
+          "source_confidence": 0.94,
+          "visible_end_condition": "hands close distance onto scroll grip_primary",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "CONTACT",
+          "script_span": "Lucius steadies the scroll.",
+          "start_sec": 22.9375,
+          "end_sec": 23.4625,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "STEADY_PROP",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "grip_locked",
+          "torso_lean": 0.12,
+          "head_look": 0.9,
+          "knee_flex": 0.11,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.648,
+          "source_confidence": 0.94,
+          "visible_end_condition": "zero-hover grip established on scroll",
+          "sound_cue": "rope_creak"
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "EXERT",
+          "script_span": "Lucius steadies the scroll.",
+          "start_sec": 23.4625,
+          "end_sec": 24.95,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "STEADY_PROP",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "drive_through_legs_and_arms",
+          "torso_lean": 0.06,
+          "head_look": 0.85,
+          "knee_flex": 0.16,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_in_out",
+          "intensity": 0.72,
+          "source_confidence": 0.94,
+          "visible_end_condition": "force transmitted cleanly into scroll",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "FOLLOW_THROUGH",
+          "script_span": "Lucius steadies the scroll.",
+          "start_sec": 24.95,
+          "end_sec": 25.5625,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "STEADY_PROP",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "absorb_inertia",
+          "torso_lean": 0.04,
+          "head_look": 0.8,
+          "knee_flex": 0.09,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "overshoot_settle",
+          "intensity": 0.504,
+          "source_confidence": 0.94,
+          "visible_end_condition": "scroll oscillation damps while grip holds",
+          "sound_cue": null
+        },
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "SETTLE",
+          "script_span": "Lucius steadies the scroll.",
+          "start_sec": 25.5625,
+          "end_sec": 26.0,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [
+            "scroll"
+          ],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "STEADY_PROP",
+          "physical_target": "scroll",
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "secure_hold",
+          "torso_lean": 0.02,
+          "head_look": 0.75,
+          "knee_flex": 0.06,
+          "arm_reach": 1.0,
+          "hand_anchor_id": "grip_primary",
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "ease_out",
+          "intensity": 0.36,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius hand locked on scroll",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [
+        {
+          "schema_version": "14.7.6",
+          "constraint_id": "S07_I01_lucius_scroll",
+          "script_span": "Lucius steadies the scroll.",
+          "start_sec": 22.2375,
+          "end_sec": 26.0,
+          "actor_id": "lucius",
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_id": "scroll",
+          "object_ids": [
+            "scroll"
+          ],
+          "hand": "both",
+          "anchor_name": "grip_primary",
+          "anchor_local": [
+            0.0,
+            0.0
+          ],
+          "desired_state_before": {
+            "gripped": false,
+            "object_pos": [
+              0.44,
+              0.66
+            ]
+          },
+          "desired_state_after": {
+            "gripped": true,
+            "object_pos": [
+              0.44,
+              0.66
+            ]
+          },
+          "motion_type": "STEADY_PROP",
+          "physical_target": "scroll",
+          "world_start": [
+            0.44,
+            0.66
+          ],
+          "world_end": [
+            0.44,
+            0.66
+          ],
+          "exclusive": true,
+          "shared_group_id": null,
+          "drives_object": false,
+          "intensity": 0.72,
+          "source_confidence": 0.94,
+          "visible_end_condition": "lucius hand locked to scroll:grip_primary",
+          "sound_cue": "rope_creak"
+        }
+      ],
+      "emotion": "focused",
+      "intensity": 0.72,
+      "source_confidence": 0.94,
+      "visible_end_condition": "lucius hand locked on scroll",
+      "sound_cue": "rope_creak",
+      "sound_cues": [
+        {
+          "kind": "rope_creak",
+          "at": 0.613
+        }
+      ]
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S08_lucius",
+      "shot_id": "S08",
+      "actor_id": "lucius",
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [],
+      "preset": "peasant",
+      "role": "courier",
+      "script_span": "Lucius stands still while Mara laughs.",
+      "start_sec": 26.0,
+      "end_sec": 30.0,
+      "ground_y": 0.84,
+      "height_norm": 0.28,
+      "facing_start": 1,
+      "facing_end": 1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ]
+      },
+      "motion_type": "IDLE_BREATHE",
+      "is_idle_or_speech_only": true,
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.84
+      ],
+      "world_end": [
+        0.5,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "IDLE",
+          "script_span": "Lucius stands still while Mara laughs.",
+          "start_sec": 26.0,
+          "end_sec": 30.0,
+          "actor_ids": [
+            "lucius"
+          ],
+          "object_ids": [],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "IDLE_BREATHE",
+          "physical_target": null,
+          "world_start": [
+            0.5,
+            0.84
+          ],
+          "world_end": [
+            0.5,
+            0.84
+          ],
+          "posture_state": "idle_breathe",
+          "torso_lean": 0.0,
+          "head_look": 0.55,
+          "knee_flex": 0.02,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.2,
+          "source_confidence": 0.94,
+          "visible_end_condition": "S08 idle_breathe completed",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "calm",
+      "intensity": 0.2,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S08 idle_breathe completed",
+      "sound_cue": null,
+      "sound_cues": []
+    },
+    {
+      "schema_version": "14.7.6",
+      "track_id": "S08_mara",
+      "shot_id": "S08",
+      "actor_id": "mara",
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [],
+      "preset": "lady",
+      "role": "vendor",
+      "script_span": "Lucius stands still while Mara laughs.",
+      "start_sec": 26.0,
+      "end_sec": 30.0,
+      "ground_y": 0.84,
+      "height_norm": 0.27,
+      "facing_start": -1,
+      "facing_end": -1,
+      "desired_state_before": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ]
+      },
+      "desired_state_after": {
+        "actor_pos": [
+          0.5,
+          0.84
+        ]
+      },
+      "motion_type": "IDLE_BREATHE",
+      "is_idle_or_speech_only": true,
+      "physical_target": null,
+      "world_start": [
+        0.6,
+        0.84
+      ],
+      "world_end": [
+        0.6,
+        0.84
+      ],
+      "phases": [
+        {
+          "schema_version": "14.7.6",
+          "phase_name": "IDLE",
+          "script_span": "Lucius stands still while Mara laughs.",
+          "start_sec": 26.0,
+          "end_sec": 30.0,
+          "actor_ids": [
+            "mara"
+          ],
+          "object_ids": [],
+          "desired_state_before": {},
+          "desired_state_after": {},
+          "motion_type": "IDLE_BREATHE",
+          "physical_target": null,
+          "world_start": [
+            0.6,
+            0.84
+          ],
+          "world_end": [
+            0.6,
+            0.84
+          ],
+          "posture_state": "idle_breathe",
+          "torso_lean": 0.0,
+          "head_look": 0.55,
+          "knee_flex": 0.02,
+          "arm_reach": 0.0,
+          "hand_anchor_id": null,
+          "foot_planted_left": true,
+          "foot_planted_right": true,
+          "slip_foot": null,
+          "tempo_curve": "hold",
+          "intensity": 0.2,
+          "source_confidence": 0.94,
+          "visible_end_condition": "S08 idle_breathe completed",
+          "sound_cue": null
+        }
+      ],
+      "contacts": [],
+      "emotion": "calm",
+      "intensity": 0.2,
+      "source_confidence": 0.94,
+      "visible_end_condition": "S08 idle_breathe completed",
+      "sound_cue": null,
+      "sound_cues": []
+    }
+  ],
+  "world_states": [
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S01",
+      "script_span": "Lucius observes the scroll on the counter.",
+      "timestamp_sec": 2.625,
+      "start_sec": 0.0,
+      "end_sec": 2.625,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning",
+        "cart",
+        "counter",
+        "fountain",
+        "scroll"
+      ],
+      "actors": {
+        "lucius": {
+          "preset": "peasant",
+          "role": "courier",
+          "x": 0.34,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "IDLE_BREATHE"
+        },
+        "mara": {
+          "preset": "lady",
+          "role": "vendor",
+          "x": 0.64,
+          "y": 0.84,
+          "facing": -1
+        }
+      },
+      "objects": {
+        "counter": {
+          "x": 0.28,
+          "y": 0.74,
+          "state": "dispatch_table"
+        },
+        "scroll": {
+          "x": 0.44,
+          "y": 0.66,
+          "state": "sealed_urgent"
+        },
+        "awning": {
+          "x": 0.48,
+          "y": 0.46,
+          "state": "fluttering"
+        },
+        "cart": {
+          "x": 0.54,
+          "y": 0.75,
+          "state": "rolling"
+        },
+        "fountain": {
+          "x": 0.76,
+          "y": 0.74,
+          "state": "flowing"
+        }
+      },
+      "environment": {
+        "location": "roman_forum_marketplace",
+        "time": "day",
+        "wind": 0.68
+      },
+      "desired_state_before": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.34,
+            "y": 0.84,
+            "facing": 1
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.64,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "sealed_urgent"
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling"
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.34,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "IDLE_BREATHE"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.64,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "sealed_urgent"
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling"
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "counter",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S02",
+      "script_span": "Lucius walks toward the scroll reaches for the scroll.",
+      "timestamp_sec": 6.25,
+      "start_sec": 2.625,
+      "end_sec": 6.25,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning",
+        "cart",
+        "counter",
+        "fountain",
+        "scroll"
+      ],
+      "actors": {
+        "lucius": {
+          "preset": "peasant",
+          "role": "courier",
+          "x": 0.366,
+          "y": 0.84,
+          "facing": 1,
+          "motion_type": "WALK_THEN_GRAB",
+          "holding": "scroll"
+        },
+        "mara": {
+          "preset": "lady",
+          "role": "vendor",
+          "x": 0.64,
+          "y": 0.84,
+          "facing": -1
+        }
+      },
+      "objects": {
+        "counter": {
+          "x": 0.28,
+          "y": 0.74,
+          "state": "dispatch_table"
+        },
+        "scroll": {
+          "x": 0.44,
+          "y": 0.66,
+          "state": "moved_by_actor",
+          "held_by": [
+            "lucius"
+          ]
+        },
+        "awning": {
+          "x": 0.48,
+          "y": 0.46,
+          "state": "fluttering"
+        },
+        "cart": {
+          "x": 0.54,
+          "y": 0.75,
+          "state": "rolling"
+        },
+        "fountain": {
+          "x": 0.76,
+          "y": 0.74,
+          "state": "flowing"
+        }
+      },
+      "environment": {
+        "location": "roman_forum_marketplace",
+        "time": "day",
+        "wind": 0.68
+      },
+      "desired_state_before": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.34,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "IDLE_BREATHE"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.64,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "sealed_urgent"
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling"
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.366,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "WALK_THEN_GRAB",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.64,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling"
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "scroll",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S03",
+      "script_span": "Lucius runs toward the fountain.",
+      "timestamp_sec": 10.25,
+      "start_sec": 6.25,
+      "end_sec": 10.25,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning",
+        "cart",
+        "counter",
+        "fountain",
+        "scroll"
+      ],
+      "actors": {
+        "lucius": {
+          "preset": "peasant",
+          "role": "courier",
+          "x": 0.627,
+          "y": 0.84,
+          "facing": 1,
+          "motion_type": "RUN",
+          "holding": "scroll"
+        },
+        "mara": {
+          "preset": "lady",
+          "role": "vendor",
+          "x": 0.64,
+          "y": 0.84,
+          "facing": -1
+        }
+      },
+      "objects": {
+        "counter": {
+          "x": 0.28,
+          "y": 0.74,
+          "state": "dispatch_table"
+        },
+        "scroll": {
+          "x": 0.44,
+          "y": 0.66,
+          "state": "moved_by_actor",
+          "held_by": [
+            "lucius"
+          ]
+        },
+        "awning": {
+          "x": 0.48,
+          "y": 0.46,
+          "state": "fluttering"
+        },
+        "cart": {
+          "x": 0.54,
+          "y": 0.75,
+          "state": "rolling"
+        },
+        "fountain": {
+          "x": 0.76,
+          "y": 0.74,
+          "state": "flowing"
+        }
+      },
+      "environment": {
+        "location": "roman_forum_marketplace",
+        "time": "day",
+        "wind": 0.68
+      },
+      "desired_state_before": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.366,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "WALK_THEN_GRAB",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.64,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling"
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.627,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "RUN",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.64,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling"
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "fountain",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S04",
+      "script_span": "Lucius ducks beneath the awning while Mara observes.",
+      "timestamp_sec": 13.75,
+      "start_sec": 10.25,
+      "end_sec": 13.75,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning",
+        "cart",
+        "counter",
+        "fountain",
+        "scroll"
+      ],
+      "actors": {
+        "lucius": {
+          "preset": "peasant",
+          "role": "courier",
+          "x": 0.627,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "DUCK",
+          "holding": "scroll"
+        },
+        "mara": {
+          "preset": "lady",
+          "role": "vendor",
+          "x": 0.64,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "DUCK"
+        }
+      },
+      "objects": {
+        "counter": {
+          "x": 0.28,
+          "y": 0.74,
+          "state": "dispatch_table"
+        },
+        "scroll": {
+          "x": 0.44,
+          "y": 0.66,
+          "state": "moved_by_actor",
+          "held_by": [
+            "lucius"
+          ]
+        },
+        "awning": {
+          "x": 0.48,
+          "y": 0.46,
+          "state": "fluttering"
+        },
+        "cart": {
+          "x": 0.54,
+          "y": 0.75,
+          "state": "rolling"
+        },
+        "fountain": {
+          "x": 0.76,
+          "y": 0.74,
+          "state": "flowing"
+        }
+      },
+      "environment": {
+        "location": "roman_forum_marketplace",
+        "time": "day",
+        "wind": 0.68
+      },
+      "desired_state_before": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.627,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "RUN",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.64,
+            "y": 0.84,
+            "facing": -1
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling"
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.627,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "DUCK",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.64,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "DUCK"
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling"
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "awning",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S05",
+      "script_span": "Together Lucius and Mara braced the cart.",
+      "timestamp_sec": 17.25,
+      "start_sec": 13.75,
+      "end_sec": 17.25,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning",
+        "cart",
+        "counter",
+        "fountain",
+        "scroll"
+      ],
+      "actors": {
+        "lucius": {
+          "preset": "peasant",
+          "role": "courier",
+          "x": 0.627,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "BRACE_ROPE",
+          "holding": "cart"
+        },
+        "mara": {
+          "preset": "lady",
+          "role": "vendor",
+          "x": 0.6,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "BRACE_ROPE",
+          "holding": "cart"
+        }
+      },
+      "objects": {
+        "counter": {
+          "x": 0.28,
+          "y": 0.74,
+          "state": "dispatch_table"
+        },
+        "scroll": {
+          "x": 0.44,
+          "y": 0.66,
+          "state": "moved_by_actor",
+          "held_by": [
+            "lucius"
+          ]
+        },
+        "awning": {
+          "x": 0.48,
+          "y": 0.46,
+          "state": "fluttering"
+        },
+        "cart": {
+          "x": 0.54,
+          "y": 0.75,
+          "state": "rolling",
+          "held_by": [
+            "lucius",
+            "mara"
+          ]
+        },
+        "fountain": {
+          "x": 0.76,
+          "y": 0.74,
+          "state": "flowing"
+        }
+      },
+      "environment": {
+        "location": "roman_forum_marketplace",
+        "time": "day",
+        "wind": 0.68
+      },
+      "desired_state_before": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.627,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "DUCK",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.64,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "DUCK"
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling"
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.627,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "cart"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.6,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "cart"
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling",
+            "held_by": [
+              "lucius",
+              "mara"
+            ]
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "cart",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S06",
+      "script_span": "Lucius grabbed the scroll beside the fountain.",
+      "timestamp_sec": 21.625,
+      "start_sec": 17.25,
+      "end_sec": 21.625,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning",
+        "cart",
+        "counter",
+        "fountain",
+        "scroll"
+      ],
+      "actors": {
+        "lucius": {
+          "preset": "peasant",
+          "role": "courier",
+          "x": 0.5,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "GRAB",
+          "holding": "scroll"
+        },
+        "mara": {
+          "preset": "lady",
+          "role": "vendor",
+          "x": 0.6,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "BRACE_ROPE",
+          "holding": "cart"
+        }
+      },
+      "objects": {
+        "counter": {
+          "x": 0.28,
+          "y": 0.74,
+          "state": "dispatch_table"
+        },
+        "scroll": {
+          "x": 0.44,
+          "y": 0.66,
+          "state": "moved_by_actor",
+          "held_by": [
+            "lucius"
+          ]
+        },
+        "awning": {
+          "x": 0.48,
+          "y": 0.46,
+          "state": "fluttering"
+        },
+        "cart": {
+          "x": 0.54,
+          "y": 0.75,
+          "state": "rolling",
+          "held_by": [
+            "lucius",
+            "mara"
+          ]
+        },
+        "fountain": {
+          "x": 0.76,
+          "y": 0.74,
+          "state": "flowing"
+        }
+      },
+      "environment": {
+        "location": "roman_forum_marketplace",
+        "time": "day",
+        "wind": 0.68
+      },
+      "desired_state_before": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.627,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "cart"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.6,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "cart"
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling",
+            "held_by": [
+              "lucius",
+              "mara"
+            ]
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.5,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "GRAB",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.6,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "cart"
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling",
+            "held_by": [
+              "lucius",
+              "mara"
+            ]
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "scroll",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S07",
+      "script_span": "Lucius steadies the scroll.",
+      "timestamp_sec": 26.0,
+      "start_sec": 21.625,
+      "end_sec": 26.0,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning",
+        "cart",
+        "counter",
+        "fountain",
+        "scroll"
+      ],
+      "actors": {
+        "lucius": {
+          "preset": "peasant",
+          "role": "courier",
+          "x": 0.5,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "STEADY_PROP",
+          "holding": "scroll"
+        },
+        "mara": {
+          "preset": "lady",
+          "role": "vendor",
+          "x": 0.6,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "BRACE_ROPE",
+          "holding": "cart"
+        }
+      },
+      "objects": {
+        "counter": {
+          "x": 0.28,
+          "y": 0.74,
+          "state": "dispatch_table"
+        },
+        "scroll": {
+          "x": 0.44,
+          "y": 0.66,
+          "state": "moved_by_actor",
+          "held_by": [
+            "lucius"
+          ]
+        },
+        "awning": {
+          "x": 0.48,
+          "y": 0.46,
+          "state": "fluttering"
+        },
+        "cart": {
+          "x": 0.54,
+          "y": 0.75,
+          "state": "rolling",
+          "held_by": [
+            "lucius",
+            "mara"
+          ]
+        },
+        "fountain": {
+          "x": 0.76,
+          "y": 0.74,
+          "state": "flowing"
+        }
+      },
+      "environment": {
+        "location": "roman_forum_marketplace",
+        "time": "day",
+        "wind": 0.68
+      },
+      "desired_state_before": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.5,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "GRAB",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.6,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "cart"
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling",
+            "held_by": [
+              "lucius",
+              "mara"
+            ]
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.5,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "STEADY_PROP",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.6,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "cart"
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling",
+            "held_by": [
+              "lucius",
+              "mara"
+            ]
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": "scroll",
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    },
+    {
+      "schema_version": "14.7.6",
+      "shot_id": "S08",
+      "script_span": "Lucius stands still while Mara laughs.",
+      "timestamp_sec": 30.0,
+      "start_sec": 26.0,
+      "end_sec": 30.0,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning",
+        "cart",
+        "counter",
+        "fountain",
+        "scroll"
+      ],
+      "actors": {
+        "lucius": {
+          "preset": "peasant",
+          "role": "courier",
+          "x": 0.5,
+          "y": 0.84,
+          "facing": 1,
+          "motion_type": "IDLE_BREATHE",
+          "holding": "scroll"
+        },
+        "mara": {
+          "preset": "lady",
+          "role": "vendor",
+          "x": 0.6,
+          "y": 0.84,
+          "facing": -1,
+          "motion_type": "IDLE_BREATHE",
+          "holding": "cart"
+        }
+      },
+      "objects": {
+        "counter": {
+          "x": 0.28,
+          "y": 0.74,
+          "state": "dispatch_table"
+        },
+        "scroll": {
+          "x": 0.44,
+          "y": 0.66,
+          "state": "moved_by_actor",
+          "held_by": [
+            "lucius"
+          ]
+        },
+        "awning": {
+          "x": 0.48,
+          "y": 0.46,
+          "state": "fluttering"
+        },
+        "cart": {
+          "x": 0.54,
+          "y": 0.75,
+          "state": "rolling",
+          "held_by": [
+            "lucius",
+            "mara"
+          ]
+        },
+        "fountain": {
+          "x": 0.76,
+          "y": 0.74,
+          "state": "flowing"
+        }
+      },
+      "environment": {
+        "location": "roman_forum_marketplace",
+        "time": "day",
+        "wind": 0.68
+      },
+      "desired_state_before": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.5,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "STEADY_PROP",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.6,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "BRACE_ROPE",
+            "holding": "cart"
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling",
+            "held_by": [
+              "lucius",
+              "mara"
+            ]
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "desired_state_after": {
+        "actors": {
+          "lucius": {
+            "preset": "peasant",
+            "role": "courier",
+            "x": 0.5,
+            "y": 0.84,
+            "facing": 1,
+            "motion_type": "IDLE_BREATHE",
+            "holding": "scroll"
+          },
+          "mara": {
+            "preset": "lady",
+            "role": "vendor",
+            "x": 0.6,
+            "y": 0.84,
+            "facing": -1,
+            "motion_type": "IDLE_BREATHE",
+            "holding": "cart"
+          }
+        },
+        "objects": {
+          "counter": {
+            "x": 0.28,
+            "y": 0.74,
+            "state": "dispatch_table"
+          },
+          "scroll": {
+            "x": 0.44,
+            "y": 0.66,
+            "state": "moved_by_actor",
+            "held_by": [
+              "lucius"
+            ]
+          },
+          "awning": {
+            "x": 0.48,
+            "y": 0.46,
+            "state": "fluttering"
+          },
+          "cart": {
+            "x": 0.54,
+            "y": 0.75,
+            "state": "rolling",
+            "held_by": [
+              "lucius",
+              "mara"
+            ]
+          },
+          "fountain": {
+            "x": 0.76,
+            "y": 0.74,
+            "state": "flowing"
+          }
+        }
+      },
+      "motion_type": "WORLD_UPDATE",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "intensity": 0.5,
+      "source_confidence": 0.95,
+      "visible_end_condition": "world and object state persisted",
+      "sound_cue": null
+    }
+  ],
+  "camera_beats": [
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S01_cam_01",
+      "shot_id": "S01",
+      "segment_index": 0,
+      "script_span": "Lucius observes the scroll on the counter.",
+      "start_sec": 0.0,
+      "end_sec": 2.625,
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "counter",
+        "scroll"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.04,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "continuous_single_angle_take"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S02_cam_01",
+      "shot_id": "S02",
+      "segment_index": 0,
+      "script_span": "Lucius walks toward the scroll reaches for the scroll.",
+      "start_sec": 2.625,
+      "end_sec": 4.365,
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.05,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "establish_actor_approach_and_reach"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S02_cam_02",
+      "shot_id": "S02",
+      "segment_index": 1,
+      "script_span": "Lucius walks toward the scroll reaches for the scroll.",
+      "start_sec": 4.365,
+      "end_sec": 6.25,
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll"
+      ],
+      "scale": "insert",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.18,
+      "zoom_to": 1.22,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "verify_physical_grip_and_exertion"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S03_cam_01",
+      "shot_id": "S03",
+      "segment_index": 0,
+      "script_span": "Lucius runs toward the fountain.",
+      "start_sec": 6.25,
+      "end_sec": 10.25,
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "fountain"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.04,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "continuous_single_angle_take"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S04_cam_01",
+      "shot_id": "S04",
+      "segment_index": 0,
+      "script_span": "Lucius ducks beneath the awning while Mara observes.",
+      "start_sec": 10.25,
+      "end_sec": 13.75,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "awning"
+      ],
+      "scale": "wide",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.04,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "continuous_single_angle_take"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S05_cam_01",
+      "shot_id": "S05",
+      "segment_index": 0,
+      "script_span": "Together Lucius and Mara braced the cart.",
+      "start_sec": 13.75,
+      "end_sec": 15.43,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "cart"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.05,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "establish_actor_approach_and_reach"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S05_cam_02",
+      "shot_id": "S05",
+      "segment_index": 1,
+      "script_span": "Together Lucius and Mara braced the cart.",
+      "start_sec": 15.43,
+      "end_sec": 17.25,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [
+        "cart"
+      ],
+      "scale": "insert",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.18,
+      "zoom_to": 1.22,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "verify_physical_grip_and_exertion"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S06_cam_01",
+      "shot_id": "S06",
+      "segment_index": 0,
+      "script_span": "Lucius grabbed the scroll beside the fountain.",
+      "start_sec": 17.25,
+      "end_sec": 19.35,
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "fountain",
+        "scroll"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.05,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "establish_actor_approach_and_reach"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S06_cam_02",
+      "shot_id": "S06",
+      "segment_index": 1,
+      "script_span": "Lucius grabbed the scroll beside the fountain.",
+      "start_sec": 19.35,
+      "end_sec": 21.625,
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "fountain",
+        "scroll"
+      ],
+      "scale": "insert",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.18,
+      "zoom_to": 1.22,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "verify_physical_grip_and_exertion"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S07_cam_01",
+      "shot_id": "S07",
+      "segment_index": 0,
+      "script_span": "Lucius steadies the scroll.",
+      "start_sec": 21.625,
+      "end_sec": 23.725,
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll"
+      ],
+      "scale": "medium",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.05,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "establish_actor_approach_and_reach"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S07_cam_02",
+      "shot_id": "S07",
+      "segment_index": 1,
+      "script_span": "Lucius steadies the scroll.",
+      "start_sec": 23.725,
+      "end_sec": 26.0,
+      "actor_ids": [
+        "lucius"
+      ],
+      "object_ids": [
+        "scroll"
+      ],
+      "scale": "insert",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.18,
+      "zoom_to": 1.22,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "verify_physical_grip_and_exertion"
+    },
+    {
+      "schema_version": "14.7.6",
+      "beat_id": "S08_cam_01",
+      "shot_id": "S08",
+      "segment_index": 0,
+      "script_span": "Lucius stands still while Mara laughs.",
+      "start_sec": 26.0,
+      "end_sec": 30.0,
+      "actor_ids": [
+        "lucius",
+        "mara"
+      ],
+      "object_ids": [],
+      "scale": "wide",
+      "viewpoint": "front",
+      "desired_state_before": {},
+      "desired_state_after": {},
+      "motion_type": "CAMERA_TRACK",
+      "physical_target": null,
+      "world_start": [
+        0.5,
+        0.5
+      ],
+      "world_end": [
+        0.5,
+        0.5
+      ],
+      "zoom_from": 1.0,
+      "zoom_to": 1.04,
+      "pan_from": [
+        0.0,
+        0.0
+      ],
+      "pan_to": [
+        0.0,
+        0.0
+      ],
+      "intensity": 0.4,
+      "source_confidence": 0.9,
+      "visible_end_condition": "subject framed cleanly inside safe bounds",
+      "sound_cue": null,
+      "reason": "continuous_single_angle_take"
+    }
+  ],
+  "unsupported_actions": [],
+  "validation_errors": [],
+  "is_valid": true
+}

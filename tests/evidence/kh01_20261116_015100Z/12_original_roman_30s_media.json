@@ -1,0 +1,228 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "tools.produce_kh01_original_roman_30s::render_kh01_preview(1080p)",
+  "started_iso": "2026-11-16T06:12:17.586186+00:00",
+  "ended_iso": "2026-11-16T06:13:08.030615+00:00",
+  "elapsed_sec": 50.4444,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/shots.json",
+    "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/motion_plan.json",
+    "packs/squire/modern2d/style_renderer.js"
+  ],
+  "output_paths": [
+    "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/KH01_ROMES_MOST_URGENT_SCROLL_ORIGINAL_30S_1080P.mp4",
+    "tests/evidence/kh01_20261116_015100Z/12_original_roman_30s_media.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": "f205dd30d6146bef279491feb24ede1f872d30632d1c96b6af7234e5b9c939f0",
+  "measured_resources": {
+    "disk_free_gb": 54.514,
+    "ram_available_gb": 8.311,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "title": "ROME'S MOST URGENT SCROLL",
+  "subtitle": "A fictional Roman marketplace comedy; original Modern Expressive 2D animation, not a documented historical incident.",
+  "scroll_reveal_text": "MEETING MOVED TO TOMORROW",
+  "end_badge_text": "ALL THAT RUNNING.",
+  "editorial_status": "HUMAN_REVIEW_PENDING",
+  "cold_render": {
+    "status": "PRODUCED",
+    "quality": "1080p",
+    "output_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\KH01_ROMES_MOST_URGENT_SCROLL_ORIGINAL_30S_1080P.mp4",
+    "mp4_sha256": "f205dd30d6146bef279491feb24ede1f872d30632d1c96b6af7234e5b9c939f0",
+    "size_bytes": 10481468,
+    "render_only_wall_sec": 28.478,
+    "total_wall_sec": 41.919,
+    "editorial_status": "EDITORIAL_REVIEW_PENDING"
+  },
+  "warm_cache_verification": {
+    "status": "CACHE_HIT_VERIFIED",
+    "reason": "Cryptographically verified cache hit (matching input manifest, output SHA256, and valid media streams).",
+    "output_mp4": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\KH01_ROMES_MOST_URGENT_SCROLL_ORIGINAL_30S_1080P.mp4",
+    "mp4_sha256": "f205dd30d6146bef279491feb24ede1f872d30632d1c96b6af7234e5b9c939f0",
+    "size_bytes": 10481468,
+    "wall_sec": 4.417
+  },
+  "media_probe_and_full_decode": {
+    "valid": true,
+    "error": null,
+    "errors": [],
+    "duration": 30.0,
+    "video_stream_duration": 30.0,
+    "audio_stream_duration": 30.0,
+    "decoded_video_frames": 720,
+    "file_size": 10481468,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "has_video": true,
+    "has_audio": true,
+    "decode_clean": true,
+    "max_volume_db": -1.4,
+    "mean_volume_db": -20.3,
+    "integrated_lufs": null,
+    "true_peak_dbtp": null,
+    "sha256": "f205dd30d6146bef279491feb24ede1f872d30632d1c96b6af7234e5b9c939f0"
+  },
+  "voice_and_foley_manifest": {
+    "schema_version": "kh01.voice_manifest.v1",
+    "status": "PASS",
+    "tts_provider": "windows_sapi_system_speech",
+    "voice_name": "Microsoft David Desktop",
+    "master_wav_path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/timeline/voice.wav",
+    "master_wav_sha256": "f0109dfc2cf7a7c6d0d3127172c7309b425aa8b1fd755f38ffe6eab1fd59ec35",
+    "total_duration_sec": 30.0,
+    "beat_count": 8,
+    "word_count": 50,
+    "max_narration_overlap_ms": 0.0,
+    "min_breathing_tail_sec": 0.829,
+    "licensed_sfx_provenance": [
+      {
+        "path": "audio/real_sfx/external_gravel_step_ea3dc640.wav",
+        "sha256": "ea3dc6409eee12cd0a13bcf719d53af8fec5dc9976bc60417315028f4fac63a2",
+        "placements": 10
+      },
+      {
+        "path": "audio/real_sfx/external_water_drops_72f972f0.wav",
+        "sha256": "72f972f0a83084c0e55d847df52d08eda7bc9bafe2324bb825853f413104fbae",
+        "placements": 4
+      }
+    ],
+    "procedural_foley_layers": [
+      "mediterranean_wind_gust",
+      "wooden_cart_rumble",
+      "comedic_plucked_triad"
+    ],
+    "events": [
+      {
+        "shot_id": "S01",
+        "line": "Rome had one urgent message.",
+        "slot_start": 0.0,
+        "slot_end": 2.625,
+        "spoken_start": 0.14,
+        "spoken_end": 1.796,
+        "measured_tts_sec": 1.6556,
+        "breathing_tail_sec": 0.829,
+        "voice_name": "Microsoft David Desktop",
+        "source_wav_sha256": "303fe2587c33cfb4363faf6843f9b6f89f8734b529d10ed51e26d3289545172f"
+      },
+      {
+        "shot_id": "S02",
+        "line": "And one courier who could not lose it.",
+        "slot_start": 2.625,
+        "slot_end": 6.25,
+        "spoken_start": 2.745,
+        "spoken_end": 4.531,
+        "measured_tts_sec": 1.7865,
+        "breathing_tail_sec": 1.719,
+        "voice_name": "Microsoft David Desktop",
+        "source_wav_sha256": "2c747558d66f927ea5a19edc20784607f4bc940bfd56f75506ac2fa13482ebd7"
+      },
+      {
+        "shot_id": "S03",
+        "line": "But the wind had other plans.",
+        "slot_start": 6.25,
+        "slot_end": 10.25,
+        "spoken_start": 6.37,
+        "spoken_end": 7.917,
+        "measured_tts_sec": 1.5473,
+        "breathing_tail_sec": 2.333,
+        "voice_name": "Microsoft David Desktop",
+        "source_wav_sha256": "47be2272d792db2f70797406f52c460105448ec4528fb50fa9cf82634f9e72b4"
+      },
+      {
+        "shot_id": "S04",
+        "line": "He vanished beneath the market awnings.",
+        "slot_start": 10.25,
+        "slot_end": 13.75,
+        "spoken_start": 10.37,
+        "spoken_end": 12.303,
+        "measured_tts_sec": 1.9328,
+        "breathing_tail_sec": 1.447,
+        "voice_name": "Microsoft David Desktop",
+        "source_wav_sha256": "f552dd81ec40e7b4620f1197cbcf8338fdbec38c74db90d2e180390aab39d948"
+      },
+      {
+        "shot_id": "S05",
+        "line": "A runaway cart offered one last chance.",
+        "slot_start": 13.75,
+        "slot_end": 17.25,
+        "spoken_start": 13.87,
+        "spoken_end": 16.297,
+        "measured_tts_sec": 2.4272,
+        "breathing_tail_sec": 0.953,
+        "voice_name": "Microsoft David Desktop",
+        "source_wav_sha256": "563c5df8da1c32b8b69071fb262748c696d1f457ea2e29ead197a4ca12aaa436"
+      },
+      {
+        "shot_id": "S06",
+        "line": "He caught the scroll beside the fountain.",
+        "slot_start": 17.25,
+        "slot_end": 21.625,
+        "spoken_start": 17.37,
+        "spoken_end": 19.276,
+        "measured_tts_sec": 1.9061,
+        "breathing_tail_sec": 2.349,
+        "voice_name": "Microsoft David Desktop",
+        "source_wav_sha256": "5d641b8690b4b664948d215430c5b8681bba9ceec300062b5cc455b6d431a564"
+      },
+      {
+        "shot_id": "S07",
+        "line": "Then he finally read the emperor's order.",
+        "slot_start": 21.625,
+        "slot_end": 26.0,
+        "spoken_start": 21.745,
+        "spoken_end": 23.8,
+        "measured_tts_sec": 2.0555,
+        "breathing_tail_sec": 2.2,
+        "voice_name": "Microsoft David Desktop",
+        "source_wav_sha256": "b09df1304ac1c0631eede2ef9275dc2d6d0d997aebff724d4fdc0a4f4b062e04"
+      },
+      {
+        "shot_id": "S08",
+        "line": "The meeting... was tomorrow.",
+        "slot_start": 26.0,
+        "slot_end": 30.0,
+        "spoken_start": 26.12,
+        "spoken_end": 27.804,
+        "measured_tts_sec": 1.6839,
+        "breathing_tail_sec": 2.196,
+        "voice_name": "Microsoft David Desktop",
+        "source_wav_sha256": "4d76ccd8c0738675f593bdf122728cd06fee225639c062f4185cf565336b0f67"
+      }
+    ]
+  },
+  "script_wording_and_event_variation_test": {
+    "status": "PASS",
+    "canonical_shot_count": 8,
+    "varied_shot_count": 5,
+    "canonical_actions": [
+      "IDLE_BREATHE",
+      "WALK_THEN_GRAB",
+      "RUN",
+      "DUCK",
+      "BRACE_ROPE",
+      "GRAB",
+      "STEADY_PROP",
+      "IDLE_BREATHE"
+    ],
+    "varied_actions": [
+      "STEADY_PROP",
+      "POINT",
+      "LIFT_SHARED",
+      "RUN",
+      "WALK"
+    ],
+    "script_responsive_verified": true
+  }
+}

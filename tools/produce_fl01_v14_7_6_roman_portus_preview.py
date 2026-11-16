@@ -2050,7 +2050,8 @@ def produce_abc_8s_comparison(
         shutil.copy2(trace_json_path, Path(ev_dir) / "abc_motion_traces.json")
 
     distinct_hashes = len({clip_a["mp4_sha256"], clip_b["mp4_sha256"], clip_c["mp4_sha256"]}) == 3
-    all_ok = distinct_hashes and clip_a["valid"] and clip_b["valid"] and clip_c["valid"]
+    motion_qa_ok = foot_qa.get("status") == "PASS" and hand_qa.get("status") == "PASS"
+    all_ok = distinct_hashes and clip_a["valid"] and clip_b["valid"] and clip_c["valid"] and motion_qa_ok
     return {
         "status": "PASS" if all_ok else "FAIL",
         "distinct_three_mp4_hashes": distinct_hashes,

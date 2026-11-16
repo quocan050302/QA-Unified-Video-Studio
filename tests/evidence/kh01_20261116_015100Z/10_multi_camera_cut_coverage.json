@@ -1,0 +1,236 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "tools.kh01_poc_and_pilots::produce_kh01_multicamera_continuous_action",
+  "started_iso": "2026-11-16T06:11:31.234482+00:00",
+  "ended_iso": "2026-11-16T06:11:41.730303+00:00",
+  "elapsed_sec": 10.4958,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "tools/cinematic_camera.py",
+    "packs/squire/modern2d/style_renderer.js"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/10_multi_camera_cut_coverage.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": "cfd8a2024811dfcd80d042302a3fe63e163564d59ec19ad27986dd1c7456933b",
+  "measured_resources": {
+    "disk_free_gb": 54.53,
+    "ram_available_gb": 8.265,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "gate_id": "VQ04_MULTICAMERA",
+  "editorial_status": "HUMAN_REVIEW_PENDING",
+  "asset_view_linkage": {
+    "valid": true,
+    "errors": [],
+    "segment_count": 3,
+    "distinct_asset_views": [
+      "profile",
+      "three_quarter"
+    ],
+    "distinct_insert_modes": [
+      "close_hand_insert",
+      "scene_view"
+    ],
+    "bindings": [
+      {
+        "segment_id": "M01_seg01",
+        "shot_id": "M01",
+        "viewpoint": "front_three_quarter_left",
+        "scale": "wide",
+        "resolved_asset_view": "three_quarter",
+        "insert_mode": "scene_view",
+        "environment_id": "roman_forum_marketplace_v1",
+        "environment_detail_tier": "TIER_3_FULL_ARCHITECTURAL_STAGE",
+        "actor_bindings": {
+          "lucius": {
+            "asset_view": "three_quarter",
+            "insert_mode": "full_actor_view",
+            "wardrobe_state": "default_outfit",
+            "facing_sign": 1
+          },
+          "mara": {
+            "asset_view": "three_quarter",
+            "insert_mode": "full_actor_view",
+            "wardrobe_state": "default_outfit",
+            "facing_sign": 1
+          }
+        },
+        "focus_object_ids": [
+          "cart",
+          "scroll"
+        ],
+        "axis": "left_to_right",
+        "continuous_world_clock": true
+      },
+      {
+        "segment_id": "M01_seg02",
+        "shot_id": "M01",
+        "viewpoint": "profile_left",
+        "scale": "medium",
+        "resolved_asset_view": "profile",
+        "insert_mode": "scene_view",
+        "environment_id": "roman_forum_marketplace_v1",
+        "environment_detail_tier": "TIER_2_FOCUSED_STAGE",
+        "actor_bindings": {
+          "lucius": {
+            "asset_view": "profile",
+            "insert_mode": "full_actor_view",
+            "wardrobe_state": "default_outfit",
+            "facing_sign": -1
+          },
+          "mara": {
+            "asset_view": "profile",
+            "insert_mode": "full_actor_view",
+            "wardrobe_state": "default_outfit",
+            "facing_sign": -1
+          }
+        },
+        "focus_object_ids": [
+          "cart"
+        ],
+        "axis": "left_to_right",
+        "continuous_world_clock": true
+      },
+      {
+        "segment_id": "M01_seg03",
+        "shot_id": "M01",
+        "viewpoint": "front_three_quarter_left",
+        "scale": "detail",
+        "resolved_asset_view": "three_quarter",
+        "insert_mode": "close_hand_insert",
+        "environment_id": "roman_forum_marketplace_v1",
+        "environment_detail_tier": "TIER_1_TACTILE_PROP_FOCUS",
+        "actor_bindings": {
+          "lucius": {
+            "asset_view": "three_quarter",
+            "insert_mode": "close_hand_insert",
+            "wardrobe_state": "default_outfit",
+            "facing_sign": 1
+          }
+        },
+        "focus_object_ids": [
+          "scroll"
+        ],
+        "axis": "left_to_right",
+        "continuous_world_clock": true
+      }
+    ]
+  },
+  "cut_coverage_qa": {
+    "status": "PASS",
+    "total_duration_sec": 6.0,
+    "expected_intershot_cuts": 1,
+    "audited_intershot_cuts": 1,
+    "expected_internal_cuts": 2,
+    "audited_internal_cuts": 2,
+    "full_coverage": true,
+    "segment_validation_errors": [],
+    "intershot_failures": [],
+    "internal_failures": [],
+    "internal_cut_evidence": [
+      {
+        "cut_id": "M01:M01_seg01->M01_seg02",
+        "shot_id": "M01",
+        "cut_time_sec": 1.5,
+        "requested_times": {
+          "pre_2": 1.4167,
+          "pre_1": 1.4583,
+          "post_1": 1.5,
+          "post_2": 1.5417
+        },
+        "actor_continuity": [
+          {
+            "actor_id": "lucius",
+            "root_jump_norm": 0,
+            "left_foot_jump_norm": 0,
+            "right_hand_jump_norm": 0,
+            "contact_preserved": true
+          },
+          {
+            "actor_id": "mara",
+            "root_jump_norm": 0,
+            "left_foot_jump_norm": 0,
+            "right_hand_jump_norm": 0.00026,
+            "contact_preserved": true
+          }
+        ],
+        "status": "PASS",
+        "diagnostics": []
+      },
+      {
+        "cut_id": "M01:M01_seg02->M01_seg03",
+        "shot_id": "M01",
+        "cut_time_sec": 3.0,
+        "requested_times": {
+          "pre_2": 2.9167,
+          "pre_1": 2.9583,
+          "post_1": 3.0,
+          "post_2": 3.0417
+        },
+        "actor_continuity": [
+          {
+            "actor_id": "lucius",
+            "root_jump_norm": 0,
+            "left_foot_jump_norm": 0,
+            "right_hand_jump_norm": 0,
+            "contact_preserved": true
+          },
+          {
+            "actor_id": "mara",
+            "root_jump_norm": 0,
+            "left_foot_jump_norm": 0,
+            "right_hand_jump_norm": 0,
+            "contact_preserved": true
+          }
+        ],
+        "status": "PASS",
+        "diagnostics": []
+      }
+    ]
+  },
+  "render": {
+    "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\multicam_6s\\VQ04_MULTICAMERA_CONTINUOUS_6S_1080P.mp4",
+    "mp4_sha256": "cfd8a2024811dfcd80d042302a3fe63e163564d59ec19ad27986dd1c7456933b",
+    "size_bytes": 1926050,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "duration_sec": 6.0,
+    "decoded_video_frames": 144,
+    "expected_video_frames": 144,
+    "render_wall_sec": 6.744,
+    "valid": true,
+    "media_inspection": {
+      "valid": true,
+      "error": null,
+      "errors": [],
+      "duration": 6.0,
+      "video_stream_duration": 6.0,
+      "audio_stream_duration": 6.0,
+      "decoded_video_frames": 144,
+      "file_size": 1926050,
+      "width": 1920,
+      "height": 1080,
+      "fps": 24.0,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "has_video": true,
+      "has_audio": true,
+      "decode_clean": true,
+      "max_volume_db": -1.3,
+      "mean_volume_db": -19.9,
+      "integrated_lufs": null,
+      "true_peak_dbtp": null,
+      "sha256": "cfd8a2024811dfcd80d042302a3fe63e163564d59ec19ad27986dd1c7456933b"
+    }
+  }
+}

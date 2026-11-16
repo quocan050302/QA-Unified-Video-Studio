@@ -342,8 +342,19 @@ export function renderRigbyActorToCanvas(ctx, absoluteT, worldRoot, rigAsset, op
 
   // Stateless pure evaluation of Pose at localT
   pose.reset(skeleton);
+  if (typeof pose.resetPhysics === 'function') {
+    pose.resetPhysics();
+  }
   if (anim) {
     pose.apply(skeleton, anim, localT, 1.0);
+  }
+  if (options.slotAttachments && typeof options.slotAttachments === 'object') {
+    for (let si = 0; si < skeleton.slots.length; si++) {
+      const sName = skeleton.slots[si]?.name;
+      if (sName && Object.prototype.hasOwnProperty.call(options.slotAttachments, sName)) {
+        pose.attachment[si] = options.slotAttachments[sName];
+      }
+    }
   }
   pose.updateWorld(skeleton);
 
@@ -359,6 +370,7 @@ export function renderRigbyActorToCanvas(ctx, absoluteT, worldRoot, rigAsset, op
   renderer.begin(cw, ch, { x: 0, y: camY, zoom: camZoom });
   renderer.drawSkeleton(skeleton, pose, lookup, { tint: options.tint || [1, 1, 1, 1] });
   renderer.end();
+  gl.flush();
 
   // In WebGL buffer, world (0, 0) [actor feet] maps to pixel:
   // clip_y = (0 - camY) * (2 * camZoom / ch) => canvas_y_from_top = ch * 0.5 + camY * camZoom

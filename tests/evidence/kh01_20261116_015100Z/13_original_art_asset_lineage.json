@@ -1,0 +1,456 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "tools.environment_factory::build_scene_asset_manifest(kh01_modern_2d_roman_urgent_scroll_30s)",
+  "started_iso": "2026-11-16T06:12:17.586186+00:00",
+  "ended_iso": "2026-11-16T06:13:08.030615+00:00",
+  "elapsed_sec": 50.4444,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/asset_source_manifest.json"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/13_original_art_asset_lineage.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": "ac233023ba1729b01a8ebddfbb48ceb9f2389b9cbba7ac4c956c2d47f16b48da",
+  "measured_resources": {
+    "disk_free_gb": 54.514,
+    "ram_available_gb": 8.355,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "style_reference_zip_status": "STYLE_REFERENCE_UNAVAILABLE",
+  "user_reference_images_copied_into_project_or_repo": 0,
+  "prior_fl01_preview_stills_reused": 0,
+  "rigby_demo_mascots_reused": 0,
+  "scene_asset_manifest": {
+    "schema_version": "kh01.scene_asset_manifest.v1",
+    "project_id": "kh01_modern_2d_roman_urgent_scroll_30s",
+    "style_id": "modern_expressive_2d.v1",
+    "license_spdx": "CC0-1.0 OR Proprietary-Original-Project-Authored",
+    "provenance_origin": "100%_ORIGINAL_KH01_CHARACTER_AND_ENVIRONMENT_FACTORIES",
+    "reference_frames_reused": 0,
+    "prior_preview_derived_visual_inputs": 0,
+    "rigby_demo_mascots_copied": 0,
+    "external_unlicensed_rasters": 0,
+    "characters": {
+      "lucius": {
+        "actor_id": "lucius",
+        "name": "Lucius",
+        "niche": "roman_forum",
+        "views": [
+          "front",
+          "three_quarter",
+          "profile",
+          "rear_three_quarter"
+        ],
+        "expressions": [
+          "neutral_attentive",
+          "wide_shock",
+          "strained_exertion",
+          "determined_focus",
+          "joyful_laugh",
+          "deadpan_disbelief"
+        ],
+        "has_hand_insert": true,
+        "outfit_id": "royal_courier_tunic_satchel",
+        "primary_hex": "#C84B31"
+      },
+      "mara": {
+        "actor_id": "mara",
+        "name": "Mara",
+        "niche": "roman_forum",
+        "views": [
+          "front",
+          "three_quarter",
+          "profile",
+          "rear_three_quarter"
+        ],
+        "expressions": [
+          "neutral_attentive",
+          "wide_shock",
+          "strained_exertion",
+          "determined_focus",
+          "joyful_laugh",
+          "deadpan_disbelief"
+        ],
+        "has_hand_insert": true,
+        "outfit_id": "forum_vendor_stola_apron",
+        "primary_hex": "#2B6E78"
+      }
+    },
+    "rigs": {
+      "lucius": {
+        "character_id": "lucius",
+        "bone_count": 21,
+        "ik_constraints": [
+          "ik_leg_l",
+          "ik_leg_r",
+          "ik_arm_l",
+          "ik_arm_r"
+        ],
+        "expression_attachments": {
+          "neutral_attentive": "head_neutral_attentive",
+          "wide_shock": "head_wide_shock",
+          "strained_exertion": "head_strained_exertion",
+          "determined_focus": "head_determined_focus",
+          "joyful_laugh": "head_joyful_laugh",
+          "deadpan_disbelief": "head_deadpan_disbelief"
+        }
+      },
+      "mara": {
+        "character_id": "mara",
+        "bone_count": 21,
+        "ik_constraints": [
+          "ik_leg_l",
+          "ik_leg_r",
+          "ik_arm_l",
+          "ik_arm_r"
+        ],
+        "expression_attachments": {
+          "neutral_attentive": "head_neutral_attentive",
+          "wide_shock": "head_wide_shock",
+          "strained_exertion": "head_strained_exertion",
+          "determined_focus": "head_determined_focus",
+          "joyful_laugh": "head_joyful_laugh",
+          "deadpan_disbelief": "head_deadpan_disbelief"
+        }
+      }
+    },
+    "environments": {
+      "roman_forum_marketplace_v1": {
+        "environment_id": "roman_forum_marketplace_v1",
+        "niche": "roman_forum",
+        "place": "Roman Forum Marketplace & Fountain colonnade",
+        "supported_detail_tiers": [
+          "TIER_3_FULL_ARCHITECTURAL_STAGE",
+          "TIER_2_FOCUSED_STAGE",
+          "TIER_1_GRAPHIC_MOOD_BACKDROP",
+          "TIER_1_TACTILE_PROP_FOCUS"
+        ],
+        "interactable_props": [
+          "counter",
+          "scroll",
+          "awning",
+          "cart",
+          "fountain",
+          "rostra"
+        ]
+      }
+    },
+    "authored_files": [
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_layered_master.svg",
+        "role": "character_svg:lucius",
+        "sha256": "9d2ca5b7dd29b28e30f44db35ecf34ed00e1f7806308577cb57234d5e8be2006",
+        "size_bytes": 3388
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_view_front.png",
+        "role": "character_view:lucius:front",
+        "sha256": "bf34e15137ad0d3d082d242a31a2706d1eec13bc484a477bfc2946b4b445aafb",
+        "size_bytes": 47434,
+        "dimensions": [
+          480,
+          640
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_view_three_quarter.png",
+        "role": "character_view:lucius:three_quarter",
+        "sha256": "9dd231967ff2911cf61cf5b4d21284df2a672715ed48b257a9ff64662a571063",
+        "size_bytes": 46622,
+        "dimensions": [
+          480,
+          640
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_view_profile.png",
+        "role": "character_view:lucius:profile",
+        "sha256": "83520ccab0f8f9df038ccfbaff4d6c6bf87b51d01ecaec0620755a9a013ee291",
+        "size_bytes": 37292,
+        "dimensions": [
+          480,
+          640
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_view_rear_three_quarter.png",
+        "role": "character_view:lucius:rear_three_quarter",
+        "sha256": "a72e9762f6f7953d670f0566b002f3a82b4d7022b7db071f527c9b4bc3e19ff4",
+        "size_bytes": 39453,
+        "dimensions": [
+          480,
+          640
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_expr_neutral_attentive.png",
+        "role": "character_expr:lucius:neutral_attentive",
+        "sha256": "b6f283f79e5fef1163ba5a898e003c1110d6efa9c7539f9f914530a8075e6b08",
+        "size_bytes": 39892,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_expr_wide_shock.png",
+        "role": "character_expr:lucius:wide_shock",
+        "sha256": "88062c1c203100b99593090c39c73710466ab3ea58156958c68be6e727e28c83",
+        "size_bytes": 40632,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_expr_strained_exertion.png",
+        "role": "character_expr:lucius:strained_exertion",
+        "sha256": "2c9a4e37995993eddc959693c259cd5cc2710f7ad0680135ef3ac0c0c1052931",
+        "size_bytes": 40791,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_expr_determined_focus.png",
+        "role": "character_expr:lucius:determined_focus",
+        "sha256": "770e78a5e83d2d2785e0ed4f290b7ba6f348a6bb48050d7f9c0927a905b00029",
+        "size_bytes": 41697,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_expr_joyful_laugh.png",
+        "role": "character_expr:lucius:joyful_laugh",
+        "sha256": "879e4e2e13d18d822296ea63bd21c9243c811150bf0bd7b49c561894a5b77ca1",
+        "size_bytes": 39637,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/lucius/lucius_expr_deadpan_disbelief.png",
+        "role": "character_expr:lucius:deadpan_disbelief",
+        "sha256": "dbb9f2536ba16ca4e568f54941cf706b2ccb62412b67f7db1830eff71ac3b3d9",
+        "size_bytes": 38333,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_layered_master.svg",
+        "role": "character_svg:mara",
+        "sha256": "c53367b557b9246e79af939723b4147add34db51d711487096af60e6914b7d1b",
+        "size_bytes": 3386
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_front.png",
+        "role": "character_view:mara:front",
+        "sha256": "ff46d86d753c695a069a0b6618fdf0ce176f14e255766ef8754e8bacb57924ac",
+        "size_bytes": 44636,
+        "dimensions": [
+          480,
+          640
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_three_quarter.png",
+        "role": "character_view:mara:three_quarter",
+        "sha256": "a756364aa41e7f00cd2c2e2d7cf33f2c61531a522f2fa948907558c752a21b77",
+        "size_bytes": 45815,
+        "dimensions": [
+          480,
+          640
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_profile.png",
+        "role": "character_view:mara:profile",
+        "sha256": "d32e38b47f2b56fd73531468218693974995c72fcae52212b56d63a6263cfd0f",
+        "size_bytes": 37406,
+        "dimensions": [
+          480,
+          640
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_view_rear_three_quarter.png",
+        "role": "character_view:mara:rear_three_quarter",
+        "sha256": "a07bd0092e308075117f13e63f2d45ad2dbd926e8bf2d171c27b5021d1faf902",
+        "size_bytes": 36898,
+        "dimensions": [
+          480,
+          640
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_expr_neutral_attentive.png",
+        "role": "character_expr:mara:neutral_attentive",
+        "sha256": "53795315b53a67e9300ec07f22e8a620b033e8a1db0126095eeb70340344021f",
+        "size_bytes": 40554,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_expr_wide_shock.png",
+        "role": "character_expr:mara:wide_shock",
+        "sha256": "521bb1a4fe1a4062867e92cd145ab6f424a544802a6aa8f841d5255224048274",
+        "size_bytes": 40643,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_expr_strained_exertion.png",
+        "role": "character_expr:mara:strained_exertion",
+        "sha256": "7b1ad3eb17d137db54e8fa642b7da2ea3ff402fd6048fa434f9e0f0cb0a6a86a",
+        "size_bytes": 40255,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_expr_determined_focus.png",
+        "role": "character_expr:mara:determined_focus",
+        "sha256": "7ceed7921a1c0cd696e6c770c56c24e9d7855172ccea4572f10182bf7ee24b34",
+        "size_bytes": 41425,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_expr_joyful_laugh.png",
+        "role": "character_expr:mara:joyful_laugh",
+        "sha256": "89912fb585ceedcbcf47189dda57663a2a252d919daaf2b2e0f53c704e43d829",
+        "size_bytes": 40415,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/characters/mara/mara_expr_deadpan_disbelief.png",
+        "role": "character_expr:mara:deadpan_disbelief",
+        "sha256": "b61a0174c9a686647295eb54c8b1651065cee984e73b085e5f32c6f14419b5c6",
+        "size_bytes": 39262,
+        "dimensions": [
+          420,
+          560
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/lucius/lucius.json",
+        "role": "rig_skeleton_json:lucius",
+        "sha256": "d6b4469d9eb90ffd2e23011b0e68a844a1ac8bb15f1d265293dd887f5a1d72db",
+        "size_bytes": 12936
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/lucius/lucius.atlas",
+        "role": "rig_atlas:lucius",
+        "sha256": "abad4e744f1ed4087829298e0558ca4623037ba476bbbfcb8c3c9ac61eae7adb",
+        "size_bytes": 1994
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/lucius/lucius.png",
+        "role": "rig_texture_png:lucius",
+        "sha256": "77f5e4fe401613eab55e48123a721fb94eb336c555d3db91dad03e60904a49c5",
+        "size_bytes": 22215,
+        "dimensions": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/lucius/lucius_rig_manifest.json",
+        "role": "rig_manifest:lucius",
+        "sha256": "bec04d5e38cbf58a542d92f0fea4837b5819da7c8ee9d2b554a7800cd093ce21",
+        "size_bytes": 3456
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara.json",
+        "role": "rig_skeleton_json:mara",
+        "sha256": "d6bd018c4321c9566c3d25a80dae059b3bb66ea734d8cd974cec25e9c8cb34a1",
+        "size_bytes": 12934
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara.atlas",
+        "role": "rig_atlas:mara",
+        "sha256": "20ff7ee5ea4e50cce94030c83b6038fa66a913febdef405a8c376a833103656b",
+        "size_bytes": 1992
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara.png",
+        "role": "rig_texture_png:mara",
+        "sha256": "cb52d0cc1a4ad8bed9f7069d8536f1cda1fb8b1992e3850dec50423d071ee75a",
+        "size_bytes": 22198,
+        "dimensions": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/rigs/mara/mara_rig_manifest.json",
+        "role": "rig_manifest:mara",
+        "sha256": "3360e3e2dabe821f2f766b2c607c62dcf5b622365cfad471d10695e3b864a4e0",
+        "size_bytes": 3424
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/environments/roman_forum_marketplace_v1/roman_forum_marketplace_v1_layered.svg",
+        "role": "env_svg:roman_forum_marketplace_v1",
+        "sha256": "7aa2c245cefb4da3a89ecbb9c2cedaf788306b7da1bd75076528816aca8e0386",
+        "size_bytes": 929
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/environments/roman_forum_marketplace_v1/roman_forum_marketplace_v1_wide_1080p.png",
+        "role": "env_wide_png:roman_forum_marketplace_v1",
+        "sha256": "004b77eeb9116db6d81ce3b3e4e0d6f59d68c464e43f6b39380bad84f5e2f6b8",
+        "size_bytes": 141918,
+        "dimensions": [
+          1920,
+          1080
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/environments/roman_forum_marketplace_v1/roman_forum_marketplace_v1_close_backdrop_1080p.png",
+        "role": "env_close_png:roman_forum_marketplace_v1",
+        "sha256": "25927e6e05fa491a5399c1b4e935b3b9827ad0f088a348be16510a78197968f5",
+        "size_bytes": 90022,
+        "dimensions": [
+          1920,
+          1080
+        ]
+      },
+      {
+        "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/environments/roman_forum_marketplace_v1/roman_forum_marketplace_v1_runtime_stage.json",
+        "role": "env_runtime_json:roman_forum_marketplace_v1",
+        "sha256": "1c4fd8c5cd1fe8b32e795a67d8ccf788bf2a534f09ecd47228e98d736e4fa752",
+        "size_bytes": 4958
+      },
+      {
+        "path": "packs/squire/modern2d/style_renderer.js",
+        "role": "renderer_or_scene_module",
+        "sha256": "0a2670b70071808e1463acd45c1e845da680348dfec1c28945bf698f2dd90c19",
+        "size_bytes": 61988
+      }
+    ]
+  }
+}

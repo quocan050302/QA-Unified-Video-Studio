@@ -1,0 +1,35 @@
+{
+  "schema_version": "kh01.editorial_packet.v1",
+  "reference_status": "STYLE_REFERENCE_UNAVAILABLE",
+  "public_repo_contains_user_reference_images": false,
+  "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+  "EDITORIAL_APPROVED": "HUMAN_REVIEW_PENDING",
+  "visual_gates": {
+    "VQ01_STYLE_FRAME_CANDIDATE": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+    "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+    "VQ03_ACTING_8S": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+    "VQ04_MULTICAMERA": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+    "VQ05_MULTI_NICHE": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+    "VQ06_FINAL_FILM": "CANDIDATE_TECH_VERIFIED_HUMAN_REVIEW_PENDING"
+  },
+  "montage_png": {
+    "path": "tests/evidence/kh01_20261116_015100Z/editorial_packet/KH01_EDITORIAL_REVIEW_MONTAGE.png",
+    "sha256": "8e65d5ad90b09cda6795eb622cd43ce41dfb4a9a14b38572c99e876f70ad9f94",
+    "dimensions": [
+      1760,
+      1253
+    ],
+    "panel_count": 8
+  },
+  "subjective_gaps_and_disclosures": [
+    "Reference archive KH-01_STYLE_REFERENCES_ONLY.zip was unavailable on host (STYLE_REFERENCE_UNAVAILABLE); direct side-by-side pixel comparison against the three user reference frames requires the user to place those frames locally.",
+    "All KH-01 characters, outfits, props, and multi-plane stages are 100% newly authored vector/Canvas/Rigby2D artwork governed by modern_expressive_2d.v1 rules; hand-drawn frame-by-frame traditional smear/boil nuances remain simpler than bespoke studio cel animation.",
+    "STYLE_APPROVED and EDITORIAL_APPROVED remain HUMAN_REVIEW_PENDING until explicit human inspection of the PNG sheets and 30.000s 1080p MP4."
+  ],
+  "reviewer_checkpoints": [
+    "Verify bold variable-weight ink outlines and 2-3 cel-shading value groups read cleanly at 1080p and mobile width.",
+    "Inspect Lucius and Mara 3-view turnarounds and 6 facial expressions for genuine emotional range.",
+    "Inspect S01 scroll hook, S05 cart brace, S06 fountain catch multi-angle edit, S07 'MEETING MOVED TO TOMORROW' reveal, and S08 comedic payoff.",
+    "Confirm natural English narration intelligibility, Foley balance, and -14 LUFS loudness comfort."
+  ]
+}

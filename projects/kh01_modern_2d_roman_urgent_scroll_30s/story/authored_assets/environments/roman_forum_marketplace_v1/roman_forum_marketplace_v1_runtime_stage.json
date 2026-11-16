@@ -1,0 +1,196 @@
+{
+  "schema_version": "kh01.environment_runtime.v1",
+  "seed": 2026,
+  "spec": {
+    "schema_version": "kh01.environment_spec.v1",
+    "environment_id": "roman_forum_marketplace_v1",
+    "niche": "roman_forum",
+    "style_id": "modern_expressive_2d.v1",
+    "style_lock_digest": "0b3433f455475ee2574c2f47dad43aaf89aa7975fdaf241247a25957b3c6f766",
+    "place": "Roman Forum Marketplace & Fountain colonnade",
+    "period": "Classical Roman Antiquity (Contemporary Editorial 2D Presentation)",
+    "indoor_outdoor": "outdoor",
+    "time_weather": "sunny_breezy_late_morning",
+    "vanishing_point": [
+      0.52,
+      0.56
+    ],
+    "ground_y_norm": 0.84,
+    "palette": {
+      "sky": [
+        "#4A88C7",
+        "#8EC5E8",
+        "#F4DEC0"
+      ],
+      "ground": [
+        "#C9B193",
+        "#B09678",
+        "#8B735B"
+      ],
+      "architecture": [
+        "#E8D5B7",
+        "#D4B894",
+        "#B9583B",
+        "#5A7D58"
+      ],
+      "accents": [
+        "#C83E2B",
+        "#E29B27",
+        "#2B6E78",
+        "#F7EFE2"
+      ],
+      "key_light_hex": "#FFF0CE",
+      "shadow_tint_hex": "#3B2D38",
+      "mid_ink_hex": "#3A312B",
+      "far_ink_hex": "#545D6A"
+    },
+    "depth_layers": [
+      {
+        "layer_id": "sky_backdrop",
+        "z_index": 0,
+        "parallax_factor": 0.15
+      },
+      {
+        "layer_id": "far_architecture",
+        "z_index": 1,
+        "parallax_factor": 0.42
+      },
+      {
+        "layer_id": "midground_stage",
+        "z_index": 2,
+        "parallax_factor": 1.0
+      },
+      {
+        "layer_id": "foreground_occluders",
+        "z_index": 4,
+        "parallax_factor": 1.32
+      }
+    ],
+    "supported_detail_tiers": [
+      "TIER_3_FULL_ARCHITECTURAL_STAGE",
+      "TIER_2_FOCUSED_STAGE",
+      "TIER_1_GRAPHIC_MOOD_BACKDROP",
+      "TIER_1_TACTILE_PROP_FOCUS"
+    ],
+    "materials": [
+      "travertine_stone_blocks",
+      "terracotta_pan_tiles",
+      "striped_linen_awnings",
+      "carved_limestone_basin",
+      "oak_cart_timber"
+    ],
+    "interactable_props": {
+      "counter": {
+        "kind": "stone_counter",
+        "anchor_world": [
+          0.24,
+          0.74
+        ],
+        "bounds": [
+          0.14,
+          0.66,
+          0.34,
+          0.84
+        ],
+        "portable": false
+      },
+      "scroll": {
+        "kind": "wax_sealed_scroll",
+        "anchor_world": [
+          0.28,
+          0.65
+        ],
+        "bounds": [
+          0.24,
+          0.62,
+          0.33,
+          0.69
+        ],
+        "portable": true
+      },
+      "awning": {
+        "kind": "striped_market_awning",
+        "anchor_world": [
+          0.48,
+          0.44
+        ],
+        "bounds": [
+          0.32,
+          0.34,
+          0.66,
+          0.54
+        ],
+        "portable": false
+      },
+      "cart": {
+        "kind": "wooden_fruit_cart",
+        "anchor_world": [
+          0.54,
+          0.77
+        ],
+        "bounds": [
+          0.44,
+          0.67,
+          0.65,
+          0.85
+        ],
+        "portable": false
+      },
+      "fountain": {
+        "kind": "carved_forum_fountain",
+        "anchor_world": [
+          0.76,
+          0.74
+        ],
+        "bounds": [
+          0.66,
+          0.56,
+          0.88,
+          0.84
+        ],
+        "portable": false
+      },
+      "rostra": {
+        "kind": "marble_rostra_plinth",
+        "anchor_world": [
+          0.5,
+          0.75
+        ],
+        "bounds": [
+          0.38,
+          0.64,
+          0.62,
+          0.84
+        ],
+        "portable": false
+      }
+    },
+    "shot_count_planned": 0
+  },
+  "wide_stage_png": {
+    "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/environments/roman_forum_marketplace_v1/roman_forum_marketplace_v1_wide_1080p.png",
+    "sha256": "004b77eeb9116db6d81ce3b3e4e0d6f59d68c464e43f6b39380bad84f5e2f6b8",
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "detail_mode": "wide",
+    "indoor": false
+  },
+  "close_stage_png": {
+    "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/environments/roman_forum_marketplace_v1/roman_forum_marketplace_v1_close_backdrop_1080p.png",
+    "sha256": "25927e6e05fa491a5399c1b4e935b3b9827ad0f088a348be16510a78197968f5",
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "detail_mode": "close",
+    "indoor": false
+  },
+  "editable_svg": {
+    "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/story/authored_assets/environments/roman_forum_marketplace_v1/roman_forum_marketplace_v1_layered.svg",
+    "sha256": "7aa2c245cefb4da3a89ecbb9c2cedaf788306b7da1bd75076528816aca8e0386"
+  },
+  "license_spdx": "CC0-1.0 OR Proprietary-Original-Project-Authored",
+  "provenance_origin": "100%_ORIGINAL_KH01_ENVIRONMENT_FACTORY"
+}

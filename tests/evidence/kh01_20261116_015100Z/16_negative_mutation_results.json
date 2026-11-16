@@ -1,0 +1,318 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "run_kh01_visual_style_mutations + run_v14_7_6_mandatory_mutations + run_negative_fixtures_tests",
+  "started_iso": "2026-11-16T06:13:08.209146+00:00",
+  "ended_iso": "2026-11-16T06:13:21.398925+00:00",
+  "elapsed_sec": 13.1898,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "tools/visual_style_qa.py",
+    "tools/temporal_visual_qa.py"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/16_negative_mutation_results.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.5,
+    "ram_available_gb": 8.732,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 1
+  },
+  "failure_details": null,
+  "kh01_visual_style_mutations_7": {
+    "schema_version": "kh01.visual_mutations.v1",
+    "status": "PASS",
+    "baseline_passed": true,
+    "total_mutations": 7,
+    "killed_mutations": 7,
+    "mutations": [
+      {
+        "mutation_id": "VM01_midshot_character_color_altered",
+        "mutant_status": "FAIL",
+        "killed": true,
+        "diagnostics": [
+          "Mid-shot character garment color disappearance/swap detected on 'lucius' (ratio 0.0269 -> 0.01001)"
+        ]
+      },
+      {
+        "mutation_id": "VM02_missing_facial_expression",
+        "mutant_status": "FAIL",
+        "killed": true,
+        "diagnostics": [
+          "Character 'lucius' has only 2 distinct expressions (< 6 required)",
+          "Character 'lucius' missing required 6 expressions (found 2)"
+        ]
+      },
+      {
+        "mutation_id": "VM03_forbidden_reference_png_as_layer",
+        "mutant_status": "FAIL",
+        "killed": true,
+        "diagnostics": [
+          "Forbidden: reference_frames_reused != 0",
+          "Forbidden reference/legacy asset alias detected in path 'KH-01_STYLE_REFERENCES_ONLY/frame_01.png'",
+          "Declared authored asset missing on disk: 'KH-01_STYLE_REFERENCES_ONLY/frame_01.png'"
+        ]
+      },
+      {
+        "mutation_id": "VM04_unmotivated_costume_change",
+        "mutant_status": "FAIL",
+        "killed": true,
+        "diagnostics": [
+          "Shot S02: unmotivated costume teleport for 'lucius' ('courier_tunic' -> 'senator_toga') without scene event",
+          "Shot S02: character 'lucius' primary garment color changed mid-sequence (#c84b31 -> #efe6d5) without event"
+        ]
+      },
+      {
+        "mutation_id": "VM05_scene_camera_reset",
+        "mutant_status": "FAIL",
+        "killed": true,
+        "diagnostics": [
+          "Shot S01 S01_seg02: camera segment resets action time (forbidden)"
+        ]
+      },
+      {
+        "mutation_id": "VM06_planted_foot_drift_and_grip_teleport",
+        "mutant_status": "FAIL",
+        "killed": true,
+        "diagnostics": [
+          "S01_lucius: median_planted_foot_drift_norm=0.5566 > 0.03",
+          "S01_lucius: peak_planted_foot_drift_norm=1.1428 > 0.08",
+          "S01_lucius: peak_hand_grip_dist_norm=1.6422 > 0.04"
+        ]
+      },
+      {
+        "mutation_id": "VM07_unvalidated_confidence_not_verified",
+        "mutant_status": "NOT_VERIFIED",
+        "killed": true,
+        "diagnostics": [
+          "Detector confidence 0.32 below verified threshold 0.70"
+        ]
+      }
+    ]
+  },
+  "v14_7_6_motion_and_cut_mutations_10": {
+    "schema_version": "14.7.6",
+    "status": "PASS",
+    "baseline_passed": true,
+    "total_mutations": 10,
+    "killed_mutations": 10,
+    "mutations": [
+      {
+        "mutation_id": "M01_planted_foot_moves_stationary_root",
+        "description": "Planted foot drifts/skates -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "S01_aelia: peak_planted_foot_drift_norm=0.7857 > 0.08",
+          "S01_aelia: peak_planted_foot_drift_norm=0.78571 > 0.08",
+          "S01_aelia: max_adjacent_joint_jump_norm=0.78571 > 0.25"
+        ]
+      },
+      {
+        "mutation_id": "M02_hand_teleports_while_gripping",
+        "description": "Hand teleports away from grip anchor -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "S01_aelia: peak_hand_grip_dist_norm=1.6158 > 0.04"
+        ]
+      },
+      {
+        "mutation_id": "M03_internal_multi_angle_cut_discontinuity",
+        "description": "180-deg axis & spatial discontinuity across internal multi-angle cut -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "Shot S01: 180-degree axis violation across internal cut S01_seg01 (left_to_right) -> S01_seg02 (right_to_left)",
+          "S01:S01_seg01->S01_seg02 actor 'aelia': discontinuity across internal cut (root_jump=0, hand_jump=0.17709)"
+        ]
+      },
+      {
+        "mutation_id": "M04_dropped_or_duplicated_prop",
+        "description": "Dropped or duplicated lantern/rope -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "Shot S01: prop 'lantern' duplicated in world state",
+          "Shot S01: prop 'lantern' unexpectedly dropped mid-grip"
+        ]
+      },
+      {
+        "mutation_id": "M05_camera_segment_resets_action",
+        "description": "Camera segment resets action clock -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "Shot S01 S01_seg02: camera segment resets action time (forbidden)"
+        ]
+      },
+      {
+        "mutation_id": "M06_modified_original_asset_manifest",
+        "description": "Modified/tampered original-asset manifest -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "prior_preview_derived_visual_inputs != 0",
+          "checksum mismatch on C:\\Users\\QuocAn\\AppData\\Local\\Temp\\tmpy3w6oodo\\mut_baseline_proj\\authored_harbor_vec.svg"
+        ]
+      },
+      {
+        "mutation_id": "M07_stale_receipt",
+        "description": "Stale media receipt digest mismatch -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "Stale media receipt: receipt sha=deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef != live mp4 sha=36c594bd5e6f0ebe6ae83d1469856efccda9bc61bfe0fcf7ac35eb51cf420a6c"
+        ]
+      },
+      {
+        "mutation_id": "M08_silent_narration",
+        "description": "Silent narration audio stream -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "Silent or invalid narration audio: {'rms_dbfs': -180.0, 'peak_linear': 0.0, 'active_sample_ratio': 0.0}"
+        ]
+      },
+      {
+        "mutation_id": "M09_frame_order_dependent_state",
+        "description": "Frame-order-dependent mutable state -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "Frame-order-dependent mutable state detected in motion evaluation"
+        ]
+      },
+      {
+        "mutation_id": "M10_cut_boundary_incomplete",
+        "description": "Incomplete cut boundary frame coverage -> FAIL",
+        "baseline_status": "PASS",
+        "mutant_status": "FAIL",
+        "mutation_killed": true,
+        "diagnostics": [
+          "S02:S02_seg01->S02_seg02: incomplete internal boundary frames (0/4)"
+        ]
+      }
+    ]
+  },
+  "temporal_negative_fixtures_15": {
+    "all_fixtures_passed": true,
+    "total_fixtures": 15,
+    "passed_fixtures": 15,
+    "fixtures": {
+      "blank_frame": {
+        "description": "Pure black frame must be detected as blank and fail",
+        "expected_failure_caught": true,
+        "passed": true
+      },
+      "map_false_actor": {
+        "description": "Tactical map lines must NOT be falsely identified as human actor",
+        "expected_subject": "map",
+        "passed": true
+      },
+      "actor_disappearance": {
+        "description": "Actor suddenly missing mid-shot must trigger disappearance defect",
+        "detected": true,
+        "passed": true
+      },
+      "teleport_mid_shot": {
+        "description": "Instantaneous 1300px lateral jump within 0.5s must be flagged as teleport defect",
+        "teleport_flagged": true,
+        "jump_px": 1300.0,
+        "passed": true
+      },
+      "camera_snap": {
+        "description": "Abrupt 1-frame camera transform snap must be flagged by camera auditor",
+        "snap_caught": true,
+        "diagnostics": [
+          "Camera snap detected between keyframes 1->2: dt=0.040s, dx=0.65, dy=0.00, dz=0.00"
+        ],
+        "passed": true
+      },
+      "duplicate_held_object": {
+        "description": "Duplicate weapon or shield in actor configuration must be rejected by production validator",
+        "diagnostics": [
+          "DUPLICATE_HELD_OBJECT: Actor 'dup_actor' has duplicate weapon2='spear' alongside primary/preset weapon",
+          "DUPLICATE_HELD_OBJECT: Actor 'dup_actor' has duplicate shield2='buckler' alongside primary/preset shield"
+        ],
+        "passed": true
+      },
+      "wrong_preset": {
+        "description": "Unknown actor preset must fail production validateCastPreset with UNKNOWN_ACTOR_PRESET diagnostic",
+        "diagnostic": "UNKNOWN_ACTOR_PRESET: unknown_peasant_xyz",
+        "passed": true
+      },
+      "bad_cut": {
+        "description": "Successive identical framing shots must be flagged as repetition/bad cut defect",
+        "passed": true
+      },
+      "stale_receipt": {
+        "description": "Valid receipt hits initially, then input or output byte tamper invalidates cache",
+        "initial_hit": true,
+        "tampered_input_hit": false,
+        "tampered_bytes_hit": false,
+        "status": "CACHE_INVALIDATED",
+        "reason": "Input fingerprint mismatch: code, storyboard, voice, or assets modified. Recorded=5898a1ac9513, Current=db0b9a9973eb",
+        "passed": true
+      },
+      "failed_extract": {
+        "description": "Extracting frame from nonexistent media must fail closed",
+        "extract_result": false,
+        "passed": true
+      },
+      "silent_audio": {
+        "description": "Media with completely silent audio track must fail closed on measured volume",
+        "valid": false,
+        "max_volume_db": -91.0,
+        "errors": [
+          "Audio is silent (max_volume=-91.0 dB)"
+        ],
+        "passed": true
+      },
+      "empty_map": {
+        "description": "Blank tactical map canvas with no contrast features must fail mobile readability",
+        "readability_ok": false,
+        "diagnostics": [
+          "Mobile downscale test: Missing high-contrast label badges (found 0 px)"
+        ],
+        "passed": true
+      },
+      "unexpected_pose": {
+        "description": "Actor with high center of mass must fail BRACE posture check",
+        "posture_ok": false,
+        "pose_detected": "brace",
+        "diagnostics": [
+          "BRACE acting posture: center of mass too high (0.277)"
+        ],
+        "passed": true
+      },
+      "legitimate_cut": {
+        "description": "Legitimate cut or diagram transition must NOT falsely flag teleportation",
+        "teleport_flagged": false,
+        "passed": true
+      },
+      "torsion_diagram_as_roman": {
+        "description": "Torsion catapult spring diagram used for Roman formation must fail validation",
+        "valid": false,
+        "diagnostic": "MISMATCHED_DIAGRAM: Torsion catapult spring used for Roman formation!",
+        "passed": true
+      }
+    }
+  }
+}

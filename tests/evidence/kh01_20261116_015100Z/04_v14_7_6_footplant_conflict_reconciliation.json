@@ -1,0 +1,69 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "scripts.run_kh01_validation::job_w1_v14_7_6_reconciliation",
+  "started_iso": "2026-11-16T06:10:05.299128+00:00",
+  "ended_iso": "2026-11-16T06:10:23.854988+00:00",
+  "elapsed_sec": 18.5559,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "tests/evidence/v14_7_6/05_natural_motion_metrics.json",
+    "tests/evidence/v14_7_6/abc_motion_traces.json",
+    "tests/evidence/v14_7_6/09_a_b_c_render_comparison.json"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/04_v14_7_6_footplant_conflict_reconciliation.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.53,
+    "ram_available_gb": 7.812,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 2
+  },
+  "failure_details": null,
+  "v14_7_6_historical_files_untouched": true,
+  "v14_7_6_contradictions_diagnosed": {
+    "issue_1_property_mismatch_and_ignored_track_passed": "packs/squire/motion_engine.js::validateMotionFrameTrace returned {valid} without {passed}, so temporal_visual_qa.py recorded trace_passed=false on all 7 tracks in 05_natural_motion_metrics.json (recorded status=PASS), while audit_foot_plant ignored trace_passed.",
+    "issue_2_real_planted_skating_in_abc_clip": "motion_performance.py previously translated actors during ANTICIPATE/REACH while keeping foot_planted=True, producing 0.5 normalized drift (FAIL) in abc_motion_traces.json.",
+    "issue_3_mp4_decode_collapsed_into_motion_pass": "09_a_b_c_render_comparison.json reported status=PASS from MP4 decode validity alone despite abc_motion_traces.json failing foot_plant.",
+    "issue_4_absent_v14_7_6_artifacts_never_claimed_present": [
+      "00_master_acceptance.json",
+      "13_full_e2e_regression.json",
+      "20_postpush_verification.json"
+    ]
+  },
+  "reconciled_fail_closed_proofs": {
+    "positive_planted_clip": {
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\reconciliation_clips\\reconcile_pos_planted.mp4",
+      "mp4_sha256": "5b9789c2381db65d68eb29b1b1eb34a6483c51eb4c34d79e67c6dc52d0a4b1ae",
+      "foot_qa_status": "PASS",
+      "pixel_qa_status": "PASS",
+      "hand_qa_status": "PASS"
+    },
+    "negative_foot_drift_mutation_clip": {
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\reconciliation_clips\\reconcile_neg_foot_drift.mp4",
+      "mp4_sha256": "8acfbd768aaf71525ca4d0abb14c0221904003331a16ed8285212021641e6646",
+      "foot_qa_status": "FAIL",
+      "max_peak_planted_foot_drift_norm": 1.21423,
+      "pixel_qa_status": "PASS"
+    },
+    "negative_broken_grip_mutation_clip": {
+      "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\reconciliation_clips\\reconcile_neg_broken_grip.mp4",
+      "mp4_sha256": "552eececeed26c1222acd0311870728570cc77f2c6bb5c556ddf0b35442a8607",
+      "hand_qa_status": "FAIL",
+      "peak_hand_grip_dist_norm": 0.74949,
+      "violations": [
+        "R01_lucius: peak_hand_grip_dist_norm=0.7495 > 0.04"
+      ]
+    },
+    "unverified_pixel_confidence_policy": {
+      "when_mp4_absent_pixel_qa_status": "NOT_VERIFIED"
+    }
+  }
+}

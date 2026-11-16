@@ -1,0 +1,21 @@
+{
+  "name": "kh01_modern_2d_roman_urgent_scroll_30s",
+  "title": "ROME'S MOST URGENT SCROLL",
+  "subtitle": "A fictional Roman marketplace comedy; original Modern Expressive 2D animation, not a documented historical incident.",
+  "pack": "squire",
+  "genre": "roman_forum",
+  "style": "flat",
+  "styleId": "modern_expressive_2d.v1",
+  "aspect": "16:9",
+  "resolution": "1080p",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "bars": "none",
+  "captions": false,
+  "code_dependencies": [
+    "packs/squire/modern2d/style_renderer.js",
+    "packs/squire/motion_engine.js",
+    "integrations/claude_motion/adapter.js"
+  ]
+}

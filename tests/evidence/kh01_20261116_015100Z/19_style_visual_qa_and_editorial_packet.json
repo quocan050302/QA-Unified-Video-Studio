@@ -1,0 +1,2797 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "tools.produce_kh01_original_roman_30s::inspect_kh01_mp4 + generate_kh01_visual_review_packet + build_editorial_packet",
+  "started_iso": "2026-11-16T06:13:08.209146+00:00",
+  "ended_iso": "2026-11-16T06:13:48.049171+00:00",
+  "elapsed_sec": 39.84,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/KH01_ROMES_MOST_URGENT_SCROLL_ORIGINAL_30S_1080P.mp4"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/review_packet/contact_sheet_kh01_full_8shots.png",
+    "tests/evidence/kh01_20261116_015100Z/editorial_packet/KH01_EDITORIAL_REVIEW_MONTAGE.png",
+    "tests/evidence/kh01_20261116_015100Z/19_style_visual_qa_and_editorial_packet.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": "d0c851d62a72a5ed9a4409d359370bd22efe4ba71a03de288aaf4f8e21a1abcf",
+  "measured_resources": {
+    "disk_free_gb": 54.467,
+    "ram_available_gb": 8.966,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+  "EDITORIAL_APPROVED": "HUMAN_REVIEW_PENDING",
+  "VQ06_FINAL_FILM": "CANDIDATE_TECH_VERIFIED_HUMAN_REVIEW_PENDING",
+  "frame_order_determinism_720f": {
+    "forward_sha256": "52b32cd6a904c70c8c226af8c10a27218bcc8512ad6bdbe66299d7115e058984",
+    "reverse_sha256": "52b32cd6a904c70c8c226af8c10a27218bcc8512ad6bdbe66299d7115e058984",
+    "identical": true
+  },
+  "film_technical_inspection": {
+    "status": "TECH_PASS_EDITORIAL_PENDING",
+    "technical_passed": true,
+    "VQ06_FINAL_FILM": "CANDIDATE_TECH_VERIFIED_HUMAN_REVIEW_PENDING",
+    "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+    "EDITORIAL_APPROVED": "HUMAN_REVIEW_PENDING",
+    "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\KH01_ROMES_MOST_URGENT_SCROLL_ORIGINAL_30S_1080P.mp4",
+    "mp4_sha256": "f205dd30d6146bef279491feb24ede1f872d30632d1c96b6af7234e5b9c939f0",
+    "size_bytes": 10481468,
+    "media_probe_and_decode": {
+      "valid": true,
+      "error": null,
+      "errors": [],
+      "duration": 30.0,
+      "video_stream_duration": 30.0,
+      "audio_stream_duration": 30.0,
+      "decoded_video_frames": 720,
+      "file_size": 10481468,
+      "width": 1920,
+      "height": 1080,
+      "fps": 24.0,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "has_video": true,
+      "has_audio": true,
+      "decode_clean": true,
+      "max_volume_db": -1.4,
+      "mean_volume_db": -20.3,
+      "integrated_lufs": null,
+      "true_peak_dbtp": null,
+      "sha256": "f205dd30d6146bef279491feb24ede1f872d30632d1c96b6af7234e5b9c939f0"
+    },
+    "loudness_ebur128": {
+      "integrated_lufs": -15.4,
+      "true_peak_dbtp": -1.4,
+      "within_kh01_target": true
+    },
+    "narration_timing": {
+      "max_overlap_ms": 0.0,
+      "min_breathing_tail_sec": 0.829,
+      "word_count": 50,
+      "voice_name": "Microsoft David Desktop"
+    },
+    "shot_animation_liveness": {
+      "all_8_shots_animated": true,
+      "frozen_or_blank_shots": [],
+      "shots": [
+        {
+          "shot_id": "S01",
+          "frame_std": 49.3,
+          "intra_shot_motion_mad": 4.566,
+          "non_blank_and_animated": true
+        },
+        {
+          "shot_id": "S02",
+          "frame_std": 55.91,
+          "intra_shot_motion_mad": 41.221,
+          "non_blank_and_animated": true
+        },
+        {
+          "shot_id": "S03",
+          "frame_std": 56.49,
+          "intra_shot_motion_mad": 33.083,
+          "non_blank_and_animated": true
+        },
+        {
+          "shot_id": "S04",
+          "frame_std": 55.66,
+          "intra_shot_motion_mad": 40.636,
+          "non_blank_and_animated": true
+        },
+        {
+          "shot_id": "S05",
+          "frame_std": 56.36,
+          "intra_shot_motion_mad": 41.851,
+          "non_blank_and_animated": true
+        },
+        {
+          "shot_id": "S06",
+          "frame_std": 56.82,
+          "intra_shot_motion_mad": 43.667,
+          "non_blank_and_animated": true
+        },
+        {
+          "shot_id": "S07",
+          "frame_std": 46.15,
+          "intra_shot_motion_mad": 7.256,
+          "non_blank_and_animated": true
+        },
+        {
+          "shot_id": "S08",
+          "frame_std": 56.88,
+          "intra_shot_motion_mad": 57.537,
+          "non_blank_and_animated": true
+        }
+      ]
+    },
+    "motion_and_cut_qa": {
+      "status": "PASS",
+      "plan_valid": true,
+      "order_invariant": true,
+      "foot_plant": {
+        "status": "PASS",
+        "trace_qa_status": "PASS",
+        "pixel_qa_status": "PASS",
+        "failed_track_ids": [],
+        "max_median_planted_foot_drift_norm": 0.0,
+        "max_peak_planted_foot_drift_norm": 0.0658,
+        "max_stationary_foot_move_norm": 0.0,
+        "pixel_tracking_confidence": "OBSERVABLE",
+        "pixel_checks": [
+          {
+            "track_id": "S01_lucius",
+            "frames_compared": 3,
+            "roi_contrast_std": 25.1,
+            "pixel_roi_observable": true,
+            "measured_pixel_foot_drift_norm": 4e-05
+          },
+          {
+            "track_id": "S02_lucius",
+            "frames_compared": 3,
+            "roi_contrast_std": 59.0,
+            "pixel_roi_observable": true,
+            "measured_pixel_foot_drift_norm": 0.03901
+          },
+          {
+            "track_id": "S03_lucius",
+            "frames_compared": 3,
+            "roi_contrast_std": 63.59,
+            "pixel_roi_observable": true,
+            "measured_pixel_foot_drift_norm": 0.00736
+          },
+          {
+            "track_id": "S04_lucius",
+            "frames_compared": 3,
+            "roi_contrast_std": 63.88,
+            "pixel_roi_observable": true,
+            "measured_pixel_foot_drift_norm": 0.07759
+          },
+          {
+            "track_id": "S04_mara",
+            "frames_compared": 3,
+            "roi_contrast_std": 66.54,
+            "pixel_roi_observable": true,
+            "measured_pixel_foot_drift_norm": 0.05354
+          },
+          {
+            "track_id": "S05_lucius",
+            "frames_compared": 3,
+            "roi_contrast_std": 70.47,
+            "pixel_roi_observable": true,
+            "measured_pixel_foot_drift_norm": 0.07389
+          },
+          {
+            "track_id": "S05_mara",
+            "frames_compared": 3,
+            "roi_contrast_std": 65.64,
+            "pixel_roi_observable": true,
+            "measured_pixel_foot_drift_norm": 0.0558
+          },
+          {
+            "track_id": "S06_lucius",
+            "frames_compared": 3,
+            "roi_contrast_std": 35.53,
+            "pixel_roi_observable": true,
+            "measured_pixel_foot_drift_norm": 0.10848
+          }
+        ],
+        "violations": [],
+        "track_reports": [
+          {
+            "track_id": "S01_lucius",
+            "shot_id": "S01",
+            "actor_id": "lucius",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0,
+            "peak_hand_grip_dist_norm": 0,
+            "max_adjacent_joint_jump_norm": 0.00151,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 0,
+                "phase": "IDLE",
+                "root": [
+                  0.34,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.32180000000000003,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.35736,
+                  0.7553636029334991
+                ],
+                "rightHandWorld": [
+                  0.31984,
+                  0.7525636029334991
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 0.041667,
+                "phase": "IDLE",
+                "root": [
+                  0.34,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.32180000000000003,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.35736,
+                  0.7557598755697326
+                ],
+                "rightHandWorld": [
+                  0.31984,
+                  0.7529598755697325
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00142
+              },
+              {
+                "frameIndex": 2,
+                "t": 0.083333,
+                "phase": "IDLE",
+                "root": [
+                  0.34,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.32180000000000003,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.35736,
+                  0.7561823544512728
+                ],
+                "rightHandWorld": [
+                  0.31984,
+                  0.7533823544512728
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00151
+              },
+              {
+                "frameIndex": 3,
+                "t": 0.125,
+                "phase": "IDLE",
+                "root": [
+                  0.34,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.32180000000000003,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.35736,
+                  0.7565709057414853
+                ],
+                "rightHandWorld": [
+                  0.31984,
+                  0.7537709057414853
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00139
+              },
+              {
+                "frameIndex": 4,
+                "t": 0.166667,
+                "phase": "IDLE",
+                "root": [
+                  0.34,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.32180000000000003,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.35736,
+                  0.7568701962206466
+                ],
+                "rightHandWorld": [
+                  0.31984,
+                  0.7540701962206465
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00107
+              },
+              {
+                "frameIndex": 5,
+                "t": 0.208333,
+                "phase": "IDLE",
+                "root": [
+                  0.34,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.32180000000000003,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.35736,
+                  0.7570376097671155
+                ],
+                "rightHandWorld": [
+                  0.31984,
+                  0.7542376097671155
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.0006
+              }
+            ]
+          },
+          {
+            "track_id": "S02_lucius",
+            "shot_id": "S02",
+            "actor_id": "lucius",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0,
+            "peak_hand_grip_dist_norm": 0,
+            "max_adjacent_joint_jump_norm": 0.09886,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0.008821,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 2.625,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.34,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.32280000000000003,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3592,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.3266695812354187,
+                  0.7583253611524479
+                ],
+                "rightHandWorld": [
+                  0.3641895812354187,
+                  0.7555253611524478
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 2.666667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.3400007264445326,
+                  0.84
+                ],
+                "speed": 7e-05,
+                "leftFootWorld": [
+                  0.32280000000000003,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3592,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.3266703076799513,
+                  0.7583247173484634
+                ],
+                "rightHandWorld": [
+                  0.3641903076799513,
+                  0.7555247173484634
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 2,
+                "t": 2.708333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.3400116225546262,
+                  0.84
+                ],
+                "speed": 0.00056,
+                "leftFootWorld": [
+                  0.32280000000000003,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3592,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.3266812037900449,
+                  0.7584807188990067
+                ],
+                "rightHandWorld": [
+                  0.3642012037900449,
+                  0.7556807188990067
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00056
+              },
+              {
+                "frameIndex": 3,
+                "t": 2.75,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.3400588401242312,
+                  0.84
+                ],
+                "speed": 0.00188,
+                "leftFootWorld": [
+                  0.32280000000000003,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3592,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.3267284213596499,
+                  0.7587711612107477
+                ],
+                "rightHandWorld": [
+                  0.3642484213596499,
+                  0.7559711612107477
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00105
+              },
+              {
+                "frameIndex": 4,
+                "t": 2.791667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.34018596533713735,
+                  0.84
+                ],
+                "speed": 0.00447,
+                "leftFootWorld": [
+                  0.32280000000000003,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3592,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.32685554657255605,
+                  0.7591546882840784
+                ],
+                "rightHandWorld": [
+                  0.36437554657255605,
+                  0.7563546882840784
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00144
+              },
+              {
+                "frameIndex": 5,
+                "t": 2.833333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.3404540103985749,
+                  0.84
+                ],
+                "speed": 0.00872,
+                "leftFootWorld": [
+                  0.32280000000000003,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3592,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.3271388530720457,
+                  0.7596081788564633
+                ],
+                "rightHandWorld": [
+                  0.3646588530720457,
+                  0.7568081788564632
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00191
+              }
+            ]
+          },
+          {
+            "track_id": "S03_lucius",
+            "shot_id": "S03",
+            "actor_id": "lucius",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0.0658,
+            "peak_hand_grip_dist_norm": 0,
+            "max_adjacent_joint_jump_norm": 0.08855,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 6.25,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.366,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3946,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.3566846603298154,
+                  0.7643216085352426
+                ],
+                "rightHandWorld": [
+                  0.3942046603298154,
+                  0.7615216085352425
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 6.291667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.36600031874997674,
+                  0.84
+                ],
+                "speed": 3e-05,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3946,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.35668497907979213,
+                  0.7647439248393267
+                ],
+                "rightHandWorld": [
+                  0.39420497907979213,
+                  0.7619439248393267
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00151
+              },
+              {
+                "frameIndex": 2,
+                "t": 6.333333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.36600509975483475,
+                  0.84
+                ],
+                "speed": 0.00025,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3946,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.35668976008465014,
+                  0.7651302575019078
+                ],
+                "rightHandWorld": [
+                  0.39420976008465014,
+                  0.7623302575019077
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00138
+              },
+              {
+                "frameIndex": 3,
+                "t": 6.375,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.36602581792193517,
+                  0.84
+                ],
+                "speed": 0.00083,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3946,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.35671047825175056,
+                  0.7654256175845242
+                ],
+                "rightHandWorld": [
+                  0.39423047825175056,
+                  0.7626256175845242
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00106
+              },
+              {
+                "frameIndex": 4,
+                "t": 6.416667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.3660815980356873,
+                  0.84
+                ],
+                "speed": 0.00196,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3946,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.3567662583655027,
+                  0.7655879408488627
+                ],
+                "rightHandWorld": [
+                  0.3942862583655027,
+                  0.7627879408488627
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00061
+              },
+              {
+                "frameIndex": 5,
+                "t": 6.458333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.366199211085655,
+                  0.84
+                ],
+                "speed": 0.00383,
+                "leftFootWorld": [
+                  0.3582,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.3946,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.3568838714154704,
+                  0.7655941169765527
+                ],
+                "rightHandWorld": [
+                  0.3944038714154704,
+                  0.7627941169765526
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00042
+              }
+            ]
+          },
+          {
+            "track_id": "S04_lucius",
+            "shot_id": "S04",
+            "actor_id": "lucius",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0,
+            "peak_hand_grip_dist_norm": 0,
+            "max_adjacent_joint_jump_norm": 0.03746,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 10.25,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6407186001749896,
+                  0.7401106650485754
+                ],
+                "rightHandWorld": [
+                  0.6045986001749896,
+                  0.7366106650485754
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 10.291667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6407186001749896,
+                  0.7402563359379026
+                ],
+                "rightHandWorld": [
+                  0.6045986001749896,
+                  0.7367563359379027
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00052
+              },
+              {
+                "frameIndex": 2,
+                "t": 10.333333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6407186001749896,
+                  0.7405386361965931
+                ],
+                "rightHandWorld": [
+                  0.6045986001749896,
+                  0.7370386361965932
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00101
+              },
+              {
+                "frameIndex": 3,
+                "t": 10.375,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6407186001749896,
+                  0.7409173844135046
+                ],
+                "rightHandWorld": [
+                  0.6045986001749896,
+                  0.7374173844135047
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00135
+              },
+              {
+                "frameIndex": 4,
+                "t": 10.416667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6407186001749896,
+                  0.7413386479652511
+                ],
+                "rightHandWorld": [
+                  0.6045986001749896,
+                  0.7378386479652511
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.0015
+              },
+              {
+                "frameIndex": 5,
+                "t": 10.458333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6407186001749896,
+                  0.7417424370161403
+                ],
+                "rightHandWorld": [
+                  0.6045986001749896,
+                  0.7382424370161402
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00144
+              }
+            ]
+          },
+          {
+            "track_id": "S04_mara",
+            "shot_id": "S04",
+            "actor_id": "mara",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0,
+            "peak_hand_grip_dist_norm": 0,
+            "max_adjacent_joint_jump_norm": 0.0371,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 10.25,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6532286501687399,
+                  0.7436781412968406
+                ],
+                "rightHandWorld": [
+                  0.61839865016874,
+                  0.7403031412968406
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 10.291667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6532286501687399,
+                  0.7438186096544063
+                ],
+                "rightHandWorld": [
+                  0.61839865016874,
+                  0.7404436096544063
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00052
+              },
+              {
+                "frameIndex": 2,
+                "t": 10.333333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6532286501687399,
+                  0.7440908277610007
+                ],
+                "rightHandWorld": [
+                  0.61839865016874,
+                  0.7407158277610006
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00101
+              },
+              {
+                "frameIndex": 3,
+                "t": 10.375,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6532286501687399,
+                  0.7444560492558796
+                ],
+                "rightHandWorld": [
+                  0.61839865016874,
+                  0.7410810492558795
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00135
+              },
+              {
+                "frameIndex": 4,
+                "t": 10.416667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6532286501687399,
+                  0.7448622676807779
+                ],
+                "rightHandWorld": [
+                  0.61839865016874,
+                  0.7414872676807778
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.0015
+              },
+              {
+                "frameIndex": 5,
+                "t": 10.458333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6532286501687399,
+                  0.7452516356941353
+                ],
+                "rightHandWorld": [
+                  0.61839865016874,
+                  0.7418766356941353
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00144
+              }
+            ]
+          },
+          {
+            "track_id": "S05_lucius",
+            "shot_id": "S05",
+            "actor_id": "lucius",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0,
+            "peak_hand_grip_dist_norm": 0.00877,
+            "max_adjacent_joint_jump_norm": 0.06887,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0.008843,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 13.75,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6389897325652716,
+                  0.7592881425309022
+                ],
+                "rightHandWorld": [
+                  0.5946097325652716,
+                  0.7447281425309021
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 13.791667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6389897325652716,
+                  0.7595980425826386
+                ],
+                "rightHandWorld": [
+                  0.5946097325652716,
+                  0.7450380425826386
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00111
+              },
+              {
+                "frameIndex": 2,
+                "t": 13.833333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6389897325652716,
+                  0.7599923491032042
+                ],
+                "rightHandWorld": [
+                  0.5946097325652716,
+                  0.7454323491032042
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00141
+              },
+              {
+                "frameIndex": 3,
+                "t": 13.875,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6389897325652716,
+                  0.7604149381893043
+                ],
+                "rightHandWorld": [
+                  0.5946097325652716,
+                  0.7458549381893043
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00151
+              },
+              {
+                "frameIndex": 4,
+                "t": 13.916667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6389897325652716,
+                  0.7608056316209106
+                ],
+                "rightHandWorld": [
+                  0.5946097325652716,
+                  0.7462456316209106
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.0014
+              },
+              {
+                "frameIndex": 5,
+                "t": 13.958333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6389897325652716,
+                  0.7611087953913164
+                ],
+                "rightHandWorld": [
+                  0.5946097325652716,
+                  0.7465487953913164
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00108
+              }
+            ]
+          },
+          {
+            "track_id": "S05_mara",
+            "shot_id": "S05",
+            "actor_id": "mara",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0,
+            "peak_hand_grip_dist_norm": 0,
+            "max_adjacent_joint_jump_norm": 0.1158,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0.000469,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 13.75,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6522077034925279,
+                  0.7647141546210815
+                ],
+                "rightHandWorld": [
+                  0.6122477034925279,
+                  0.7555341546210814
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 13.791667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6522077034925279,
+                  0.7650129868138273
+                ],
+                "rightHandWorld": [
+                  0.6122477034925279,
+                  0.7558329868138273
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00111
+              },
+              {
+                "frameIndex": 2,
+                "t": 13.833333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6522077034925279,
+                  0.7653932109586585
+                ],
+                "rightHandWorld": [
+                  0.6122477034925279,
+                  0.7562132109586585
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00141
+              },
+              {
+                "frameIndex": 3,
+                "t": 13.875,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6522077034925279,
+                  0.7658007075773978
+                ],
+                "rightHandWorld": [
+                  0.6122477034925279,
+                  0.7566207075773977
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00151
+              },
+              {
+                "frameIndex": 4,
+                "t": 13.916667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6522077034925279,
+                  0.7661774476721611
+                ],
+                "rightHandWorld": [
+                  0.6122477034925279,
+                  0.756997447672161
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.0014
+              },
+              {
+                "frameIndex": 5,
+                "t": 13.958333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.64,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.65755,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6224500000000001,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6522077034925279,
+                  0.7664697841650524
+                ],
+                "rightHandWorld": [
+                  0.6122477034925279,
+                  0.7572897841650523
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00108
+              }
+            ]
+          },
+          {
+            "track_id": "S06_lucius",
+            "shot_id": "S06",
+            "actor_id": "lucius",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0.00321,
+            "peak_hand_grip_dist_norm": 0,
+            "max_adjacent_joint_jump_norm": 0.18383,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0.008196,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 17.25,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6396598406589178,
+                  0.7623251194965012
+                ],
+                "rightHandWorld": [
+                  0.5982198406589178,
+                  0.7528051194965012
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 17.291667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6396598406589178,
+                  0.7627316945430608
+                ],
+                "rightHandWorld": [
+                  0.5982198406589178,
+                  0.7532116945430608
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00145
+              },
+              {
+                "frameIndex": 2,
+                "t": 17.333333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6396598406589178,
+                  0.7631520536490783
+                ],
+                "rightHandWorld": [
+                  0.5982198406589178,
+                  0.7536320536490784
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.0015
+              },
+              {
+                "frameIndex": 3,
+                "t": 17.375,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6396598406589178,
+                  0.7635263646976985
+                ],
+                "rightHandWorld": [
+                  0.5982198406589178,
+                  0.7540063646976986
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00134
+              },
+              {
+                "frameIndex": 4,
+                "t": 17.416667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6396598406589178,
+                  0.76380132193899
+                ],
+                "rightHandWorld": [
+                  0.5982198406589178,
+                  0.75428132193899
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00098
+              },
+              {
+                "frameIndex": 5,
+                "t": 17.458333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.627,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6452,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.6088,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.6396598406589178,
+                  0.7639377746827589
+                ],
+                "rightHandWorld": [
+                  0.5982198406589178,
+                  0.754417774682759
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00049
+              }
+            ]
+          },
+          {
+            "track_id": "S07_lucius",
+            "shot_id": "S07",
+            "actor_id": "lucius",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0,
+            "peak_hand_grip_dist_norm": 0.00498,
+            "max_adjacent_joint_jump_norm": 0.06974,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0.003466,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 21.625,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.5119897325652717,
+                  0.7613024871417188
+                ],
+                "rightHandWorld": [
+                  0.4676097325652716,
+                  0.7467424871417188
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 21.666667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.5119897325652717,
+                  0.7611725036467073
+                ],
+                "rightHandWorld": [
+                  0.4676097325652716,
+                  0.7466125036467073
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00046
+              },
+              {
+                "frameIndex": 2,
+                "t": 21.708333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.5119897325652717,
+                  0.7609027678227275
+                ],
+                "rightHandWorld": [
+                  0.4676097325652716,
+                  0.7463427678227275
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00096
+              },
+              {
+                "frameIndex": 3,
+                "t": 21.75,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.5119897325652717,
+                  0.7605316727130355
+                ],
+                "rightHandWorld": [
+                  0.4676097325652716,
+                  0.7459716727130354
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00133
+              },
+              {
+                "frameIndex": 4,
+                "t": 21.791667,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.5119897325652717,
+                  0.7601120609202383
+                ],
+                "rightHandWorld": [
+                  0.4676097325652716,
+                  0.7455520609202383
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.0015
+              },
+              {
+                "frameIndex": 5,
+                "t": 21.833333,
+                "phase": "ANTICIPATE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.5119897325652717,
+                  0.7597036872787551
+                ],
+                "rightHandWorld": [
+                  0.4676097325652716,
+                  0.7451436872787551
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00146
+              }
+            ]
+          },
+          {
+            "track_id": "S08_lucius",
+            "shot_id": "S08",
+            "actor_id": "lucius",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0,
+            "peak_hand_grip_dist_norm": 0,
+            "max_adjacent_joint_jump_norm": 0.00151,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 26,
+                "phase": "IDLE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.48264,
+                  0.7552123519841561
+                ],
+                "rightHandWorld": [
+                  0.52016,
+                  0.7524123519841561
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 26.041667,
+                "phase": "IDLE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.48264,
+                  0.754950206858821
+                ],
+                "rightHandWorld": [
+                  0.52016,
+                  0.752150206858821
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00094
+              },
+              {
+                "frameIndex": 2,
+                "t": 26.083333,
+                "phase": "IDLE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.48264,
+                  0.7548295621419678
+                ],
+                "rightHandWorld": [
+                  0.52016,
+                  0.7520295621419678
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00043
+              },
+              {
+                "frameIndex": 3,
+                "t": 26.125,
+                "phase": "IDLE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.48264,
+                  0.7548675898864756
+                ],
+                "rightHandWorld": [
+                  0.52016,
+                  0.7520675898864756
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00014
+              },
+              {
+                "frameIndex": 4,
+                "t": 26.166667,
+                "phase": "IDLE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.48264,
+                  0.7550588802881885
+                ],
+                "rightHandWorld": [
+                  0.52016,
+                  0.7522588802881884
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00068
+              },
+              {
+                "frameIndex": 5,
+                "t": 26.208333,
+                "phase": "IDLE",
+                "root": [
+                  0.5,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.4818,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.5182,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.48264,
+                  0.7553761880227352
+                ],
+                "rightHandWorld": [
+                  0.52016,
+                  0.7525761880227352
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00113
+              }
+            ]
+          },
+          {
+            "track_id": "S08_mara",
+            "shot_id": "S08",
+            "actor_id": "mara",
+            "median_planted_foot_drift_norm": 0,
+            "peak_planted_foot_drift_norm": 0,
+            "peak_hand_grip_dist_norm": 0,
+            "max_adjacent_joint_jump_norm": 0.00151,
+            "max_stationary_foot_move_norm": 0,
+            "max_grip_hand_jump_norm": 0,
+            "trace_passed": true,
+            "violations": [],
+            "sample_frames": [
+              {
+                "frameIndex": 0,
+                "t": 26,
+                "phase": "IDLE",
+                "root": [
+                  0.6,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6175499999999999,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.58245,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.61674,
+                  0.7582404822704364
+                ],
+                "rightHandWorld": [
+                  0.58056,
+                  0.7555404822704364
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0
+              },
+              {
+                "frameIndex": 1,
+                "t": 26.041667,
+                "phase": "IDLE",
+                "root": [
+                  0.6,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6175499999999999,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.58245,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.61674,
+                  0.757987699471006
+                ],
+                "rightHandWorld": [
+                  0.58056,
+                  0.7552876994710059
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00094
+              },
+              {
+                "frameIndex": 2,
+                "t": 26.083333,
+                "phase": "IDLE",
+                "root": [
+                  0.6,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6175499999999999,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.58245,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.61674,
+                  0.7578713634940404
+                ],
+                "rightHandWorld": [
+                  0.58056,
+                  0.7551713634940403
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00043
+              },
+              {
+                "frameIndex": 3,
+                "t": 26.125,
+                "phase": "IDLE",
+                "root": [
+                  0.6,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6175499999999999,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.58245,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.61674,
+                  0.7579080331048159
+                ],
+                "rightHandWorld": [
+                  0.58056,
+                  0.7552080331048159
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00014
+              },
+              {
+                "frameIndex": 4,
+                "t": 26.166667,
+                "phase": "IDLE",
+                "root": [
+                  0.6,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6175499999999999,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.58245,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.61674,
+                  0.7580924917064675
+                ],
+                "rightHandWorld": [
+                  0.58056,
+                  0.7553924917064675
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00068
+              },
+              {
+                "frameIndex": 5,
+                "t": 26.208333,
+                "phase": "IDLE",
+                "root": [
+                  0.6,
+                  0.84
+                ],
+                "speed": 0,
+                "leftFootWorld": [
+                  0.6175499999999999,
+                  0.84
+                ],
+                "rightFootWorld": [
+                  0.58245,
+                  0.84
+                ],
+                "leftPlanted": true,
+                "rightPlanted": true,
+                "leftHandWorld": [
+                  0.61674,
+                  0.7583984670219233
+                ],
+                "rightHandWorld": [
+                  0.58056,
+                  0.7556984670219232
+                ],
+                "gripDistNorm": null,
+                "maxJointJumpNorm": 0.00113
+              }
+            ]
+          }
+        ]
+      },
+      "hand_prop_contact": {
+        "status": "PASS",
+        "plan_valid": true,
+        "peak_hand_grip_dist_norm": 0.00877,
+        "max_grip_hand_jump_norm": 0.00884,
+        "frame_strips": [
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\kh01_20261116_015100Z\\film_qa\\motion_qa\\strips\\strip_01_S02_lucius_GRAB_CONTACT.png",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\kh01_20261116_015100Z\\film_qa\\motion_qa\\strips\\strip_02_S05_lucius_BRACE_ROPE_CONTACT.png",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\kh01_20261116_015100Z\\film_qa\\motion_qa\\strips\\strip_03_S05_mara_BRACE_ROPE_CONTACT.png",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\kh01_20261116_015100Z\\film_qa\\motion_qa\\strips\\strip_04_S06_lucius_GRAB_CONTACT.png",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\evidence\\kh01_20261116_015100Z\\film_qa\\motion_qa\\strips\\strip_05_S07_lucius_STEADY_PROP_CONTACT.png"
+        ],
+        "violations": []
+      },
+      "internal_camera_cuts": {
+        "status": "PASS",
+        "total_duration_sec": 30.0,
+        "expected_intershot_cuts": 7,
+        "audited_intershot_cuts": 7,
+        "expected_internal_cuts": 2,
+        "audited_internal_cuts": 2,
+        "full_coverage": true,
+        "segment_validation_errors": [],
+        "intershot_failures": [],
+        "internal_failures": [],
+        "internal_cut_evidence": [
+          {
+            "cut_id": "S06:S06_seg01->S06_seg02",
+            "shot_id": "S06",
+            "cut_time_sec": 18.75,
+            "requested_times": {
+              "pre_2": 18.6667,
+              "pre_1": 18.7083,
+              "post_1": 18.75,
+              "post_2": 18.7917
+            },
+            "actor_continuity": [
+              {
+                "actor_id": "lucius",
+                "root_jump_norm": 0,
+                "left_foot_jump_norm": 0,
+                "right_hand_jump_norm": 0,
+                "contact_preserved": true
+              }
+            ],
+            "status": "PASS",
+            "diagnostics": []
+          },
+          {
+            "cut_id": "S06:S06_seg02->S06_seg03",
+            "shot_id": "S06",
+            "cut_time_sec": 20.125,
+            "requested_times": {
+              "pre_2": 20.0417,
+              "pre_1": 20.0833,
+              "post_1": 20.125,
+              "post_2": 20.1667
+            },
+            "actor_continuity": [
+              {
+                "actor_id": "lucius",
+                "root_jump_norm": 0,
+                "left_foot_jump_norm": 0,
+                "right_hand_jump_norm": 0,
+                "contact_preserved": true
+              }
+            ],
+            "status": "PASS",
+            "diagnostics": []
+          }
+        ]
+      },
+      "original_asset_manifest_status": "PASS",
+      "media_receipt_status": "PASS",
+      "audio_non_silent": true,
+      "audio_metrics": {
+        "rms_dbfs": -20.29,
+        "peak_linear": 0.8518,
+        "active_sample_ratio": 0.4466
+      },
+      "failures": []
+    },
+    "visual_style_qa": {
+      "status": "PASS",
+      "valid": true,
+      "style_id": "modern_expressive_2d.v1",
+      "is_aesthetic_equivalence_proof": false,
+      "style_similarity_percentage": null,
+      "editorial_gate_status": "HUMAN_REVIEW_PENDING",
+      "inspected_count": 8,
+      "frame_metrics": [
+        {
+          "file": "S01_a.png",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "ink_pixel_ratio": 0.03429,
+          "edge_density": 0.043,
+          "edge_sharpness_p95": 0.0157,
+          "occupied_value_groups": 6,
+          "depth_plane_luma_spread": 0.1727,
+          "focal_contrast_std": 0.1782
+        },
+        {
+          "file": "S02_a.png",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "ink_pixel_ratio": 0.03347,
+          "edge_density": 0.0547,
+          "edge_sharpness_p95": 0.0168,
+          "occupied_value_groups": 7,
+          "depth_plane_luma_spread": 0.0764,
+          "focal_contrast_std": 0.1993
+        },
+        {
+          "file": "S03_a.png",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "ink_pixel_ratio": 0.03068,
+          "edge_density": 0.0569,
+          "edge_sharpness_p95": 0.0196,
+          "occupied_value_groups": 7,
+          "depth_plane_luma_spread": 0.0668,
+          "focal_contrast_std": 0.1959
+        },
+        {
+          "file": "S04_a.png",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "ink_pixel_ratio": 0.03457,
+          "edge_density": 0.0571,
+          "edge_sharpness_p95": 0.0196,
+          "occupied_value_groups": 7,
+          "depth_plane_luma_spread": 0.0868,
+          "focal_contrast_std": 0.2021
+        },
+        {
+          "file": "S05_a.png",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "ink_pixel_ratio": 0.03662,
+          "edge_density": 0.0565,
+          "edge_sharpness_p95": 0.0196,
+          "occupied_value_groups": 7,
+          "depth_plane_luma_spread": 0.0876,
+          "focal_contrast_std": 0.2073
+        },
+        {
+          "file": "S06_a.png",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "ink_pixel_ratio": 0.03363,
+          "edge_density": 0.0582,
+          "edge_sharpness_p95": 0.0171,
+          "occupied_value_groups": 7,
+          "depth_plane_luma_spread": 0.0752,
+          "focal_contrast_std": 0.2023
+        },
+        {
+          "file": "S07_a.png",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "ink_pixel_ratio": 0.03564,
+          "edge_density": 0.0493,
+          "edge_sharpness_p95": 0.023,
+          "occupied_value_groups": 6,
+          "depth_plane_luma_spread": 0.0975,
+          "focal_contrast_std": 0.1875
+        },
+        {
+          "file": "S08_a.png",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "ink_pixel_ratio": 0.03908,
+          "edge_density": 0.0602,
+          "edge_sharpness_p95": 0.0211,
+          "occupied_value_groups": 7,
+          "depth_plane_luma_spread": 0.0831,
+          "focal_contrast_std": 0.2114
+        }
+      ],
+      "errors": []
+    },
+    "composition_qa": {
+      "status": "PASS",
+      "valid": true,
+      "shot_count": 8,
+      "unique_scales": [
+        "close",
+        "macro",
+        "medium",
+        "wide"
+      ],
+      "unique_viewpoints": [
+        "front_three_quarter_right",
+        "profile_left",
+        "profile_right",
+        "rear",
+        "rear_three_quarter_left",
+        "rear_three_quarter_right"
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    "character_consistency_qa": {
+      "status": "PASS",
+      "valid": true,
+      "confidence": 0.92,
+      "manual_fallback": "HUMAN_REVIEW_PENDING",
+      "frames_inspected": 8,
+      "actor_reports": {
+        "lucius": {
+          "valid": true,
+          "status": "PASS",
+          "actor_id": "lucius",
+          "checked_shots": 8,
+          "frame_color_checks": [
+            {
+              "frame": "S01_a.png",
+              "garment_color_pixel_ratio": 0.01841,
+              "detected": true
+            },
+            {
+              "frame": "S02_a.png",
+              "garment_color_pixel_ratio": 0.03716,
+              "detected": true
+            },
+            {
+              "frame": "S03_a.png",
+              "garment_color_pixel_ratio": 0.03169,
+              "detected": true
+            },
+            {
+              "frame": "S04_a.png",
+              "garment_color_pixel_ratio": 0.03368,
+              "detected": true
+            },
+            {
+              "frame": "S05_a.png",
+              "garment_color_pixel_ratio": 0.0349,
+              "detected": true
+            },
+            {
+              "frame": "S06_a.png",
+              "garment_color_pixel_ratio": 0.03412,
+              "detected": true
+            },
+            {
+              "frame": "S07_a.png",
+              "garment_color_pixel_ratio": 0.02593,
+              "detected": true
+            },
+            {
+              "frame": "S08_a.png",
+              "garment_color_pixel_ratio": 0.03593,
+              "detected": true
+            }
+          ],
+          "errors": [],
+          "warnings": []
+        },
+        "mara": {
+          "valid": true,
+          "status": "PASS",
+          "actor_id": "mara",
+          "checked_shots": 8,
+          "frame_color_checks": [
+            {
+              "frame": "S01_a.png",
+              "garment_color_pixel_ratio": 0.00922,
+              "detected": true
+            },
+            {
+              "frame": "S02_a.png",
+              "garment_color_pixel_ratio": 0.01524,
+              "detected": true
+            },
+            {
+              "frame": "S03_a.png",
+              "garment_color_pixel_ratio": 0.0126,
+              "detected": true
+            },
+            {
+              "frame": "S04_a.png",
+              "garment_color_pixel_ratio": 0.01324,
+              "detected": true
+            },
+            {
+              "frame": "S05_a.png",
+              "garment_color_pixel_ratio": 0.0142,
+              "detected": true
+            },
+            {
+              "frame": "S06_a.png",
+              "garment_color_pixel_ratio": 0.01318,
+              "detected": true
+            },
+            {
+              "frame": "S07_a.png",
+              "garment_color_pixel_ratio": 0.00087,
+              "detected": false
+            },
+            {
+              "frame": "S08_a.png",
+              "garment_color_pixel_ratio": 0.01545,
+              "detected": true
+            }
+          ],
+          "errors": [],
+          "warnings": []
+        }
+      },
+      "luma_range": [
+        137.11,
+        159.51
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    "style_assets_contract_qa": {
+      "valid": true,
+      "status": "PASS",
+      "style_id": "modern_expressive_2d.v1",
+      "style_lock_digest": "0b3433f455475ee2574c2f47dad43aaf89aa7975fdaf241247a25957b3c6f766",
+      "reference_availability": "STYLE_REFERENCE_UNAVAILABLE",
+      "checked_authored_files": 35,
+      "errors": [],
+      "warnings": []
+    }
+  },
+  "visual_review_packet": {
+    "status": "PASS",
+    "editorial_status": "HUMAN_REVIEW_PENDING",
+    "full_contact_sheet": {
+      "path": "tests/evidence/kh01_20261116_015100Z/review_packet/contact_sheet_kh01_full_8shots.png",
+      "sha256": "d0c851d62a72a5ed9a4409d359370bd22efe4ba71a03de288aaf4f8e21a1abcf"
+    },
+    "hook_strip": {
+      "path": "tests/evidence/kh01_20261116_015100Z/review_packet/strip_01_hook_and_lunge.png",
+      "sha256": "8545e6e8ed830f6774ef9cdeb718d3c430059d61edb6be8ccc4054a42acb3dee"
+    },
+    "action_strip": {
+      "path": "tests/evidence/kh01_20261116_015100Z/review_packet/strip_02_chase_awning_cart.png",
+      "sha256": "0917d52fe9e24c2a96f107707f2aa6b715f77ccdc3129485439536da36ddd191"
+    },
+    "climax_reveal_strip": {
+      "path": "tests/evidence/kh01_20261116_015100Z/review_packet/strip_03_multicam_catch_and_reveal.png",
+      "sha256": "7e3eafb00d85f69b41653df028e20ce4b1c8e47b2779aa18f802ac15e3175f7e"
+    },
+    "extracted_shot_panels": [
+      {
+        "path": "tests/evidence/kh01_20261116_015100Z/review_packet/shot_S01_1.31s.png",
+        "label": "S01 HOOK_GUST_COUNTER",
+        "timestamp_sec": 1.31
+      },
+      {
+        "path": "tests/evidence/kh01_20261116_015100Z/review_packet/shot_S02_4.44s.png",
+        "label": "S02 STAKES_MISSED_LUNGE",
+        "timestamp_sec": 4.44
+      },
+      {
+        "path": "tests/evidence/kh01_20261116_015100Z/review_packet/shot_S03_8.25s.png",
+        "label": "S03 CHASE_FORUM_STREET",
+        "timestamp_sec": 8.25
+      },
+      {
+        "path": "tests/evidence/kh01_20261116_015100Z/review_packet/shot_S04_12.00s.png",
+        "label": "S04 OBSTACLE_MARKET_AWNINGS",
+        "timestamp_sec": 12.0
+      },
+      {
+        "path": "tests/evidence/kh01_20261116_015100Z/review_packet/shot_S05_15.50s.png",
+        "label": "S05 ESCALATION_RUNAWAY_CART",
+        "timestamp_sec": 15.5
+      },
+      {
+        "path": "tests/evidence/kh01_20261116_015100Z/review_packet/shot_S06_19.44s.png",
+        "label": "S06 CLIMAX_FOUNTAIN_CATCH",
+        "timestamp_sec": 19.44
+      },
+      {
+        "path": "tests/evidence/kh01_20261116_015100Z/review_packet/shot_S07_24.43s.png",
+        "label": "S07 REVEAL_SCROLL_UNFOLD",
+        "timestamp_sec": 24.43
+      },
+      {
+        "path": "tests/evidence/kh01_20261116_015100Z/review_packet/shot_S08_29.20s.png",
+        "label": "S08 PAYOFF_TOMORROW_LAUGH",
+        "timestamp_sec": 29.2
+      }
+    ]
+  },
+  "editorial_packet": {
+    "schema_version": "kh01.editorial_packet.v1",
+    "reference_status": "STYLE_REFERENCE_UNAVAILABLE",
+    "public_repo_contains_user_reference_images": false,
+    "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+    "EDITORIAL_APPROVED": "HUMAN_REVIEW_PENDING",
+    "visual_gates": {
+      "VQ01_STYLE_FRAME_CANDIDATE": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+      "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+      "VQ03_ACTING_8S": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+      "VQ04_MULTICAMERA": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+      "VQ05_MULTI_NICHE": "CANDIDATE_READY_FOR_HUMAN_REVIEW",
+      "VQ06_FINAL_FILM": "CANDIDATE_TECH_VERIFIED_HUMAN_REVIEW_PENDING"
+    },
+    "montage_png": {
+      "path": "tests/evidence/kh01_20261116_015100Z/editorial_packet/KH01_EDITORIAL_REVIEW_MONTAGE.png",
+      "sha256": "8e65d5ad90b09cda6795eb622cd43ce41dfb4a9a14b38572c99e876f70ad9f94",
+      "dimensions": [
+        1760,
+        1253
+      ],
+      "panel_count": 8
+    },
+    "subjective_gaps_and_disclosures": [
+      "Reference archive KH-01_STYLE_REFERENCES_ONLY.zip was unavailable on host (STYLE_REFERENCE_UNAVAILABLE); direct side-by-side pixel comparison against the three user reference frames requires the user to place those frames locally.",
+      "All KH-01 characters, outfits, props, and multi-plane stages are 100% newly authored vector/Canvas/Rigby2D artwork governed by modern_expressive_2d.v1 rules; hand-drawn frame-by-frame traditional smear/boil nuances remain simpler than bespoke studio cel animation.",
+      "STYLE_APPROVED and EDITORIAL_APPROVED remain HUMAN_REVIEW_PENDING until explicit human inspection of the PNG sheets and 30.000s 1080p MP4."
+    ],
+    "reviewer_checkpoints": [
+      "Verify bold variable-weight ink outlines and 2-3 cel-shading value groups read cleanly at 1080p and mobile width.",
+      "Inspect Lucius and Mara 3-view turnarounds and 6 facial expressions for genuine emotional range.",
+      "Inspect S01 scroll hook, S05 cart brace, S06 fountain catch multi-angle edit, S07 'MEETING MOVED TO TOMORROW' reveal, and S08 comedic payoff.",
+      "Confirm natural English narration intelligibility, Foley balance, and -14 LUFS loudness comfort."
+    ]
+  }
+}

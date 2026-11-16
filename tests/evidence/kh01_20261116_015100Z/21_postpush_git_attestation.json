@@ -1,0 +1,31 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "git status --short && git rev-parse HEAD (pre-push scaffold; finalized via --postpush)",
+  "started_iso": "2026-11-16T06:23:58.948926+00:00",
+  "ended_iso": "2026-11-16T06:23:58.948926+00:00",
+  "elapsed_sec": 0.0,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    ".git/HEAD"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/21_postpush_git_attestation.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.466,
+    "ram_available_gb": 9.564,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "attestation_stage": "PRE_PUSH_READY_AWAITING_GIT_PUSH",
+  "base_head_sha": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "production_branch_invariant_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1"
+}

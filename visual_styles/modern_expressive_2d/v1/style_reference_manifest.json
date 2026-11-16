@@ -1,0 +1,17 @@
+{
+  "schema_version": "kh01.style_reference_manifest.v1",
+  "style_id": "modern_expressive_2d.v1",
+  "reference_status": "STYLE_REFERENCE_UNAVAILABLE",
+  "expected_archive": "KH-01_STYLE_REFERENCES_ONLY.zip",
+  "cited_reference_video_url": "https://www.youtube.com/watch?v=fXuWQg7uJKg",
+  "archive_present_on_host": false,
+  "reference_frames": [],
+  "public_repo_payload_included": false,
+  "copyright_exclusion_rules": {
+    "no_reference_frame_pixels_used": true,
+    "no_reference_characters_copied": true,
+    "no_prior_fl01_preview_stills_used": true,
+    "no_rigby_demo_mascots_used": true,
+    "no_text_only_similarity_percentage_claimed": true
+  }
+}

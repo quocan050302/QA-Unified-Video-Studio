@@ -1,0 +1,58 @@
+[
+  {
+    "id": "S01",
+    "slot": "NARRATOR",
+    "start": 0.14,
+    "end": 1.796,
+    "text": "Rome had one urgent message."
+  },
+  {
+    "id": "S02",
+    "slot": "NARRATOR",
+    "start": 2.745,
+    "end": 4.531,
+    "text": "And one courier who could not lose it."
+  },
+  {
+    "id": "S03",
+    "slot": "NARRATOR",
+    "start": 6.37,
+    "end": 7.917,
+    "text": "But the wind had other plans."
+  },
+  {
+    "id": "S04",
+    "slot": "NARRATOR",
+    "start": 10.37,
+    "end": 12.303,
+    "text": "He vanished beneath the market awnings."
+  },
+  {
+    "id": "S05",
+    "slot": "NARRATOR",
+    "start": 13.87,
+    "end": 16.297,
+    "text": "A runaway cart offered one last chance."
+  },
+  {
+    "id": "S06",
+    "slot": "NARRATOR",
+    "start": 17.37,
+    "end": 19.276,
+    "text": "He caught the scroll beside the fountain."
+  },
+  {
+    "id": "S07",
+    "slot": "NARRATOR",
+    "start": 21.745,
+    "end": 23.8,
+    "text": "Then he finally read the emperor's order."
+  },
+  {
+    "id": "S08",
+    "slot": "NARRATOR",
+    "start": 26.12,
+    "end": 27.804,
+    "text": "The meeting... was tomorrow."
+  }
+]

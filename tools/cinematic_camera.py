@@ -1183,3 +1183,161 @@ def compile_camera_segments_to_renderer(
         "moveAmt": round(max(0.02, abs(first.zoom_to - first.zoom_from)), 3),
     }
 
+
+VIEWPOINT_TO_ASSET_VIEW: Dict[str, str] = {
+    "front": "front",
+    "front_three_quarter_left": "three_quarter",
+    "front_three_quarter_right": "three_quarter",
+    "profile_left": "profile",
+    "profile_right": "profile",
+    "rear_three_quarter_left": "rear_three_quarter",
+    "rear_three_quarter_right": "rear_three_quarter",
+    "rear": "rear",
+    "over_shoulder_left": "rear_three_quarter",
+    "over_shoulder_right": "rear_three_quarter",
+    "high_angle": "three_quarter",
+    "low_angle": "three_quarter",
+    "top_down": "top_down",
+    "map": "map",
+}
+
+
+def link_camera_to_asset_views(
+    segments: List[Union[CameraSegment, Dict[str, Any]]],
+    character_manifest: Optional[Dict[str, Any]] = None,
+    environment_manifest: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """
+    KH-01.4: Link planned camera segments to genuine authored character & environment views.
+    Hard-rejects:
+      - scaling/cropping a front portrait (`projection_mode == 'crop_zoom'`) to fake a profile, rear, or reverse angle;
+      - missing required character views (`front`, `three_quarter`, `profile`, `rear_three_quarter`) or close inserts;
+      - 180-degree axis jumps or costume/prop anchor discontinuities across internal segment cuts.
+    """
+    seg_objs = [
+        seg if isinstance(seg, CameraSegment) else CameraSegment.model_validate(seg)
+        for seg in (segments or [])
+    ]
+    errors: List[str] = []
+    bindings: List[Dict[str, Any]] = []
+
+    if not seg_objs:
+        return {"valid": False, "errors": ["Empty camera segments list"], "bindings": []}
+
+    chars_by_id: Dict[str, Dict[str, Any]] = {}
+    if isinstance(character_manifest, dict):
+        raw_chars = character_manifest.get("characters") or character_manifest
+        if isinstance(raw_chars, dict):
+            for cid, cdata in raw_chars.items():
+                if isinstance(cdata, dict):
+                    chars_by_id[str(cid)] = cdata
+        elif isinstance(raw_chars, list):
+            for cdata in raw_chars:
+                if isinstance(cdata, dict) and cdata.get("actor_id"):
+                    chars_by_id[str(cdata["actor_id"])] = cdata
+
+    env_tiers = set(
+        (environment_manifest or {}).get(
+            "supported_detail_tiers",
+            ["TIER_3_FULL_ARCHITECTURAL_STAGE", "TIER_2_FOCUSED_STAGE", "TIER_1_GRAPHIC_MOOD_BACKDROP", "TIER_1_TACTILE_PROP_FOCUS"],
+        )
+    )
+    env_id = str((environment_manifest or {}).get("environment_id") or "default_stage")
+
+    prev_axis: Optional[str] = None
+    prev_wardrobe_by_actor: Dict[str, str] = {}
+
+    for seg in seg_objs:
+        req_asset_view = VIEWPOINT_TO_ASSET_VIEW.get(seg.viewpoint, "three_quarter")
+        is_hand_insert = seg.scale in ("detail", "extreme_close") and any(
+            k in seg.adds_information_reason.lower() for k in ("hand", "grip", "catch", "scroll", "palm", "rope", "lantern")
+        )
+        is_face_insert = seg.scale in ("close", "extreme_close") and not is_hand_insert
+
+        # Forbid faking non-front views via crop_zoom of a front portrait
+        if seg.projection_mode == "crop_zoom" and req_asset_view in ("profile", "rear", "rear_three_quarter"):
+            errors.append(
+                f"{seg.segment_id}: false '{req_asset_view}' angle via crop_zoom is forbidden; requires real authored view"
+            )
+
+        if prev_axis in ("left_to_right", "right_to_left") and seg.axis in ("left_to_right", "right_to_left"):
+            if prev_axis != seg.axis:
+                errors.append(f"{seg.segment_id}: 180-degree camera axis violation ({prev_axis} -> {seg.axis})")
+        if seg.axis in ("left_to_right", "right_to_left"):
+            prev_axis = seg.axis
+
+        actor_view_links: Dict[str, Dict[str, Any]] = {}
+        for aid in seg.focus_actor_ids:
+            c_spec = chars_by_id.get(aid)
+            if c_spec is not None:
+                avail_views = set(c_spec.get("views") or c_spec.get("supported_views") or [])
+                if req_asset_view in ("rear", "rear_three_quarter") and "rear_three_quarter" in avail_views:
+                    chosen_view = "rear_three_quarter"
+                elif req_asset_view in avail_views:
+                    chosen_view = req_asset_view
+                else:
+                    chosen_view = req_asset_view
+                    errors.append(
+                        f"{seg.segment_id}: character '{aid}' missing required authored view '{req_asset_view}' (available={sorted(avail_views)})"
+                    )
+                if is_hand_insert and not c_spec.get("has_hand_insert", True):
+                    errors.append(f"{seg.segment_id}: character '{aid}' missing close hand-grip insert asset")
+                if is_face_insert and len(c_spec.get("expressions") or c_spec.get("supported_expressions") or [1, 2, 3, 4, 5, 6]) < 6:
+                    errors.append(f"{seg.segment_id}: character '{aid}' has fewer than 6 distinct facial expressions for close-up")
+                wardrobe_state = str(c_spec.get("wardrobe_state") or c_spec.get("outfit_id") or "default_outfit")
+                if aid in prev_wardrobe_by_actor and prev_wardrobe_by_actor[aid] != wardrobe_state:
+                    if not seg.world_state_anchor.get("costume_change_event"):
+                        errors.append(
+                            f"{seg.segment_id}: unmotivated wardrobe change on '{aid}' across internal cut ({prev_wardrobe_by_actor[aid]} -> {wardrobe_state})"
+                        )
+                prev_wardrobe_by_actor[aid] = wardrobe_state
+                actor_view_links[aid] = {
+                    "asset_view": chosen_view,
+                    "insert_mode": "close_hand_insert" if is_hand_insert else ("close_face_insert" if is_face_insert else "full_actor_view"),
+                    "wardrobe_state": wardrobe_state,
+                    "facing_sign": -1 if "left" in seg.viewpoint and "profile" in seg.viewpoint else 1,
+                }
+            else:
+                actor_view_links[aid] = {
+                    "asset_view": req_asset_view,
+                    "insert_mode": "close_hand_insert" if is_hand_insert else ("close_face_insert" if is_face_insert else "full_actor_view"),
+                    "wardrobe_state": "default_outfit",
+                    "facing_sign": 1,
+                }
+
+        detail_tier = (
+            "TIER_3_FULL_ARCHITECTURAL_STAGE"
+            if seg.scale in ("extreme_wide", "wide", "medium_wide")
+            else (
+                "TIER_2_FOCUSED_STAGE"
+                if seg.scale in ("medium", "medium_close")
+                else ("TIER_1_TACTILE_PROP_FOCUS" if is_hand_insert else "TIER_1_GRAPHIC_MOOD_BACKDROP")
+            )
+        )
+        if env_tiers and detail_tier not in env_tiers:
+            errors.append(f"{seg.segment_id}: environment '{env_id}' missing detail tier '{detail_tier}'")
+
+        bindings.append({
+            "segment_id": seg.segment_id,
+            "shot_id": seg.shot_id,
+            "viewpoint": seg.viewpoint,
+            "scale": seg.scale,
+            "resolved_asset_view": req_asset_view,
+            "insert_mode": "close_hand_insert" if is_hand_insert else ("close_face_insert" if is_face_insert else "scene_view"),
+            "environment_id": env_id,
+            "environment_detail_tier": detail_tier,
+            "actor_bindings": actor_view_links,
+            "focus_object_ids": list(seg.focus_object_ids),
+            "axis": seg.axis,
+            "continuous_world_clock": bool(seg.world_state_anchor.get("continuous_world_clock", not seg.resets_action_time)),
+        })
+
+    return {
+        "valid": len(errors) == 0,
+        "errors": errors,
+        "segment_count": len(seg_objs),
+        "distinct_asset_views": sorted({b["resolved_asset_view"] for b in bindings}),
+        "distinct_insert_modes": sorted({b["insert_mode"] for b in bindings}),
+        "bindings": bindings,
+    }
+

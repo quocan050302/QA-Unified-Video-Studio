@@ -1,0 +1,65 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "scripts.run_kh01_validation::job_w3_speed_benchmark(n=3)",
+  "started_iso": "2026-11-16T06:13:08.209146+00:00",
+  "ended_iso": "2026-11-16T06:13:14.969126+00:00",
+  "elapsed_sec": 6.76,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/KH01_ROMES_MOST_URGENT_SCROLL_ORIGINAL_30S_1080P.mp4"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/18_serial_parallel_speed.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.514,
+    "ram_available_gb": 8.569,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 1
+  },
+  "failure_details": null,
+  "scope_disclosure": "Speedup ratio applies strictly to bounded-parallel QA ffprobe + RGB24 frame-decode tasks (n=3) and is NEVER extrapolated to full-film rendering. Heavy 1080p Chromium renders are serialized to 1 worker.",
+  "iterations": 3,
+  "mean_serial_sec": 1.6019,
+  "mean_parallel_sec": 0.612,
+  "mean_qa_speedup_ratio": 2.617,
+  "all_output_sha256_identical": true,
+  "runs": [
+    {
+      "iteration": 1,
+      "serial_sec": 1.6002,
+      "parallel_sec": 0.6467,
+      "speedup_ratio": 2.474,
+      "overlapping_pairs": 6,
+      "output_hashes_identical": true
+    },
+    {
+      "iteration": 2,
+      "serial_sec": 1.3025,
+      "parallel_sec": 0.5829,
+      "speedup_ratio": 2.235,
+      "overlapping_pairs": 6,
+      "output_hashes_identical": true
+    },
+    {
+      "iteration": 3,
+      "serial_sec": 1.903,
+      "parallel_sec": 0.6064,
+      "speedup_ratio": 3.138,
+      "overlapping_pairs": 6,
+      "output_hashes_identical": true
+    }
+  ],
+  "motion_engine_720f_eval_overhead": {
+    "evals_720f": 993,
+    "total_ms": 14.053,
+    "ms_per_frame": 0.01952
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "kh01.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "reference_status": "STYLE_REFERENCE_UNAVAILABLE",
+  "expected_archive_filename": "KH-01_STYLE_REFERENCES_ONLY.zip",
+  "expected_reference_count": 3,
+  "cited_reference_url": "https://www.youtube.com/watch?v=fXuWQg7uJKg",
+  "zip_found_on_host": false,
+  "uploaded_media_found_in_session": false,
+  "searched_locations": [
+    "D:/Project_github/QA-Unified-Video-Studio",
+    "D:/Project_github",
+    "D:/",
+    "C:/Users/QuocAn/Downloads",
+    "C:/Users/QuocAn/Desktop",
+    "C:/Users/QuocAn/Documents",
+    "C:/Users/QuocAn/AppData/Local/Temp",
+    "C:/Users/QuocAn/.gemini/antigravity/brain/a5ea746b-f073-4b48-be89-612429f28b26/.user_uploaded"
+  ],
+  "reference_files": [],
+  "visual_similarity_claim_policy": "NO_TEXT_ONLY_SIMILARITY_CLAIM_PERMITTED",
+  "copyright_and_reuse_policy": {
+    "direct_frame_reuse_allowed": false,
+    "character_copy_allowed": false,
+    "public_git_commit_of_reference_frames_allowed": false,
+    "authored_art_origin": "100%_ORIGINAL_EDITORIAL_2D_RULES_AND_NEWLY_AUTHORED_LAYERED_VECTORS"
+  },
+  "human_editorial_gates": {
+    "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+    "EDITORIAL_APPROVED": "HUMAN_REVIEW_PENDING"
+  },
+  "notes": "KH-01_STYLE_REFERENCES_ONLY.zip was not present on any mounted filesystem (C:, D:) or session upload directory at execution time (2026-11-16T01:45:00Z). Per prompt mandate ('If these images are not accessible, explicitly report STYLE_REFERENCE_UNAVAILABLE and DO NOT claim visual similarity from text alone'), zero reference frame hashes/dimensions are fabricated and visual similarity to unseen reference rasters is NOT claimed. All KH-01 style rules, character sheets, environments, and animations are 100% original creations targeting modern expressive 2D cartoon principles."
+}

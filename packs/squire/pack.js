@@ -8,6 +8,7 @@ import { soldier, bust, CAST } from './chara.js';
 import { bg } from './world.js';
 import { formation } from './army.js';
 import { drawThing, loadWorld } from './templates.js';
+import { initModernExpressive2D } from './modern2d/style_renderer.js';
 export * from './ink.js';
 export * from './chara.js';
 export * from './world.js';
@@ -26,6 +27,7 @@ export async function init(E) {
   if (E.cfg.captions === undefined || E.cfg.captions === null) E.cfg.captions = E.vertical;
   if (!E.cfg.captionStyle) E.cfg.captionStyle = 'squire';
   if (E.shots.some((s) => s.tpl === 'map')) await loadWorld(); else await loadWorld().catch(() => {});
+  if (E.shots.some((s) => s.tpl === 'modern_expressive_2d')) await initModernExpressive2D(E);
 }
 
 // ---------- phu de Short: 1-3 chu IN HOA trang sieu dam, vien den, bong; chu dang doc to hon chut

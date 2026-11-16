@@ -1,0 +1,198 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "tools.kh01_poc_and_pilots::produce_kh01_visual_style_poc(character_model_sheets)",
+  "started_iso": "2026-11-16T06:10:34.049207+00:00",
+  "ended_iso": "2026-11-16T06:10:40.161255+00:00",
+  "elapsed_sec": 6.112,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "tools/character_design.py",
+    "visual_styles/modern_expressive_2d/v1/style_bible.json"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ02_MODEL_SHEET_CANDIDATE_01_lucius_hero.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ02_MODEL_SHEET_CANDIDATE_02_mara_supporting.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ02_MODEL_SHEET_CANDIDATE_03_maya_science.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ02_MODEL_SHEET_CANDIDATE_04_sam_business.png"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.53,
+    "ram_available_gb": 8.178,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE": "CANDIDATE_GENERATED_HUMAN_REVIEW_PENDING",
+  "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+  "model_sheets": [
+    {
+      "id": "P01",
+      "gate": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ02_MODEL_SHEET_CANDIDATE_01_lucius_hero.png",
+      "sha256": "8c11bcbcf45ff7979ab09659fffcd8f8981a1980cd4e96537c44b74fff3a9794",
+      "label": "Hero Lucius Turnaround + 6 Expressions"
+    },
+    {
+      "id": "P02",
+      "gate": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ02_MODEL_SHEET_CANDIDATE_02_mara_supporting.png",
+      "sha256": "9e96f147b31755df7eed67da2094b5ad9938b2fc4ba9c480753781ca1cbf1b37",
+      "label": "Supporting Mara Turnaround + 6 Expressions"
+    },
+    {
+      "id": "P03",
+      "gate": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ02_MODEL_SHEET_CANDIDATE_03_maya_science.png",
+      "sha256": "bcc1c40ef662dbd42f5db8912244cd5c5ac20f96de76b71234644f9459fd930d",
+      "label": "Science Lead Dr. Maya Lin Model Sheet"
+    },
+    {
+      "id": "P04",
+      "gate": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ02_MODEL_SHEET_CANDIDATE_04_sam_business.png",
+      "sha256": "8c7f3d13ede6760063ee31050159ef17e7f5d25001bf6511055ba35ea0e16983",
+      "label": "Business Barista Sam Model Sheet"
+    }
+  ],
+  "character_specs_summary": {
+    "lucius": {
+      "niche": "roman_forum",
+      "outfit_id": "royal_courier_tunic_satchel",
+      "head_to_height_ratio": 0.215,
+      "views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "rear_three_quarter"
+      ],
+      "expressions": [
+        "neutral_attentive",
+        "wide_shock",
+        "strained_exertion",
+        "determined_focus",
+        "joyful_laugh",
+        "deadpan_disbelief"
+      ],
+      "editable_svg": {
+        "path": "tests/evidence/kh01_20261116_015100Z/style_poc/characters/lucius/lucius_layered_master.svg",
+        "sha256": "9d2ca5b7dd29b28e30f44db35ecf34ed00e1f7806308577cb57234d5e8be2006",
+        "layers": [
+          "ground_shadow",
+          "back_accessory_layer",
+          "legs_and_footwear",
+          "upper_arm_far",
+          "torso_and_clothing_masks",
+          "upper_and_forearm_near",
+          "head_and_hair",
+          "face_expression_controls"
+        ]
+      }
+    },
+    "mara": {
+      "niche": "roman_forum",
+      "outfit_id": "forum_vendor_stola_apron",
+      "head_to_height_ratio": 0.21,
+      "views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "rear_three_quarter"
+      ],
+      "expressions": [
+        "neutral_attentive",
+        "wide_shock",
+        "strained_exertion",
+        "determined_focus",
+        "joyful_laugh",
+        "deadpan_disbelief"
+      ],
+      "editable_svg": {
+        "path": "tests/evidence/kh01_20261116_015100Z/style_poc/characters/mara/mara_layered_master.svg",
+        "sha256": "c53367b557b9246e79af939723b4147add34db51d711487096af60e6914b7d1b",
+        "layers": [
+          "ground_shadow",
+          "back_accessory_layer",
+          "legs_and_footwear",
+          "upper_arm_far",
+          "torso_and_clothing_masks",
+          "upper_and_forearm_near",
+          "head_and_hair",
+          "face_expression_controls"
+        ]
+      }
+    },
+    "maya_lin": {
+      "niche": "modern_science",
+      "outfit_id": "lead_scientist_labcoat_knit",
+      "head_to_height_ratio": 0.198,
+      "views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "rear_three_quarter"
+      ],
+      "expressions": [
+        "neutral_attentive",
+        "wide_shock",
+        "strained_exertion",
+        "determined_focus",
+        "joyful_laugh",
+        "deadpan_disbelief"
+      ],
+      "editable_svg": {
+        "path": "tests/evidence/kh01_20261116_015100Z/style_poc/characters/maya_lin/maya_lin_layered_master.svg",
+        "sha256": "6a8dfa0024afad47203f36a615c1020f53a2740f41c1ecf1520e0259fe1a81fb",
+        "layers": [
+          "ground_shadow",
+          "back_accessory_layer",
+          "legs_and_footwear",
+          "upper_arm_far",
+          "torso_and_clothing_masks",
+          "upper_and_forearm_near",
+          "head_and_hair",
+          "face_expression_controls"
+        ]
+      }
+    },
+    "sam_barista": {
+      "niche": "everyday_business",
+      "outfit_id": "barista_chore_jacket_apron",
+      "head_to_height_ratio": 0.21,
+      "views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "rear_three_quarter"
+      ],
+      "expressions": [
+        "neutral_attentive",
+        "wide_shock",
+        "strained_exertion",
+        "determined_focus",
+        "joyful_laugh",
+        "deadpan_disbelief"
+      ],
+      "editable_svg": {
+        "path": "tests/evidence/kh01_20261116_015100Z/style_poc/characters/sam_barista/sam_barista_layered_master.svg",
+        "sha256": "5bf929f64f54d4f3601d6151f41abf72213081967fdb154a9b88959ba23d0868",
+        "layers": [
+          "ground_shadow",
+          "back_accessory_layer",
+          "legs_and_footwear",
+          "upper_arm_far",
+          "torso_and_clothing_masks",
+          "upper_and_forearm_near",
+          "head_and_hair",
+          "face_expression_controls"
+        ]
+      }
+    }
+  }
+}

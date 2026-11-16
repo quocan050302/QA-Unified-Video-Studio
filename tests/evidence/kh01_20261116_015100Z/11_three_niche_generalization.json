@@ -1,0 +1,271 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "tools.kh01_poc_and_pilots::produce_kh01_four_niche_generalization",
+  "started_iso": "2026-11-16T06:11:41.828864+00:00",
+  "ended_iso": "2026-11-16T06:12:17.493640+00:00",
+  "elapsed_sec": 35.6648,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "tools/visual_style_director.py",
+    "tools/character_design.py",
+    "tools/environment_factory.py"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/VQ05_MULTI_NICHE_4WAY_COMPARISON.png",
+    "tests/evidence/kh01_20261116_015100Z/11_three_niche_generalization.json"
+  ],
+  "input_sha256": null,
+  "output_sha256": "a095e202ec5f18f2c4c7718526586060f2b6a8fc5e95dd88aeba5a084fd30913",
+  "measured_resources": {
+    "disk_free_gb": 54.53,
+    "ram_available_gb": 8.801,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "gate_id": "VQ05_MULTI_NICHE",
+  "editorial_status": "HUMAN_REVIEW_PENDING",
+  "niche_cases_count": 4,
+  "distinct_environments_count": 4,
+  "distinct_outfits_count": 8,
+  "comparison_sheet": {
+    "path": "projects/kh01_modern_2d_roman_urgent_scroll_30s/out/pilots/multi_niche_6s/VQ05_MULTI_NICHE_4WAY_COMPARISON.png",
+    "sha256": "a095e202ec5f18f2c4c7718526586060f2b6a8fc5e95dd88aeba5a084fd30913",
+    "evidence_copy_path": "tests/evidence/kh01_20261116_015100Z/VQ05_MULTI_NICHE_4WAY_COMPARISON.png"
+  },
+  "cases": [
+    {
+      "case_id": "niche_01_roman_forum_negotiation",
+      "is_holdout": false,
+      "inferred_niche": "roman_forum",
+      "style_id": "modern_expressive_2d.v1",
+      "style_lock_digest": "0b3433f455475ee2574c2f47dad43aaf89aa7975fdaf241247a25957b3c6f766",
+      "environment_id": "roman_forum_marketplace_v1",
+      "actor_outfits": {
+        "cato": "senatorial_civic_toga",
+        "tullia": "forum_vendor_stola_apron"
+      },
+      "actor_primary_colors": {
+        "cato": "#EFE6D5",
+        "tullia": "#2B6E78"
+      },
+      "zero_roman_military_leak": true,
+      "shared_universal_template": "modern_expressive_2d",
+      "per_story_custom_js_modules_count": 0,
+      "foot_plant_status": "PASS",
+      "environment_continuity_status": "PASS",
+      "render": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\multi_niche_6s\\VQ05_niche_01_roman_forum_negotiation_6s_1080p.mp4",
+        "mp4_sha256": "a165d1793e54a7c37d3d8f911a3ff0fb188d20aeec64e0703e7f96d6cb2f717d",
+        "size_bytes": 937297,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "duration_sec": 6.0,
+        "decoded_video_frames": 144,
+        "expected_video_frames": 144,
+        "render_wall_sec": 6.383,
+        "valid": true,
+        "media_inspection": {
+          "valid": true,
+          "error": null,
+          "errors": [],
+          "duration": 6.0,
+          "video_stream_duration": 6.0,
+          "audio_stream_duration": 6.0,
+          "decoded_video_frames": 144,
+          "file_size": 937297,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "has_video": true,
+          "has_audio": true,
+          "decode_clean": true,
+          "max_volume_db": -1.2,
+          "mean_volume_db": -18.0,
+          "integrated_lufs": null,
+          "true_peak_dbtp": null,
+          "sha256": "a165d1793e54a7c37d3d8f911a3ff0fb188d20aeec64e0703e7f96d6cb2f717d"
+        }
+      }
+    },
+    {
+      "case_id": "niche_02_modern_science_cleanroom",
+      "is_holdout": false,
+      "inferred_niche": "modern_science",
+      "style_id": "modern_expressive_2d.v1",
+      "style_lock_digest": "0b3433f455475ee2574c2f47dad43aaf89aa7975fdaf241247a25957b3c6f766",
+      "environment_id": "cleanroom_optics_lab_v1",
+      "actor_outfits": {
+        "maya": "lead_scientist_labcoat_knit",
+        "owen": "research_engineer_utility_jacket"
+      },
+      "actor_primary_colors": {
+        "maya": "#EAF2F8",
+        "owen": "#3D5A73"
+      },
+      "zero_roman_military_leak": true,
+      "shared_universal_template": "modern_expressive_2d",
+      "per_story_custom_js_modules_count": 0,
+      "foot_plant_status": "PASS",
+      "environment_continuity_status": "PASS",
+      "render": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\multi_niche_6s\\VQ05_niche_02_modern_science_cleanroom_6s_1080p.mp4",
+        "mp4_sha256": "69ee8548586adf3f90a83f8fca1aadb650fadafdc8c1a4bee1ac49efc808c59a",
+        "size_bytes": 536958,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "duration_sec": 6.0,
+        "decoded_video_frames": 144,
+        "expected_video_frames": 144,
+        "render_wall_sec": 5.524,
+        "valid": true,
+        "media_inspection": {
+          "valid": true,
+          "error": null,
+          "errors": [],
+          "duration": 6.0,
+          "video_stream_duration": 6.0,
+          "audio_stream_duration": 6.0,
+          "decoded_video_frames": 144,
+          "file_size": 536958,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "has_video": true,
+          "has_audio": true,
+          "decode_clean": true,
+          "max_volume_db": -1.3,
+          "mean_volume_db": -18.3,
+          "integrated_lufs": null,
+          "true_peak_dbtp": null,
+          "sha256": "69ee8548586adf3f90a83f8fca1aadb650fadafdc8c1a4bee1ac49efc808c59a"
+        }
+      }
+    },
+    {
+      "case_id": "niche_03_everyday_business_cafe",
+      "is_holdout": false,
+      "inferred_niche": "everyday_business",
+      "style_id": "modern_expressive_2d.v1",
+      "style_lock_digest": "0b3433f455475ee2574c2f47dad43aaf89aa7975fdaf241247a25957b3c6f766",
+      "environment_id": "corner_artisan_cafe_v1",
+      "actor_outfits": {
+        "sam": "barista_chore_jacket_apron",
+        "priya": "cafe_customer_cardigan_blouse"
+      },
+      "actor_primary_colors": {
+        "sam": "#4A6B5D",
+        "priya": "#D96B43"
+      },
+      "zero_roman_military_leak": true,
+      "shared_universal_template": "modern_expressive_2d",
+      "per_story_custom_js_modules_count": 0,
+      "foot_plant_status": "PASS",
+      "environment_continuity_status": "PASS",
+      "render": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\multi_niche_6s\\VQ05_niche_03_everyday_business_cafe_6s_1080p.mp4",
+        "mp4_sha256": "fd23972f1e792f3105ad0d3f38a3ee5bac6d27479ce7a65e8e352785a04ad535",
+        "size_bytes": 448155,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "duration_sec": 6.0,
+        "decoded_video_frames": 144,
+        "expected_video_frames": 144,
+        "render_wall_sec": 5.491,
+        "valid": true,
+        "media_inspection": {
+          "valid": true,
+          "error": null,
+          "errors": [],
+          "duration": 6.0,
+          "video_stream_duration": 6.0,
+          "audio_stream_duration": 6.0,
+          "decoded_video_frames": 144,
+          "file_size": 448155,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "has_video": true,
+          "has_audio": true,
+          "decode_clean": true,
+          "max_volume_db": -1.4,
+          "mean_volume_db": -18.3,
+          "integrated_lufs": null,
+          "true_peak_dbtp": null,
+          "sha256": "fd23972f1e792f3105ad0d3f38a3ee5bac6d27479ce7a65e8e352785a04ad535"
+        }
+      }
+    },
+    {
+      "case_id": "niche_04_holdout_planetarium_gallery",
+      "is_holdout": true,
+      "inferred_niche": "holdout_astronomy_museum",
+      "style_id": "modern_expressive_2d.v1",
+      "style_lock_digest": "0b3433f455475ee2574c2f47dad43aaf89aa7975fdaf241247a25957b3c6f766",
+      "environment_id": "planetarium_eclipse_gallery_v1",
+      "actor_outfits": {
+        "elena": "planetarium_curator_blazer",
+        "leo": "museum_visitor_hoodie"
+      },
+      "actor_primary_colors": {
+        "elena": "#2C354D",
+        "leo": "#D64550"
+      },
+      "zero_roman_military_leak": true,
+      "shared_universal_template": "modern_expressive_2d",
+      "per_story_custom_js_modules_count": 0,
+      "foot_plant_status": "PASS",
+      "environment_continuity_status": "PASS",
+      "render": {
+        "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh01_modern_2d_roman_urgent_scroll_30s\\out\\pilots\\multi_niche_6s\\VQ05_niche_04_holdout_planetarium_gallery_6s_1080p.mp4",
+        "mp4_sha256": "dadc371252269eaf7a82d3b716935179d42d3b925f0b9c4044c285c93fc21046",
+        "size_bytes": 519537,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "duration_sec": 6.0,
+        "decoded_video_frames": 144,
+        "expected_video_frames": 144,
+        "render_wall_sec": 5.581,
+        "valid": true,
+        "media_inspection": {
+          "valid": true,
+          "error": null,
+          "errors": [],
+          "duration": 6.0,
+          "video_stream_duration": 6.0,
+          "audio_stream_duration": 6.0,
+          "decoded_video_frames": 144,
+          "file_size": 519537,
+          "width": 1920,
+          "height": 1080,
+          "fps": 24.0,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "has_video": true,
+          "has_audio": true,
+          "decode_clean": true,
+          "max_volume_db": -1.1,
+          "mean_volume_db": -18.2,
+          "integrated_lufs": null,
+          "true_peak_dbtp": null,
+          "sha256": "dadc371252269eaf7a82d3b716935179d42d3b925f0b9c4044c285c93fc21046"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,266 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "tools.kh01_poc_and_pilots::produce_kh01_visual_style_poc(environments_and_frames)",
+  "started_iso": "2026-11-16T06:10:34.049207+00:00",
+  "ended_iso": "2026-11-16T06:10:40.161255+00:00",
+  "elapsed_sec": 6.112,
+  "exit_code": 0,
+  "status": "PASS",
+  "input_paths": [
+    "tools/environment_factory.py",
+    "tools/visual_style_qa.py"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_05_outdoor_roman_forum.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_06_indoor_roman_archive.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_07_indoor_science_lab.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_08_indoor_business_cafe.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_09_sample_wide_staging.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_10_sample_medium_acting.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_11_sample_closeup_face.png",
+    "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_12_sample_close_hand_grip.png"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.53,
+    "ram_available_gb": 8.182,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "VQ01_STYLE_FRAME_CANDIDATE": "CANDIDATE_GENERATED_HUMAN_REVIEW_PENDING",
+  "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+  "total_poc_panels": 12,
+  "unique_panel_sha256_count": 12,
+  "environment_and_sample_panels": [
+    {
+      "id": "P05",
+      "gate": "VQ01_STYLE_FRAME_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_05_outdoor_roman_forum.png",
+      "sha256": "004b77eeb9116db6d81ce3b3e4e0d6f59d68c464e43f6b39380bad84f5e2f6b8",
+      "label": "Outdoor Roman Forum Marketplace"
+    },
+    {
+      "id": "P06",
+      "gate": "VQ01_STYLE_FRAME_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_06_indoor_roman_archive.png",
+      "sha256": "32ca49d20864beed2bd3077516dede07418d41a7dc176a15db203291a265d000",
+      "label": "Indoor Roman Courier Archive"
+    },
+    {
+      "id": "P07",
+      "gate": "VQ01_STYLE_FRAME_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_07_indoor_science_lab.png",
+      "sha256": "31fbd5e0cbe57719350a4469f038d85a94478e2aa90ba3a57fc56591566888f7",
+      "label": "Indoor Cleanroom Science Lab"
+    },
+    {
+      "id": "P08",
+      "gate": "VQ01_STYLE_FRAME_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_08_indoor_business_cafe.png",
+      "sha256": "78954a15d14c9b12277523856ac4502824db987f25bc01121e136634bbc86dad",
+      "label": "Indoor Everyday Artisan Cafe"
+    },
+    {
+      "id": "P09",
+      "gate": "VQ01_STYLE_FRAME_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_09_sample_wide_staging.png",
+      "sha256": "accbcbfe9061c828e1a747b0c0ee8ec5cafe3c7231c21f57d21974b152074420",
+      "label": "Sample Wide Forum Two-Actor Staging"
+    },
+    {
+      "id": "P10",
+      "gate": "VQ01_STYLE_FRAME_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_10_sample_medium_acting.png",
+      "sha256": "da37845da088de7075c2ef2bea2a3de4006770007dbfbb2b9c4b9f0e1a53f212",
+      "label": "Sample Medium Expressive Acting"
+    },
+    {
+      "id": "P11",
+      "gate": "VQ01_STYLE_FRAME_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_11_sample_closeup_face.png",
+      "sha256": "1309c78662bb8f4fdc5d02e3d997a428b2e936e37bf21da25a48c73969aaa859",
+      "label": "Sample Close-Up Shock Face"
+    },
+    {
+      "id": "P12",
+      "gate": "VQ01_STYLE_FRAME_CANDIDATE",
+      "path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_12_sample_close_hand_grip.png",
+      "sha256": "2db9044ca62fbe74e5abbcc1492d4ef564b753505bba971decf2b70c98acff4e",
+      "label": "Sample Macro Hand Grasping Scroll"
+    }
+  ],
+  "visual_style_audit": {
+    "status": "PASS",
+    "valid": true,
+    "style_id": "modern_expressive_2d.v1",
+    "is_aesthetic_equivalence_proof": false,
+    "style_similarity_percentage": null,
+    "editorial_gate_status": "HUMAN_REVIEW_PENDING",
+    "inspected_count": 12,
+    "frame_metrics": [
+      {
+        "file": "VQ02_MODEL_SHEET_CANDIDATE_01_lucius_hero.png",
+        "dimensions": [
+          2400,
+          1600
+        ],
+        "ink_pixel_ratio": 0.1152,
+        "edge_density": 0.0582,
+        "edge_sharpness_p95": 0.021,
+        "occupied_value_groups": 3,
+        "depth_plane_luma_spread": 0.1314,
+        "focal_contrast_std": 0.2358
+      },
+      {
+        "file": "VQ02_MODEL_SHEET_CANDIDATE_02_mara_supporting.png",
+        "dimensions": [
+          2400,
+          1600
+        ],
+        "ink_pixel_ratio": 0.11532,
+        "edge_density": 0.0589,
+        "edge_sharpness_p95": 0.025,
+        "occupied_value_groups": 4,
+        "depth_plane_luma_spread": 0.1278,
+        "focal_contrast_std": 0.2348
+      },
+      {
+        "file": "VQ02_MODEL_SHEET_CANDIDATE_03_maya_science.png",
+        "dimensions": [
+          2400,
+          1600
+        ],
+        "ink_pixel_ratio": 0.11593,
+        "edge_density": 0.0575,
+        "edge_sharpness_p95": 0.0235,
+        "occupied_value_groups": 3,
+        "depth_plane_luma_spread": 0.1187,
+        "focal_contrast_std": 0.2279
+      },
+      {
+        "file": "VQ02_MODEL_SHEET_CANDIDATE_04_sam_business.png",
+        "dimensions": [
+          2400,
+          1600
+        ],
+        "ink_pixel_ratio": 0.11794,
+        "edge_density": 0.0568,
+        "edge_sharpness_p95": 0.0204,
+        "occupied_value_groups": 4,
+        "depth_plane_luma_spread": 0.1286,
+        "focal_contrast_std": 0.2295
+      },
+      {
+        "file": "VQ01_STYLE_POC_CANDIDATE_05_outdoor_roman_forum.png",
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "ink_pixel_ratio": 0.00646,
+        "edge_density": 0.0536,
+        "edge_sharpness_p95": 0.0185,
+        "occupied_value_groups": 6,
+        "depth_plane_luma_spread": 0.0979,
+        "focal_contrast_std": 0.1984
+      },
+      {
+        "file": "VQ01_STYLE_POC_CANDIDATE_06_indoor_roman_archive.png",
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "ink_pixel_ratio": 0.04493,
+        "edge_density": 0.0616,
+        "edge_sharpness_p95": 0.0154,
+        "occupied_value_groups": 7,
+        "depth_plane_luma_spread": 0.1079,
+        "focal_contrast_std": 0.2747
+      },
+      {
+        "file": "VQ01_STYLE_POC_CANDIDATE_07_indoor_science_lab.png",
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "ink_pixel_ratio": 0.02672,
+        "edge_density": 0.0292,
+        "edge_sharpness_p95": 0.0,
+        "occupied_value_groups": 5,
+        "depth_plane_luma_spread": 0.2693,
+        "focal_contrast_std": 0.3484
+      },
+      {
+        "file": "VQ01_STYLE_POC_CANDIDATE_08_indoor_business_cafe.png",
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "ink_pixel_ratio": 0.0637,
+        "edge_density": 0.0258,
+        "edge_sharpness_p95": 0.0,
+        "occupied_value_groups": 7,
+        "depth_plane_luma_spread": 0.32,
+        "focal_contrast_std": 0.2867
+      },
+      {
+        "file": "VQ01_STYLE_POC_CANDIDATE_09_sample_wide_staging.png",
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "ink_pixel_ratio": 0.01191,
+        "edge_density": 0.0587,
+        "edge_sharpness_p95": 0.0314,
+        "occupied_value_groups": 6,
+        "depth_plane_luma_spread": 0.0806,
+        "focal_contrast_std": 0.2125
+      },
+      {
+        "file": "VQ01_STYLE_POC_CANDIDATE_10_sample_medium_acting.png",
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "ink_pixel_ratio": 0.061,
+        "edge_density": 0.0692,
+        "edge_sharpness_p95": 0.0301,
+        "occupied_value_groups": 7,
+        "depth_plane_luma_spread": 0.1182,
+        "focal_contrast_std": 0.2716
+      },
+      {
+        "file": "VQ01_STYLE_POC_CANDIDATE_11_sample_closeup_face.png",
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "ink_pixel_ratio": 0.0726,
+        "edge_density": 0.0368,
+        "edge_sharpness_p95": 0.0039,
+        "occupied_value_groups": 8,
+        "depth_plane_luma_spread": 0.1227,
+        "focal_contrast_std": 0.2921
+      },
+      {
+        "file": "VQ01_STYLE_POC_CANDIDATE_12_sample_close_hand_grip.png",
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "ink_pixel_ratio": 0.03295,
+        "edge_density": 0.0511,
+        "edge_sharpness_p95": 0.0118,
+        "occupied_value_groups": 7,
+        "depth_plane_luma_spread": 0.0874,
+        "focal_contrast_std": 0.2331
+      }
+    ],
+    "errors": []
+  }
+}

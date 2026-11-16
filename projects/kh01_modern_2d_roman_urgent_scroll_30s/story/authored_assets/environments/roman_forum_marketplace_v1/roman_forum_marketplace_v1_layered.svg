@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" data-environment-id="roman_forum_marketplace_v1" data-niche="roman_forum">
+  <defs>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A88C7"/>
+      <stop offset="100%" stop-color="#F4DEC0"/>
+    </linearGradient>
+  </defs>
+  <g id="sky_backdrop">
+    <rect x="0" y="0" width="1920" height="907" fill="url(#skyGrad)"/>
+  </g>
+  <g id="far_architecture">
+    <rect x="0" y="380" width="1920" height="527" fill="#E8D5B7" stroke="#3A312B" stroke-width="4"/>
+  </g>
+  <g id="midground_stage">
+    <rect x="0" y="907" width="1920" height="173" fill="#C9B193" stroke="#3A312B" stroke-width="4"/>
+  </g>
+  <g id="foreground_occluders">
+    <ellipse cx="42" cy="960" rx="110" ry="150" fill="#3B2D38" fill-opacity="0.82"/>
+  </g>
+</svg>

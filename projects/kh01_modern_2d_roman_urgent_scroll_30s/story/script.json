@@ -1,0 +1,87 @@
+{
+  "title": "ROME'S MOST URGENT SCROLL",
+  "subtitle": "A fictional Roman marketplace comedy; original Modern Expressive 2D animation, not a documented historical incident.",
+  "duration": 30.0,
+  "beats": [
+    {
+      "id": "S01",
+      "act": "HOOK_GUST_COUNTER",
+      "start": 0.0,
+      "end": 2.625,
+      "dur": 2.625,
+      "frames": 63,
+      "line": "Rome had one urgent message.",
+      "scale": "macro"
+    },
+    {
+      "id": "S02",
+      "act": "STAKES_MISSED_LUNGE",
+      "start": 2.625,
+      "end": 6.25,
+      "dur": 3.625,
+      "frames": 87,
+      "line": "And one courier who could not lose it.",
+      "scale": "medium"
+    },
+    {
+      "id": "S03",
+      "act": "CHASE_FORUM_STREET",
+      "start": 6.25,
+      "end": 10.25,
+      "dur": 4.0,
+      "frames": 96,
+      "line": "But the wind had other plans.",
+      "scale": "wide"
+    },
+    {
+      "id": "S04",
+      "act": "OBSTACLE_MARKET_AWNINGS",
+      "start": 10.25,
+      "end": 13.75,
+      "dur": 3.5,
+      "frames": 84,
+      "line": "He vanished beneath the market awnings.",
+      "scale": "medium"
+    },
+    {
+      "id": "S05",
+      "act": "ESCALATION_RUNAWAY_CART",
+      "start": 13.75,
+      "end": 17.25,
+      "dur": 3.5,
+      "frames": 84,
+      "line": "A runaway cart offered one last chance.",
+      "scale": "medium"
+    },
+    {
+      "id": "S06",
+      "act": "CLIMAX_FOUNTAIN_CATCH",
+      "start": 17.25,
+      "end": 21.625,
+      "dur": 4.375,
+      "frames": 105,
+      "line": "He caught the scroll beside the fountain.",
+      "scale": "wide"
+    },
+    {
+      "id": "S07",
+      "act": "REVEAL_SCROLL_UNFOLD",
+      "start": 21.625,
+      "end": 26.0,
+      "dur": 4.375,
+      "frames": 105,
+      "line": "Then he finally read the emperor's order.",
+      "scale": "close"
+    },
+    {
+      "id": "S08",
+      "act": "PAYOFF_TOMORROW_LAUGH",
+      "start": 26.0,
+      "end": 30.0,
+      "dur": 4.0,
+      "frames": 96,
+      "line": "The meeting... was tomorrow.",
+      "scale": "medium"
+    }
+  ]
+}

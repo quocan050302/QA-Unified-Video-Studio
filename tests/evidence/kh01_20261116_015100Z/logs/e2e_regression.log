@@ -1,0 +1,33 @@
+===========================================================================
+QA-Unified-Video-Studio — Async E2E Regression Orchestrator (V5)
+Run ID: 20261116_131440
+Root: D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio
+===========================================================================
+--> Executing Phase 1: Baseline & Blank Project Inits...
+--> Executing Phase 2: Core E2E Render Pipelines (Bounded Concurrency)...
+--> Executing Phase 3: Synthetic Long Timeline & Medium Continuity E2E...
+--> Executing Phase 4: Negative, Tamper & Security Tests...
+--> Executing Phase 5: Media Quality, Concurrency, UHD & Telemetry...
+--> Executing Phase 6: V6 Project Visibility, Semantics & Narrative Alignment...
+[assign_visuals] AI Director applied plan: 6 shots updated (offline_grounded_rule_fallback).
+Xong assign_visuals: 6 shots cap nhat (giu nguyen 0 shots da co, modified=True) -> D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\.test-runs\20261116_131440\g_v6_narrative_cases\story\shots.json
+--> Executing Phase 7: V7 Narrative Audio & Sound Design Matrix (N1 - N12)...
+[assign_visuals] AI Director applied plan: 10 shots updated (offline_grounded_rule_fallback).
+Xong assign_visuals: 10 shots cap nhat (giu nguyen 0 shots da co, modified=True) -> D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\.test-runs\20261116_131440\n07_squire_showcase_1080p\story\shots.json
+[assign_visuals] AI Director applied plan: 2 shots updated (offline_grounded_rule_fallback).
+Xong assign_visuals: 2 shots cap nhat (giu nguyen 0 shots da co, modified=True) -> D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\.test-runs\20261116_131440\n10_shorts_vertical\story\shots.json
+--> Executing Phase 8: V8 Master Acceptance Matrix (H1 - H14)...
+--> Executing Phase 9: V9 Hook Director & Truthful UI/Audio Matrix (J1 - J15)...
+--> Executing Phase 10: V10 Opening Hook Director Suite (K1 - K15)...
+
+===========================================================================
+VERDICT: FLOW_READY (81/81 REQUIRED PASS)
+Summary:    D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\tests\evidence\latest-summary.json
+Ledger V10: D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\tests\evidence\v10\v10_execution_ledger.json
+Ledger V9:  D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\tests\evidence\v9\v9_execution_ledger.json
+Ledger V8:  D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\tests\evidence\v8\v8_execution_ledger.json
+Ledger V7:  D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\tests\evidence\v7\v7_execution_ledger.json
+Ledger V6:  D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\tests\evidence\v6\v6_execution_ledger.json
+Report:     D:\Project_github\QA-Unified-Video-Studio\QA-Unified-Video-Studio\tests\evidence\latest-report.md
+===========================================================================
+

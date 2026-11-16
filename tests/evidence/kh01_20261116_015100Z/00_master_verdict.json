@@ -1,0 +1,205 @@
+{
+  "schema_version": "kh01.evidence_gate.v1",
+  "run_id": "kh01_20261116_015100Z",
+  "commit_head_at_run": "f2fbea4cb6ec50c6655b08f24177869dbc961dd1",
+  "branch": "fix/Image-Shot",
+  "command": "python scripts/run_kh01_validation.py",
+  "started_iso": "2026-11-16T06:10:02.423173+00:00",
+  "ended_iso": "2026-11-16T06:23:59.278851+00:00",
+  "elapsed_sec": 836.8557,
+  "exit_code": 0,
+  "status": "TECH_PASS_HUMAN_REVIEW_PENDING",
+  "input_paths": [
+    "tests/evidence/kh01_20261116_015100Z/01_git_preservation.json",
+    "tests/evidence/kh01_20261116_015100Z/02_resources_telemetry.json",
+    "tests/evidence/kh01_20261116_015100Z/03_async_parallel_dag.json",
+    "tests/evidence/kh01_20261116_015100Z/04_v14_7_6_footplant_conflict_reconciliation.json",
+    "tests/evidence/kh01_20261116_015100Z/05_style_bible_contract.json",
+    "tests/evidence/kh01_20261116_015100Z/06_original_character_model_sheets_manifest.json",
+    "tests/evidence/kh01_20261116_015100Z/07_scene_environment_original_art.json",
+    "tests/evidence/kh01_20261116_015100Z/08_rigby_new_hero_real_runtime.json",
+    "tests/evidence/kh01_20261116_015100Z/09_natural_motion_A_B_C.json",
+    "tests/evidence/kh01_20261116_015100Z/10_multi_camera_cut_coverage.json",
+    "tests/evidence/kh01_20261116_015100Z/11_three_niche_generalization.json",
+    "tests/evidence/kh01_20261116_015100Z/12_original_roman_30s_media.json",
+    "tests/evidence/kh01_20261116_015100Z/13_original_art_asset_lineage.json",
+    "tests/evidence/kh01_20261116_015100Z/14_full_e2e_regression.json",
+    "tests/evidence/kh01_20261116_015100Z/15_backtests_synthetic_vs_real.json",
+    "tests/evidence/kh01_20261116_015100Z/16_negative_mutation_results.json",
+    "tests/evidence/kh01_20261116_015100Z/17_repair_before_after.json",
+    "tests/evidence/kh01_20261116_015100Z/18_serial_parallel_speed.json",
+    "tests/evidence/kh01_20261116_015100Z/19_style_visual_qa_and_editorial_packet.json",
+    "tests/evidence/kh01_20261116_015100Z/20_changed_vs_kept_as_is.json"
+  ],
+  "output_paths": [
+    "tests/evidence/kh01_20261116_015100Z/00_master_verdict.json",
+    "tests/evidence/kh01_20261116_015100Z/KH01_ACCEPTANCE_REPORT.md"
+  ],
+  "input_sha256": null,
+  "output_sha256": null,
+  "measured_resources": {
+    "disk_free_gb": 54.466,
+    "ram_available_gb": 9.561,
+    "free_inodes": null,
+    "process_rss_mb": null,
+    "child_process_count": 0
+  },
+  "failure_details": null,
+  "technical_verdict": "KH01_TECH_PASS_EDITORIAL_PENDING",
+  "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+  "EDITORIAL_APPROVED": "HUMAN_REVIEW_PENDING",
+  "style_reference_zip_status": "STYLE_REFERENCE_UNAVAILABLE",
+  "mandatory_total": 20,
+  "mandatory_passed": 20,
+  "mandatory_failures": [],
+  "visual_quality_gates": {
+    "VQ01_STYLE_FRAME_CANDIDATE": "CANDIDATE_GENERATED_HUMAN_REVIEW_PENDING",
+    "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE": "CANDIDATE_GENERATED_HUMAN_REVIEW_PENDING",
+    "VQ03_ACTING_8S": "TECH_PASS_HUMAN_REVIEW_PENDING",
+    "VQ04_MULTICAMERA": "TECH_PASS_HUMAN_REVIEW_PENDING",
+    "VQ05_MULTI_NICHE": "TECH_PASS_HUMAN_REVIEW_PENDING",
+    "VQ06_FINAL_FILM": "CANDIDATE_TECH_VERIFIED_HUMAN_REVIEW_PENDING"
+  },
+  "gates": [
+    {
+      "gate_id": "G01",
+      "evidence_file": "01_git_preservation.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 2.6536
+    },
+    {
+      "gate_id": "G02",
+      "evidence_file": "02_resources_telemetry.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 836.3157
+    },
+    {
+      "gate_id": "G03",
+      "evidence_file": "03_async_parallel_dag.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 836.4377
+    },
+    {
+      "gate_id": "G04",
+      "evidence_file": "04_v14_7_6_footplant_conflict_reconciliation.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 18.5559
+    },
+    {
+      "gate_id": "G05",
+      "evidence_file": "05_style_bible_contract.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 28.6555
+    },
+    {
+      "gate_id": "G06",
+      "evidence_file": "06_original_character_model_sheets_manifest.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 6.112
+    },
+    {
+      "gate_id": "G07",
+      "evidence_file": "07_scene_environment_original_art.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 6.112
+    },
+    {
+      "gate_id": "G08",
+      "evidence_file": "08_rigby_new_hero_real_runtime.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 14.0652
+    },
+    {
+      "gate_id": "G09",
+      "evidence_file": "09_natural_motion_A_B_C.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 50.7857
+    },
+    {
+      "gate_id": "G10",
+      "evidence_file": "10_multi_camera_cut_coverage.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 10.4958
+    },
+    {
+      "gate_id": "G11",
+      "evidence_file": "11_three_niche_generalization.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 35.6648
+    },
+    {
+      "gate_id": "G12",
+      "evidence_file": "12_original_roman_30s_media.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 50.4444
+    },
+    {
+      "gate_id": "G13",
+      "evidence_file": "13_original_art_asset_lineage.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 50.4444
+    },
+    {
+      "gate_id": "G14",
+      "evidence_file": "14_full_e2e_regression.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 556.1072
+    },
+    {
+      "gate_id": "G15",
+      "evidence_file": "15_backtests_synthetic_vs_real.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 556.1072
+    },
+    {
+      "gate_id": "G16",
+      "evidence_file": "16_negative_mutation_results.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 13.1898
+    },
+    {
+      "gate_id": "G17",
+      "evidence_file": "17_repair_before_after.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 52.28
+    },
+    {
+      "gate_id": "G18",
+      "evidence_file": "18_serial_parallel_speed.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 6.76
+    },
+    {
+      "gate_id": "G19",
+      "evidence_file": "19_style_visual_qa_and_editorial_packet.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 39.84
+    },
+    {
+      "gate_id": "G20",
+      "evidence_file": "20_changed_vs_kept_as_is.json",
+      "mandatory": true,
+      "status": "PASS",
+      "elapsed_sec": 0.0
+    }
+  ]
+}

@@ -311,6 +311,16 @@ KNOWN_ROLE_NOUNS: Dict[str, Dict[str, Any]] = {
     "man": {"preset": "peasant", "height_norm": 0.29, "role": "civilian"},
     "sailor": {"preset": "peasant", "height_norm": 0.28, "role": "sailor"},
     "engineer": {"preset": "lady", "height_norm": 0.28, "role": "engineer"},
+    "courier": {"preset": "peasant", "height_norm": 0.28, "role": "courier"},
+    "vendor": {"preset": "lady", "height_norm": 0.27, "role": "vendor"},
+    "senator": {"preset": "senator", "height_norm": 0.29, "role": "senator"},
+    "baker": {"preset": "lady", "height_norm": 0.27, "role": "baker"},
+    "scientist": {"preset": "lady", "height_norm": 0.28, "role": "scientist"},
+    "researcher": {"preset": "peasant", "height_norm": 0.28, "role": "researcher"},
+    "barista": {"preset": "peasant", "height_norm": 0.28, "role": "barista"},
+    "customer": {"preset": "lady", "height_norm": 0.27, "role": "customer"},
+    "curator": {"preset": "lady", "height_norm": 0.28, "role": "curator"},
+    "visitor": {"preset": "peasant", "height_norm": 0.23, "role": "visitor"},
 }
 
 KNOWN_PROPS: Dict[str, Dict[str, Any]] = {
@@ -336,6 +346,22 @@ KNOWN_PROPS: Dict[str, Dict[str, Any]] = {
     "gate": {"kind": "gate", "x": 0.58, "y": 0.62, "portable": False},
     "phone": {"kind": "phone", "x": 0.56, "y": 0.68, "portable": True},
     "book": {"kind": "book", "x": 0.56, "y": 0.68, "portable": True},
+    "scroll": {"kind": "scroll", "x": 0.52, "y": 0.66, "portable": True},
+    "cart": {"kind": "cart", "x": 0.54, "y": 0.76, "portable": False, "heavy": True},
+    "fountain": {"kind": "fountain", "x": 0.66, "y": 0.74, "portable": False},
+    "awning": {"kind": "awning", "x": 0.48, "y": 0.48, "portable": False},
+    "awnings": {"kind": "awning", "x": 0.48, "y": 0.48, "portable": False},
+    "counter": {"kind": "counter", "x": 0.34, "y": 0.74, "portable": False},
+    "beaker": {"kind": "beaker", "x": 0.50, "y": 0.68, "portable": True},
+    "crystal": {"kind": "crystal", "x": 0.50, "y": 0.68, "portable": True},
+    "sample": {"kind": "beaker", "x": 0.50, "y": 0.68, "portable": True},
+    "tray": {"kind": "tray", "x": 0.48, "y": 0.70, "portable": True},
+    "espresso": {"kind": "tray", "x": 0.48, "y": 0.70, "portable": True},
+    "telescope": {"kind": "telescope", "x": 0.54, "y": 0.66, "portable": False},
+    "lens": {"kind": "telescope", "x": 0.54, "y": 0.66, "portable": False},
+    "rostra": {"kind": "rostra", "x": 0.50, "y": 0.74, "portable": False},
+    "package": {"kind": "package", "x": 0.50, "y": 0.68, "portable": True},
+    "vase": {"kind": "vase", "x": 0.50, "y": 0.68, "portable": True},
 }
 
 UNSUPPORTED_PHYSICAL_PATTERNS: Tuple[Tuple[str, str], ...] = (
@@ -351,6 +377,9 @@ STOPWORD_NAMES: Set[str] = {
     "The", "A", "An", "She", "He", "They", "It", "Its", "Together", "Below",
     "At", "In", "On", "When", "Then", "As", "From", "Into", "Toward", "Towards",
     "One", "Two", "Above", "Across", "Against", "Before", "After", "Suddenly",
+    "But", "And", "Or", "Yet", "So", "For", "Nor", "While", "Though", "Although",
+    "Inside", "Outside", "Under", "Beneath", "Beside", "Around", "Through", "Near",
+    "Meanwhile", "Finally", "Quickly", "Carefully", "Rome", "Roman", "Young", "Dr",
 }
 
 
@@ -1161,64 +1190,154 @@ def _build_phases_for_intent(
         target_oid = obj_id or "prop_target"
         obj_start = intent.desired_state_before.get("object_pos") or object_world.get(target_oid, (ex + 0.06, ey - 0.10))
         obj_end = intent.desired_state_after.get("object_pos") or obj_start
-        is_shared = effective_motion in ("LIFT_SHARED", "HAUL_ROPE") and len(intent.actor_ids) >= 2
+        is_shared = len(intent.actor_ids) >= 2
         anchor_offset_x = (-0.035 if actor_idx == 0 else 0.035) if is_shared else 0.0
         anchor_name = f"handle_{actor_idx + 1}" if is_shared else "grip_primary"
 
-        t_ant = _tm(0.14)
-        t_rch = _tm(0.30)
-        t_con = _tm(0.42)
-        t_exr = _tm(0.76)
-        t_flt = _tm(0.90)
+        disp_to_target = math.hypot(
+            float(actor_end[0]) - float(actor_start[0]),
+            float(actor_end[1]) - float(actor_start[1]),
+        )
+        needs_approach_step = disp_to_target >= 0.015
+
+        if needs_approach_step:
+            t_ant = _tm(0.10)
+            t_app = _tm(0.24)
+            t_rch = _tm(0.33)
+            t_con = _tm(0.44)
+            t_exr = _tm(0.77)
+            t_flt = _tm(0.90)
+            phases.extend([
+                MotionPhase(
+                    phase_name="ANTICIPATE",
+                    script_span=intent.script_span,
+                    start_sec=t0,
+                    end_sec=t_ant,
+                    actor_ids=[actor_id],
+                    object_ids=[target_oid],
+                    motion_type=effective_motion,
+                    physical_target=target_oid,
+                    world_start=actor_start,
+                    world_end=actor_start,
+                    posture_state="coil_for_step",
+                    torso_lean=0.07,
+                    head_look=0.80,
+                    knee_flex=0.12,
+                    arm_reach=0.20,
+                    foot_planted_left=True,
+                    foot_planted_right=True,
+                    tempo_curve="ease_in",
+                    intensity=intent.intensity * 0.65,
+                    source_confidence=intent.source_confidence,
+                    visible_end_condition=f"{actor_id} shifts weight to step toward {target_oid}",
+                ),
+                MotionPhase(
+                    phase_name="APPROACH",
+                    script_span=intent.script_span,
+                    start_sec=t_ant,
+                    end_sec=t_app,
+                    actor_ids=[actor_id],
+                    object_ids=[target_oid],
+                    motion_type=effective_motion,
+                    physical_target=target_oid,
+                    world_start=actor_start,
+                    world_end=actor_end,
+                    posture_state="step_to_grip_stance",
+                    torso_lean=0.10,
+                    head_look=0.85,
+                    knee_flex=0.14,
+                    arm_reach=0.45,
+                    foot_planted_left=False,
+                    foot_planted_right=False,
+                    tempo_curve="ease_in_out",
+                    intensity=intent.intensity * 0.75,
+                    source_confidence=intent.source_confidence,
+                    visible_end_condition=f"{actor_id} steps cleanly into stance beside {target_oid}",
+                ),
+                MotionPhase(
+                    phase_name="REACH",
+                    script_span=intent.script_span,
+                    start_sec=t_app,
+                    end_sec=t_rch,
+                    actor_ids=[actor_id],
+                    object_ids=[target_oid],
+                    motion_type=effective_motion,
+                    physical_target=target_oid,
+                    world_start=actor_end,
+                    world_end=actor_end,
+                    posture_state="extend_hands_to_target",
+                    torso_lean=0.14,
+                    head_look=0.90,
+                    knee_flex=0.20 if effective_motion == "LIFT_SHARED" else 0.10,
+                    arm_reach=0.88,
+                    hand_anchor_id=anchor_name,
+                    foot_planted_left=True,
+                    foot_planted_right=True,
+                    tempo_curve="ease_out",
+                    intensity=intent.intensity * 0.80,
+                    source_confidence=intent.source_confidence,
+                    visible_end_condition=f"hands close distance onto {target_oid} {anchor_name}",
+                ),
+            ])
+            contact_start_sec = t_app
+        else:
+            t_ant = _tm(0.14)
+            t_rch = _tm(0.30)
+            t_con = _tm(0.42)
+            t_exr = _tm(0.76)
+            t_flt = _tm(0.90)
+            phases.extend([
+                MotionPhase(
+                    phase_name="ANTICIPATE",
+                    script_span=intent.script_span,
+                    start_sec=t0,
+                    end_sec=t_ant,
+                    actor_ids=[actor_id],
+                    object_ids=[target_oid],
+                    motion_type=effective_motion,
+                    physical_target=target_oid,
+                    world_start=actor_start,
+                    world_end=actor_end,
+                    posture_state="coil_for_reach",
+                    torso_lean=0.08,
+                    head_look=0.80,
+                    knee_flex=0.16 if effective_motion in ("LIFT_SHARED", "HAUL_ROPE") else 0.08,
+                    arm_reach=0.35,
+                    foot_planted_left=True,
+                    foot_planted_right=True,
+                    tempo_curve="ease_in",
+                    intensity=intent.intensity * 0.65,
+                    source_confidence=intent.source_confidence,
+                    visible_end_condition=f"{actor_id} lowers center of mass toward {target_oid}",
+                ),
+                MotionPhase(
+                    phase_name="REACH",
+                    script_span=intent.script_span,
+                    start_sec=t_ant,
+                    end_sec=t_rch,
+                    actor_ids=[actor_id],
+                    object_ids=[target_oid],
+                    motion_type=effective_motion,
+                    physical_target=target_oid,
+                    world_start=actor_end,
+                    world_end=actor_end,
+                    posture_state="extend_hands_to_target",
+                    torso_lean=0.14,
+                    head_look=0.90,
+                    knee_flex=0.20 if effective_motion == "LIFT_SHARED" else 0.10,
+                    arm_reach=0.88,
+                    hand_anchor_id=anchor_name,
+                    foot_planted_left=True,
+                    foot_planted_right=True,
+                    tempo_curve="ease_out",
+                    intensity=intent.intensity * 0.80,
+                    source_confidence=intent.source_confidence,
+                    visible_end_condition=f"hands close distance onto {target_oid} {anchor_name}",
+                ),
+            ])
+            contact_start_sec = t_ant
 
         phases.extend([
-            MotionPhase(
-                phase_name="ANTICIPATE",
-                script_span=intent.script_span,
-                start_sec=t0,
-                end_sec=t_ant,
-                actor_ids=[actor_id],
-                object_ids=[target_oid],
-                motion_type=effective_motion,
-                physical_target=target_oid,
-                world_start=actor_start,
-                world_end=_lerp_pt(0.35),
-                posture_state="coil_for_reach",
-                torso_lean=0.08,
-                head_look=0.80,
-                knee_flex=0.16 if effective_motion in ("LIFT_SHARED", "HAUL_ROPE") else 0.08,
-                arm_reach=0.35,
-                foot_planted_left=True,
-                foot_planted_right=True,
-                tempo_curve="ease_in",
-                intensity=intent.intensity * 0.65,
-                source_confidence=intent.source_confidence,
-                visible_end_condition=f"{actor_id} lowers center of mass toward {target_oid}",
-            ),
-            MotionPhase(
-                phase_name="REACH",
-                script_span=intent.script_span,
-                start_sec=t_ant,
-                end_sec=t_rch,
-                actor_ids=[actor_id],
-                object_ids=[target_oid],
-                motion_type=effective_motion,
-                physical_target=target_oid,
-                world_start=_lerp_pt(0.35),
-                world_end=actor_end,
-                posture_state="extend_hands_to_target",
-                torso_lean=0.14,
-                head_look=0.90,
-                knee_flex=0.20 if effective_motion == "LIFT_SHARED" else 0.10,
-                arm_reach=0.88,
-                hand_anchor_id=anchor_name,
-                foot_planted_left=True,
-                foot_planted_right=True,
-                tempo_curve="ease_out",
-                intensity=intent.intensity * 0.80,
-                source_confidence=intent.source_confidence,
-                visible_end_condition=f"hands close distance onto {target_oid} {anchor_name}",
-            ),
             MotionPhase(
                 phase_name="CONTACT",
                 script_span=intent.script_span,
@@ -1324,7 +1443,7 @@ def _build_phases_for_intent(
             ObjectContactConstraint(
                 constraint_id=f"{intent.intent_id}_{actor_id}_{target_oid}",
                 script_span=intent.script_span,
-                start_sec=t_ant,
+                start_sec=contact_start_sec,
                 end_sec=t1,
                 actor_id=actor_id,
                 actor_ids=list(intent.actor_ids),

@@ -480,13 +480,54 @@ def plan_actor_performance(
     return performances_by_shot
 
 
+MODERN_EXPRESSION_LOOKUP: Dict[str, str] = {
+    "neutral": "neutral_attentive",
+    "calm": "neutral_attentive",
+    "curious": "neutral_attentive",
+    "neutral_attentive": "neutral_attentive",
+    "shock": "wide_shock",
+    "startled": "wide_shock",
+    "scared": "wide_shock",
+    "alarm": "wide_shock",
+    "surprised": "wide_shock",
+    "wide_shock": "wide_shock",
+    "grim": "strained_exertion",
+    "strained": "strained_exertion",
+    "strained_cooperative": "strained_exertion",
+    "strained_determined": "strained_exertion",
+    "fatigued": "strained_exertion",
+    "pain": "strained_exertion",
+    "strained_exertion": "strained_exertion",
+    "determined": "determined_focus",
+    "focused": "determined_focus",
+    "urgent": "determined_focus",
+    "angry": "determined_focus",
+    "shout": "determined_focus",
+    "determined_focus": "determined_focus",
+    "happy": "joyful_laugh",
+    "laugh": "joyful_laugh",
+    "smile": "joyful_laugh",
+    "relieved": "joyful_laugh",
+    "hopeful": "joyful_laugh",
+    "joyful_laugh": "joyful_laugh",
+    "bored": "deadpan_disbelief",
+    "deadpan": "deadpan_disbelief",
+    "confused": "deadpan_disbelief",
+    "deadpan_disbelief": "deadpan_disbelief",
+}
+
+
 def compile_actor_performance_to_rig(
     performance: ActorPerformanceBeat,
     pack: str = "squire",
+    style_instance: Optional[Any] = None,
+    rig_manifest: Optional[Dict[str, Any]] = None,
+    view: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Compile an ActorPerformanceBeat into renderer-consumable parameters for
-    packs/squire/chara.js or packs/dem/bean.js.
+    packs/squire/chara.js, packs/squire/modern2d/style_renderer.js, Rigby2D, or packs/dem/bean.js.
+    Preserves 100% legacy output keys when `style_instance` and `rig_manifest` are omitted.
     """
     if pack == "squire":
         pose_name = "stand"
@@ -541,6 +582,39 @@ def compile_actor_performance_to_rig(
             compiled["motionTrack"] = performance.motion_track
             compiled["performanceRig"]["phases"] = performance.phases
             compiled["performanceRig"]["contacts"] = performance.contacts
+
+        if style_instance is not None or rig_manifest is not None or view is not None:
+            style_id = (
+                getattr(style_instance, "style_id", None)
+                or (style_instance.get("style_id") if isinstance(style_instance, dict) else None)
+                or "modern_expressive_2d.v1"
+            )
+            canonical_expr = MODERN_EXPRESSION_LOOKUP.get(str(performance.face_expression).lower(), "neutral_attentive")
+            resolved_view = view or "three_quarter"
+            available_views = list((rig_manifest or {}).get("supported_views", ["front", "three_quarter", "profile"]))
+            if resolved_view not in available_views and available_views:
+                resolved_view = "three_quarter" if "three_quarter" in available_views else available_views[0]
+            expr_map = (rig_manifest or {}).get("expression_attachments", {})
+            viseme_default = "teeth_grit" if canonical_expr == "strained_exertion" else (
+                "round_oh" if canonical_expr == "wide_shock" else (
+                    "wide_laugh" if canonical_expr == "joyful_laugh" else "closed_rest"
+                )
+            )
+            hand_shape = "locked_grip" if performance.contacts else (
+                "pointing" if "POINT" in performance.action else (
+                    "open_reach" if "REACH" in performance.action or "LUNGE" in performance.action else "relaxed"
+                )
+            )
+            compiled["styleAssetBinding"] = {
+                "style_id": style_id,
+                "actor_id": performance.actor_id,
+                "view_skin": resolved_view,
+                "expression_id": canonical_expr,
+                "expression_attachment": expr_map.get(canonical_expr, f"face_{canonical_expr}"),
+                "default_viseme": viseme_default,
+                "hand_shape": hand_shape,
+                "rig_character_id": (rig_manifest or {}).get("character_id", performance.actor_id),
+            }
         return compiled
 
     elif pack == "dem":
