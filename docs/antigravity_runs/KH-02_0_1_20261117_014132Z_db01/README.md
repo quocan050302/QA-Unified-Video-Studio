@@ -4,7 +4,7 @@
 - **Target Branch**: `feat/modern-2d-cinematic` (branched directly from `origin/Production`)
 - **Authoritative Baseline SHA (`origin/Production`)**: `80559d09d4b7bb72ee4c5acc6cc846e69abd65d1`
 - **Branch SHA Before Implementation**: `80559d09d4b7bb72ee4c5acc6cc846e69abd65d1`
-- **Branch SHA After Implementation & Push**: Recorded in `POST_PUSH_ATTESTATION.md` immediately upon `git commit` + `git push -u origin feat/modern-2d-cinematic`
+- **Implementation Commit SHA Pushed to `origin/feat/modern-2d-cinematic`**: `5f0c0a62b48445a13bfdc58a3a98a0f3d1b08d2e` (followed by post-push attestation commit; see `POST_PUSH_ATTESTATION.md`)
 - **Untouched Historical Branch (`origin/fix/Image-Shot`)**: `c96c4f366b873aa3e81a299ab70a330b4adae5ee` (drifted from earlier `3e470f87...` observation; left 100% untouched)
 
 ## 1. Stage Gate Verdict Summary
