@@ -1,0 +1,29 @@
+{
+  "title": "The Bell That Rang Too Early",
+  "pack": "squire",
+  "aspect": "16:9",
+  "resolution": "1080p",
+  "fps": 24,
+  "style": "flat",
+  "style_profile": "squire_cinematic_2d.v1",
+  "render_mode": "canvas2d_only",
+  "kh02_2d_only": true,
+  "experimental_preview": true,
+  "kh02_stage": "KH-02.0+KH-02.1_EXPERIMENTAL_PREVIEW",
+  "captions": false,
+  "bars": "none",
+  "fadeIn": 0.0,
+  "fadeOut": 0.35,
+  "lang": "en",
+  "music": {
+    "enabled": true,
+    "file": "build/audio_gen/roman_dawn_bell_score.wav",
+    "gainDb": -14
+  },
+  "sfx": {
+    "enabled": true,
+    "gainDb": -3
+  },
+  "loudness": -14,
+  "duration": 30.0
+}

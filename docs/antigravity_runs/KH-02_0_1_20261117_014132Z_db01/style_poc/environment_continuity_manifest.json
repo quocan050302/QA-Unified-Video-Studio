@@ -1,0 +1,439 @@
+{
+  "schema_version": "kh02_environment_manifest.v1",
+  "location_id": "loc_janiculum_bell_tower",
+  "location_name": "Roman Hilltop Civic Watch & Bell Tower at Pre-Dawn",
+  "render_mode": "canvas2d_only",
+  "spec_sha256": "84cb6b56ec66ccd7172ef3d75c8da184dce42a023cbfd8f5d3d59d40f2ff46be",
+  "fixed_world_landmarks": [
+    {
+      "landmark_id": "lm_5arch_aqueduct",
+      "description": "Five-arch travertine Roman aqueduct spanning the eastern misty valley",
+      "world_azimuth": "east_southeast"
+    },
+    {
+      "landmark_id": "lm_twin_cypresses_umbrella_pine",
+      "description": "Pair of tall Mediterranean cypresses beside one umbrella pine on western ridge",
+      "world_azimuth": "west_ridge"
+    },
+    {
+      "landmark_id": "lm_bronze_watch_bell_rig",
+      "description": "Giant cast-bronze civic bell on mortised oak yoke with iron clapper and single coiled hemp rope",
+      "world_azimuth": "tower_center_axis"
+    }
+  ],
+  "views": [
+    {
+      "view_id": "belfry_lower_arch",
+      "camera_projection_2d": "close_floor_level_2d",
+      "purpose": "Close framing of coiled hemp rope base and Pip the goat with upper bell blurred in 2D depth",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_twin_cypresses_umbrella_pine",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "distinct_floor_arch_and_blurred_upper_belfry"
+    },
+    {
+      "view_id": "belfry_wide_interior",
+      "camera_projection_2d": "eye_level_wide_2d",
+      "purpose": "Full belfry arch showing oak crossbeam, bronze bell, vertical rope, stone piers, and valley horizon",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_twin_cypresses_umbrella_pine",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "full_pier_arch_crossbeam_bell_and_slab_floor"
+    },
+    {
+      "view_id": "belfry_low_angle",
+      "camera_projection_2d": "authored_upward_2d_perspective",
+      "purpose": "Artist-authored 2D upward framing of taut rope, hand grip, and looming bronze bell overhead",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "converging_2d_arch_soffit_and_overhead_yoke"
+    },
+    {
+      "view_id": "tower_stairwell_ascent",
+      "camera_projection_2d": "side_elevation_tracking_2d",
+      "purpose": "Stepped travertine tower stairwell with arched window to aqueduct horizon and vertical rope shaft",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_twin_cypresses_umbrella_pine"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "nine_step_travertine_risers_window_cutout_and_foreground_rail"
+    },
+    {
+      "view_id": "belfry_catwalk_clapper",
+      "camera_projection_2d": "upper_catwalk_medium_and_detail_2d",
+      "purpose": "Upper maintenance oak catwalk directly beside bronze bell mouth and iron clapper bulb",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "upper_oak_catwalk_bell_mouth_cavity_and_clapper_shaft"
+    },
+    {
+      "view_id": "hilltop_courtyard_wide",
+      "camera_projection_2d": "exterior_wide_courtyard_2d",
+      "purpose": "Cobbled courtyard below the bell tower with shuttered insula balcony, amphorae, and waking citizens",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_twin_cypresses_umbrella_pine",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "exterior_bell_tower_facade_insula_shutters_and_cobbled_court"
+    }
+  ],
+  "layers_by_view": {
+    "belfry_lower_arch": [
+      {
+        "layer_id": "belfry_lower_arch__L0_sky_dawn",
+        "plane": "L0_sky_atmosphere",
+        "depth": 0.12,
+        "elements": [
+          "pre_dawn_gradient",
+          "horizon_glow",
+          "fading_stars",
+          "stratified_clouds"
+        ]
+      },
+      {
+        "layer_id": "belfry_lower_arch__L1_valley_landmarks",
+        "plane": "L1_far_hills_aqueduct",
+        "depth": 0.34,
+        "elements": [
+          "lm_5arch_aqueduct",
+          "lm_twin_cypresses_umbrella_pine",
+          "lm_bronze_watch_bell_rig"
+        ]
+      },
+      {
+        "layer_id": "belfry_lower_arch__L2_mid_architecture",
+        "plane": "L2_mid_architecture",
+        "depth": 0.72,
+        "elements": [
+          "distinct_floor_arch_and_blurred_upper_belfry",
+          "travertine_masonry",
+          "mortised_oak_timbers"
+        ]
+      },
+      {
+        "layer_id": "belfry_lower_arch__L3_subject_stage",
+        "plane": "L3_subject_stage",
+        "depth": 1.0,
+        "elements": [
+          "bell_and_rope_mechanics",
+          "planted_ground_or_treads",
+          "cast_actors"
+        ]
+      },
+      {
+        "layer_id": "belfry_lower_arch__L4_foreground_occluder",
+        "plane": "L4_foreground_occluder",
+        "depth": 1.25,
+        "elements": [
+          "dark_arch_spandrel_or_timber_rail_silhouette"
+        ]
+      }
+    ],
+    "belfry_wide_interior": [
+      {
+        "layer_id": "belfry_wide_interior__L0_sky_dawn",
+        "plane": "L0_sky_atmosphere",
+        "depth": 0.12,
+        "elements": [
+          "pre_dawn_gradient",
+          "horizon_glow",
+          "fading_stars",
+          "stratified_clouds"
+        ]
+      },
+      {
+        "layer_id": "belfry_wide_interior__L1_valley_landmarks",
+        "plane": "L1_far_hills_aqueduct",
+        "depth": 0.34,
+        "elements": [
+          "lm_5arch_aqueduct",
+          "lm_twin_cypresses_umbrella_pine",
+          "lm_bronze_watch_bell_rig"
+        ]
+      },
+      {
+        "layer_id": "belfry_wide_interior__L2_mid_architecture",
+        "plane": "L2_mid_architecture",
+        "depth": 0.72,
+        "elements": [
+          "full_pier_arch_crossbeam_bell_and_slab_floor",
+          "travertine_masonry",
+          "mortised_oak_timbers"
+        ]
+      },
+      {
+        "layer_id": "belfry_wide_interior__L3_subject_stage",
+        "plane": "L3_subject_stage",
+        "depth": 1.0,
+        "elements": [
+          "bell_and_rope_mechanics",
+          "planted_ground_or_treads",
+          "cast_actors"
+        ]
+      },
+      {
+        "layer_id": "belfry_wide_interior__L4_foreground_occluder",
+        "plane": "L4_foreground_occluder",
+        "depth": 1.25,
+        "elements": [
+          "dark_arch_spandrel_or_timber_rail_silhouette"
+        ]
+      }
+    ],
+    "belfry_low_angle": [
+      {
+        "layer_id": "belfry_low_angle__L0_sky_dawn",
+        "plane": "L0_sky_atmosphere",
+        "depth": 0.12,
+        "elements": [
+          "pre_dawn_gradient",
+          "horizon_glow",
+          "fading_stars",
+          "stratified_clouds"
+        ]
+      },
+      {
+        "layer_id": "belfry_low_angle__L1_valley_landmarks",
+        "plane": "L1_far_hills_aqueduct",
+        "depth": 0.34,
+        "elements": [
+          "lm_5arch_aqueduct",
+          "lm_bronze_watch_bell_rig"
+        ]
+      },
+      {
+        "layer_id": "belfry_low_angle__L2_mid_architecture",
+        "plane": "L2_mid_architecture",
+        "depth": 0.72,
+        "elements": [
+          "converging_2d_arch_soffit_and_overhead_yoke",
+          "travertine_masonry",
+          "mortised_oak_timbers"
+        ]
+      },
+      {
+        "layer_id": "belfry_low_angle__L3_subject_stage",
+        "plane": "L3_subject_stage",
+        "depth": 1.0,
+        "elements": [
+          "bell_and_rope_mechanics",
+          "planted_ground_or_treads",
+          "cast_actors"
+        ]
+      },
+      {
+        "layer_id": "belfry_low_angle__L4_foreground_occluder",
+        "plane": "L4_foreground_occluder",
+        "depth": 1.25,
+        "elements": [
+          "dark_arch_spandrel_or_timber_rail_silhouette"
+        ]
+      }
+    ],
+    "tower_stairwell_ascent": [
+      {
+        "layer_id": "tower_stairwell_ascent__L0_sky_dawn",
+        "plane": "L0_sky_atmosphere",
+        "depth": 0.12,
+        "elements": [
+          "pre_dawn_gradient",
+          "horizon_glow",
+          "fading_stars",
+          "stratified_clouds"
+        ]
+      },
+      {
+        "layer_id": "tower_stairwell_ascent__L1_valley_landmarks",
+        "plane": "L1_far_hills_aqueduct",
+        "depth": 0.34,
+        "elements": [
+          "lm_5arch_aqueduct",
+          "lm_twin_cypresses_umbrella_pine"
+        ]
+      },
+      {
+        "layer_id": "tower_stairwell_ascent__L2_mid_architecture",
+        "plane": "L2_mid_architecture",
+        "depth": 0.72,
+        "elements": [
+          "nine_step_travertine_risers_window_cutout_and_foreground_rail",
+          "travertine_masonry",
+          "mortised_oak_timbers"
+        ]
+      },
+      {
+        "layer_id": "tower_stairwell_ascent__L3_subject_stage",
+        "plane": "L3_subject_stage",
+        "depth": 1.0,
+        "elements": [
+          "bell_and_rope_mechanics",
+          "planted_ground_or_treads",
+          "cast_actors"
+        ]
+      },
+      {
+        "layer_id": "tower_stairwell_ascent__L4_foreground_occluder",
+        "plane": "L4_foreground_occluder",
+        "depth": 1.25,
+        "elements": [
+          "dark_arch_spandrel_or_timber_rail_silhouette"
+        ]
+      }
+    ],
+    "belfry_catwalk_clapper": [
+      {
+        "layer_id": "belfry_catwalk_clapper__L0_sky_dawn",
+        "plane": "L0_sky_atmosphere",
+        "depth": 0.12,
+        "elements": [
+          "pre_dawn_gradient",
+          "horizon_glow",
+          "fading_stars",
+          "stratified_clouds"
+        ]
+      },
+      {
+        "layer_id": "belfry_catwalk_clapper__L1_valley_landmarks",
+        "plane": "L1_far_hills_aqueduct",
+        "depth": 0.34,
+        "elements": [
+          "lm_5arch_aqueduct",
+          "lm_bronze_watch_bell_rig"
+        ]
+      },
+      {
+        "layer_id": "belfry_catwalk_clapper__L2_mid_architecture",
+        "plane": "L2_mid_architecture",
+        "depth": 0.72,
+        "elements": [
+          "upper_oak_catwalk_bell_mouth_cavity_and_clapper_shaft",
+          "travertine_masonry",
+          "mortised_oak_timbers"
+        ]
+      },
+      {
+        "layer_id": "belfry_catwalk_clapper__L3_subject_stage",
+        "plane": "L3_subject_stage",
+        "depth": 1.0,
+        "elements": [
+          "bell_and_rope_mechanics",
+          "planted_ground_or_treads",
+          "cast_actors"
+        ]
+      },
+      {
+        "layer_id": "belfry_catwalk_clapper__L4_foreground_occluder",
+        "plane": "L4_foreground_occluder",
+        "depth": 1.25,
+        "elements": [
+          "dark_arch_spandrel_or_timber_rail_silhouette"
+        ]
+      }
+    ],
+    "hilltop_courtyard_wide": [
+      {
+        "layer_id": "hilltop_courtyard_wide__L0_sky_dawn",
+        "plane": "L0_sky_atmosphere",
+        "depth": 0.12,
+        "elements": [
+          "pre_dawn_gradient",
+          "horizon_glow",
+          "fading_stars",
+          "stratified_clouds"
+        ]
+      },
+      {
+        "layer_id": "hilltop_courtyard_wide__L1_valley_landmarks",
+        "plane": "L1_far_hills_aqueduct",
+        "depth": 0.34,
+        "elements": [
+          "lm_5arch_aqueduct",
+          "lm_twin_cypresses_umbrella_pine",
+          "lm_bronze_watch_bell_rig"
+        ]
+      },
+      {
+        "layer_id": "hilltop_courtyard_wide__L2_mid_architecture",
+        "plane": "L2_mid_architecture",
+        "depth": 0.72,
+        "elements": [
+          "exterior_bell_tower_facade_insula_shutters_and_cobbled_court",
+          "travertine_masonry",
+          "mortised_oak_timbers"
+        ]
+      },
+      {
+        "layer_id": "hilltop_courtyard_wide__L3_subject_stage",
+        "plane": "L3_subject_stage",
+        "depth": 1.0,
+        "elements": [
+          "bell_and_rope_mechanics",
+          "planted_ground_or_treads",
+          "cast_actors"
+        ]
+      },
+      {
+        "layer_id": "hilltop_courtyard_wide__L4_foreground_occluder",
+        "plane": "L4_foreground_occluder",
+        "depth": 1.25,
+        "elements": [
+          "dark_arch_spandrel_or_timber_rail_silhouette"
+        ]
+      }
+    ]
+  },
+  "rendered_view_proofs": {
+    "belfry_wide_interior": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_03_wide_establishing_belfry.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_03_wide_establishing_belfry.png",
+      "sha256": "23a6c1380955284ac25b29386ac2aa18e18bf68c7941c2f019710188c4efccd4",
+      "bytes": 455521,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_03_wide_establishing_belfry.jpg"
+    },
+    "tower_stairwell_ascent": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_04_environment_stairwell_detail.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_04_environment_stairwell_detail.png",
+      "sha256": "5f3650f53b57d867fccaef0ec96834eeffe4140590dd77b489b889e738603b13",
+      "bytes": 178896,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_04_environment_stairwell_detail.jpg"
+    },
+    "belfry_catwalk_clapper": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_05_prop_hand_contact_closeup.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_05_prop_hand_contact_closeup.png",
+      "sha256": "2f19180d8572121661ec1061ed590bf60e6b04ca9e0b39f151e95e8da1e660d1",
+      "bytes": 405210,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_05_prop_hand_contact_closeup.jpg"
+    },
+    "hilltop_courtyard_wide": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_09_courtyard_exterior_angle.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_09_courtyard_exterior_angle.png",
+      "sha256": "eb0cd0375e952f85812862476cddf370319fb9592474496ca03f532d9747a124",
+      "bytes": 304720,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_09_courtyard_exterior_angle.jpg"
+    }
+  },
+  "forbidden_motifs_absent": [
+    "marketplace_chase",
+    "urgent_scroll",
+    "runaway_cart",
+    "market_awnings",
+    "fountain_catch",
+    "fog_legion_stock"
+  ],
+  "manifest_sha256": "9ca40cf90e323afb4aec0cb44d011c7ec6b25fa99e27a3a34e2981f6fe526e06"
+}

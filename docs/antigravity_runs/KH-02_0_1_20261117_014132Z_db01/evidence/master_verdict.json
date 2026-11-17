@@ -1,0 +1,591 @@
+{
+  "schema_version": "kh02_0_1_master_verdict.v1",
+  "generated_at_utc": "2026-11-17T04:03:42Z",
+  "run_folder": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01",
+  "stage_flags": {
+    "KH02_BASELINE_PASS": true,
+    "KH02_2D_ONLY_PASS": true,
+    "KH02_STYLE_POC_TECH_PASS": true,
+    "KH02_FILM_TECH_PASS": true,
+    "KH02_QA_PASS": true,
+    "KH02_STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+    "KH02_EDITORIAL_APPROVED": "HUMAN_REVIEW_PENDING",
+    "KH02_RELEASE_READY": "TECH_PASS_HUMAN_REVIEW_PENDING"
+  },
+  "scope_honesty": {
+    "implemented_now": [
+      "KH-02.0 Safe Branch & 2D Baseline",
+      "KH-02.1 Style Foundation + Experimental 30s Original Bell Preview"
+    ],
+    "future_not_implemented": [
+      "KH-02.2 Character & Shot Continuity Engine",
+      "KH-02.3 Comprehensive Natural Motion Engine",
+      "KH-02.4 Full Camera Director",
+      "KH-02.5 Smart Shot Director",
+      "KH-02.6 Broad QA/Pilot",
+      "KH-02.7 Production Release"
+    ]
+  },
+  "resource_telemetry": {
+    "samples": 538,
+    "min_free_disk_gb": 53.99,
+    "min_avail_ram_gb": 4.91,
+    "breached": false,
+    "breach_message": "",
+    "total_wall_sec": 542.58,
+    "end_disk": {
+      "total_gb": 144.02,
+      "used_gb": 90.03,
+      "free_gb": 53.99
+    },
+    "end_ram": {
+      "total_gb": 31.75,
+      "available_gb": 10.23
+    }
+  },
+  "jobs": {
+    "run_preflight": {
+      "job": "run_preflight",
+      "status": "PASS",
+      "branch": "feat/modern-2d-cinematic",
+      "head_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+      "origin_production_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+      "origin_fix_image_shot_sha": "c96c4f366b873aa3e81a299ab70a330b4adae5ee",
+      "descended_from_origin_production": true,
+      "resource_guard_ok": true,
+      "resource_message": "OK",
+      "telemetry": {
+        "disk": {
+          "total_gb": 144.02,
+          "used_gb": 89.79,
+          "free_gb": 54.23
+        },
+        "ram": {
+          "total_gb": 31.75,
+          "available_gb": 10.94
+        },
+        "cpus": 12,
+        "workspace": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio"
+      },
+      "worker_caps": {
+        "logical_cpus": 12,
+        "light_async_workers": 3,
+        "heavy_chromium_1080p_cap": 1,
+        "heavy_ffmpeg_encode_cap": 1
+      },
+      "scratch_dir": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh02_20261117_014132Z_db01",
+      "run_dir": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01"
+    },
+    "job_baseline": {
+      "job": "job_baseline",
+      "status": "PASS",
+      "duration_sec": 1.659,
+      "js_files_checked": 40,
+      "js_failures": [],
+      "baseline_squire_frames_checked": 1552,
+      "preservation_audit": {
+        "passed": true,
+        "confidence_class": "MEASURED_TECHNICAL",
+        "style_approved": "HUMAN_REVIEW_PENDING",
+        "outline_hex": "#392a21",
+        "head_diameter_ratio": 0.38,
+        "preserved_baseline_files_intact": true,
+        "errors": []
+      }
+    },
+    "job_style_contract": {
+      "job": "job_style_contract",
+      "status": "PASS",
+      "duration_sec": 0.005,
+      "style_id": "squire_cinematic_2d.v1",
+      "style_lock_digest": "f1b22b7606f80d1e37c2f32a4cd97152c5c6765400506caa7a9e1f768f333a75",
+      "validation": {
+        "valid": true,
+        "style_id": "squire_cinematic_2d.v1",
+        "style_digest": "f1b22b7606f80d1e37c2f32a4cd97152c5c6765400506caa7a9e1f768f333a75",
+        "digest_verified": true,
+        "shots_checked": 8,
+        "errors": [],
+        "warnings": []
+      },
+      "resolved_niche_digests": {
+        "roman": "eaeb33318429380782fa1dd4937a126a9cb68cf404f4c9d59b64704e75fa12fd",
+        "medieval": "9e403638f90d3daf896bdd1c3f1f3ead9e2d6ffc719697eb8defe5423849ba22",
+        "non_historical_future": "c2cca404bd80bb280433e5f26bfab66823841ded718acfca01a072842b85692c"
+      }
+    },
+    "job_negative_mutations": {
+      "job": "job_negative_mutations",
+      "status": "PASS",
+      "duration_sec": 1.917,
+      "pytest_exit_code": 0,
+      "pytest_stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\QuocAn\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\ncachedir: .pytest_cache\nrootdir: D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\nplugins: anyio-4.16.0\ncollecting ... collected 6 items\n\ntests/kh02_2d/test_kh02_foundation.py::test_style_contract_load_and_niche_resolution PASSED [ 16%]\ntests/kh02_2d/test_kh02_foundation.py::test_style_contract_tampered_digest_killed PASSED [ 33%]\ntests/kh02_2d/test_kh02_foundation.py::test_character_factory_uniqueness_and_goat_honesty PASSED [ 50%]\ntests/kh02_2d/test_kh02_foundation.py::test_environment_factory_views_and_forbidden_motifs PASSED [ 66%]\ntests/kh02_2d/test_kh02_foundation.py::test_2d_only_guard_vs_legacy_3d_compatibility PASSED [ 83%]\ntests/kh02_2d/test_kh02_foundation.py::test_mandatory_negative_mutations_and_false_positive_prevention PASSED [100%]\n\n============================== 6 passed in 1.42s ==============================",
+      "mandatory_mutants_killed": [
+        "M01_3d_kind_in_canvas2d_only",
+        "M02_blank_black_frame_mp4",
+        "M03_static_3s_pan_in_action_shot",
+        "M04_actor_wardrobe_identity_flip_across_cut",
+        "M05_prop_duplicate_and_angle_teleport",
+        "M06_hand_releases_rope_early",
+        "M07_planted_foot_slides_on_stairs",
+        "M08_camera_overzoom_out_of_bounds_snap",
+        "M09_incorrect_shot_end_timing",
+        "M10_non_human_goat_claimed_as_human_rig",
+        "M11_tampered_style_lock_digest",
+        "M12_forbidden_reused_scroll_motif",
+        "M13_corrupt_mp4_stream",
+        "M14_false_positive_guards_6frame_hold_and_valid_cut_pass"
+      ]
+    },
+    "job_2d_only_guard": {
+      "job": "job_2d_only_guard",
+      "status": "PASS",
+      "duration_sec": 2.843,
+      "kh02_zero_threejs_verified": true,
+      "negative_3d_injection_rejected": true,
+      "legacy_3d_projects_intact": true,
+      "probe_details": {
+        "kh02": {
+          "ready": true,
+          "bootError": null,
+          "three3dLoaded": false,
+          "info": {
+            "W": 960,
+            "H": 540,
+            "fps": 24,
+            "duration": 30,
+            "frames": 720,
+            "shots": [
+              {
+                "id": "S01",
+                "start": 0,
+                "end": 3,
+                "line": "Before dawn, Pip found the bell rope.",
+                "has": true
+              },
+              {
+                "id": "S02",
+                "start": 3,
+                "end": 6.5,
+                "line": "Tavi had one rule: wait for sunrise.",
+                "has": true
+              },
+              {
+                "id": "S03",
+                "start": 6.5,
+                "end": 10,
+                "line": "He lunged, but the rope slipped free.",
+                "has": true
+              },
+              {
+                "id": "S04",
+                "start": 10,
+                "end": 13.5,
+                "line": "One tug set the whole bell tower shaking.",
+                "has": true
+              },
+              {
+                "id": "S05",
+                "start": 13.5,
+                "end": 17.5,
+                "line": "He sprinted up the stairs to catch the clapper.",
+                "has": true
+              },
+              {
+                "id": "S06",
+                "start": 17.5,
+                "end": 23,
+                "line": "For one breathless second, total silence.",
+                "has": true
+              },
+              {
+                "id": "S07",
+                "start": 23,
+                "end": 26.5,
+                "line": "Then little Pip sneezed.",
+                "has": true
+              },
+              {
+                "id": "S08",
+                "start": 26.5,
+                "end": 30,
+                "line": "And Rome woke up an hour early.",
+                "has": true
+              }
+            ],
+            "importErrors": [],
+            "style": "flat",
+            "missingImages": [],
+            "images": 0,
+            "renderMode": "canvas2d_only",
+            "three3dLoaded": false
+          },
+          "threeUrlsCount": 0,
+          "threeUrls": []
+        },
+        "neg3d": {
+          "ready": false,
+          "bootError": "KH02_2D_ONLY_VIOLATION: render_mode=canvas2d_only khong cho phep canh 3D (s3d).",
+          "three3dLoaded": false,
+          "info": null,
+          "threeUrlsCount": 0,
+          "threeUrls": []
+        },
+        "leg3d": {
+          "ready": true,
+          "bootError": null,
+          "three3dLoaded": true,
+          "info": {
+            "W": 960,
+            "H": 540,
+            "fps": 24,
+            "duration": 1,
+            "frames": 24,
+            "shots": [
+              {
+                "id": "s3d",
+                "start": 0,
+                "end": 1,
+                "line": "",
+                "has": true
+              }
+            ],
+            "importErrors": [],
+            "style": "flat",
+            "missingImages": [],
+            "images": 0,
+            "renderMode": "default",
+            "three3dLoaded": true
+          },
+          "threeUrlsCount": 2,
+          "threeUrls": [
+            "/engine/three3d.js",
+            "/node_modules/three/build/three.module.js"
+          ]
+        }
+      }
+    },
+    "job_generate_new_art": {
+      "job": "job_generate_new_art",
+      "status": "PASS",
+      "style_approval_status": "HUMAN_REVIEW_PENDING",
+      "duration_sec": 3.071,
+      "artifact_count": 11,
+      "character_validation": {
+        "valid": true,
+        "human_characters": [
+          "TAVI",
+          "LYRA"
+        ],
+        "non_human_entities": [
+          "PIP"
+        ],
+        "errors": []
+      },
+      "environment_validation": {
+        "valid": true,
+        "location_id": "loc_janiculum_bell_tower",
+        "view_count": 6,
+        "verified_proof_count": 4,
+        "errors": []
+      }
+    },
+    "job_render_original_30s": {
+      "job": "job_render_original_30s",
+      "status": "PASS",
+      "experimental_preview": true,
+      "style_approved": "HUMAN_REVIEW_PENDING",
+      "editorial_approved": "HUMAN_REVIEW_PENDING",
+      "duration_sec": 117.241,
+      "film_receipt": {
+        "status": "FILM_EXPORT_VERIFIED",
+        "experimental_preview": true,
+        "style_approved": "HUMAN_REVIEW_PENDING",
+        "editorial_approved": "HUMAN_REVIEW_PENDING",
+        "output_mp4": "projects/kh02_bell_before_sunrise_30s/out/KH02_BELL_EARLY_ORIGINAL_30S_1080P.mp4",
+        "output_sha256": "2f521d88e1da887bfe0654085230b95257154b6f16411e1aeaa39d8da5a9cf5a",
+        "output_bytes": 9009085,
+        "width": 1920,
+        "height": 1080,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "fps": "24/1",
+        "video_stream_duration_sec": 30.0,
+        "format_duration_sec": 30.0,
+        "decoded_frames": 720,
+        "decoded_aac_lufs": -14.0,
+        "decoded_aac_true_peak_dbtp": -1.7,
+        "elapsed_sec": 117.24
+      },
+      "editorial_packet_contact_sheet": {
+        "file": "contact_sheet_8shots.jpg",
+        "sha256": "c8c6b9aba5526134359a424bc013e1019d03c7dd6567ff3783bd18ae73a7d92f",
+        "bytes": 164990
+      }
+    },
+    "job_render_motion_probe": {
+      "job": "job_render_motion_probe",
+      "status": "PASS",
+      "duration_sec": 4.683,
+      "frames_compared_per_order": 16,
+      "orders_tested": [
+        "forward_pass_1",
+        "reverse_order",
+        "random_order",
+        "forward_pass_2"
+      ],
+      "mismatches_count": 0,
+      "sample_frame_digests": {
+        "6": "a68ea9bc258417e17bdde615da49a124f076cd4cfdbf017a89692d640e021494",
+        "36": "0901950a4d12a1cbf7d21d91df63b6ce5f69002a70be3795a361228257636ad2",
+        "96": "d1dd2cd98c76933ed70dc88e51fe37faaec90288fcee14b2dccedd9da22ebd19",
+        "165": "652238382339b3d76bc51ed03af9dcf6517aeb6c50ea543ed203281d02cd9291",
+        "195": "00cedb93b70b26e57c7aaef9d23439060c6517bf02cd6b0feb1f3caf44c8db6c",
+        "222": "7f1d01f3926beae20bd440bfdd5799228d50d238377a3df0202741b687ea8c35",
+        "268": "1cfb3e8a10d9195647273a4b88398c5940958dfc7c4323a1c87407667f846535",
+        "336": "a3e875a9d56cd661c1ea8710bafbba44b30a160fac343439ffcee266a2f6152d"
+      },
+      "trace_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh02_20261117_014132Z_db01\\determinism_probe\\trace_720_frames.json"
+    },
+    "job_temporal_qa": {
+      "job": "job_temporal_qa",
+      "status": "PASS",
+      "duration_sec": 1.742,
+      "audits": {
+        "style_baseline_preservation": {
+          "passed": true,
+          "confidence_class": "MEASURED_TECHNICAL",
+          "style_approved": "HUMAN_REVIEW_PENDING",
+          "outline_hex": "#392a21",
+          "head_diameter_ratio": 0.38,
+          "preserved_baseline_files_intact": true,
+          "errors": []
+        },
+        "unique_visual_language": {
+          "passed": true,
+          "confidence_class": "MEASURED_TECHNICAL",
+          "files_checked": 29,
+          "external_bitmap_count": 0,
+          "errors": []
+        },
+        "character_identity": {
+          "passed": true,
+          "confidence_class": "MEASURED_TECHNICAL",
+          "locked_cast": [
+            "LYRA",
+            "MARCUS",
+            "PIP",
+            "TAVI"
+          ],
+          "errors": []
+        },
+        "frame_temporal_liveness": {
+          "passed": true,
+          "confidence_class": "MEASURED_TECHNICAL",
+          "shot_pose_metrics": {
+            "S01": {
+              "frames_evaluated": 72,
+              "total_actor_world_path_px": 446.43,
+              "active_pose_frame_ratio": 0.831,
+              "longest_static_hold_frames": 7,
+              "distinct_expressions": 2
+            },
+            "S02": {
+              "frames_evaluated": 84,
+              "total_actor_world_path_px": 323.2,
+              "active_pose_frame_ratio": 0.6145,
+              "longest_static_hold_frames": 18,
+              "distinct_expressions": 3
+            },
+            "S03": {
+              "frames_evaluated": 84,
+              "total_actor_world_path_px": 1812.77,
+              "active_pose_frame_ratio": 1.0,
+              "longest_static_hold_frames": 0,
+              "distinct_expressions": 3
+            },
+            "S04": {
+              "frames_evaluated": 84,
+              "total_actor_world_path_px": 1144.27,
+              "active_pose_frame_ratio": 1.0,
+              "longest_static_hold_frames": 0,
+              "distinct_expressions": 2
+            },
+            "S05": {
+              "frames_evaluated": 96,
+              "total_actor_world_path_px": 2602.4,
+              "active_pose_frame_ratio": 1.0,
+              "longest_static_hold_frames": 0,
+              "distinct_expressions": 3
+            },
+            "S06": {
+              "frames_evaluated": 132,
+              "total_actor_world_path_px": 860.87,
+              "active_pose_frame_ratio": 0.9695,
+              "longest_static_hold_frames": 2,
+              "distinct_expressions": 3
+            },
+            "S07": {
+              "frames_evaluated": 84,
+              "total_actor_world_path_px": 518.52,
+              "active_pose_frame_ratio": 0.9639,
+              "longest_static_hold_frames": 3,
+              "distinct_expressions": 3
+            },
+            "S08": {
+              "frames_evaluated": 84,
+              "total_actor_world_path_px": 1065.6,
+              "active_pose_frame_ratio": 1.0,
+              "longest_static_hold_frames": 0,
+              "distinct_expressions": 4
+            }
+          },
+          "decoded_video_metrics": {
+            "decoded_frames": 720,
+            "blank_frames": 0,
+            "min_frame_luma": 11.9,
+            "max_frame_luma": 117.64,
+            "roi_temporal_activity_pct": 92.91
+          },
+          "errors": []
+        },
+        "continuity_across_cuts": {
+          "passed": true,
+          "confidence_class": "MEASURED_TECHNICAL",
+          "joins_verified": 7,
+          "errors": []
+        },
+        "hand_prop_and_planted_foot_contact": {
+          "passed": true,
+          "confidence_class": "MEASURED_TECHNICAL",
+          "max_grip_distance_px": 0.0,
+          "max_planted_foot_drift_px": 0.0,
+          "errors": []
+        },
+        "camera_2d_bounds": {
+          "passed": true,
+          "confidence_class": "MEASURED_TECHNICAL",
+          "shots_checked": 8,
+          "errors": []
+        }
+      }
+    },
+    "job_backtests": {
+      "job": "job_backtests",
+      "status": "PASS",
+      "duration_sec": 23.449,
+      "synthetic_180_stress": {
+        "label": "SYNTHETIC_PASS",
+        "equivalent_to_historical": false,
+        "shots_validated": 180,
+        "fast_check_sec": 7.086
+      },
+      "real_20shot_multi_angle": {
+        "label": "REAL_RENDERED_PASS",
+        "mp4_sha256": "e72b8def80f330d8e515599d940142116b2598b7223974d5892b67e627e9b22f",
+        "decoded_frames": 600,
+        "duration_sec": 25.0,
+        "full_decode_ok": true,
+        "error": ""
+      },
+      "historical_replay": {
+        "label": "NOT_RUN_MISSING_FIXTURE",
+        "counted_as_pass": false,
+        "fixture_checked": "tests/fixtures/historical_company_180"
+      }
+    },
+    "job_speed_trial": {
+      "job": "job_speed_trial",
+      "status": "PASS",
+      "scope_disclaimer": "Measured speedup applies ONLY to independent parallel QA tasks across isolated workspaces; NOT extrapolated to single-stream video encoding.",
+      "repeats_per_mode": 3,
+      "workers_used": 3,
+      "serial_wall_sec": [
+        5.079,
+        4.909,
+        4.837
+      ],
+      "parallel_wall_sec": [
+        2.342,
+        2.593,
+        2.333
+      ],
+      "serial_mean_sec": 4.942,
+      "serial_median_sec": 4.909,
+      "parallel_mean_sec": 2.423,
+      "parallel_median_sec": 2.342,
+      "qa_workload_speedup_ratio": 2.04,
+      "output_hashes_100pct_identical": true,
+      "reference_task_digests": [
+        "8b2c24ec693ad4aed64f2e88a322bbfbc700eb63137cc6f3448b1a3213167388",
+        "8b2c24ec693ad4aed64f2e88a322bbfbc700eb63137cc6f3448b1a3213167388",
+        "8b2c24ec693ad4aed64f2e88a322bbfbc700eb63137cc6f3448b1a3213167388"
+      ],
+      "parallel_overlap_windows_sec": [
+        {
+          "2": [
+            0.001,
+            2.299
+          ],
+          "0": [
+            0.0,
+            2.313
+          ],
+          "1": [
+            0.001,
+            2.341
+          ]
+        },
+        {
+          "1": [
+            0.0,
+            2.559
+          ],
+          "2": [
+            0.001,
+            2.575
+          ],
+          "0": [
+            0.0,
+            2.593
+          ]
+        },
+        {
+          "0": [
+            0.002,
+            2.281
+          ],
+          "2": [
+            0.002,
+            2.307
+          ],
+          "1": [
+            0.002,
+            2.333
+          ]
+        }
+      ]
+    },
+    "job_old_pack_e2e_regression": {
+      "job": "job_old_pack_e2e_regression",
+      "status": "PASS",
+      "duration_sec": 365.27,
+      "exit_code": 0,
+      "verdict": "FLOW_READY",
+      "required_gates_passed": 81,
+      "required_gates_total": 81,
+      "optional_gates_not_run": 1,
+      "baseline_tracked_evidence_untouched": true
+    },
+    "safe_commit_push_verify": {
+      "safe_to_commit_and_push_target": true,
+      "current_branch": "feat/modern-2d-cinematic",
+      "target_remote_ref": "refs/heads/feat/modern-2d-cinematic",
+      "git_diff_check_clean": true,
+      "protected_remote_refs": [
+        "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1\trefs/heads/Production",
+        "c96c4f366b873aa3e81a299ab70a330b4adae5ee\trefs/heads/fix/Image-Shot"
+      ]
+    }
+  }
+}

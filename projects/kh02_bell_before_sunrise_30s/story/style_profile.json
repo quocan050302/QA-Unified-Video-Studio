@@ -1,0 +1,155 @@
+{
+  "style_id": "squire_cinematic_2d.v1",
+  "style_lock_digest": "f1b22b7606f80d1e37c2f32a4cd97152c5c6765400506caa7a9e1f768f333a75",
+  "resolved_niche": "roman",
+  "render_mode": "canvas2d_only",
+  "base_ink": "#392a21",
+  "base_skin": "#f4ede1",
+  "stroke_weight_model": {
+    "reference_canvas": [
+      1920,
+      1080
+    ],
+    "formula": "clamp(base_px * (actor_px / 420)^0.58 * canvas_short_side / 1080, min_px, max_px)",
+    "tiers": {
+      "outer_silhouette": {
+        "base_px": 5.4,
+        "min_px": 2.0,
+        "max_px": 9.5
+      },
+      "limb_and_garment_seam": {
+        "base_px": 4.2,
+        "min_px": 1.6,
+        "max_px": 7.4
+      },
+      "facial_feature": {
+        "base_px": 3.8,
+        "min_px": 1.5,
+        "max_px": 6.8
+      },
+      "interior_cloth_fold": {
+        "base_px": 2.4,
+        "min_px": 1.1,
+        "max_px": 4.4
+      },
+      "midground_architecture": {
+        "base_px": 3.2,
+        "min_px": 1.4,
+        "max_px": 5.2
+      },
+      "far_background_silhouette": {
+        "base_px": 1.8,
+        "min_px": 0.9,
+        "max_px": 3.0
+      }
+    }
+  },
+  "cel_shading_bands": {
+    "band_count_min": 2,
+    "band_count_max": 3,
+    "bands": [
+      {
+        "id": "lit_base",
+        "role": "Primary local color lit by warm pre-dawn key"
+      },
+      {
+        "id": "core_cel_shadow",
+        "role": "Crisp cool-shifted shadow plane (-14% to -22% value) following form"
+      },
+      {
+        "id": "deep_occlusion_or_rim",
+        "role": "Selective contact occlusion under chin/belt/bell hood plus warm dawn edge highlight"
+      }
+    ],
+    "forbid_muddy_actor_gradients": true,
+    "forbid_drop_shadow_stickers": true
+  },
+  "layer_value_separation": {
+    "min_layers": 3,
+    "max_layers": 5,
+    "planes": {
+      "L0_sky_atmosphere": {
+        "depth": 0.15,
+        "luma_range": [
+          0.22,
+          0.72
+        ],
+        "contrast": "low_smooth"
+      },
+      "L1_far_hills_aqueduct": {
+        "depth": 0.35,
+        "luma_range": [
+          0.18,
+          0.46
+        ],
+        "contrast": "compressed_cool"
+      },
+      "L2_mid_architecture": {
+        "depth": 0.75,
+        "luma_range": [
+          0.2,
+          0.58
+        ],
+        "contrast": "structured_stone_timber"
+      },
+      "L3_subject_stage": {
+        "depth": 1.0,
+        "luma_range": [
+          0.12,
+          0.94
+        ],
+        "contrast": "high_focal_clarity"
+      },
+      "L4_foreground_occluder": {
+        "depth": 1.28,
+        "luma_range": [
+          0.06,
+          0.24
+        ],
+        "contrast": "dark_framing_silhouette"
+      }
+    }
+  },
+  "niche_palette": {
+    "label": "Roman Hilltop Pre-Dawn & Terracotta",
+    "sky_zenith": "#232d4b",
+    "sky_horizon": "#e7a477",
+    "dawn_rim": "#ffd49e",
+    "cool_shadow_tint": "#2c3554",
+    "stone_base": "#c7bca9",
+    "stone_shadow": "#8f8578",
+    "stone_highlight": "#dfd6c5",
+    "timber_base": "#9b6839",
+    "timber_shadow": "#684323",
+    "bronze_base": "#c99642",
+    "bronze_shadow": "#875d21",
+    "bronze_highlight": "#f2cf85",
+    "rope_hemp": "#cbb07c",
+    "rope_shadow": "#93784a",
+    "terracotta_roof": "#b6533c",
+    "cypress_foliage": "#496548",
+    "wardrobe_presets": {
+      "apprentice_keeper": {
+        "tunic": "#b84b39",
+        "tunic_shadow": "#863124",
+        "undertunic": "#eadbc2",
+        "scarf": "#df9b43",
+        "belt": "#694226",
+        "sandals": "#6e472b"
+      },
+      "elder_master": {
+        "stola": "#415980",
+        "stola_shadow": "#2b3d59",
+        "palla": "#d8c39e",
+        "trim": "#c99642",
+        "sandals": "#5c3d28"
+      },
+      "courtyard_citizen": {
+        "tunic": "#687d48",
+        "tunic_shadow": "#495931",
+        "cloak": "#c9b38c"
+      }
+    }
+  },
+  "resolved_sha256": "eaeb33318429380782fa1dd4937a126a9cb68cf404f4c9d59b64704e75fa12fd"
+}

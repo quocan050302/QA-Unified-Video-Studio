@@ -146,3 +146,175 @@ export function vignette(g, a = 0.25, color = '#2a1a10') {
   g.save(); const gr = g.createRadialGradient(E.W / 2, E.H / 2, Math.min(E.W, E.H) * 0.35, E.W / 2, E.H / 2, Math.max(E.W, E.H) * 0.75);
   gr.addColorStop(0, alpha(color, 0)); gr.addColorStop(1, alpha(color, a)); g.fillStyle = gr; g.fillRect(0, 0, E.W, E.H); g.restore();
 }
+
+// ======================================================================================
+// KH-02.1 ADDITIVE 2D CINEMATIC INK PRIMITIVES (OPT-IN ONLY; ZERO CHANGE TO DEFAULTS)
+// ======================================================================================
+
+export function scaleStrokeWeight2D(actorHeightPx = 420, basePx = 5.2, minPx = 1.5, maxPx = 9.5) {
+  const shortSide = Math.min(E.W || 1920, E.H || 1080);
+  const raw = basePx * Math.pow(Math.max(48, actorHeightPx) / 420, 0.58) * (shortSide / 1080);
+  return clamp(raw, minPx, maxPx);
+}
+
+function _samplePolyline2D(pts, subdivisions = 6) {
+  if (!pts || pts.length < 2) return pts || [];
+  if (pts.length === 2) {
+    const out = [];
+    for (let i = 0; i <= subdivisions; i++) {
+      const k = i / subdivisions;
+      out.push([lerp(pts[0][0], pts[1][0], k), lerp(pts[0][1], pts[1][1], k)]);
+    }
+    return out;
+  }
+  const out = [];
+  const n = pts.length;
+  const P = (idx) => pts[clamp(idx, 0, n - 1)];
+  for (let i = 0; i < n - 1; i++) {
+    const p0 = P(i - 1), p1 = P(i), p2 = P(i + 1), p3 = P(i + 2);
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+    const steps = i === n - 2 ? subdivisions : subdivisions - 1;
+    for (let s = 0; s <= steps; s++) {
+      const t = s / subdivisions, it = 1 - t;
+      const x = it * it * it * p1[0] + 3 * it * it * t * c1x + 3 * it * t * t * c2x + t * t * t * p2[0];
+      const y = it * it * it * p1[1] + 3 * it * it * t * c1y + 3 * it * t * t * c2y + t * t * t * p2[1];
+      out.push([x, y]);
+    }
+  }
+  return out;
+}
+
+export function strokeTapered2D(g, pts, o = {}) {
+  if (!pts || pts.length < 2) return;
+  const {
+    lw = 4.5,
+    startRatio = 0.38,
+    midRatio = 1.0,
+    endRatio = 0.32,
+    ink = OUT,
+    a = 1,
+  } = o;
+  if (lw <= 0.1 || a <= 0) return;
+  const dense = _samplePolyline2D(pts, 6);
+  if (dense.length < 2) return;
+  const left = [], right = [];
+  const m = dense.length - 1;
+  for (let i = 0; i <= m; i++) {
+    const prev = dense[Math.max(0, i - 1)], next = dense[Math.min(m, i + 1)];
+    const dx = next[0] - prev[0], dy = next[1] - prev[1];
+    const len = Math.hypot(dx, dy) || 1;
+    const nx = -dy / len, ny = dx / len;
+    const u = i / m;
+    const wProfile = u < 0.5
+      ? lerp(startRatio, midRatio, ease.out(u * 2))
+      : lerp(midRatio, endRatio, ease.in((u - 0.5) * 2));
+    const hw = Math.max(0.25, lw * wProfile * 0.5);
+    left.push([dense[i][0] + nx * hw, dense[i][1] + ny * hw]);
+    right.push([dense[i][0] - nx * hw, dense[i][1] - ny * hw]);
+  }
+  g.save();
+  if (a < 1) g.globalAlpha *= a;
+  g.fillStyle = ink;
+  g.beginPath();
+  g.moveTo(left[0][0], left[0][1]);
+  for (let i = 1; i < left.length; i++) g.lineTo(left[i][0], left[i][1]);
+  for (let i = right.length - 1; i >= 0; i--) g.lineTo(right[i][0], right[i][1]);
+  g.closePath();
+  g.fill();
+  g.restore();
+}
+
+export function fillCelShadedShape2D(g, buildPath, o = {}) {
+  const {
+    fill = PAL.white,
+    shadow = null,
+    deepShadow = null,
+    rim = null,
+    bounds = null, // [cx, cy, rx, ry]
+    lightDir = [-0.68, -0.45],
+    lw = 5,
+    ink = OUT,
+    a = 1,
+    inner = null,
+  } = o;
+  g.save();
+  if (a < 1) g.globalAlpha *= a;
+  g.beginPath();
+  buildPath(g);
+  if (fill) {
+    g.fillStyle = fill;
+    g.fill();
+  }
+  if (shadow || deepShadow || rim || inner) {
+    g.save();
+    g.clip();
+    if (bounds) {
+      const [cx, cy, rx, ry] = bounds;
+      const lx = lightDir[0], ly = lightDir[1];
+      if (shadow) {
+        g.fillStyle = shadow;
+        g.beginPath();
+        g.ellipse(cx - lx * rx * 0.85, cy - ly * ry * 0.65, rx * 1.35, ry * 1.35, 0, 0, Math.PI * 2);
+        g.ellipse(cx + lx * rx * 0.52, cy + ly * ry * 0.36, rx * 1.08, ry * 1.12, 0, 0, Math.PI * 2, true);
+        g.fill('evenodd');
+      }
+      if (deepShadow) {
+        g.fillStyle = deepShadow;
+        g.beginPath();
+        g.ellipse(cx - lx * rx * 1.18, cy - ly * ry * 0.95, rx * 1.15, ry * 1.15, 0, 0, Math.PI * 2);
+        g.ellipse(cx + lx * rx * 0.12, cy + ly * ry * 0.08, rx * 1.02, ry * 1.05, 0, 0, Math.PI * 2, true);
+        g.fill('evenodd');
+      }
+      if (rim) {
+        g.strokeStyle = rim;
+        g.lineWidth = Math.max(1.5, lw * 0.72);
+        g.beginPath();
+        g.ellipse(cx + lx * rx * 0.22, cy + ly * ry * 0.18, rx * 0.96, ry * 0.96, 0, Math.PI * 0.92, Math.PI * 1.62);
+        g.stroke();
+      }
+    }
+    if (inner) inner(g);
+    g.restore();
+  }
+  if (lw > 0) {
+    g.beginPath();
+    buildPath(g);
+    g.lineWidth = lw;
+    g.strokeStyle = ink;
+    g.lineJoin = 'round';
+    g.lineCap = 'round';
+    g.stroke();
+  }
+  g.restore();
+}
+
+export function shadeClothFold2D(g, anchorPt, endPt, ctrlPt, o = {}) {
+  const {
+    shadow = alpha('#2a1814', 0.24),
+    lw = 2.6,
+    ink = OUT,
+    spread = 7,
+  } = o;
+  const dx = endPt[0] - anchorPt[0], dy = endPt[1] - anchorPt[1];
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len, ny = dx / len;
+  if (shadow) {
+    g.save();
+    g.fillStyle = shadow;
+    g.beginPath();
+    g.moveTo(anchorPt[0], anchorPt[1]);
+    g.quadraticCurveTo(ctrlPt[0] + nx * spread * 0.65, ctrlPt[1] + ny * spread * 0.65, endPt[0] + nx * spread, endPt[1] + ny * spread);
+    g.lineTo(endPt[0] - nx * spread * 0.22, endPt[1] - ny * spread * 0.22);
+    g.quadraticCurveTo(ctrlPt[0], ctrlPt[1], anchorPt[0], anchorPt[1]);
+    g.closePath();
+    g.fill();
+    g.restore();
+  }
+  strokeTapered2D(g, [anchorPt, ctrlPt, endPt], { lw, startRatio: 0.3, midRatio: 1.0, endRatio: 0.2, ink });
+}
+
+export function drawInkEdgeHighlight2D(g, pts, o = {}) {
+  const { lw = 3.0, color = '#ffd49e', a = 0.72 } = o;
+  strokeTapered2D(g, pts, { lw, startRatio: 0.2, midRatio: 1.0, endRatio: 0.2, ink: color, a });
+}

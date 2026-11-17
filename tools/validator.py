@@ -78,6 +78,13 @@ def validate_project(project_dir: str, stage: str = "preflight") -> dict:
         report["fatal_errors"].append(f"config.json resolution khong hop le: {resolution}")
         report["status"] = "BLOCKED"
         return report
+
+    render_mode = cfg.get("render_mode", "default")
+    is_2d_only = (render_mode == "canvas2d_only") or bool(cfg.get("kh02_2d_only", False))
+    if render_mode not in ("default", "auto", "canvas2d_only"):
+        report["fatal_errors"].append(f"config.json render_mode khong hop le: {render_mode}")
+        report["status"] = "BLOCKED"
+        return report
     
     known_templates = PACK_TEMPLATES.get(pack, set())
 
@@ -126,6 +133,11 @@ def validate_project(project_dir: str, stage: str = "preflight") -> dict:
         for f in scenes_dir.iterdir():
             if f.is_file() and f.suffix == '.js':
                 custom_scenes.add(f.stem)
+                try:
+                    for m in re.finditer(r"""registerShot\s*\(\s*['"]([^'"]+)['"]""", f.read_text(encoding="utf-8", errors="ignore")):
+                        custom_scenes.add(m.group(1))
+                except OSError:
+                    pass
 
     seen_ids = set()
     prev_end = 0.0
@@ -176,6 +188,19 @@ def validate_project(project_dir: str, stage: str = "preflight") -> dict:
         for ref in img_refs:
             if ref not in existing_assets:
                 report["missing_assets"].append(f"Shot {sid} can anh '{ref}' nhung khong tim thay trong anh/")
+
+        if is_2d_only and (s.get("kind") == "3d" or s.get("tpl") == "3d" or args.get("kind") == "3d"):
+            report["fatal_errors"].append(f"KH02_2D_ONLY_VIOLATION: Shot '{sid}' khai bao 3D trong che do render_mode=canvas2d_only")
+
+    if is_2d_only and (P / "scenes").is_dir():
+        for js_f in sorted((P / "scenes").rglob("*.js")):
+            try:
+                js_txt = js_f.read_text(encoding="utf-8", errors="ignore")
+                if re.search(r"""kind\s*:\s*['"]3d['"]|three3d\.js|from\s+['"]three['"]|import\s*\(\s*['"][^'"]*three3d""", js_txt):
+                    rel_js = js_f.relative_to(P).as_posix()
+                    report["fatal_errors"].append(f"KH02_2D_ONLY_VIOLATION: File '{rel_js}' chua dinh nghia 3D / Three.js trong che do canvas2d_only")
+            except OSError:
+                pass
 
     # 3. Kiem tra am thanh tuy theo pack va stage
     if pack == "squire":

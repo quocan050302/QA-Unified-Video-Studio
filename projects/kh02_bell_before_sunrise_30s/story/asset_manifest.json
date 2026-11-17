@@ -1,0 +1,224 @@
+{
+  "schema_version": "kh02_asset_manifest.v1",
+  "project": "kh02_bell_before_sunrise_30s",
+  "render_mode": "canvas2d_only",
+  "style_id": "squire_cinematic_2d.v1",
+  "style_lock_digest": "f1b22b7606f80d1e37c2f32a4cd97152c5c6765400506caa7a9e1f768f333a75",
+  "external_copied_images_count": 0,
+  "reused_demo_frames_count": 0,
+  "three3d_assets_count": 0,
+  "voice_provenance": {
+    "status": "VOICE_READY",
+    "provider": "Local OS SpeechSynthesizer (Windows SAPI 48kHz mono, 1.0x rate)",
+    "timeline_voice_sha256": "a1ca39abd62589a8c668051f0a00c150cd0af6d49d95eb9a8f930e2989aa9882",
+    "duration_sec": 30.0,
+    "clips": {
+      "build/voice_clips/S01_tts.wav": {
+        "origin": "LOCAL_OS_SAPI_TTS_1X_MEASURED",
+        "shot_id": "S01",
+        "text": "Before dawn, Pip found the bell rope.",
+        "start_sec": 0.16,
+        "end_sec": 2.685,
+        "measured_duration_sec": 2.5248,
+        "rms": 0.1067,
+        "sha256": "f39cdaa00e01ea4ece0ac95fd69838e77aebbb3174b226320ea7b7baa3be1b08"
+      },
+      "build/voice_clips/S02_tts.wav": {
+        "origin": "LOCAL_OS_SAPI_TTS_1X_MEASURED",
+        "shot_id": "S02",
+        "text": "Tavi had one rule: wait for sunrise.",
+        "start_sec": 3.22,
+        "end_sec": 6.062,
+        "measured_duration_sec": 2.842,
+        "rms": 0.10577,
+        "sha256": "5e42c67708e094ba00632ed5c521b0e4c7c9a2a16b6af877711a9a8a3c3e59c8"
+      },
+      "build/voice_clips/S03_tts.wav": {
+        "origin": "LOCAL_OS_SAPI_TTS_1X_MEASURED",
+        "shot_id": "S03",
+        "text": "He lunged, but the rope slipped free.",
+        "start_sec": 6.7,
+        "end_sec": 9.144,
+        "measured_duration_sec": 2.4438,
+        "rms": 0.08569,
+        "sha256": "98bb5610624656e9be31331e33330301c9c3727ab3c7cb1a2d55cdacfd687604"
+      },
+      "build/voice_clips/S04_tts.wav": {
+        "origin": "LOCAL_OS_SAPI_TTS_1X_MEASURED",
+        "shot_id": "S04",
+        "text": "One tug set the whole bell tower shaking.",
+        "start_sec": 10.24,
+        "end_sec": 12.661,
+        "measured_duration_sec": 2.421,
+        "rms": 0.11682,
+        "sha256": "c30de5eae3ebe78a4b877602ea070e08f0101dc24dc89a19b6e046e3a0d4025c"
+      },
+      "build/voice_clips/S05_tts.wav": {
+        "origin": "LOCAL_OS_SAPI_TTS_1X_MEASURED",
+        "shot_id": "S05",
+        "text": "He sprinted up the stairs to catch the clapper.",
+        "start_sec": 13.75,
+        "end_sec": 16.213,
+        "measured_duration_sec": 2.4632,
+        "rms": 0.09677,
+        "sha256": "a08432a13050e293a6952c7177f6d4c4c90f85ea0625c52d412f8728de2e1255"
+      },
+      "build/voice_clips/S06_tts.wav": {
+        "origin": "LOCAL_OS_SAPI_TTS_1X_MEASURED",
+        "shot_id": "S06",
+        "text": "For one breathless second, total silence.",
+        "start_sec": 17.85,
+        "end_sec": 20.715,
+        "measured_duration_sec": 2.8649,
+        "rms": 0.10754,
+        "sha256": "f780a34d27f837c8fb978a4005128d9e21df63fc42d88a6ce8df506970c72d7f"
+      },
+      "build/voice_clips/S07_tts.wav": {
+        "origin": "LOCAL_OS_SAPI_TTS_1X_MEASURED",
+        "shot_id": "S07",
+        "text": "Then little Pip sneezed.",
+        "start_sec": 23.14,
+        "end_sec": 24.545,
+        "measured_duration_sec": 1.4046,
+        "rms": 0.09541,
+        "sha256": "d5072e360cc732f3251db33b04e6240fea37018ae784f750233136f709c6e408"
+      },
+      "build/voice_clips/S08_tts.wav": {
+        "origin": "LOCAL_OS_SAPI_TTS_1X_MEASURED",
+        "shot_id": "S08",
+        "text": "And Rome woke up an hour early.",
+        "start_sec": 26.78,
+        "end_sec": 28.568,
+        "measured_duration_sec": 1.7876,
+        "rms": 0.12951,
+        "sha256": "f1b9ad593adecddf113e2c1ab0fd769a473ba0ebfc9d9045f6a0cbc87d913336"
+      }
+    }
+  },
+  "procedural_audio_assets": {
+    "build/audio_gen/goat_hoof_tap.wav": {
+      "origin": "PROCEDURAL_CODE_GENERATED_KH02",
+      "license": "100% original procedural synthesis in tools/build_kh02_bell_project.py",
+      "formula": "bandpass stone click + 240Hz wood/hoof resonance double tap",
+      "duration_sec": 0.42,
+      "sha256": "bc3b5ee0cdf34affd7c377dfca9348a7a260f3a2b1ed8127949fd68c37185787",
+      "bytes": 40364
+    },
+    "build/audio_gen/rope_hemp_swish.wav": {
+      "origin": "PROCEDURAL_CODE_GENERATED_KH02",
+      "license": "100% original procedural synthesis in tools/build_kh02_bell_project.py",
+      "formula": "bandpass hemp friction envelope + 190..310Hz tension creak",
+      "duration_sec": 0.68,
+      "sha256": "961e3fa4149ec2c54f1e8eda51a2abb94a1e86ff67146b969146ee8eb0b7fb85",
+      "bytes": 65324
+    },
+    "build/audio_gen/bell_creak_swing.wav": {
+      "origin": "PROCEDURAL_CODE_GENERATED_KH02",
+      "license": "100% original procedural synthesis in tools/build_kh02_bell_project.py",
+      "formula": "low-band yoke air whoosh + FM timber creak harmonics",
+      "duration_sec": 1.45,
+      "sha256": "9a7e5ba7aeb322e22d5d4f3f3fe622d8a611ea22aaa68797a97f32d2b3d5c497",
+      "bytes": 139244
+    },
+    "build/audio_gen/stone_stair_steps.wav": {
+      "origin": "PROCEDURAL_CODE_GENERATED_KH02",
+      "license": "100% original procedural synthesis in tools/build_kh02_bell_project.py",
+      "formula": "4-step travertine impact sequence with ascending pitch",
+      "duration_sec": 1.85,
+      "sha256": "d80a66a02fe9e0715e0c39aaa5681855f5a7682381de46b5de0443c9a61ca7f0",
+      "bytes": 177644
+    },
+    "build/audio_gen/clapper_leather_catch.wav": {
+      "origin": "PROCEDURAL_CODE_GENERATED_KH02",
+      "license": "100% original procedural synthesis in tools/build_kh02_bell_project.py",
+      "formula": "damped iron-clapper thud + leather grip transient",
+      "duration_sec": 0.46,
+      "sha256": "df8fabe18b76fd98874b087746111ede8062b2c2bc6ac968e0567be54f2db10f",
+      "bytes": 44204
+    },
+    "build/audio_gen/goat_sneeze_choo.wav": {
+      "origin": "PROCEDURAL_CODE_GENERATED_KH02",
+      "license": "100% original procedural synthesis in tools/build_kh02_bell_project.py",
+      "formula": "inhale noise swell + 680->310Hz comic sneeze burst",
+      "duration_sec": 0.75,
+      "sha256": "f56908f30ca03186e756e99243816cfd58f4bf3504db65aeac1e0bddb2d2afcd",
+      "bytes": 72044
+    },
+    "build/audio_gen/roman_bell_early_toll.wav": {
+      "origin": "PROCEDURAL_CODE_GENERATED_KH02",
+      "license": "100% original procedural synthesis in tools/build_kh02_bell_project.py",
+      "formula": "7-partial cast bronze harmonic bell synthesis + clapper transient",
+      "duration_sec": 3.2,
+      "sha256": "9c93373b213d783131117b54ce8c6c48fb788faed6deaf4f22601994397e374b",
+      "bytes": 307244
+    },
+    "build/audio_gen/courtyard_waking_murmur.wav": {
+      "origin": "PROCEDURAL_CODE_GENERATED_KH02",
+      "license": "100% original procedural synthesis in tools/build_kh02_bell_project.py",
+      "formula": "dual wooden shutter impacts + modulated formant crowd murmur",
+      "duration_sec": 2.4,
+      "sha256": "e169df3a566ed7dadd390c285e70f991ddf0e01654f36411890fe549382c8f40",
+      "bytes": 230444
+    },
+    "build/audio_gen/roman_dawn_bell_score.wav": {
+      "origin": "PROCEDURAL_CODE_GENERATED_KH02",
+      "license": "100% original procedural synthesis in tools/build_kh02_bell_project.py",
+      "formula": "104bpm plucked Dorian lyre ostinato + soft 92Hz frame drum + S06 silence drop",
+      "duration_sec": 30.0,
+      "sha256": "19f277d16d3cb528fdca01a5f288b074a54da5203eac938f5398b65e9a7416c3",
+      "bytes": 2880044
+    }
+  },
+  "project_source_files": {
+    "scenes/shots/bell_film.js": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "2cf5e7ae9b697ec7110e1035d9a684095ff98e0fed42eb222f488a71a8102a1c",
+      "bytes": 23594
+    },
+    "scenes/shots/thumb.js": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "e86348f455686814b727e93e459e8b66778c90fbcaa8b276a048e02816617783",
+      "bytes": 1357
+    },
+    "story/style_profile.json": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "8d89aa7e76ea0849351df1dded88100c7d09419f207a6acdaf858ccd9253b2b8",
+      "bytes": 4020
+    },
+    "story/character_bible.json": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "0379817ed7cfcd8a66be224c5b59e9ef9a1e2aeca8c9ca0fc90fad60da285055",
+      "bytes": 5215
+    },
+    "story/environment_bible.json": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "635c9cbd3929fec90de1e524d30ffad80cda9760577a1e984559f84996cfb0e1",
+      "bytes": 3887
+    },
+    "story/props.json": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "bcb08a958e5ef217ae3940eb88dac24d57c4eab9e402c6b3cec1ef590cfa78b7",
+      "bytes": 1121
+    },
+    "story/camera_beats.json": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "785b84996b7e65a997c2c32dad52720065a7829adde3acf036a3e0321904c047",
+      "bytes": 1400
+    },
+    "story/storyboard.json": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "f8c153cb94704088e002bdadce2d8cf54322943c5324533c1ad08071789db2e3",
+      "bytes": 11889
+    },
+    "story/continuity_ledger.json": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "23afcd44500bc94426791285542252df7b1a346f35019348d3811a60686fd9b5",
+      "bytes": 2548
+    },
+    "story/shots.json": {
+      "origin": "AUTHORED_FRESH_IN_KH02_RUN",
+      "sha256": "12612ed8e4448a953acdc50f354bd391973f91052bea41c507573a5eedd5dfcd",
+      "bytes": 5162
+    }
+  }
+}

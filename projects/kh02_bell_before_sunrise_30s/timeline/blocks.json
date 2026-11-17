@@ -1,0 +1,74 @@
+[
+  {
+    "id": "V001",
+    "slot": "NARRATOR",
+    "char": "TAVI",
+    "drop": false,
+    "text": "Before dawn, Pip found the bell rope.",
+    "start": 0.16,
+    "end": 2.685
+  },
+  {
+    "id": "V002",
+    "slot": "NARRATOR",
+    "char": "TAVI",
+    "drop": false,
+    "text": "Tavi had one rule: wait for sunrise.",
+    "start": 3.22,
+    "end": 6.062
+  },
+  {
+    "id": "V003",
+    "slot": "NARRATOR",
+    "char": "TAVI",
+    "drop": false,
+    "text": "He lunged, but the rope slipped free.",
+    "start": 6.7,
+    "end": 9.144
+  },
+  {
+    "id": "V004",
+    "slot": "NARRATOR",
+    "char": "TAVI",
+    "drop": false,
+    "text": "One tug set the whole bell tower shaking.",
+    "start": 10.24,
+    "end": 12.661
+  },
+  {
+    "id": "V005",
+    "slot": "NARRATOR",
+    "char": "TAVI",
+    "drop": false,
+    "text": "He sprinted up the stairs to catch the clapper.",
+    "start": 13.75,
+    "end": 16.213
+  },
+  {
+    "id": "V006",
+    "slot": "NARRATOR",
+    "char": "TAVI",
+    "drop": true,
+    "text": "For one breathless second, total silence.",
+    "start": 17.85,
+    "end": 20.715
+  },
+  {
+    "id": "V007",
+    "slot": "NARRATOR",
+    "char": "TAVI",
+    "drop": false,
+    "text": "Then little Pip sneezed.",
+    "start": 23.14,
+    "end": 24.545
+  },
+  {
+    "id": "V008",
+    "slot": "NARRATOR",
+    "char": "TAVI",
+    "drop": false,
+    "text": "And Rome woke up an hour early.",
+    "start": 26.78,
+    "end": 28.568
+  }
+]

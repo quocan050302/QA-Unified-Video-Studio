@@ -1,0 +1,8 @@
+[  0.160 -   2.685] V001 NARRATOR  Before dawn, Pip found the bell rope.
+[  3.220 -   6.062] V002 NARRATOR  Tavi had one rule: wait for sunrise.
+[  6.700 -   9.144] V003 NARRATOR  He lunged, but the rope slipped free.
+[ 10.240 -  12.661] V004 NARRATOR  One tug set the whole bell tower shaking.
+[ 13.750 -  16.213] V005 NARRATOR  He sprinted up the stairs to catch the clapper.
+[ 17.850 -  20.715] V006 NARRATOR  For one breathless second, total silence.
+[ 23.140 -  24.545] V007 NARRATOR  Then little Pip sneezed.
+[ 26.780 -  28.568] V008 NARRATOR  And Rome woke up an hour early.

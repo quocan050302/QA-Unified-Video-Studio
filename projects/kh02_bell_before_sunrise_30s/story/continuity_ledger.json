@@ -1,0 +1,94 @@
+{
+  "schema_version": "kh02_continuity_ledger.v1",
+  "canonical_cast_locked": [
+    "TAVI",
+    "PIP",
+    "LYRA",
+    "MARCUS"
+  ],
+  "wardrobe_locks": {
+    "TAVI": {
+      "skin": "#f4ede1",
+      "skin_shade": "#d6c8c6",
+      "hair": "tousled_tufts",
+      "hair_color": "#4c3020",
+      "tunic": "#b84b39",
+      "tunic_shadow": "#863124",
+      "tunic_deep": "#5c1e15",
+      "undertunic": "#eadbc2",
+      "scarf": "#df9b43",
+      "belt": "#694226",
+      "sandals": "#6e472b",
+      "accessories": [
+        "saffron_neck_scarf",
+        "brass_bell_key",
+        "leather_hip_pouch",
+        "caligae_sandals"
+      ]
+    },
+    "LYRA": {
+      "skin": "#f1e7d8",
+      "skin_shade": "#d2c3bf",
+      "hair": "elder_braided_bun",
+      "hair_color": "#9e9a95",
+      "tunic": "#415980",
+      "tunic_shadow": "#2b3d59",
+      "tunic_deep": "#1c293d",
+      "undertunic": "#dfd3be",
+      "palla": "#d8c39e",
+      "belt": "#8c6635",
+      "sandals": "#5c3d28",
+      "accessories": [
+        "bronze_fibula_brooch",
+        "silver_bun_hairpin",
+        "woven_border_palla"
+      ]
+    },
+    "PIP": {
+      "coat": "#efe3cc",
+      "coat_shadow": "#cbbba0",
+      "dark_markings": "#4c382c",
+      "horns": "#bfa070",
+      "collar": "#b84234",
+      "accessories": [
+        "red_wool_collar_cord",
+        "wooden_toggle"
+      ]
+    }
+  },
+  "world_landmarks_locked": [
+    "lm_5arch_aqueduct",
+    "lm_twin_cypresses_umbrella_pine",
+    "lm_bronze_watch_bell_rig"
+  ],
+  "shot_joins": [
+    {
+      "join": "S01->S02",
+      "invariant": "Hemp rope remains on right of bell axis; PIP stays at coiled rope base"
+    },
+    {
+      "join": "S02->S03",
+      "invariant": "TAVI lunges from left toward right-side hemp rope; upward 2D framing"
+    },
+    {
+      "join": "S03->S04",
+      "invariant": "Rope slip at 8.55s drives continuous bell oscillation into S04 wide interior"
+    },
+    {
+      "join": "S04->S05",
+      "invariant": "TAVI exits right in S04 and ascends left-to-right up tower stairs in S05"
+    },
+    {
+      "join": "S05->S06",
+      "invariant": "Stair summit leads onto upper oak catwalk beside swinging bronze bell mouth"
+    },
+    {
+      "join": "S06->S07",
+      "invariant": "While TAVI holds clapper silent above, rope remains taut down to PIP at base"
+    },
+    {
+      "join": "S07->S08",
+      "invariant": "PIP sneeze yank at 24.85s triggers bell toll heard & seen across courtyard in S08"
+    }
+  ]
+}

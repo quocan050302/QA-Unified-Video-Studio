@@ -1,0 +1,102 @@
+{
+  "status": "TECH_PASS",
+  "style_approval_status": "HUMAN_REVIEW_PENDING",
+  "style_id": "squire_cinematic_2d.v1",
+  "style_lock_digest": "f1b22b7606f80d1e37c2f32a4cd97152c5c6765400506caa7a9e1f768f333a75",
+  "render_mode": "canvas2d_only",
+  "character_validation": {
+    "valid": true,
+    "human_characters": [
+      "TAVI",
+      "LYRA"
+    ],
+    "non_human_entities": [
+      "PIP"
+    ],
+    "errors": []
+  },
+  "environment_validation": {
+    "valid": true,
+    "location_id": "loc_janiculum_bell_tower",
+    "view_count": 6,
+    "verified_proof_count": 4,
+    "errors": []
+  },
+  "artifacts": {
+    "poc_01_characters_dual_scale.png": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_01_characters_dual_scale.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_01_characters_dual_scale.png",
+      "sha256": "989812b3d6ef75144acfa740fc9dcdcc2488543b6a0aabb9c69b2f234c027f93",
+      "bytes": 575202,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_01_characters_dual_scale.jpg"
+    },
+    "poc_02_dramatic_close_face.png": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_02_dramatic_close_face.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_02_dramatic_close_face.png",
+      "sha256": "dc7108a2dcf182cf3ababc25567840bb30058624cb7b6f7661db88fc92b8e590",
+      "bytes": 687810,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_02_dramatic_close_face.jpg"
+    },
+    "poc_03_wide_establishing_belfry.png": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_03_wide_establishing_belfry.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_03_wide_establishing_belfry.png",
+      "sha256": "23a6c1380955284ac25b29386ac2aa18e18bf68c7941c2f019710188c4efccd4",
+      "bytes": 455521,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_03_wide_establishing_belfry.jpg"
+    },
+    "poc_04_environment_stairwell_detail.png": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_04_environment_stairwell_detail.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_04_environment_stairwell_detail.png",
+      "sha256": "5f3650f53b57d867fccaef0ec96834eeffe4140590dd77b489b889e738603b13",
+      "bytes": 178896,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_04_environment_stairwell_detail.jpg"
+    },
+    "poc_05_prop_hand_contact_closeup.png": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_05_prop_hand_contact_closeup.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_05_prop_hand_contact_closeup.png",
+      "sha256": "2f19180d8572121661ec1061ed590bf60e6b04ca9e0b39f151e95e8da1e660d1",
+      "bytes": 405210,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_05_prop_hand_contact_closeup.jpg"
+    },
+    "poc_06_goat_pip_quadruped.png": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_06_goat_pip_quadruped.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_06_goat_pip_quadruped.png",
+      "sha256": "5cb0dd6e10605d940fc42677d943640a6d73f9af1bc3ee69793ae8d3b21e76d6",
+      "bytes": 488105,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_06_goat_pip_quadruped.jpg"
+    },
+    "model_sheet_turnaround_tavi_lyra.png": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/model_sheet_turnaround_tavi_lyra.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\model_sheet_turnaround_tavi_lyra.png",
+      "sha256": "9e7c45b83dc500f4ea49ecc1fc025d00e15c85d19ed46aeb7ac412a7e45b0835",
+      "bytes": 569329,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/model_sheet_turnaround_tavi_lyra.jpg"
+    },
+    "expression_sheet_tavi_lyra_6states.png": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/expression_sheet_tavi_lyra_6states.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\expression_sheet_tavi_lyra_6states.png",
+      "sha256": "90a217ffa26a9d6e6f8b3c47c11f34c78171b9016c87e2618c7a9310d42802bf",
+      "bytes": 458735,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/expression_sheet_tavi_lyra_6states.jpg"
+    },
+    "poc_09_courtyard_exterior_angle.png": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_09_courtyard_exterior_angle.png",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_09_courtyard_exterior_angle.png",
+      "sha256": "eb0cd0375e952f85812862476cddf370319fb9592474496ca03f532d9747a124",
+      "bytes": 304720,
+      "evidence_jpg": "tests/evidence/kh02_20261117_014132Z_db01/style_poc/poc_09_courtyard_exterior_angle.jpg"
+    },
+    "poc_contact_sheet.jpg": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/poc_contact_sheet.jpg",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\poc_contact_sheet.jpg",
+      "sha256": "65279acf6cfa8317e386bd25d947ab9d4c361dee5d9079aef49ac0d059157c84",
+      "bytes": 249826
+    },
+    "baseline_vs_kh02_comparison.jpg": {
+      "run_rel_path": "docs/antigravity_runs/KH-02_0_1_20261117_014132Z_db01/style_poc/baseline_vs_kh02_comparison.jpg",
+      "abs_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-02_0_1_20261117_014132Z_db01\\style_poc\\baseline_vs_kh02_comparison.jpg",
+      "sha256": "c5873911693b0b32bb9877239843030ea1f0748b054c3974be1861e77f374825",
+      "bytes": 228789
+    }
+  }
+}

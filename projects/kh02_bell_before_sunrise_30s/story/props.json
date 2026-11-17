@@ -1,0 +1,38 @@
+{
+  "schema_version": "kh02_props.v1",
+  "central_prop_id": "prop_giant_bronze_bell",
+  "props": [
+    {
+      "prop_id": "prop_giant_bronze_bell",
+      "name": "Giant Roman Civic Watch-Bell",
+      "materials": [
+        "aged_cast_bronze",
+        "mortised_oak_yoke",
+        "iron_clapper_bulb",
+        "coiled_hemp_rope"
+      ],
+      "mechanical_solver": "packs/squire/cinematic2d/environment.js::evaluateBellRigStateAt",
+      "continuous_across_shots": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "physical_plausibility_note": "Mounted above an upper oak maintenance catwalk so apprentice bell-keeper TAVI can physically reach and brace the internal iron clapper shaft with leather-wrapped hands in S06 without teleporting or floating."
+    },
+    {
+      "prop_id": "prop_courtyard_amphorae",
+      "name": "Terracotta Courtyard Storage Amphorae",
+      "materials": [
+        "fired_terracotta_clay"
+      ],
+      "continuous_across_shots": [
+        "S08"
+      ]
+    }
+  ]
+}

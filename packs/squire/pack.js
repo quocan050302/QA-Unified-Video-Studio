@@ -14,7 +14,14 @@ export * from './world.js';
 export * from './horse.js';
 export * from './army.js';
 export * from './templates.js';
+export * from './cinematic2d/character.js';
+export * from './cinematic2d/environment.js';
+export * from './cinematic2d/shot_direction.js';
 export { E } from '/engine/core.js';
+
+async function _fetchOptJSON(u) {
+  try { const r = await fetch(u); return r.ok ? await r.json() : null; } catch { return null; }
+}
 
 function css(href) { return new Promise((r) => { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; l.onload = r; l.onerror = r; document.head.appendChild(l); }); }
 export async function init(E) {
@@ -24,6 +31,21 @@ export async function init(E) {
   if (E.cfg.bars === null || E.cfg.bars === undefined) E.cfg.bars = 'none';
   if (E.cfg.captions === undefined || E.cfg.captions === null) E.cfg.captions = E.vertical;
   if (!E.cfg.captionStyle) E.cfg.captionStyle = 'squire';
+  if (E.cfg.style_profile === 'squire_cinematic_2d.v1') {
+    const q = new URLSearchParams(location.search);
+    const proj = q.get('proj') || '/proj';
+    const [styleProfile, characterBible, environmentBible, propsSpec, continuityLedger, storyboardSpec, cameraBeats, assetManifest] = await Promise.all([
+      _fetchOptJSON(`${proj}/story/style_profile.json`),
+      _fetchOptJSON(`${proj}/story/character_bible.json`),
+      _fetchOptJSON(`${proj}/story/environment_bible.json`),
+      _fetchOptJSON(`${proj}/story/props.json`),
+      _fetchOptJSON(`${proj}/story/continuity_ledger.json`),
+      _fetchOptJSON(`${proj}/story/storyboard.json`),
+      _fetchOptJSON(`${proj}/story/camera_beats.json`),
+      _fetchOptJSON(`${proj}/story/asset_manifest.json`),
+    ]);
+    E.kh02 = { styleProfile, characterBible, environmentBible, propsSpec, continuityLedger, storyboardSpec, cameraBeats, assetManifest };
+  }
   if (E.shots.some((s) => s.tpl === 'map')) await loadWorld(); else await loadWorld().catch(() => {});
 }
 

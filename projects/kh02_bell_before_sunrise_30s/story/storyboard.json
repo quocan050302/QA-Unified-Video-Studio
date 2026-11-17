@@ -1,0 +1,399 @@
+{
+  "schema_version": "kh02_storyboard_grammar.v1",
+  "working_title": "THE BELL THAT RANG TOO EARLY",
+  "fictional_disclaimer": "Original fictional Roman-comedy short authored for KH-02.1 2D style & motion review; not claimed as historical fact.",
+  "experimental_status": "EXPERIMENTAL_PREVIEW_HUMAN_REVIEW_PENDING",
+  "duration_sec": 30.0,
+  "fps": 24,
+  "total_frames": 720,
+  "shots": [
+    {
+      "id": "S01",
+      "start": 0.0,
+      "end": 3.0,
+      "voice_offset": 0.16,
+      "line": "Before dawn, Pip found the bell rope.",
+      "view": "belfry_lower_arch",
+      "frame_scale": "CU",
+      "lens_equivalent_2d": "65mm_shallow_dof_2d",
+      "purpose": "Immediate visual hook in first 0.5s: goat nudging coiled hemp rope while giant bell blurs behind in 2D",
+      "action": "PIP lunges snout into coiled hemp rope at t=0.05..0.48s, sending a crisp 2D wave up the rope",
+      "motion_phases": [
+        "nudge_hook_0.0_0.9s",
+        "curious_pause_0.9_1.35s",
+        "second_tug_1.35_2.6s"
+      ],
+      "camera_curve": {
+        "z0": 1.03,
+        "z1": 1.11,
+        "x0": -18,
+        "x1": 16,
+        "y0": 10,
+        "y1": 2,
+        "ease": "inOut"
+      },
+      "continuity_anchors": {
+        "location": "loc_janiculum_bell_tower",
+        "prop_rope_x_side": "right_of_bell_axis",
+        "cast_present": [
+          "PIP"
+        ]
+      },
+      "sfx": [
+        {
+          "name": "build/audio_gen/goat_hoof_tap.wav",
+          "at": 0.08,
+          "gain": -7
+        },
+        {
+          "name": "build/audio_gen/rope_hemp_swish.wav",
+          "at": 0.22,
+          "gain": -8
+        },
+        {
+          "name": "build/audio_gen/goat_hoof_tap.wav",
+          "at": 1.48,
+          "gain": -8
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "start": 3.0,
+      "end": 6.5,
+      "voice_offset": 0.22,
+      "line": "Tavi had one rule: wait for sunrise.",
+      "view": "belfry_wide_interior",
+      "frame_scale": "MS_TWO_SHOT",
+      "lens_equivalent_2d": "35mm_two_shot_2d",
+      "purpose": "Establish apprentice keeper TAVI, his rule, and clear spatial relation to PIP and swaying bell rope",
+      "action": "TAVI stands watchful, hears rope creak, pupils snap up-right in wide shock, leans ready to lunge",
+      "motion_phases": [
+        "calm_watchful_0.0_0.5s",
+        "pupil_snap_shock_0.5_1.55s",
+        "anxious_lean_ready_1.55_3.5s"
+      ],
+      "camera_curve": {
+        "z0": 1.01,
+        "z1": 1.09,
+        "x0": -28,
+        "x1": 24,
+        "y0": 0,
+        "y1": -8,
+        "ease": "inOut"
+      },
+      "continuity_anchors": {
+        "location": "loc_janiculum_bell_tower",
+        "prop_rope_x_side": "right_of_bell_axis",
+        "cast_present": [
+          "TAVI",
+          "PIP"
+        ]
+      },
+      "sfx": [
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 0.42,
+          "gain": -9
+        },
+        {
+          "name": "build/audio_gen/stone_stair_steps.wav",
+          "at": 1.85,
+          "gain": -11
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "start": 6.5,
+      "end": 10.0,
+      "voice_offset": 0.2,
+      "line": "He lunged, but the rope slipped free.",
+      "view": "belfry_low_angle",
+      "frame_scale": "MCU_LOW_ANGLE_2D",
+      "lens_equivalent_2d": "28mm_authored_upward_2d",
+      "purpose": "Escalating physical stakes: TAVI grabs rope, strains downward, hemp slips through fingers and whips upward",
+      "action": "Anticipate & reach -> taut two-handed pull -> friction slip & open-hand recoil as bell begins swinging",
+      "motion_phases": [
+        "anticipate_reach_0.0_1.05s",
+        "pull_strain_1.05_2.05s",
+        "slip_recoil_2.05_3.5s"
+      ],
+      "camera_curve": {
+        "z0": 1.06,
+        "z1": 1.16,
+        "x0": -16,
+        "x1": 18,
+        "y0": 22,
+        "y1": -26,
+        "ease": "inOut"
+      },
+      "continuity_anchors": {
+        "location": "loc_janiculum_bell_tower",
+        "hand_to_rope_contact_window_local": [
+          0.95,
+          2.05
+        ],
+        "cast_present": [
+          "TAVI"
+        ]
+      },
+      "sfx": [
+        {
+          "name": "build/audio_gen/rope_hemp_swish.wav",
+          "at": 0.85,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/rope_hemp_swish.wav",
+          "at": 2.05,
+          "gain": -5
+        },
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 2.25,
+          "gain": -7
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "start": 10.0,
+      "end": 13.5,
+      "voice_offset": 0.24,
+      "line": "One tug set the whole bell tower shaking.",
+      "view": "belfry_wide_interior",
+      "frame_scale": "WS_INTERIOR",
+      "lens_equivalent_2d": "24mm_layered_wide_2d",
+      "purpose": "Show heavy bronze bell swinging in rhythmic arcs across 5 parallax planes while TAVI bolts for the stairs",
+      "action": "Giant bronze bell rotates on oak yoke; clapper nears bronze lip; TAVI sprints right toward stairwell",
+      "motion_phases": [
+        "shock_look_up_0.0_0.65s",
+        "stairwell_dash_0.65_3.5s"
+      ],
+      "camera_curve": {
+        "z0": 1.0,
+        "z1": 1.14,
+        "x0": -12,
+        "x1": 22,
+        "y0": 8,
+        "y1": -18,
+        "ease": "inOut"
+      },
+      "continuity_anchors": {
+        "location": "loc_janiculum_bell_tower",
+        "exit_direction": "screen_right_to_stairs",
+        "cast_present": [
+          "TAVI",
+          "PIP"
+        ]
+      },
+      "sfx": [
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 0.15,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/stone_stair_steps.wav",
+          "at": 0.85,
+          "gain": -8
+        },
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 1.95,
+          "gain": -6
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "start": 13.5,
+      "end": 17.5,
+      "voice_offset": 0.25,
+      "line": "He sprinted up the stairs to catch the clapper.",
+      "view": "tower_stairwell_ascent",
+      "frame_scale": "MS_SIDE_TRACKING",
+      "lens_equivalent_2d": "40mm_tracking_elevation_2d",
+      "purpose": "Dynamic vertical climb with planted sandals on stone treads, scarf/hair lag, and diagonal tracking camera",
+      "action": "TAVI climbs 6 consecutive travertine steps (step 1 -> step 7) with world-locked stance foot and progressive effort",
+      "motion_phases": [
+        "steps_1_2_anxious",
+        "steps_3_4_determined",
+        "steps_5_6_strained_summit"
+      ],
+      "camera_curve": {
+        "z0": 1.08,
+        "z1": 1.15,
+        "x0": -155,
+        "x1": 145,
+        "y0": 80,
+        "y1": -72,
+        "ease": "inOut"
+      },
+      "continuity_anchors": {
+        "location": "loc_janiculum_bell_tower",
+        "planted_foot_skate_px": 0.0,
+        "visible_landmark": "lm_5arch_aqueduct",
+        "cast_present": [
+          "TAVI"
+        ]
+      },
+      "sfx": [
+        {
+          "name": "build/audio_gen/stone_stair_steps.wav",
+          "at": 0.12,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/stone_stair_steps.wav",
+          "at": 2.02,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 1.4,
+          "gain": -8
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "start": 17.5,
+      "end": 23.0,
+      "voice_offset": 0.35,
+      "line": "For one breathless second, total silence.",
+      "view": "belfry_catwalk_clapper",
+      "frame_scale": "MS_TO_ECU_INTERNAL_CUT",
+      "lens_equivalent_2d": "35mm_catwalk_cut_to_85mm_clapper_closeup_2d",
+      "purpose": "Physically plausible catwalk clapper catch across motivated internal cut at 19.3s, dropping sound to silence",
+      "action": "S06a [17.5-19.3s]: TAVI reaches from oak catwalk to catch clapper shaft; S06b [19.3-23.0s]: close grip & relief",
+      "motion_phases": [
+        "catwalk_lunge_catch_0.0_1.8s",
+        "closeup_strained_hold_1.8_2.75s",
+        "breathless_relief_hold_2.75_5.5s"
+      ],
+      "camera_curve": {
+        "z0": 1.02,
+        "z1": 1.1,
+        "x0": -24,
+        "x1": 8,
+        "y0": 6,
+        "y1": -10,
+        "ease": "out"
+      },
+      "continuity_anchors": {
+        "location": "loc_janiculum_bell_tower",
+        "internal_cut_local_sec": 1.8,
+        "hand_to_clapper_contact_from_global_sec": 18.65,
+        "cast_present": [
+          "TAVI"
+        ]
+      },
+      "notes": "DROP",
+      "sfx": [
+        {
+          "name": "build/audio_gen/clapper_leather_catch.wav",
+          "at": 1.12,
+          "gain": -5
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "start": 23.0,
+      "end": 26.5,
+      "voice_offset": 0.14,
+      "line": "Then little Pip sneezed.",
+      "view": "belfry_lower_arch",
+      "frame_scale": "CU_SURPRISE",
+      "lens_equivalent_2d": "65mm_goat_closeup_2d",
+      "purpose": "Micro-surprise reversal: golden dust mote tickles PIP -> 2D inhale squash -> explosive sneeze yanks rope!",
+      "action": "PIP inhales with puffed cheeks & squashed body (0.45..1.85s), then sneezes forward at 24.85s yanking rope & ringing bell",
+      "motion_phases": [
+        "dust_tickle_0.0_0.45s",
+        "inhale_squash_0.45_1.85s",
+        "sneeze_stretch_bell_strike_1.85_3.5s"
+      ],
+      "camera_curve": {
+        "z0": 1.04,
+        "z1": 1.15,
+        "x0": -10,
+        "x1": 16,
+        "y0": 8,
+        "y1": -6,
+        "ease": "inOut"
+      },
+      "continuity_anchors": {
+        "location": "loc_janiculum_bell_tower",
+        "sneeze_burst_global_sec": 24.85,
+        "cast_present": [
+          "PIP"
+        ]
+      },
+      "sfx": [
+        {
+          "name": "build/audio_gen/goat_sneeze_choo.wav",
+          "at": 1.55,
+          "gain": -4
+        },
+        {
+          "name": "build/audio_gen/rope_hemp_swish.wav",
+          "at": 1.9,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/roman_bell_early_toll.wav",
+          "at": 2.08,
+          "gain": -4
+        }
+      ]
+    },
+    {
+      "id": "S08",
+      "start": 26.5,
+      "end": 30.0,
+      "voice_offset": 0.28,
+      "line": "And Rome woke up an hour early.",
+      "view": "hilltop_courtyard_wide",
+      "frame_scale": "WS_PAYOFF_TO_CU_DEADPAN",
+      "lens_equivalent_2d": "28mm_courtyard_cut_to_85mm_deadpan_2d",
+      "purpose": "Comic payoff: courtyard shutters fly open as LYRA & MARCUS wake to ringing bell, fast cut to TAVI's deadpan face",
+      "action": "S08a [26.5-28.35s]: wide courtyard waking reaction; S08b [28.35-30.0s]: fast cut to TAVI deadpan disbelief",
+      "motion_phases": [
+        "courtyard_shutters_open_0.0_1.85s",
+        "tavi_deadpan_blink_1.85_3.5s"
+      ],
+      "camera_curve": {
+        "z0": 1.0,
+        "z1": 1.05,
+        "x0": 0,
+        "x1": 12,
+        "y0": 0,
+        "y1": -6,
+        "ease": "out"
+      },
+      "continuity_anchors": {
+        "location": "loc_janiculum_bell_tower",
+        "internal_cut_local_sec": 1.85,
+        "cast_present": [
+          "LYRA",
+          "MARCUS",
+          "TAVI"
+        ]
+      },
+      "sfx": [
+        {
+          "name": "build/audio_gen/roman_bell_early_toll.wav",
+          "at": 0.05,
+          "gain": -5
+        },
+        {
+          "name": "build/audio_gen/courtyard_waking_murmur.wav",
+          "at": 0.22,
+          "gain": -6
+        }
+      ]
+    }
+  ]
+}

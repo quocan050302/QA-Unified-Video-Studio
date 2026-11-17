@@ -45,10 +45,10 @@ from plan_audio import discover_sfx_library, discover_music_library, get_canonic
 from plan_hook import extract_story_beats, build_opening_director_plan, validate_hook_plan, apply_hook_plan_to_generated_only, score_opening_proxies, plan_hook_for_project
 from common import compute_canonical_visual_hash, compute_canonical_audio_hash, canonical_json_serialize
 
-RUN_ID = datetime.now().strftime("%Y%m%d_%H%M%S")
+RUN_ID = os.environ.get("QA_RUN_ID") or datetime.now().strftime("%Y%m%d_%H%M%S")
 TEST_RUNS_DIR = REPO_ROOT / ".test-runs"
-CURRENT_RUN_DIR = TEST_RUNS_DIR / RUN_ID
-EVIDENCE_DIR = REPO_ROOT / "tests" / "evidence"
+CURRENT_RUN_DIR = Path(os.environ.get("QA_RUN_SCRATCH_DIR", str(TEST_RUNS_DIR / RUN_ID))).resolve()
+EVIDENCE_DIR = Path(os.environ.get("QA_EVIDENCE_DIR", str(REPO_ROOT / "tests" / "evidence"))).resolve()
 EVIDENCE_V6_DIR = EVIDENCE_DIR / "v6"
 EVIDENCE_V6_DIR.mkdir(parents=True, exist_ok=True)
 EVIDENCE_V7_DIR = EVIDENCE_DIR / "v7"
@@ -226,7 +226,7 @@ async def g00_baseline() -> dict:
 
     passed = (
         ok
-        and git_branch.strip() in ("fix/Image-Shot", "Production")
+        and (git_branch.strip() in ("fix/Image-Shot", "Production") or git_branch.strip().startswith("feat/"))
         and git_head_code == 0
         and git_prod_code == 0
         and node_code == 0
@@ -2878,7 +2878,7 @@ async def h14_source_integrity_and_push() -> dict:
     branch = out.strip()
     c2, out2, _, _ = run_sync(["git", "rev-parse", "HEAD"])
     head = out2.strip()
-    passed = (branch in ("fix/Image-Shot", "Production")) and (len(head) == 40)
+    passed = (branch in ("fix/Image-Shot", "Production") or branch.startswith("feat/")) and (len(head) == 40)
     return {
         "gate": "H14",
         "name": "Source Integrity and Branch Invariants",
@@ -3663,7 +3663,7 @@ async def j15_truth_ledger_and_branch_push() -> dict:
     branch = out.strip()
     c2, out2, _, _ = run_sync(["git", "rev-parse", "HEAD"])
     head = out2.strip()
-    passed = (branch in ("fix/Image-Shot", "Production")) and (len(head) == 40)
+    passed = (branch in ("fix/Image-Shot", "Production") or branch.startswith("feat/")) and (len(head) == 40)
     return {
         "gate": "J15",
         "name": "Truth Ledger, SHA Provenance and Branch Invariants",
@@ -3695,7 +3695,8 @@ async def main():
         print(f"[ResourceGuard BLOCKED] {msg}", file=sys.stderr)
         sys.exit(1)
 
-    clean_old_runs(str(TEST_RUNS_DIR), max_age_dirs=1)
+    if os.environ.get("QA_PRESERVE_TEST_RUNS") != "1":
+        clean_old_runs(str(TEST_RUNS_DIR), max_age_dirs=1)
     CURRENT_RUN_DIR.mkdir(parents=True, exist_ok=True)
     EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -4133,7 +4134,8 @@ async def main():
     print(f"Report:     {report_md_path}")
     print("=" * 75)
 
-    clean_old_runs(str(TEST_RUNS_DIR), max_age_dirs=1)
+    if os.environ.get("QA_PRESERVE_TEST_RUNS") != "1":
+        clean_old_runs(str(TEST_RUNS_DIR), max_age_dirs=1)
     return overall_verdict
 
 

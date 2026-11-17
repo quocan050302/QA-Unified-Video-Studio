@@ -1,0 +1,234 @@
+{
+  "title": "The Bell That Rang Too Early",
+  "duration": 30.0,
+  "render_mode": "canvas2d_only",
+  "style_profile": "squire_cinematic_2d.v1",
+  "shots": [
+    {
+      "id": "S01",
+      "start": 0.0,
+      "end": 3.0,
+      "line": "Before dawn, Pip found the bell rope.",
+      "speaker": "NARRATOR",
+      "char": "TAVI",
+      "in": {
+        "type": "cut"
+      },
+      "notes": "",
+      "sfx": [
+        {
+          "name": "build/audio_gen/goat_hoof_tap.wav",
+          "at": 0.08,
+          "gain": -7
+        },
+        {
+          "name": "build/audio_gen/rope_hemp_swish.wav",
+          "at": 0.22,
+          "gain": -8
+        },
+        {
+          "name": "build/audio_gen/goat_hoof_tap.wav",
+          "at": 1.48,
+          "gain": -8
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "start": 3.0,
+      "end": 6.5,
+      "line": "Tavi had one rule: wait for sunrise.",
+      "speaker": "NARRATOR",
+      "char": "TAVI",
+      "in": {
+        "type": "cut"
+      },
+      "notes": "",
+      "sfx": [
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 0.42,
+          "gain": -9
+        },
+        {
+          "name": "build/audio_gen/stone_stair_steps.wav",
+          "at": 1.85,
+          "gain": -11
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "start": 6.5,
+      "end": 10.0,
+      "line": "He lunged, but the rope slipped free.",
+      "speaker": "NARRATOR",
+      "char": "TAVI",
+      "in": {
+        "type": "cut"
+      },
+      "notes": "",
+      "sfx": [
+        {
+          "name": "build/audio_gen/rope_hemp_swish.wav",
+          "at": 0.85,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/rope_hemp_swish.wav",
+          "at": 2.05,
+          "gain": -5
+        },
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 2.25,
+          "gain": -7
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "start": 10.0,
+      "end": 13.5,
+      "line": "One tug set the whole bell tower shaking.",
+      "speaker": "NARRATOR",
+      "char": "TAVI",
+      "in": {
+        "type": "cut"
+      },
+      "notes": "",
+      "sfx": [
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 0.15,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/stone_stair_steps.wav",
+          "at": 0.85,
+          "gain": -8
+        },
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 1.95,
+          "gain": -6
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "start": 13.5,
+      "end": 17.5,
+      "line": "He sprinted up the stairs to catch the clapper.",
+      "speaker": "NARRATOR",
+      "char": "TAVI",
+      "in": {
+        "type": "cut"
+      },
+      "notes": "",
+      "sfx": [
+        {
+          "name": "build/audio_gen/stone_stair_steps.wav",
+          "at": 0.12,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/stone_stair_steps.wav",
+          "at": 2.02,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/bell_creak_swing.wav",
+          "at": 1.4,
+          "gain": -8
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "start": 17.5,
+      "end": 23.0,
+      "line": "For one breathless second, total silence.",
+      "speaker": "NARRATOR",
+      "char": "TAVI",
+      "in": {
+        "type": "cut"
+      },
+      "notes": "DROP",
+      "sfx": [
+        {
+          "name": "build/audio_gen/clapper_leather_catch.wav",
+          "at": 1.12,
+          "gain": -5
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "start": 23.0,
+      "end": 26.5,
+      "line": "Then little Pip sneezed.",
+      "speaker": "NARRATOR",
+      "char": "TAVI",
+      "in": {
+        "type": "cut"
+      },
+      "notes": "",
+      "sfx": [
+        {
+          "name": "build/audio_gen/goat_sneeze_choo.wav",
+          "at": 1.55,
+          "gain": -4
+        },
+        {
+          "name": "build/audio_gen/rope_hemp_swish.wav",
+          "at": 1.9,
+          "gain": -6
+        },
+        {
+          "name": "build/audio_gen/roman_bell_early_toll.wav",
+          "at": 2.08,
+          "gain": -4
+        }
+      ]
+    },
+    {
+      "id": "S08",
+      "start": 26.5,
+      "end": 30.0,
+      "line": "And Rome woke up an hour early.",
+      "speaker": "NARRATOR",
+      "char": "TAVI",
+      "in": {
+        "type": "cut"
+      },
+      "notes": "",
+      "sfx": [
+        {
+          "name": "build/audio_gen/roman_bell_early_toll.wav",
+          "at": 0.05,
+          "gain": -5
+        },
+        {
+          "name": "build/audio_gen/courtyard_waking_murmur.wav",
+          "at": 0.22,
+          "gain": -6
+        }
+      ]
+    }
+  ],
+  "music": [
+    {
+      "start": 0.0,
+      "end": 18.85,
+      "bed": "user",
+      "gainDb": 0
+    },
+    {
+      "start": 24.85,
+      "end": 30.0,
+      "bed": "user",
+      "gainDb": 1
+    }
+  ]
+}

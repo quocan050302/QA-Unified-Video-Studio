@@ -1,0 +1,174 @@
+{
+  "schema_version": "kh02_character_bible.v1",
+  "human_character_count": 2,
+  "animal_character_count": 1,
+  "characters": [
+    {
+      "entity_key": "TAVI",
+      "character_id": "char_tavi_keeper",
+      "canonical_name": "TAVI",
+      "entity_kind": "human",
+      "rig_class": "human_squire_caricature_2d",
+      "is_human_rig": true,
+      "role": "Young, anxious, clever apprentice Roman hilltop bell-keeper",
+      "proportions": {
+        "stature_scale": 0.95,
+        "head_scale": 1.03,
+        "head_radius_per_100u": 19.57,
+        "shoulder_width_u": 12.6
+      },
+      "layered_parts": [
+        "hair_back",
+        "far_arm_tapered",
+        "scarf_tail_secondary",
+        "undertunic_hem",
+        "terracotta_tunic_cel",
+        "leather_belt_brass_key_pouch",
+        "saffron_neck_scarf",
+        "neck_and_round_squire_head",
+        "facial_features_freckles",
+        "tousled_forelock_tufts",
+        "near_arm_and_articulated_hand",
+        "planted_caligae_sandals"
+      ],
+      "wardrobe": {
+        "skin": "#f4ede1",
+        "skin_shade": "#d6c8c6",
+        "hair": "tousled_tufts",
+        "hair_color": "#4c3020",
+        "tunic": "#b84b39",
+        "tunic_shadow": "#863124",
+        "tunic_deep": "#5c1e15",
+        "undertunic": "#eadbc2",
+        "scarf": "#df9b43",
+        "belt": "#694226",
+        "sandals": "#6e472b",
+        "accessories": [
+          "saffron_neck_scarf",
+          "brass_bell_key",
+          "leather_hip_pouch",
+          "caligae_sandals"
+        ]
+      },
+      "expressions": [
+        "calm_watchful",
+        "anxious_alert",
+        "wide_shock",
+        "strained_pull",
+        "determined_climb",
+        "breathless_relief",
+        "deadpan_disbelief"
+      ],
+      "hand_poses": [
+        "rope_grip",
+        "pin_catch",
+        "open_recoil",
+        "point_alert"
+      ],
+      "identity_hash": "885f50ca3ca970a22d48d4a656b3abc45693a2f322053d0a78d3ae31a7d11b4d"
+    },
+    {
+      "entity_key": "LYRA",
+      "character_id": "char_lyra_master",
+      "canonical_name": "LYRA",
+      "entity_kind": "human",
+      "rig_class": "human_squire_caricature_2d",
+      "is_human_rig": true,
+      "role": "Elderly Roman head bell-mistress and courtyard matron",
+      "proportions": {
+        "stature_scale": 0.91,
+        "head_scale": 1.01,
+        "head_radius_per_100u": 19.19,
+        "shoulder_width_u": 11.8,
+        "stoop_rad": 0.055
+      },
+      "layered_parts": [
+        "silver_braided_bun_hairpin",
+        "far_arm_tapered",
+        "undertunic_hem",
+        "slate_indigo_stola_cel",
+        "oat_palla_drape_fibula",
+        "neck_and_round_squire_head",
+        "elder_cheek_lines_and_features",
+        "braided_crown_hair",
+        "near_arm_and_articulated_hand",
+        "planted_matron_sandals"
+      ],
+      "wardrobe": {
+        "skin": "#f1e7d8",
+        "skin_shade": "#d2c3bf",
+        "hair": "elder_braided_bun",
+        "hair_color": "#9e9a95",
+        "tunic": "#415980",
+        "tunic_shadow": "#2b3d59",
+        "tunic_deep": "#1c293d",
+        "undertunic": "#dfd3be",
+        "palla": "#d8c39e",
+        "belt": "#8c6635",
+        "sandals": "#5c3d28",
+        "accessories": [
+          "bronze_fibula_brooch",
+          "silver_bun_hairpin",
+          "woven_border_palla"
+        ]
+      },
+      "expressions": [
+        "calm_watchful",
+        "sleepy_blink",
+        "startled_gasp",
+        "grumpy_glare",
+        "anxious_alert",
+        "wry_amusement"
+      ],
+      "hand_poses": [
+        "lantern_hold",
+        "palm_raised_react",
+        "point_alert"
+      ],
+      "identity_hash": "d6ab77fafeb7c36b7cf7724fb823535cc813939d7592a8a079c6c4a0d210a34d"
+    },
+    {
+      "entity_key": "PIP",
+      "character_id": "animal_pip_goat",
+      "canonical_name": "PIP",
+      "entity_kind": "animal",
+      "rig_class": "quadruped_animal_2d",
+      "is_human_rig": false,
+      "role": "Mischievous small Roman hilltop goat (quadruped 2D rig, non-human)",
+      "proportions": {
+        "withers_height_ratio": 0.44,
+        "head_radius_per_100u": 21.5,
+        "horn_curve": true,
+        "cloven_hoof": true
+      },
+      "layered_parts": [
+        "far_quadruped_legs_cloven",
+        "perky_tail",
+        "compact_barrel_coat_cel",
+        "near_quadruped_legs_cloven",
+        "red_braided_wool_collar_toggle",
+        "curved_horns_and_droopy_ear",
+        "goat_head_rectangular_pupil_snout"
+      ],
+      "wardrobe": {
+        "coat": "#efe3cc",
+        "coat_shadow": "#cbbba0",
+        "dark_markings": "#4c382c",
+        "horns": "#bfa070",
+        "collar": "#b84234",
+        "accessories": [
+          "red_wool_collar_cord",
+          "wooden_toggle"
+        ]
+      },
+      "actions": [
+        "rope_nudge",
+        "curious_tilt",
+        "sneeze_anticipation",
+        "sneeze_burst"
+      ],
+      "identity_hash": "f28b1917e35c710faf30e126efa5e4d92101c70d74e45882ad8eefe9bdd71892"
+    }
+  ],
+  "bible_sha256": "4488752bf27b53028b2f5dfb01a0946133fa4fb1c1d73069886d6544ba039d27"
+}

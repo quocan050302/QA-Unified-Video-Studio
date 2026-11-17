@@ -59,10 +59,10 @@ from plan_hook import (
 from plan_audio import plan_audio_for_project
 from app import Handler, summarize_project, task_commands, verify_task_result
 
-RUN_ID = datetime.now().strftime("%Y%m%d_%H%M%S")
+RUN_ID = os.environ.get("QA_RUN_ID") or datetime.now().strftime("%Y%m%d_%H%M%S")
 TEST_RUNS_DIR = REPO_ROOT / ".test-runs"
-CURRENT_RUN_DIR = TEST_RUNS_DIR / f"v10_{RUN_ID}"
-EVIDENCE_DIR = REPO_ROOT / "tests" / "evidence"
+CURRENT_RUN_DIR = Path(os.environ.get("QA_V10_SCRATCH_DIR", str(TEST_RUNS_DIR / f"v10_{RUN_ID}"))).resolve()
+EVIDENCE_DIR = Path(os.environ.get("QA_EVIDENCE_DIR", str(REPO_ROOT / "tests" / "evidence"))).resolve()
 EVIDENCE_V10_DIR = EVIDENCE_DIR / "v10"
 EVIDENCE_V10_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -1130,7 +1130,8 @@ async def run_v10_suite() -> List[Dict[str, Any]]:
     if not ok:
         sys.exit(f"[ResourceGuard BLOCKED] {msg}")
 
-    clean_old_runs(str(TEST_RUNS_DIR), max_age_dirs=1)
+    if os.environ.get("QA_PRESERVE_TEST_RUNS") != "1":
+        clean_old_runs(str(TEST_RUNS_DIR), max_age_dirs=1)
     CURRENT_RUN_DIR.mkdir(parents=True, exist_ok=True)
 
     global ACTIVE_MONITOR

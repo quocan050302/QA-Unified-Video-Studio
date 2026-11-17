@@ -1,0 +1,84 @@
+{
+  "status": "PACKET_BUILT",
+  "style_approved": "HUMAN_REVIEW_PENDING",
+  "editorial_approved": "HUMAN_REVIEW_PENDING",
+  "contact_sheet": {
+    "file": "contact_sheet_8shots.jpg",
+    "sha256": "c8c6b9aba5526134359a424bc013e1019d03c7dd6567ff3783bd18ae73a7d92f",
+    "bytes": 164990
+  },
+  "stills": {
+    "S01_hook_goat_rope_0.50s.png": {
+      "timestamp_sec": 0.5,
+      "sha256": "4f242c6afe21fa1b38e0930fe31b919c0a1095c781ff0fca3cd2ee778a654e93",
+      "bytes": 483751
+    },
+    "S02_tavi_pupil_snap_4.15s.png": {
+      "timestamp_sec": 4.15,
+      "sha256": "a65f63ede6382b058c8721dab32aab20f7142522115c3288e221c0b804da4364",
+      "bytes": 566247
+    },
+    "S03_low_angle_rope_slip_8.20s.png": {
+      "timestamp_sec": 8.2,
+      "sha256": "42e077d6c6d7a9468097f0929de3d6d1249dcb1dc99558d14019915dca324b59",
+      "bytes": 544302
+    },
+    "S04_wide_belfry_swing_11.40s.png": {
+      "timestamp_sec": 11.4,
+      "sha256": "e3a964033dffec02846c3cd7259e300ecf92f99699035c0bd28242224597500a",
+      "bytes": 553698
+    },
+    "S05_stairwell_climb_15.60s.png": {
+      "timestamp_sec": 15.6,
+      "sha256": "12dce2555e69637db17959ddde276c881363401ddb7e7a4582bcacb370e818b4",
+      "bytes": 335984
+    },
+    "S06_clapper_catch_silence_20.40s.png": {
+      "timestamp_sec": 20.4,
+      "sha256": "387d5b5f648063d269ae9af6f273e62134722ae92159437f4df90d669d3ae465",
+      "bytes": 583068
+    },
+    "S07_goat_sneeze_burst_25.05s.png": {
+      "timestamp_sec": 25.05,
+      "sha256": "9dd2728134d8530ff0bac26d26d54edcdb325f16a5e63fe22ef31a02403652e5",
+      "bytes": 577171
+    },
+    "S08_courtyard_and_deadpan_27.40s.png": {
+      "timestamp_sec": 27.4,
+      "sha256": "3a7d130a55fc74972e271f2bc001eea5ba73ea9010159a29226cde9bba28cdff",
+      "bytes": 482646
+    }
+  },
+  "action_strips": {
+    "strip_1_hook_nudge.jpg": {
+      "timestamps_sec": [
+        0.1,
+        0.35,
+        0.65,
+        1.85
+      ],
+      "sha256": "7fa0433ed3b08f9ca2cc3d3e54754630b68f99ed7c6b8a32a5dbaa9c4013d7c6",
+      "bytes": 62717
+    },
+    "strip_2_rising_climb_and_catch.jpg": {
+      "timestamps_sec": [
+        7.8,
+        8.85,
+        15.2,
+        19.8
+      ],
+      "sha256": "7d5680ed4e9049f5b5ce12a55b389e542edc7e201673f5999e903f89009bb1ea",
+      "bytes": 81287
+    },
+    "strip_3_sneeze_and_deadpan_payoff.jpg": {
+      "timestamps_sec": [
+        24.2,
+        24.95,
+        27.3,
+        29.1
+      ],
+      "sha256": "7b92984d158d2f0cc7fc8df6a83de961e61112f3a1d33ff463d8b14e88cf0f7e",
+      "bytes": 79191
+    }
+  }
+}

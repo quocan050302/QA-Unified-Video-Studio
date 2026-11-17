@@ -4,6 +4,8 @@
 import { E, rng, lerp, clamp, noise, alpha, mix, shade } from './ink.js';
 import { OUT, PAL, shape, rect, ellipse, circ, blob, polyS, line, tube, smoothPath, darker, lighter, haze } from './ink.js';
 import { charge } from './chara.js';
+import { drawLayeredRomanEnvironment2D } from './cinematic2d/environment.js';
+export { drawLayeredRomanEnvironment2D };
 
 const W = () => E.W, H = () => E.H;
 // ---------- bang mau theo gio
@@ -248,6 +250,14 @@ export function bg(g, kind = 'field', o = {}) {
       haze(g, '#1a1f26', 0.1);
       break;
     }
+    case 'roman_belfry_2d':
+    case 'roman_stairwell_2d':
+    case 'roman_courtyard_2d':
+      return drawLayeredRomanEnvironment2D(g, o.cam || null, {
+        ...o,
+        view: kind === 'roman_stairwell_2d' ? 'tower_stairwell_ascent' : kind === 'roman_courtyard_2d' ? 'hilltop_courtyard_wide' : (o.view || 'belfry_wide_interior'),
+        globalT: o.globalT ?? o.t ?? 0,
+      });
     case 'night': return bg(g, 'field', { ...o, time: 'night' });
     default: return bg(g, 'field', o);
   }

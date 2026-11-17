@@ -3,6 +3,8 @@
 // o = { preset, face, look(-1..1), flip, pose, talk(0..1), t, blink, helmet, visor, hair, beard, body, tabard, charge, colors..., shield, weapon, kid, lod }
 import { E, clamp, lerp, ease, noise, shade, alpha } from './ink.js';
 import { OUT, PAL, shape, rect, ellipse, circ, blob, polyS, line, tube, celShade, darker, lighter, smoothPath } from './ink.js';
+import { drawSquireCinematic2DActor, drawCinematicFace2D, drawCinematicHand2D, drawPipGoat2D } from './cinematic2d/character.js';
+export { drawSquireCinematic2DActor, drawCinematicFace2D, drawCinematicHand2D, drawPipGoat2D };
 
 // ====================================================================================== MAT
 // mat: eyes, brows, mouth, blush, tears, sweat
@@ -99,6 +101,7 @@ function mouth(g, x, y, R, kind, lw, talk) {
 }
 // ve khuon mat trong dau (cx,cy,R)
 export function face(g, cx, cy, R, o = {}) {
+  if (o.cinematic2d === true) return drawCinematicFace2D(g, cx, cy, R, o);
   const f = typeof o.face === 'object' ? o.face : (FACES[o.face] || FACES.neutral), lw = o.lw, look = o.look || 0;
   const ox = look * R * 0.22, ey = cy + (o.eyeY ?? 0.02) * R, sp = R * 0.33;
   const blinkK = o.blink ?? blinkAt(o.t || 0, o.seed || 0);
@@ -543,6 +546,7 @@ function armPts(sx, sy, s, sh, el, u, L) {
   return [[sx, sy], [ex, ey], [hx, hy], a2];
 }
 export function hand(g, x, y, r, o = {}) {
+  if (o.cinematic2d === true) return drawCinematicHand2D(g, x, y, r, o);
   const lw = o.lw, col = o.gauntlet ? PAL.steelLight : (o.glove || '#ffffff');
   circ(g, x, y, r, { fill: col, lw });
   if (o.thumb !== false) ellipse(g, x + (o.s || 1) * r * 0.75, y - r * 0.45, r * 0.38, r * 0.3, { fill: col, lw: lw * 0.8, rot: 0.6 * (o.s || 1) });
@@ -762,6 +766,10 @@ function soldierLow(g, x, y, h, o) {
 
 // ====================================================================================== NHAN VAT DAY DU
 export function soldier(g, x, y, h, o = {}) {
+  if (o.cinematic2d === true) {
+    const res = drawSquireCinematic2DActor(g, x, y, h, o);
+    return { x, y, h, head: res.headCenter, R: res.headRadius, hand: res.rightHandWorld, anchors: res };
+  }
   o = { ...(CAST[o.preset] || {}), ...o };
   if (o.lod === 'low' || (o.lod !== 'high' && h < 70)) return soldierLow(g, x, y, h, o);
   const u = h / 100, lw = o.lw ?? Math.max(1.4, h * 0.011), t = o.t || 0;

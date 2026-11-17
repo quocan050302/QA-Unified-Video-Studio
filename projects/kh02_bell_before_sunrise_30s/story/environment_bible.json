@@ -1,0 +1,97 @@
+{
+  "schema_version": "kh02_environment_bible.v1",
+  "location_id": "loc_janiculum_bell_tower",
+  "location_name": "Roman Hilltop Civic Watch & Bell Tower at Pre-Dawn",
+  "time_of_day_arc": "pre_dawn_indigo_to_apricot_horizon",
+  "render_mode": "canvas2d_only",
+  "fixed_world_landmarks": [
+    {
+      "landmark_id": "lm_5arch_aqueduct",
+      "description": "Five-arch travertine Roman aqueduct spanning the eastern misty valley",
+      "world_azimuth": "east_southeast"
+    },
+    {
+      "landmark_id": "lm_twin_cypresses_umbrella_pine",
+      "description": "Pair of tall Mediterranean cypresses beside one umbrella pine on western ridge",
+      "world_azimuth": "west_ridge"
+    },
+    {
+      "landmark_id": "lm_bronze_watch_bell_rig",
+      "description": "Giant cast-bronze civic bell on mortised oak yoke with iron clapper and single coiled hemp rope",
+      "world_azimuth": "tower_center_axis"
+    }
+  ],
+  "views": [
+    {
+      "view_id": "belfry_lower_arch",
+      "camera_projection_2d": "close_floor_level_2d",
+      "purpose": "Close framing of coiled hemp rope base and Pip the goat with upper bell blurred in 2D depth",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_twin_cypresses_umbrella_pine",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "distinct_floor_arch_and_blurred_upper_belfry"
+    },
+    {
+      "view_id": "belfry_wide_interior",
+      "camera_projection_2d": "eye_level_wide_2d",
+      "purpose": "Full belfry arch showing oak crossbeam, bronze bell, vertical rope, stone piers, and valley horizon",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_twin_cypresses_umbrella_pine",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "full_pier_arch_crossbeam_bell_and_slab_floor"
+    },
+    {
+      "view_id": "belfry_low_angle",
+      "camera_projection_2d": "authored_upward_2d_perspective",
+      "purpose": "Artist-authored 2D upward framing of taut rope, hand grip, and looming bronze bell overhead",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "converging_2d_arch_soffit_and_overhead_yoke"
+    },
+    {
+      "view_id": "tower_stairwell_ascent",
+      "camera_projection_2d": "side_elevation_tracking_2d",
+      "purpose": "Stepped travertine tower stairwell with arched window to aqueduct horizon and vertical rope shaft",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_twin_cypresses_umbrella_pine"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "nine_step_travertine_risers_window_cutout_and_foreground_rail"
+    },
+    {
+      "view_id": "belfry_catwalk_clapper",
+      "camera_projection_2d": "upper_catwalk_medium_and_detail_2d",
+      "purpose": "Upper maintenance oak catwalk directly beside bronze bell mouth and iron clapper bulb",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "upper_oak_catwalk_bell_mouth_cavity_and_clapper_shaft"
+    },
+    {
+      "view_id": "hilltop_courtyard_wide",
+      "camera_projection_2d": "exterior_wide_courtyard_2d",
+      "purpose": "Cobbled courtyard below the bell tower with shuttered insula balcony, amphorae, and waking citizens",
+      "visible_landmarks": [
+        "lm_5arch_aqueduct",
+        "lm_twin_cypresses_umbrella_pine",
+        "lm_bronze_watch_bell_rig"
+      ],
+      "layer_count": 5,
+      "authored_geometry": "exterior_bell_tower_facade_insula_shutters_and_cobbled_court"
+    }
+  ],
+  "beat_count_bound": 8,
+  "spec_sha256": "a3afd44cf2dac11734b6c9f56c13d4d1ad334881c44e2fb40ba68376bb407967"
+}

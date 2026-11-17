@@ -124,6 +124,9 @@ function validateInfo(info) {
   if (info.importErrors && info.importErrors.length > 0) {
     fatal.push(`LOI NAP FILE CANH:\n${info.importErrors.map((e) => '   - ' + e).join('\n')}`);
   }
+  if ((_cfg.render_mode === 'canvas2d_only' || _cfg.kh02_2d_only === true || info.renderMode === 'canvas2d_only') && info.three3dLoaded) {
+    fatal.push('KH02_2D_ONLY_VIOLATION: Three.js / engine/three3d.js da duoc nap trong che do canvas2d_only.');
+  }
   return { ok: fatal.length === 0, fatal, missShots };
 }
 

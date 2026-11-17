@@ -1,0 +1,355 @@
+{
+  "style_id": "squire_cinematic_2d.v1",
+  "schema_version": "1.0.0",
+  "lineage": {
+    "source_branch": "origin/Production",
+    "source_commit": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+    "production_modules_inspected": [
+      "packs/squire/ink.js",
+      "packs/squire/chara.js",
+      "packs/squire/world.js",
+      "packs/squire/templates.js",
+      "packs/squire/pack.js"
+    ],
+    "design_intent": "Evolutionary 2D upgrade of Production Squire vector caricature identity: retain expressive round cream-faced characters and #392a21 dark-brown ink contours while upgrading tapered strokes, anatomical arm/knee/foot silhouettes, articulated hand grips, 2-3 cel-shading planes, cloth folds, and 3-5 layered Canvas2D environments."
+  },
+  "render_contract": {
+    "render_mode": "canvas2d_only",
+    "forbid_three3d": true,
+    "forbid_webgl_scene": true,
+    "forbid_depth_mesh": true,
+    "allow_2d_transforms": [
+      "translate",
+      "scale",
+      "rotate",
+      "parallax_layer",
+      "canvas2d_blur"
+    ]
+  },
+  "protected_production_default": {
+    "opt_in_only": true,
+    "default_pack_style": "flat",
+    "outline_hex": "#392a21",
+    "skin_hex": "#f4ede1",
+    "skin_shade_hex": "#d9cfd0",
+    "blush_hex": "#f2a7a0",
+    "mouth_interior_hex": "#5a2a25",
+    "legacy_projects_untouched": [
+      "projects/squire-mau",
+      "projects/selfimprove-mau"
+    ]
+  },
+  "stroke_weight_model": {
+    "reference_canvas": [
+      1920,
+      1080
+    ],
+    "formula": "clamp(base_px * (actor_px / 420)^0.58 * canvas_short_side / 1080, min_px, max_px)",
+    "tiers": {
+      "outer_silhouette": {
+        "base_px": 5.4,
+        "min_px": 2.0,
+        "max_px": 9.5
+      },
+      "limb_and_garment_seam": {
+        "base_px": 4.2,
+        "min_px": 1.6,
+        "max_px": 7.4
+      },
+      "facial_feature": {
+        "base_px": 3.8,
+        "min_px": 1.5,
+        "max_px": 6.8
+      },
+      "interior_cloth_fold": {
+        "base_px": 2.4,
+        "min_px": 1.1,
+        "max_px": 4.4
+      },
+      "midground_architecture": {
+        "base_px": 3.2,
+        "min_px": 1.4,
+        "max_px": 5.2
+      },
+      "far_background_silhouette": {
+        "base_px": 1.8,
+        "min_px": 0.9,
+        "max_px": 3.0
+      }
+    }
+  },
+  "tapered_strokes": {
+    "enabled": true,
+    "start_weight_ratio": 0.42,
+    "mid_weight_ratio": 1.0,
+    "end_weight_ratio": 0.36,
+    "apply_to": [
+      "cloth_drape_creases",
+      "hair_tufts",
+      "brow_curves",
+      "motion_arcs",
+      "timber_grain",
+      "rope_fray"
+    ],
+    "anti_capsule_rule": "Never draw elbows, knees, or shoulders as exposed overlapping circles; use continuous tapered polygon-curve envelopes."
+  },
+  "silhouette_clarity_360px": {
+    "min_test_height_px": 360,
+    "head_readability_min_radius_px": 24,
+    "negative_space_requirements": [
+      "Clear gap between active arm/hand and torso during reach, pull, and catch poses",
+      "Distinct costume hem asymmetry or sash silhouette per named character",
+      "Readable prop silhouette (bell rim, clapper bulb, coiled rope) against background value"
+    ]
+  },
+  "proportional_invariants": {
+    "human_squire_caricature": {
+      "head_radius_per_100u": 19.0,
+      "head_diameter_ratio": 0.38,
+      "torso_top_u": -59.0,
+      "hip_u": -30.0,
+      "upper_arm_len_u": 13.0,
+      "forearm_len_u": 12.5,
+      "hand_palm_radius_u": 4.8,
+      "foot_planted_sole_flat": true
+    },
+    "variants": {
+      "apprentice_youth": {
+        "height_scale": 0.94,
+        "head_scale": 1.03,
+        "shoulder_width_scale": 0.92
+      },
+      "elder_master": {
+        "height_scale": 0.91,
+        "head_scale": 1.02,
+        "stoop_rad": 0.06
+      },
+      "quadruped_goat_non_human": {
+        "rig_class": "quadruped_animal_2d",
+        "is_human_rig": false,
+        "withers_height_ratio": 0.44,
+        "head_radius_per_100u": 21.5,
+        "horn_curve": true,
+        "cloven_hoof": true
+      }
+    }
+  },
+  "cel_shading_bands": {
+    "band_count_min": 2,
+    "band_count_max": 3,
+    "bands": [
+      {
+        "id": "lit_base",
+        "role": "Primary local color lit by warm pre-dawn key"
+      },
+      {
+        "id": "core_cel_shadow",
+        "role": "Crisp cool-shifted shadow plane (-14% to -22% value) following form"
+      },
+      {
+        "id": "deep_occlusion_or_rim",
+        "role": "Selective contact occlusion under chin/belt/bell hood plus warm dawn edge highlight"
+      }
+    ],
+    "forbid_muddy_actor_gradients": true,
+    "forbid_drop_shadow_stickers": true
+  },
+  "cloth_fold_rules": {
+    "max_fold_lines_per_garment": 5,
+    "tension_origin": "Anchor folds at shoulder brooch, belt cinch, or raised knee/elbow",
+    "hem_secondary_motion": "Deterministic phase-lagged hem/scarf offset driven by velocity, never random jitter"
+  },
+  "face_emotional_range": {
+    "required_states": [
+      "calm_watchful",
+      "anxious_alert",
+      "wide_shock",
+      "strained_pull",
+      "determined_climb",
+      "breathless_relief",
+      "deadpan_disbelief",
+      "joyful_mischief"
+    ],
+    "eye_pupil_snap_supported": true,
+    "asymmetric_brows_supported": true,
+    "mouth_phoneme_and_effort_shapes": [
+      "flat",
+      "smile",
+      "wavy_anxious",
+      "gasp_o",
+      "clenched_effort",
+      "sigh_relief",
+      "deadpan_line"
+    ]
+  },
+  "layer_value_separation": {
+    "min_layers": 3,
+    "max_layers": 5,
+    "planes": {
+      "L0_sky_atmosphere": {
+        "depth": 0.15,
+        "luma_range": [
+          0.22,
+          0.72
+        ],
+        "contrast": "low_smooth"
+      },
+      "L1_far_hills_aqueduct": {
+        "depth": 0.35,
+        "luma_range": [
+          0.18,
+          0.46
+        ],
+        "contrast": "compressed_cool"
+      },
+      "L2_mid_architecture": {
+        "depth": 0.75,
+        "luma_range": [
+          0.2,
+          0.58
+        ],
+        "contrast": "structured_stone_timber"
+      },
+      "L3_subject_stage": {
+        "depth": 1.0,
+        "luma_range": [
+          0.12,
+          0.94
+        ],
+        "contrast": "high_focal_clarity"
+      },
+      "L4_foreground_occluder": {
+        "depth": 1.28,
+        "luma_range": [
+          0.06,
+          0.24
+        ],
+        "contrast": "dark_framing_silhouette"
+      }
+    }
+  },
+  "line_of_action_and_fx_rules": {
+    "require_clear_spine_curve_in_action": true,
+    "contact_invariants": [
+      "hand_to_rope_anchor",
+      "hand_to_clapper_pin_anchor",
+      "planted_foot_world_lock"
+    ],
+    "allowed_2d_fx": [
+      "dust_motes_2d",
+      "acoustic_ring_wave_2d",
+      "sneeze_puff_2d",
+      "rope_whip_arc_2d",
+      "dawn_light_shafts_2d"
+    ],
+    "forbid_overexposed_bloom": true
+  },
+  "cinematic_composition": {
+    "focal_hierarchy": [
+      "primary_character_or_contact",
+      "prop_mechanical_stakes",
+      "architectural_context"
+    ],
+    "camera_bounds": {
+      "min_zoom": 0.94,
+      "max_zoom": 1.35,
+      "max_pan_fraction_per_shot": 0.22,
+      "forbid_constant_bobbing": true,
+      "allow_motivated_static_hold": true
+    }
+  },
+  "semantic_palettes": {
+    "roman": {
+      "label": "Roman Hilltop Pre-Dawn & Terracotta",
+      "sky_zenith": "#232d4b",
+      "sky_horizon": "#e7a477",
+      "dawn_rim": "#ffd49e",
+      "cool_shadow_tint": "#2c3554",
+      "stone_base": "#c7bca9",
+      "stone_shadow": "#8f8578",
+      "stone_highlight": "#dfd6c5",
+      "timber_base": "#9b6839",
+      "timber_shadow": "#684323",
+      "bronze_base": "#c99642",
+      "bronze_shadow": "#875d21",
+      "bronze_highlight": "#f2cf85",
+      "rope_hemp": "#cbb07c",
+      "rope_shadow": "#93784a",
+      "terracotta_roof": "#b6533c",
+      "cypress_foliage": "#496548",
+      "wardrobe_presets": {
+        "apprentice_keeper": {
+          "tunic": "#b84b39",
+          "tunic_shadow": "#863124",
+          "undertunic": "#eadbc2",
+          "scarf": "#df9b43",
+          "belt": "#694226",
+          "sandals": "#6e472b"
+        },
+        "elder_master": {
+          "stola": "#415980",
+          "stola_shadow": "#2b3d59",
+          "palla": "#d8c39e",
+          "trim": "#c99642",
+          "sandals": "#5c3d28"
+        },
+        "courtyard_citizen": {
+          "tunic": "#687d48",
+          "tunic_shadow": "#495931",
+          "cloak": "#c9b38c"
+        }
+      }
+    },
+    "medieval": {
+      "label": "Medieval Stone Keep & Heraldic Wool",
+      "sky_zenith": "#243046",
+      "sky_horizon": "#cfa37e",
+      "dawn_rim": "#f5d39c",
+      "cool_shadow_tint": "#293247",
+      "stone_base": "#b5b0a8",
+      "stone_shadow": "#7f7b74",
+      "stone_highlight": "#d4cfc7",
+      "timber_base": "#8a5a36",
+      "timber_shadow": "#593820",
+      "bronze_base": "#b89047",
+      "bronze_shadow": "#7d5e28",
+      "bronze_highlight": "#e8c882",
+      "rope_hemp": "#c2a878",
+      "rope_shadow": "#8a734b",
+      "wardrobe_presets": {
+        "watchman": {
+          "tunic": "#3e64a3",
+          "tunic_shadow": "#2b4878",
+          "gambeson": "#e3d9c2",
+          "belt": "#5a3a22"
+        }
+      }
+    },
+    "non_historical_future": {
+      "label": "Utilitarian Civic & Brass Acoustic",
+      "sky_zenith": "#162238",
+      "sky_horizon": "#6fa3bf",
+      "dawn_rim": "#bfe6ff",
+      "cool_shadow_tint": "#1b2942",
+      "stone_base": "#9aa4ae",
+      "stone_shadow": "#67707a",
+      "stone_highlight": "#c5cdd4",
+      "timber_base": "#6e7680",
+      "timber_shadow": "#474d54",
+      "bronze_base": "#d1a14f",
+      "bronze_shadow": "#8c672b",
+      "bronze_highlight": "#f7d999",
+      "rope_hemp": "#9da5ad",
+      "rope_shadow": "#666e75",
+      "wardrobe_presets": {
+        "technician": {
+          "jacket": "#3b5875",
+          "jacket_shadow": "#263b50",
+          "undershirt": "#e6eaee",
+          "belt": "#333940"
+        }
+      }
+    }
+  },
+  "canonical_digest": "f1b22b7606f80d1e37c2f32a4cd97152c5c6765400506caa7a9e1f768f333a75"
+}

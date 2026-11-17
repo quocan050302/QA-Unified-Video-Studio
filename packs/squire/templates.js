@@ -3,7 +3,7 @@
 // Mau: scene | close | army | top | map | plan | board | xray | frame | item | split | title | black
 import { E, clamp, lerp, ease, registerTemplate, blurLayer, talkAmount, text, img } from '/engine/core.js';
 import { OUT, PAL, T, pop, grow, bob, shape, rect, ellipse, circ, blob, polyS, line, tube, sign, blockArrow, curveArrow, qmark, ban, label, haze, vignette, wrap, darker, lighter, alpha, mix, FONT_SIGN, FONT_THUMB, FONT_CAP } from './ink.js';
-import { soldier, bust, shield, weapon, charge, CAST, hand, head, arrowStuck, STEP } from './chara.js';
+import { soldier, bust, shield, weapon, charge, CAST, hand, head, arrowStuck, STEP, drawPipGoat2D } from './chara.js';
 import { horse } from './horse.js';
 import { bg, tree, bush, tent, flag, castle, cloud, TIMES } from './world.js';
 import { formation, standard, topGround, topBlock, dustPuff, rain, volley, stuckArrows, dust, javelins, smoke, sparks, arrowFly } from './army.js';
@@ -174,6 +174,7 @@ export function drawThing(g, kind, x, y, s, o = {}) {
     case 'cauldron': ellipse(g, x, y, s * 0.4, s * 0.32, { fill: PAL.black, lw }); break;
     case 'skull': circ(g, x, y, s * 0.3, { fill: '#efe7d6', lw }); circ(g, x - s * 0.1, y, s * 0.07, { fill: OUT, lw: 0 }); circ(g, x + s * 0.1, y, s * 0.07, { fill: OUT, lw: 0 }); break;
     case 'soldier': soldier(g, x, y + s * 0.5, s, { ...o, t: o.t }); break;
+    case 'pip_goat': drawPipGoat2D(g, x, y + s * 0.5, s, { ...o, t: o.t }); break;
     case 'horse': horse(g, x, y + s * 0.5, s, o); break;
     case 'treadmill': {
       const lw2 = o.lw ?? Math.max(2, s * 0.025);
