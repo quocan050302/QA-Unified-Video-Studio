@@ -31,6 +31,16 @@ REQUIRED_EXPRESSIONS: Tuple[str, ...] = (
     "deadpan_disbelief",
 )
 
+REQUIRED_EXPRESSIONS_V2: Tuple[str, ...] = (
+    "neutral_attentive",
+    "wide_shock",
+    "strained_exertion",
+    "determined_focus",
+    "joyful_laugh",
+    "deadpan_disbelief",
+    "warm_relief_smile",
+)
+
 REQUIRED_VIEWS: Tuple[str, ...] = (
     "front",
     "three_quarter",
@@ -149,6 +159,62 @@ HAIR_PALETTES: List[Dict[str, str]] = [
 
 
 NICHE_WARDROBE_CATALOG: Dict[str, List[Dict[str, Any]]] = {
+    "city_park": [
+        {
+            "outfit_id": "mina_parka_windbreaker_striped_tee",
+            "garment_kind": "layered_parka_windbreaker_over_striped_tee",
+            "primary_hex": "#E0533C",
+            "secondary_hex": "#FFF5DE",
+            "trim_hex": "#2D7D90",
+            "pants_hex": "#3B4F6B",
+            "accessory_hex": "#E6A13B",
+            "footwear": "cuffed_canvas_park_sneakers",
+            "hair_style": "playful_bob_with_side_clip",
+            "archetype": "inventive_school_youth",
+            "accessories": ["star_hair_clip", "kite_maker_pouch", "striped_inner_tee"],
+        },
+        {
+            "outfit_id": "bao_overshirt_ochre_tee_chinos",
+            "garment_kind": "open_overshirt_cardigan_and_relaxed_chinos",
+            "primary_hex": "#2E6F7E",
+            "secondary_hex": "#F2B84B",
+            "trim_hex": "#F7EFE2",
+            "pants_hex": "#6E5644",
+            "accessory_hex": "#8F4A2E",
+            "footwear": "suede_park_trainers",
+            "hair_style": "tousled_layered_waves",
+            "archetype": "caring_older_friend",
+            "accessories": ["rolled_cuff_overshirt", "woven_wristband"],
+        },
+    ],
+    "holdout_botanical_conservatory": [
+        {
+            "outfit_id": "botanist_linen_smock_sunhat",
+            "garment_kind": "draped_linen_smock_and_apron",
+            "primary_hex": "#4A7C6F",
+            "secondary_hex": "#F5E9D4",
+            "trim_hex": "#E06D44",
+            "pants_hex": "#5B4A3E",
+            "accessory_hex": "#9C5A3C",
+            "footwear": "garden_leather_boots",
+            "hair_style": "braided_kerchief_updo",
+            "archetype": "grounded_artisan",
+            "accessories": ["linen_seed_apron", "brass_magnifying_loupe"],
+        },
+        {
+            "outfit_id": "apprentice_overalls_striped_tee",
+            "garment_kind": "denim_overalls_over_knit",
+            "primary_hex": "#3B6E8C",
+            "secondary_hex": "#F2BE54",
+            "trim_hex": "#FAF6EC",
+            "pants_hex": "#2F5670",
+            "accessory_hex": "#C85A38",
+            "footwear": "canvas_sneakers",
+            "hair_style": "curly_fade",
+            "archetype": "energetic_junior",
+            "accessories": ["overall_brass_buckles", "watering_tag"],
+        },
+    ],
     "roman_forum": [
         {
             "outfit_id": "royal_courier_tunic_satchel",
@@ -295,11 +361,17 @@ def derive_character_specs(
         ent_list = [{"actor_id": "hero_actor", "name": "Hero", "role": "protagonist"}]
 
     cat_key = style.niche if style.niche in NICHE_WARDROBE_CATALOG else (
-        "roman_forum" if "roman" in style.niche else (
-            "modern_science" if "science" in style.niche else "everyday_business"
+        "city_park" if ("park" in style.niche or "kite" in style.niche) else (
+            "holdout_botanical_conservatory" if ("conservatory" in style.niche or "botanical" in style.niche) else (
+                "roman_forum" if "roman" in style.niche else (
+                    "modern_science" if "science" in style.niche else "everyday_business"
+                )
+            )
         )
     )
     catalog = NICHE_WARDROBE_CATALOG[cat_key]
+    is_v2 = str(style.style_id).endswith(".v2")
+    expr_tuple = REQUIRED_EXPRESSIONS_V2 if is_v2 else REQUIRED_EXPRESSIONS
 
     mood_arc: List[str] = []
     for obj in scene_objectives or []:
@@ -339,9 +411,15 @@ def derive_character_specs(
         sec = str(ent.get("secondary_hex") or template["secondary_hex"])
         trim = str(ent.get("trim_hex") or template["trim_hex"])
         acc = str(ent.get("accessory_hex") or template["accessory_hex"])
+        pants_hex = str(ent.get("pants_hex") or template.get("pants_hex") or ("#34495E" if cat_key != "roman_forum" else sec))
+
+        default_h_norm = (
+            0.255 if arch_name in ("energetic_junior", "inventive_school_youth")
+            else (0.325 if arch_name == "caring_older_friend" else 0.31)
+        )
 
         specs.append({
-            "schema_version": "kh01.character_spec.v1",
+            "schema_version": "kh01.character_spec.v2" if is_v2 else "kh01.character_spec.v1",
             "actor_id": aid,
             "name": name,
             "role": str(ent.get("role") or ("protagonist" if idx == 0 else "supporting")),
@@ -355,7 +433,7 @@ def derive_character_specs(
                 "torso_to_height_ratio": float(arch["torso_to_height_ratio"]),
                 "leg_to_height_ratio": float(arch["leg_to_height_ratio"]),
                 "cranium_shape": str(arch["cranium_shape"]),
-                "height_norm": float(ent.get("height_norm") or (0.31 if arch_name != "energetic_junior" else 0.25)),
+                "height_norm": float(ent.get("height_norm") or default_h_norm),
             },
             "skin_palette": skin,
             "hair_palette": hair,
@@ -365,20 +443,22 @@ def derive_character_specs(
                 "outfit_id": str(ent.get("outfit_id") or template["outfit_id"]),
                 "garment_kind": str(ent.get("garment_kind") or template["garment_kind"]),
                 "primary_hex": prim,
-                "primary_shadow_hex": _shade_hex(prim, 0.74, cool_shift=10),
-                "primary_rim_hex": _shade_hex(prim, 1.24, cool_shift=-8),
+                "primary_shadow_hex": _shade_hex(prim, 0.72 if is_v2 else 0.74, cool_shift=12 if is_v2 else 10),
+                "primary_rim_hex": _shade_hex(prim, 1.26 if is_v2 else 1.24, cool_shift=-8),
                 "secondary_hex": sec,
                 "secondary_shadow_hex": _shade_hex(sec, 0.78, cool_shift=8),
+                "pants_hex": pants_hex,
+                "pants_shadow_hex": _shade_hex(pants_hex, 0.74, cool_shift=10),
                 "trim_hex": trim,
                 "accessory_hex": acc,
-                "footwear": str(template["footwear"]),
+                "footwear": str(ent.get("footwear") or template["footwear"]),
                 "accessories": list(ent.get("accessories") or template["accessories"]),
             },
             "wardrobe_timeline": [
                 {"from_shot": "S01", "outfit_id": str(ent.get("outfit_id") or template["outfit_id"]), "reason": "initial_character_establishment"}
             ],
             "supported_views": list(REQUIRED_VIEWS),
-            "supported_expressions": list(REQUIRED_EXPRESSIONS),
+            "supported_expressions": list(expr_tuple),
             "has_hand_insert": True,
             "mood_arc": mood_arc,
             "ink_outer_hex": style.character_outer_ink_hex,
@@ -590,6 +670,13 @@ def _draw_character_expression_face(
             ink_outer,
             lw * 1.0,
         )
+    elif expression == "warm_relief_smile":
+        _draw_tapered_stroke(
+            d,
+            [(mouth_cx - mw * 0.84, my - r * 0.04), (mouth_cx, my + r * 0.14), (mouth_cx + mw * 0.84, my - r * 0.04)],
+            ink_outer,
+            lw * 1.05,
+        )
     else:  # neutral_attentive
         _draw_tapered_stroke(
             d,
@@ -597,6 +684,728 @@ def _draw_character_expression_face(
             ink_outer,
             lw * 0.95,
         )
+
+
+def _sample_quad_bezier(
+    p0: Tuple[float, float],
+    p1: Tuple[float, float],
+    p2: Tuple[float, float],
+    steps: int = 18,
+) -> List[Tuple[float, float]]:
+    pts: List[Tuple[float, float]] = []
+    for i in range(steps + 1):
+        t = i / float(steps)
+        mt = 1.0 - t
+        x = mt * mt * p0[0] + 2.0 * mt * t * p1[0] + t * t * p2[0]
+        y = mt * mt * p0[1] + 2.0 * mt * t * p1[1] + t * t * p2[1]
+        pts.append((x, y))
+    return pts
+
+
+def _build_curved_tapered_limb_poly(
+    p0: Tuple[float, float],
+    p_mid: Tuple[float, float],
+    p2: Tuple[float, float],
+    w0: float,
+    w_mid: float,
+    w2: float,
+    steps: int = 18,
+) -> Tuple[List[Tuple[float, float]], List[Tuple[float, float]], List[Tuple[float, float]]]:
+    """
+    Build a smooth organic curved-and-tapered polygon (plus left/right edge polylines) around
+    a quadratic Bezier spine passing through `(p0, p_mid, p2)` so `v2` limbs have natural
+    rounded elbow/knee volume and wrist/ankle taper instead of rigid straight pipes.
+    """
+    ctrl = (
+        2.0 * p_mid[0] - 0.5 * (p0[0] + p2[0]),
+        2.0 * p_mid[1] - 0.5 * (p0[1] + p2[1]),
+    )
+    spine = _sample_quad_bezier(p0, ctrl, p2, steps=steps)
+    left_edge: List[Tuple[float, float]] = []
+    right_edge: List[Tuple[float, float]] = []
+    n_pts = len(spine)
+    for i, (sx, sy) in enumerate(spine):
+        u = i / float(max(1, n_pts - 1))
+        if u <= 0.5:
+            su = u * 2.0
+            half_w = 0.5 * (w0 + (w_mid - w0) * (su * (2.0 - su)))
+        else:
+            su = (u - 0.5) * 2.0
+            half_w = 0.5 * (w_mid + (w2 - w_mid) * (su * su * (3.0 - 2.0 * su)))
+        p_prev = spine[max(0, i - 1)]
+        p_next = spine[min(n_pts - 1, i + 1)]
+        tx = p_next[0] - p_prev[0]
+        ty = p_next[1] - p_prev[1]
+        tlen = max(1e-4, math.hypot(tx, ty))
+        nx = -ty / tlen
+        ny = tx / tlen
+        left_edge.append((sx + nx * half_w, sy + ny * half_w))
+        right_edge.append((sx - nx * half_w, sy - ny * half_w))
+    poly = left_edge + list(reversed(right_edge))
+    return poly, left_edge, right_edge
+
+
+def _draw_v2_articulated_hand(
+    d: ImageDraw.ImageDraw,
+    wrist_pt: Tuple[float, float],
+    elbow_pt: Tuple[float, float],
+    head_r: float,
+    hand_pose: str,
+    skin_col: Tuple[int, int, int, int],
+    skin_sh: Tuple[int, int, int, int],
+    ink_outer: Tuple[int, int, int, int],
+    ink_inner: Tuple[int, int, int, int],
+    lw_outer: float,
+    dir_x: int,
+) -> None:
+    """Draw differentiated wrist -> sculpted palm -> opposable thumb + 4 curved tapered fingers (`v2`)."""
+    wx, wy = wrist_pt
+    dx = wx - elbow_pt[0]
+    dy = wy - elbow_pt[1]
+    base_ang = math.atan2(dy, dx) if math.hypot(dx, dy) > 2.0 else (0.15 if dir_x > 0 else math.pi - 0.15)
+    palm_r = head_r * 0.23
+    px = wx + math.cos(base_ang) * palm_r * 0.72
+    py = wy + math.sin(base_ang) * palm_r * 0.72
+
+    # Sculpted 2-pass cartoon hand ("bold outer ink silhouette pass -> clean skin fill pass -> subtle interior creases")
+    # Eliminates muddy dark-blob fingers at medium/wide scale while keeping crisp 4-finger + thumb silhouette in closeups!
+    palm_poly = [
+        (wx + perp_x * palm_r * 0.62, wy + perp_y * palm_r * 0.62),
+        (px + math.cos(base_ang) * palm_r * 0.68 + perp_x * palm_r * 0.86, py + math.sin(base_ang) * palm_r * 0.68 + perp_y * palm_r * 0.86),
+        (px + math.cos(base_ang) * palm_r * 0.68 - perp_x * palm_r * 0.82, py + math.sin(base_ang) * palm_r * 0.68 - perp_y * palm_r * 0.82),
+        (wx - perp_x * palm_r * 0.58, wy - perp_y * palm_r * 0.58),
+    ]
+    th_ang = base_ang - dir_x * 0.82
+    th_mid = (px + math.cos(th_ang) * palm_r * 0.72, py + math.sin(th_ang) * palm_r * 0.72)
+    th_tip = (th_mid[0] + math.cos(th_ang + dir_x * 0.24) * palm_r * 0.62, th_mid[1] + math.sin(th_ang + dir_x * 0.24) * palm_r * 0.62)
+    th_poly, _, _ = _build_curved_tapered_limb_poly((px, py), th_mid, th_tip, palm_r * 0.62, palm_r * 0.52, palm_r * 0.34, steps=8)
+
+    finger_polys: List[List[Tuple[float, float]]] = []
+    if hand_pose == "locked_grip":
+        for fi in range(4):
+            off = (fi - 1.5) * palm_r * 0.40
+            fx = px + math.cos(base_ang) * palm_r * 0.52 + perp_x * off
+            fy = py + math.sin(base_ang) * palm_r * 0.52 + perp_y * off
+            r_f = palm_r * 0.30
+            finger_polys.append([(fx - r_f, fy - r_f * 0.75), (fx + r_f, fy - r_f * 0.75), (fx + r_f, fy + r_f * 0.75), (fx - r_f, fy + r_f * 0.75)])
+    else:
+        spread = 0.24 if hand_pose in ("open_reach", "spread_shock") else 0.13
+        for fi in range(4):
+            f_len = palm_r * 0.56 if (hand_pose == "pointing" and fi > 0) else palm_r * (1.36 if fi in (1, 2) else 1.14) * (1.10 if hand_pose == "spread_shock" else 1.0)
+            f_ang = base_ang + (fi - 1.5) * spread
+            curl = 0.20 * dir_x if hand_pose == "relaxed" else (-0.06 * dir_x if hand_pose == "spread_shock" else 0.06 * dir_x)
+            knuckle = (
+                px + math.cos(base_ang) * palm_r * 0.52 + perp_x * (fi - 1.5) * palm_r * 0.36,
+                py + math.sin(base_ang) * palm_r * 0.52 + perp_y * (fi - 1.5) * palm_r * 0.36,
+            )
+            f_mid = (knuckle[0] + math.cos(f_ang) * f_len * 0.54, knuckle[1] + math.sin(f_ang) * f_len * 0.54)
+            f_tip = (f_mid[0] + math.cos(f_ang + curl) * f_len * 0.50, f_mid[1] + math.sin(f_ang + curl) * f_len * 0.50)
+            f_p, _, _ = _build_curved_tapered_limb_poly(knuckle, f_mid, f_tip, palm_r * 0.46, palm_r * 0.40, palm_r * 0.28, steps=8)
+            finger_polys.append(f_p)
+
+    # Pass 1: Outer bold ink strokes around palm, thumb, and fingers
+    ink_w = lw_outer * 1.25
+    _draw_tapered_stroke(d, palm_poly + [palm_poly[0]], ink_outer, ink_w, taper_ends=False)
+    _draw_tapered_stroke(d, th_poly + [th_poly[0]], ink_outer, ink_w * 0.92, taper_ends=False)
+    for fp_i in finger_polys:
+        _draw_tapered_stroke(d, fp_i + [fp_i[0]], ink_outer, ink_w * 0.90, taper_ends=False)
+
+    # Pass 2: Clean warm skin fill over interior so fingers never turn into dark ink blobs!
+    d.polygon(palm_poly, fill=skin_col)
+    d.polygon([palm_poly[2], palm_poly[3], (px, py)], fill=skin_sh)
+    d.polygon(th_poly, fill=skin_col)
+    for fp_i in finger_polys:
+        d.polygon(fp_i, fill=skin_col)
+
+    # Pass 3: Delicate interior finger-separation & palm creases
+    for fi in range(1, min(4, len(finger_polys))):
+        sep_pt = finger_polys[fi][0]
+        _draw_tapered_stroke(d, [(px + math.cos(base_ang) * palm_r * 0.28, py + math.sin(base_ang) * palm_r * 0.28), sep_pt], ink_inner, max(1.5, lw_outer * 0.34), taper_ends=True)
+
+
+def _draw_v2_expression_face(
+    d: ImageDraw.ImageDraw,
+    cx: float,
+    cy: float,
+    r: float,
+    spec: Dict[str, Any],
+    expression: str,
+    view: str,
+    ink_outer: Tuple[int, int, int, int],
+    ink_inner: Tuple[int, int, int, int],
+    lw: float,
+) -> None:
+    """Reference-grounded `v2` facial acting with bold lid/brow calligraphy and tooth+tongue cel planes."""
+    if view == "rear_three_quarter":
+        ear_x = cx + r * 0.58
+        ear_y = cy + r * 0.10
+        d.ellipse(
+            [ear_x - r * 0.17, ear_y - r * 0.24, ear_x + r * 0.17, ear_y + r * 0.24],
+            fill=_hex_rgba(spec["skin_palette"]["base"]),
+            outline=ink_outer,
+            width=max(2, int(lw * 0.85)),
+        )
+        return
+
+    skin_sh = _hex_rgba(spec["skin_palette"]["shadow"])
+    blush_col = _hex_rgba(spec["skin_palette"]["blush"], 138)
+    hair_col = _hex_rgba(spec["hair_palette"]["base"])
+    white = (253, 251, 247, 255)
+    mouth_dark = (62, 20, 24, 255)
+    tongue_col = (226, 104, 98, 255)
+
+    if view == "profile":
+        eye_positions = [(cx + r * 0.36, cy - r * 0.05, 0.94)]
+        nose_pts = [(cx + r * 0.74, cy - r * 0.14), (cx + r * 1.08, cy + r * 0.12), (cx + r * 0.78, cy + r * 0.22)]
+        mouth_cx = cx + r * 0.58
+        ear_box = [cx - r * 0.34, cy - r * 0.04, cx - r * 0.02, cy + r * 0.38]
+    elif view == "three_quarter":
+        eye_positions = [
+            (cx - r * 0.15, cy - r * 0.04, 1.04),
+            (cx + r * 0.44, cy - r * 0.05, 0.78),
+        ]
+        nose_pts = [(cx + r * 0.18, cy - r * 0.09), (cx + r * 0.39, cy + r * 0.13), (cx + r * 0.17, cy + r * 0.20)]
+        mouth_cx = cx + r * 0.15
+        ear_box = [cx - r * 0.98, cy - r * 0.02, cx - r * 0.68, cy + r * 0.38]
+    else:
+        eye_positions = [
+            (cx - r * 0.35, cy - r * 0.04, 1.02),
+            (cx + r * 0.35, cy - r * 0.04, 1.02),
+        ]
+        nose_pts = [(cx - r * 0.03, cy - r * 0.06), (cx + r * 0.09, cy + r * 0.13), (cx - r * 0.04, cy + r * 0.19)]
+        mouth_cx = cx
+        ear_box = [cx - r * 1.06, cy - r * 0.02, cx - r * 0.78, cy + r * 0.36]
+
+    d.ellipse(ear_box, fill=_hex_rgba(spec["skin_palette"]["base"]), outline=ink_outer, width=max(2, int(lw * 0.85)))
+    ex_m = 0.5 * (ear_box[0] + ear_box[2])
+    ey_m = 0.5 * (ear_box[1] + ear_box[3])
+    d.arc([ex_m - r * 0.07, ey_m - r * 0.10, ex_m + r * 0.07, ey_m + r * 0.10], 30, 220, fill=ink_inner, width=max(2, int(lw * 0.5)))
+    if view == "front":
+        r_ear = [cx + r * 0.78, cy - r * 0.02, cx + r * 1.06, cy + r * 0.36]
+        d.ellipse(r_ear, fill=_hex_rgba(spec["skin_palette"]["base"]), outline=ink_outer, width=max(2, int(lw * 0.85)))
+
+    if expression in ("joyful_laugh", "warm_relief_smile", "strained_exertion", "neutral_attentive"):
+        for ex, ey, sc in eye_positions:
+            d.ellipse([ex - r * 0.20 * sc, ey + r * 0.17, ex + r * 0.20 * sc, ey + r * 0.33], fill=blush_col)
+
+    for idx_e, (ex, ey, sc) in enumerate(eye_positions):
+        ew = r * 0.22 * sc
+        eh = r * (0.29 if expression == "wide_shock" else (0.18 if expression == "deadpan_disbelief" else 0.22))
+        if expression == "joyful_laugh":
+            # Bold happy tilted crescent/oval eyes (Ref 3 expressive clarity)
+            _draw_tapered_stroke(
+                d,
+                [(ex - ew * 1.08, ey + r * 0.06), (ex, ey - r * 0.12), (ex + ew * 1.08, ey + r * 0.05)],
+                ink_outer,
+                lw * 1.28,
+            )
+        elif expression == "warm_relief_smile":
+            d.ellipse([ex - ew, ey - eh * 0.88, ex + ew, ey + eh * 0.88], fill=white, outline=ink_outer, width=max(2, int(lw * 0.85)))
+            pr = ew * 0.56
+            px_off = ew * 0.14 if view in ("three_quarter", "profile") else 0.0
+            d.ellipse([ex + px_off - pr, ey - pr * 0.85, ex + px_off + pr, ey + pr * 0.95], fill=ink_outer)
+            hl_r = max(2.0, pr * 0.38)
+            d.ellipse([ex + px_off - pr * 0.52, ey - pr * 0.58, ex + px_off - pr * 0.52 + hl_r * 2, ey - pr * 0.58 + hl_r * 2], fill=(255, 255, 255, 255))
+            _draw_tapered_stroke(d, [(ex - ew * 1.08, ey - eh * 0.28), (ex, ey - eh * 0.96), (ex + ew * 1.08, ey - eh * 0.22)], ink_outer, lw * 1.18)
+        elif expression == "strained_exertion":
+            d.ellipse([ex - ew, ey - eh * 0.62, ex + ew, ey + eh * 0.62], fill=white, outline=ink_outer, width=max(2, int(lw * 0.82)))
+            d.ellipse([ex - ew * 0.38, ey - eh * 0.34, ex + ew * 0.38, ey + eh * 0.34], fill=ink_outer)
+            _draw_tapered_stroke(d, [(ex - ew * 1.12, ey + eh * 0.48), (ex, ey + eh * 0.08), (ex + ew * 1.12, ey + eh * 0.52)], ink_outer, lw * 1.02)
+        else:
+            d.ellipse([ex - ew, ey - eh, ex + ew, ey + eh], fill=white, outline=ink_outer, width=max(2, int(lw * 0.86)))
+            pr = ew * (0.32 if expression == "wide_shock" else (0.44 if expression == "deadpan_disbelief" else 0.56))
+            px_off = ew * 0.16 if view in ("three_quarter", "profile") else 0.0
+            py_off = eh * 0.18 if expression == "deadpan_disbelief" else 0.0
+            d.ellipse([ex + px_off - pr, ey + py_off - pr, ex + px_off + pr, ey + py_off + pr], fill=ink_outer)
+            hl_r = max(2.2, pr * 0.38)
+            d.ellipse([ex + px_off - pr * 0.55, ey + py_off - pr * 0.65, ex + px_off - pr * 0.55 + hl_r * 2, ey + py_off - pr * 0.65 + hl_r * 2], fill=(255, 255, 255, 255))
+            if expression == "deadpan_disbelief":
+                d.chord([ex - ew * 1.04, ey - eh * 1.04, ex + ew * 1.04, ey + eh * 0.68], start=182, end=358, fill=skin_sh, outline=ink_outer, width=max(2, int(lw * 0.82)))
+            else:
+                _draw_tapered_stroke(d, [(ex - ew * 1.08, ey - eh * 0.32), (ex, ey - eh * 1.06), (ex + ew * 1.08, ey - eh * 0.28)], ink_outer, lw * 1.22)
+
+        side_sign = -1 if idx_e == 0 else 1
+        by = ey - eh - r * (0.17 if expression == "wide_shock" else 0.095)
+        if expression == "wide_shock":
+            b_pts = [(ex - ew * 1.12, by + r * 0.06), (ex, by - r * 0.12), (ex + ew * 1.12, by + r * 0.04)]
+        elif expression in ("determined_focus", "strained_exertion"):
+            in_drop = r * 0.10
+            b_pts = [(ex - ew * 1.12, by - side_sign * in_drop), (ex, by + r * 0.02), (ex + ew * 1.12, by + side_sign * in_drop)]
+        elif expression == "deadpan_disbelief":
+            lift = -r * 0.09 if idx_e == 1 else r * 0.02
+            b_pts = [(ex - ew * 1.06, by + lift), (ex, by + lift * 0.9), (ex + ew * 1.06, by + lift)]
+        elif expression == "warm_relief_smile":
+            b_pts = [(ex - ew * 1.06, by - side_sign * r * 0.03), (ex, by - r * 0.06), (ex + ew * 1.06, by + side_sign * r * 0.04)]
+        else:
+            b_pts = [(ex - ew * 1.06, by + r * 0.02), (ex, by - r * 0.05), (ex + ew * 1.06, by + r * 0.02)]
+        _draw_tapered_stroke(d, b_pts, hair_col, lw * 1.38, taper_ends=True)
+
+        if spec.get("has_glasses"):
+            d.rounded_rectangle([ex - ew * 1.44, ey - eh * 1.32, ex + ew * 1.44, ey + eh * 1.32], radius=max(4, int(r * 0.11)), outline=_hex_rgba("#2B3544"), width=max(2, int(lw * 0.65)))
+
+    if view == "profile":
+        d.polygon(nose_pts, fill=_hex_rgba(spec["skin_palette"]["base"]))
+        _draw_tapered_stroke(d, nose_pts, ink_outer, lw * 0.96, taper_ends=False)
+    else:
+        d.polygon([nose_pts[0], nose_pts[1], (nose_pts[2][0], nose_pts[1][1] + r * 0.05)], fill=skin_sh)
+        _draw_tapered_stroke(d, nose_pts, ink_inner, lw * 0.80, taper_ends=True)
+
+    my = cy + r * 0.42
+    mw = r * (0.24 if view == "profile" else 0.36)
+    if expression == "joyful_laugh":
+        # Big emotive D-shaped laugh mouth with white tooth block & coral tongue plane!
+        m_poly = _sample_quad_bezier((mouth_cx - mw * 1.05, my - r * 0.08), (mouth_cx, my - r * 0.12), (mouth_cx + mw * 1.05, my - r * 0.08), steps=8)
+        m_poly += _sample_quad_bezier((mouth_cx + mw * 1.05, my - r * 0.08), (mouth_cx, my + r * 0.44), (mouth_cx - mw * 1.05, my - r * 0.08), steps=12)
+        d.polygon(m_poly, fill=mouth_dark)
+        d.rounded_rectangle([mouth_cx - mw * 0.56, my - r * 0.09, mouth_cx + mw * 0.56, my + r * 0.03], radius=max(2, int(r * 0.03)), fill=white, outline=ink_inner, width=max(1, int(lw * 0.45)))
+        d.pieslice([mouth_cx - mw * 0.64, my + r * 0.05, mouth_cx + mw * 0.64, my + r * 0.30], 0, 180, fill=tongue_col)
+        _draw_tapered_stroke(d, m_poly + [m_poly[0]], ink_outer, lw * 0.92, taper_ends=False)
+    elif expression == "wide_shock":
+        d.ellipse([mouth_cx - mw * 0.68, my - r * 0.14, mouth_cx + mw * 0.68, my + r * 0.25], fill=mouth_dark, outline=ink_outer, width=max(2, int(lw * 0.88)))
+        d.rectangle([mouth_cx - mw * 0.42, my - r * 0.12, mouth_cx + mw * 0.42, my - r * 0.04], fill=white)
+        d.pieslice([mouth_cx - mw * 0.48, my + r * 0.04, mouth_cx + mw * 0.48, my + r * 0.24], 0, 180, fill=tongue_col)
+    elif expression == "strained_exertion":
+        d.rounded_rectangle([mouth_cx - mw * 0.96, my - r * 0.09, mouth_cx + mw * 0.96, my + r * 0.12], radius=max(3, int(r * 0.06)), fill=white, outline=ink_outer, width=max(2, int(lw * 0.86)))
+        d.line([(mouth_cx - mw * 0.88, my + r * 0.015), (mouth_cx + mw * 0.88, my + r * 0.015)], fill=ink_inner, width=max(2, int(lw * 0.55)))
+        sx_sw = cx - r * 0.60 if view != "profile" else cx + r * 0.05
+        sy_sw = cy - r * 0.28
+        d.polygon([(sx_sw, sy_sw - r * 0.15), (sx_sw + r * 0.08, sy_sw + r * 0.04), (sx_sw - r * 0.08, sy_sw + r * 0.04)], fill=(168, 226, 252, 238), outline=ink_inner)
+    elif expression == "warm_relief_smile":
+        _draw_tapered_stroke(
+            d,
+            _sample_quad_bezier((mouth_cx - mw * 0.85, my - r * 0.04), (mouth_cx, my + r * 0.18), (mouth_cx + mw * 0.85, my - r * 0.05), steps=10),
+            ink_outer,
+            lw * 1.02,
+        )
+    elif expression == "determined_focus":
+        _draw_tapered_stroke(d, [(mouth_cx - mw * 0.82, my + r * 0.04), (mouth_cx, my - r * 0.04), (mouth_cx + mw * 0.76, my + r * 0.01)], ink_outer, lw * 1.02)
+    elif expression == "deadpan_disbelief":
+        # Subtle Ref-2 quirked disbelief mouth + tiny tongue hint
+        _draw_tapered_stroke(d, [(mouth_cx - mw * 0.72, my + r * 0.04), (mouth_cx, my - r * 0.03), (mouth_cx + mw * 0.72, my + r * 0.05)], ink_outer, lw * 1.0)
+        d.pieslice([mouth_cx - mw * 0.24, my - r * 0.01, mouth_cx + mw * 0.18, my + r * 0.14], 0, 180, fill=tongue_col, outline=ink_outer, width=max(1, int(lw * 0.55)))
+    else:
+        _draw_tapered_stroke(
+            d,
+            _sample_quad_bezier((mouth_cx - mw * 0.74, my - r * 0.02), (mouth_cx, my + r * 0.10), (mouth_cx + mw * 0.76, my - r * 0.03), steps=10),
+            ink_outer,
+            lw * 0.98,
+        )
+
+
+def _draw_character_figure_v2_rgba(
+    spec: Dict[str, Any],
+    view: str = "three_quarter",
+    expression: str = "neutral_attentive",
+    hand_pose: str = "relaxed",
+    canvas_size: Tuple[int, int] = (720, 960),
+    supersample: int = 2,
+) -> Image.Image:
+    """
+    Reference-grounded `modern_expressive_2d.v2` full-body vector/cel character builder:
+      - Curved Bezier-spined limbs with rounded elbow/knee volume and sleeve-to-wrist taper
+      - Differentiated sculpted palms + opposable thumb + 4 curved tapered fingers
+      - Multi-layer garments (flared windbreaker/overshirt/coat/robe over inner collar/tee + draped trousers/skirt)
+      - 3–4 value planes (lit base, curved volumetric cel shadow, warm sunlight rim, interior fold strokes)
+      - 4 genuinely distinct authored views (`front`, `three_quarter`, `profile`, `rear_three_quarter`)
+    """
+    W = canvas_size[0] * supersample
+    H = canvas_size[1] * supersample
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img, "RGBA")
+
+    ink_outer = _hex_rgba(spec["ink_outer_hex"])
+    ink_inner = _hex_rgba(spec["ink_inner_hex"])
+    skin_base = _hex_rgba(spec["skin_palette"]["base"])
+    skin_sh = _hex_rgba(spec["skin_palette"]["shadow"])
+    skin_rim = _hex_rgba(spec["skin_palette"]["rim"])
+    hair_base = _hex_rgba(spec["hair_palette"]["base"])
+    hair_sh = _hex_rgba(spec["hair_palette"]["shadow"])
+    hair_hl = _hex_rgba(spec["hair_palette"]["highlight"])
+
+    wd = spec["wardrobe"]
+    prim = _hex_rgba(wd["primary_hex"])
+    prim_sh = _hex_rgba(wd["primary_shadow_hex"])
+    prim_rim = _hex_rgba(wd["primary_rim_hex"])
+    sec = _hex_rgba(wd["secondary_hex"])
+    sec_sh = _hex_rgba(wd["secondary_shadow_hex"])
+    pants_col = _hex_rgba(wd.get("pants_hex") or "#3B4F6B")
+    pants_sh = _hex_rgba(wd.get("pants_shadow_hex") or _shade_hex(wd.get("pants_hex") or "#3B4F6B", 0.72, cool_shift=10))
+    pants_rim = _hex_rgba(_shade_hex(wd.get("pants_hex") or "#3B4F6B", 1.22, cool_shift=-6))
+    trim = _hex_rgba(wd["trim_hex"])
+    acc = _hex_rgba(wd["accessory_hex"])
+
+    char_h = H * 0.79
+    foot_y = H * 0.905
+    cx = W * 0.50
+    lw_outer = max(4.5, char_h * 0.0138)
+    lw_inner = lw_outer * 0.44
+
+    props = spec["proportions"]
+    head_r = char_h * float(props["head_to_height_ratio"]) * 0.53
+    sh_half = head_r * float(props["shoulder_to_head_width"]) * (
+        0.56 if view == "profile" else (0.86 if view in ("three_quarter", "rear_three_quarter") else 1.0)
+    )
+    hip_half = sh_half * (0.78 if view == "profile" else 0.82)
+    head_cy = foot_y - char_h + head_r * 1.12
+    neck_y = head_cy + head_r * 0.90
+    torso_top = neck_y + head_r * 0.16
+    pelvis_y = torso_top + char_h * float(props["torso_to_height_ratio"])
+
+    # Soft directional ground contact shadow (Ref 2 grounding)
+    d.ellipse(
+        [cx - sh_half * 1.22, foot_y - head_r * 0.22, cx + sh_half * 1.32, foot_y + head_r * 0.25],
+        fill=(26, 20, 18, 96),
+    )
+
+    h_style = str(spec["hair_style"])
+    gk = str(wd["garment_kind"])
+
+    # Back hair silhouette ONLY for bob / long / updo styles (keeps Bao's short tousled hairstyle distinct!)
+    if view != "rear_three_quarter" and any(k in h_style for k in ("bob", "long", "updo")):
+        hb_r_lim = head_r * (0.45 if view == "profile" else 1.08)
+        hb_poly = _sample_quad_bezier((cx - head_r * 1.10, head_cy - head_r * 0.25), (cx - head_r * 1.24, head_cy + head_r * 0.66), (cx - head_r * 0.74, head_cy + head_r * 0.98), steps=10)
+        hb_poly += _sample_quad_bezier((cx + hb_r_lim * 0.72, head_cy + head_r * 0.98), (cx + hb_r_lim * 1.12, head_cy + head_r * 0.62), (cx + hb_r_lim, head_cy - head_r * 0.25), steps=10)
+        d.polygon(hb_poly, fill=hair_sh)
+        _draw_tapered_stroke(d, hb_poly + [hb_poly[0]], ink_outer, lw_outer * 0.92, taper_ends=False)
+
+    # Flowing neck scarf / hood / capelet back layer
+    if "scarf" in " ".join(wd.get("accessories") or []) or "tunic" in gk:
+        scarf_dir = -1 if view in ("three_quarter", "profile") else 1
+        s_pts = _sample_quad_bezier((cx - scarf_dir * sh_half * 0.2, torso_top + head_r * 0.08), (cx + scarf_dir * sh_half * 0.95, torso_top + head_r * 0.18), (cx + scarf_dir * sh_half * 1.50, torso_top + head_r * 0.65), steps=10)
+        s_pts += _sample_quad_bezier((cx + scarf_dir * sh_half * 1.30, torso_top + head_r * 1.32), (cx + scarf_dir * sh_half * 0.55, torso_top + head_r * 1.02), (cx - scarf_dir * sh_half * 0.12, torso_top + head_r * 0.70), steps=10)
+        d.polygon(s_pts, fill=sec)
+        _draw_tapered_stroke(d, s_pts + [s_pts[0]], ink_outer, lw_outer * 0.88, taper_ends=False)
+
+    # Helper: Curved Draped Trouser / Calf Leg + Stylized Sneaker / Sandal
+    leg_offsets = [-head_r * 0.14, head_r * 0.20] if view == "profile" else [-hip_half * 0.52, hip_half * 0.52]
+    is_robed_niche = "roman" in str(spec["niche"]) and ("toga" in gk or "stola" in gk)
+    for li, lx_off in enumerate(leg_offsets):
+        is_far = (li == 1 and view in ("three_quarter", "profile")) or (li == 0 and view == "rear_three_quarter")
+        lx = cx + lx_off
+        ankle_y = foot_y - head_r * 0.24
+        knee_bend_x = lx + (1 if view in ("three_quarter", "profile") else (-0.4 if li == 0 else 0.4)) * head_r * 0.16
+        knee_y = pelvis_y + (ankle_y - pelvis_y) * 0.52
+        is_bare_calf = "roman" in str(spec["niche"]) and not is_robed_niche
+        leg_fill = (skin_sh if is_far else skin_base) if is_bare_calf else (pants_sh if is_far else pants_col)
+        leg_sh_fill = skin_sh if is_bare_calf else pants_sh
+
+        w_hip = head_r * (0.64 if not is_bare_calf else 0.52)
+        w_knee = head_r * (0.60 if not is_bare_calf else 0.44)
+        w_ankle = head_r * (0.44 if not is_bare_calf else 0.32)
+        l_poly, l_left, l_right = _build_curved_tapered_limb_poly((lx, pelvis_y - head_r * 0.08), (knee_bend_x, knee_y), (lx, ankle_y), w_hip, w_knee, w_ankle, steps=14)
+        d.polygon(l_poly, fill=leg_fill)
+        # Inner cel-shadow strip along away side of leg
+        if not is_far:
+            sh_strip = l_right + [(p[0] - w_knee * 0.26, p[1]) for p in reversed(l_right)]
+            d.polygon(sh_strip, fill=leg_sh_fill)
+            rim_strip = l_left[:10] + [(p[0] + w_knee * 0.14, p[1]) for p in reversed(l_left[:10])]
+            if not is_bare_calf:
+                d.polygon(rim_strip, fill=pants_rim)
+        _draw_tapered_stroke(d, l_left, ink_outer, lw_outer * 0.92, taper_ends=False)
+        _draw_tapered_stroke(d, l_right, ink_outer, lw_outer * 0.92, taper_ends=False)
+
+        if not is_bare_calf:
+            # Rolled trouser cuff band + curved knee drape creases
+            d.rounded_rectangle(
+                [lx - w_ankle * 0.62, ankle_y - head_r * 0.16, lx + w_ankle * 0.62, ankle_y + head_r * 0.02],
+                radius=max(3, int(head_r * 0.06)),
+                fill=trim if "cuffed" in wd["footwear"] else leg_sh_fill,
+                outline=ink_outer,
+                width=max(2, int(lw_outer * 0.72)),
+            )
+            _draw_tapered_stroke(d, [(knee_bend_x - w_knee * 0.28, knee_y - head_r * 0.06), (knee_bend_x + w_knee * 0.18, knee_y + head_r * 0.05)], ink_inner, lw_inner, taper_ends=True)
+
+        # Stylized 2D Sneaker / Boot / Sandal with white sole & toe cap
+        toe_dir = 1 if view in ("three_quarter", "profile") else (-1 if view == "rear_three_quarter" else (-1 if li == 0 else 1))
+        shoe_poly = [
+            (lx - w_ankle * 0.60, ankle_y - head_r * 0.04),
+            (lx + w_ankle * 0.60, ankle_y - head_r * 0.04),
+            (lx + toe_dir * w_ankle * 1.48, foot_y - head_r * 0.06),
+            (lx + toe_dir * w_ankle * 1.42, foot_y),
+            (lx - toe_dir * w_ankle * 0.72, foot_y),
+        ]
+        d.polygon(shoe_poly, fill=acc)
+        if "sneaker" in wd["footwear"] or "trainer" in wd["footwear"]:
+            d.line([(lx - toe_dir * w_ankle * 0.68, foot_y - head_r * 0.04), (lx + toe_dir * w_ankle * 1.38, foot_y - head_r * 0.04)], fill=(250, 248, 242, 255), width=max(3, int(lw_outer * 0.75)))
+        _draw_tapered_stroke(d, shoe_poly + [shoe_poly[0]], ink_outer, lw_outer * 0.88, taper_ends=False)
+
+    # Helper: Curved Sleeved Upper Arm + Rounded Elbow + Tapered Forearm + Articulated Hand
+    def _draw_v2_arm(side_idx: int, behind: bool) -> None:
+        dir_x = -1 if side_idx == 0 else 1
+        if view == "profile":
+            dir_x = 1
+        sx = cx + (-sh_half * 0.86 if side_idx == 0 else sh_half * 0.86)
+        if view == "profile":
+            sx = cx + (-head_r * 0.10 if behind else head_r * 0.08)
+        sy = torso_top + head_r * 0.26
+
+        if hand_pose in ("open_reach", "locked_grip", "pointing") and not behind:
+            el_pt = (sx + dir_x * head_r * 0.66, sy + head_r * 0.56)
+            wr_pt = (el_pt[0] + dir_x * head_r * 0.74, el_pt[1] - head_r * 0.24)
+        elif hand_pose == "spread_shock":
+            el_pt = (sx + dir_x * head_r * 0.68, sy + head_r * 0.30)
+            wr_pt = (el_pt[0] + dir_x * head_r * 0.34, el_pt[1] - head_r * 0.66)
+        else:
+            el_pt = (sx + dir_x * head_r * 0.42, sy + head_r * 0.84)
+            wr_pt = (el_pt[0] + dir_x * head_r * 0.14, el_pt[1] + head_r * 0.72)
+
+        sleeve_col = prim_sh if behind else prim
+        arm_skin = skin_sh if behind else skin_base
+
+        # Tapered bare forearm emerging from sleeve cuff
+        cuff_anchor = (
+            el_pt[0] + (wr_pt[0] - el_pt[0]) * 0.34,
+            el_pt[1] + (wr_pt[1] - el_pt[1]) * 0.34,
+        )
+        fore_mid = (
+            0.5 * (cuff_anchor[0] + wr_pt[0]) + dir_x * head_r * 0.05,
+            0.5 * (cuff_anchor[1] + wr_pt[1]) + head_r * 0.04,
+        )
+        f_poly, f_l, f_r = _build_curved_tapered_limb_poly(cuff_anchor, fore_mid, wr_pt, head_r * 0.38, head_r * 0.32, head_r * 0.23, steps=10)
+        d.polygon(f_poly, fill=arm_skin)
+        _draw_tapered_stroke(d, f_l, ink_outer, lw_outer * 0.84, taper_ends=False)
+        _draw_tapered_stroke(d, f_r, ink_outer, lw_outer * 0.84, taper_ends=False)
+
+        # Voluminous curved jacket/robe sleeve wrapping shoulder -> rounded elbow -> clean perpendicular cuff!
+        sl_poly, sl_l, sl_r = _build_curved_tapered_limb_poly((sx, sy), el_pt, cuff_anchor, head_r * 0.64, head_r * 0.58, head_r * 0.48, steps=12)
+        d.polygon(sl_poly, fill=sleeve_col)
+        # Clean cuff trim strictly along the sleeve mouth (inset by 15% so it never pokes outside the contour!)
+        c_p0 = (sl_l[-1][0] * 0.82 + sl_r[-1][0] * 0.18, sl_l[-1][1] * 0.82 + sl_r[-1][1] * 0.18)
+        c_p1 = (sl_r[-1][0] * 0.82 + sl_l[-1][0] * 0.18, sl_r[-1][1] * 0.82 + sl_l[-1][1] * 0.18)
+        _draw_tapered_stroke(d, [c_p0, c_p1], trim, lw_outer * 0.95, taper_ends=False)
+        _draw_tapered_stroke(d, sl_poly + [sl_poly[0]], ink_outer, lw_outer * 0.90, taper_ends=False)
+        _draw_tapered_stroke(d, [(el_pt[0] - head_r * 0.10, el_pt[1] - head_r * 0.05), (el_pt[0] + head_r * 0.08, el_pt[1] + head_r * 0.06)], ink_inner, lw_inner, taper_ends=True)
+
+        # Articulated sculpted palm + thumb + 4 curved fingers
+        _draw_v2_articulated_hand(
+            d,
+            wr_pt,
+            el_pt,
+            head_r,
+            hand_pose if not behind else "relaxed",
+            arm_skin,
+            skin_sh,
+            ink_outer,
+            ink_inner,
+            lw_outer,
+            dir_x,
+        )
+
+    if view in ("three_quarter", "profile"):
+        _draw_v2_arm(1, behind=True)
+    elif view == "rear_three_quarter":
+        _draw_v2_arm(0, behind=True)
+        _draw_v2_arm(1, behind=True)
+
+    # Multi-Layer Outer + Inner Garment Torso (Flared curved Bezier silhouette + 3-8 cloth folds)
+    hem_drop = head_r * (0.88 if any(k in gk for k in ("tunic", "stola", "coat", "smock", "toga")) else 0.32)
+    hem_y = pelvis_y + hem_drop
+    flare = 1.24 if any(k in gk for k in ("windbreaker", "parka", "coat", "smock", "tunic", "stola")) else 1.12
+
+    left_seam = _sample_quad_bezier((cx - sh_half, torso_top + head_r * 0.06), (cx - sh_half * 0.96, 0.5 * (torso_top + hem_y)), (cx - hip_half * flare, hem_y), steps=12)
+    bot_hem = _sample_quad_bezier((cx - hip_half * flare, hem_y), (cx, hem_y + head_r * 0.14), (cx + hip_half * flare, hem_y), steps=12)
+    right_seam = _sample_quad_bezier((cx + hip_half * flare, hem_y), (cx + sh_half * 0.96, 0.5 * (torso_top + hem_y)), (cx + sh_half, torso_top + head_r * 0.06), steps=12)
+    torso_poly = left_seam + bot_hem[1:] + right_seam[1:]
+    d.polygon(torso_poly, fill=prim)
+
+    # Shaped volumetric cel-shadow & key-light rim planes on outer garment
+    sh_torso = [
+        (cx + sh_half * 0.18, torso_top + head_r * 0.06),
+        (cx + sh_half, torso_top + head_r * 0.06),
+        (cx + hip_half * flare, hem_y),
+        (cx + hip_half * 0.14, hem_y + head_r * 0.06),
+    ]
+    d.polygon(sh_torso, fill=prim_sh)
+    rim_torso = left_seam[:10] + [(p[0] + head_r * 0.16, p[1]) for p in reversed(left_seam[:10])]
+    d.polygon(rim_torso, fill=prim_rim)
+
+    if view != "rear_three_quarter":
+        open_jacket = any(k in gk for k in ("windbreaker", "parka", "overshirt", "cardigan", "coat", "blazer"))
+        if open_jacket:
+            # Inner crewneck/striped tee panel + open lapels + zipper/buttons + side pockets!
+            shift_c = head_r * (0.14 if view == "three_quarter" else (0.34 if view == "profile" else 0.0))
+            in_w = sh_half * (0.24 if view == "profile" else 0.34)
+            inner_panel = [
+                (cx + shift_c - in_w, torso_top + head_r * 0.05),
+                (cx + shift_c + in_w, torso_top + head_r * 0.05),
+                (cx + shift_c + in_w * 0.92, pelvis_y + head_r * 0.12),
+                (cx + shift_c - in_w * 0.92, pelvis_y + head_r * 0.12),
+            ]
+            d.polygon(inner_panel, fill=sec)
+            if "striped" in gk or "striped_inner_tee" in (wd.get("accessories") or []):
+                for st_i in range(4):
+                    sy_st = torso_top + head_r * (0.28 + st_i * 0.28)
+                    if sy_st < pelvis_y + head_r * 0.06:
+                        d.line([(cx + shift_c - in_w * 0.90, sy_st), (cx + shift_c + in_w * 0.90, sy_st)], fill=trim, width=max(3, int(lw_inner * 1.35)))
+            # Folded jacket collar lapels
+            lapel_l = [(cx + shift_c - in_w, torso_top + head_r * 0.04), (cx + shift_c - in_w * 1.75, torso_top + head_r * 0.42), (cx + shift_c - in_w * 0.95, torso_top + head_r * 0.68)]
+            lapel_r = [(cx + shift_c + in_w, torso_top + head_r * 0.04), (cx + shift_c + in_w * 1.75, torso_top + head_r * 0.42), (cx + shift_c + in_w * 0.95, torso_top + head_r * 0.68)]
+            d.polygon(lapel_l, fill=trim)
+            _draw_tapered_stroke(d, lapel_l + [lapel_l[0]], ink_outer, lw_inner * 1.25, taper_ends=False)
+            if view != "profile":
+                d.polygon(lapel_r, fill=trim)
+                _draw_tapered_stroke(d, lapel_r + [lapel_r[0]], ink_outer, lw_inner * 1.25, taper_ends=False)
+            _draw_tapered_stroke(d, [(cx + shift_c - in_w, torso_top + head_r * 0.06), (cx + shift_c - in_w * 0.92, hem_y)], ink_outer, lw_inner * 1.35, taper_ends=False)
+            if view != "profile":
+                _draw_tapered_stroke(d, [(cx + shift_c + in_w, torso_top + head_r * 0.06), (cx + shift_c + in_w * 0.92, hem_y)], ink_outer, lw_inner * 1.35, taper_ends=False)
+            # Angled welt pockets
+            _draw_tapered_stroke(d, [(cx - sh_half * 0.68, pelvis_y - head_r * 0.22), (cx - sh_half * 0.42, pelvis_y + head_r * 0.04)], ink_inner, lw_inner * 1.2, taper_ends=True)
+        else:
+            # Overlapping cross-collar / apron / belt sash with curved fabric folds (Ref 2 & 3 garment craft)
+            _draw_tapered_stroke(d, [(cx - sh_half * 0.36, torso_top + head_r * 0.04), (cx + head_r * 0.14, torso_top + head_r * 0.72)], trim, lw_outer * 1.1, taper_ends=False)
+            _draw_tapered_stroke(d, [(cx + sh_half * 0.36, torso_top + head_r * 0.04), (cx - head_r * 0.06, torso_top + head_r * 0.58)], trim, lw_outer * 1.1, taper_ends=False)
+            d.rounded_rectangle([cx - hip_half * 1.04, pelvis_y - head_r * 0.16, cx + hip_half * 1.04, pelvis_y + head_r * 0.08], radius=max(4, int(head_r * 0.07)), fill=acc, outline=ink_outer, width=max(2, int(lw_inner * 1.2)))
+    else:
+        # Rear 3/4 back yoke seam & center pleat (authentic back garment design!)
+        _draw_tapered_stroke(d, [(cx - sh_half * 0.88, torso_top + head_r * 0.42), (cx, torso_top + head_r * 0.52), (cx + sh_half * 0.88, torso_top + head_r * 0.42)], ink_inner, lw_inner * 1.2, taper_ends=False)
+        _draw_tapered_stroke(d, [(cx - head_r * 0.06, torso_top + head_r * 0.52), (cx - head_r * 0.10, hem_y - head_r * 0.08)], ink_inner, lw_inner * 1.1, taper_ends=True)
+
+    # Interior curved cloth tension folds (4 distinct crease strokes)
+    for fx0, fy0, fx1, fy1 in [
+        (-0.56, 0.35, -0.68, 0.82),
+        (0.48, 0.38, 0.62, 0.84),
+        (-0.42, 0.68, -0.22, 0.90),
+        (0.28, 0.66, 0.46, 0.88),
+    ]:
+        _draw_tapered_stroke(
+            d,
+            _sample_quad_bezier(
+                (cx + sh_half * fx0, torso_top + (hem_y - torso_top) * fy0),
+                (cx + sh_half * ((fx0 + fx1) * 0.52), torso_top + (hem_y - torso_top) * ((fy0 + fy1) * 0.5 + 0.04)),
+                (cx + hip_half * fx1, torso_top + (hem_y - torso_top) * fy1),
+                steps=8,
+            ),
+            ink_inner,
+            lw_inner,
+            taper_ends=True,
+        )
+
+    _draw_tapered_stroke(d, bot_hem, trim, lw_outer * 0.95, taper_ends=False)
+    _draw_tapered_stroke(d, torso_poly + [torso_poly[0]], ink_outer, lw_outer, taper_ends=False)
+
+    # Near arm(s) in front of torso
+    if view != "rear_three_quarter":
+        _draw_v2_arm(0, behind=False)
+    if view == "front":
+        _draw_v2_arm(1, behind=False)
+
+    # Connected Neck Cylinder with cast chin shadow
+    nw = head_r * 0.31
+    d.rounded_rectangle([cx - nw, neck_y - head_r * 0.24, cx + nw, torso_top + head_r * 0.16], radius=int(nw * 0.5), fill=skin_sh, outline=ink_outer, width=int(lw_outer * 0.84))
+
+    # Sculpted Organic Head Silhouette (distinct cheek/jaw per archetype + curved 35% cel shadow + warm rim!)
+    c_shape = str(props.get("cranium_shape") or "rounded_tapered_jaw")
+    cheek_bulge = 1.06 if "soft_cheek" in c_shape or "round" in c_shape else 0.94
+    jaw_taper = 0.72 if "tapered" in c_shape or "angular" in c_shape else 0.86
+
+    if view == "profile":
+        head_poly = (
+            _sample_quad_bezier((cx - head_r * 0.88, head_cy + head_r * 0.10), (cx - head_r * 0.94, head_cy - head_r * 0.95), (cx + head_r * 0.10, head_cy - head_r * 1.02), steps=10)
+            + _sample_quad_bezier((cx + head_r * 0.10, head_cy - head_r * 1.02), (cx + head_r * 0.86, head_cy - head_r * 0.92), (cx + head_r * 0.84, head_cy - head_r * 0.12), steps=8)
+            + _sample_quad_bezier((cx + head_r * 0.84, head_cy - head_r * 0.12), (cx + head_r * 0.92, head_cy + head_r * 0.62), (cx + head_r * 0.34, head_cy + head_r * 0.96), steps=8)
+            + _sample_quad_bezier((cx + head_r * 0.34, head_cy + head_r * 0.96), (cx - head_r * 0.62, head_cy + head_r * 0.86), (cx - head_r * 0.88, head_cy + head_r * 0.10), steps=8)
+        )
+    else:
+        r_right = head_r * (cheek_bulge * 0.96 if view == "three_quarter" else 0.96)
+        r_left = head_r * (0.92 if view == "three_quarter" else 0.96)
+        head_poly = (
+            _sample_quad_bezier((cx - r_left, head_cy - head_r * 0.08), (cx - r_left * 0.95, head_cy - head_r * 1.02), (cx, head_cy - head_r * 1.02), steps=10)
+            + _sample_quad_bezier((cx, head_cy - head_r * 1.02), (cx + r_right * 0.96, head_cy - head_r * 1.00), (cx + r_right, head_cy - head_r * 0.04), steps=10)
+            + _sample_quad_bezier((cx + r_right, head_cy - head_r * 0.04), (cx + r_right * jaw_taper, head_cy + head_r * 0.94), (cx + head_r * 0.06, head_cy + head_r * 0.98), steps=10)
+            + _sample_quad_bezier((cx + head_r * 0.06, head_cy + head_r * 0.98), (cx - r_left * jaw_taper, head_cy + head_r * 0.94), (cx - r_left, head_cy - head_r * 0.08), steps=10)
+        )
+
+    d.polygon(head_poly, fill=skin_base)
+    # Curved crescent core shadow wrapping lower/away side of head (Ref 1/2/3 lighting volume)
+    sh_crescent = (
+        _sample_quad_bezier((cx - head_r * 0.58, head_cy + head_r * 0.72), (cx - head_r * 0.92, head_cy + head_r * 0.15), (cx - head_r * 0.72, head_cy - head_r * 0.58), steps=10)
+        + _sample_quad_bezier((cx - head_r * 0.72, head_cy - head_r * 0.58), (cx - head_r * 0.52, head_cy + head_r * 0.35), (cx + head_r * 0.32, head_cy + head_r * 0.88), steps=10)
+    )
+    d.polygon(sh_crescent, fill=skin_sh)
+    # Warm sunlit rim highlight along upper-right lit temple/cheek
+    _draw_tapered_stroke(
+        d,
+        _sample_quad_bezier((cx + head_r * 0.25, head_cy - head_r * 0.90), (cx + head_r * 0.88, head_cy - head_r * 0.55), (cx + head_r * 0.84, head_cy + head_r * 0.22), steps=10),
+        skin_rim,
+        lw_outer * 0.95,
+        taper_ends=True,
+    )
+    _draw_tapered_stroke(d, head_poly + [head_poly[0]], ink_outer, lw_outer, taper_ends=False)
+
+    # Facial features
+    _draw_v2_expression_face(d, cx, head_cy, head_r, spec, expression, view, ink_outer, ink_inner, lw_outer)
+
+    # Distinct Multi-Lock Hair Silhouettes + Hair Clip / Kerchief
+    if view == "rear_three_quarter":
+        is_short_rear = any(k in h_style for k in ("waves", "curly", "tuft"))
+        nape_y = head_cy + head_r * (0.36 if is_short_rear else 0.78)
+        top_lift = 1.28 if is_short_rear else 1.14
+        rear_hair = (
+            _sample_quad_bezier((cx - head_r * 1.04, nape_y), (cx - head_r * 1.12, head_cy - head_r * 1.08), (cx, head_cy - head_r * top_lift), steps=10)
+            + _sample_quad_bezier((cx, head_cy - head_r * top_lift), (cx + head_r * 1.02, head_cy - head_r * 1.02), (cx + head_r * 0.60, head_cy + head_r * 0.34), steps=10)
+            + _sample_quad_bezier((cx + head_r * 0.60, head_cy + head_r * 0.34), (cx - head_r * 0.15, nape_y + head_r * 0.10), (cx - head_r * 1.04, nape_y), steps=10)
+        )
+        d.polygon(rear_hair, fill=hair_base)
+        _draw_tapered_stroke(d, [(cx - head_r * 0.55, head_cy - head_r * 0.72), (cx + head_r * 0.35, head_cy - head_r * 0.65)], hair_hl, lw_outer * 1.3, taper_ends=True)
+        _draw_tapered_stroke(d, rear_hair + [rear_hair[0]], ink_outer, lw_outer * 0.95, taper_ends=False)
+    elif "bob" in h_style:
+        # Mina's distinctive asymmetric swept bangs + side bob locks + ochre hair clip!
+        r_front_x = head_r * (0.72 if view == "profile" else 1.02)
+        r_front_y = head_cy + head_r * (-0.36 if view == "profile" else 0.08)
+        hair_cap = [
+            (cx - head_r * 1.04, head_cy + head_r * 0.18),
+            (cx - head_r * 1.02, head_cy - head_r * 0.76),
+            (cx - head_r * 0.48, head_cy - head_r * 1.18),
+            (cx + head_r * 0.38, head_cy - head_r * 1.16),
+            (cx + head_r * 0.94, head_cy - head_r * 0.72),
+            (cx + r_front_x, r_front_y),
+            (cx + head_r * 0.66, head_cy - head_r * 0.44),
+            (cx + head_r * 0.18, head_cy - head_r * 0.36),
+            (cx - head_r * 0.12, head_cy - head_r * 0.56),
+            (cx - head_r * 0.66, head_cy - head_r * 0.32),
+        ]
+        d.polygon(hair_cap, fill=hair_base)
+        _draw_tapered_stroke(d, [(cx - head_r * 0.54, head_cy - head_r * 0.88), (cx + head_r * 0.12, head_cy - head_r * 0.96), (cx + head_r * 0.62, head_cy - head_r * 0.68)], hair_hl, lw_outer * 1.25, taper_ends=True)
+        _draw_tapered_stroke(d, hair_cap + [hair_cap[0]], ink_outer, lw_outer * 0.94, taper_ends=False)
+        d.rounded_rectangle([cx - head_r * 0.78, head_cy - head_r * 0.46, cx - head_r * 0.42, head_cy - head_r * 0.30], radius=max(3, int(head_r * 0.06)), fill=acc, outline=ink_outer, width=max(2, int(lw_inner * 1.1)))
+    elif "waves" in h_style or "curly" in h_style:
+        # Bao's taller tousled layered crown waves (short clean temples, zero bob cape!)
+        r_temple_x = head_r * (0.76 if view == "profile" else 0.95)
+        hair_cap = [
+            (cx - head_r * 0.98, head_cy - head_r * 0.08),
+            (cx - head_r * 0.98, head_cy - head_r * 0.88),
+            (cx - head_r * 0.44, head_cy - head_r * 1.36),
+            (cx - head_r * 0.08, head_cy - head_r * 1.16),
+            (cx + head_r * 0.38, head_cy - head_r * 1.40),
+            (cx + head_r * 0.90, head_cy - head_r * 0.90),
+            (cx + r_temple_x, head_cy - head_r * 0.42),
+            (cx + head_r * 0.44, head_cy - head_r * 0.66),
+            (cx - head_r * 0.18, head_cy - head_r * 0.58),
+            (cx - head_r * 0.62, head_cy - head_r * 0.48),
+        ]
+        d.polygon(hair_cap, fill=hair_base)
+        _draw_tapered_stroke(d, [(cx - head_r * 0.46, head_cy - head_r * 0.98), (cx + head_r * 0.38, head_cy - head_r * 1.04)], hair_hl, lw_outer * 1.2, taper_ends=True)
+        _draw_tapered_stroke(d, hair_cap + [hair_cap[0]], ink_outer, lw_outer * 0.94, taper_ends=False)
+    else:
+        hair_cap = [
+            (cx - head_r * 0.98, head_cy - head_r * 0.18),
+            (cx - head_r * 0.82, head_cy - head_r * 1.08),
+            (cx + head_r * 0.18, head_cy - head_r * 1.24),
+            (cx + head_r * 0.92, head_cy - head_r * 0.86),
+            (cx + head_r * 0.98, head_cy - head_r * 0.34),
+            (cx + head_r * 0.36, head_cy - head_r * 0.62),
+            (cx - head_r * 0.28, head_cy - head_r * 0.54),
+        ]
+        d.polygon(hair_cap, fill=hair_base)
+        _draw_tapered_stroke(d, [(cx - head_r * 0.52, head_cy - head_r * 0.92), (cx + head_r * 0.08, head_cy - head_r * 1.04), (cx + head_r * 0.56, head_cy - head_r * 0.78)], hair_hl, lw_outer * 1.2, taper_ends=True)
+        _draw_tapered_stroke(d, hair_cap + [hair_cap[0]], ink_outer, lw_outer * 0.92, taper_ends=False)
+        if "updo" in h_style:
+            d.ellipse([cx - head_r * 0.45, head_cy - head_r * 1.48, cx + head_r * 0.25, head_cy - head_r * 0.96], fill=hair_base, outline=ink_outer, width=int(lw_outer * 0.9))
+            d.polygon([(cx - head_r * 0.96, head_cy - head_r * 0.36), (cx + head_r * 0.88, head_cy - head_r * 0.56), (cx + head_r * 0.92, head_cy - head_r * 0.34), (cx - head_r * 0.92, head_cy - head_r * 0.14)], fill=sec, outline=ink_outer)
+
+    if supersample > 1:
+        img = img.resize(canvas_size, Image.Resampling.LANCZOS)
+    return img
 
 
 def draw_character_figure_rgba(
@@ -613,7 +1422,18 @@ def draw_character_figure_rgba(
       - 3-band cel shading (base + cool core shadow + warm rim light)
       - True geometric projection for `front`, `three_quarter`, `profile`, and `rear_three_quarter`
       - Articulated hands (`relaxed`, `open_reach`, `locked_grip`, `spread_shock`, `pointing`)
+    Dispatches opt-in `modern_expressive_2d.v2` characters to `_draw_character_figure_v2_rgba`
+    while keeping `v1` pixel-identical for historical KH-01 baselines.
     """
+    if str(spec.get("style_id") or "").endswith(".v2"):
+        return _draw_character_figure_v2_rgba(
+            spec,
+            view=view,
+            expression=expression,
+            hand_pose=hand_pose,
+            canvas_size=canvas_size,
+            supersample=supersample,
+        )
     W = canvas_size[0] * supersample
     H = canvas_size[1] * supersample
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -1021,7 +1841,9 @@ def generate_character_design(
     Generate original multilayer editable SVG + per-view and per-expression RGBA plates
     for `spec`, recording cryptographic SHA-256 provenance.
     """
-    style = style_instance or resolve_visual_style("", niche=spec.get("niche", "roman_forum"))
+    style = style_instance or resolve_visual_style("", niche=spec.get("niche", "roman_forum"), style_id=str(spec.get("style_id") or "modern_expressive_2d.v1"))
+    is_v2 = str(style.style_id).endswith(".v2")
+    expr_list = list(REQUIRED_EXPRESSIONS_V2 if is_v2 else REQUIRED_EXPRESSIONS)
     aid = str(spec["actor_id"])
     out_d = Path(output_dir) if output_dir else (ROOT_DIR / "projects" / "_kh01_shared_cache" / "characters" / aid)
     out_d.mkdir(parents=True, exist_ok=True)
@@ -1046,15 +1868,16 @@ def generate_character_design(
         "wide_shock": "spread_shock",
         "strained_exertion": "locked_grip",
         "determined_focus": "open_reach",
-        "joyful_laugh": "relaxed",
+        "joyful_laugh": "open_reach" if is_v2 else "relaxed",
         "deadpan_disbelief": "relaxed",
+        "warm_relief_smile": "pointing",
     }
-    for expr in REQUIRED_EXPRESSIONS:
+    for expr in expr_list:
         im_e = draw_character_figure_rgba(
             spec,
             view="three_quarter",
             expression=expr,
-            hand_pose=hand_for_expr[expr],
+            hand_pose=hand_for_expr.get(expr, "relaxed"),
             canvas_size=(420, 560),
             supersample=2,
         )
@@ -1064,11 +1887,11 @@ def generate_character_design(
             "path": str(ep.relative_to(ROOT_DIR).as_posix() if ep.is_relative_to(ROOT_DIR) else ep),
             "sha256": _sha256_file(ep),
             "dimensions": [im_e.width, im_e.height],
-            "hand_pose": hand_for_expr[expr],
+            "hand_pose": hand_for_expr.get(expr, "relaxed"),
         }
 
     return {
-        "schema_version": "kh01.character_asset.v1",
+        "schema_version": "kh01.character_asset.v2" if is_v2 else "kh01.character_asset.v1",
         "actor_id": aid,
         "name": spec["name"],
         "niche": spec["niche"],
@@ -1093,7 +1916,7 @@ def generate_character_design(
         "view_assets": view_files,
         "expression_assets": expression_files,
         "views": list(REQUIRED_VIEWS),
-        "expressions": list(REQUIRED_EXPRESSIONS),
+        "expressions": expr_list,
         "has_hand_insert": True,
         "license_spdx": "CC0-1.0 OR Proprietary-Original-Project-Authored",
         "provenance_origin": "100%_ORIGINAL_KH01_LAYERED_VECTOR_CHARACTER_FACTORY",
@@ -1131,9 +1954,13 @@ def build_character_model_sheet(
         fill=(252, 238, 206),
         font=f_title,
     )
+    is_v2 = str(spec.get("style_id") or "").endswith(".v2")
+    turnaround_views = ("front", "three_quarter", "profile", "rear_three_quarter") if is_v2 else ("front", "three_quarter", "profile")
+    expr_list = list(character_asset.get("expressions") or REQUIRED_EXPRESSIONS)
+
     dr.text(
         (36, 62),
-        f"Style Lock: {spec['style_id']} | Archetype: {spec['archetype']} (head/height={spec['proportions']['head_to_height_ratio']}) | Original Authored Turnaround + 6 Expressions | EDITORIAL_REVIEW_PENDING",
+        f"Style Lock: {spec['style_id']} | Archetype: {spec['archetype']} (head/height={spec['proportions']['head_to_height_ratio']}) | Original {len(turnaround_views)}-View Turnaround + {len(expr_list)} Expressions | HUMAN_REVIEW_PENDING",
         fill=(206, 198, 186),
         font=f_sub,
     )
@@ -1145,17 +1972,20 @@ def build_character_model_sheet(
         dr.line([(56, guide_y), (1720, guide_y)], fill=(224, 214, 198), width=2)
         dr.text((62, guide_y - 22), g_lbl, fill=(154, 142, 126), font=f_sub)
 
-    for v_idx, vw in enumerate(("front", "three_quarter", "profile")):
+    slot_stride = 415 if len(turnaround_views) == 4 else 540
+    slot_start_x = 68 if len(turnaround_views) == 4 else 110
+    target_h = 655 if len(turnaround_views) == 4 else 680
+    for v_idx, vw in enumerate(turnaround_views):
         vp = ROOT_DIR / character_asset["view_assets"][vw]["path"]
         with Image.open(vp) as im_v:
             rgba_v = im_v.convert("RGBA")
-        target_h = 680
         target_w = int(round(rgba_v.width * (target_h / rgba_v.height)))
         resized = rgba_v.resize((target_w, target_h), Image.Resampling.LANCZOS)
-        x_slot = 110 + v_idx * 540
-        y_slot = 135
+        x_slot = slot_start_x + v_idx * slot_stride
+        y_slot = 148 if len(turnaround_views) == 4 else 135
         sheet.paste(resized, (x_slot, y_slot), resized)
-        dr.text((x_slot + target_w // 2 - 70, 822), f"VIEW: {vw.upper()}", fill=(36, 28, 24), font=f_lbl)
+        lbl_short = "REAR 3/4" if vw == "rear_three_quarter" else ("3/4 TURN" if vw == "three_quarter" else vw.upper())
+        dr.text((x_slot + target_w // 2 - 68, 822), f"VIEW: {lbl_short}", fill=(36, 28, 24), font=f_lbl)
 
     # Color & Wardrobe Specification Panel (top right)
     spec_box = [1772, 118, 2364, 860]
@@ -1180,12 +2010,14 @@ def build_character_model_sheet(
     dr.text((1802, 756), f"Footwear: {wd['footwear']}", fill=(58, 48, 42), font=f_sub)
     dr.text((1802, 788), f"Hair: {spec['hair_style']}", fill=(58, 48, 42), font=f_sub)
 
-    # Bottom tier: 6 Distinct Expressions + Hand Poses
+    # Bottom tier: 6 or 7 Distinct Expressions + Hand Poses
     expr_hashes: List[str] = []
-    card_w = 372
+    n_cards = len(expr_list)
+    gap_x = 14 if n_cards >= 7 else 19
+    card_w = (W - 72 - gap_x * (n_cards - 1)) // n_cards
     card_h = 660
-    for e_idx, expr in enumerate(REQUIRED_EXPRESSIONS):
-        ex_x = 36 + e_idx * (card_w + 19)
+    for e_idx, expr in enumerate(expr_list):
+        ex_x = 36 + e_idx * (card_w + gap_x)
         ex_y = 892
         dr.rounded_rectangle([ex_x, ex_y, ex_x + card_w, ex_y + card_h], radius=14, fill=(252, 249, 242), outline=(196, 184, 166), width=3)
         ep_info = character_asset["expression_assets"][expr]
@@ -1200,18 +2032,19 @@ def build_character_model_sheet(
         bust_res = bust.resize((fit_w, min(card_h - 84, fit_h)), Image.Resampling.LANCZOS)
         sheet.paste(bust_res, (ex_x + 10, ex_y + 12), bust_res)
         dr.rectangle([ex_x, ex_y + card_h - 68, ex_x + card_w, ex_y + card_h], fill=(36, 28, 25))
-        dr.text((ex_x + 14, ex_y + card_h - 58), f"E{e_idx+1}: {expr}", fill=(252, 236, 198), font=f_lbl)
-        dr.text((ex_x + 14, ex_y + card_h - 30), f"Hand: {ep_info['hand_pose']}", fill=(198, 190, 176), font=f_sub)
+        dr.text((ex_x + 12, ex_y + card_h - 58), f"E{e_idx+1}: {expr[:18]}", fill=(252, 236, 198), font=f_lbl)
+        dr.text((ex_x + 12, ex_y + card_h - 30), f"Hand: {ep_info['hand_pose']}", fill=(198, 190, 176), font=f_sub)
 
     sheet.save(sheet_path, format="PNG")
     return {
         "gate_id": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE",
         "editorial_status": "HUMAN_REVIEW_PENDING",
         "actor_id": aid,
+        "style_id": spec["style_id"],
         "model_sheet_path": str(sheet_path.relative_to(ROOT_DIR).as_posix() if sheet_path.is_relative_to(ROOT_DIR) else sheet_path),
         "model_sheet_sha256": _sha256_file(sheet_path),
         "dimensions": [W, H],
-        "unique_view_hashes": len({character_asset["view_assets"][v]["sha256"] for v in ("front", "three_quarter", "profile")}),
+        "unique_view_hashes": len({character_asset["view_assets"][v]["sha256"] for v in turnaround_views}),
         "unique_expression_hashes": len(set(expr_hashes)),
     }
 
@@ -1266,8 +2099,10 @@ def export_character_rig_manifest(
         "lower_leg_l": (396, 264, 68, 128),
         "sandal_l": (478, 264, 98, 54),
     }
-    # 6 distinct expression head plates on bottom half of 1024x1024 atlas!
-    for idx_e, expr in enumerate(REQUIRED_EXPRESSIONS):
+    # 6 or 7 distinct expression head plates on bottom half of 1024x1024 atlas!
+    is_v2_rig = str(spec.get("style_id") or "").endswith(".v2")
+    rig_exprs = list(character_asset.get("expressions") or (REQUIRED_EXPRESSIONS_V2 if is_v2_rig else REQUIRED_EXPRESSIONS))
+    for idx_e, expr in enumerate(rig_exprs):
         col = idx_e % 4
         row = idx_e // 4
         rx = 16 + col * 240
@@ -1345,8 +2180,8 @@ def export_character_rig_manifest(
             taper_ends=False,
         )
 
-    # 5. Render all 6 distinct facial expression heads into the atlas!
-    for expr in REQUIRED_EXPRESSIONS:
+    # 5. Render all distinct facial expression heads into the atlas!
+    for expr in rig_exprs:
         rx, ry, rw, rh = regions[f"head_{expr}"]
         cx_h = rx + rw * 0.48
         cy_h = ry + rh * 0.48
@@ -1354,7 +2189,10 @@ def export_character_rig_manifest(
         d.rounded_rectangle([cx_h - r_h * 0.32, cy_h + r_h * 0.78, cx_h + r_h * 0.32, ry + rh - 10], radius=10, fill=skin_sh, outline=ink, width=5)
         d.ellipse([cx_h - r_h, cy_h - r_h, cx_h + r_h, cy_h + r_h], fill=skin, outline=ink, width=6)
         d.arc([cx_h - r_h * 0.94, cy_h - r_h * 0.94, cx_h + r_h * 0.94, cy_h + r_h * 0.94], 140, 250, fill=skin_rim, width=5)
-        _draw_character_expression_face(d, cx_h, cy_h, r_h, spec, expr, "three_quarter", ink, ink_in, 5.5)
+        if is_v2_rig:
+            _draw_v2_expression_face(d, cx_h, cy_h, r_h, spec, expr, "three_quarter", ink, ink_in, 5.5)
+        else:
+            _draw_character_expression_face(d, cx_h, cy_h, r_h, spec, expr, "three_quarter", ink, ink_in, 5.5)
         hair_cap = [
             (cx_h - r_h * 0.98, cy_h - r_h * 0.16),
             (cx_h - r_h * 0.80, cy_h - r_h * 1.08),
@@ -1434,7 +2272,7 @@ def export_character_rig_manifest(
     ]
     head_skin_attachments = {
         f"head_{expr}": {"x": 26, "y": -2, "rotation": -90, "width": 78, "height": 82}
-        for expr in REQUIRED_EXPRESSIONS
+        for expr in rig_exprs
     }
     head_skin_attachments["head"] = {"x": 26, "y": -2, "rotation": -90, "width": 78, "height": 82}
 
@@ -1517,7 +2355,7 @@ def export_character_rig_manifest(
         "ik_constraints": [c["name"] for c in ik],
         "supported_views": list(REQUIRED_VIEWS),
         "view_art_mapping": {vw: character_asset["view_assets"][vw]["path"] for vw in REQUIRED_VIEWS},
-        "expression_attachments": {expr: f"head_{expr}" for expr in REQUIRED_EXPRESSIONS},
+        "expression_attachments": {expr: f"head_{expr}" for expr in rig_exprs},
         "hand_attachments": {"open": "hand_r", "locked_grip": "hand_r_grip"},
         "viseme_mapping": {
             "closed_rest": "head_neutral_attentive",

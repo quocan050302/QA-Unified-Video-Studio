@@ -1,0 +1,124 @@
+{
+  "schema_version": "kh01.rig_manifest.v1",
+  "character_id": "bao",
+  "name": "Bao",
+  "niche": "city_park",
+  "style_id": "modern_expressive_2d.v2",
+  "spine_format_version": "3.8.99",
+  "height_units": 210.0,
+  "setup_targets": {
+    "ik_foot_l_target": {
+      "x": 10.0,
+      "y": 6.0
+    },
+    "ik_foot_r_target": {
+      "x": -8.0,
+      "y": 6.0
+    },
+    "ik_hand_l_target": {
+      "x": 28.0,
+      "y": 98.0
+    },
+    "ik_hand_r_target": {
+      "x": 24.0,
+      "y": 94.0
+    }
+  },
+  "bones": [
+    "root",
+    "pelvis",
+    "torso",
+    "cloak",
+    "head",
+    "upper_arm_l",
+    "lower_arm_l",
+    "hand_l",
+    "upper_arm_r",
+    "lower_arm_r",
+    "hand_r",
+    "upper_leg_l",
+    "lower_leg_l",
+    "foot_l",
+    "upper_leg_r",
+    "lower_leg_r",
+    "foot_r",
+    "ik_foot_l_target",
+    "ik_foot_r_target",
+    "ik_hand_l_target",
+    "ik_hand_r_target"
+  ],
+  "slots": [
+    "cloak_back",
+    "upper_arm_l",
+    "lower_arm_l",
+    "hand_l",
+    "upper_leg_l",
+    "lower_leg_l",
+    "sandal_l",
+    "torso_tunic",
+    "upper_leg_r",
+    "lower_leg_r",
+    "sandal_r",
+    "head",
+    "upper_arm_r",
+    "lower_arm_r",
+    "hand_r"
+  ],
+  "ik_constraints": [
+    "ik_leg_l",
+    "ik_leg_r",
+    "ik_arm_l",
+    "ik_arm_r"
+  ],
+  "supported_views": [
+    "front",
+    "three_quarter",
+    "profile",
+    "rear_three_quarter"
+  ],
+  "view_art_mapping": {
+    "front": "tests/evidence/kh01_r1_20261116_074000Z/style_poc_v2/characters/bao/bao_view_front.png",
+    "three_quarter": "tests/evidence/kh01_r1_20261116_074000Z/style_poc_v2/characters/bao/bao_view_three_quarter.png",
+    "profile": "tests/evidence/kh01_r1_20261116_074000Z/style_poc_v2/characters/bao/bao_view_profile.png",
+    "rear_three_quarter": "tests/evidence/kh01_r1_20261116_074000Z/style_poc_v2/characters/bao/bao_view_rear_three_quarter.png"
+  },
+  "expression_attachments": {
+    "neutral_attentive": "head_neutral_attentive",
+    "wide_shock": "head_wide_shock",
+    "strained_exertion": "head_strained_exertion",
+    "determined_focus": "head_determined_focus",
+    "joyful_laugh": "head_joyful_laugh",
+    "deadpan_disbelief": "head_deadpan_disbelief",
+    "warm_relief_smile": "head_warm_relief_smile"
+  },
+  "hand_attachments": {
+    "open": "hand_r",
+    "locked_grip": "hand_r_grip"
+  },
+  "viseme_mapping": {
+    "closed_rest": "head_neutral_attentive",
+    "open_ah": "head_wide_shock",
+    "teeth_grit": "head_strained_exertion",
+    "wide_laugh": "head_joyful_laugh"
+  },
+  "files": {
+    "skeleton_json": {
+      "path": "tests/evidence/kh01_r1_20261116_074000Z/style_poc_v2/rigs/bao/bao.json",
+      "sha256": "e3f1471b962ec995afcd21be14f888f9663c7ef35977cdf7f19a25be78c74313"
+    },
+    "atlas": {
+      "path": "tests/evidence/kh01_r1_20261116_074000Z/style_poc_v2/rigs/bao/bao.atlas",
+      "sha256": "3350675f12646f5d7ea6b4946ea3552aeedf611c4ebf3dbaf310620aff95080b"
+    },
+    "texture_png": {
+      "path": "tests/evidence/kh01_r1_20261116_074000Z/style_poc_v2/rigs/bao/bao.png",
+      "sha256": "f146a3270f7c2d83034fa713ef323b4d7abbf94f13b23bde1165843b9b616fae",
+      "dimensions": [
+        1024,
+        1024
+      ]
+    }
+  },
+  "rigby_demo_assets_copied": false,
+  "reference_frames_reused": 0
+}

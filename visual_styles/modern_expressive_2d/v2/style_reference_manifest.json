@@ -1,0 +1,99 @@
+{
+  "schema_version": "kh01_r1.style_reference_manifest.v2",
+  "run_id": "20261116_074000Z",
+  "ingested_at_utc": "2026-11-16T07:53:30.872250+00:00",
+  "reference_status": "STYLE_REFERENCES_INGESTED_3_OF_3",
+  "public_repo_payload_included": false,
+  "copyright_and_usage_policy": "All 3 user-attached frames are stored strictly in gitignored private workspace .test-runs/kh01_r1_20261116_074000Z/references_private/ for offline human visual review only. Zero pixels, crops, traces, characters, or palettes from copyrighted source footage are copied into any project asset, sprite, atlas, background, or final MP4.",
+  "reference_count_verified": 3,
+  "references": [
+    {
+      "reference_id": "ref_01_poster_high_energy",
+      "original_attachment_filename": "media_1794812923609_b07e0faf.jpg",
+      "private_workspace_relpath": ".test-runs/kh01_r1_20261116_074000Z/references_private/ref01_poster_high_energy.jpg",
+      "private_workspace_gitignored": true,
+      "public_repo_committed": false,
+      "format": "JPEG",
+      "color_mode": "RGB",
+      "dimensions": [
+        1024,
+        576
+      ],
+      "size_bytes": 376376,
+      "sha256": "26846e213288ce8c1de20ff2a93001fe86c1f460be6b24ad3ec7b35c2c7bb5c1",
+      "editorial_role": "POSTER_THUMBNAIL_HIGH_ENERGY_ACCENT_ONLY"
+    },
+    {
+      "reference_id": "ref_02_normal_scene_baseline",
+      "original_attachment_filename": "media_1794812930039_77590f3d.jpg",
+      "private_workspace_relpath": ".test-runs/kh01_r1_20261116_074000Z/references_private/ref02_normal_scene_baseline.jpg",
+      "private_workspace_gitignored": true,
+      "public_repo_committed": false,
+      "format": "JPEG",
+      "color_mode": "RGB",
+      "dimensions": [
+        1024,
+        521
+      ],
+      "size_bytes": 106038,
+      "sha256": "bac9bb42a94d85556815683abefcb1e2cec562e39a56ab98850adacd9489b1f2",
+      "editorial_role": "NORMAL_SCENE_QUALITY_BASELINE"
+    },
+    {
+      "reference_id": "ref_03_closeup_overlapping_forms",
+      "original_attachment_filename": "media_1794812936006_89d46e35.jpg",
+      "private_workspace_relpath": ".test-runs/kh01_r1_20261116_074000Z/references_private/ref03_closeup_overlapping_forms.jpg",
+      "private_workspace_gitignored": true,
+      "public_repo_committed": false,
+      "format": "JPEG",
+      "color_mode": "RGB",
+      "dimensions": [
+        1024,
+        487
+      ],
+      "size_bytes": 68125,
+      "sha256": "f69b4b310a00c78e60c9923f3218d95259e8e60e736517b694ef54f882d49535",
+      "editorial_role": "CLOSEUP_ACTING_AND_OVER_SHOULDER_DEPTH_OVERLAP"
+    }
+  ],
+  "observable_analysis_by_frame": {
+    "ref_01_poster_high_energy": {
+      "dimensions": [
+        1024,
+        576
+      ],
+      "contour": "Thick dark-espresso ink contour (7-11px at 1080p) wrapped in white cutout sticker border with neon magenta/green edge highlights (poster/thumbnail accent only, forbidden on normal scene shots).",
+      "value_structure": "High-contrast 3-band cel shading with curved diagonal shadow across rounded face + warm orange firelight rim; halftone screen dots on secondary background silhouettes.",
+      "silhouette_and_anatomy": "Articulated 4-finger + thumb hand rubbing squinting eye; thick armored/robed cuff bracers; overlapping piggyback foreground silhouette against mid/far crowd.",
+      "scene_perspective_and_lighting": "Multi-tiered background architecture (burning palace roofs, brick rampart with arched windows) tilted dynamically; intense warm red-amber firelight vs deep violet shadow.",
+      "focus_subject_height_ratio": 0.92,
+      "local_reviewer_note": "Use ONLY to inform optional poster_thumbnail_mode and articulated finger/cuff overlap; NEVER apply neon chromatic fringe or halftone screen to normal narrative shots."
+    },
+    "ref_02_normal_scene_baseline": {
+      "dimensions": [
+        1024,
+        521
+      ],
+      "contour": "Warm dark-espresso variable-weight outer contour (~6-8.5px at 1080p) paired with finer interior cloth fold and facial lines (~2.5-4px), smooth rounded caps/joins.",
+      "value_structure": "Clean 3-plane cel shading (lit warm base, cool/warm 24-30% darker core shadow wrapping cylindrical forms, crisp warm sunlight rim strip on lit shoulder/head edge).",
+      "silhouette_and_anatomy": "Two strongly contrasted character silhouettes: left tall robed official with wide draped sleeves and emerging 4-finger open hand; right casual tunic figure with curved organic bent arm (rounded elbow, tapered wrist, splayed fingers) and folded kneeling trousers.",
+      "costume_detail": "Overlapping cross-collar lapels, wide cuff borders, waist sash, pleated lower hem, frog-button clasps, and curved interior tension folds at elbow, chest, and knee.",
+      "scene_perspective_and_lighting": "True 4-plane interior stage: dark foreground chest + small carved rabbit prop on left, massive red structural columns at varied intervals, wood-framed lattice wall panels with intricate organic grain swirl, diagonal warm sunbeam shaft (~38 deg), and perspective wood-plank floor with soft cast shadows.",
+      "focus_subject_height_ratio": 0.74,
+      "local_reviewer_note": "PRIMARY NORMAL-SCENE QUALITY BASELINE for modern_expressive_2d.v2 line fluency, curved limb anatomy, draped clothing folds, tactile background surfaces, and diagonal sunlight staging."
+    },
+    "ref_03_closeup_overlapping_forms": {
+      "dimensions": [
+        1024,
+        487
+      ],
+      "contour": "Bold calligraphic outer head/garment contour (~8-11px in closeup) with crisp medium interior fold strokes.",
+      "value_structure": "Deep atmospheric foreground shadow on over-the-shoulder left figure with bright rim edge; clean cel-shaded robes and bright high-contrast face plane on central child.",
+      "silhouette_and_anatomy": "3-depth character overlap: large rear-3/4 foreground figure on left framing smaller joyful child in center-midground (outstretched wide sleeves + cute splayed fingers) and taller draped figure on right with raised expressive hand.",
+      "facial_storytelling": "Huge emotive D-shaped open laugh mouth with distinct white top tooth block and pink tongue cel-plane, tilted happy oval/crescent eyes, immediate emotional readability.",
+      "scene_perspective_and_lighting": "Soft atmospheric gradient backdrop in closeup (avoiding cluttered background noise behind facial acting) with warm rim separation on overlapping silhouettes.",
+      "focus_subject_height_ratio": 0.68,
+      "local_reviewer_note": "Governs closeup/OTS depth staging, rear-3/4 foreground framing, softened mood backdrops on close shots, and bold open-mouth tooth/tongue facial acting."
+    }
+  }
+}

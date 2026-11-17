@@ -1,0 +1,545 @@
+{
+  "schema_version": "kh01.style_bible.v2",
+  "style_id": "modern_expressive_2d.v2",
+  "style_name": "Reference-Grounded Modern Expressive Editorial 2D Cartoon (v2)",
+  "version": "2.0.0",
+  "editorial_origin": "ORIGINAL_AUTHORED_REFERENCE_GROUNDED_ART_RULES_V2",
+  "editorial_approval_status": "PROPOSED_NOT_APPROVED",
+  "style_reference_manifest_path": "visual_styles/modern_expressive_2d/v2/style_reference_manifest.json",
+  "reference_analysis_markdown_path": "visual_styles/modern_expressive_2d/v2/reference_style_analysis.md",
+  "reference_availability": "STYLE_REFERENCES_INGESTED_3_OF_3",
+  "style_lock_digest": "423e7ce66ba8f45fc421ba32b497f95ffc4497dc1cfec3fecb0618bfd73299b2",
+  "asset_resolution_target": {
+    "video_16x9": [
+      1920,
+      1080
+    ],
+    "video_9x16": [
+      1080,
+      1920
+    ],
+    "character_rig_atlas_px": [
+      1024,
+      1024
+    ],
+    "model_sheet_px": [
+      2400,
+      1600
+    ],
+    "static_poc_panel_px": [
+      1920,
+      1080
+    ],
+    "supersample_factor": 2
+  },
+  "ink_linework": {
+    "character_outer_ink_hex": "#211612",
+    "character_inner_ink_hex": "#3A2821",
+    "environment_mid_ink_hex": "#352923",
+    "environment_far_ink_hex": "#52606D",
+    "outer_stroke_to_actor_height_range": [
+      0.0105,
+      0.0168
+    ],
+    "inner_detail_to_outer_stroke_ratio": [
+      0.34,
+      0.54
+    ],
+    "closeup_stroke_px_clamp": [
+      3.5,
+      10.5
+    ],
+    "wide_stroke_px_clamp": [
+      2.2,
+      5.8
+    ],
+    "variable_weight_taper": true,
+    "calligraphic_curve_subdivision": 14,
+    "line_cap": "round",
+    "line_join": "round",
+    "anti_patterns_forbidden": [
+      "uniform_1px_hairline_wireframe",
+      "thick_muddy_equal_weight_interior_grid",
+      "unstroked_floating_ellipses",
+      "rigid_straight_pipe_capsule_limbs"
+    ]
+  },
+  "silhouette_and_proportions": {
+    "min_silhouette_bg_luma_contrast": 0.24,
+    "forbid_uniform_white_circle_heads": true,
+    "forbid_stick_or_capsule_only_bodies": true,
+    "require_curved_tapered_limbs": true,
+    "require_rounded_elbow_and_knee_volume": true,
+    "require_differentiated_wrist_palm_fingers": true,
+    "archetypes": {
+      "inventive_school_youth": {
+        "head_to_height_ratio": 0.238,
+        "shoulder_to_head_width": 1.32,
+        "torso_to_height_ratio": 0.285,
+        "leg_to_height_ratio": 0.415,
+        "cranium_shape": "sculpted_soft_cheek_expressive"
+      },
+      "caring_older_friend": {
+        "head_to_height_ratio": 0.204,
+        "shoulder_to_head_width": 1.48,
+        "torso_to_height_ratio": 0.305,
+        "leg_to_height_ratio": 0.445,
+        "cranium_shape": "warm_tapered_jaw_tall"
+      },
+      "agile_youth": {
+        "head_to_height_ratio": 0.215,
+        "shoulder_to_head_width": 1.38,
+        "torso_to_height_ratio": 0.29,
+        "leg_to_height_ratio": 0.44,
+        "cranium_shape": "rounded_tapered_jaw"
+      },
+      "grounded_artisan": {
+        "head_to_height_ratio": 0.21,
+        "shoulder_to_head_width": 1.54,
+        "torso_to_height_ratio": 0.315,
+        "leg_to_height_ratio": 0.415,
+        "cranium_shape": "warm_broad_cheek"
+      },
+      "intellectual_specialist": {
+        "head_to_height_ratio": 0.198,
+        "shoulder_to_head_width": 1.42,
+        "torso_to_height_ratio": 0.3,
+        "leg_to_height_ratio": 0.45,
+        "cranium_shape": "sculpted_angular_chin"
+      },
+      "energetic_junior": {
+        "head_to_height_ratio": 0.242,
+        "shoulder_to_head_width": 1.26,
+        "torso_to_height_ratio": 0.275,
+        "leg_to_height_ratio": 0.415,
+        "cranium_shape": "round_expressive"
+      }
+    },
+    "required_authored_views": [
+      "front",
+      "three_quarter",
+      "profile",
+      "rear_three_quarter"
+    ],
+    "optional_cinematic_views": [
+      "close_face_insert",
+      "close_hand_insert",
+      "over_shoulder_foreground"
+    ]
+  },
+  "facial_acting": {
+    "required_distinct_expressions": [
+      "neutral_attentive",
+      "wide_shock",
+      "strained_exertion",
+      "determined_focus",
+      "joyful_laugh",
+      "deadpan_disbelief",
+      "warm_relief_smile"
+    ],
+    "visemes": [
+      "closed_rest",
+      "narrow_eh",
+      "open_ah",
+      "round_oh",
+      "teeth_grit",
+      "wide_laugh"
+    ],
+    "require_tooth_and_tongue_planes_on_open_mouths": true,
+    "eye_sclera_contrast_min": 0.46,
+    "brow_lead_frames": 2,
+    "personality_feature_offsets": {
+      "earnest": {
+        "eye_scale": 1.14,
+        "brow_thickness": 1.06,
+        "mouth_y_offset": 0.0
+      },
+      "inventive": {
+        "eye_scale": 1.16,
+        "brow_thickness": 1.04,
+        "mouth_y_offset": -0.01
+      },
+      "caring": {
+        "eye_scale": 1.04,
+        "brow_thickness": 1.1,
+        "mouth_y_offset": -0.015
+      },
+      "witty": {
+        "eye_scale": 1.02,
+        "brow_thickness": 0.95,
+        "mouth_y_offset": -0.02
+      },
+      "analytical": {
+        "eye_scale": 0.96,
+        "brow_thickness": 1.0,
+        "mouth_y_offset": 0.02
+      },
+      "warm": {
+        "eye_scale": 1.08,
+        "brow_thickness": 1.08,
+        "mouth_y_offset": -0.01
+      }
+    }
+  },
+  "cel_shading_and_lighting": {
+    "value_group_count_range": [
+      3,
+      4
+    ],
+    "core_shadow_darkening_factor": 0.26,
+    "core_shadow_hue_cool_shift_deg": -12,
+    "rim_highlight_boost_factor": 0.3,
+    "rim_width_to_head_radius": 0.085,
+    "diagonal_sunbeam_shaft_alpha": 0.22,
+    "ground_contact_shadow_alpha": 0.36,
+    "ambient_bounce_alpha": 0.16
+  },
+  "clothing_and_materials": {
+    "require_layered_overlap": true,
+    "min_garment_layers_hero": 2,
+    "fold_lines_per_garment_range": [
+      3,
+      8
+    ],
+    "require_collar_cuff_and_hem_volume": true,
+    "hem_and_seam_accent_required": true,
+    "cloth_secondary_sway_max_rad": 0.26
+  },
+  "texture_and_perspective": {
+    "edge_density_target_range": [
+      0.045,
+      0.38
+    ],
+    "forbid_single_plain_wall_repeated_arches": true,
+    "require_tactile_material_patterns": true,
+    "perspective_modes": [
+      "one_point_park_promenade",
+      "two_point_architectural_hall",
+      "orthographic_elevation_with_multi_plane_parallax",
+      "macro_soft_atmospheric_backdrop"
+    ],
+    "default_horizon_y_norm": 0.56,
+    "low_angle_horizon_y_norm": 0.74,
+    "high_angle_horizon_y_norm": 0.36,
+    "required_depth_planes": [
+      "sky_backdrop",
+      "far_architecture_or_canopy",
+      "midground_stage_and_props",
+      "diagonal_light_shafts",
+      "foreground_occluders"
+    ]
+  },
+  "environment_detail_tiers_by_scale": {
+    "wide": {
+      "tier": "TIER_3_FULL_MULTIPLANE_STAGE",
+      "far_plane_detail": 1.0,
+      "mid_plane_props": 1.0,
+      "foreground_occlusion": true,
+      "background_soften": 0.0
+    },
+    "medium": {
+      "tier": "TIER_2_FOCUSED_LAYERED_STAGE",
+      "far_plane_detail": 0.78,
+      "mid_plane_props": 0.9,
+      "foreground_occlusion": true,
+      "background_soften": 0.14
+    },
+    "close": {
+      "tier": "TIER_1_DESIGNED_ATMOSPHERIC_MOOD_BACKDROP",
+      "far_plane_detail": 0.32,
+      "mid_plane_props": 0.4,
+      "foreground_occlusion": false,
+      "background_soften": 0.48
+    },
+    "macro": {
+      "tier": "TIER_1_TACTILE_PROP_AND_HAND_FOCUS",
+      "far_plane_detail": 0.22,
+      "mid_plane_props": 0.35,
+      "foreground_occlusion": false,
+      "background_soften": 0.58
+    }
+  },
+  "camera_composition_and_safe_zones": {
+    "safe_zone_16x9": {
+      "x_min": 0.07,
+      "x_max": 0.93,
+      "y_min": 0.07,
+      "y_max": 0.92
+    },
+    "safe_zone_9x16": {
+      "x_min": 0.1,
+      "x_max": 0.9,
+      "y_min": 0.12,
+      "y_max": 0.86
+    },
+    "subject_height_norm_by_scale": {
+      "wide": [
+        0.24,
+        0.44
+      ],
+      "medium": [
+        0.44,
+        0.68
+      ],
+      "close": [
+        0.64,
+        0.94
+      ],
+      "macro": [
+        0.56,
+        0.96
+      ]
+    },
+    "forbid_crop_as_reverse_angle": true,
+    "enforce_180_degree_axis": true,
+    "max_cuts_per_3s_shot": 2
+  },
+  "typography_and_legibility": {
+    "min_luma_contrast_ratio": 4.5,
+    "max_diegetic_text_screen_fraction": 0.18,
+    "max_title_badge_screen_fraction": 0.18,
+    "font_family_stack": "Segoe UI, Trebuchet MS, Arial Black, sans-serif"
+  },
+  "fx_discipline": {
+    "scene_chromatic_aberration_allowed": false,
+    "scene_halftone_overlay_allowed": false,
+    "scene_neon_glow_allowed": false,
+    "poster_thumbnail_accent_opt_in_only": true,
+    "max_motivated_particles_per_event": 18
+  },
+  "niche_overrides": {
+    "city_park": {
+      "niche_id": "city_park",
+      "temperature": "sunlit_golden_afternoon_breezy_park",
+      "sky_palette": [
+        "#4E96D8",
+        "#9AD2F5",
+        "#FCEAC8"
+      ],
+      "ground_palette": [
+        "#D8C6A8",
+        "#BFA989",
+        "#8E785D"
+      ],
+      "architecture_palette": [
+        "#4E8B52",
+        "#2F663B",
+        "#88B969",
+        "#E8DCC6"
+      ],
+      "accent_palette": [
+        "#E0473B",
+        "#F2A93B",
+        "#2D7D90",
+        "#FFF6E5"
+      ],
+      "key_light_hex": "#FFF2CC",
+      "shadow_tint_hex": "#2B3244",
+      "wardrobe_templates": [
+        "layered_parka_windbreaker_over_striped_tee",
+        "open_overshirt_cardigan_and_relaxed_chinos"
+      ],
+      "material_motifs": [
+        "sunlit_layered_foliage_clusters",
+        "flagstone_park_promenade",
+        "slatted_oak_and_wrought_iron_bench",
+        "tiered_stone_park_fountain",
+        "origami_creased_paper_kite",
+        "background_park_bicycles_and_pennants"
+      ]
+    },
+    "roman_forum": {
+      "niche_id": "roman_forum",
+      "temperature": "warm_mediterranean_sunlight",
+      "sky_palette": [
+        "#4A88C7",
+        "#8EC5E8",
+        "#F4DEC0"
+      ],
+      "ground_palette": [
+        "#C9B193",
+        "#B09678",
+        "#8B735B"
+      ],
+      "architecture_palette": [
+        "#E8D5B7",
+        "#D4B894",
+        "#B9583B",
+        "#5A7D58"
+      ],
+      "accent_palette": [
+        "#C83E2B",
+        "#E29B27",
+        "#2B6E78",
+        "#F7EFE2"
+      ],
+      "key_light_hex": "#FFF0CE",
+      "shadow_tint_hex": "#3B2D38",
+      "wardrobe_templates": [
+        "draped_pleated_tunic_and_scarf",
+        "layered_market_stola_and_apron",
+        "senatorial_bordered_toga"
+      ],
+      "material_motifs": [
+        "travertine_ashlar_courses",
+        "terracotta_roof_tiles",
+        "striped_linen_awnings",
+        "carved_stone_fountain",
+        "coffered_timber_and_lattice"
+      ]
+    },
+    "modern_science": {
+      "niche_id": "modern_science",
+      "temperature": "crisp_cleanroom_daylight_with_amber_instrument_accents",
+      "sky_palette": [
+        "#22344A",
+        "#355370",
+        "#6B92B0"
+      ],
+      "ground_palette": [
+        "#CFD9E2",
+        "#B5C3CF",
+        "#8E9FAD"
+      ],
+      "architecture_palette": [
+        "#EBF1F6",
+        "#D2DDE7",
+        "#3D5A73",
+        "#2A9D8F"
+      ],
+      "accent_palette": [
+        "#00A6A6",
+        "#F4A261",
+        "#E76F51",
+        "#264653"
+      ],
+      "key_light_hex": "#E6F7FF",
+      "shadow_tint_hex": "#1E2D3D",
+      "wardrobe_templates": [
+        "tailored_draped_lab_coat_over_knit",
+        "cleanroom_utility_jacket_and_badge"
+      ],
+      "material_motifs": [
+        "brushed_aluminum_bench",
+        "borosilicate_glassware",
+        "acoustic_slat_panels",
+        "led_status_strips"
+      ]
+    },
+    "everyday_business": {
+      "niche_id": "everyday_business",
+      "temperature": "cozy_morning_cafe_warm_oak_and_teal",
+      "sky_palette": [
+        "#6CA6C8",
+        "#A7D0E4",
+        "#F7E5C8"
+      ],
+      "ground_palette": [
+        "#9C6B49",
+        "#7F5437",
+        "#5E3C26"
+      ],
+      "architecture_palette": [
+        "#F2E6D5",
+        "#D6C0A5",
+        "#2F5D62",
+        "#B85D3B"
+      ],
+      "accent_palette": [
+        "#D96B43",
+        "#2F5D62",
+        "#E9B44C",
+        "#FBF7F0"
+      ],
+      "key_light_hex": "#FFEBC6",
+      "shadow_tint_hex": "#33262A",
+      "wardrobe_templates": [
+        "rolled_sleeve_chore_jacket_and_apron",
+        "layered_cardigan_and_collar_blouse"
+      ],
+      "material_motifs": [
+        "herringbone_oak_floor",
+        "espresso_brass_machine",
+        "wood_lattice_divider",
+        "potted_monstera",
+        "ceramic_cups"
+      ]
+    },
+    "holdout_botanical_conservatory": {
+      "niche_id": "holdout_botanical_conservatory",
+      "temperature": "humid_sunbeam_glasshouse_emerald_and_terracotta",
+      "sky_palette": [
+        "#5EA9BE",
+        "#A8DCE7",
+        "#F2F7E4"
+      ],
+      "ground_palette": [
+        "#B99B7C",
+        "#987A5C",
+        "#6E553D"
+      ],
+      "architecture_palette": [
+        "#D9ECE8",
+        "#4A7C6F",
+        "#C86D44",
+        "#2E5347"
+      ],
+      "accent_palette": [
+        "#E06D44",
+        "#F2BE54",
+        "#3B8EA5",
+        "#FAF6EC"
+      ],
+      "key_light_hex": "#FFF5D1",
+      "shadow_tint_hex": "#213635",
+      "wardrobe_templates": [
+        "botanist_linen_smock_and_sunhat",
+        "apprentice_denim_overalls_and_tee"
+      ],
+      "material_motifs": [
+        "arched_iron_glasshouse_ribs",
+        "terracotta_orchid_pots",
+        "fern_frond_clusters",
+        "herringbone_brick_walkway"
+      ]
+    },
+    "holdout_astronomy_museum": {
+      "niche_id": "holdout_astronomy_museum",
+      "temperature": "deep_twilight_dome_with_warm_brass_and_eclipse_gold",
+      "sky_palette": [
+        "#182238",
+        "#27395C",
+        "#48638E"
+      ],
+      "ground_palette": [
+        "#6E6A7C",
+        "#545063",
+        "#3C3948"
+      ],
+      "architecture_palette": [
+        "#2C354D",
+        "#414E6E",
+        "#C9963B",
+        "#E6DCC8"
+      ],
+      "accent_palette": [
+        "#E09F3E",
+        "#4EA8DE",
+        "#D64550",
+        "#F4F0E6"
+      ],
+      "key_light_hex": "#FFE29A",
+      "shadow_tint_hex": "#181A2C",
+      "wardrobe_templates": [
+        "curator_blazer_and_lanyard",
+        "visitor_hoodie_and_backpack"
+      ],
+      "material_motifs": [
+        "planetarium_ribbed_dome",
+        "polished_brass_telescope",
+        "illuminated_star_chart",
+        "velvet_stanchion"
+      ]
+    }
+  }
+}

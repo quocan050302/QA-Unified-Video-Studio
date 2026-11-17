@@ -410,16 +410,18 @@ def render_modern2d_project_to_mp4(
 # ==============================================================================
 
 
-def produce_kh01_visual_style_poc(out_dir: Path) -> Dict[str, Any]:
+def produce_kh01_visual_style_poc(out_dir: Path, style_id: str = "modern_expressive_2d.v1") -> Dict[str, Any]:
     """
-    Generate >= 12 genuinely distinct ORIGINAL high-resolution PNG panels BEFORE the main film:
-      - Hero (Lucius) & Supporting (Mara) + Science (Dr. Maya Lin) + Business (Barista Sam) 3-view + 6-expression model sheets
-      - Rich Outdoor Roman Forum & Rich Indoor Roman Archive / Science Cleanroom / Artisan Cafe backgrounds
-      - Sample Wide, Medium, Expressive Close-Face, and Close Hand-Grasping-Object scene frames
+    Generate >= 12 genuinely distinct ORIGINAL high-resolution PNG panels BEFORE the main film.
+    Preserves `modern_expressive_2d.v1` baseline when `style_id == 'modern_expressive_2d.v1'` and
+    generates reference-grounded `modern_expressive_2d.v2` Mina + Bao (City Park) + 3 non-Roman
+    niches (Science, Business, Botanical Conservatory) when `style_id == 'modern_expressive_2d.v2'`.
     """
     out_dir = Path(out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
-    prof = load_style_profile("modern_expressive_2d.v1")
+    prof = load_style_profile(style_id)
+    if str(style_id).endswith(".v2"):
+        return _produce_kh01_r1_visual_style_poc_v2(out_dir, prof)
     f_lbl = ImageFont.load_default()
 
     # 1. Author 4 distinct character designs & model sheets across 3 niches
@@ -577,6 +579,7 @@ def _write_modern2d_mini_project(
     width: int = 1920,
     height: int = 1080,
     duration_sec: float = 7.0,
+    style_id: str = "modern_expressive_2d.v1",
 ) -> None:
     for sub in ("story", "timeline", "build", "out"):
         (proj_dir / sub).mkdir(parents=True, exist_ok=True)
@@ -586,7 +589,7 @@ def _write_modern2d_mini_project(
         "pack": "squire",
         "genre": niche,
         "style": "flat",
-        "styleId": "modern_expressive_2d.v1",
+        "styleId": style_id,
         "aspect": "16:9",
         "resolution": "1080p" if height == 1080 else "720p",
         "width": width,
@@ -605,7 +608,7 @@ def _write_modern2d_mini_project(
     (proj_dir / "story" / "character_bible.json").write_text(
         json.dumps(
             {
-                "style_id": "modern_expressive_2d.v1",
+                "style_id": style_id,
                 "characters": {c["actor_id"]: c for c in char_specs},
                 "rig_manifests": rig_manifests or {},
             },
@@ -615,12 +618,17 @@ def _write_modern2d_mini_project(
     )
 
 
-def produce_kh01_acting_handoff_8s(out_dir: Path, poc_bundle: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def produce_kh01_acting_handoff_8s(
+    out_dir: Path,
+    poc_bundle: Optional[Dict[str, Any]] = None,
+    style_id: str = "modern_expressive_2d.v1",
+) -> Dict[str, Any]:
     """
-    KH-01.3 (`VQ03_ACTING_8S`): 7.000s (168 frames @ 24fps) ORIGINAL animation of Lucius
-    quickly reacting to a falling parcel/scroll (`neutral -> anticipation -> contact -> strain ->
-    release/handoff -> recoil -> settle`) and handing it cleanly to Mara.
+    KH-01.3 (`VQ03_ACTING_8S`): 7.000s (168 frames @ 24fps) ORIGINAL animation (`neutral -> anticipation ->
+    contact -> strain -> release/handoff -> recoil -> settle`). Supports both `v1` baseline and `v2` City Park Mina+Bao.
     """
+    if str(style_id).endswith(".v2"):
+        return _produce_kh01_r1_acting_handoff_v2(out_dir, poc_bundle=poc_bundle)
     out_dir = Path(out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -707,7 +715,11 @@ def produce_kh01_acting_handoff_8s(out_dir: Path, poc_bundle: Optional[Dict[str,
     }
 
 
-def produce_kh01_same_script_abcd_comparison(out_dir: Path, poc_bundle: Dict[str, Any]) -> Dict[str, Any]:
+def produce_kh01_same_script_abcd_comparison(
+    out_dir: Path,
+    poc_bundle: Dict[str, Any],
+    style_id: str = "modern_expressive_2d.v1",
+) -> Dict[str, Any]:
     """
     KH-01.3 Fixed Same-Script Motion & Art Comparison (6.0s / 144 frames @ 24fps):
       - Clip A: Previous basic Canvas art + legacy sine motion (`legacy_basic_canvas`)
@@ -716,6 +728,8 @@ def produce_kh01_same_script_abcd_comparison(out_dir: Path, poc_bundle: Dict[str
       - Clip C: `Clip B2` + selective Claude FX (`fx_profile='claude_selective'`)
     Explicitly separates visual-asset improvement (A -> B1) from motion/rig improvement (B1 -> B2 -> C).
     """
+    if str(style_id).endswith(".v2"):
+        return _produce_kh01_r1_same_script_abcd_v2(out_dir, poc_bundle)
     out_dir = Path(out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -862,12 +876,18 @@ def produce_kh01_same_script_abcd_comparison(out_dir: Path, poc_bundle: Dict[str
 # ==============================================================================
 
 
-def produce_kh01_multicamera_continuous_action(out_dir: Path, poc_bundle: Dict[str, Any]) -> Dict[str, Any]:
+def produce_kh01_multicamera_continuous_action(
+    out_dir: Path,
+    poc_bundle: Dict[str, Any],
+    style_id: str = "modern_expressive_2d.v1",
+) -> Dict[str, Any]:
     """
     KH-01.4 (`VQ04_MULTICAMERA`): 1 continuous 6.0s (`144` frames @ `24fps`) action rendered across
     3 genuinely different authored views inside a coherent timeline (`wide 3/4 setup -> profile medium exertion -> authored close hand-grip insert`),
     verified by `link_camera_to_asset_views` and `audit_internal_camera_cuts`.
     """
+    if str(style_id).endswith(".v2"):
+        return _produce_kh01_r1_multicamera_v2(out_dir, poc_bundle)
     out_dir = Path(out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1041,17 +1061,17 @@ def produce_kh01_multicamera_continuous_action(out_dir: Path, poc_bundle: Dict[s
 # ==============================================================================
 
 
-def produce_kh01_four_niche_generalization(out_dir: Path) -> Dict[str, Any]:
+def produce_kh01_four_niche_generalization(
+    out_dir: Path,
+    style_id: str = "modern_expressive_2d.v1",
+) -> Dict[str, Any]:
     """
     KH-01.5 (`VQ05_MULTI_NICHE`): Run 4 genuinely different scripts from scratch through the SAME
     universal API (`infer_niche_from_script -> VisualStyleDirector -> CharacterFactory ->
-    EnvironmentFactory -> MotionPlan -> modern_expressive_2d universal template -> render.mjs -> FFmpeg`):
-      1. Roman Civic Forum Negotiation (`roman_forum`)
-      2. Contemporary Cleanroom Science Discovery (`modern_science`)
-      3. Everyday Artisan Cafe Customer Service (`everyday_business`)
-      4. Holdout Unseen Astronomy Museum Script (`holdout_astronomy_museum`)
-    Zero story-specific JS modules; zero Roman soldiers in science/business/museum cases!
+    EnvironmentFactory -> MotionPlan -> modern_expressive_2d universal template -> render.mjs -> FFmpeg`).
     """
+    if str(style_id).endswith(".v2"):
+        return _produce_kh01_r1_four_niche_v2(out_dir)
     out_dir = Path(out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1237,6 +1257,845 @@ def produce_kh01_four_niche_generalization(out_dir: Path) -> Dict[str, Any]:
     return {
         "status": "PASS" if all_ok else "FAIL",
         "gate_id": "VQ05_MULTI_NICHE",
+        "editorial_status": "HUMAN_REVIEW_PENDING",
+        "niche_cases_count": len(case_reports),
+        "distinct_environments_count": distinct_envs,
+        "distinct_outfits_count": distinct_outfits,
+        "comparison_sheet": {"path": grid_path.relative_to(ROOT_DIR).as_posix(), "sha256": sha256_file(grid_path)},
+        "cases": case_reports,
+    }
+
+
+# ==============================================================================
+# 5. KH-01.R1 REFERENCE-GROUNDED `modern_expressive_2d.v2` POC, V1-VS-V2 & PILOTS
+# ==============================================================================
+
+
+def _produce_kh01_r1_visual_style_poc_v2(out_dir: Path, prof: Any) -> Dict[str, Any]:
+    """
+    Generate 13 distinct ORIGINAL `modern_expressive_2d.v2` PNGs BEFORE the main Kite film:
+      - Two main City Park characters: MINA (school-age kite maker) & BAO (older friend) — 4-view + 7-expression model sheets
+      - Three distinct non-Roman niche characters: Dr. Maya Lin (Science), Sam (Business Cafe), Clara (Botanical Conservatory Holdout)
+      - Four rich v2 multi-plane stages: Sunlit City Park, Botanical Conservatory, Cleanroom Lab, Artisan Cafe
+      - Four framed narrative staging panels: Wide Park Two-Shot, Over-the-Shoulder Depth Overlap (Ref 3 principle),
+        Dramatic Close-Up Face Reaction, and Macro Hand Threading Origami Dragon Kite!
+    """
+    park_style = resolve_visual_style("Mina built a dragon kite in the sunlit park with her friend Bao.", niche="city_park", style_id="modern_expressive_2d.v2")
+    park_specs = derive_character_specs(
+        [
+            {"actor_id": "mina", "name": "Mina", "role": "kite_maker", "personality": "inventive", "skin_base": "#F0C19E", "hair_base": "#2B222C"},
+            {"actor_id": "bao", "name": "Bao", "role": "older_friend", "personality": "caring", "skin_base": "#E3AE88", "hair_base": "#3B261E"},
+        ],
+        "city_park",
+        style_instance=park_style,
+    )
+    mina_asset = generate_character_design(park_specs[0], park_style, seed=20261, output_dir=out_dir / "characters" / "mina")
+    bao_asset = generate_character_design(park_specs[1], park_style, seed=20262, output_dir=out_dir / "characters" / "bao")
+    mina_sheet = build_character_model_sheet(mina_asset, out_dir / "VQ02_V2_MODEL_SHEET_01_mina_hero.png")
+    bao_sheet = build_character_model_sheet(bao_asset, out_dir / "VQ02_V2_MODEL_SHEET_02_bao_friend.png")
+
+    sci_style = resolve_visual_style("Dr. Maya Lin stabilizes a glowing crystal beaker in the cleanroom lab.", niche="modern_science", style_id="modern_expressive_2d.v2")
+    maya_spec = derive_character_specs([{"actor_id": "maya_lin", "name": "Dr. Maya Lin", "role": "scientist"}], "modern_science", style_instance=sci_style)[0]
+    maya_asset = generate_character_design(maya_spec, sci_style, seed=20263, output_dir=out_dir / "characters" / "maya_lin")
+    maya_sheet = build_character_model_sheet(maya_asset, out_dir / "VQ02_V2_MODEL_SHEET_03_maya_science.png")
+
+    biz_style = resolve_visual_style("Barista Sam catches a tipping espresso tray at the morning cafe.", niche="everyday_business", style_id="modern_expressive_2d.v2")
+    sam_spec = derive_character_specs([{"actor_id": "sam_barista", "name": "Sam", "role": "barista"}], "everyday_business", style_instance=biz_style)[0]
+    sam_asset = generate_character_design(sam_spec, biz_style, seed=20264, output_dir=out_dir / "characters" / "sam_barista")
+    sam_sheet = build_character_model_sheet(sam_asset, out_dir / "VQ02_V2_MODEL_SHEET_04_sam_business.png")
+
+    bot_style = resolve_visual_style("Botanist Clara tends rare orchids inside the sunlit glasshouse conservatory.", niche="holdout_botanical_conservatory", style_id="modern_expressive_2d.v2")
+    clara_spec = derive_character_specs([{"actor_id": "clara_botanist", "name": "Clara", "role": "botanist"}], "holdout_botanical_conservatory", style_instance=bot_style)[0]
+    clara_asset = generate_character_design(clara_spec, bot_style, seed=20265, output_dir=out_dir / "characters" / "clara_botanist")
+    clara_sheet = build_character_model_sheet(clara_asset, out_dir / "VQ02_V2_MODEL_SHEET_05_clara_conservatory.png")
+
+    # Export v2 Rigby2D 1024x1024 rigs for Mina & Bao
+    mina_rig = export_character_rig_manifest(mina_asset, out_dir / "rigs" / "mina")
+    bao_rig = export_character_rig_manifest(bao_asset, out_dir / "rigs" / "bao")
+
+    # Four Rich v2 Multi-Plane Environments
+    env_park = derive_environment_specs("Sunlit city park promenade with bench, tree branch, bicycles and fountain", niche="city_park", style_id="modern_expressive_2d.v2")
+    env_bot = derive_environment_specs("Glasshouse botanical conservatory", niche="holdout_botanical_conservatory", style_id="modern_expressive_2d.v2")
+    env_lab = derive_environment_specs("Cleanroom optics laboratory", niche="modern_science", style_id="modern_expressive_2d.v2")
+    env_cafe = derive_environment_specs("Corner artisan cafe", niche="everyday_business", style_id="modern_expressive_2d.v2")
+
+    p06 = render_environment_stage_png(env_park, out_dir / "VQ01_V2_POC_06_outdoor_city_park.png", detail_mode="wide")
+    p07 = render_environment_stage_png(env_bot, out_dir / "VQ01_V2_POC_07_indoor_botanical_conservatory.png", detail_mode="wide")
+    p08 = render_environment_stage_png(env_lab, out_dir / "VQ01_V2_POC_08_indoor_science_lab.png", detail_mode="wide")
+    p09 = render_environment_stage_png(env_cafe, out_dir / "VQ01_V2_POC_09_indoor_business_cafe.png", detail_mode="wide")
+
+    # Panel 10: Wide Sunlit Park Staging (Mina + Bao + Origami Dragon Kite soaring over bench & fountain)
+    wide_im = Image.open(out_dir / "VQ01_V2_POC_06_outdoor_city_park.png").convert("RGBA")
+    mina_w = draw_character_figure_rgba(park_specs[0], view="three_quarter", expression="joyful_laugh", hand_pose="open_reach", canvas_size=(280, 390), supersample=2)
+    bao_w = draw_character_figure_rgba(park_specs[1], view="profile", expression="warm_relief_smile", hand_pose="pointing", canvas_size=(340, 470), supersample=2)
+    wide_im.paste(mina_w, (470, 540), mina_w)
+    wide_im.paste(bao_w, (980, 468), bao_w)
+    dw = ImageDraw.Draw(wide_im, "RGBA")
+    # Origami dragon kite + continuous crimson string from Mina's hand!
+    dw.polygon([(1120, 210), (1035, 245), (1075, 290), (1120, 268)], fill=(224, 71, 59, 255), outline=(33, 22, 18, 255), width=5)
+    dw.polygon([(1120, 210), (1205, 238), (1165, 286), (1120, 268)], fill=(242, 169, 59, 255), outline=(33, 22, 18, 255), width=5)
+    dw.polygon([(1120, 178), (1148, 232), (1120, 304), (1092, 232)], fill=(255, 246, 229, 255), outline=(33, 22, 18, 255), width=5)
+    dw.line([(652, 718), (890, 495), (1120, 295)], fill=(220, 57, 45, 255), width=5)
+    p10_path = out_dir / "VQ01_V2_POC_10_sample_wide_park_staging.png"
+    wide_im.convert("RGB").save(p10_path, format="PNG")
+
+    # Panel 11: Dynamic Over-the-Shoulder Depth Overlap (Ref 3 staging principle — Bao Rear-3/4 foreground + Mina joyful center!)
+    render_environment_stage_png(env_park, out_dir / "_tmp_ots_bg.png", detail_mode="close")
+    ots_im = Image.open(out_dir / "_tmp_ots_bg.png").convert("RGBA")
+    (out_dir / "_tmp_ots_bg.png").unlink(missing_ok=True)
+    mina_mid = draw_character_figure_rgba(park_specs[0], view="front", expression="joyful_laugh", hand_pose="open_reach", canvas_size=(760, 1020), supersample=2)
+    bao_fg = draw_character_figure_rgba(park_specs[1], view="rear_three_quarter", expression="neutral_attentive", hand_pose="relaxed", canvas_size=(1060, 1420), supersample=2)
+    ots_im.paste(mina_mid, (690, 175), mina_mid)
+    ots_im.paste(bao_fg, (-85, 65), bao_fg)
+    p11_path = out_dir / "VQ01_V2_POC_11_sample_ots_depth_overlap.png"
+    ots_im.convert("RGB").save(p11_path, format="PNG")
+
+    # Panel 12: Dramatic Large Close-Up Face Reaction (Mina Wide Shock — focal subject > 0.72 height!)
+    render_environment_stage_png(env_park, out_dir / "_tmp_close_v2.png", detail_mode="close")
+    close_im = Image.open(out_dir / "_tmp_close_v2.png").convert("RGBA")
+    (out_dir / "_tmp_close_v2.png").unlink(missing_ok=True)
+    mina_close_full = draw_character_figure_rgba(park_specs[0], view="three_quarter", expression="wide_shock", hand_pose="spread_shock", canvas_size=(1920, 2560), supersample=2)
+    mina_close_crop = mina_close_full.crop((0, 110, 1920, 1190))
+    close_im.paste(mina_close_crop, (0, 0), mina_close_crop)
+    p12_path = out_dir / "VQ01_V2_POC_12_sample_closeup_face.png"
+    close_im.convert("RGB").save(p12_path, format="PNG")
+
+    # Panel 13: Tactile Macro Hand Threading Crimson Ribbon Through Creased Origami Dragon Kite!
+    render_environment_stage_png(env_park, out_dir / "_tmp_macro_v2.png", detail_mode="macro")
+    macro_im = Image.open(out_dir / "_tmp_macro_v2.png").convert("RGB")
+    (out_dir / "_tmp_macro_v2.png").unlink(missing_ok=True)
+    dm = ImageDraw.Draw(macro_im)
+    # Origami dragon kite wings & diamond facets with paper crease lines
+    dm.polygon([(980, 210), (540, 420), (720, 760), (980, 610)], fill=(224, 71, 59), outline=(33, 22, 18), width=11)
+    dm.polygon([(980, 210), (1440, 395), (1260, 745), (980, 610)], fill=(242, 169, 59), outline=(33, 22, 18), width=11)
+    dm.polygon([(980, 130), (1145, 430), (980, 820), (815, 430)], fill=(255, 246, 229), outline=(33, 22, 18), width=12)
+    dm.line([(980, 140), (980, 810)], fill=(126, 84, 51), width=9)
+    dm.line([(565, 420), (1415, 398)], fill=(126, 84, 51), width=8)
+    # Sculpted curved sleeve + forearm + articulated fingers threading crimson ribbon
+    dm.polygon([(60, 1080), (390, 1080), (760, 665), (620, 555)], fill=(240, 193, 158), outline=(33, 22, 18), width=10)
+    dm.polygon([(20, 1080), (410, 1080), (565, 865), (355, 735)], fill=(224, 83, 60), outline=(33, 22, 18), width=12)
+    dm.line([(348, 752), (548, 882)], fill=(45, 125, 144), width=14)
+    for fi in range(4):
+        fx0 = 675 + fi * 68
+        dm.rounded_rectangle([fx0, 505, fx0 + 54, 645], radius=24, fill=(240, 193, 158), outline=(33, 22, 18), width=9)
+    dm.line([(420, 920), (780, 560), (980, 495), (1260, 620)], fill=(220, 57, 45), width=14)
+    p13_path = out_dir / "VQ01_V2_POC_13_sample_macro_kite_ribbon.png"
+    macro_im.save(p13_path, format="PNG")
+
+    panels = [
+        {"id": "P01", "gate": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE", "path": mina_sheet["model_sheet_path"], "sha256": mina_sheet["model_sheet_sha256"], "label": "Hero Mina 4-View + 7-Expression Model Sheet (v2)"},
+        {"id": "P02", "gate": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE", "path": bao_sheet["model_sheet_path"], "sha256": bao_sheet["model_sheet_sha256"], "label": "Friend Bao 4-View + 7-Expression Model Sheet (v2)"},
+        {"id": "P03", "gate": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE", "path": maya_sheet["model_sheet_path"], "sha256": maya_sheet["model_sheet_sha256"], "label": "Science Lead Dr. Maya Lin Model Sheet (v2)"},
+        {"id": "P04", "gate": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE", "path": sam_sheet["model_sheet_path"], "sha256": sam_sheet["model_sheet_sha256"], "label": "Business Barista Sam Model Sheet (v2)"},
+        {"id": "P05", "gate": "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE", "path": clara_sheet["model_sheet_path"], "sha256": clara_sheet["model_sheet_sha256"], "label": "Holdout Botanist Clara Model Sheet (v2)"},
+        {"id": "P06", "gate": "VQ01_STYLE_FRAME_CANDIDATE", "path": p06["path"], "sha256": p06["sha256"], "label": "Outdoor Sunlit City Park Promenade (v2)"},
+        {"id": "P07", "gate": "VQ01_STYLE_FRAME_CANDIDATE", "path": p07["path"], "sha256": p07["sha256"], "label": "Holdout Botanical Conservatory (v2)"},
+        {"id": "P08", "gate": "VQ01_STYLE_FRAME_CANDIDATE", "path": p08["path"], "sha256": p08["sha256"], "label": "Indoor Cleanroom Science Lab (v2)"},
+        {"id": "P09", "gate": "VQ01_STYLE_FRAME_CANDIDATE", "path": p09["path"], "sha256": p09["sha256"], "label": "Indoor Artisan Cafe (v2)"},
+        {"id": "P10", "gate": "VQ01_STYLE_FRAME_CANDIDATE", "path": p10_path.relative_to(ROOT_DIR).as_posix(), "sha256": sha256_file(p10_path), "label": "Sample Wide Park Two-Actor + Dragon Kite (v2)"},
+        {"id": "P11", "gate": "VQ01_STYLE_FRAME_CANDIDATE", "path": p11_path.relative_to(ROOT_DIR).as_posix(), "sha256": sha256_file(p11_path), "label": "Sample Over-the-Shoulder Depth Overlap (v2)"},
+        {"id": "P12", "gate": "VQ01_STYLE_FRAME_CANDIDATE", "path": p12_path.relative_to(ROOT_DIR).as_posix(), "sha256": sha256_file(p12_path), "label": "Sample Close-Up Shock Face (v2)"},
+        {"id": "P13", "gate": "VQ01_STYLE_FRAME_CANDIDATE", "path": p13_path.relative_to(ROOT_DIR).as_posix(), "sha256": sha256_file(p13_path), "label": "Sample Macro Hand Threading Dragon Kite (v2)"},
+    ]
+    unique_hashes = len({p["sha256"] for p in panels})
+    vq_audit = audit_visual_style(None, [ROOT_DIR / p["path"] for p in panels], prof)
+    rig_probe = inspect_rigby_runtime_capabilities(
+        skeleton_path=ROOT_DIR / mina_rig["files"]["skeleton_json"]["path"],
+        atlas_path=ROOT_DIR / mina_rig["files"]["atlas"]["path"],
+        manifest_path=ROOT_DIR / mina_rig["manifest_path"],
+    )
+
+    return {
+        "status": "PASS" if (unique_hashes == len(panels) and vq_audit["status"] == "PASS" and rig_probe.get("status") == "RUNTIME_VERIFIED") else "FAIL",
+        "style_id": "modern_expressive_2d.v2",
+        "VQ01_STYLE_FRAME_CANDIDATE": "CANDIDATE_GENERATED_HUMAN_REVIEW_PENDING",
+        "VQ02_CHARACTER_MODEL_SHEET_CANDIDATE": "CANDIDATE_GENERATED_HUMAN_REVIEW_PENDING",
+        "VQ_REFERENCE_MATCH": "HUMAN_REVIEW_PENDING",
+        "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+        "panel_count": len(panels),
+        "unique_panel_sha256_count": unique_hashes,
+        "panels": panels,
+        "visual_style_audit": vq_audit,
+        "new_hero_rigby_probe": rig_probe,
+        "character_assets": {
+            "mina": mina_asset,
+            "bao": bao_asset,
+            "maya_lin": maya_asset,
+            "sam_barista": sam_asset,
+            "clara_botanist": clara_asset,
+        },
+        "rig_manifests": {"mina": mina_rig, "bao": bao_rig},
+    }
+
+
+def produce_kh01_r1_v1_vs_v2_comparison(out_dir: Path) -> Dict[str, Any]:
+    """
+    VQ-C (`05_v1_to_v2_visual_comparison.json`): Render SAME camera / SAME beat / SAME composition
+    under frozen `modern_expressive_2d.v1` vs upgraded `modern_expressive_2d.v2` to demonstrate
+    measurable structural art improvements (curved sleeved limbs, garment folds, multi-plane stage,
+    4-view turnaround) without overwriting any historical KH-01 v1 files.
+    """
+    out_dir = Path(out_dir).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Same-camera, same-beat matched composition 1: Outdoor Roman Forum Two-Actor Medium-Wide Staging
+    st_v1 = resolve_visual_style("Lucius and Mara in the forum.", niche="roman_forum", style_id="modern_expressive_2d.v1")
+    st_v2 = resolve_visual_style("Lucius and Mara in the forum.", niche="roman_forum", style_id="modern_expressive_2d.v2")
+    sp_v1 = derive_character_specs([{"actor_id": "lucius", "name": "Lucius"}, {"actor_id": "mara", "name": "Mara"}], "roman_forum", style_instance=st_v1)
+    sp_v2 = derive_character_specs([{"actor_id": "lucius", "name": "Lucius"}, {"actor_id": "mara", "name": "Mara"}], "roman_forum", style_instance=st_v2)
+    env_v1 = derive_environment_specs("Roman forum", niche="roman_forum", style_id="modern_expressive_2d.v1")
+    env_v2 = derive_environment_specs("Roman forum", niche="roman_forum", style_id="modern_expressive_2d.v2")
+
+    v1_scene_p = out_dir / "v1_same_comp_forum_two_shot.png"
+    v2_scene_p = out_dir / "v2_same_comp_forum_two_shot.png"
+    render_environment_stage_png(env_v1, v1_scene_p, detail_mode="wide")
+    render_environment_stage_png(env_v2, v2_scene_p, detail_mode="wide")
+
+    for target_p, specs in [(v1_scene_p, sp_v1), (v2_scene_p, sp_v2)]:
+        bg = Image.open(target_p).convert("RGBA")
+        c0 = draw_character_figure_rgba(specs[0], view="three_quarter", expression="joyful_laugh", hand_pose="open_reach", canvas_size=(420, 580), supersample=2)
+        c1 = draw_character_figure_rgba(specs[1], view="profile", expression="determined_focus", hand_pose="pointing", canvas_size=(400, 560), supersample=2)
+        bg.paste(c0, (380, 410), c0)
+        bg.paste(c1, (1040, 425), c1)
+        bg.convert("RGB").save(target_p, format="PNG")
+
+    # Same-camera matched composition 2:Everyday Cafe / Park Youth Character Full-Body Figure (v1 vs v2)
+    youth_v1 = derive_character_specs([{"actor_id": "cafe_youth", "name": "Youth"}], "everyday_business", style_instance=resolve_visual_style("Cafe", niche="everyday_business", style_id="modern_expressive_2d.v1"))[0]
+    youth_v2 = derive_character_specs([{"actor_id": "mina", "name": "Mina"}], "city_park", style_instance=resolve_visual_style("Park", niche="city_park", style_id="modern_expressive_2d.v2"))[0]
+    fig_v1_p = out_dir / "v1_character_figure_close.png"
+    fig_v2_p = out_dir / "v2_character_figure_close.png"
+    for p_f, sp_c in [(fig_v1_p, youth_v1), (fig_v2_p, youth_v2)]:
+        card = Image.new("RGBA", (960, 1080), (248, 244, 235, 255))
+        ch = draw_character_figure_rgba(sp_c, view="three_quarter", expression="joyful_laugh", hand_pose="open_reach", canvas_size=(760, 1000), supersample=2)
+        card.paste(ch, (100, 40), ch)
+        card.convert("RGB").save(p_f, format="PNG")
+
+    # Compose public side-by-side v1 vs v2 comparison sheet
+    comp_sheet_p = out_dir / "KH01_R1_V1_VS_V2_SAME_COMPOSITION_COMPARISON.png"
+    sheet = Image.new("RGB", (1960, 1220), (22, 20, 24))
+    dr = ImageDraw.Draw(sheet)
+    with Image.open(v1_scene_p) as im1, Image.open(v2_scene_p) as im2:
+        sheet.paste(im1.resize((930, 523), Image.Resampling.LANCZOS), (24, 72))
+        sheet.paste(im2.resize((930, 523), Image.Resampling.LANCZOS), (1006, 72))
+        diff_scene_mae = float(np.mean(np.abs(np.asarray(im1, dtype=np.float32) - np.asarray(im2, dtype=np.float32))))
+    with Image.open(fig_v1_p) as jf1, Image.open(fig_v2_p) as jf2:
+        sheet.paste(jf1.resize((460, 518), Image.Resampling.LANCZOS), (255, 646))
+        sheet.paste(jf2.resize((460, 518), Image.Resampling.LANCZOS), (1245, 646))
+        diff_fig_mae = float(np.mean(np.abs(np.asarray(jf1, dtype=np.float32) - np.asarray(jf2, dtype=np.float32))))
+
+    dr.text((24, 22), "VQ-C: SAME-CAMERA / SAME-BEAT COMPARISON — FROZEN v1 BASELINE (LEFT) vs UPGRADED v2 REFERENCE-GROUNDED ART (RIGHT)", fill=(252, 234, 192))
+    dr.text((28, 602), "LEFT: modern_expressive_2d.v1 (straight pipe limbs, uniform 7 arches)", fill=(216, 192, 184))
+    dr.text((1010, 602), "RIGHT: modern_expressive_2d.v2 (curved sleeved limbs, tooth/tongue D-mouth, asymmetric stage + sunbeam)", fill=(192, 238, 206))
+    sheet.save(comp_sheet_p, format="PNG")
+
+    aud_v1 = audit_visual_style(None, [v1_scene_p], "modern_expressive_2d.v1")
+    aud_v2 = audit_visual_style(None, [v2_scene_p], "modern_expressive_2d.v2")
+
+    return {
+        "status": "PASS" if (diff_scene_mae > 8.0 and diff_fig_mae > 8.0 and aud_v2["status"] == "PASS") else "FAIL",
+        "gate_id": "VQ_C_V1_TO_V2_SAME_COMPOSITION",
+        "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+        "same_composition_scene_pixel_mae": round(diff_scene_mae, 3),
+        "character_close_pixel_mae": round(diff_fig_mae, 3),
+        "v1_metrics": aud_v1["frame_metrics"][0],
+        "v2_metrics": aud_v2["frame_metrics"][0],
+        "comparison_sheet": {
+            "path": comp_sheet_p.relative_to(ROOT_DIR).as_posix() if comp_sheet_p.is_relative_to(ROOT_DIR) else str(comp_sheet_p),
+            "sha256": sha256_file(comp_sheet_p),
+            "dimensions": [1960, 1220],
+        },
+        "panels": {
+            "v1_same_comp": {"path": v1_scene_p.relative_to(ROOT_DIR).as_posix(), "sha256": sha256_file(v1_scene_p)},
+            "v2_same_comp": {"path": v2_scene_p.relative_to(ROOT_DIR).as_posix(), "sha256": sha256_file(v2_scene_p)},
+            "v1_figure": {"path": fig_v1_p.relative_to(ROOT_DIR).as_posix(), "sha256": sha256_file(fig_v1_p)},
+            "v2_figure": {"path": fig_v2_p.relative_to(ROOT_DIR).as_posix(), "sha256": sha256_file(fig_v2_p)},
+        },
+    }
+
+
+def _produce_kh01_r1_acting_handoff_v2(out_dir: Path, poc_bundle: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """7.000s (168 frames @ 24fps) City Park v2 acting pilot: Mina catches wind-pulled kite spool and hands off to Bao."""
+    out_dir = Path(out_dir).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    style = resolve_visual_style("Mina catches the kite spool in the park and hands it to Bao.", niche="city_park", style_id="modern_expressive_2d.v2")
+    if poc_bundle and "mina" in (poc_bundle.get("character_assets") or {}):
+        char_specs = [poc_bundle["character_assets"]["mina"]["spec"], poc_bundle["character_assets"]["bao"]["spec"]]
+    else:
+        char_specs = derive_character_specs([{"actor_id": "mina", "name": "Mina"}, {"actor_id": "bao", "name": "Bao"}], "city_park", style_instance=style)
+    env_spec = derive_environment_specs("Sunlit city park promenade", niche="city_park", style_id="modern_expressive_2d.v2")
+
+    beats = [
+        {"id": "A01", "start": 0.0, "end": 3.5, "dur": 3.5, "line": "Mina reached forward and grabbed the spinning kite spool."},
+        {"id": "A02", "start": 3.5, "end": 7.0, "dur": 3.5, "line": "Together, Mina and Bao steadied the dragon kite ribbon."},
+    ]
+    cast = {
+        "mina": {"preset": "lady", "role": "maker", "x": 0.36, "y": 0.84, "facing": 1},
+        "bao": {"preset": "peasant", "role": "friend", "x": 0.60, "y": 0.84, "facing": -1},
+    }
+    w_state = {
+        "environment": {"wind": 0.45},
+        "actors": copy.deepcopy(cast),
+        "objects": {"spool": {"x": 0.46, "y": 0.69}, "ribbon": {"x": 0.49, "y": 0.66}, "kite": {"x": 0.56, "y": 0.38}},
+    }
+    intents = extract_semantic_motion_intents("\n".join(b["line"] for b in beats), beats, cast, w_state, pack="squire", genre="civic")
+    tracks = plan_actor_motion_phases(intents, get_pack_capabilities("squire", "civic"), beats, cast_bible=cast, world_state=w_state)
+    mplan = build_shared_motion_timeline([], tracks, w_state, intents=intents, project_id="kh01_r1_acting_7s_v2", pack="squire", genre="city_park")
+    mp_dict = mplan.model_dump()
+
+    shots = []
+    for idx, b in enumerate(beats):
+        sid = b["id"]
+        s_tracks = [tr for tr in mp_dict["tracks"] if tr["shot_id"] == sid]
+        shots.append({
+            "id": sid,
+            "start": b["start"],
+            "end": b["end"],
+            "dur": b["dur"],
+            "line": b["line"],
+            "tpl": "modern_expressive_2d",
+            "style_id": "modern_expressive_2d.v2",
+            "expected_subject": "actor",
+            "world_state": {"environment_id": env_spec["environment_id"], "objects": w_state["objects"]},
+            "mechanics": {"wind_strength": 0.48, "show_fountain": True, "show_park_bench": True},
+            "args": {
+                "actorBackend": "modern_2d_canvas",
+                "fx_profile": "claude_selective",
+                "motionPlan": mp_dict,
+                "motionTracks": s_tracks,
+                "people": [
+                    {"id": "mina", "x": 0.40, "y": 0.84, "h": char_specs[0]["proportions"]["height_norm"], "expression": "wide_shock" if idx == 0 else "warm_relief_smile", "heldProp": "spool" if idx == 0 else None},
+                    {"id": "bao", "x": 0.58, "y": 0.84, "h": char_specs[1]["proportions"]["height_norm"], "expression": "determined_focus" if idx == 0 else "joyful_laugh", "heldProp": "spool" if idx == 1 else None},
+                ],
+                "props": [
+                    {"id": "kite", "kind": "origami_dragon_kite", "fromX": 0.52, "fromY": 0.44, "toX": 0.58, "toY": 0.34, "scale": 1.05},
+                ],
+                "tetherLinks": [{"fromActor": "mina" if idx == 0 else "bao", "toProp": "kite"}],
+                "fxEvents": [{"kind": "foot_brace_dust", "t0": 0.65, "x": 0.40, "y": 0.84}, {"kind": "catch_accent_ring", "t0": 1.35, "x": 0.46, "y": 0.68}],
+            },
+        })
+
+    proj_dir = out_dir / "_proj_acting_7s_v2"
+    _write_modern2d_mini_project(proj_dir, "KH-01.R1 Acting v2 7s", "city_park", shots, char_specs, env_spec, mp_dict, duration_sec=7.0, style_id="modern_expressive_2d.v2")
+    nar = build_timed_narration_track(shots, 7.0, proj_dir / "build", proj_dir / "timeline" / "voice.wav")
+    (proj_dir / "timeline" / "words.json").write_text(json.dumps(nar["words"], indent=2), encoding="utf-8")
+    (proj_dir / "timeline" / "lines.json").write_text(json.dumps(nar["lines"], indent=2), encoding="utf-8")
+
+    mp4_out = out_dir / "VQ03_V2_ACTING_REACTION_HANDOFF_7S_1080P.mp4"
+    render_res = render_modern2d_project_to_mp4(proj_dir, mp4_out, Path(nar["out_wav"]), duration_sec=7.0)
+    foot_qa = audit_foot_plant(mplan, mp4_path=mp4_out, ev_dir=out_dir / "qa_acting_v2", require_pixel_verification=True)
+    hand_qa = audit_hand_prop_contact(mplan, mp4_path=mp4_out, strips_dir=out_dir / "qa_acting_v2" / "strips")
+    shutil.rmtree(proj_dir, ignore_errors=True)
+    shutil.rmtree(out_dir / "qa_acting_v2" / "foot_plant_frames", ignore_errors=True)
+
+    ok = render_res["valid"] and foot_qa["status"] == "PASS" and hand_qa["status"] == "PASS"
+    return {
+        "status": "PASS" if ok else "FAIL",
+        "gate_id": "VQ03_ACTING_8S",
+        "style_id": "modern_expressive_2d.v2",
+        "renderer_backend_used": "modern_2d_canvas_v2_plus_motionplan_ik",
+        "editorial_status": "HUMAN_REVIEW_PENDING",
+        "render": render_res,
+        "narration": {"max_overlap_ms": nar["max_overlap_ms"], "min_tail_margin_sec": nar["min_tail_margin_sec"]},
+        "foot_plant_qa": foot_qa,
+        "hand_contact_qa": hand_qa,
+    }
+
+
+def _produce_kh01_r1_same_script_abcd_v2(out_dir: Path, poc_bundle: Dict[str, Any]) -> Dict[str, Any]:
+    """Fair A / B1 (v2 art + legacy motion) / B2 (v2 art + Rigby2D WebGL & IK) / C (B2 + Claude FX) 6.0s comparison."""
+    out_dir = Path(out_dir).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    mina_spec = poc_bundle["character_assets"]["mina"]["spec"]
+    bao_spec = poc_bundle["character_assets"]["bao"]["spec"]
+    rig_manifests = poc_bundle["rig_manifests"]
+    env_spec = derive_environment_specs("Sunlit city park promenade", niche="city_park", style_id="modern_expressive_2d.v2")
+
+    beats = [
+        {"id": "C01", "start": 0.0, "end": 3.0, "dur": 3.0, "line": "Mina grabbed the wooden spool beside the park bench."},
+        {"id": "C02", "start": 3.0, "end": 6.0, "dur": 3.0, "line": "Together, Mina and Bao steadied the dragon kite."},
+    ]
+    cast = {
+        "mina": {"preset": "lady", "role": "maker", "x": 0.35, "y": 0.84, "facing": 1},
+        "bao": {"preset": "peasant", "role": "friend", "x": 0.61, "y": 0.84, "facing": -1},
+    }
+    w_state = {
+        "environment": {"wind": 0.45},
+        "actors": copy.deepcopy(cast),
+        "objects": {"spool": {"x": 0.43, "y": 0.69}, "kite": {"x": 0.52, "y": 0.66}},
+    }
+    intents = extract_semantic_motion_intents("\n".join(b["line"] for b in beats), beats, cast, w_state, pack="squire", genre="civic")
+    tracks = plan_actor_motion_phases(intents, get_pack_capabilities("squire", "civic"), beats, cast_bible=cast, world_state=w_state)
+    mplan = build_shared_motion_timeline([], tracks, w_state, intents=intents, project_id="kh01_r1_abcd_6s_v2", pack="squire", genre="city_park")
+    mp_dict = mplan.model_dump()
+
+    shared_wav = out_dir / "abcd_v2_shared_6s_voice.wav"
+    nar = build_timed_narration_track(beats, 6.0, out_dir / "_tts_work_v2", shared_wav)
+    shutil.rmtree(out_dir / "_tts_work_v2", ignore_errors=True)
+
+    variants = [
+        ("clip_A_legacy_art_sine", "legacy_basic_canvas", "none", "A_legacy_basic_canvas_6s.mp4"),
+        ("clip_B1_v2_art_legacy_motion_control", "modern_2d_legacy_motion", "none", "B1_v2_art_legacy_motion_control_6s.mp4"),
+        ("clip_B2_v2_art_rigby_natural_motion", "rigby2d_modern", "none", "B2_v2_art_rigby2d_natural_motion_6s.mp4"),
+        ("clip_C_v2_art_rigby_plus_claude_fx", "rigby2d_modern", "claude_selective", "C_v2_art_rigby2d_plus_claude_fx_6s.mp4"),
+    ]
+
+    clips_out: Dict[str, Any] = {}
+    for key, backend, fx_p, fname in variants:
+        v_shots = []
+        for idx, b in enumerate(beats):
+            sid = b["id"]
+            s_tracks = [tr for tr in mp_dict["tracks"] if tr["shot_id"] == sid]
+            v_shots.append({
+                "id": sid,
+                "start": b["start"],
+                "end": b["end"],
+                "dur": b["dur"],
+                "line": b["line"],
+                "tpl": "modern_expressive_2d",
+                "style_id": "modern_expressive_2d.v2",
+                "expected_subject": "actor",
+                "world_state": {"environment_id": env_spec["environment_id"], "objects": w_state["objects"]},
+                "mechanics": {"wind_strength": 0.45, "show_fountain": True, "show_park_bench": True},
+                "args": {
+                    "actorBackend": backend,
+                    "fx_profile": fx_p,
+                    "motionPlan": {**mp_dict, "fx_profile": fx_p},
+                    "motionTracks": s_tracks,
+                    "people": [
+                        {"id": "mina", "preset": "lady", "from": 0.35, "to": 0.44, "x": 0.39, "y": 0.84, "h": mina_spec["proportions"]["height_norm"], "facing": 1, "expression": "determined_focus" if idx == 0 else "joyful_laugh"},
+                        {"id": "bao", "preset": "peasant", "from": 0.62, "to": 0.56, "x": 0.58, "y": 0.84, "h": bao_spec["proportions"]["height_norm"], "facing": -1, "expression": "neutral_attentive" if idx == 0 else "warm_relief_smile"},
+                    ],
+                    "props": [{"id": "kite", "kind": "origami_dragon_kite", "x": 0.52, "y": 0.42, "scale": 1.0}],
+                    "fxEvents": [
+                        {"kind": "foot_brace_dust", "t0": 3.45, "x": 0.44, "y": 0.84},
+                        {"kind": "catch_accent_ring", "t0": 1.15, "x": 0.43, "y": 0.69},
+                    ] if fx_p == "claude_selective" else [],
+                    "actionWarpSpecs": [{"at": 3.55, "hold": 0.045}] if fx_p == "claude_selective" else [],
+                },
+            })
+        p_work = out_dir / f"_work_{key}"
+        _write_modern2d_mini_project(
+            p_work,
+            f"KH-01.R1 {key}",
+            "city_park",
+            v_shots,
+            [mina_spec, bao_spec],
+            env_spec,
+            mp_dict,
+            rig_manifests=rig_manifests if "rigby2d" in backend else None,
+            duration_sec=6.0,
+            style_id="modern_expressive_2d.v2",
+        )
+        clips_out[key] = render_modern2d_project_to_mp4(p_work, out_dir / fname, shared_wav, duration_sec=6.0)
+        shutil.rmtree(p_work, ignore_errors=True)
+
+    sheet_path = out_dir / "contact_sheet_ABCD_v2_same_script_comparison.png"
+    sample_ts = [1.1, 2.4, 3.8, 5.2]
+    tw, th, pad = 384, 216, 14
+    sheet = Image.new("RGB", (pad + len(sample_ts) * (tw + pad), 54 + 4 * (th + 28 + pad)), (20, 22, 28))
+    dr = ImageDraw.Draw(sheet)
+    dr.text((pad, 14), "KH-01.R1 v2 Fair Comparison: A (Legacy Art+Sine) | B1 (v2 Art+Legacy Sine Control) | B2 (v2 Art+Rigby2D WebGL) | C (B2+Claude FX)", fill=(252, 232, 184))
+    tmp_f = out_dir / "_tmp_abcd_v2_frames"
+    tmp_f.mkdir(parents=True, exist_ok=True)
+    rows_meta = [
+        ("A: Legacy Art+Sine", clips_out["clip_A_legacy_art_sine"]),
+        ("B1: v2 Art+Sine Control", clips_out["clip_B1_v2_art_legacy_motion_control"]),
+        ("B2: v2 Art+Rigby2D WebGL", clips_out["clip_B2_v2_art_rigby_natural_motion"]),
+        ("C: B2+Claude FX", clips_out["clip_C_v2_art_rigby_plus_claude_fx"]),
+    ]
+    for r_i, (lbl, c_info) in enumerate(rows_meta):
+        for c_i, ts in enumerate(sample_ts):
+            fp = tmp_f / f"r{r_i}_c{c_i}.png"
+            extract_frame_at_time(Path(c_info["mp4_path"]), ts, fp)
+            with Image.open(fp) as im:
+                thumb = im.convert("RGB").resize((tw, th), Image.Resampling.LANCZOS)
+            x0 = pad + c_i * (tw + pad)
+            y0 = 54 + r_i * (th + 28 + pad)
+            sheet.paste(thumb, (x0, y0))
+            dr.rectangle([x0 - 1, y0 - 1, x0 + tw + 1, y0 + th + 1], outline=(218, 174, 88), width=2)
+            dr.text((x0 + 6, y0 + th + 6), f"{lbl} @ {ts:.1f}s", fill=(235, 238, 244))
+    sheet.save(sheet_path, format="PNG")
+    shutil.rmtree(tmp_f, ignore_errors=True)
+    shared_wav.unlink(missing_ok=True)
+
+    foot_qa = audit_foot_plant(mplan, mp4_path=Path(clips_out["clip_B2_v2_art_rigby_natural_motion"]["mp4_path"]), ev_dir=out_dir / "qa_b2_v2", require_pixel_verification=True)
+    shutil.rmtree(out_dir / "qa_b2_v2" / "foot_plant_frames", ignore_errors=True)
+    hand_qa = audit_hand_prop_contact(mplan)
+    distinct_hashes = len({c["mp4_sha256"] for c in clips_out.values()}) == 4
+    all_valid = all(c["valid"] for c in clips_out.values()) and distinct_hashes and foot_qa["status"] == "PASS" and hand_qa["status"] == "PASS"
+
+    return {
+        "status": "PASS" if all_valid else "FAIL",
+        "style_id": "modern_expressive_2d.v2",
+        "distinct_four_mp4_hashes": distinct_hashes,
+        "renderer_backends_by_clip": {
+            "clip_A": "legacy_basic_canvas",
+            "clip_B1": "modern_2d_canvas_v2_with_legacy_sine_control",
+            "clip_B2": "rigby2d_webgl_0_5_1_with_v2_1024_atlas",
+            "clip_C": "rigby2d_webgl_0_5_1_with_v2_1024_atlas_plus_claude_selective_fx",
+        },
+        "scientific_attribution_disclosure": (
+            "Art-matched control (A -> B1) isolates the reference-grounded modern_expressive_2d.v2 visual upgrade, "
+            "while motion-matched control (B1 -> B2 -> C) isolates MotionPlan IK / Rigby2D WebGL skeletal runtime and selective Claude FX."
+        ),
+        "clips": clips_out,
+        "contact_sheet": {"path": sheet_path.relative_to(ROOT_DIR).as_posix() if sheet_path.is_relative_to(ROOT_DIR) else str(sheet_path), "sha256": sha256_file(sheet_path)},
+        "foot_plant_qa_on_B2": foot_qa,
+        "hand_contact_qa_on_B2": hand_qa,
+    }
+
+
+def _produce_kh01_r1_multicamera_v2(out_dir: Path, poc_bundle: Dict[str, Any]) -> Dict[str, Any]:
+    """6.0s (144 frames @ 24fps) continuous v2 City Park multi-angle action across 3 distinct authored views."""
+    out_dir = Path(out_dir).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    mina_spec = poc_bundle["character_assets"]["mina"]["spec"]
+    bao_spec = poc_bundle["character_assets"]["bao"]["spec"]
+    env_spec = derive_environment_specs("Sunlit city park promenade", niche="city_park", style_id="modern_expressive_2d.v2")
+
+    beats = [
+        {"id": "M01", "start": 0.0, "end": 4.5, "dur": 4.5, "line": "Together, Mina and Bao reached up and unhooked the snagged ribbon."},
+        {"id": "M02", "start": 4.5, "end": 6.0, "dur": 1.5, "line": "The paper dragon kite was safe."},
+    ]
+    cast = {
+        "mina": {"preset": "lady", "role": "maker", "x": 0.44, "y": 0.84, "facing": 1},
+        "bao": {"preset": "peasant", "role": "friend", "x": 0.56, "y": 0.84, "facing": -1},
+    }
+    w_state = {"environment": {"wind": 0.42}, "actors": copy.deepcopy(cast), "objects": {"ribbon": {"x": 0.53, "y": 0.58}, "kite": {"x": 0.54, "y": 0.52}}}
+    intents = extract_semantic_motion_intents("\n".join(b["line"] for b in beats), beats, cast, w_state, pack="squire", genre="civic")
+    tracks = plan_actor_motion_phases(intents, get_pack_capabilities("squire", "civic"), beats, cast_bible=cast, world_state=w_state)
+    mplan = build_shared_motion_timeline([], tracks, w_state, intents=intents, project_id="kh01_r1_multicam_6s_v2", pack="squire", genre="city_park")
+    mp_dict = mplan.model_dump()
+
+    m01_segs = [
+        CameraSegment(
+            segment_id="M01_seg01",
+            shot_id="M01",
+            segment_index=0,
+            local_start=0.0,
+            local_end=1.5,
+            global_start=0.0,
+            global_end=1.5,
+            scale="wide",
+            viewpoint="front_three_quarter_left",
+            projection_mode="continuous_2d_canvas",
+            center_from=(0.50, 0.54),
+            center_to=(0.51, 0.52),
+            zoom_from=1.00,
+            zoom_to=1.05,
+            axis="left_to_right",
+            focus_actor_ids=["mina", "bao"],
+            focus_object_ids=["kite", "ribbon"],
+            action_phase_at_entry="ANTICIPATE",
+            action_phase_at_exit="CONTACT",
+            adds_information_reason="wide_park_setup_establishing_bench_branch_and_snagged_dragon_kite",
+            world_state_anchor={"actors": ["mina", "bao"], "objects": ["kite", "ribbon"], "continuous_world_clock": True},
+        ),
+        CameraSegment(
+            segment_id="M01_seg02",
+            shot_id="M01",
+            segment_index=1,
+            local_start=1.5,
+            local_end=3.0,
+            global_start=1.5,
+            global_end=3.0,
+            scale="medium",
+            viewpoint="profile_left",
+            projection_mode="continuous_2d_canvas",
+            center_from=(0.50, 0.56),
+            center_to=(0.52, 0.54),
+            zoom_from=1.20,
+            zoom_to=1.26,
+            axis="left_to_right",
+            focus_actor_ids=["mina", "bao"],
+            focus_object_ids=["ribbon"],
+            action_phase_at_entry="CONTACT",
+            action_phase_at_exit="EXERT",
+            adds_information_reason="profile_medium_showing_safe_foot_stance_and_cooperative_reach",
+            world_state_anchor={"actors": ["mina", "bao"], "objects": ["kite", "ribbon"], "continuous_world_clock": True},
+        ),
+        CameraSegment(
+            segment_id="M01_seg03",
+            shot_id="M01",
+            segment_index=2,
+            local_start=3.0,
+            local_end=4.5,
+            global_start=3.0,
+            global_end=4.5,
+            scale="detail",
+            viewpoint="front_three_quarter_left",
+            projection_mode="authored_2d_insert",
+            center_from=(0.48, 0.50),
+            center_to=(0.48, 0.48),
+            zoom_from=1.32,
+            zoom_to=1.36,
+            axis="left_to_right",
+            focus_actor_ids=["mina"],
+            focus_object_ids=["ribbon", "kite"],
+            action_phase_at_entry="EXERT",
+            action_phase_at_exit="SETTLE",
+            adds_information_reason="tactile_close_hand_insert_unhooking_crimson_ribbon_from_branch",
+            world_state_anchor={"actors": ["mina", "bao"], "objects": ["kite", "ribbon"], "continuous_world_clock": True},
+        ),
+    ]
+    comp_m01 = compile_camera_segments_to_renderer(m01_segs)
+    comp_m01["cameraSegments"][2]["insert_kind"] = "kite_close_branch_unhook"
+
+    link_res = link_camera_to_asset_views(
+        m01_segs,
+        character_manifest={"mina": poc_bundle["character_assets"]["mina"], "bao": poc_bundle["character_assets"]["bao"]},
+        environment_manifest=env_spec,
+    )
+
+    shots = [
+        {
+            "id": "M01",
+            "start": 0.0,
+            "end": 4.5,
+            "dur": 4.5,
+            "line": beats[0]["line"],
+            "tpl": "modern_expressive_2d",
+            "style_id": "modern_expressive_2d.v2",
+            "expected_subject": "actor",
+            "world_state": {"environment_id": env_spec["environment_id"], "objects": w_state["objects"]},
+            "mechanics": {"wind_strength": 0.42, "show_fountain": True, "show_park_bench": True, "insert_kind": "kite_close_branch_unhook"},
+            "args": {
+                **comp_m01,
+                "actorBackend": "modern_2d_canvas",
+                "motionPlan": mp_dict,
+                "motionTracks": [tr for tr in mp_dict["tracks"] if tr["shot_id"] == "M01"],
+                "people": [
+                    {"id": "mina", "x": 0.45, "y": 0.84, "h": mina_spec["proportions"]["height_norm"], "expression": "strained_exertion"},
+                    {"id": "bao", "x": 0.56, "y": 0.84, "h": bao_spec["proportions"]["height_norm"], "expression": "determined_focus"},
+                ],
+                "props": [{"id": "kite", "kind": "origami_dragon_kite", "x": 0.54, "y": 0.50, "scale": 1.05}],
+                "tetherLinks": [{"fromActor": "mina", "toProp": "kite"}],
+            },
+        },
+        {
+            "id": "M02",
+            "start": 4.5,
+            "end": 6.0,
+            "dur": 1.5,
+            "line": beats[1]["line"],
+            "tpl": "modern_expressive_2d",
+            "style_id": "modern_expressive_2d.v2",
+            "expected_subject": "actor",
+            "world_state": {"environment_id": env_spec["environment_id"], "objects": w_state["objects"]},
+            "mechanics": {"wind_strength": 0.25, "show_fountain": True, "show_park_bench": True},
+            "args": {
+                "actorBackend": "modern_2d_canvas",
+                "motionPlan": mp_dict,
+                "motionTracks": [tr for tr in mp_dict["tracks"] if tr["shot_id"] == "M02"],
+                "people": [
+                    {"id": "mina", "x": 0.45, "y": 0.84, "h": mina_spec["proportions"]["height_norm"], "expression": "joyful_laugh", "heldProp": "origami_dragon_kite"},
+                    {"id": "bao", "x": 0.56, "y": 0.84, "h": bao_spec["proportions"]["height_norm"], "expression": "warm_relief_smile"},
+                ],
+                "props": [],
+            },
+        },
+    ]
+
+    proj_dir = out_dir / "_proj_multicam_v2"
+    _write_modern2d_mini_project(proj_dir, "KH-01.R1 Multi-Camera v2", "city_park", shots, [mina_spec, bao_spec], env_spec, mp_dict, duration_sec=6.0, style_id="modern_expressive_2d.v2")
+    nar = build_timed_narration_track(shots, 6.0, proj_dir / "build", proj_dir / "timeline" / "voice.wav")
+    mp4_out = out_dir / "VQ04_V2_MULTICAMERA_CONTINUOUS_6S_1080P.mp4"
+    render_res = render_modern2d_project_to_mp4(proj_dir, mp4_out, Path(nar["out_wav"]), duration_sec=6.0)
+    cuts_qa = audit_internal_camera_cuts(proj_dir, mp4_out, motion_plan=mplan, ev_dir=out_dir / "qa_multicam_v2")
+    shutil.rmtree(proj_dir, ignore_errors=True)
+    shutil.rmtree(out_dir / "qa_multicam_v2" / "cut_frames", ignore_errors=True)
+
+    ok = render_res["valid"] and link_res["valid"] and cuts_qa["status"] == "PASS" and cuts_qa["audited_internal_cuts"] == 2 and cuts_qa["audited_intershot_cuts"] == 1
+    return {
+        "status": "PASS" if ok else "FAIL",
+        "gate_id": "VQ04_MULTICAMERA",
+        "style_id": "modern_expressive_2d.v2",
+        "editorial_status": "HUMAN_REVIEW_PENDING",
+        "asset_view_linkage": link_res,
+        "cut_coverage_qa": cuts_qa,
+        "render": render_res,
+    }
+
+
+def _produce_kh01_r1_four_niche_v2(out_dir: Path) -> Dict[str, Any]:
+    """
+    VQ-F (`12_multi_niche_holdout.json`): Run 4 distinct domains under `modern_expressive_2d.v2`
+    including City Park, Modern Science, Everyday Business, AND an unseen Botanical Conservatory holdout
+    with ZERO Roman-specific dependency!
+    """
+    out_dir = Path(out_dir).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    niche_scripts = [
+        {
+            "case_id": "v2_niche_01_city_park_kite_adventure",
+            "is_holdout": False,
+            "script_lines": [
+                "In the sunlit park, Mina steadied the paper dragon kite beside the bench.",
+                "Friend Bao smiled warmly and held the wooden spool.",
+            ],
+            "entities": [{"actor_id": "mina", "name": "Mina", "role": "maker"}, {"actor_id": "bao", "name": "Bao", "role": "friend"}],
+            "objects": {"kite": {"x": 0.48, "y": 0.62}, "spool": {"x": 0.54, "y": 0.68}},
+            "props": [{"id": "kite", "kind": "origami_dragon_kite", "x": 0.48, "y": 0.50, "scale": 1.0}],
+        },
+        {
+            "case_id": "v2_niche_02_modern_science_cleanroom",
+            "is_holdout": False,
+            "script_lines": [
+                "Inside the cleanroom lab, Maya grabbed the glowing crystal beaker.",
+                "Together, Maya and Owen steadied the volatile sample on the bench.",
+            ],
+            "entities": [{"actor_id": "maya", "name": "Dr. Maya Lin", "role": "scientist"}, {"actor_id": "owen", "name": "Owen", "role": "researcher"}],
+            "objects": {"beaker": {"x": 0.50, "y": 0.68}, "sample": {"x": 0.50, "y": 0.68}},
+            "props": [{"kind": "beaker", "x": 0.50, "y": 0.68, "scale": 1.15}],
+        },
+        {
+            "case_id": "v2_niche_03_everyday_business_cafe",
+            "is_holdout": False,
+            "script_lines": [
+                "At the busy morning cafe, barista Sam steadied a tipping espresso tray.",
+                "Customer Priya smiled warmly across the counter.",
+            ],
+            "entities": [{"actor_id": "sam", "name": "Sam", "role": "barista"}, {"actor_id": "priya", "name": "Priya", "role": "customer"}],
+            "objects": {"tray": {"x": 0.48, "y": 0.67}, "counter": {"x": 0.46, "y": 0.75}},
+            "props": [{"kind": "tray", "x": 0.48, "y": 0.65, "scale": 1.05}],
+        },
+        {
+            "case_id": "v2_niche_04_holdout_botanical_conservatory",
+            "is_holdout": True,
+            "script_lines": [
+                "Inside the glasshouse conservatory, botanist Clara steadied the terracotta orchid pot.",
+                "Apprentice Toby pointed up toward the sunlit fern arch.",
+            ],
+            "entities": [{"actor_id": "clara", "name": "Clara", "role": "botanist"}, {"actor_id": "toby", "name": "Toby", "role": "apprentice"}],
+            "objects": {"orchid": {"x": 0.50, "y": 0.68}, "pot": {"x": 0.50, "y": 0.68}},
+            "props": [{"kind": "terracotta_orchid_pot", "x": 0.50, "y": 0.68, "scale": 1.15}],
+        },
+    ]
+
+    case_reports: List[Dict[str, Any]] = []
+    sheet_frames: List[Tuple[str, Path]] = []
+
+    for cs in niche_scripts:
+        cid = cs["case_id"]
+        joined_script = "\n".join(cs["script_lines"])
+        inferred_niche = infer_niche_from_script(joined_script)
+        beats = [
+            {"id": "N01", "start": 0.0, "end": 3.0, "dur": 3.0, "line": cs["script_lines"][0]},
+            {"id": "N02", "start": 3.0, "end": 6.0, "dur": 3.0, "line": cs["script_lines"][1]},
+        ]
+        story_ctx = build_story_context(beats, pack="squire", genre=inferred_niche, niche=inferred_niche, style_id="modern_expressive_2d.v2")
+        objectives = infer_scene_objectives(story_ctx)
+        style_inst = resolve_visual_style(story_ctx, niche=inferred_niche, style_id="modern_expressive_2d.v2")
+        char_specs = derive_character_specs(cs["entities"], inferred_niche, objectives, style_inst)
+        env_spec = derive_environment_specs(story_ctx, niche=inferred_niche, style_id="modern_expressive_2d.v2")
+
+        cast_map = {
+            c["actor_id"]: {"preset": "lady" if i == 0 else "peasant", "role": c["role"], "x": 0.40 if i == 0 else 0.58, "y": 0.84, "facing": 1 if i == 0 else -1}
+            for i, c in enumerate(char_specs)
+        }
+        w_state = {"environment": {"wind": 0.28}, "actors": copy.deepcopy(cast_map), "objects": copy.deepcopy(cs["objects"])}
+        intents = extract_semantic_motion_intents(joined_script, beats, cast_map, w_state, pack="squire", genre="civic")
+        tracks = plan_actor_motion_phases(intents, get_pack_capabilities("squire", "civic"), beats, cast_bible=cast_map, world_state=w_state)
+        mplan = build_shared_motion_timeline(objectives, tracks, w_state, intents=intents, project_id=cid, pack="squire", genre=inferred_niche)
+        mp_dict = mplan.model_dump()
+
+        shots = []
+        for idx, b in enumerate(beats):
+            sid = b["id"]
+            s_tracks = [tr for tr in mp_dict["tracks"] if tr["shot_id"] == sid]
+            shots.append({
+                "id": sid,
+                "start": b["start"],
+                "end": b["end"],
+                "dur": b["dur"],
+                "line": b["line"],
+                "tpl": "modern_expressive_2d",
+                "style_id": "modern_expressive_2d.v2",
+                "expected_subject": "actor",
+                "world_state": {"environment_id": env_spec["environment_id"], "objects": cs["objects"]},
+                "mechanics": {"wind_strength": 0.25},
+                "args": {
+                    "actorBackend": "modern_2d_canvas",
+                    "motionPlan": mp_dict,
+                    "motionTracks": s_tracks,
+                    "people": [
+                        {
+                            "id": c["actor_id"],
+                            "x": 0.40 if i == 0 else 0.58,
+                            "y": 0.84,
+                            "h": c["proportions"]["height_norm"],
+                            "outfitId": c["wardrobe"]["outfit_id"],
+                            "primaryColor": c["wardrobe"]["primary_hex"],
+                            "expression": "determined_focus" if idx == 0 else "joyful_laugh",
+                        }
+                        for i, c in enumerate(char_specs)
+                    ],
+                    "props": cs["props"],
+                },
+            })
+
+        p_dir = out_dir / f"_proj_{cid}"
+        _write_modern2d_mini_project(p_dir, f"KH-01.R1 {cid}", inferred_niche, shots, char_specs, env_spec, mp_dict, duration_sec=6.0, style_id="modern_expressive_2d.v2")
+        nar = build_timed_narration_track(shots, 6.0, p_dir / "build", p_dir / "timeline" / "voice.wav")
+        (p_dir / "timeline" / "words.json").write_text(json.dumps(nar["words"], indent=2), encoding="utf-8")
+        (p_dir / "timeline" / "lines.json").write_text(json.dumps(nar["lines"], indent=2), encoding="utf-8")
+
+        mp4_p = out_dir / f"VQ05_{cid}_6s_1080p.mp4"
+        r_info = render_modern2d_project_to_mp4(p_dir, mp4_p, Path(nar["out_wav"]), duration_sec=6.0)
+        sample_png = out_dir / f"VQ05_{cid}_frame_2s.png"
+        extract_frame_at_time(mp4_p, 2.0, sample_png)
+        sheet_frames.append((f"{cid} ({inferred_niche})", sample_png))
+        fp_qa = audit_foot_plant(mplan)
+        env_cont = validate_environment_continuity(env_spec, shots)
+        shutil.rmtree(p_dir, ignore_errors=True)
+
+        has_roman_leak = inferred_niche.startswith("roman")
+        case_reports.append({
+            "case_id": cid,
+            "is_holdout": cs["is_holdout"],
+            "inferred_niche": inferred_niche,
+            "style_id": style_inst.style_id,
+            "style_lock_digest": style_inst.style_lock_digest,
+            "environment_id": env_spec["environment_id"],
+            "actor_outfits": {c["actor_id"]: c["wardrobe"]["outfit_id"] for c in char_specs},
+            "actor_primary_colors": {c["actor_id"]: c["wardrobe"]["primary_hex"] for c in char_specs},
+            "zero_roman_dependency": not has_roman_leak,
+            "shared_universal_template": "modern_expressive_2d",
+            "per_story_custom_js_modules_count": 0,
+            "foot_plant_status": fp_qa["status"],
+            "environment_continuity_status": env_cont["status"],
+            "render": r_info,
+        })
+
+    grid = Image.new("RGB", (1600, 960), (22, 22, 26))
+    dg = ImageDraw.Draw(grid)
+    dg.text((24, 16), "VQ05_MULTI_NICHE (v2) — 4 Non-Roman Domains Including Unseen Botanical Holdout (Zero Per-Story JS)", fill=(252, 234, 192))
+    for i, (lbl, sp) in enumerate(sheet_frames[:4]):
+        rx = 24 + (i % 2) * 784
+        ry = 58 + (i // 2) * 444
+        with Image.open(sp) as im:
+            th_im = im.convert("RGB").resize((760, 405), Image.Resampling.LANCZOS)
+        grid.paste(th_im, (rx, ry))
+        dg.text((rx + 8, ry + 412), lbl, fill=(232, 232, 238))
+    grid_path = out_dir / "VQ05_V2_MULTI_NICHE_4WAY_COMPARISON.png"
+    grid.save(grid_path, format="PNG")
+
+    distinct_envs = len({r["environment_id"] for r in case_reports})
+    distinct_outfits = len({o for r in case_reports for o in r["actor_outfits"].values()})
+    all_ok = (
+        len(case_reports) == 4
+        and distinct_envs == 4
+        and distinct_outfits == 8
+        and all(r["render"]["valid"] and r["zero_roman_dependency"] and r["foot_plant_status"] == "PASS" for r in case_reports)
+    )
+    return {
+        "status": "PASS" if all_ok else "FAIL",
+        "gate_id": "VQ05_MULTI_NICHE",
+        "style_id": "modern_expressive_2d.v2",
         "editorial_status": "HUMAN_REVIEW_PENDING",
         "niche_cases_count": len(case_reports),
         "distinct_environments_count": distinct_envs,

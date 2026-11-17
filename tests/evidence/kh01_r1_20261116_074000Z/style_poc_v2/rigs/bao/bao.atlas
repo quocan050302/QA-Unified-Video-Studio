@@ -1,0 +1,98 @@
+bao.png
+size: 1024, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+pma: false
+torso_tunic
+  rotate: false
+  bounds: 16, 16, 168, 224
+  offsets: 0, 0, 168, 224
+cloak_back
+  rotate: false
+  bounds: 200, 16, 152, 232
+  offsets: 0, 0, 152, 232
+upper_arm_r
+  rotate: false
+  bounds: 368, 16, 68, 118
+  offsets: 0, 0, 68, 118
+lower_arm_r
+  rotate: false
+  bounds: 448, 16, 62, 112
+  offsets: 0, 0, 62, 112
+hand_r
+  rotate: false
+  bounds: 524, 16, 56, 56
+  offsets: 0, 0, 56, 56
+hand_r_grip
+  rotate: false
+  bounds: 592, 16, 56, 56
+  offsets: 0, 0, 56, 56
+upper_arm_l
+  rotate: false
+  bounds: 368, 148, 68, 118
+  offsets: 0, 0, 68, 118
+lower_arm_l
+  rotate: false
+  bounds: 448, 148, 62, 112
+  offsets: 0, 0, 62, 112
+hand_l
+  rotate: false
+  bounds: 524, 148, 56, 56
+  offsets: 0, 0, 56, 56
+upper_leg_r
+  rotate: false
+  bounds: 16, 264, 78, 136
+  offsets: 0, 0, 78, 136
+lower_leg_r
+  rotate: false
+  bounds: 108, 264, 68, 128
+  offsets: 0, 0, 68, 128
+sandal_r
+  rotate: false
+  bounds: 190, 264, 98, 54
+  offsets: 0, 0, 98, 54
+upper_leg_l
+  rotate: false
+  bounds: 304, 264, 78, 136
+  offsets: 0, 0, 78, 136
+lower_leg_l
+  rotate: false
+  bounds: 396, 264, 68, 128
+  offsets: 0, 0, 68, 128
+sandal_l
+  rotate: false
+  bounds: 478, 264, 98, 54
+  offsets: 0, 0, 98, 54
+head_neutral_attentive
+  rotate: false
+  bounds: 16, 432, 220, 228
+  offsets: 0, 0, 220, 228
+head_wide_shock
+  rotate: false
+  bounds: 256, 432, 220, 228
+  offsets: 0, 0, 220, 228
+head_strained_exertion
+  rotate: false
+  bounds: 496, 432, 220, 228
+  offsets: 0, 0, 220, 228
+head_determined_focus
+  rotate: false
+  bounds: 736, 432, 220, 228
+  offsets: 0, 0, 220, 228
+head_joyful_laugh
+  rotate: false
+  bounds: 16, 680, 220, 228
+  offsets: 0, 0, 220, 228
+head_deadpan_disbelief
+  rotate: false
+  bounds: 256, 680, 220, 228
+  offsets: 0, 0, 220, 228
+head_warm_relief_smile
+  rotate: false
+  bounds: 496, 680, 220, 228
+  offsets: 0, 0, 220, 228
+head
+  rotate: false
+  bounds: 16, 432, 220, 228
+  offsets: 0, 0, 220, 228

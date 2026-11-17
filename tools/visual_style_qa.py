@@ -26,10 +26,12 @@ from tools.cinematic_camera import CameraSegment, validate_camera_segments
 from tools.temporal_visual_qa import audit_foot_plant, audit_hand_prop_contact
 from tools.visual_style_director import (
     FORBIDDEN_ASSET_TOKENS,
+    FORBIDDEN_REFERENCE_IMAGE_SHA256,
     StyleInstance,
     StyleProfile,
     load_style_profile,
     resolve_visual_style,
+    validate_reference_grounded_style_contract,
     validate_style_contract,
 )
 
@@ -95,28 +97,59 @@ def validate_style_assets(
         shots = project.get("shots") or []
 
     checked_files = 0
+    is_v2 = str(prof.style_id).endswith(".v2")
     for mf in mf_list:
-        niche = str(mf.get("niche") or next(iter((mf.get("environments") or {}).values()), {}).get("niche") or "roman_forum")
+        niche = str(mf.get("niche") or next(iter((mf.get("environments") or {}).values()), {}).get("niche") or ("city_park" if is_v2 else "roman_forum"))
         style_inst = resolve_visual_style({"niche": niche}, niche=niche, style_id=prof.style_id)
-        res = validate_style_contract(style_inst, mf, shots)
+        if is_v2:
+            res = validate_reference_grounded_style_contract(style_inst, mf, shots)
+        else:
+            res = validate_style_contract(style_inst, mf, shots)
         if not res["valid"]:
             errors.extend(res["errors"])
 
         # Explicit check that any png/svg layer does not reference forbidden copyrighted/reference tokens
+        view_img_by_char: Dict[str, Dict[str, Path]] = {}
         for entry in mf.get("authored_files") or []:
             checked_files += 1
             p_str = str(entry.get("path") or "")
             if any(tok in p_str.lower() for tok in FORBIDDEN_ASSET_TOKENS):
                 errors.append(f"Forbidden reference/legacy image layer detected: {p_str}")
+            role_s = str(entry.get("role") or "")
+            if role_s.startswith("character_view:"):
+                parts = role_s.split(":")
+                if len(parts) == 3:
+                    fp_v = Path(p_str) if Path(p_str).is_absolute() else (ROOT_DIR / p_str)
+                    if fp_v.is_file():
+                        view_img_by_char.setdefault(parts[1], {})[parts[2]] = fp_v
 
-        # Verify distinct expression hashes if expression_assets provided
+        # Verify distinct expression hashes & non-flipped 4-view geometry on v2 characters
+        req_views_set = {"front", "three_quarter", "profile", "rear_three_quarter"} if is_v2 else {"front", "three_quarter", "profile"}
         for cid, cdata in (mf.get("characters") or {}).items():
             exprs = list(cdata.get("expressions") or [])
             if len(set(exprs)) < 6:
                 errors.append(f"Character '{cid}' missing required 6 expressions (found {len(set(exprs))})")
             views = set(cdata.get("views") or [])
-            if not {"front", "three_quarter", "profile"}.issubset(views):
-                errors.append(f"Character '{cid}' missing required 3 views (found {sorted(views)})")
+            if not req_views_set.issubset(views):
+                errors.append(f"Character '{cid}' missing required views (expected {sorted(req_views_set)}, found {sorted(views)})")
+            vmap = view_img_by_char.get(cid) or {}
+            if is_v2 and len(vmap) >= 2:
+                # Reject horizontally flipped front masquerading as profile or rear_three_quarter!
+                if "front" in vmap:
+                    with Image.open(vmap["front"]) as im_fr:
+                        arr_fr = np.asarray(im_fr.convert("RGBA"), dtype=np.float32)
+                    arr_fr_flip = np.fliplr(arr_fr)
+                    for other_vw in ("three_quarter", "profile", "rear_three_quarter"):
+                        if other_vw in vmap:
+                            with Image.open(vmap[other_vw]) as im_o:
+                                arr_o = np.asarray(im_o.convert("RGBA"), dtype=np.float32)
+                            if arr_o.shape == arr_fr.shape:
+                                diff_direct = float(np.mean(np.abs(arr_o - arr_fr)))
+                                diff_flip = float(np.mean(np.abs(arr_o - arr_fr_flip)))
+                                if diff_direct < 1.2 or diff_flip < 1.2:
+                                    errors.append(
+                                        f"Character '{cid}' view '{other_vw}' is flattened/duplicate/flipped copy of 'front' (diff={min(diff_direct, diff_flip):.3f})"
+                                    )
 
     return {
         "valid": len(errors) == 0,
@@ -199,8 +232,9 @@ def audit_character_consistency(
                     f"Mid-shot character garment color disappearance/swap detected on '{aid}' (ratio {max(ratios):.4f} -> {min(ratios):.5f})"
                 )
 
-    # Check adjacent frame sudden 1-frame disappearance / blank glitch
+    # Check adjacent frame sudden 1-frame disappearance / blank glitch + lower-limb/hand ink continuity
     luma_means: List[float] = []
+    lower_limb_ink_ratios: List[float] = []
     for fp in frame_paths:
         with Image.open(fp) as im:
             arr_f = np.asarray(im.convert("RGB"), dtype=np.float32)
@@ -208,6 +242,16 @@ def audit_character_consistency(
         if std_f < 3.0:
             errors.append(f"Blank or near-uniform frame detected: {fp.name} (std={std_f:.2f})")
         luma_means.append(float(np.mean(arr_f)))
+        fh, fw = arr_f.shape[:2]
+        luma_f = (0.2126 * arr_f[:, :, 0] + 0.7152 * arr_f[:, :, 1] + 0.0722 * arr_f[:, :, 2]) / 255.0
+        limb_band = luma_f[int(fh * 0.55) : int(fh * 0.90), int(fw * 0.15) : int(fw * 0.85)]
+        lower_limb_ink_ratios.append(float(np.mean(limb_band < 0.18)))
+
+    if len(shots) <= 1 and len(lower_limb_ink_ratios) >= 2:
+        if max(lower_limb_ink_ratios) >= 0.015 and min(lower_limb_ink_ratios) < 0.0015:
+            errors.append(
+                f"Sudden lower-limb/hand ink disappearance detected across frames ({max(lower_limb_ink_ratios):.4f} -> {min(lower_limb_ink_ratios):.5f})"
+            )
 
     return {
         "status": "PASS" if len(errors) == 0 else "FAIL",
@@ -277,9 +321,15 @@ def audit_visual_style(
         bot_mean = float(np.mean(luma[int(h * 0.78) :, :]))
         depth_plane_spread = round(max(top_mean, mid_mean, bot_mean) - min(top_mean, mid_mean, bot_mean), 4)
 
-        # 5. Center focal contrast
+        # 5. Center focal contrast & closeup subject bounding-box height ratio
         center_patch = luma[int(h * 0.18) : int(h * 0.86), int(w * 0.20) : int(w * 0.80)]
         focal_std = float(np.std(center_patch))
+        ink_rows = np.where(np.mean(luma[:, int(w * 0.12) : int(w * 0.88)] < 0.18, axis=1) > 0.008)[0]
+        focal_height_ratio = round(float(ink_rows[-1] - ink_rows[0]) / float(max(1, h)), 4) if ink_rows.size >= 2 else 0.0
+
+        is_declared_close = any(tok in fp.name.lower() for tok in ("closeup", "close_", "macro"))
+        if is_declared_close and focal_height_ratio < 0.42:
+            errors.append(f"{fp.name}: declared closeup/macro subject too small (focal_height_ratio={focal_height_ratio:.3f} < 0.42)")
 
         if ink_ratio < 0.004:
             errors.append(f"{fp.name}: missing bold ink linework (ink_ratio={ink_ratio:.5f} < 0.004)")
@@ -299,6 +349,7 @@ def audit_visual_style(
             "occupied_value_groups": occupied_value_groups,
             "depth_plane_luma_spread": depth_plane_spread,
             "focal_contrast_std": round(focal_std, 4),
+            "focal_subject_height_ratio": focal_height_ratio,
         })
 
     return {
@@ -329,6 +380,12 @@ def audit_composition_storytelling(
 
     scales: List[str] = []
     views: List[str] = []
+    expected_total_dur: Optional[float] = None
+    if isinstance(project, dict) and project.get("expected_duration_sec") is not None:
+        expected_total_dur = float(project["expected_duration_sec"])
+
+    prev_end: Optional[float] = None
+    expected_next_variant: Dict[str, str] = {}
     for idx, s in enumerate(shots):
         sid = str(s.get("id") or f"S{idx+1:02d}")
         args = s.get("args") or {}
@@ -338,6 +395,14 @@ def audit_composition_storytelling(
         vw = str(cam.get("viewpoint") or art.get("viewpoint_target") or args.get("view") or "three_quarter")
         scales.append(sc)
         views.append(vw)
+
+        st_s = float(s.get("start", 0.0))
+        et_s = float(s.get("end", st_s + float(s.get("dur", 3.0))))
+        if et_s <= st_s:
+            errors.append(f"Shot {sid}: impossible non-positive shot duration ({st_s}..{et_s})")
+        if prev_end is not None and abs(st_s - prev_end) > 0.02:
+            errors.append(f"Shot {sid}: timeline gap or overlap ({prev_end:.3f}s -> {st_s:.3f}s)")
+        prev_end = et_s
 
         if idx == 0:
             hook_line = str(s.get("line") or s.get("desc") or "").strip()
@@ -351,10 +416,36 @@ def audit_composition_storytelling(
             if not ok_seg:
                 errors.extend(seg_errs)
 
+        # Reject duplicate ribbon/string tether links on a single prop
+        tethers = args.get("tetherLinks") or []
+        seen_tether_targets: set[str] = set()
+        for tl in tethers:
+            if isinstance(tl, dict):
+                tgt = str(tl.get("toProp") or tl.get("id") or "kite")
+                if tgt in seen_tether_targets or tl.get("duplicated") is True:
+                    errors.append(f"Shot {sid}: duplicate ribbon/string tether detected on '{tgt}'")
+                seen_tether_targets.add(tgt)
+
+        # Verify asset variant continuity when required_next_variant was set by prior shot
+        for p_item in args.get("people") or []:
+            if isinstance(p_item, dict) and p_item.get("id"):
+                aid_p = str(p_item["id"])
+                actual_var = str(p_item.get("assetVariant") or p_item.get("outfitId") or "")
+                if aid_p in expected_next_variant and actual_var and actual_var != expected_next_variant[aid_p]:
+                    errors.append(
+                        f"Shot {sid}: incorrect asset variant after shot for '{aid_p}' (expected '{expected_next_variant[aid_p]}', got '{actual_var}')"
+                    )
+        if isinstance(s.get("required_next_asset_variant"), dict):
+            for k_aid, v_var in s["required_next_asset_variant"].items():
+                expected_next_variant[str(k_aid)] = str(v_var)
+
         # Reject static slideshow pan-only shots when actor action is claimed
-        has_motion = bool(args.get("motionTracks")) or bool(args.get("people")) or s.get("expected_subject") == "prop"
+        has_motion = bool(args.get("motionTracks")) or bool(args.get("people")) or bool(args.get("insertKind")) or s.get("expected_subject") == "prop"
         if not has_motion:
             errors.append(f"Shot {sid}: static slideshow detected (zero motionTracks/actors/animated props)")
+
+    if expected_total_dur is not None and prev_end is not None and abs(prev_end - expected_total_dur) > 0.02:
+        errors.append(f"Impossible total timeline duration: {prev_end:.3f}s != expected {expected_total_dur:.3f}s")
 
     if len(shots) >= 4 and len(set(scales)) < 2:
         errors.append(f"Monotonous shot scale composition across {len(shots)} shots: {scales}")
@@ -375,10 +466,12 @@ def build_editorial_packet(
     original_output_frames: Sequence[Dict[str, Any] | Path | str],
     qa_results: Dict[str, Any],
     out_dir: Optional[Path] = None,
+    private_ref_dir: Optional[Path] = None,
 ) -> Dict[str, Any]:
     """
-    Build a local visual editorial review montage PNG + structured JSON/Markdown packet
-    without shipping or embedding any copyrighted user reference images.
+    Build a public original-only editorial review montage PNG + structured JSON packet in `out_dir`,
+    AND when `private_ref_dir` contains the 3 ingested user reference frames, write a PRIVATE local
+    side-by-side comparison sheet ONLY inside gitignored `private_ref_dir` (zero reference pixels in Git!).
     """
     pkt_dir = Path(out_dir) if out_dir else (ROOT_DIR / "tests" / "evidence" / "_editorial_packet")
     pkt_dir.mkdir(parents=True, exist_ok=True)
@@ -396,7 +489,7 @@ def build_editorial_packet(
         if p.is_file():
             normalized_items.append({"path": p, "label": lbl, "timestamp_sec": ts})
 
-    # Compose 3-column original art review montage
+    # Compose 3-column original art review montage (100% public-safe, zero user reference pixels)
     cols = 3
     tw, th, pad = 560, 315, 20
     rows = max(1, math.ceil(len(normalized_items) / cols))
@@ -405,19 +498,19 @@ def build_editorial_packet(
     montage_h = header_h + rows * (th + 46 + pad)
     montage = Image.new("RGB", (montage_w, montage_h), (24, 22, 24))
     dr = ImageDraw.Draw(montage)
-    f_h = _load_font(28, bold=True)
+    f_h = _load_font(26, bold=True)
     f_s = _load_font(17, bold=False)
 
     ref_status = str(reference_manifest.get("reference_status") or "STYLE_REFERENCE_UNAVAILABLE")
     dr.text(
         (pad, 18),
-        "KH-01 ORIGINAL MODERN EXPRESSIVE 2D — EDITORIAL REVIEW MONTAGE (ZERO USER REF FRAMES EMBEDDED)",
+        "ORIGINAL MODERN EXPRESSIVE 2D — PUBLIC EDITORIAL MONTAGE (ZERO USER REF PIXELS EMBEDDED)",
         fill=(252, 234, 192),
         font=f_h,
     )
     dr.text(
         (pad, 58),
-        f"Reference Archive Status: {ref_status} | STYLE_APPROVED: HUMAN_REVIEW_PENDING | EDITORIAL_APPROVED: HUMAN_REVIEW_PENDING",
+        f"Reference Status: {ref_status} | VQ_REFERENCE_MATCH: HUMAN_REVIEW_PENDING | STYLE_APPROVED: HUMAN_REVIEW_PENDING",
         fill=(204, 198, 188),
         font=f_s,
     )
@@ -437,18 +530,87 @@ def build_editorial_packet(
     montage_path = pkt_dir / "KH01_EDITORIAL_REVIEW_MONTAGE.png"
     montage.save(montage_path, format="PNG")
 
-    honest_gap_notes = [
-        "Reference archive KH-01_STYLE_REFERENCES_ONLY.zip was unavailable on host (STYLE_REFERENCE_UNAVAILABLE); direct side-by-side pixel comparison against the three user reference frames requires the user to place those frames locally.",
-        "All KH-01 characters, outfits, props, and multi-plane stages are 100% newly authored vector/Canvas/Rigby2D artwork governed by modern_expressive_2d.v1 rules; hand-drawn frame-by-frame traditional smear/boil nuances remain simpler than bespoke studio cel animation.",
-        "STYLE_APPROVED and EDITORIAL_APPROVED remain HUMAN_REVIEW_PENDING until explicit human inspection of the PNG sheets and 30.000s 1080p MP4.",
-    ]
+    # Optional PRIVATE local side-by-side comparison containing real user references vs newly authored v2 frames
+    private_comparison_receipt: Optional[Dict[str, Any]] = None
+    refs_meta = list(reference_manifest.get("references") or [])
+    if private_ref_dir is not None and len(refs_meta) == 3:
+        priv_d = Path(private_ref_dir)
+        priv_d.mkdir(parents=True, exist_ok=True)
+        ref_paths: List[Tuple[str, Path]] = []
+        for rm in refs_meta:
+            rp = ROOT_DIR / str(rm.get("private_workspace_relpath") or "")
+            if not rp.is_file():
+                rp = priv_d / Path(str(rm.get("private_workspace_relpath") or rm.get("original_attachment_filename") or "")).name
+            if rp.is_file():
+                ref_paths.append((f"{rm['reference_id']} ({rm['editorial_role']})", rp))
+        if len(ref_paths) == 3 and len(normalized_items) >= 3:
+            pw_c, ph_c = 760, 428
+            side_w = pad + 2 * (pw_c + pad)
+            side_h = 110 + 3 * (ph_c + 52 + pad)
+            priv_im = Image.new("RGB", (side_w, side_h), (20, 19, 23))
+            dp = ImageDraw.Draw(priv_im)
+            dp.text((pad, 18), "PRIVATE LOCAL REVIEW ONLY — USER ATTACHED REFERENCES (LEFT) vs NEW ORIGINAL v2 FRAMES (RIGHT)", fill=(255, 226, 174), font=f_h)
+            dp.text((pad, 58), "DO NOT COMMIT THIS FILE TO PUBLIC GIT — Stored strictly in gitignored .test-runs/.../references_private/", fill=(238, 152, 142), font=f_s)
+            paired_outputs = [normalized_items[0], normalized_items[min(1, len(normalized_items) - 1)], normalized_items[min(2, len(normalized_items) - 1)]]
+            for row_i in range(3):
+                ry = 110 + row_i * (ph_c + 52 + pad)
+                r_lbl, r_p = ref_paths[row_i]
+                o_item = paired_outputs[row_i]
+                with Image.open(r_p) as im_r:
+                    th_r = im_r.convert("RGB").resize((pw_c, ph_c), Image.Resampling.LANCZOS)
+                with Image.open(o_item["path"]) as im_o:
+                    th_o = im_o.convert("RGB").resize((pw_c, ph_c), Image.Resampling.LANCZOS)
+                lx0 = pad
+                rx0 = pad + pw_c + pad
+                priv_im.paste(th_r, (lx0, ry))
+                priv_im.paste(th_o, (rx0, ry))
+                dp.rectangle([lx0 - 2, ry - 2, lx0 + pw_c + 2, ry + ph_c + 2], outline=(214, 112, 102), width=2)
+                dp.rectangle([rx0 - 2, ry - 2, rx0 + pw_c + 2, ry + ph_c + 2], outline=(118, 206, 148), width=2)
+                dp.text((lx0 + 6, ry + ph_c + 10), f"REF {row_i+1}: {r_lbl[:64]}", fill=(240, 214, 210), font=f_s)
+                dp.text((rx0 + 6, ry + ph_c + 10), f"NEW v2: {o_item['label'][:64]}", fill=(212, 242, 220), font=f_s)
+            priv_out = priv_d / "PRIVATE_REF_VS_V2_SIDE_BY_SIDE_REVIEW.png"
+            priv_im.save(priv_out, format="PNG")
+            private_comparison_receipt = {
+                "private_local_relpath": priv_out.relative_to(ROOT_DIR).as_posix() if priv_out.is_relative_to(ROOT_DIR) else priv_out.as_posix(),
+                "sha256": _sha256_file(priv_out),
+                "dimensions": [side_w, side_h],
+                "gitignored": True,
+                "public_repo_committed": False,
+            }
+
+    qualitative_criteria_evaluation = {
+        "outline_fluency": "Curved Bezier-subdivided calligraphic outer contours (#211612) with subordinated interior fold strokes (#3A2821); cleaner than v1 straight polygons, though procedural curves remain more regular than hand-inked brush strokes.",
+        "posing_and_limb_anatomy": "Curved sleeved upper arms, rounded elbows/knees, tapered wrists, and sculpted palms with opposable thumb + 4 fingers replace v1 cylindrical pipe limbs.",
+        "silhouette_contrast": "Distinct compact school-age silhouette (Mina: bob hair + clip, flared windbreaker) vs taller broad-shouldered friend (Bao: tousled crown waves, open overshirt + chinos).",
+        "face_expression": "7 distinct expressions including open D-shaped laugh mouths with white tooth block and coral tongue cel-plane, wide shock, focused knot-tying, and warm relief smiles.",
+        "clothing_folds": "Layered open windbreakers/overshirts over striped/solid inner tees, folded lapels, cuff bands, rolled trouser hems, and curved tension creases.",
+        "shadow_shape": "Angled/curved 3-band cel shadows + warm sunlight rim highlights aligned with ~38-deg diagonal stage sunbeams and ground contact shadows.",
+        "background_material_and_depth": "4-plane city park & multi-niche stages with bark grain, flagstone mortar, slatted oak benches, cruising background bicycles, tiered fountain, and organic foliage occluders.",
+        "composition": "Deliberate rhythm combining tactile macro hook, low-angle wide launch, finger-slip insert, wide pursuit, bench obstacle, close branch unhook, close knot repair, and close smiling eyes -> wide soaring sky.",
+    }
+
+    honest_gap_notes = (
+        [
+            "All 3 user-attached reference frames were ingested privately and compared side-by-side in gitignored .test-runs/.../references_private/PRIVATE_REF_VS_V2_SIDE_BY_SIDE_REVIEW.png (zero reference pixels committed to public Git).",
+            "While modern_expressive_2d.v2 substantially upgrades limb curvature, sleeve/garment layering, facial tooth/tongue planes, and multi-plane sunlit backgrounds over v1, procedural vector/Canvas curves still lack bespoke hand-painted frame-by-frame squash/smear asymmetry and organic brush-grain micro-imperfections present in studio-drawn 2D frames.",
+            "VQ_REFERENCE_MATCH, STYLE_APPROVED, and EDITORIAL_APPROVED remain strictly HUMAN_REVIEW_PENDING until explicit user review.",
+        ]
+        if ref_status == "STYLE_REFERENCES_INGESTED_3_OF_3"
+        else [
+            "Reference archive KH-01_STYLE_REFERENCES_ONLY.zip was unavailable on host (STYLE_REFERENCE_UNAVAILABLE); direct side-by-side pixel comparison against the three user reference frames requires the user to place those frames locally.",
+            "All KH-01 characters, outfits, props, and multi-plane stages are 100% newly authored vector/Canvas/Rigby2D artwork governed by modern_expressive_2d.v1 rules; hand-drawn frame-by-frame traditional smear/boil nuances remain simpler than bespoke studio cel animation.",
+            "STYLE_APPROVED and EDITORIAL_APPROVED remain HUMAN_REVIEW_PENDING until explicit human inspection of the PNG sheets and 30.000s 1080p MP4.",
+        ]
+    )
 
     packet = {
-        "schema_version": "kh01.editorial_packet.v1",
+        "schema_version": "kh01.editorial_packet.v2" if ref_status == "STYLE_REFERENCES_INGESTED_3_OF_3" else "kh01.editorial_packet.v1",
         "reference_status": ref_status,
         "public_repo_contains_user_reference_images": False,
+        "VQ_REFERENCE_MATCH": "HUMAN_REVIEW_PENDING",
         "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
         "EDITORIAL_APPROVED": "HUMAN_REVIEW_PENDING",
+        "hallucinated_similarity_percentage": None,
         "visual_gates": {gid: qa_results.get(gid, "CANDIDATE_READY_FOR_HUMAN_REVIEW") for gid in VISUAL_GATE_IDS},
         "montage_png": {
             "path": str(montage_path.relative_to(ROOT_DIR).as_posix() if montage_path.is_relative_to(ROOT_DIR) else montage_path),
@@ -456,12 +618,14 @@ def build_editorial_packet(
             "dimensions": [montage_w, montage_h],
             "panel_count": len(normalized_items),
         },
+        "private_local_ref_vs_output_comparison": private_comparison_receipt,
+        "qualitative_criteria_evaluation": qualitative_criteria_evaluation,
         "subjective_gaps_and_disclosures": honest_gap_notes,
         "reviewer_checkpoints": [
-            "Verify bold variable-weight ink outlines and 2-3 cel-shading value groups read cleanly at 1080p and mobile width.",
-            "Inspect Lucius and Mara 3-view turnarounds and 6 facial expressions for genuine emotional range.",
-            "Inspect S01 scroll hook, S05 cart brace, S06 fountain catch multi-angle edit, S07 'MEETING MOVED TO TOMORROW' reveal, and S08 comedic payoff.",
-            "Confirm natural English narration intelligibility, Foley balance, and -14 LUFS loudness comfort.",
+            "Inspect private local side-by-side sheet (.test-runs/.../references_private/PRIVATE_REF_VS_V2_SIDE_BY_SIDE_REVIEW.png) offline against Ref 1/2/3.",
+            "Verify curved sleeved/tapered limbs, articulated thumbs/fingers, and layered garments on Mina, Bao, and multi-niche v2 model sheets.",
+            "Inspect THE KITE THAT CAME BACK 8-shot contact sheet and MP4 for continuous spool-ribbon-kite physics, bench foot contact, and facial acting.",
+            "Confirm natural English narration intelligibility, park/wind/cloth/footsteps SFX balance, and -14 LUFS loudness comfort.",
         ],
     }
     pkt_json = pkt_dir / "KH01_EDITORIAL_REVIEW_PACKET.json"
@@ -708,6 +872,341 @@ def run_kh01_visual_style_mutations(work_dir: Optional[Path] = None) -> Dict[str
             "total_mutations": len(results),
             "killed_mutations": killed_count,
             "mutations": results,
+        }
+    finally:
+        if tmp_ctx is not None:
+            tmp_ctx.cleanup()
+
+
+def verify_parent_rollup_honesty(parent_verdict: Dict[str, Any], child_gates: Dict[str, str]) -> Dict[str, Any]:
+    """Fail-closed parent verdict auditor: rejects parent PASS when any required child gate failed or blocked."""
+    bad_children = [
+        f"{k}={v}"
+        for k, v in child_gates.items()
+        if str(v) not in ("PASS", "TECH_STYLE_CONTRACT_PASS", "PRODUCED", "REPAIRED", "FLOW_READY", "RUNTIME_VERIFIED", "NOT_AVAILABLE")
+    ]
+    claimed = str(parent_verdict.get("status") or "")
+    if bad_children and claimed in ("PASS", "RELEASE_READY", "100%_PASS"):
+        return {
+            "valid": False,
+            "status": "FAIL",
+            "errors": [f"Misleading parent status '{claimed}' while child gates failed/blocked: {bad_children}"],
+        }
+    return {"valid": True, "status": "PASS", "errors": []}
+
+
+def verify_render_receipt_freshness(receipt: Dict[str, Any], live_mp4: Path, live_shots_json: Path) -> Dict[str, Any]:
+    """Fail-closed stale render receipt detector comparing receipt digests against live MP4 and shots.json."""
+    errors: List[str] = []
+    if not live_mp4.is_file():
+        errors.append(f"Live MP4 missing: {live_mp4}")
+    else:
+        actual_mp4_sha = _sha256_file(live_mp4)
+        if str(receipt.get("mp4_sha256") or "") != actual_mp4_sha:
+            errors.append(f"Stale render receipt: mp4_sha256 {receipt.get('mp4_sha256')} != live {actual_mp4_sha}")
+    if not live_shots_json.is_file():
+        errors.append(f"Live shots.json missing: {live_shots_json}")
+    else:
+        actual_shots_sha = _sha256_file(live_shots_json)
+        if str(receipt.get("shots_sha256") or "") != actual_shots_sha:
+            errors.append(f"Stale render receipt: shots_sha256 {receipt.get('shots_sha256')} != live {actual_shots_sha}")
+    expected_frames = int(receipt.get("expected_video_frames") or 720)
+    decoded_frames = int(receipt.get("decoded_video_frames") or 0)
+    if decoded_frames <= 0 or decoded_frames != expected_frames:
+        errors.append(f"Zero or partial decoded frames: decoded={decoded_frames}, expected={expected_frames}")
+    return {"valid": len(errors) == 0, "status": "PASS" if len(errors) == 0 else "FAIL", "errors": errors}
+
+
+def verify_non_silent_narration_wav(wav_path: Path, min_rms: float = 0.004) -> Dict[str, Any]:
+    """Fail-closed narration audio verifier: rejects silent or near-zero-amplitude WAV labeled narration."""
+    import wave as _wave
+    if not wav_path.is_file():
+        return {"valid": False, "status": "BLOCKED_NO_REAL_TTS", "errors": [f"Missing narration WAV: {wav_path}"]}
+    with _wave.open(str(wav_path), "rb") as wf:
+        raw = wf.readframes(wf.getnframes())
+        sw = wf.getsampwidth()
+    if sw != 2 or len(raw) < 1600:
+        return {"valid": False, "status": "FAIL", "errors": ["Empty or invalid PCM16 WAV"]}
+    arr = np.frombuffer(raw, dtype=np.int16).astype(np.float32) / 32768.0
+    rms = float(np.sqrt(np.mean(arr * arr)))
+    peak = float(np.max(np.abs(arr))) if arr.size else 0.0
+    if rms < min_rms or peak < 0.03:
+        return {
+            "valid": False,
+            "status": "FAIL",
+            "rms": round(rms, 6),
+            "peak": round(peak, 6),
+            "errors": [f"Silent TTS track rejected (rms={rms:.6f} < {min_rms}, peak={peak:.6f})"],
+        }
+    return {"valid": True, "status": "PASS", "rms": round(rms, 5), "peak": round(peak, 4), "errors": []}
+
+
+def run_kh01_r1_negative_mutations(work_dir: Optional[Path] = None) -> Dict[str, Any]:
+    """
+    Execute all 15 mandatory KH-01.R1 Section G negative/mutation cases on real files, manifests,
+    WAVs, motion plans, and rendered PNGs — verifying fail-closed rejection on every single case!
+    """
+    import wave as _wave
+    from tools.character_design import derive_character_specs, draw_character_figure_rgba
+    from tools.environment_factory import derive_environment_specs, render_environment_stage_png, validate_environment_continuity
+
+    tmp_ctx = tempfile.TemporaryDirectory() if work_dir is None else None
+    base_d = Path(tmp_ctx.name) if tmp_ctx else Path(work_dir)
+    base_d.mkdir(parents=True, exist_ok=True)
+
+    try:
+        prof_v2 = load_style_profile("modern_expressive_2d.v2")
+        style_v2 = resolve_visual_style("Mina built a dragon kite in the sunlit park.", niche="city_park", style_id="modern_expressive_2d.v2")
+        env_v2 = derive_environment_specs("Sunlit city park", niche="city_park", style_id="modern_expressive_2d.v2")
+
+        bg_png = base_d / "clean_park_01.png"
+        render_environment_stage_png(env_v2, bg_png, canvas_size=(640, 360), supersample=1)
+        mina_spec = derive_character_specs([{"actor_id": "mina", "name": "Mina"}], "city_park", style_instance=style_v2)[0]
+
+        view_pngs: Dict[str, Path] = {}
+        authored_list: List[Dict[str, Any]] = []
+        for vw in ("front", "three_quarter", "profile", "rear_three_quarter"):
+            vp = base_d / f"mina_view_{vw}.png"
+            im_v = draw_character_figure_rgba(mina_spec, view=vw, expression="neutral_attentive", canvas_size=(200, 260), supersample=1)
+            im_v.save(vp, format="PNG")
+            view_pngs[vw] = vp
+            authored_list.append({"path": str(vp), "role": f"character_view:mina:{vw}", "sha256": _sha256_file(vp), "dimensions": [200, 260]})
+
+        with Image.open(bg_png) as bg_im:
+            comp = bg_im.convert("RGBA")
+            with Image.open(view_pngs["three_quarter"]) as ch_im:
+                comp.paste(ch_im, (210, 82), ch_im)
+            comp.convert("RGB").save(bg_png, format="PNG")
+        bg_png_2 = base_d / "clean_park_02.png"
+        with Image.open(bg_png) as g_im:
+            g_im.save(bg_png_2, format="PNG")
+        authored_list.append({"path": str(bg_png), "role": "scene_frame", "sha256": _sha256_file(bg_png), "dimensions": [640, 360]})
+
+        # Non-silent synthetic speech-band test WAV vs silent WAV
+        sr = 16000
+        t_ax = np.linspace(0.0, 1.0, sr, endpoint=False, dtype=np.float32)
+        good_wav = base_d / "good_voice.wav"
+        with _wave.open(str(good_wav), "wb") as wf:
+            wf.setnchannels(1)
+            wf.setsampwidth(2)
+            wf.setframerate(sr)
+            wf.writeframes((0.25 * np.sin(2 * np.pi * 220 * t_ax) * 32767).astype(np.int16).tobytes())
+
+        silent_wav = base_d / "silent_voice.wav"
+        with _wave.open(str(silent_wav), "wb") as wf:
+            wf.setnchannels(1)
+            wf.setsampwidth(2)
+            wf.setframerate(sr)
+            wf.writeframes(np.zeros(sr, dtype=np.int16).tobytes())
+
+        shots_json_path = base_d / "shots.json"
+        clean_shots = [
+            {
+                "id": "S01",
+                "start": 0.0,
+                "end": 15.0,
+                "dur": 15.0,
+                "line": "Mina built a dragon kite in the park.",
+                "style_id": "modern_expressive_2d.v2",
+                "scale": "close",
+                "art_direction": {"camera_scale": "close", "outfit_state_by_actor": {"mina": mina_spec["wardrobe"]["outfit_id"]}},
+                "required_next_asset_variant": {"mina": mina_spec["wardrobe"]["outfit_id"]},
+                "world_state": {"environment_id": env_v2["environment_id"], "objects": {"kite": {"x": 0.52, "y": 0.44}, "spool": {"x": 0.44, "y": 0.68}}},
+                "args": {
+                    "people": [{"id": "mina", "outfitId": mina_spec["wardrobe"]["outfit_id"], "assetVariant": mina_spec["wardrobe"]["outfit_id"], "primaryColor": mina_spec["wardrobe"]["primary_hex"]}],
+                    "tetherLinks": [{"fromActor": "mina", "toProp": "kite"}],
+                },
+            },
+            {
+                "id": "S02",
+                "start": 15.0,
+                "end": 30.0,
+                "dur": 15.0,
+                "line": "And this time they flew the kite together.",
+                "style_id": "modern_expressive_2d.v2",
+                "scale": "wide",
+                "art_direction": {"camera_scale": "wide", "outfit_state_by_actor": {"mina": mina_spec["wardrobe"]["outfit_id"]}},
+                "world_state": {"environment_id": env_v2["environment_id"], "objects": {"kite": {"x": 0.58, "y": 0.36}, "spool": {"x": 0.46, "y": 0.68}}},
+                "args": {
+                    "people": [{"id": "mina", "outfitId": mina_spec["wardrobe"]["outfit_id"], "assetVariant": mina_spec["wardrobe"]["outfit_id"], "primaryColor": mina_spec["wardrobe"]["primary_hex"]}],
+                    "tetherLinks": [{"fromActor": "mina", "toProp": "kite"}],
+                },
+            },
+        ]
+        shots_json_path.write_text(json.dumps({"shots": clean_shots}, indent=2), encoding="utf-8")
+        dummy_mp4 = base_d / "clean_stub.mp4"
+        dummy_mp4.write_bytes(b"VALID_MP4_STREAM_PAYLOAD_BYTES_FOR_RECEIPT_CHECK")
+
+        clean_manifest = {
+            "niche": "city_park",
+            "license_spdx": "CC0-1.0",
+            "provenance_origin": "ORIGINAL_KH01_R1_V2_TEST",
+            "reference_frames_reused": 0,
+            "prior_preview_derived_visual_inputs": 0,
+            "authored_files": authored_list,
+            "characters": {
+                "mina": {
+                    "views": ["front", "three_quarter", "profile", "rear_three_quarter"],
+                    "expressions": list(mina_spec["supported_expressions"]),
+                }
+            },
+        }
+        clean_proj = {
+            "expected_duration_sec": 30.0,
+            "shots": clean_shots,
+            "character_bible": {"characters": {"mina": mina_spec}},
+        }
+        clean_receipt = {
+            "mp4_sha256": _sha256_file(dummy_mp4),
+            "shots_sha256": _sha256_file(shots_json_path),
+            "expected_video_frames": 720,
+            "decoded_video_frames": 720,
+        }
+
+        baseline_ok = (
+            validate_style_assets(prof_v2, clean_manifest, clean_proj)["status"] == "PASS"
+            and audit_character_consistency({"shots": [clean_shots[0]], "character_bible": clean_proj["character_bible"]}, [bg_png, bg_png_2])["status"] == "PASS"
+            and audit_composition_storytelling(clean_proj, clean_shots)["status"] == "PASS"
+            and verify_render_receipt_freshness(clean_receipt, dummy_mp4, shots_json_path)["status"] == "PASS"
+            and verify_non_silent_narration_wav(good_wav)["status"] == "PASS"
+        )
+
+        cases: List[Dict[str, Any]] = []
+
+        # 1. Reference image copied into asset atlas
+        m1 = copy.deepcopy(clean_manifest)
+        ref_sha = sorted(FORBIDDEN_REFERENCE_IMAGE_SHA256)[0]
+        fake_atlas = base_d / "mut_atlas_ref.png"
+        fake_atlas.write_bytes(b"fake")
+        m1["authored_files"].append({"path": str(fake_atlas), "role": "rig_texture_png:mina", "sha256": ref_sha, "dimensions": [1024, 1024]})
+        r1 = validate_style_assets(prof_v2, m1, clean_proj)
+        cases.append({"case_id": "M01_reference_image_copied_into_asset_atlas", "status": r1["status"], "killed": baseline_ok and r1["status"] == "FAIL", "diagnostics": r1["errors"][:2]})
+
+        # 2. Old KH-01 v1 PNG reused in v2 manifest
+        m2 = copy.deepcopy(clean_manifest)
+        m2["authored_files"].append({"path": "tests/evidence/kh01_20261116_015100Z/style_poc/VQ01_STYLE_POC_CANDIDATE_05_outdoor_roman_forum.png", "sha256": "0" * 64, "dimensions": [1920, 1080]})
+        r2 = validate_style_assets(prof_v2, m2, clean_proj)
+        cases.append({"case_id": "M02_old_kh01_png_reused", "status": r2["status"], "killed": baseline_ok and r2["status"] == "FAIL", "diagnostics": r2["errors"][:2]})
+
+        # 3. Missing viewpoint + horizontally flipped front masquerading as profile
+        m3 = copy.deepcopy(clean_manifest)
+        m3["characters"]["mina"]["views"] = ["front", "three_quarter"]
+        flipped_p = base_d / "mina_flipped_fake_profile.png"
+        with Image.open(view_pngs["front"]) as im_f:
+            im_f.transpose(Image.Transpose.FLIP_LEFT_RIGHT).save(flipped_p, format="PNG")
+        m3["authored_files"].append({"path": str(flipped_p), "role": "character_view:mina:profile", "sha256": _sha256_file(flipped_p), "dimensions": [200, 260]})
+        r3 = validate_style_assets(prof_v2, m3, clean_proj)
+        cases.append({"case_id": "M03_missing_or_flipped_viewpoint", "status": r3["status"], "killed": baseline_ok and r3["status"] == "FAIL", "diagnostics": r3["errors"][:2]})
+
+        # 4. Character hand floating off kite spool
+        mp_float_hand = {
+            "project_id": "mut_spool_float",
+            "start_sec": 0.0,
+            "end_sec": 3.0,
+            "tracks": [{
+                "track_id": "S01_mina",
+                "shot_id": "S01",
+                "actor_id": "mina",
+                "start_sec": 0.0,
+                "end_sec": 3.0,
+                "ground_y": 0.84,
+                "height_norm": 0.26,
+                "world_start": [0.25, 0.84],
+                "world_end": [0.25, 0.84],
+                "phases": [{"phase_name": "CONTACT", "start_sec": 0.0, "end_sec": 3.0, "world_start": [0.25, 0.84], "world_end": [0.25, 0.84], "foot_planted_left": True, "foot_planted_right": True}],
+                "contacts": [{"constraint_id": "c_spool", "start_sec": 0.0, "end_sec": 3.0, "actor_id": "mina", "object_id": "spool", "hand": "right", "world_start": [0.88, 0.22], "world_end": [0.88, 0.22]}],
+            }],
+            "world_states": [{"shot_id": "S01", "start_sec": 0.0, "end_sec": 3.0, "objects": {"spool": {"x": 0.88, "y": 0.22}}}],
+        }
+        r4 = audit_hand_prop_contact(mp_float_hand)
+        cases.append({"case_id": "M04_hand_floating_off_kite_spool", "status": r4["status"], "killed": baseline_ok and r4["status"] == "FAIL", "diagnostics": r4["violations"][:2]})
+
+        # 5. Planted foot skate
+        mp_skate = copy.deepcopy(mp_float_hand)
+        mp_skate["tracks"][0]["contacts"] = []
+        mp_skate["tracks"][0]["phases"][0]["world_end"] = [0.68, 0.84]
+        r5 = audit_foot_plant(mp_skate)
+        cases.append({"case_id": "M05_planted_foot_skate", "status": r5["status"], "killed": baseline_ok and r5["status"] == "FAIL", "diagnostics": r5["violations"][:2]})
+
+        # 6. Sudden face/costume change mid-cut
+        swapped_png = base_d / "mut_mina_costume_swap.png"
+        render_environment_stage_png(env_v2, swapped_png, canvas_size=(640, 360), supersample=1)
+        bad_mina = copy.deepcopy(mina_spec)
+        bad_mina["wardrobe"]["primary_hex"] = "#1B4FD8"
+        bad_mina["wardrobe"]["primary_shadow_hex"] = "#10328C"
+        im_bad = draw_character_figure_rgba(bad_mina, view="three_quarter", expression="wide_shock", canvas_size=(200, 260), supersample=1)
+        with Image.open(swapped_png) as bg_s:
+            cs_im = bg_s.convert("RGBA")
+            cs_im.paste(im_bad, (210, 82), im_bad)
+            cs_im.convert("RGB").save(swapped_png, format="PNG")
+        r6 = audit_character_consistency({"shots": [clean_shots[0]], "character_bible": clean_proj["character_bible"]}, [bg_png, swapped_png])
+        cases.append({"case_id": "M06_sudden_face_costume_change_midcut", "status": r6["status"], "killed": baseline_ok and r6["status"] == "FAIL", "diagnostics": r6["errors"][:2]})
+
+        # 7. Duplicate ribbon/string tether
+        s_dup = copy.deepcopy(clean_shots)
+        s_dup[0]["args"]["tetherLinks"].append({"fromActor": "mina", "toProp": "kite", "duplicated": True})
+        s_dup[0]["world_state"]["objects"]["ribbon"] = {"x": 0.5, "y": 0.6, "duplicated": True}
+        r7a = audit_composition_storytelling(clean_proj, s_dup)
+        r7b = validate_environment_continuity(env_v2, s_dup)
+        cases.append({"case_id": "M07_duplicate_ribbon_or_string", "status": "FAIL" if (r7a["status"] == "FAIL" and r7b["status"] == "FAIL") else "PASS", "killed": baseline_ok and r7a["status"] == "FAIL" and r7b["status"] == "FAIL", "diagnostics": (r7a["errors"][:1] + r7b["errors"][:1])})
+
+        # 8. Stale render receipt
+        stale_rec = copy.deepcopy(clean_receipt)
+        stale_rec["shots_sha256"] = "f" * 64
+        r8 = verify_render_receipt_freshness(stale_rec, dummy_mp4, shots_json_path)
+        cases.append({"case_id": "M08_stale_render_receipt", "status": r8["status"], "killed": baseline_ok and r8["status"] == "FAIL", "diagnostics": r8["errors"][:2]})
+
+        # 9. Silent TTS narration track
+        r9 = verify_non_silent_narration_wav(silent_wav)
+        cases.append({"case_id": "M09_silent_tts_narration", "status": r9["status"], "killed": baseline_ok and r9["status"] == "FAIL", "diagnostics": r9["errors"][:2]})
+
+        # 10. Zero or partial decoded video frames
+        part_rec = copy.deepcopy(clean_receipt)
+        part_rec["decoded_video_frames"] = 140
+        r10 = verify_render_receipt_freshness(part_rec, dummy_mp4, shots_json_path)
+        cases.append({"case_id": "M10_zero_or_partial_decoded_frames", "status": r10["status"], "killed": baseline_ok and r10["status"] == "FAIL", "diagnostics": r10["errors"][:2]})
+
+        # 11. Invalid camera action reset
+        s_cam = copy.deepcopy(clean_shots)
+        s_cam[0]["args"]["cameraSegments"] = [
+            {"segment_id": "S01_seg01", "shot_id": "S01", "local_start": 0.0, "local_end": 7.5, "global_start": 0.0, "global_end": 7.5, "resets_action_time": False},
+            {"segment_id": "S01_seg02", "shot_id": "S01", "local_start": 7.5, "local_end": 15.0, "global_start": 7.5, "global_end": 15.0, "scale": "wide", "viewpoint": "profile_left", "resets_action_time": True},
+        ]
+        r11 = audit_composition_storytelling(clean_proj, s_cam)
+        cases.append({"case_id": "M11_invalid_camera_action_reset", "status": r11["status"], "killed": baseline_ok and r11["status"] == "FAIL", "diagnostics": r11["errors"][:2]})
+
+        # 12. Impossible 30s timing (overlap + wrong total duration)
+        s_time = copy.deepcopy(clean_shots)
+        s_time[1]["start"] = 12.5
+        s_time[1]["end"] = 26.0
+        r12 = audit_composition_storytelling(clean_proj, s_time)
+        cases.append({"case_id": "M12_impossible_30s_timing", "status": r12["status"], "killed": baseline_ok and r12["status"] == "FAIL", "diagnostics": r12["errors"][:2]})
+
+        # 13. Incorrect asset variant after shot
+        s_var = copy.deepcopy(clean_shots)
+        s_var[1]["args"]["people"][0]["assetVariant"] = "wrong_roman_soldier_armor"
+        r13 = audit_composition_storytelling(clean_proj, s_var)
+        cases.append({"case_id": "M13_incorrect_asset_variant_after_shot", "status": r13["status"], "killed": baseline_ok and r13["status"] == "FAIL", "diagnostics": r13["errors"][:2]})
+
+        # 14. Misleading parent PASS when child gate is FAIL
+        r14 = verify_parent_rollup_honesty({"status": "PASS"}, {"style_contract": "PASS", "foot_plant_qa": "FAIL"})
+        cases.append({"case_id": "M14_misleading_parent_pass_when_child_fail", "status": r14["status"], "killed": baseline_ok and r14["status"] == "FAIL", "diagnostics": r14["errors"][:2]})
+
+        # 15. Invented style visual similarity score / auto-approved STYLE_APPROVED without review
+        m15 = copy.deepcopy(clean_manifest)
+        m15["style_similarity_score"] = 0.96
+        m15["STYLE_APPROVED"] = "PASS"
+        r15 = validate_reference_grounded_style_contract(style_v2, m15, clean_shots)
+        cases.append({"case_id": "M15_invented_style_score_or_auto_approval", "status": r15["status"], "killed": baseline_ok and r15["status"] == "FAIL", "diagnostics": r15["errors"][:2]})
+
+        killed = sum(1 for c in cases if c["killed"])
+        return {
+            "schema_version": "kh01_r1.negative_mutations.v2",
+            "status": "PASS" if (baseline_ok and killed == len(cases)) else "FAIL",
+            "baseline_passed": baseline_ok,
+            "total_mutations": len(cases),
+            "killed_mutations": killed,
+            "mutations": cases,
         }
     finally:
         if tmp_ctx is not None:

@@ -321,6 +321,12 @@ KNOWN_ROLE_NOUNS: Dict[str, Dict[str, Any]] = {
     "customer": {"preset": "lady", "height_norm": 0.27, "role": "customer"},
     "curator": {"preset": "lady", "height_norm": 0.28, "role": "curator"},
     "visitor": {"preset": "peasant", "height_norm": 0.23, "role": "visitor"},
+    "friend": {"preset": "peasant", "height_norm": 0.30, "role": "friend"},
+    "maker": {"preset": "lady", "height_norm": 0.24, "role": "kite_maker"},
+    "student": {"preset": "lady", "height_norm": 0.24, "role": "student"},
+    "cyclist": {"preset": "peasant", "height_norm": 0.28, "role": "cyclist"},
+    "botanist": {"preset": "lady", "height_norm": 0.28, "role": "botanist"},
+    "apprentice": {"preset": "peasant", "height_norm": 0.25, "role": "apprentice"},
 }
 
 KNOWN_PROPS: Dict[str, Dict[str, Any]] = {
@@ -362,6 +368,17 @@ KNOWN_PROPS: Dict[str, Dict[str, Any]] = {
     "rostra": {"kind": "rostra", "x": 0.50, "y": 0.74, "portable": False},
     "package": {"kind": "package", "x": 0.50, "y": 0.68, "portable": True},
     "vase": {"kind": "vase", "x": 0.50, "y": 0.68, "portable": True},
+    "kite": {"kind": "origami_dragon_kite", "x": 0.56, "y": 0.44, "portable": True},
+    "dragon": {"kind": "origami_dragon_kite", "x": 0.54, "y": 0.58, "portable": True},
+    "ribbon": {"kind": "kite_ribbon", "x": 0.52, "y": 0.62, "portable": True},
+    "string": {"kind": "kite_string", "x": 0.48, "y": 0.66, "portable": True},
+    "spool": {"kind": "kite_spool", "x": 0.44, "y": 0.68, "portable": True},
+    "knot": {"kind": "kite_ribbon", "x": 0.48, "y": 0.65, "portable": True},
+    "loop": {"kind": "kite_ribbon", "x": 0.48, "y": 0.65, "portable": True},
+    "branch": {"kind": "ornamental_branch", "x": 0.58, "y": 0.54, "portable": False},
+    "bench": {"kind": "park_bench", "x": 0.54, "y": 0.78, "portable": False},
+    "orchid": {"kind": "terracotta_orchid_pot", "x": 0.50, "y": 0.68, "portable": True},
+    "pot": {"kind": "terracotta_orchid_pot", "x": 0.50, "y": 0.68, "portable": True},
 }
 
 UNSUPPORTED_PHYSICAL_PATTERNS: Tuple[Tuple[str, str], ...] = (
@@ -441,6 +458,12 @@ def _classify_clause_verb(
     """
     low = clause.lower()
 
+    # Tethered kite / paper-craft flight is spool/string handling, NOT human levitation
+    has_kite_prop = any(o in object_ids for o in ("kite", "dragon", "spool", "ribbon", "string", "knot", "loop"))
+    if has_kite_prop and re.search(r"\b(fly|flies|flying|flew|soar|soars|soared)\b", low) and not re.search(r"\b(levitate|hover)\b", low):
+        emo = "relieved" if re.search(r"\b(together|again|this\s+time)\b", low) else "focused"
+        return ("HAUL_ROPE", False, False, None, None, emo, 0.72, "sail_wind")
+
     for pat, reason in UNSUPPORTED_PHYSICAL_PATTERNS:
         m = re.search(pat, low)
         if m:
@@ -455,22 +478,22 @@ def _classify_clause_verb(
                 None,
             )
 
-    # Multi-actor shared lift / haul
-    if re.search(r"\b(lift|lifts|lifted|carry|carries|heave|heaves|raise|raised)\b", low) and (
+    # Multi-actor shared lift / haul / recovery
+    if re.search(r"\b(lift|lifts|lifted|carry|carries|heave|heaves|raise|raised|freed|free|flew)\b", low) and (
         actor_count >= 2 or re.search(r"\b(together|with\s+another|two\s+workers|both)\b", low)
     ):
-        if "rope" in object_ids or "pulley" in object_ids or "flame" in object_ids or "lantern" in object_ids:
-            if "rope" in object_ids or "pulley" in object_ids or "raised" in low:
-                return ("HAUL_ROPE", False, False, None, None, "strained_determined", 0.85, "pulley_load")
+        if "rope" in object_ids or "pulley" in object_ids or "flame" in object_ids or "lantern" in object_ids or has_kite_prop:
+            if "rope" in object_ids or "pulley" in object_ids or "raised" in low or has_kite_prop:
+                return ("HAUL_ROPE", False, False, None, None, "strained_determined", 0.78, "pulley_load")
         return ("LIFT_SHARED", False, False, None, None, "strained_cooperative", 0.82, "heavy_lift")
 
     if re.search(
-        r"\b(slip|slips|slipped|stumble|stumbles|stumbled|skid|skids|wind\s+nearly\s+pulled|pulled\s+it\s+from\s+(?:her|his|their)\s+hands)\b",
+        r"\b(slip|slips|slipped|stumble|stumbles|stumbled|skid|skids|stole\s+it\s+away|snapped|wind\s+nearly\s+pulled|pulled\s+it\s+from\s+(?:her|his|their)\s+hands)\b",
         low,
     ):
         return ("SLIP", False, False, None, None, "startled", 0.78, "ladder_rattle")
 
-    if re.search(r"\b(steady|steadies|steadied|stabilize|stabilizes|hold\s+fast|tighten|tightens)\b", low):
+    if re.search(r"\b(steady|steadies|steadied|stabilize|stabilizes|hold\s+fast|tighten|tightens|built|thread|threads|threading|tie|ties|tied|repair|repairs|repaired)\b", low):
         return ("STEADY_PROP", False, False, None, None, "focused", 0.72, "basket_steady" if "basket" in object_ids else "rope_creak")
 
     if re.search(r"\b(duck|ducks|ducked|crouch|crouches|crouched|flinch|flinches|shield\s+eyes)\b", low):
@@ -485,7 +508,7 @@ def _classify_clause_verb(
     if re.search(r"\b(catch|catches|caught)\b", low) and any(o in object_ids for o in ("rail", "ladder")):
         return ("CATCH_RAIL", False, False, None, None, "urgent", 0.80, "ladder_rattle")
 
-    if re.search(r"\b(grab|grabs|grabbed|seize|seizes|seized|snatch|snatches|pick\s+up|picks\s+up|picked\s+up|reach|reaches|reached)\b", low):
+    if re.search(r"\b(grab|grabs|grabbed|seize|seizes|seized|snatch|snatches|pick\s+up|picks\s+up|picked\s+up|reach|reaches|reached|unhook|unhooks|unhooked|snagged)\b", low):
         return ("GRAB", False, False, None, None, "urgent", 0.74, "lantern_grab")
 
     if re.search(r"\b(run|runs|ran|sprint|sprints|race|races|raced|rush|rushes|rushed)\b", low):

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 768" width="512" height="768" data-actor-id="clara_botanist" data-style-id="modern_expressive_2d.v2" data-niche="holdout_botanical_conservatory">
+  <defs>
+    <filter id="celShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="4" dy="6" stdDeviation="0" flood-color="#2e575a" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <g id="ground_shadow">
+    <ellipse cx="256" cy="706" rx="88" ry="18" fill="#191210" fill-opacity="0.30"/>
+  </g>
+  <g id="back_accessory_layer">
+    <path d="M236 278 C312 292 356 336 344 398 C306 382 268 352 238 326 Z" fill="#F5E9D4" stroke="#211612" stroke-width="6" stroke-linejoin="round"/>
+  </g>
+  <g id="legs_and_footwear">
+    <path d="M214 452 L242 452 L236 676 L210 676 Z" fill="#E3AE88" stroke="#211612" stroke-width="6"/>
+    <path d="M270 452 L298 452 L292 676 L266 676 Z" fill="#BD825D" stroke="#211612" stroke-width="6"/>
+    <path d="M204 674 L244 674 L264 704 L198 704 Z" fill="#9C5A3C" stroke="#211612" stroke-width="6"/>
+    <path d="M262 674 L300 674 L322 704 L256 704 Z" fill="#9C5A3C" stroke="#211612" stroke-width="6"/>
+  </g>
+  <g id="upper_arm_far">
+    <path d="M312 288 Q352 346 364 416" fill="none" stroke="#211612" stroke-width="32" stroke-linecap="round"/>
+    <path d="M312 288 Q352 346 364 416" fill="none" stroke="#BD825D" stroke-width="20" stroke-linecap="round"/>
+  </g>
+  <g id="torso_and_clothing_masks">
+    <path d="M188 274 L324 274 L344 512 L168 512 Z" fill="#4A7C6F" stroke="#211612" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M276 274 L324 274 L344 512 L272 512 Z" fill="#2e575a"/>
+    <path d="M192 278 L212 278 L194 506 L174 506 Z" fill="#629e85"/>
+    <rect x="176" y="424" width="160" height="22" rx="6" fill="#9C5A3C" stroke="#211612" stroke-width="5"/>
+    <line x1="172" y1="494" x2="340" y2="494" stroke="#E06D44" stroke-width="8"/>
+  </g>
+  <g id="upper_and_forearm_near">
+    <path d="M196 290 Q164 356 184 432" fill="none" stroke="#211612" stroke-width="34" stroke-linecap="round"/>
+    <path d="M196 290 Q164 356 184 432" fill="none" stroke="#E3AE88" stroke-width="22" stroke-linecap="round"/>
+    <circle cx="188" cy="442" r="18" fill="#E3AE88" stroke="#211612" stroke-width="6"/>
+  </g>
+  <g id="head_and_hair">
+    <rect x="238" y="236" width="36" height="46" rx="12" fill="#BD825D" stroke="#211612" stroke-width="6"/>
+    <circle cx="256" cy="176" r="74" fill="#E3AE88" stroke="#211612" stroke-width="7"/>
+    <path d="M182 164 C194 94 282 78 330 128 C302 118 242 124 182 164 Z" fill="#3B261E" stroke="#211612" stroke-width="7" stroke-linejoin="round"/>
+  </g>
+  <g id="face_expression_controls">
+    <ellipse cx="236" cy="172" rx="14" ry="18" fill="#FCFAF6" stroke="#211612" stroke-width="5"/>
+    <ellipse cx="288" cy="172" rx="11" ry="17" fill="#FCFAF6" stroke="#211612" stroke-width="5"/>
+    <circle cx="239" cy="172" r="7" fill="#211612"/>
+    <circle cx="290" cy="172" r="6" fill="#211612"/>
+    <path d="M220 146 Q236 136 252 146" fill="none" stroke="#3B261E" stroke-width="7" stroke-linecap="round"/>
+    <path d="M274 146 Q288 136 302 146" fill="none" stroke="#3B261E" stroke-width="7" stroke-linecap="round"/>
+    <path d="M242 214 Q262 226 282 212" fill="none" stroke="#211612" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

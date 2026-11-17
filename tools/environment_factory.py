@@ -50,6 +50,54 @@ def _sha256_file(path: Path) -> str:
 
 
 ENVIRONMENT_BLUEPRINTS: Dict[str, Dict[str, Any]] = {
+    "city_park": {
+        "environment_id": "sunlit_city_park_promenade_v2",
+        "place": "Contemporary Sunlit City Park Promenade, Fountain Plaza & Ornamental Tree Bench",
+        "period": "21st Century Everyday Urban Park Life",
+        "indoor_outdoor": "outdoor",
+        "time_weather": "golden_afternoon_breezy_sunbeams",
+        "vanishing_point": [0.52, 0.56],
+        "ground_y_norm": 0.84,
+        "materials": [
+            "sunlit_layered_foliage_clusters",
+            "flagstone_park_paving_with_mortar",
+            "slatted_oak_and_wrought_iron_bench",
+            "tiered_stone_park_fountain",
+            "bark_grained_ornamental_tree_branch",
+            "park_bicycles_and_paper_pennants",
+        ],
+        "interactable_props": {
+            "bench": {"kind": "park_bench", "anchor_world": [0.50, 0.79], "bounds": [0.38, 0.70, 0.62, 0.85], "portable": False},
+            "branch": {"kind": "ornamental_branch", "anchor_world": [0.58, 0.53], "bounds": [0.48, 0.44, 0.72, 0.60], "portable": False},
+            "fountain": {"kind": "park_fountain", "anchor_world": [0.80, 0.75], "bounds": [0.70, 0.58, 0.90, 0.84], "portable": False},
+            "kite": {"kind": "origami_dragon_kite", "anchor_world": [0.56, 0.44], "bounds": [0.48, 0.34, 0.64, 0.54], "portable": True},
+            "dragon": {"kind": "origami_dragon_kite", "anchor_world": [0.56, 0.44], "bounds": [0.48, 0.34, 0.64, 0.54], "portable": True},
+            "spool": {"kind": "kite_spool", "anchor_world": [0.44, 0.68], "bounds": [0.40, 0.64, 0.48, 0.72], "portable": True},
+            "ribbon": {"kind": "kite_ribbon", "anchor_world": [0.54, 0.56], "bounds": [0.46, 0.48, 0.62, 0.66], "portable": True},
+            "string": {"kind": "kite_string", "anchor_world": [0.48, 0.62], "bounds": [0.40, 0.44, 0.60, 0.70], "portable": True},
+        },
+    },
+    "holdout_botanical_conservatory": {
+        "environment_id": "sunbeam_botanical_conservatory_v2",
+        "place": "Arched Iron & Glass Botanical Conservatory",
+        "period": "Contemporary Botanical Glasshouse",
+        "indoor_outdoor": "indoor",
+        "time_weather": "humid_morning_sunbeams",
+        "vanishing_point": [0.50, 0.54],
+        "ground_y_norm": 0.84,
+        "materials": [
+            "arched_wrought_iron_glasshouse_ribs",
+            "terracotta_orchid_pots",
+            "layered_fern_fronds",
+            "herringbone_brick_walkway",
+            "potting_timber_table",
+        ],
+        "interactable_props": {
+            "orchid": {"kind": "terracotta_orchid_pot", "anchor_world": [0.50, 0.68], "bounds": [0.45, 0.60, 0.55, 0.74], "portable": True},
+            "pot": {"kind": "terracotta_orchid_pot", "anchor_world": [0.50, 0.68], "bounds": [0.45, 0.60, 0.55, 0.74], "portable": True},
+            "bench": {"kind": "potting_timber_bench", "anchor_world": [0.50, 0.76], "bounds": [0.34, 0.68, 0.66, 0.84], "portable": False},
+        },
+    },
     "roman_forum": {
         "environment_id": "roman_forum_marketplace_v1",
         "place": "Roman Forum Marketplace & Fountain colonnade",
@@ -125,19 +173,27 @@ def derive_environment_specs(
     profile = load_style_profile(style.style_id)
 
     bp_key = style.niche if style.niche in ENVIRONMENT_BLUEPRINTS else (
-        "roman_forum" if "roman" in style.niche else (
-            "modern_science" if "science" in style.niche else "everyday_business"
+        "city_park" if ("park" in style.niche or "kite" in style.niche) else (
+            "holdout_botanical_conservatory" if ("conservatory" in style.niche or "botanical" in style.niche) else (
+                "roman_forum" if "roman" in style.niche else (
+                    "modern_science" if "science" in style.niche else "everyday_business"
+                )
+            )
         )
     )
     bp = ENVIRONMENT_BLUEPRINTS[bp_key]
     st = dict(setting or {})
+    is_v2 = str(style.style_id).endswith(".v2")
+    default_env_id = str(bp["environment_id"])
+    if is_v2 and default_env_id.endswith("_v1"):
+        default_env_id = default_env_id[:-3] + "_v2"
 
     indoor_outdoor = str(st.get("indoor_outdoor") or bp["indoor_outdoor"])
     place = str(st.get("place") or bp["place"])
 
     return {
-        "schema_version": "kh01.environment_spec.v1",
-        "environment_id": str(st.get("environment_id") or bp["environment_id"]),
+        "schema_version": "kh01.environment_spec.v2" if is_v2 else "kh01.environment_spec.v1",
+        "environment_id": str(st.get("environment_id") or default_env_id),
         "niche": style.niche,
         "style_id": style.style_id,
         "style_lock_digest": style.style_lock_digest,
@@ -205,12 +261,13 @@ def render_environment_stage_png(
     vp_y = H * float(spec["vanishing_point"][1])
     ground_y = int(H * float(spec["ground_y_norm"]))
     niche = spec["niche"]
+    is_v2 = str(spec.get("style_id") or "").endswith(".v2")
     is_indoor = indoor_override if indoor_override is not None else (spec["indoor_outdoor"] == "indoor")
-    lw = max(3, int(H * 0.0028))
+    lw = max(3, int(H * (0.0031 if is_v2 else 0.0028)))
 
     # Plane 0: Sky / Upper Wall Gradient
     band_steps = 64
-    top_limit = int(H * 0.72)
+    top_limit = int(H * (0.86 if niche == "city_park" else 0.72))
     for bi in range(band_steps):
         u = bi / float(band_steps - 1)
         col = _lerp_rgb(sky_cols[0], sky_cols[-1], u)
@@ -219,7 +276,137 @@ def render_environment_stage_png(
         d.rectangle([0, y0, W, y1], fill=(*col, 255))
 
     # Plane 1: Niche-Specific Far Architecture & Perspective Stage
-    if "roman" in niche and not is_indoor:
+    if niche == "city_park":
+        # Sculpted sunlit cumulus clouds + breezy festive paper pennants
+        for cx_c, cy_c, rw_c, rh_c in [
+            (W * 0.18, H * 0.15, W * 0.12, H * 0.048),
+            (W * 0.56, H * 0.12, W * 0.15, H * 0.055),
+            (W * 0.86, H * 0.18, W * 0.10, H * 0.042),
+        ]:
+            d.ellipse([cx_c - rw_c, cy_c - rh_c, cx_c + rw_c, cy_c + rh_c], fill=(255, 252, 244, 228))
+            d.ellipse([cx_c - rw_c * 0.45, cy_c - rh_c * 1.45, cx_c + rw_c * 0.55, cy_c + rh_c * 0.65], fill=(255, 254, 249, 240))
+
+        # Rolling distant park meadow hills & far tree canopy silhouettes
+        d.polygon(
+            [(0, ground_y), (0, int(H * 0.54)), (int(W * 0.28), int(H * 0.48)), (int(W * 0.64), int(H * 0.52)), (W, int(H * 0.46)), (W, ground_y)],
+            fill=_hex_rgba("#76AE62"),
+            outline=ink_far,
+            width=max(2, lw - 1),
+        )
+        for tx_c, ty_c, tr_w, tr_h, t_hex in [
+            (W * 0.10, H * 0.36, W * 0.11, H * 0.16, arch_cols[1]),
+            (W * 0.24, H * 0.39, W * 0.09, H * 0.14, arch_cols[0]),
+            (W * 0.44, H * 0.38, W * 0.10, H * 0.13, arch_cols[1]),
+            (W * 0.90, H * 0.34, W * 0.12, H * 0.18, arch_cols[0]),
+        ]:
+            d.rectangle([int(tx_c - W * 0.012), int(ty_c + tr_h * 0.4), int(tx_c + W * 0.012), int(H * 0.68)], fill=_hex_rgba("#6B4B35"), outline=ink_far, width=max(2, lw - 1))
+            d.ellipse([int(tx_c - tr_w), int(ty_c - tr_h), int(tx_c + tr_w), int(ty_c + tr_h)], fill=_hex_rgba(t_hex), outline=ink_far, width=lw)
+            d.ellipse([int(tx_c - tr_w * 0.65), int(ty_c - tr_h * 1.15), int(tx_c + tr_w * 0.55), int(ty_c - tr_h * 0.1)], fill=_hex_rgba(arch_cols[2], 220))
+
+        if detail_mode not in ("close", "macro"):
+            # Sunlit lush green lawn strip above flagstone promenade + background bike path
+            lawn_top = int(H * 0.64)
+            d.rectangle([0, lawn_top, W, ground_y], fill=_hex_rgba("#88B969"), outline=ink_mid, width=lw)
+            d.rectangle([0, int(H * 0.675), W, int(H * 0.705)], fill=_hex_rgba("#E5D8C1"), outline=ink_far, width=max(2, lw - 1))
+
+            # Background park bicycles along the far bike path (world-building detail!)
+            for bx_c in (int(W * 0.20), int(W * 0.33)):
+                by_c = int(H * 0.685)
+                wr = int(H * 0.022)
+                for wx in (bx_c - int(wr * 1.6), bx_c + int(wr * 1.6)):
+                    d.ellipse([wx - wr, by_c - wr, wx + wr, by_c + wr], outline=ink_far, width=max(2, lw - 1))
+                d.polygon([(bx_c - int(wr * 1.6), by_c), (bx_c - int(wr * 0.2), by_c - int(wr * 1.5)), (bx_c + int(wr * 1.2), by_c - int(wr * 1.4)), (bx_c + int(wr * 0.2), by_c)], outline=_hex_rgba(acc_cols[2]), width=max(2, lw - 1))
+
+            # Breezy festive paper pennant garland between park lamp posts
+            for lp_x in (int(W * 0.14), int(W * 0.42)):
+                d.rectangle([lp_x - 5, int(H * 0.42), lp_x + 5, int(H * 0.72)], fill=_hex_rgba("#2B353E"), outline=ink_mid, width=max(2, lw - 1))
+                d.ellipse([lp_x - 16, int(H * 0.39), lp_x + 16, int(H * 0.43)], fill=_hex_rgba("#FFF5CC"), outline=ink_mid, width=max(2, lw - 1))
+            for pi in range(9):
+                u_p = pi / 8.0
+                px_p = int(W * (0.14 + u_p * 0.28))
+                py_p = int(H * 0.43 + math.sin(math.pi * u_p) * H * 0.035)
+                p_col = acc_cols[pi % 3]
+                d.polygon([(px_p - 12, py_p), (px_p + 12, py_p + 2), (px_p, py_p + 26)], fill=_hex_rgba(p_col), outline=ink_mid, width=max(2, lw - 1))
+
+            # Diagonal warm afternoon sunbeam shafts cutting through canopy (~38 deg, Ref 2 lighting!)
+            for sb_x in (W * 0.16, W * 0.48):
+                d.polygon(
+                    [(int(sb_x), 0), (int(sb_x + W * 0.11), 0), (int(sb_x + W * 0.31), ground_y), (int(sb_x + W * 0.18), ground_y)],
+                    fill=(255, 244, 198, 56),
+                )
+
+            # Hero Midground Ornamental Tree + Low Snag Branch (`x ~ 0.58, y ~ 0.53`)
+            tr_x = int(W * 0.67)
+            d.polygon(
+                [(tr_x - int(W * 0.022), ground_y - int(H * 0.04)), (tr_x - int(W * 0.015), int(H * 0.34)), (tr_x + int(W * 0.020), int(H * 0.34)), (tr_x + int(W * 0.032), ground_y - int(H * 0.04))],
+                fill=_hex_rgba("#734E36"),
+                outline=ink_mid,
+                width=lw + 1,
+            )
+            # Bark grain lines
+            for bk_y in (0.44, 0.56, 0.68):
+                d.line([(tr_x - int(W * 0.006), int(H * bk_y)), (tr_x - int(W * 0.004), int(H * (bk_y + 0.07)))], fill=ink_mid, width=max(2, lw - 1))
+            # Expressive low ornamental branch extending left over the park bench
+            d.polygon(
+                [(tr_x - int(W * 0.012), int(H * 0.49)), (int(W * 0.54), int(H * 0.52)), (int(W * 0.54), int(H * 0.542)), (tr_x - int(W * 0.008), int(H * 0.525))],
+                fill=_hex_rgba("#734E36"),
+                outline=ink_mid,
+                width=lw,
+            )
+            for lf_x, lf_y, lr_w, lr_h in [
+                (W * 0.66, H * 0.25, W * 0.13, H * 0.13),
+                (W * 0.58, H * 0.30, W * 0.09, H * 0.09),
+                (W * 0.74, H * 0.30, W * 0.10, H * 0.10),
+                (W * 0.55, H * 0.49, W * 0.042, H * 0.035),
+            ]:
+                d.ellipse([int(lf_x - lr_w), int(lf_y - lr_h), int(lf_x + lr_w), int(lf_y + lr_h)], fill=_hex_rgba(arch_cols[0]), outline=ink_mid, width=lw)
+                d.ellipse([int(lf_x - lr_w * 0.6), int(lf_y - lr_h * 0.85), int(lf_x + lr_w * 0.5), int(lf_y - lr_h * 0.1)], fill=_hex_rgba(arch_cols[2], 215))
+
+            # Patterned Slatted-Oak & Wrought-Iron Park Bench (`x ~ 0.42..0.58`)
+            bx0, bx1 = int(W * 0.41), int(W * 0.57)
+            by_seat = int(H * 0.775)
+            by_back = int(H * 0.715)
+            d.ellipse([bx0 - 16, ground_y - 10, bx1 + 22, ground_y + 14], fill=shadow_rgba)
+            for sl_y in (by_back, by_back + int(H * 0.024)):
+                d.rounded_rectangle([bx0, sl_y, bx1, sl_y + int(H * 0.018)], radius=4, fill=_hex_rgba("#C88A52"), outline=ink_mid, width=lw)
+            d.rounded_rectangle([bx0 - 8, by_seat, bx1 + 8, by_seat + int(H * 0.022)], radius=5, fill=_hex_rgba("#D89B62"), outline=ink_mid, width=lw)
+            for leg_x in (bx0 + 14, bx1 - 14):
+                d.rectangle([leg_x - 6, by_back, leg_x + 6, ground_y], fill=_hex_rgba("#2B333C"), outline=ink_mid, width=max(2, lw - 1))
+
+            # Tiered Stone Park Fountain on right (`x ~ 0.81`)
+            fx_c = int(W * 0.81)
+            d.rounded_rectangle([fx_c - int(W * 0.088), int(H * 0.73), fx_c + int(W * 0.088), ground_y + 6], radius=12, fill=_hex_rgba("#E5DAC6"), outline=ink_mid, width=lw)
+            d.ellipse([fx_c - int(W * 0.076), int(H * 0.712), fx_c + int(W * 0.076), int(H * 0.752)], fill=(86, 186, 218, 242), outline=ink_mid, width=lw)
+            d.rectangle([fx_c - int(W * 0.020), int(H * 0.58), fx_c + int(W * 0.020), int(H * 0.73)], fill=_hex_rgba("#EFE6D5"), outline=ink_mid, width=lw)
+            d.pieslice([fx_c - int(W * 0.052), int(H * 0.545), fx_c + int(W * 0.052), int(H * 0.605)], 0, 180, fill=_hex_rgba("#EFE6D5"), outline=ink_mid, width=lw)
+            for sgn in (-1, 1):
+                d.arc([fx_c - int(W * 0.05) if sgn < 0 else fx_c, int(H * 0.55), fx_c if sgn < 0 else fx_c + int(W * 0.05), int(H * 0.72)], 190 if sgn < 0 else 260, 280 if sgn < 0 else 350, fill=(220, 248, 255, 232), width=max(3, lw))
+        else:
+            # Soft designed atmospheric park bokeh & sunlit foliage mood backdrop for Closeups/Macros (Ref 3 principle!)
+            for bx_b, by_b, br_b, b_alpha in [
+                (W * 0.22, H * 0.32, W * 0.14, 72),
+                (W * 0.76, H * 0.28, W * 0.16, 68),
+                (W * 0.52, H * 0.48, W * 0.18, 52),
+            ]:
+                d.ellipse([int(bx_b - br_b), int(by_b - br_b), int(bx_b + br_b), int(by_b + br_b)], fill=(255, 246, 206, b_alpha))
+
+    elif niche == "holdout_botanical_conservatory":
+        # Arched wrought-iron glasshouse ribs + humid diagonal sunbeams + terracotta orchid tables
+        d.rectangle([0, int(H * 0.14), W, ground_y], fill=_hex_rgba(arch_cols[0]), outline=ink_mid, width=lw)
+        for rx_i in range(6):
+            rx = int(W * (0.08 + rx_i * 0.168))
+            d.line([(rx, int(H * 0.14)), (rx, ground_y)], fill=_hex_rgba(arch_cols[3]), width=lw + 1)
+            d.arc([rx - int(W * 0.084), int(H * 0.04), rx + int(W * 0.084), int(H * 0.28)], 180, 360, fill=_hex_rgba(arch_cols[3]), width=lw + 1)
+        d.polygon([(int(W * 0.24), 0), (int(W * 0.38), 0), (int(W * 0.60), ground_y), (int(W * 0.42), ground_y)], fill=key_rgba)
+        # Timber potting bench + terracotta orchid pots & lush fern clusters
+        d.rounded_rectangle([int(W * 0.32), int(H * 0.68), int(W * 0.68), int(H * 0.74)], radius=8, fill=_hex_rgba("#9E6B47"), outline=ink_mid, width=lw)
+        for leg_x in (int(W * 0.36), int(W * 0.64)):
+            d.rectangle([leg_x - 10, int(H * 0.74), leg_x + 10, ground_y], fill=_hex_rgba("#6E482E"), outline=ink_mid, width=lw)
+        for px_pot in (int(W * 0.40), int(W * 0.50), int(W * 0.60)):
+            d.polygon([(px_pot - 26, int(H * 0.62)), (px_pot + 26, int(H * 0.62)), (px_pot + 18, int(H * 0.68)), (px_pot - 18, int(H * 0.68))], fill=_hex_rgba(arch_cols[2]), outline=ink_mid, width=lw)
+            d.ellipse([px_pot - 32, int(H * 0.54), px_pot + 32, int(H * 0.63)], fill=_hex_rgba(arch_cols[1]), outline=ink_mid, width=max(2, lw - 1))
+
+    elif "roman" in niche and not is_indoor:
         # Sculptural Mediterranean cumulus clouds
         for cx_c, cy_c, rw_c, rh_c in [(W * 0.22, H * 0.17, W * 0.11, H * 0.05), (W * 0.68, H * 0.14, W * 0.14, H * 0.055)]:
             d.ellipse([cx_c - rw_c, cy_c - rh_c, cx_c + rw_c, cy_c + rh_c], fill=(255, 250, 240, 215))
@@ -239,15 +426,28 @@ def render_environment_stage_png(
             d.line([(tx, col_top - int(H * 0.055)), (tx - int(W * 0.008), col_top)], fill=ink_mid, width=max(2, lw - 1))
 
         if detail_mode != "close":
-            for arch_i in range(7):
-                ax0 = int(W * (0.06 + arch_i * 0.13))
-                aw = int(W * 0.082)
-                ay0 = int(H * 0.44)
-                d.rounded_rectangle([ax0, ay0, ax0 + aw, ground_y], radius=aw // 2, fill=_hex_rgba(arch_cols[1], 230), outline=ink_mid, width=lw)
-                # Fluted column pilaster between arches
-                px = ax0 - int(W * 0.024)
-                if px > 10:
-                    d.rectangle([px, col_top + int(H * 0.03), px + int(W * 0.018), ground_y], fill=_hex_rgba("#F5EAD6"), outline=ink_mid, width=max(2, lw - 1))
+            if is_v2:
+                # Asymmetric v2 Roman street elevation: ashlar stone courses, stepped temple portico, timber insula balcony & diagonal sunbeam!
+                for row_y in range(col_top + int(H * 0.045), ground_y, int(H * 0.055)):
+                    d.line([(0, row_y), (W, row_y)], fill=_hex_rgba(arch_cols[1], 145), width=max(2, lw - 1))
+                    for jx in range(int((row_y * 1.7) % 140), W, 160):
+                        d.line([(jx, row_y), (jx, min(ground_y, row_y + int(H * 0.055)))], fill=_hex_rgba(arch_cols[1], 130), width=max(2, lw - 1))
+                # Left grand portico columns + timber merchant balcony on center-right (varied rhythm, NOT 7 identical arches!)
+                for col_x in (int(W * 0.08), int(W * 0.20), int(W * 0.32)):
+                    d.rectangle([col_x, col_top + int(H * 0.02), col_x + int(W * 0.026), ground_y], fill=_hex_rgba("#F7EDD9"), outline=ink_mid, width=lw)
+                d.rounded_rectangle([int(W * 0.42), int(H * 0.46), int(W * 0.62), ground_y], radius=int(W * 0.05), fill=_hex_rgba("#9E7C5C"), outline=ink_mid, width=lw + 1)
+                d.rectangle([int(W * 0.39), int(H * 0.42), int(W * 0.66), int(H * 0.455)], fill=_hex_rgba("#7B5033"), outline=ink_mid, width=lw)
+                d.polygon([(int(W * 0.16), 0), (int(W * 0.28), 0), (int(W * 0.48), ground_y), (int(W * 0.32), ground_y)], fill=(255, 242, 198, 54))
+            else:
+                for arch_i in range(7):
+                    ax0 = int(W * (0.06 + arch_i * 0.13))
+                    aw = int(W * 0.082)
+                    ay0 = int(H * 0.44)
+                    d.rounded_rectangle([ax0, ay0, ax0 + aw, ground_y], radius=aw // 2, fill=_hex_rgba(arch_cols[1], 230), outline=ink_mid, width=lw)
+                    # Fluted column pilaster between arches
+                    px = ax0 - int(W * 0.024)
+                    if px > 10:
+                        d.rectangle([px, col_top + int(H * 0.03), px + int(W * 0.018), ground_y], fill=_hex_rgba("#F5EAD6"), outline=ink_mid, width=max(2, lw - 1))
 
             # Colorful striped linen market awnings (left & center stalls)
             for st_x, col_a, col_b in [(W * 0.10, acc_cols[0], acc_cols[3]), (W * 0.38, acc_cols[2], acc_cols[1])]:
@@ -375,11 +575,22 @@ def render_environment_stage_png(
         d.line([(0, ry), (W, ry)], fill=_hex_rgba(gnd_cols[2], 140), width=max(2, lw - 1))
 
     # Plane 3: Foreground Occluders (framing vignette silhouettes on wide/medium stages)
-    if detail_mode != "close":
-        fg_col = _hex_rgba(pal["shadow_tint_hex"], 215)
-        # Left foreground amphora/planter silhouette + right foreground column/frame edge
-        d.ellipse([int(-W * 0.03), int(H * 0.76), int(W * 0.09), int(H * 1.04)], fill=fg_col, outline=ink_mid, width=lw)
-        d.rectangle([int(W * 0.955), 0, W, H], fill=fg_col)
+    if detail_mode not in ("close", "macro"):
+        fg_col = _hex_rgba(pal["shadow_tint_hex"], 220 if is_v2 else 215)
+        if is_v2 and niche == "city_park":
+            # Organic foreground park foliage bush + flowers on bottom-left & overhanging canopy leaves on top-right!
+            for bx_f, by_f, rx_f, ry_f in [
+                (W * 0.02, H * 0.94, W * 0.085, H * 0.11),
+                (W * 0.09, H * 0.98, W * 0.065, H * 0.08),
+                (W * 0.94, H * 0.06, W * 0.095, H * 0.09),
+            ]:
+                d.ellipse([int(bx_f - rx_f), int(by_f - ry_f), int(bx_f + rx_f), int(by_f + ry_f)], fill=_hex_rgba("#1E3B2B", 225), outline=ink_mid, width=lw)
+            for fl_x, fl_y in [(int(W * 0.04), int(H * 0.89)), (int(W * 0.08), int(H * 0.93))]:
+                d.ellipse([fl_x - 9, fl_y - 9, fl_x + 9, fl_y + 9], fill=_hex_rgba(acc_cols[1]), outline=ink_mid, width=2)
+        else:
+            # Left foreground amphora/planter silhouette + right foreground column/frame edge
+            d.ellipse([int(-W * 0.03), int(H * 0.76), int(W * 0.09), int(H * 1.04)], fill=fg_col, outline=ink_mid, width=lw)
+            d.rectangle([int(W * 0.955), 0, W, H], fill=fg_col)
 
     if supersample > 1:
         img = img.resize(canvas_size, Image.Resampling.LANCZOS)

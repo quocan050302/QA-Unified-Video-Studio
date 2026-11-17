@@ -32,7 +32,20 @@ FORBIDDEN_ASSET_TOKENS: Tuple[str, ...] = (
     "fl01_v14_7_5_roman_eagle",
     "fl01_v14_7_5_1_roman_water_gate",
     "fl01_v14_7_6_roman_last_light_portus",
+    "media_1794812923609",
+    "media_1794812930039",
+    "media_1794812936006",
+    "references_private",
+    "ref01_poster_high_energy",
+    "ref02_normal_scene_baseline",
+    "ref03_closeup_overlapping_forms",
 )
+
+FORBIDDEN_REFERENCE_IMAGE_SHA256: Set[str] = {
+    "26846e213288ce8c1de20ff2a93001fe86c1f460be6b24ad3ec7b35c2c7bb5c1",
+    "bac9bb42a94d85556815683abefcb1e2cec562e39a56ab98850adacd9489b1f2",
+    "f69b4b310a00c78e60c9923f3218d95259e8e60e736517b694ef54f882d49535",
+}
 
 
 def _hex_to_rel_luminance(hex_color: str) -> float:
@@ -68,7 +81,7 @@ def _compute_core_lock_digest(raw_bible: Dict[str, Any]) -> str:
 
 
 class StyleProfile(BaseModel):
-    """Validated immutable Style Lock profile loaded from `visual_styles/<name>/v1/style_bible.json`."""
+    """Validated immutable Style Lock profile loaded from `visual_styles/<name>/<version>/style_bible.json`."""
 
     model_config = ConfigDict(frozen=True)
 
@@ -77,8 +90,10 @@ class StyleProfile(BaseModel):
     style_name: str
     version: str
     editorial_origin: str
+    editorial_approval_status: str = "PROPOSED_NOT_APPROVED"
     style_reference_manifest_path: str
     reference_availability: str
+    reference_analysis_manifest: Dict[str, Any] = Field(default_factory=dict)
     style_lock_digest: str
     computed_lock_digest: str
     asset_resolution_target: Dict[str, Any]
@@ -152,6 +167,7 @@ class ShotArtPlan(BaseModel):
 
 STYLE_PATH_REGISTRY: Dict[str, Path] = {
     "modern_expressive_2d.v1": STYLES_ROOT / "modern_expressive_2d" / "v1" / "style_bible.json",
+    "modern_expressive_2d.v2": STYLES_ROOT / "modern_expressive_2d" / "v2" / "style_bible.json",
     "modern_expressive_2d": STYLES_ROOT / "modern_expressive_2d" / "v1" / "style_bible.json",
 }
 
@@ -179,6 +195,8 @@ def load_style_profile(profile_id: str = "modern_expressive_2d.v1") -> StyleProf
     req_views = list((raw.get("silhouette_and_proportions") or {}).get("required_authored_views") or [])
     if not {"front", "three_quarter", "profile"}.issubset(set(req_views)):
         raise ValueError(f"Style profile '{profile_id}' must require front, three_quarter, and profile views")
+    if str(raw.get("style_id") or "").endswith(".v2") and "rear_three_quarter" not in set(req_views):
+        raise ValueError(f"Style profile '{profile_id}' (v2) must require rear_three_quarter view")
 
     req_exprs = list((raw.get("facial_acting") or {}).get("required_distinct_expressions") or [])
     if len(set(req_exprs)) < 6:
@@ -191,8 +209,10 @@ def load_style_profile(profile_id: str = "modern_expressive_2d.v1") -> StyleProf
         style_name=str(raw["style_name"]),
         version=str(raw["version"]),
         editorial_origin=str(raw["editorial_origin"]),
+        editorial_approval_status=str(raw.get("editorial_approval_status") or "PROPOSED_NOT_APPROVED"),
         style_reference_manifest_path=ref_rel,
         reference_availability=str(ref_data.get("reference_status") or raw.get("reference_availability") or "STYLE_REFERENCE_UNAVAILABLE"),
+        reference_analysis_manifest=dict(ref_data),
         style_lock_digest=str(raw.get("style_lock_digest") or computed_digest),
         computed_lock_digest=computed_digest,
         asset_resolution_target=dict(raw["asset_resolution_target"]),
@@ -238,6 +258,10 @@ def resolve_visual_style(
     override_map = profile.niche_overrides
     if resolved_niche in override_map:
         ov = override_map[resolved_niche]
+    elif "park" in resolved_niche or "kite" in resolved_niche:
+        ov = override_map.get("city_park") or override_map["everyday_business"]
+    elif "conservatory" in resolved_niche or "botanical" in resolved_niche:
+        ov = override_map.get("holdout_botanical_conservatory") or override_map["holdout_astronomy_museum"]
     elif "roman" in resolved_niche:
         ov = override_map["roman_forum"]
     elif "science" in resolved_niche or "lab" in resolved_niche or "tech" in resolved_niche:
@@ -306,41 +330,43 @@ def build_shot_art_direction(
 
     if explicit_scale in ("wide", "medium", "close", "macro"):
         scale: Literal["wide", "medium", "close", "macro"] = explicit_scale
-    elif obj.pacing_role == "HOOK" and any(w in line_low for w in ("scroll", "sliding", "gust", "macro", "seal")):
+    elif obj.pacing_role == "HOOK" and any(w in line_low for w in ("scroll", "sliding", "gust", "macro", "seal", "built", "dragon", "thread", "ribbon")):
         scale = "macro"
-    elif any(w in line_low for w in ("read", "order", "close", "unfold", "tomorrow", "deadpan")):
+    elif any(w in line_low for w in ("read", "order", "close", "unfold", "tomorrow", "deadpan", "knot", "tied", "careful")):
         scale = "close"
-    elif any(w in line_low for w in ("forum", "chase", "street", "crowd", "wide", "fountain")):
+    elif any(w in line_low for w in ("forum", "chase", "street", "crowd", "wide", "fountain", "park", "trees", "higher", "together")):
         scale = "wide"
     else:
         scale = "medium"
 
     if scale == "macro":
         viewpoint = "three_quarter"
-        detail_tier = "TIER_1_TACTILE_PROP_FOCUS"
+        detail_tier = style_instance.style_id.endswith(".v2") and "TIER_1_TACTILE_PROP_AND_HAND_FOCUS" or "TIER_1_TACTILE_PROP_FOCUS"
         fg_occl = False
     elif scale == "close":
         viewpoint = "three_quarter" if "laugh" not in line_low else "front"
-        detail_tier = "TIER_1_GRAPHIC_MOOD_BACKDROP"
+        detail_tier = style_instance.style_id.endswith(".v2") and "TIER_1_DESIGNED_ATMOSPHERIC_MOOD_BACKDROP" or "TIER_1_GRAPHIC_MOOD_BACKDROP"
         fg_occl = False
     elif scale == "wide":
-        viewpoint = "profile" if any(w in line_low for w in ("chase", "run", "wind", "jump")) else "three_quarter"
-        detail_tier = "TIER_3_FULL_ARCHITECTURAL_STAGE"
+        viewpoint = "profile" if any(w in line_low for w in ("chase", "run", "wind", "jump", "spotted")) else "three_quarter"
+        detail_tier = style_instance.style_id.endswith(".v2") and "TIER_3_FULL_MULTIPLANE_STAGE" or "TIER_3_FULL_ARCHITECTURAL_STAGE"
         fg_occl = True
     else:
         viewpoint = "three_quarter"
-        detail_tier = "TIER_2_FOCUSED_STAGE"
+        detail_tier = style_instance.style_id.endswith(".v2") and "TIER_2_FOCUSED_LAYERED_STAGE" or "TIER_2_FOCUSED_STAGE"
         fg_occl = True
 
-    if any(w in line_low for w in ("gust", "urgent", "read", "shock", "widen", "miss")):
+    if any(w in line_low for w in ("gust", "urgent", "read", "shock", "widen", "miss", "stole", "slipped")):
         expr = "wide_shock"
-    elif any(w in line_low for w in ("cart", "brace", "strain", "heavy", "caught", "jump")):
+    elif any(w in line_low for w in ("cart", "brace", "strain", "heavy", "caught", "jump", "snagged", "freed", "reach")):
         expr = "strained_exertion"
     elif any(w in line_low for w in ("tomorrow", "postponed", "deadpan")):
         expr = "deadpan_disbelief"
-    elif any(w in line_low for w in ("laugh", "relief", "safe", "smile")):
+    elif any(w in line_low for w in ("knot", "tied", "careful")) and "warm_relief_smile" in style_instance.required_expressions:
+        expr = "warm_relief_smile"
+    elif any(w in line_low for w in ("laugh", "relief", "safe", "smile", "together", "flew", "soar")):
         expr = "joyful_laugh"
-    elif any(w in line_low for w in ("chase", "lose", "vanish", "duck", "wind")):
+    elif any(w in line_low for w in ("chase", "lose", "vanish", "duck", "wind", "spotted", "higher")):
         expr = "determined_focus"
     else:
         expr = "neutral_attentive"
@@ -416,12 +442,18 @@ def validate_style_contract(
         errors.append("Forbidden: prior_preview_derived_visual_inputs != 0")
 
     # 2. Check authored files exist, match SHA-256, and do not alias forbidden assets
-    forbidden_hashes: Set[str] = set(asset_manifest.get("forbidden_sha256_blocklist") or [])
+    forbidden_hashes: Set[str] = set(asset_manifest.get("forbidden_sha256_blocklist") or []) | set(FORBIDDEN_REFERENCE_IMAGE_SHA256)
+    is_v2_contract = str(style_instance.style_id).endswith(".v2")
     for item in asset_manifest.get("authored_files") or []:
         rel_p = str(item.get("path") or "")
         low_p = rel_p.lower()
         if any(tok in low_p for tok in FORBIDDEN_ASSET_TOKENS):
             errors.append(f"Forbidden reference/legacy asset alias detected in path '{rel_p}'")
+        if is_v2_contract and (
+            "kh01_modern_2d_roman_urgent_scroll_30s" in low_p
+            or "kh01_20261116_015100z" in low_p
+        ):
+            errors.append(f"Forbidden reuse of old KH-01 v1 asset/evidence PNG in v2 manifest: '{rel_p}'")
         fp = Path(rel_p) if Path(rel_p).is_absolute() else (ROOT_DIR / rel_p)
         if not fp.is_file():
             errors.append(f"Declared authored asset missing on disk: '{rel_p}'")
@@ -499,6 +531,167 @@ def validate_style_contract(
         "style_lock_digest": style_instance.style_lock_digest,
         "niche": style_instance.niche,
         "ink_stage_contrast_ratio": ink_contrast,
+        "errors": errors,
+        "warnings": warnings,
+    }
+
+
+def resolve_art_quality_targets(
+    script_context: Any,
+    references: Optional[Dict[str, Any]] = None,
+    niche: Optional[str] = None,
+    shot_beats: Optional[List[Dict[str, Any]]] = None,
+    style_id: str = "modern_expressive_2d.v2",
+) -> Dict[str, Any]:
+    """
+    Additive KH-01.R1 art quality target resolver anchored to `modern_expressive_2d.v2` and
+    observable reference language (Frame 2 normal-scene baseline, Frame 3 closeup/OTS overlap,
+    Frame 1 poster-only FX boundary). Never fabricates a numeric visual similarity percentage.
+    """
+    profile = load_style_profile(style_id)
+    style_inst = resolve_visual_style(script_context, niche=niche, style_id=style_id)
+    ref_manifest = dict(references or profile.reference_analysis_manifest or {})
+    ref_list = list(ref_manifest.get("references") or [])
+    ref_ingested_ok = (
+        ref_manifest.get("reference_status") == "STYLE_REFERENCES_INGESTED_3_OF_3"
+        and len(ref_list) == 3
+        and all(bool(r.get("sha256")) and isinstance(r.get("dimensions"), list) and len(r["dimensions"]) == 2 for r in ref_list)
+    )
+
+    beats = list(shot_beats or [])
+    if not beats and isinstance(script_context, dict):
+        beats = list(script_context.get("beats") or script_context.get("shots") or [])
+
+    beat_targets: List[Dict[str, Any]] = []
+    for idx, b in enumerate(beats):
+        sid = str(b.get("id") or b.get("shot_id") or f"S{idx + 1:02d}")
+        scale = str(b.get("scale") or ("macro" if idx == 0 else ("wide" if idx in (1, 3, 7) else ("close" if idx == 6 else "medium"))))
+        if scale not in ("wide", "medium", "close", "macro"):
+            scale = "medium"
+        subj_range = profile.camera_composition_and_safe_zones["subject_height_norm_by_scale"][scale]
+        tier_cfg = profile.environment_detail_tiers_by_scale[scale]
+        beat_targets.append({
+            "shot_id": sid,
+            "camera_scale": scale,
+            "subject_height_norm_target_range": list(subj_range),
+            "environment_detail_tier": tier_cfg["tier"],
+            "background_soften_target": float(tier_cfg["background_soften"]),
+            "foreground_occlusion_expected": bool(tier_cfg["foreground_occlusion"]),
+            "poster_fx_allowed": False,
+            "reference_role_guidance": (
+                "ref_03_closeup_overlapping_forms" if scale in ("close", "macro") else "ref_02_normal_scene_baseline"
+            ),
+        })
+
+    return {
+        "schema_version": "kh01_r1.art_quality_targets.v2",
+        "style_id": style_inst.style_id,
+        "style_lock_digest": style_inst.style_lock_digest,
+        "niche": style_inst.niche,
+        "reference_ingested_3_of_3": ref_ingested_ok,
+        "reference_status": "STYLE_REFERENCES_INGESTED_3_OF_3" if ref_ingested_ok else "REFERENCE_INPUT_BLOCKED",
+        "anatomy_and_garment_targets": {
+            "require_curved_tapered_limbs": bool(profile.silhouette_and_proportions.get("require_curved_tapered_limbs", True)),
+            "require_rounded_elbow_and_knee_volume": bool(profile.silhouette_and_proportions.get("require_rounded_elbow_and_knee_volume", True)),
+            "require_differentiated_wrist_palm_fingers": bool(profile.silhouette_and_proportions.get("require_differentiated_wrist_palm_fingers", True)),
+            "min_garment_layers_hero": int(profile.clothing_and_materials.get("min_garment_layers_hero", 2)),
+            "fold_lines_per_garment_range": list(profile.clothing_and_materials.get("fold_lines_per_garment_range", [3, 8])),
+            "required_authored_views": list(style_inst.required_views),
+            "required_distinct_expressions": list(style_inst.required_expressions),
+        },
+        "shading_and_environment_targets": {
+            "cel_value_groups": style_inst.cel_value_groups,
+            "diagonal_sunbeam_shaft_alpha": float(profile.cel_shading_and_lighting.get("diagonal_sunbeam_shaft_alpha", 0.22)),
+            "forbid_single_plain_wall_repeated_arches": bool(profile.texture_and_perspective.get("forbid_single_plain_wall_repeated_arches", True)),
+            "material_motifs": list(style_inst.material_motifs),
+            "poster_neon_halftone_forbidden_in_scenes": True,
+        },
+        "beat_targets": beat_targets,
+        "VQ_REFERENCE_MATCH": "HUMAN_REVIEW_PENDING",
+        "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+        "hallucinated_similarity_score": None,
+    }
+
+
+def validate_reference_grounded_style_contract(
+    style_instance: StyleInstance,
+    asset_manifest: Dict[str, Any],
+    shots: List[Dict[str, Any]],
+    reference_manifest: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """
+    Fail-closed KH-01.R1 validator verifying BOTH technical style/asset contract (`TECH_STYLE_CONTRACT_PASS`)
+    AND real 3-frame reference ingestion metadata completeness without auto-approving human art quality.
+    """
+    base_res = validate_style_contract(style_instance, asset_manifest, shots)
+    errors = list(base_res["errors"])
+    warnings = list(base_res["warnings"])
+
+    profile = load_style_profile(style_instance.style_id)
+    ref_mf = dict(reference_manifest if reference_manifest is not None else profile.reference_analysis_manifest)
+
+    if ref_mf.get("public_repo_payload_included") is True:
+        errors.append("Forbidden: public_repo_payload_included=True in reference_manifest")
+
+    refs = list(ref_mf.get("references") or [])
+    if len(refs) != 3:
+        return {
+            "valid": False,
+            "status": "REFERENCE_INPUT_BLOCKED",
+            "tech_contract_status": "FAIL",
+            "VQ_REFERENCE_MATCH": "STYLE_COMPARISON_NOT_VERIFIED",
+            "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+            "style_id": style_instance.style_id,
+            "errors": errors + [f"Expected exactly 3 ingested reference frames, got {len(refs)}"],
+            "warnings": warnings,
+        }
+
+    ref_hashes: Set[str] = set()
+    for idx, r in enumerate(refs):
+        sha = str(r.get("sha256") or "").strip().lower()
+        dims = r.get("dimensions")
+        if len(sha) != 64:
+            errors.append(f"Reference[{idx}] missing valid SHA-256 digest")
+        else:
+            ref_hashes.add(sha)
+        if not (isinstance(dims, list) and len(dims) == 2 and int(dims[0]) >= 320 and int(dims[1]) >= 240):
+            errors.append(f"Reference[{idx}] invalid dimensions: {dims}")
+        if r.get("public_repo_committed") is True:
+            errors.append(f"Reference[{idx}] marked public_repo_committed=True (copyright violation)")
+
+    if len(ref_hashes) != 3:
+        errors.append(f"Expected 3 distinct reference image SHA-256 hashes, got {len(ref_hashes)}")
+
+    obs = ref_mf.get("observable_analysis_by_frame") or {}
+    if len(obs) < 3:
+        errors.append("reference_manifest missing per-image observable_analysis_by_frame for all 3 frames")
+    for rk, rdata in obs.items():
+        if not isinstance(rdata, dict) or not rdata.get("contour") or not rdata.get("value_structure"):
+            errors.append(f"Observable analysis for '{rk}' incomplete (missing contour/value_structure)")
+
+    # Cross-check authored asset SHA-256s against ingested reference image SHA-256s
+    for item in asset_manifest.get("authored_files") or []:
+        if str(item.get("sha256") or "").lower() in ref_hashes:
+            errors.append(f"Forbidden: user reference image bytes copied into authored file '{item.get('path')}'")
+
+    # Reject invented visual similarity score or auto-approval claims if smuggled into asset_manifest
+    if asset_manifest.get("STYLE_APPROVED") == "PASS" or asset_manifest.get("VQ_REFERENCE_MATCH") == "PASS":
+        errors.append("Forbidden: STYLE_APPROVED / VQ_REFERENCE_MATCH cannot be auto-marked PASS without user signoff")
+    if asset_manifest.get("style_similarity_score") is not None:
+        errors.append("Forbidden: invented numeric style_similarity_score is disallowed")
+
+    tech_ok = len(errors) == 0
+    return {
+        "valid": tech_ok,
+        "status": "TECH_STYLE_CONTRACT_PASS" if tech_ok else "FAIL",
+        "tech_contract_status": "TECH_STYLE_CONTRACT_PASS" if tech_ok else "FAIL",
+        "reference_ingestion_status": "STYLE_REFERENCES_INGESTED_3_OF_3",
+        "VQ_REFERENCE_MATCH": "HUMAN_REVIEW_PENDING",
+        "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+        "style_id": style_instance.style_id,
+        "style_lock_digest": style_instance.style_lock_digest,
+        "niche": style_instance.niche,
+        "verified_reference_hashes": sorted(ref_hashes),
         "errors": errors,
         "warnings": warnings,
     }

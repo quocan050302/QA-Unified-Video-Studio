@@ -33,6 +33,10 @@ class StoryContext(BaseModel):
 
 
 NICHE_KEYWORD_MAP: Dict[str, Tuple[str, ...]] = {
+    "city_park": (
+        "park", "kite", "bench", "trees", "branch", "ribbon", "spool", "bicycle",
+        "meadow", "pathway", "promenade", "origami", "paper dragon", "built a dragon from paper",
+    ),
     "modern_science": (
         "lab", "cleanroom", "beaker", "crystal", "scientist", "microscope", "sample",
         "experiment", "laser", "molecule", "researcher", "pipette", "spectrometer",
@@ -40,6 +44,9 @@ NICHE_KEYWORD_MAP: Dict[str, Tuple[str, ...]] = {
     "everyday_business": (
         "cafe", "barista", "espresso", "customer", "shop", "office", "counter", "invoice",
         "bakery", "tray", "latte", "storefront", "cashier", "client",
+    ),
+    "holdout_botanical_conservatory": (
+        "conservatory", "glasshouse", "botanist", "orchid", "fern", "seedling", "terrarium", "greenhouse",
     ),
     "holdout_astronomy_museum": (
         "planetarium", "telescope", "curator", "eclipse", "gallery", "museum", "dome", "star chart",
