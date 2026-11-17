@@ -249,6 +249,7 @@ export function evaluateRomanActorPoseAt(globalT, shot, actor = {}, worldState =
   const face = sampleDiscrete(lt, actor.faceKeys, actor.face || 'neutral');
   const phase = sampleDiscrete(lt, actor.phaseKeys, actor.phase || 'idle');
   const tremor = sampleTrack(lt, actor.tremorKeys, actor.tremor ?? 0);
+  const hipBobU = actor.hipBobUKeys ? sampleTrack(lt, actor.hipBobUKeys, actor.hipBobU ?? 0) : (actor.hipBobU ?? 0);
 
   const sec = evaluateRomanSecondaryMotionAt(globalT, velX, accelX, seed, {
     tremor,
@@ -364,6 +365,11 @@ export function evaluateRomanActorPoseAt(globalT, shot, actor = {}, worldState =
     featherBend: sec.featherBend,
     skirtSway: sec.skirtSway,
     breathBobU: sec.breathBobU,
+    hipBobU,
+    leftKneeBend: actor.leftKneeBend,
+    rightKneeBend: actor.rightKneeBend,
+    courierSatchel: !!actor.courierSatchel,
+    shoeMode: actor.shoeMode,
     armsAng: Object.freeze([lsh, lel, rsh, rel]),
     footPlant: Object.freeze(footSol),
     shieldGrip: shieldSol ? Object.freeze(shieldSol) : null,

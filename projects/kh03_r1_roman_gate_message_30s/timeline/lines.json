@@ -1,0 +1,187 @@
+[
+  {
+    "id": "L01",
+    "slot": "NARRATOR",
+    "start": 0.08,
+    "end": 4.503,
+    "duration": 4.423,
+    "tempo_rate": 1.0,
+    "rms": 0.102675,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      3840,
+      216160
+    ],
+    "word_count": 13,
+    "text": "At sunset, the city gate began to close with one last courier outside.",
+    "shot_ids": [
+      "SH01",
+      "SH02",
+      "SH03"
+    ]
+  },
+  {
+    "id": "L02",
+    "slot": "NARRATOR",
+    "start": 4.583,
+    "end": 7.839,
+    "duration": 3.256,
+    "tempo_rate": 1.0,
+    "rms": 0.117929,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      219984,
+      376283
+    ],
+    "word_count": 8,
+    "text": "Inside Marcus's satchel lay one urgent wax-sealed order.",
+    "shot_ids": [
+      "SH03",
+      "SH04"
+    ]
+  },
+  {
+    "id": "L03",
+    "slot": "NARRATOR",
+    "start": 7.919,
+    "end": 10.969,
+    "duration": 3.05,
+    "tempo_rate": 1.0,
+    "rms": 0.112395,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      380112,
+      526515
+    ],
+    "word_count": 10,
+    "text": "His sandals hammered damp cobbles as the oak gap narrowed.",
+    "shot_ids": [
+      "SH04",
+      "SH05",
+      "SH06"
+    ]
+  },
+  {
+    "id": "L04",
+    "slot": "NARRATOR",
+    "start": 11.049,
+    "end": 14.868,
+    "duration": 3.819,
+    "tempo_rate": 1.0,
+    "rms": 0.102279,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      530352,
+      713688
+    ],
+    "word_count": 12,
+    "text": "Twenty paces short he clipped a curb—the scroll flew from his grip.",
+    "shot_ids": [
+      "SH06",
+      "SH07"
+    ]
+  },
+  {
+    "id": "L05",
+    "slot": "NARRATOR",
+    "start": 14.948,
+    "end": 19.505,
+    "duration": 4.557,
+    "tempo_rate": 1.0,
+    "rms": 0.099295,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      717504,
+      936263
+    ],
+    "word_count": 13,
+    "text": "Guard Gaius lunged and missed. His heel pinned the scroll beside the drain.",
+    "shot_ids": [
+      "SH07",
+      "SH08",
+      "SH09",
+      "SH10"
+    ]
+  },
+  {
+    "id": "L06",
+    "slot": "NARRATOR",
+    "start": 19.585,
+    "end": 22.462,
+    "duration": 2.877,
+    "tempo_rate": 1.0,
+    "rms": 0.098949,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      940080,
+      1078177
+    ],
+    "word_count": 9,
+    "text": "Out of breath, he cracked the crimson seal open.",
+    "shot_ids": [
+      "SH10",
+      "SH11"
+    ]
+  },
+  {
+    "id": "L07",
+    "slot": "NARRATOR",
+    "start": 22.542,
+    "end": 25.485,
+    "duration": 2.943,
+    "tempo_rate": 1.0,
+    "rms": 0.096766,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      1082016,
+      1223257
+    ],
+    "word_count": 9,
+    "text": "Four painted words stared up: KEEP THE GATE OPEN.",
+    "shot_ids": [
+      "SH11",
+      "SH12"
+    ]
+  },
+  {
+    "id": "L08",
+    "slot": "NARRATOR",
+    "start": 25.565,
+    "end": 26.676,
+    "duration": 1.111,
+    "tempo_rate": 1.0,
+    "rms": 0.105496,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      1227120,
+      1280437
+    ],
+    "word_count": 5,
+    "text": "He yelled to the tower.",
+    "shot_ids": [
+      "SH12",
+      "SH13"
+    ]
+  },
+  {
+    "id": "L09",
+    "slot": "NARRATOR",
+    "start": 26.756,
+    "end": 29.174,
+    "duration": 2.418,
+    "tempo_rate": 1.0,
+    "rms": 0.107648,
+    "gap_after_sec": 0.0,
+    "pcm_sample_range": [
+      1284288,
+      1400359
+    ],
+    "word_count": 7,
+    "text": "Too late—the heavy oak leaves slammed shut.",
+    "shot_ids": [
+      "SH13",
+      "SH14",
+      "SH15"
+    ]
+  }
+]

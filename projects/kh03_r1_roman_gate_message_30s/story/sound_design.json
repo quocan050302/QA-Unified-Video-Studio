@@ -1,0 +1,56 @@
+{
+  "schema_version": "kh03.r1.sound_design.v1",
+  "voice_provenance": "local_os_sapi_speech_synthesizer",
+  "voice_sha256": "2570b4f1fcfda0a258b8712e07a1ef86a4f704f2228fa8ae99288a312828457e",
+  "global_tempo_scale": 0.987,
+  "audio_assets": {
+    "sfx_files": {
+      "kh03_r1_cobble_step.wav": {
+        "path": "audio/sfx/kh03_r1_cobble_step.wav",
+        "sha256": "64064f029b00d10862f334666b2abee2467857d69f341a7c6c9558e15ae1c54e"
+      },
+      "kh03_r1_winch_creak.wav": {
+        "path": "audio/sfx/kh03_r1_winch_creak.wav",
+        "sha256": "8d313aad9cf29abd1013480e0f65f9daa0b1ccc6876f14378bfde5c06d4bcd5d"
+      },
+      "kh03_r1_stumble_scrape.wav": {
+        "path": "audio/sfx/kh03_r1_stumble_scrape.wav",
+        "sha256": "c6744b214962b02f7afe51a01a587afa8778743562136307e507dd9507d77703"
+      },
+      "kh03_r1_scroll_whoosh.wav": {
+        "path": "audio/sfx/kh03_r1_scroll_whoosh.wav",
+        "sha256": "994052a6f8630adc48c04ec242568814449a252eb7763bd5ba78ffe83c385069"
+      },
+      "kh03_r1_guard_lunge_swoosh.wav": {
+        "path": "audio/sfx/kh03_r1_guard_lunge_swoosh.wav",
+        "sha256": "444e489813c5baf7cc40a911f0ad62ad2a05f431c61061638ea6688946775d31"
+      },
+      "kh03_r1_sandal_stomp_drain.wav": {
+        "path": "audio/sfx/kh03_r1_sandal_stomp_drain.wav",
+        "sha256": "4cb98404851d17471d4db8070431750d54ceb90a822124ab14889503ebe83ea9"
+      },
+      "kh03_r1_wax_seal_crack.wav": {
+        "path": "audio/sfx/kh03_r1_wax_seal_crack.wav",
+        "sha256": "0c6e125e597817c4e66aad870fb454b33e7ab5feeb013915fcaaa37c58a1cdc4"
+      },
+      "kh03_r1_tower_shout_echo.wav": {
+        "path": "audio/sfx/kh03_r1_tower_shout_echo.wav",
+        "sha256": "b2a7f4f4a748ab3c0a0d2461a826db7a873bf2219e717cf035a5eceda5107f3f"
+      },
+      "kh03_r1_iron_bolt_slam.wav": {
+        "path": "audio/sfx/kh03_r1_iron_bolt_slam.wav",
+        "sha256": "23d1b6076a0ea17cc7eef1de95cbdd9e329d124c1e56fdcf0146e983f8b16843"
+      }
+    },
+    "music_bed": {
+      "path": "audio/music/bed_r1_dusk_chase.wav",
+      "sha256": "0e93e0e4f430dba13064ca8e57722fe01d53b9ea4328c4e5190930f71c532692",
+      "bpm": 120,
+      "duration_sec": 12.0
+    }
+  },
+  "editorial_drop_shots": [
+    "SH14",
+    "SH15"
+  ]
+}

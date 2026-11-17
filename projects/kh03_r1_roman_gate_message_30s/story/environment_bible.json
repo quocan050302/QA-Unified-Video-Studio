@@ -1,0 +1,10 @@
+{
+  "locations": [
+    "exterior_gate_approach",
+    "gate_winch_machinery",
+    "cobble_alley_chase",
+    "interior_guard_threshold"
+  ],
+  "aspect": "9:16",
+  "render_mode": "canvas2d_only"
+}

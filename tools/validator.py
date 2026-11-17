@@ -225,6 +225,49 @@ def validate_project(project_dir: str, stage: str = "preflight") -> dict:
                     "Vui long render lai truoc khi mix."
                 )
 
+    # 5. Opt-in validation for KH-03.0.R1 script_beat_director_v1 editorial contracts
+    if cfg.get("editorial_mode") == "script_beat_director_v1":
+        sp_file = P / "story" / "shot_plan.json"
+        map_file = P / "story" / "shot_to_line_map.json"
+        if not sp_file.is_file():
+            report["fatal_errors"].append("editorial_mode='script_beat_director_v1' thieu story/shot_plan.json")
+        else:
+            try:
+                sp = json.loads(sp_file.read_text(encoding="utf-8"))
+                sp_shots = sp.get("shots", [])
+                exp_frames = int(sp.get("total_frames", 720))
+                if not sp_shots:
+                    report["fatal_errors"].append("story/shot_plan.json khong co shots")
+                else:
+                    cursor_f = 0
+                    for s_item in sp_shots:
+                        fs, fe = int(s_item.get("frame_start", -1)), int(s_item.get("frame_end", -1))
+                        if fs != cursor_f or fe < fs:
+                            report["timeline_errors"].append(
+                                f"shot_plan frame continuity gap/overlap tai {s_item.get('id')}: {fs}..{fe} (cho doi {cursor_f})"
+                            )
+                            break
+                        cursor_f = fe + 1
+                    if cursor_f != exp_frames:
+                        report["timeline_errors"].append(
+                            f"shot_plan khong phu du {exp_frames} frames (ket thuc tai {cursor_f})"
+                        )
+            except Exception as exc:
+                report["fatal_errors"].append(f"Loi doc story/shot_plan.json: {exc}")
+
+        if not map_file.is_file():
+            report["fatal_errors"].append("editorial_mode='script_beat_director_v1' thieu story/shot_to_line_map.json")
+        else:
+            try:
+                cw = json.loads(map_file.read_text(encoding="utf-8"))
+                sm = cw.get("summary", {})
+                if float(sm.get("word_coverage_ratio", 0.0)) < 0.999:
+                    report["timeline_errors"].append(
+                        f"shot_to_line_map bo sot tu (coverage={sm.get('word_coverage_ratio')})"
+                    )
+            except Exception as exc:
+                report["fatal_errors"].append(f"Loi doc story/shot_to_line_map.json: {exc}")
+
     # Danh gia trang thai chung
     if (report["fatal_errors"] or report["missing_ids"] or report["missing_templates"] or
         report["missing_assets"] or report["timeline_errors"] or report["import_errors"]):

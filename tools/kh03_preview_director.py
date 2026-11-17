@@ -2159,6 +2159,10 @@ def render_roman_preview_30s(
     return manifest
 
 
+# Opt-in KH-03.0.R1 script-driven builder & renderer (zero change to KH-03.0 legacy functions above)
+from tools.kh03_r1_project_builder import build_roman_script_driven_project, render_roman_r1_preview
+
+
 if __name__ == "__main__":
     scr_tts = REPO_ROOT / ".test-runs" / "kh03_0_20261117_044405Z_4e4f" / "tts_segments"
     pkt = REPO_ROOT / "docs" / "antigravity_runs" / "KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f" / "film_preview_packet"

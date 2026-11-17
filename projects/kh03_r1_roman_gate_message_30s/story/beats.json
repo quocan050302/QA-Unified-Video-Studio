@@ -1,0 +1,223 @@
+{
+  "schema_version": "kh03.r1.beats.v1",
+  "beats": [
+    {
+      "beat_id": "B01",
+      "line_id": "L01",
+      "source_text": "At sunset, the city gate began to close with one last courier outside.",
+      "beat_function": "HOOK_RISK",
+      "location_id": "exterior_gate_approach",
+      "primary_actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "city_gate"
+      ],
+      "actions": [
+        "narrative_hold"
+      ],
+      "negated_verbs": [],
+      "clause_breaks": 2,
+      "legacy_signal_tags": {
+        "has_run": false,
+        "hook_phase_hint": null
+      },
+      "visual_obligation": "immediate_moving_threat",
+      "allow_merge": false
+    },
+    {
+      "beat_id": "B02",
+      "line_id": "L02",
+      "source_text": "Inside Marcus's satchel lay one urgent wax-sealed order.",
+      "beat_function": "ESCALATION_SETUP",
+      "location_id": "exterior_gate_approach",
+      "primary_actors": [
+        "courier_marcus"
+      ],
+      "props": [],
+      "actions": [
+        "satchel_dispatch"
+      ],
+      "negated_verbs": [],
+      "clause_breaks": 1,
+      "legacy_signal_tags": {
+        "has_run": false,
+        "hook_phase_hint": null
+      },
+      "visual_obligation": "state_change_action",
+      "allow_merge": false
+    },
+    {
+      "beat_id": "B03",
+      "line_id": "L03",
+      "source_text": "His sandals hammered damp cobbles as the oak gap narrowed.",
+      "beat_function": "ESCALATION_SETUP",
+      "location_id": "cobble_alley_chase",
+      "primary_actors": [
+        "courier_marcus"
+      ],
+      "props": [],
+      "actions": [
+        "gate_closing",
+        "sprint_chase"
+      ],
+      "negated_verbs": [],
+      "clause_breaks": 1,
+      "legacy_signal_tags": {
+        "has_run": false,
+        "hook_phase_hint": null
+      },
+      "visual_obligation": "state_change_action",
+      "allow_merge": false
+    },
+    {
+      "beat_id": "B04",
+      "line_id": "L04",
+      "source_text": "Twenty paces short he clipped a curb—the scroll flew from his grip.",
+      "beat_function": "CRISIS_SHIFT",
+      "location_id": "exterior_gate_approach",
+      "primary_actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "sealed_scroll"
+      ],
+      "actions": [
+        "stumble_trip",
+        "scroll_flight"
+      ],
+      "negated_verbs": [],
+      "clause_breaks": 2,
+      "legacy_signal_tags": {
+        "has_run": false,
+        "hook_phase_hint": null
+      },
+      "visual_obligation": "state_change_action",
+      "allow_merge": false
+    },
+    {
+      "beat_id": "B05",
+      "line_id": "L05",
+      "source_text": "Guard Gaius lunged and missed. His heel pinned the scroll beside the drain.",
+      "beat_function": "CRISIS_SHIFT",
+      "location_id": "interior_guard_threshold",
+      "primary_actors": [
+        "courier_marcus",
+        "gate_guard_gaius"
+      ],
+      "props": [
+        "sealed_scroll",
+        "drain_grate"
+      ],
+      "actions": [
+        "lunge_miss",
+        "NEGATED:sandal_catch"
+      ],
+      "negated_verbs": [
+        "catch"
+      ],
+      "clause_breaks": 2,
+      "legacy_signal_tags": {
+        "has_run": false,
+        "hook_phase_hint": null
+      },
+      "visual_obligation": "state_change_action",
+      "allow_merge": false
+    },
+    {
+      "beat_id": "B06",
+      "line_id": "L06",
+      "source_text": "Out of breath, he cracked the crimson seal open.",
+      "beat_function": "RECOVERY_IMPACT",
+      "location_id": "exterior_gate_approach",
+      "primary_actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "sealed_scroll"
+      ],
+      "actions": [
+        "seal_break_read"
+      ],
+      "negated_verbs": [],
+      "clause_breaks": 2,
+      "legacy_signal_tags": {
+        "has_run": false,
+        "hook_phase_hint": null
+      },
+      "visual_obligation": "state_change_action",
+      "allow_merge": false
+    },
+    {
+      "beat_id": "B07",
+      "line_id": "L07",
+      "source_text": "Four painted words stared up: KEEP THE GATE OPEN.",
+      "beat_function": "REVEAL_PAYOFF",
+      "location_id": "interior_guard_threshold",
+      "primary_actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "sealed_scroll",
+        "city_gate"
+      ],
+      "actions": [
+        "seal_break_read"
+      ],
+      "negated_verbs": [],
+      "clause_breaks": 2,
+      "legacy_signal_tags": {
+        "has_run": false,
+        "hook_phase_hint": null
+      },
+      "visual_obligation": "state_change_action",
+      "allow_merge": false
+    },
+    {
+      "beat_id": "B08",
+      "line_id": "L08",
+      "source_text": "He yelled to the tower.",
+      "beat_function": "ESCALATION_SETUP",
+      "location_id": "exterior_gate_approach",
+      "primary_actors": [
+        "courier_marcus",
+        "watchman_sec"
+      ],
+      "props": [],
+      "actions": [
+        "tower_shout"
+      ],
+      "negated_verbs": [],
+      "clause_breaks": 1,
+      "legacy_signal_tags": {
+        "has_run": false,
+        "hook_phase_hint": null
+      },
+      "visual_obligation": "state_change_action",
+      "allow_merge": true
+    },
+    {
+      "beat_id": "B09",
+      "line_id": "L09",
+      "source_text": "Too late—the heavy oak leaves slammed shut.",
+      "beat_function": "FINAL_IRONY_PAYOFF",
+      "location_id": "interior_guard_threshold",
+      "primary_actors": [
+        "courier_marcus"
+      ],
+      "props": [],
+      "actions": [
+        "gate_closing",
+        "gate_slam"
+      ],
+      "negated_verbs": [],
+      "clause_breaks": 2,
+      "legacy_signal_tags": {
+        "has_run": false,
+        "hook_phase_hint": null
+      },
+      "visual_obligation": "state_change_action",
+      "allow_merge": false
+    }
+  ]
+}

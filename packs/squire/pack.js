@@ -18,6 +18,8 @@ export * from './roman_master/motion.js';
 export * from './roman_master/character_state.js';
 export * from './roman_master/camera.js';
 export * from './roman_master/environment.js';
+export * from './roman_master/editorial_state.js';
+export * from './roman_master/script_shot_renderer.js';
 export { E } from '/engine/core.js';
 
 async function fetchOptJSON(url, fallback = null) {
@@ -41,7 +43,7 @@ export async function init(E) {
   if (E.shots.some((s) => s.tpl === 'map')) await loadWorld(); else await loadWorld().catch(() => {});
   if (E.cfg.style_profile === 'roman_squire_master.v1') {
     const proj = new URLSearchParams(location.search).get('proj') || '/proj';
-    const [styleRef, charBible, envBible, propsManifest, ledger, camBeats, storyboard] = await Promise.all([
+    const [styleRef, charBible, envBible, propsManifest, ledger, camBeats, storyboard, shotPlan, beats, shotToLineMap, narrationTimeline, pacingReport] = await Promise.all([
       fetchOptJSON(`${proj}/story/roman_master_style_ref.json`, {}),
       fetchOptJSON(`${proj}/story/character_bible.json`, {}),
       fetchOptJSON(`${proj}/story/environment_bible.json`, {}),
@@ -49,9 +51,15 @@ export async function init(E) {
       fetchOptJSON(`${proj}/story/continuity_ledger.json`, {}),
       fetchOptJSON(`${proj}/story/camera_beats.json`, {}),
       fetchOptJSON(`${proj}/story/storyboard.json`, {}),
+      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/shot_plan.json`, null) : null,
+      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/beats.json`, null) : null,
+      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/shot_to_line_map.json`, null) : null,
+      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/narration_timeline.json`, null) : null,
+      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/pacing_report.json`, null) : null,
     ]);
     E.kh03 = Object.freeze({
       styleProfile: 'roman_squire_master.v1',
+      editorialMode: E.cfg.editorial_mode || null,
       styleRef,
       charBible,
       envBible,
@@ -59,6 +67,11 @@ export async function init(E) {
       ledger,
       camBeats,
       storyboard,
+      shotPlan,
+      beats,
+      shotToLineMap,
+      narrationTimeline,
+      pacingReport,
     });
   }
 }

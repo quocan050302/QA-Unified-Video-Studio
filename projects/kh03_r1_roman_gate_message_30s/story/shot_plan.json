@@ -1,0 +1,617 @@
+{
+  "schema_version": "kh03.r1.shot_plan.v1",
+  "editorial_mode": "script_beat_director_v1",
+  "seed": 20261117,
+  "aspect": "9:16",
+  "fps": 24,
+  "total_frames": 720,
+  "duration_sec": 30.0,
+  "style_profile": "roman_squire_master.v1",
+  "render_mode": "canvas2d_only",
+  "shots": [
+    {
+      "id": "SH01",
+      "index": 1,
+      "event_id": "B01_E1",
+      "beat_id": "B01",
+      "frame_start": 0,
+      "frame_end": 37,
+      "frame_count": 38,
+      "start": 0.0,
+      "end": 1.5833,
+      "duration": 1.5833,
+      "aspect": "9:16",
+      "location_id": "exterior_gate_approach",
+      "framing_scale": "extreme_detail_insert",
+      "event_kind": "detail_insert",
+      "sub_action": "moving_scroll_toward_closing_oak_gap",
+      "purpose": "hook_closing_gate_slit_with_courier_shadow_and_scroll_entering_lt_0p5s",
+      "cut_rationale": "State change cut on 'moving_scroll_toward_closing_oak_gap' (detail_insert)",
+      "line_ids": [
+        "L01"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        0,
+        1583
+      ],
+      "source_phrase": "At sunset, the city gate",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "city_gate"
+      ],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "push_in",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH02",
+      "index": 2,
+      "event_id": "B01_E2",
+      "beat_id": "B01",
+      "frame_start": 38,
+      "frame_end": 105,
+      "frame_count": 68,
+      "start": 1.5833,
+      "end": 4.4167,
+      "duration": 2.8333,
+      "aspect": "9:16",
+      "location_id": "gate_winch_machinery",
+      "framing_scale": "over_shoulder_medium",
+      "event_kind": "action_step",
+      "sub_action": "winch_drum_turns_and_doors_converge",
+      "purpose": "reveal_overhead_timber_pulley_and_closing_city_doors",
+      "cut_rationale": "State change cut on 'winch_drum_turns_and_doors_converge' (action_step)",
+      "line_ids": [
+        "L01"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        1583,
+        4417
+      ],
+      "source_phrase": "At sunset, the city gate began to close with one last courier outside.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "city_gate"
+      ],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "motivated_pan",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH03",
+      "index": 3,
+      "event_id": "B02_E1",
+      "beat_id": "B02",
+      "frame_start": 106,
+      "frame_end": 173,
+      "frame_count": 68,
+      "start": 4.4167,
+      "end": 7.25,
+      "duration": 2.8333,
+      "aspect": "9:16",
+      "location_id": "exterior_gate_approach",
+      "framing_scale": "medium_full_tracking",
+      "event_kind": "action_step",
+      "sub_action": "courier_sprint_with_satchel",
+      "purpose": "courier_clutches_sealed_satchel_at_full_stride_toward_dusk_gate",
+      "cut_rationale": "State change cut on 'courier_sprint_with_satchel' (action_step)",
+      "line_ids": [
+        "L02"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        4417,
+        7250
+      ],
+      "source_phrase": "Inside Marcus's satchel lay one urgent wax-sealed order.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "track_chase",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH04",
+      "index": 4,
+      "event_id": "B03_E1",
+      "beat_id": "B03",
+      "frame_start": 174,
+      "frame_end": 219,
+      "frame_count": 46,
+      "start": 7.25,
+      "end": 9.1667,
+      "duration": 1.9167,
+      "aspect": "9:16",
+      "location_id": "cobble_alley_chase",
+      "framing_scale": "low_angle_chase",
+      "event_kind": "action_step",
+      "sub_action": "sandals_hammer_damp_cobbles",
+      "purpose": "low_angle_sandals_splashing_slick_cobbles_in_rush",
+      "cut_rationale": "State change cut on 'sandals_hammer_damp_cobbles' (action_step)",
+      "line_ids": [
+        "L03"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        7250,
+        9167
+      ],
+      "source_phrase": "His sandals hammered damp cobbles as the oak gap narrowed.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "track_chase",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH05",
+      "index": 5,
+      "event_id": "B03_E2",
+      "beat_id": "B03",
+      "frame_start": 220,
+      "frame_end": 257,
+      "frame_count": 38,
+      "start": 9.1667,
+      "end": 10.75,
+      "duration": 1.5833,
+      "aspect": "9:16",
+      "location_id": "gate_winch_machinery",
+      "framing_scale": "extreme_detail_insert",
+      "event_kind": "detail_insert",
+      "sub_action": "closing_oak_gap_tension_cut",
+      "purpose": "parallel_cut_narrowing_oak_gate_gap_against_sunset",
+      "cut_rationale": "State change cut on 'closing_oak_gap_tension_cut' (detail_insert)",
+      "line_ids": [
+        "L03"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        9167,
+        10750
+      ],
+      "source_phrase": "heavy oak gap narrowed",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "push_in",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH06",
+      "index": 6,
+      "event_id": "B04_E1",
+      "beat_id": "B04",
+      "frame_start": 258,
+      "frame_end": 308,
+      "frame_count": 51,
+      "start": 10.75,
+      "end": 12.875,
+      "duration": 2.125,
+      "aspect": "9:16",
+      "location_id": "cobble_alley_chase",
+      "framing_scale": "low_angle_chase",
+      "event_kind": "action_step",
+      "sub_action": "stumble_trip_impact",
+      "purpose": "courier_sandal_trips_and_loses_footing",
+      "cut_rationale": "State change cut on 'stumble_trip_impact' (action_step)",
+      "line_ids": [
+        "L04"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        10750,
+        12875
+      ],
+      "source_phrase": "Twenty paces short he clipped a curb",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "sealed_scroll"
+      ],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "track_chase",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH07",
+      "index": 7,
+      "event_id": "B04_E2",
+      "beat_id": "B04",
+      "frame_start": 309,
+      "frame_end": 359,
+      "frame_count": 51,
+      "start": 12.875,
+      "end": 15.0,
+      "duration": 2.125,
+      "aspect": "9:16",
+      "location_id": "cobble_alley_chase",
+      "framing_scale": "macro_physics_insert",
+      "event_kind": "detail_insert",
+      "sub_action": "airborne_scroll_arc",
+      "purpose": "sealed_scroll_catapults_through_dusk_air_toward_gate",
+      "cut_rationale": "State change cut on 'airborne_scroll_arc' (detail_insert)",
+      "line_ids": [
+        "L04"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        12875,
+        15000
+      ],
+      "source_phrase": "the scroll flew from his grip.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "sealed_scroll"
+      ],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "push_in",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH08",
+      "index": 8,
+      "event_id": "B05_E1",
+      "beat_id": "B05",
+      "frame_start": 360,
+      "frame_end": 402,
+      "frame_count": 43,
+      "start": 15.0,
+      "end": 16.7917,
+      "duration": 1.7917,
+      "aspect": "9:16",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "medium_full_tracking",
+      "event_kind": "action_step",
+      "sub_action": "guard_lunges_and_scroll_slips_past_gloves",
+      "purpose": "guard_dives_forward_missing_by_centimeters",
+      "cut_rationale": "State change cut on 'guard_lunges_and_scroll_slips_past_gloves' (action_step)",
+      "line_ids": [
+        "L05"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        15000,
+        16792
+      ],
+      "source_phrase": "Guard Gaius lunged and missed.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus",
+        "gate_guard_gaius"
+      ],
+      "props": [
+        "sealed_scroll",
+        "drain_grate"
+      ],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "track_chase",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH09",
+      "index": 9,
+      "event_id": "B05_E2",
+      "beat_id": "B05",
+      "frame_start": 403,
+      "frame_end": 447,
+      "frame_count": 45,
+      "start": 16.7917,
+      "end": 18.6667,
+      "duration": 1.875,
+      "aspect": "9:16",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "extreme_detail_insert",
+      "event_kind": "detail_insert",
+      "sub_action": "sandal_stomps_scroll_at_drain_edge",
+      "purpose": "sandal_pins_scroll_one_centimeter_before_stone_drain",
+      "cut_rationale": "State change cut on 'sandal_stomps_scroll_at_drain_edge' (detail_insert)",
+      "line_ids": [
+        "L05"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        16792,
+        18667
+      ],
+      "source_phrase": "His heel pinned the scroll beside the drain.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus",
+        "gate_guard_gaius"
+      ],
+      "props": [
+        "sealed_scroll",
+        "drain_grate"
+      ],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "push_in",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH10",
+      "index": 10,
+      "event_id": "B05_E3",
+      "beat_id": "B05",
+      "frame_start": 448,
+      "frame_end": 485,
+      "frame_count": 38,
+      "start": 18.6667,
+      "end": 20.25,
+      "duration": 1.5833,
+      "aspect": "9:16",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "over_shoulder_medium",
+      "event_kind": "reaction",
+      "sub_action": "guard_relieved_exhale_retrieving_scroll",
+      "purpose": "guard_breathes_out_and_picks_up_muddy_scroll",
+      "cut_rationale": "State change cut on 'guard_relieved_exhale_retrieving_scroll' (reaction)",
+      "line_ids": [
+        "L05"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        18667,
+        20250
+      ],
+      "source_phrase": "Guard Gaius lunged and missed. His heel pinned the scroll beside the drain.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus",
+        "gate_guard_gaius"
+      ],
+      "props": [
+        "sealed_scroll",
+        "drain_grate"
+      ],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "motivated_pan",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH11",
+      "index": 11,
+      "event_id": "B06_E1",
+      "beat_id": "B06",
+      "frame_start": 486,
+      "frame_end": 553,
+      "frame_count": 68,
+      "start": 20.25,
+      "end": 23.0833,
+      "duration": 2.8333,
+      "aspect": "9:16",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "over_shoulder_medium",
+      "event_kind": "action_step",
+      "sub_action": "break_wax_seal_unroll_scroll",
+      "purpose": "guard_snaps_red_wax_seal_and_unrolls_parchment",
+      "cut_rationale": "State change cut on 'break_wax_seal_unroll_scroll' (action_step)",
+      "line_ids": [
+        "L06"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        20250,
+        23083
+      ],
+      "source_phrase": "Out of breath, he cracked the crimson seal open.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "sealed_scroll"
+      ],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "motivated_pan",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH12",
+      "index": 12,
+      "event_id": "B07_E1",
+      "beat_id": "B07",
+      "frame_start": 554,
+      "frame_end": 618,
+      "frame_count": 65,
+      "start": 23.0833,
+      "end": 25.7917,
+      "duration": 2.7083,
+      "aspect": "9:16",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "payoff_close_reveal",
+      "event_kind": "camera_reveal",
+      "sub_action": "legible_scroll_text_card_reveal",
+      "purpose": "readable_four_word_message_reveal_keep_the_gate_open",
+      "cut_rationale": "State change cut on 'legible_scroll_text_card_reveal' (camera_reveal)",
+      "line_ids": [
+        "L07"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        23083,
+        25792
+      ],
+      "source_phrase": "KEEP THE GATE OPEN",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [
+        "sealed_scroll",
+        "city_gate"
+      ],
+      "intentional_hold": {
+        "enabled": true,
+        "frames": 8,
+        "editorial_justification": "8-frame readable eyes-fixation beat on bold four words KEEP THE GATE OPEN"
+      },
+      "camera_intent": {
+        "move": "push_in",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH13",
+      "index": 13,
+      "event_id": "B08_E1",
+      "beat_id": "B08",
+      "frame_start": 619,
+      "frame_end": 649,
+      "frame_count": 31,
+      "start": 25.7917,
+      "end": 27.0833,
+      "duration": 1.2917,
+      "aspect": "9:16",
+      "location_id": "gate_winch_machinery",
+      "framing_scale": "over_shoulder_medium",
+      "event_kind": "reaction",
+      "sub_action": "guard_shouts_up_to_winch_tower",
+      "purpose": "guard_cups_gloved_hand_shouting_upward_toward_winch_crew",
+      "cut_rationale": "State change cut on 'guard_shouts_up_to_winch_tower' (reaction)",
+      "line_ids": [
+        "L08"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        25792,
+        27083
+      ],
+      "source_phrase": "He yelled to the tower.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus",
+        "watchman_sec"
+      ],
+      "props": [],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "motivated_pan",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH14",
+      "index": 14,
+      "event_id": "B09_E1",
+      "beat_id": "B09",
+      "frame_start": 650,
+      "frame_end": 683,
+      "frame_count": 34,
+      "start": 27.0833,
+      "end": 28.5,
+      "duration": 1.4167,
+      "aspect": "9:16",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "wide_geography",
+      "event_kind": "action_step",
+      "sub_action": "oak_gate_bolt_slams_home_behind_guard",
+      "purpose": "massive_timber_gate_leaves_slam_shut_as_scroll_shakes",
+      "cut_rationale": "State change cut on 'oak_gate_bolt_slams_home_behind_guard' (action_step)",
+      "line_ids": [
+        "L09"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        27083,
+        28500
+      ],
+      "source_phrase": "Too late—the heavy oak leaves slammed shut.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [],
+      "intentional_hold": null,
+      "camera_intent": {
+        "move": "motivated_pan",
+        "safe_vertical_center_y": 0.44
+      }
+    },
+    {
+      "id": "SH15",
+      "index": 15,
+      "event_id": "B09_E2",
+      "beat_id": "B09",
+      "frame_start": 684,
+      "frame_end": 719,
+      "frame_count": 36,
+      "start": 28.5,
+      "end": 30.0,
+      "duration": 1.5,
+      "aspect": "9:16",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "payoff_close_reveal",
+      "event_kind": "reaction",
+      "sub_action": "guard_deadpan_blink_with_open_scroll",
+      "purpose": "comic_ironic_reaction_blinking_at_locked_bolt_end_loop_motif",
+      "cut_rationale": "State change cut on 'guard_deadpan_blink_with_open_scroll' (reaction)",
+      "line_ids": [
+        "L09"
+      ],
+      "word_ids": [],
+      "word_range_ms": [
+        28500,
+        30000
+      ],
+      "source_phrase": "Too late—the heavy oak leaves slammed shut.",
+      "stage_axis_sign": 1,
+      "actors": [
+        "courier_marcus"
+      ],
+      "props": [],
+      "intentional_hold": {
+        "enabled": true,
+        "frames": 9,
+        "editorial_justification": "9-frame deadpan comic hold after final bolt slam before loop end"
+      },
+      "camera_intent": {
+        "move": "push_in",
+        "safe_vertical_center_y": 0.44
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KH-03.0.R1 Script-Driven Roman Master Shot Plan Contract",
+  "schema_version": "kh03.r1.shot_plan.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "editorial_mode",
+    "aspect",
+    "fps",
+    "total_frames",
+    "duration_sec",
+    "style_profile",
+    "render_mode",
+    "shots",
+    "crosswalk_summary"
+  ],
+  "properties": {
+    "schema_version": { "const": "kh03.r1.shot_plan.v1" },
+    "editorial_mode": { "const": "script_beat_director_v1" },
+    "aspect": { "enum": ["9:16", "16:9"] },
+    "fps": { "type": "integer", "const": 24 },
+    "total_frames": { "type": "integer", "minimum": 24 },
+    "duration_sec": { "type": "number", "exclusiveMinimum": 0 },
+    "style_profile": { "const": "roman_squire_master.v1" },
+    "render_mode": { "const": "canvas2d_only" },
+    "shots": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "index",
+          "frame_start",
+          "frame_end",
+          "start",
+          "end",
+          "duration",
+          "location_id",
+          "framing_scale",
+          "purpose",
+          "cut_rationale",
+          "line_ids",
+          "word_range_ms",
+          "stage_axis_sign",
+          "actors",
+          "props"
+        ]
+      }
+    }
+  }
+}

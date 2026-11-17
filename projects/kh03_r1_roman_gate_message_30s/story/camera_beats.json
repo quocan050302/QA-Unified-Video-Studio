@@ -1,0 +1,704 @@
+{
+  "schema_version": "kh03.r1.camera_beats.v1",
+  "aspect": "9:16",
+  "vertical_safe_zone_norm": {
+    "y_min": 0.14,
+    "y_max": 0.72,
+    "caption_band": [
+      0.64,
+      0.71
+    ]
+  },
+  "shots": {
+    "SH01": {
+      "start": 0.0,
+      "end": 1.5833,
+      "framingScale": "extreme_detail_insert",
+      "purpose": "hook_closing_gate_slit_with_courier_shadow_and_scroll_entering_lt_0p5s",
+      "trajectory": "push_in",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.5833,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.5833,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.5833,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH02": {
+      "start": 1.5833,
+      "end": 4.4167,
+      "framingScale": "over_shoulder_medium",
+      "purpose": "reveal_overhead_timber_pulley_and_closing_city_doors",
+      "trajectory": "motivated_pan",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          2.8333,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          2.8333,
+          0.48,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          2.8333,
+          0.44,
+          "c1"
+        ]
+      ]
+    },
+    "SH03": {
+      "start": 4.4167,
+      "end": 7.25,
+      "framingScale": "medium_full_tracking",
+      "purpose": "courier_clutches_sealed_satchel_at_full_stride_toward_dusk_gate",
+      "trajectory": "track_chase",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          2.8333,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          2.8333,
+          0.48,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          2.8333,
+          0.44,
+          "c1"
+        ]
+      ]
+    },
+    "SH04": {
+      "start": 7.25,
+      "end": 9.1667,
+      "framingScale": "low_angle_chase",
+      "purpose": "low_angle_sandals_splashing_slick_cobbles_in_rush",
+      "trajectory": "track_chase",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          1.9167,
+          1.09,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.9167,
+          0.54,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.47000000000000003,
+          "c1"
+        ],
+        [
+          1.9167,
+          0.45,
+          "c1"
+        ]
+      ]
+    },
+    "SH05": {
+      "start": 9.1667,
+      "end": 10.75,
+      "framingScale": "extreme_detail_insert",
+      "purpose": "parallel_cut_narrowing_oak_gate_gap_against_sunset",
+      "trajectory": "push_in",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.5833,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.5833,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.5833,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH06": {
+      "start": 10.75,
+      "end": 12.875,
+      "framingScale": "low_angle_chase",
+      "purpose": "courier_sandal_trips_and_loses_footing",
+      "trajectory": "track_chase",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          2.125,
+          1.09,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          2.125,
+          0.54,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.47000000000000003,
+          "c1"
+        ],
+        [
+          2.125,
+          0.45,
+          "c1"
+        ]
+      ],
+      "impactImpulse": {
+        "atLocal": 0.892,
+        "dur": 0.22,
+        "ampPx": 8.0
+      }
+    },
+    "SH07": {
+      "start": 12.875,
+      "end": 15.0,
+      "framingScale": "macro_physics_insert",
+      "purpose": "sealed_scroll_catapults_through_dusk_air_toward_gate",
+      "trajectory": "push_in",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          2.125,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          2.125,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          2.125,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH08": {
+      "start": 15.0,
+      "end": 16.7917,
+      "framingScale": "medium_full_tracking",
+      "purpose": "guard_dives_forward_missing_by_centimeters",
+      "trajectory": "track_chase",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          1.7917,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          1.7917,
+          0.48,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.7917,
+          0.44,
+          "c1"
+        ]
+      ]
+    },
+    "SH09": {
+      "start": 16.7917,
+      "end": 18.6667,
+      "framingScale": "extreme_detail_insert",
+      "purpose": "sandal_pins_scroll_one_centimeter_before_stone_drain",
+      "trajectory": "push_in",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.875,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.875,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.875,
+          0.435,
+          "c1"
+        ]
+      ],
+      "impactImpulse": {
+        "atLocal": 0.787,
+        "dur": 0.22,
+        "ampPx": 8.0
+      }
+    },
+    "SH10": {
+      "start": 18.6667,
+      "end": 20.25,
+      "framingScale": "over_shoulder_medium",
+      "purpose": "guard_breathes_out_and_picks_up_muddy_scroll",
+      "trajectory": "motivated_pan",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          1.5833,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          1.5833,
+          0.48,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.5833,
+          0.44,
+          "c1"
+        ]
+      ]
+    },
+    "SH11": {
+      "start": 20.25,
+      "end": 23.0833,
+      "framingScale": "over_shoulder_medium",
+      "purpose": "guard_snaps_red_wax_seal_and_unrolls_parchment",
+      "trajectory": "motivated_pan",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          2.8333,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          2.8333,
+          0.48,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          2.8333,
+          0.44,
+          "c1"
+        ]
+      ]
+    },
+    "SH12": {
+      "start": 23.0833,
+      "end": 25.7917,
+      "framingScale": "payoff_close_reveal",
+      "purpose": "readable_four_word_message_reveal_keep_the_gate_open",
+      "trajectory": "push_in",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.06,
+          "c1"
+        ],
+        [
+          2.7083,
+          1.14,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          2.7083,
+          0.5,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.43,
+          "c1"
+        ],
+        [
+          2.7083,
+          0.45,
+          "c1"
+        ]
+      ]
+    },
+    "SH13": {
+      "start": 25.7917,
+      "end": 27.0833,
+      "framingScale": "over_shoulder_medium",
+      "purpose": "guard_cups_gloved_hand_shouting_upward_toward_winch_crew",
+      "trajectory": "motivated_pan",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          1.2917,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          1.2917,
+          0.48,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.2917,
+          0.44,
+          "c1"
+        ]
+      ]
+    },
+    "SH14": {
+      "start": 27.0833,
+      "end": 28.5,
+      "framingScale": "wide_geography",
+      "purpose": "massive_timber_gate_leaves_slam_shut_as_scroll_shakes",
+      "trajectory": "motivated_pan",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.0,
+          "c1"
+        ],
+        [
+          1.4167,
+          1.05,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.46,
+          "c1"
+        ],
+        [
+          1.4167,
+          0.53,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.44,
+          "c1"
+        ],
+        [
+          1.4167,
+          0.46,
+          "c1"
+        ]
+      ],
+      "impactImpulse": {
+        "atLocal": 0.595,
+        "dur": 0.22,
+        "ampPx": 8.0
+      }
+    },
+    "SH15": {
+      "start": 28.5,
+      "end": 30.0,
+      "framingScale": "payoff_close_reveal",
+      "purpose": "comic_ironic_reaction_blinking_at_locked_bolt_end_loop_motif",
+      "trajectory": "push_in",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.06,
+          "c1"
+        ],
+        [
+          1.5,
+          1.14,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          1.5,
+          0.5,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.43,
+          "c1"
+        ],
+        [
+          1.5,
+          0.45,
+          "c1"
+        ]
+      ]
+    }
+  }
+}

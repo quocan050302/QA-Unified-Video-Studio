@@ -1,0 +1,383 @@
+{
+  "title": "KH03_R1_ROMAN_GATE_MESSAGE_ORIGINAL_30S_9x16",
+  "duration": 30.0,
+  "aspect": "9:16",
+  "fps": 24,
+  "shots": [
+    {
+      "id": "SH01",
+      "start": 0.0,
+      "end": 1.5833,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "moving_scroll_toward_closing_oak_gap",
+      "location_id": "exterior_gate_approach",
+      "framing_scale": "extreme_detail_insert",
+      "line_ids": [
+        "L01"
+      ],
+      "line": "At sunset, the city gate began to close with one last courier outside.",
+      "sfx": [
+        {
+          "at": 0.08,
+          "name": "audio/sfx/kh03_r1_cobble_step.wav",
+          "gainDb": -3.0
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH02",
+      "start": 1.5833,
+      "end": 4.4167,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "winch_drum_turns_and_doors_converge",
+      "location_id": "gate_winch_machinery",
+      "framing_scale": "over_shoulder_medium",
+      "line_ids": [
+        "L01"
+      ],
+      "line": "At sunset, the city gate began to close with one last courier outside.",
+      "sfx": [
+        {
+          "at": 0.12,
+          "name": "audio/sfx/kh03_r1_winch_creak.wav",
+          "gainDb": -2.0
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH03",
+      "start": 4.4167,
+      "end": 7.25,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "courier_sprint_with_satchel",
+      "location_id": "exterior_gate_approach",
+      "framing_scale": "medium_full_tracking",
+      "line_ids": [
+        "L02"
+      ],
+      "line": "Inside Marcus's satchel lay one urgent wax-sealed order.",
+      "sfx": [
+        {
+          "at": 0.1,
+          "name": "audio/sfx/kh03_r1_cobble_step.wav",
+          "gainDb": -2.0
+        },
+        {
+          "at": 1.35,
+          "name": "audio/sfx/kh03_r1_cobble_step.wav",
+          "gainDb": -1.5
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH04",
+      "start": 7.25,
+      "end": 9.1667,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "sandals_hammer_damp_cobbles",
+      "location_id": "cobble_alley_chase",
+      "framing_scale": "low_angle_chase",
+      "line_ids": [
+        "L03"
+      ],
+      "line": "His sandals hammered damp cobbles as the oak gap narrowed.",
+      "sfx": [
+        {
+          "at": 0.05,
+          "name": "audio/sfx/kh03_r1_cobble_step.wav",
+          "gainDb": -1.0
+        },
+        {
+          "at": 1.0,
+          "name": "audio/sfx/kh03_r1_cobble_step.wav",
+          "gainDb": -0.5
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH05",
+      "start": 9.1667,
+      "end": 10.75,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "closing_oak_gap_tension_cut",
+      "location_id": "gate_winch_machinery",
+      "framing_scale": "extreme_detail_insert",
+      "line_ids": [
+        "L03"
+      ],
+      "line": "His sandals hammered damp cobbles as the oak gap narrowed.",
+      "sfx": [
+        {
+          "at": 0.1,
+          "name": "audio/sfx/kh03_r1_winch_creak.wav",
+          "gainDb": -1.0
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH06",
+      "start": 10.75,
+      "end": 12.875,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "stumble_trip_impact",
+      "location_id": "cobble_alley_chase",
+      "framing_scale": "low_angle_chase",
+      "line_ids": [
+        "L04"
+      ],
+      "line": "Twenty paces short he clipped a curb—the scroll flew from his grip.",
+      "sfx": [
+        {
+          "at": 0.72,
+          "name": "audio/sfx/kh03_r1_stumble_scrape.wav",
+          "gainDb": 0.5
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH07",
+      "start": 12.875,
+      "end": 15.0,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "airborne_scroll_arc",
+      "location_id": "cobble_alley_chase",
+      "framing_scale": "macro_physics_insert",
+      "line_ids": [
+        "L04"
+      ],
+      "line": "Twenty paces short he clipped a curb—the scroll flew from his grip.",
+      "sfx": [
+        {
+          "at": 0.06,
+          "name": "audio/sfx/kh03_r1_scroll_whoosh.wav",
+          "gainDb": 0.0
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH08",
+      "start": 15.0,
+      "end": 16.7917,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "guard_lunges_and_scroll_slips_past_gloves",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "medium_full_tracking",
+      "line_ids": [
+        "L05"
+      ],
+      "line": "Guard Gaius lunged and missed. His heel pinned the scroll beside the drain.",
+      "sfx": [
+        {
+          "at": 0.12,
+          "name": "audio/sfx/kh03_r1_guard_lunge_swoosh.wav",
+          "gainDb": 0.0
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH09",
+      "start": 16.7917,
+      "end": 18.6667,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "sandal_stomps_scroll_at_drain_edge",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "extreme_detail_insert",
+      "line_ids": [
+        "L05"
+      ],
+      "line": "Guard Gaius lunged and missed. His heel pinned the scroll beside the drain.",
+      "sfx": [
+        {
+          "at": 0.82,
+          "name": "audio/sfx/kh03_r1_sandal_stomp_drain.wav",
+          "gainDb": 1.5
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH10",
+      "start": 18.6667,
+      "end": 20.25,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "guard_relieved_exhale_retrieving_scroll",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "over_shoulder_medium",
+      "line_ids": [
+        "L05"
+      ],
+      "line": "Guard Gaius lunged and missed. His heel pinned the scroll beside the drain.",
+      "sfx": [],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH11",
+      "start": 20.25,
+      "end": 23.0833,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "break_wax_seal_unroll_scroll",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "over_shoulder_medium",
+      "line_ids": [
+        "L06"
+      ],
+      "line": "Out of breath, he cracked the crimson seal open.",
+      "sfx": [
+        {
+          "at": 0.71,
+          "name": "audio/sfx/kh03_r1_wax_seal_crack.wav",
+          "gainDb": 0.5
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH12",
+      "start": 23.0833,
+      "end": 25.7917,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "legible_scroll_text_card_reveal",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "payoff_close_reveal",
+      "line_ids": [
+        "L07"
+      ],
+      "line": "Four painted words stared up: KEEP THE GATE OPEN.",
+      "sfx": [],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH13",
+      "start": 25.7917,
+      "end": 27.0833,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "guard_shouts_up_to_winch_tower",
+      "location_id": "gate_winch_machinery",
+      "framing_scale": "over_shoulder_medium",
+      "line_ids": [
+        "L08"
+      ],
+      "line": "He yelled to the tower.",
+      "sfx": [
+        {
+          "at": 0.23,
+          "name": "audio/sfx/kh03_r1_tower_shout_echo.wav",
+          "gainDb": -1.0
+        }
+      ],
+      "notes": "",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH14",
+      "start": 27.0833,
+      "end": 28.5,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "oak_gate_bolt_slams_home_behind_guard",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "wide_geography",
+      "line_ids": [
+        "L09"
+      ],
+      "line": "Too late—the heavy oak leaves slammed shut.",
+      "sfx": [
+        {
+          "at": 0.45,
+          "name": "audio/sfx/kh03_r1_iron_bolt_slam.wav",
+          "gainDb": 2.5
+        }
+      ],
+      "notes": "DROP",
+      "in": {
+        "type": "cut"
+      }
+    },
+    {
+      "id": "SH15",
+      "start": 28.5,
+      "end": 30.0,
+      "tpl": "custom",
+      "scene": "gate_message_r1",
+      "sub_action": "guard_deadpan_blink_with_open_scroll",
+      "location_id": "interior_guard_threshold",
+      "framing_scale": "payoff_close_reveal",
+      "line_ids": [
+        "L09"
+      ],
+      "line": "Too late—the heavy oak leaves slammed shut.",
+      "sfx": [],
+      "notes": "DROP",
+      "in": {
+        "type": "cut"
+      }
+    }
+  ],
+  "music": [
+    {
+      "start": 0.0,
+      "end": 27.083,
+      "bed": "user",
+      "gainDb": -1.5
+    }
+  ]
+}

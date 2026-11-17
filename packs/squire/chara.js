@@ -725,6 +725,13 @@ function torso(g, u, o, lw, t) {
   // that lung
   if (!['robe', 'toga', 'dress', 'sailor'].includes(body) || o.belt) { rect(g, -wB * 0.98, hip - 5 * u, wB * 1.96, 4.5 * u, { fill: o.beltColor || PAL.leather, lw: lw * 0.8, r: 1 }); circ(g, 0, hip - 2.8 * u, 2.4 * u, { fill: PAL.gold, lw: lw * 0.6 }); }
   if (o.scarf) { shape(g, (c) => { c.moveTo(-10 * u, top + 1 * u); c.quadraticCurveTo(0, top + 6 * u, 10 * u, top + 1 * u); c.lineTo(8 * u, top + 5 * u); c.lineTo(4 * u, top + 16 * u); c.lineTo(0, top + 15 * u); c.lineTo(2 * u, top + 6 * u); c.quadraticCurveTo(-4 * u, top + 6 * u, -10 * u, top + 4 * u); c.closePath(); }, { fill: o.scarf, lw: lw * 0.8 }); }
+  if (o.courierSatchel) {
+    // Opt-in Roman messenger cross-strap & leather pouch with brass buckle (0 impact when omitted)
+    tube(g, [[-wT * 0.72, top + 3.5 * u], [wB * 0.86, hip - 3.5 * u]], 3.2 * u, PAL.leather, lw * 0.8);
+    rect(g, wB * 0.42, hip - 7.5 * u, 9.2 * u, 10.5 * u, { fill: '#7c4c2a', lw: lw * 0.85, r: 2.2 * u });
+    rect(g, wB * 0.44, hip - 7.5 * u, 8.8 * u, 4.4 * u, { fill: PAL.leather, lw: lw * 0.75, r: 1.6 * u });
+    circ(g, wB * 0.88, hip - 3.6 * u, 1.3 * u, { fill: PAL.gold, lw: lw * 0.5 });
+  }
   // vai giap
   if (o.arms === 'plate' || body === 'plate') for (const s of [-1, 1]) ellipse(g, s * (wT - 1 * u), top + 4 * u, 7 * u, 6 * u, { fill: PAL.steelLight, lw: lw * 0.9 });
   if (body === 'samurai') for (const s of [-1, 1]) rect(g, s * (wT + 1 * u) - 6 * u, top + 1 * u, 12 * u, 13 * u, { fill: o.lacing || PAL.red, lw: lw * 0.85, r: 2 * u, inner: (c) => { for (let i = 1; i < 4; i++) line(c, [[s * (wT + 1 * u) - 6 * u, top + 1 * u + i * 3.2 * u], [s * (wT + 1 * u) + 6 * u, top + 1 * u + i * 3.2 * u]], { lw: lw * 0.4 }); } });
@@ -835,7 +842,7 @@ export function soldier(g, x, y, h, o = {}) {
   if (sh && sh.back) shield(g, -16 * u, -40 * u, 40 * u, { ...sh, lw, back: true });
   g.restore();
   g.restore();
-  return { x, y, h, head: [x + (o.flip ? -hx : hx), y + hy + br], R, hand: right.H };
+  return { x, y, h, head: [x + (o.flip ? -hx : hx), y + hy + br], R, hand: right.H, leftHand: L.H };
 }
 // ====================================================================================== HIEP SI AO LUOI (than + mu trum lien 1 khoi)
 // Hinh dang hat dau: mu nhon co dai vang dinh tan + song mui, mu luoi trum lien than, o mat chu nhat bo tron chi lo mat (mieng bi tam che co day buoc),

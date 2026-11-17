@@ -1,0 +1,53 @@
+{
+  "project": "kh03_r1_roman_gate_message_30s",
+  "title": "KH03_R1_ROMAN_GATE_MESSAGE_ORIGINAL_30S_9x16",
+  "output_mp4_local_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh03_r1_roman_gate_message_30s\\out\\KH03_R1_ROMAN_GATE_MESSAGE_ORIGINAL_30S_9x16.mp4",
+  "output_mp4_sha256": "1747ec31d948faf005ce3eb06f43fe1d3fd2113edbb32ce0dd8f816e1833f176",
+  "output_mp4_bytes": 10626429,
+  "render_wall_sec": 23.859,
+  "mix_wall_sec": 5.172,
+  "video_stream": {
+    "codec_name": "h264",
+    "width": 1080,
+    "height": 1920,
+    "r_frame_rate": "24/1",
+    "decoded_frames": 720,
+    "format_duration_sec": 30.0
+  },
+  "audio_stream": {
+    "codec_name": "aac",
+    "sample_rate": 48000,
+    "channels": 2,
+    "integrated_lufs": -14.0,
+    "true_peak_dbtp": -2.6
+  },
+  "review_packet": {
+    "contact_sheet_all_shots": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_R1_SCRIPT_SHOT_20261117_080723Z_4ff0\\preview_packet\\contact_sheet_all_shots.jpg",
+    "thumbnail_9x16": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_R1_SCRIPT_SHOT_20261117_080723Z_4ff0\\preview_packet\\thumbnail_9x16.jpg",
+    "action_strips": [
+      {
+        "name": "action_strip_1_stumble_and_scroll_launch.jpg",
+        "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_R1_SCRIPT_SHOT_20261117_080723Z_4ff0\\preview_packet\\action_strip_1_stumble_and_scroll_launch.jpg",
+        "sha256": "aa9728f84fe74350a7e64084bb7e74ca691c70b87a9bc299275c006207757488"
+      },
+      {
+        "name": "action_strip_2_guard_lunge_and_drain_pin.jpg",
+        "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_R1_SCRIPT_SHOT_20261117_080723Z_4ff0\\preview_packet\\action_strip_2_guard_lunge_and_drain_pin.jpg",
+        "sha256": "75c2c62f47536a7d7c4f06fac1dc260d4688f84030eae5175d45f1a5590dba8f"
+      },
+      {
+        "name": "action_strip_3_scroll_reveal_and_bolt_slam.jpg",
+        "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_R1_SCRIPT_SHOT_20261117_080723Z_4ff0\\preview_packet\\action_strip_3_scroll_reveal_and_bolt_slam.jpg",
+        "sha256": "b4928dbbbc0631ab5b74af2f8974620ef7e4ed653944f318000b6d48668902b2"
+      },
+      {
+        "name": "cut_interval_strip_0p5s.jpg",
+        "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_R1_SCRIPT_SHOT_20261117_080723Z_4ff0\\preview_packet\\cut_interval_strip_0p5s.jpg",
+        "sha256": "e96603151290c4c9955f35e7af058c50a241c91b43a081a42144d923c657afdb"
+      }
+    ],
+    "stills_count": 15
+  },
+  "editorial_approved": "HUMAN_REVIEW_PENDING",
+  "style_approved": "HUMAN_REVIEW_PENDING"
+}

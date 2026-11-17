@@ -1,0 +1,33 @@
+{
+  "style_profile": "roman_squire_master.v1",
+  "cast": [
+    {
+      "actor_id": "courier_marcus",
+      "aliases": [
+        "marcus",
+        "courier",
+        "sandals",
+        "his",
+        "he"
+      ],
+      "archetype": "rookie_hastatus"
+    },
+    {
+      "actor_id": "gate_guard_gaius",
+      "aliases": [
+        "gaius",
+        "guard"
+      ],
+      "archetype": "instructor_princeps"
+    },
+    {
+      "actor_id": "watchman_sec",
+      "aliases": [
+        "winch",
+        "tower",
+        "crew"
+      ],
+      "archetype": "veteran_neighbor_legionary"
+    }
+  ]
+}

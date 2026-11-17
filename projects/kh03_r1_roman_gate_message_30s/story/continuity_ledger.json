@@ -1,0 +1,45 @@
+{
+  "schema_version": "kh03.r1.continuity_ledger.v1",
+  "world_invariants": {
+    "gate_closure_monotonic": true,
+    "axis_direction": "left_to_right_outside_to_inside",
+    "scroll_mud_after_drain_stomp": true,
+    "wardrobe_locked": true
+  },
+  "actors": {
+    "courier_marcus": {
+      "archetype": "rookie_hastatus",
+      "helmet": "montefortino_white_gold",
+      "tunic": "#b83b31",
+      "satchel": true,
+      "shield": null
+    },
+    "gate_guard_gaius": {
+      "archetype": "instructor_princeps",
+      "helmet": "montefortino_red",
+      "mustache": "big",
+      "tunic": "#b83b31"
+    },
+    "watchman_sec": {
+      "archetype": "veteran_neighbor_legionary",
+      "helmet": "montefortino_white_red",
+      "beard": "stubble",
+      "tunic": "#b83b31"
+    }
+  },
+  "props": {
+    "sealed_scroll": {
+      "text": "KEEP THE GATE OPEN",
+      "seal_state_transitions": [
+        "sealed",
+        "pinned_muddy",
+        "cracking",
+        "unrolled"
+      ]
+    },
+    "city_gate": {
+      "leaves_monotonic_close": true,
+      "bolt_drops_on_slam": true
+    }
+  }
+}

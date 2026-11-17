@@ -1,0 +1,397 @@
+{
+  "schema_version": "kh03.r1.crosswalk.v1",
+  "lines_to_shots": {
+    "L01": [
+      "SH01",
+      "SH02",
+      "SH03"
+    ],
+    "L02": [
+      "SH03",
+      "SH04"
+    ],
+    "L03": [
+      "SH04",
+      "SH05",
+      "SH06"
+    ],
+    "L04": [
+      "SH06",
+      "SH07"
+    ],
+    "L05": [
+      "SH07",
+      "SH08",
+      "SH09",
+      "SH10"
+    ],
+    "L06": [
+      "SH10",
+      "SH11"
+    ],
+    "L07": [
+      "SH11",
+      "SH12"
+    ],
+    "L08": [
+      "SH12",
+      "SH13"
+    ],
+    "L09": [
+      "SH13",
+      "SH14",
+      "SH15"
+    ]
+  },
+  "shots_to_lines": {
+    "SH01": [
+      "L01"
+    ],
+    "SH02": [
+      "L01"
+    ],
+    "SH03": [
+      "L01",
+      "L02"
+    ],
+    "SH04": [
+      "L02",
+      "L03"
+    ],
+    "SH05": [
+      "L03"
+    ],
+    "SH06": [
+      "L03",
+      "L04"
+    ],
+    "SH07": [
+      "L04",
+      "L05"
+    ],
+    "SH08": [
+      "L05"
+    ],
+    "SH09": [
+      "L05"
+    ],
+    "SH10": [
+      "L05",
+      "L06"
+    ],
+    "SH11": [
+      "L06",
+      "L07"
+    ],
+    "SH12": [
+      "L07",
+      "L08"
+    ],
+    "SH13": [
+      "L08",
+      "L09"
+    ],
+    "SH14": [
+      "L09"
+    ],
+    "SH15": [
+      "L09"
+    ]
+  },
+  "overlap_edges": [
+    {
+      "line_id": "L01",
+      "shot_id": "SH01",
+      "overlap_ms": [
+        80,
+        1583
+      ],
+      "overlap_sec": 1.503
+    },
+    {
+      "line_id": "L01",
+      "shot_id": "SH02",
+      "overlap_ms": [
+        1583,
+        4417
+      ],
+      "overlap_sec": 2.833
+    },
+    {
+      "line_id": "L01",
+      "shot_id": "SH03",
+      "overlap_ms": [
+        4417,
+        4503
+      ],
+      "overlap_sec": 0.086
+    },
+    {
+      "line_id": "L02",
+      "shot_id": "SH03",
+      "overlap_ms": [
+        4583,
+        7250
+      ],
+      "overlap_sec": 2.667
+    },
+    {
+      "line_id": "L02",
+      "shot_id": "SH04",
+      "overlap_ms": [
+        7250,
+        7839
+      ],
+      "overlap_sec": 0.589
+    },
+    {
+      "line_id": "L03",
+      "shot_id": "SH04",
+      "overlap_ms": [
+        7919,
+        9167
+      ],
+      "overlap_sec": 1.248
+    },
+    {
+      "line_id": "L03",
+      "shot_id": "SH05",
+      "overlap_ms": [
+        9167,
+        10750
+      ],
+      "overlap_sec": 1.583
+    },
+    {
+      "line_id": "L03",
+      "shot_id": "SH06",
+      "overlap_ms": [
+        10750,
+        10969
+      ],
+      "overlap_sec": 0.219
+    },
+    {
+      "line_id": "L04",
+      "shot_id": "SH06",
+      "overlap_ms": [
+        11049,
+        12875
+      ],
+      "overlap_sec": 1.826
+    },
+    {
+      "line_id": "L04",
+      "shot_id": "SH07",
+      "overlap_ms": [
+        12875,
+        14868
+      ],
+      "overlap_sec": 1.993
+    },
+    {
+      "line_id": "L05",
+      "shot_id": "SH07",
+      "overlap_ms": [
+        14948,
+        15000
+      ],
+      "overlap_sec": 0.052
+    },
+    {
+      "line_id": "L05",
+      "shot_id": "SH08",
+      "overlap_ms": [
+        15000,
+        16792
+      ],
+      "overlap_sec": 1.792
+    },
+    {
+      "line_id": "L05",
+      "shot_id": "SH09",
+      "overlap_ms": [
+        16792,
+        18667
+      ],
+      "overlap_sec": 1.875
+    },
+    {
+      "line_id": "L05",
+      "shot_id": "SH10",
+      "overlap_ms": [
+        18667,
+        19505
+      ],
+      "overlap_sec": 0.838
+    },
+    {
+      "line_id": "L06",
+      "shot_id": "SH10",
+      "overlap_ms": [
+        19585,
+        20250
+      ],
+      "overlap_sec": 0.665
+    },
+    {
+      "line_id": "L06",
+      "shot_id": "SH11",
+      "overlap_ms": [
+        20250,
+        22462
+      ],
+      "overlap_sec": 2.212
+    },
+    {
+      "line_id": "L07",
+      "shot_id": "SH11",
+      "overlap_ms": [
+        22542,
+        23083
+      ],
+      "overlap_sec": 0.541
+    },
+    {
+      "line_id": "L07",
+      "shot_id": "SH12",
+      "overlap_ms": [
+        23083,
+        25485
+      ],
+      "overlap_sec": 2.402
+    },
+    {
+      "line_id": "L08",
+      "shot_id": "SH12",
+      "overlap_ms": [
+        25565,
+        25792
+      ],
+      "overlap_sec": 0.227
+    },
+    {
+      "line_id": "L08",
+      "shot_id": "SH13",
+      "overlap_ms": [
+        25792,
+        26676
+      ],
+      "overlap_sec": 0.884
+    },
+    {
+      "line_id": "L09",
+      "shot_id": "SH13",
+      "overlap_ms": [
+        26756,
+        27083
+      ],
+      "overlap_sec": 0.327
+    },
+    {
+      "line_id": "L09",
+      "shot_id": "SH14",
+      "overlap_ms": [
+        27083,
+        28500
+      ],
+      "overlap_sec": 1.417
+    },
+    {
+      "line_id": "L09",
+      "shot_id": "SH15",
+      "overlap_ms": [
+        28500,
+        29174
+      ],
+      "overlap_sec": 0.674
+    }
+  ],
+  "summary": {
+    "total_lines": 9,
+    "total_shots": 15,
+    "one_to_many_lines": {
+      "L01": [
+        "SH01",
+        "SH02",
+        "SH03"
+      ],
+      "L02": [
+        "SH03",
+        "SH04"
+      ],
+      "L03": [
+        "SH04",
+        "SH05",
+        "SH06"
+      ],
+      "L04": [
+        "SH06",
+        "SH07"
+      ],
+      "L05": [
+        "SH07",
+        "SH08",
+        "SH09",
+        "SH10"
+      ],
+      "L06": [
+        "SH10",
+        "SH11"
+      ],
+      "L07": [
+        "SH11",
+        "SH12"
+      ],
+      "L08": [
+        "SH12",
+        "SH13"
+      ],
+      "L09": [
+        "SH13",
+        "SH14",
+        "SH15"
+      ]
+    },
+    "one_to_many_count": 9,
+    "many_to_one_shots": {
+      "SH03": [
+        "L01",
+        "L02"
+      ],
+      "SH04": [
+        "L02",
+        "L03"
+      ],
+      "SH06": [
+        "L03",
+        "L04"
+      ],
+      "SH07": [
+        "L04",
+        "L05"
+      ],
+      "SH10": [
+        "L05",
+        "L06"
+      ],
+      "SH11": [
+        "L06",
+        "L07"
+      ],
+      "SH12": [
+        "L07",
+        "L08"
+      ],
+      "SH13": [
+        "L08",
+        "L09"
+      ]
+    },
+    "many_to_one_count": 8,
+    "mid_sentence_cuts_count": 13,
+    "words_total": 86,
+    "words_covered": 86,
+    "word_coverage_ratio": 1.0
+  }
+}

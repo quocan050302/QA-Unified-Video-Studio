@@ -1,0 +1,350 @@
+{
+  "run_id": "20261117_080723Z_4ff0",
+  "head_sha": "8d10b6e81b27632769fbf000487794925c6b0937",
+  "branch": "feat/roman-2d-master",
+  "protected_remote_refs": {
+    "refs/heads/feat/roman-2d-master": "8d10b6e81b27632769fbf000487794925c6b0937",
+    "refs/heads/Production": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+    "refs/heads/fix/Image-Shot": "c96c4f366b873aa3e81a299ab70a330b4adae5ee",
+    "refs/heads/feat/modern-2d-cinematic": "688ec5351cf8fbcdb7740420d81e1bbeac4eb727"
+  },
+  "resources": {
+    "ok": true,
+    "msg": "OK",
+    "disk": {
+      "total_gb": 144.02,
+      "used_gb": 91.07,
+      "free_gb": 52.96
+    },
+    "ram": {
+      "total_gb": 31.75,
+      "available_gb": 7.21
+    },
+    "cpus": 12,
+    "workspace": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio"
+  },
+  "file_hashes": {
+    "visual_styles/roman_squire_master/v1/style_bible.json": {
+      "exists": true,
+      "sha256": "65cf35ba0c050902df5bf60f0bf08f46a5bd977032b68c61a9a77f57d216186c",
+      "bytes": 5898
+    },
+    "tools/kh03_style_lock.py": {
+      "exists": true,
+      "sha256": "f01f8c5d842bd84fe4bc2a9be0287ed745d4c457ffce860f8e74acfd30097a29",
+      "bytes": 10355
+    },
+    "tools/kh03_reference_audit.py": {
+      "exists": true,
+      "sha256": "5c5c27054c34c28c037863d0ff8a2e44ba182af1e261dce359ac9b5d2d7fe31a",
+      "bytes": 5114
+    },
+    "tools/kh03_baseline_comparator.py": {
+      "exists": true,
+      "sha256": "8518aeaf206e5dbf528e4fb01cee72930958f3678c1708f303f48bd345bfdef1",
+      "bytes": 27682
+    },
+    "tools/kh03_preview_director.py": {
+      "exists": true,
+      "sha256": "022faab849d7fa6088f0cf19f30e7031eb4cc3f0c75675399bce4fc04ce7bceb",
+      "bytes": 91410
+    },
+    "tools/validator.py": {
+      "exists": true,
+      "sha256": "df8dc0119ef46c420921992d7f06641bbc80d07fa9ff6aac672080e4b28958b8",
+      "bytes": 11523
+    },
+    "tools/mix.py": {
+      "exists": true,
+      "sha256": "978c307886ffe4ccb2e98b21da9b3c9341b9e0b9270c046007652cea6f59a91e",
+      "bytes": 17192
+    },
+    "tools/prep_voice.py": {
+      "exists": true,
+      "sha256": "06c8b5b0871b8ee3858d842550f7765d91660c36d986b985d58c061657d692de",
+      "bytes": 12950
+    },
+    "tools/plan_audio.py": {
+      "exists": true,
+      "sha256": "ced8d5c6c28ea8c68698dedce71479a2115277c67b4fc9fae2635b1261a0ea83",
+      "bytes": 26505
+    },
+    "tools/assign_visuals.py": {
+      "exists": true,
+      "sha256": "45fc1c1fe212fbdd1f9ca2cb909cb7081423b3b005dd2ee791feabbec7d30dcf",
+      "bytes": 34454
+    },
+    "tools/plan_hook.py": {
+      "exists": true,
+      "sha256": "ec24ebbd5d2538ef43efbf736246dd7a2473f0c4feff01c4d20d5410354f06c9",
+      "bytes": 42664
+    },
+    "packs/squire/ink.js": {
+      "exists": true,
+      "sha256": "4a1cbef8024a0942774cbe4357d766c3d119b533b3e38e31b3e37abc9c33e3c0",
+      "bytes": 11271
+    },
+    "packs/squire/chara.js": {
+      "exists": true,
+      "sha256": "62c92a3d8136efecbb08db5056ed6755607c7739f81b3516d2e9adf0645b508b",
+      "bytes": 105730
+    },
+    "packs/squire/world.js": {
+      "exists": true,
+      "sha256": "c116795e4778c102576d5ab6d656c022fb7a82bd595f961241a22bf2622cf778",
+      "bytes": 30393
+    },
+    "packs/squire/templates.js": {
+      "exists": true,
+      "sha256": "5e2a2f5a06a965beadbe62fdc3111a03e6c5e58c7329143a5280f76939334155",
+      "bytes": 48249
+    },
+    "packs/squire/pack.js": {
+      "exists": true,
+      "sha256": "af9be2e7e812322c6ac87a0934d0d0b35f7a4eab2d7e07d2646df8c54f09019d",
+      "bytes": 10081
+    },
+    "packs/squire/roman_master/motion.js": {
+      "exists": true,
+      "sha256": "a696cdc7d5c30eaf1c9338964bdcbe8974d1a8a0c861ff994aeb78cd44a99d74",
+      "bytes": 15058
+    },
+    "packs/squire/roman_master/character_state.js": {
+      "exists": true,
+      "sha256": "4be9a9a866e1ef07f29d31c7a0a85b296234f929b17e7b5d65bcec2e85c16579",
+      "bytes": 8339
+    },
+    "packs/squire/roman_master/camera.js": {
+      "exists": true,
+      "sha256": "0c40b25a29937bbcb5365c134030a2ec1dc45a954d6833728c59ea96bd3186c0",
+      "bytes": 5558
+    },
+    "packs/squire/roman_master/environment.js": {
+      "exists": true,
+      "sha256": "0b9e2217dc36867de37809ca7ea5ee787c83383e6b356947606e2bdc3648fd5b",
+      "bytes": 16641
+    },
+    "packs/dem/pack.js": {
+      "exists": true,
+      "sha256": "fd211c072601829da72da89bfc5ff3048d50e2e81c3a446a5c8e35b59a401199",
+      "bytes": 1698
+    },
+    "packs/dem/templates.js": {
+      "exists": true,
+      "sha256": "811b7c80ae1fcfeef609b71a76f51e67bc419212da5542a881233064af8728a7",
+      "bytes": 25065
+    },
+    "engine/core.js": {
+      "exists": true,
+      "sha256": "a224b1dc69809b63e16544236ed2c37ed6c5ce16f9cdf2c55548a04b3ba40a56",
+      "bytes": 13486
+    },
+    "engine/player.js": {
+      "exists": true,
+      "sha256": "f7ad898dc78a2f10b3a3b28750db06c78dc5b22ddce43a2a2c4028b6e9ae2261",
+      "bytes": 16341
+    },
+    "engine/three3d.js": {
+      "exists": true,
+      "sha256": "09884b6fd1a72d6839450345c86a63540b8f076dd38df48b1b1f2f972a1b42b1",
+      "bytes": 14919
+    },
+    "render.mjs": {
+      "exists": true,
+      "sha256": "afeae05f1110b80c8a1433915b619a199b2a9429445cfc0bba7ba820f138c067",
+      "bytes": 20030
+    },
+    "projects/squire-mau/config.json": {
+      "exists": true,
+      "sha256": "5b479432b9d536887047a2e4cb1248b6a054ee9a070eae71313337cceb0024eb",
+      "bytes": 394
+    },
+    "projects/squire-mau/story/shots.json": {
+      "exists": true,
+      "sha256": "d1f0d223ffedeae147507bfacd348b6c070ed745c76aca09e93f244a7590b3ab",
+      "bytes": 18900
+    },
+    "projects/selfimprove-mau/config.json": {
+      "exists": true,
+      "sha256": "31cbc94c65a8c25966a783e2d42fe091c093e8769f6e292205855d1341ebb228",
+      "bytes": 199
+    },
+    "projects/selfimprove-mau/story/shots.json": {
+      "exists": true,
+      "sha256": "72b18b802156f78ffc81135d65d5f567e617055b08b434c305b8ec30bf6a5a78",
+      "bytes": 17344
+    },
+    "projects/kh03_roman_last_gap_30s/config.json": {
+      "exists": true,
+      "sha256": "570ee2657e0e6545fdf3af8a1162eb9a24fc0ef5ddefbe6cf71c2bb16c96688d",
+      "bytes": 831
+    },
+    "projects/kh03_roman_last_gap_30s/story/shots.json": {
+      "exists": true,
+      "sha256": "9da7bd4c081b0b8d07210a4ef52fc9e243df3a9a4e282bbdb92afebe53a012ce",
+      "bytes": 5038
+    },
+    "projects/kh03_roman_last_gap_30s/story/storyboard.json": {
+      "exists": true,
+      "sha256": "e6f121ec720ddf421c158ffc1be7f3c229eff7229014a838d522eaf5142383c5",
+      "bytes": 11569
+    },
+    "projects/kh03_roman_last_gap_30s/story/camera_beats.json": {
+      "exists": true,
+      "sha256": "1f4d3d875cfe053e1c42be335b7f8d8db332473b6e5b5bd27d388eba7c70de90",
+      "bytes": 7779
+    },
+    "projects/kh03_roman_last_gap_30s/story/script.txt": {
+      "exists": true,
+      "sha256": "4aa50030e5d4a4d44de2be983bcd738be6f35907e10a56242fcd359861389dac",
+      "bytes": 397
+    },
+    "projects/kh03_roman_last_gap_30s/timeline/lines.json": {
+      "exists": true,
+      "sha256": "471f57d87f48c81e8ad41e91e85d201314b5e92d1d3aa41d1eec3a1dde92925c",
+      "bytes": 2208
+    },
+    "projects/kh03_roman_last_gap_30s/timeline/words.json": {
+      "exists": true,
+      "sha256": "69da4b974d86a539b62c57ebde86a56487292774fa8b0b032b706ae2c51f8699",
+      "bytes": 5808
+    },
+    "projects/kh03_roman_last_gap_30s/scenes/shots/last_gap_pilot.js": {
+      "exists": true,
+      "sha256": "fa8f73ff69a2e9e7ff532146fd9c15d7b63f3f86ec501729c87bd81b2c642cec",
+      "bytes": 38825
+    },
+    "projects/kh03_roman_last_gap_30s/scenes/shots/thumb.js": {
+      "exists": true,
+      "sha256": "7b0f9e3debea711b53e66a06bde6f2dac9cc4609d8b0d604a5decbe56e9fc926",
+      "bytes": 951
+    }
+  },
+  "legacy_kh03_9shot_baseline": {
+    "shots_count": 9,
+    "lines_count": 9,
+    "one_to_one_line_shot_pairs": 9,
+    "shot_durations_sec": [
+      2.5,
+      3.0,
+      3.5,
+      3.0,
+      3.0,
+      3.5,
+      4.5,
+      3.5,
+      3.5
+    ],
+    "mean_shot_dur_sec": 3.333,
+    "max_shot_dur_sec": 4.5,
+    "shots_ge_3p0s": 8,
+    "speech_gaps_analysis": [
+      {
+        "line_id": "L01",
+        "shot_id": "SH01",
+        "shot_dur": 2.5,
+        "speech_dur": 2.264,
+        "tail_pause_in_shot": 0.136,
+        "inter_line_silence": 0.256
+      },
+      {
+        "line_id": "L02",
+        "shot_id": "SH02",
+        "shot_dur": 3.0,
+        "speech_dur": 2.732,
+        "tail_pause_in_shot": 0.148,
+        "inter_line_silence": 0.368
+      },
+      {
+        "line_id": "L03",
+        "shot_id": "SH03",
+        "shot_dur": 3.5,
+        "speech_dur": 1.325,
+        "tail_pause_in_shot": 1.955,
+        "inter_line_silence": 2.035
+      },
+      {
+        "line_id": "L04",
+        "shot_id": "SH04",
+        "shot_dur": 3.0,
+        "speech_dur": 2.816,
+        "tail_pause_in_shot": 0.104,
+        "inter_line_silence": 0.184
+      },
+      {
+        "line_id": "L05",
+        "shot_id": "SH05",
+        "shot_dur": 3.0,
+        "speech_dur": 2.84,
+        "tail_pause_in_shot": 0.08,
+        "inter_line_silence": 0.24
+      },
+      {
+        "line_id": "L06",
+        "shot_id": "SH06",
+        "shot_dur": 3.5,
+        "speech_dur": 1.549,
+        "tail_pause_in_shot": 1.791,
+        "inter_line_silence": 2.091
+      },
+      {
+        "line_id": "L07",
+        "shot_id": "SH07",
+        "shot_dur": 4.5,
+        "speech_dur": 2.3,
+        "tail_pause_in_shot": 1.9,
+        "inter_line_silence": 2.02
+      },
+      {
+        "line_id": "L08",
+        "shot_id": "SH08",
+        "shot_dur": 3.5,
+        "speech_dur": 2.815,
+        "tail_pause_in_shot": 0.565,
+        "inter_line_silence": 0.705
+      },
+      {
+        "line_id": "L09",
+        "shot_id": "SH09",
+        "shot_dur": 3.5,
+        "speech_dur": 3.192,
+        "tail_pause_in_shot": 0.168,
+        "inter_line_silence": 0.168
+      }
+    ],
+    "inter_line_gaps_gt_0p75s": [
+      {
+        "line_id": "L03",
+        "shot_id": "SH03",
+        "shot_dur": 3.5,
+        "speech_dur": 1.325,
+        "tail_pause_in_shot": 1.955,
+        "inter_line_silence": 2.035
+      },
+      {
+        "line_id": "L06",
+        "shot_id": "SH06",
+        "shot_dur": 3.5,
+        "speech_dur": 1.549,
+        "tail_pause_in_shot": 1.791,
+        "inter_line_silence": 2.091
+      },
+      {
+        "line_id": "L07",
+        "shot_id": "SH07",
+        "shot_dur": 4.5,
+        "speech_dur": 2.3,
+        "tail_pause_in_shot": 1.9,
+        "inter_line_silence": 2.02
+      }
+    ],
+    "physical_mp4_metrics": {
+      "exists": true,
+      "sha256": "114992fc726b7540d4edc2414419ded9f182fb837292878d1d18796ee544056e",
+      "bytes": 12399535,
+      "decoded_frames": 720,
+      "low_activity_frames_under_0p8_mad": 53,
+      "mean_center_mad": 7.1717
+    }
+  }
+}

@@ -1,0 +1,9 @@
+L01: At sunset, the city gate began to close with one last courier outside.
+L02: Inside Marcus's satchel lay one urgent wax-sealed order.
+L03: His sandals hammered damp cobbles as the oak gap narrowed.
+L04: Twenty paces short he clipped a curb—the scroll flew from his grip.
+L05: Guard Gaius lunged and missed. His heel pinned the scroll beside the drain.
+L06: Out of breath, he cracked the crimson seal open.
+L07: Four painted words stared up: KEEP THE GATE OPEN.
+L08: He yelled to the tower.
+L09: Too late—the heavy oak leaves slammed shut.

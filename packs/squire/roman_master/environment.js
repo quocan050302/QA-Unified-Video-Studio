@@ -448,3 +448,4 @@ export function drawRomanShieldWall2D(g, worldState = {}, cam = null, opts = {})
 }
 
 export { dustPuff };
+export * from './gate_city_env.js';

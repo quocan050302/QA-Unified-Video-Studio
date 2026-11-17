@@ -1,0 +1,25 @@
+{
+  "schema_version": "kh03.r1.pacing_proxies.v1",
+  "shots_count": 15,
+  "lines_count": 9,
+  "duration_histogram": {
+    "lt_1p0s": 0,
+    "1p0_to_2p0s": 9,
+    "2p0_to_3p0s": 6,
+    "ge_3p0s": 0
+  },
+  "min_shot_dur_sec": 1.292,
+  "mean_shot_dur_sec": 2.0,
+  "max_shot_dur_sec": 2.833,
+  "first_hook_action_cutoff_sec": 0.45,
+  "meaningful_action_beats": 15,
+  "repeated_scale_3x_runs": 0,
+  "long_low_event_candidates": [],
+  "narration_gaps_gt_0p75s": [],
+  "one_to_many_sentences": 9,
+  "many_to_one_shots": 8,
+  "mid_sentence_cuts_count": 13,
+  "subjective_retention_verified": false,
+  "editorial_approved": "HUMAN_REVIEW_PENDING",
+  "honesty_note": "Technical pacing proxies only; actual audience retention cannot be inferred without real upload analytics."
+}
