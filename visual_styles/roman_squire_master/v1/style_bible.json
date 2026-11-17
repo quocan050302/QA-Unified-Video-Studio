@@ -1,0 +1,200 @@
+{
+  "schema_version": "roman_squire_master.style_bible.v1",
+  "style_id": "roman_squire_master.v1",
+  "style_family": "production_squire_original_roman_2d",
+  "canonical_digest": "1d3209a715bdd38a73f11acf5c5e2cb6974a6a1855d470e590eaa934360e1259",
+  "renderer_contract": {
+    "engine": "html5_canvas_2d",
+    "required_render_mode": "canvas2d_only",
+    "forbid_threejs": true,
+    "forbid_webgl_3d_scene": true,
+    "core_character_module": "packs/squire/chara.js",
+    "core_ink_module": "packs/squire/ink.js",
+    "core_world_module": "packs/squire/world.js",
+    "core_army_module": "packs/squire/army.js"
+  },
+  "reference_provenance": {
+    "authoritative_source_branch": "origin/Production",
+    "authoritative_source_commit": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+    "user_screenshot_filename": "KH-03-ROMAN-ORIGINAL-STYLE-REFERENCE-ONLY.png",
+    "user_screenshot_status": "USER_SCREENSHOT_REFERENCE_UNAVAILABLE",
+    "primary_code_truth_hashes": {
+      "packs/squire/chara.js": "8f1bea5cf62e3a7c3b905cd80395d12a18c32313098027fb4a1e9a8f818e913c",
+      "packs/squire/ink.js": "7af6a71ebc237cc23c869846e29077339da02d05761b74e56c9d1f0162236168",
+      "packs/squire/world.js": "9806a14ce877629455407a366034167bbc0c2bc40f2f0398eeef0311f8dc220a",
+      "packs/squire/army.js": "94a4ad492b2ae4a1b85d46ee2b9e9d901400cded07848b44ee3f03d29d1990fd"
+    },
+    "forbid_reference_screenshot_in_video_frames": true
+  },
+  "geometric_invariants": {
+    "unit_basis": "u = h / 100",
+    "head_radius_u": 19.0,
+    "head_diameter_to_body_height_ratio": 0.38,
+    "head_center_y_u": -78.0,
+    "torso_top_y_u": -59.0,
+    "hip_y_u": -30.0,
+    "arm_segment_length_u": 12.5,
+    "arm_tube_width_u": 7.5,
+    "hand_glove_radius_u": 5.3,
+    "scutum_height_u": 62.0,
+    "scutum_ellipse_rx_to_s": 0.33,
+    "scutum_ellipse_ry_to_s": 0.5,
+    "scutum_boss_radius_to_s": 0.09,
+    "spear_default_length_u": 62.0,
+    "step_stride_u": 17.0
+  },
+  "palette_lock": {
+    "OUT": "#392a21",
+    "skin": "#f4ede1",
+    "skinShade": "#d9cfd0",
+    "glove": "#ffffff",
+    "red": "#c9473a",
+    "redDark": "#9b3127",
+    "crimson": "#b8352d",
+    "gold": "#e7b04a",
+    "goldDark": "#b98429",
+    "bronze": "#d3a24e",
+    "bronzeDark": "#a8782f",
+    "yellow": "#efc23f",
+    "steel": "#b9b5b3",
+    "steelLight": "#dedbd8",
+    "wood": "#a8733f",
+    "woodDark": "#7a5129",
+    "leather": "#7b4f2c",
+    "brownDark": "#64401f"
+  },
+  "outline_and_lod_rules": {
+    "high_lod_lw_formula": "max(1.4, h * 0.011)",
+    "low_lod_threshold_px": 70,
+    "stroke_join": "round",
+    "stroke_cap": "round",
+    "shadow_rule": "single_clean_cel_crescent_plus_clipped_side_band"
+  },
+  "locked_character_archetypes": {
+    "rookie_hastatus": {
+      "base_preset": "hastatus",
+      "helmet": "montefortino",
+      "feathers": 3,
+      "featherColors": [
+        "#f7f3ea",
+        "#392a21",
+        "#f7f3ea"
+      ],
+      "body": "roman",
+      "tunicColor": "#c9473a",
+      "legs": "bare",
+      "shield": {
+        "type": "scutum",
+        "color": "#c9473a",
+        "rim": "#e7b04a",
+        "charge": "lightning",
+        "chargeColor": "#efc23f"
+      },
+      "weapon": "spear"
+    },
+    "instructor_princeps": {
+      "base_preset": "princeps",
+      "helmet": "montefortino",
+      "feathers": 3,
+      "featherColors": [
+        "#c9473a",
+        "#392a21",
+        "#c9473a"
+      ],
+      "mustache": "big",
+      "body": "roman",
+      "tunicColor": "#c9473a",
+      "legs": "bare",
+      "shield": {
+        "type": "scutum",
+        "color": "#c9473a",
+        "rim": "#e7b04a",
+        "charge": "wings",
+        "chargeColor": "#efc23f"
+      },
+      "weapon": "pilum"
+    },
+    "veteran_neighbor_legionary": {
+      "base_preset": "hastatus",
+      "helmet": "montefortino",
+      "feathers": 3,
+      "featherColors": [
+        "#f7f3ea",
+        "#c9473a",
+        "#f7f3ea"
+      ],
+      "beard": "stubble",
+      "body": "roman",
+      "tunicColor": "#c9473a",
+      "legs": "bare",
+      "shield": {
+        "type": "scutum",
+        "color": "#c9473a",
+        "rim": "#e7b04a",
+        "charge": "lightning",
+        "chargeColor": "#efc23f"
+      },
+      "weapon": "spear"
+    },
+    "centurion_crest": {
+      "base_preset": "legionary",
+      "helmet": "montefortino",
+      "crest": "#c9473a",
+      "mail": true,
+      "body": "roman",
+      "tunicColor": "#c9473a",
+      "legs": "bare",
+      "shield": {
+        "type": "scutum",
+        "color": "#c9473a",
+        "rim": "#e7b04a",
+        "charge": "wings",
+        "chargeColor": "#efc23f"
+      },
+      "weapon": "pilum"
+    }
+  },
+  "expression_grammar": {
+    "allowed_base_faces": [
+      "neutral",
+      "calm",
+      "worried",
+      "scared",
+      "shock",
+      "surprised",
+      "determined",
+      "angry",
+      "shout",
+      "bored",
+      "smug",
+      "confused",
+      "tired",
+      "pain",
+      "smile"
+    ],
+    "allowed_minimal_extensions": [
+      "focused",
+      "awkward",
+      "exhale",
+      "sternNod"
+    ],
+    "forbid_anime_iris_makeover": true
+  },
+  "editable_upgrade_slots": [
+    "line_and_rim_polish",
+    "micro_expression_grammar",
+    "secondary_feather_and_skirt_lag",
+    "world_space_foot_and_shield_contact_lock",
+    "multi_plane_2d_field_parallax"
+  ],
+  "forbidden_modifications": [
+    "kh02_tavi_lyra_character_family",
+    "kh02_goat_or_bell_tower_assets",
+    "kh01_urgent_scroll_or_marketplace_cart",
+    "swap_helmet_for_bare_brown_hair_on_roman_soldiers",
+    "replace_white_glove_hand_with_anatomical_fingers",
+    "threejs_or_3d_mesh_rendering",
+    "baking_reference_screenshot_as_video_texture",
+    "mutating_production_default_when_profile_disabled"
+  ]
+}

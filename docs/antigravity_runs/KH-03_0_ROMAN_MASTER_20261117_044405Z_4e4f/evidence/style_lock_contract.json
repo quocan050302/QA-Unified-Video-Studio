@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "style_id": "roman_squire_master.v1",
+  "canonical_digest": "1d3209a715bdd38a73f11acf5c5e2cb6974a6a1855d470e590eaa934360e1259",
+  "contract_validation": {
+    "valid": true,
+    "style_id": "roman_squire_master.v1",
+    "computed_digest": "1d3209a715bdd38a73f11acf5c5e2cb6974a6a1855d470e590eaa934360e1259",
+    "digest_verified": true,
+    "errors": [],
+    "warnings": [
+      "Companion user screenshot attachment unavailable in workspace; using Production source & baseline renders as primary truth."
+    ],
+    "style_approved": "HUMAN_REVIEW_PENDING"
+  },
+  "user_screenshot_reference": {
+    "status": "USER_SCREENSHOT_REFERENCE_UNAVAILABLE",
+    "path": null,
+    "sha256": null,
+    "bytes": 0,
+    "allowed_usage": "FALLBACK_TO_PRODUCTION_SOURCE_AND_BASELINE_RENDERS",
+    "forbid_video_frame_ingest": true
+  },
+  "style_approved": "HUMAN_REVIEW_PENDING"
+}

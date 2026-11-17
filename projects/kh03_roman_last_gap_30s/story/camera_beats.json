@@ -1,0 +1,493 @@
+{
+  "schema_version": "kh03.0.camera_beats.v1",
+  "shots": {
+    "SH01": {
+      "start": 0.0,
+      "end": 2.5,
+      "framingScale": "extreme_detail_insert",
+      "purpose": "hook_exposed_gap",
+      "zoomKeys": [
+        [
+          0.0,
+          1.06,
+          "c1"
+        ],
+        [
+          2.5,
+          1.22,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          2.5,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          2.5,
+          0.49,
+          "c1"
+        ]
+      ]
+    },
+    "SH02": {
+      "start": 2.5,
+      "end": 5.5,
+      "framingScale": "medium_over_shoulder",
+      "purpose": "character_reveal_grip",
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          3.0,
+          1.13,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.53,
+          "c1"
+        ],
+        [
+          3.0,
+          0.5,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          3.0,
+          0.48,
+          "c1"
+        ]
+      ]
+    },
+    "SH03": {
+      "start": 5.5,
+      "end": 9.0,
+      "framingScale": "wide_geography",
+      "purpose": "establish_castra_and_line",
+      "zoomKeys": [
+        [
+          0.0,
+          1.01,
+          "c1"
+        ],
+        [
+          3.5,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.46,
+          "c1"
+        ],
+        [
+          3.5,
+          0.53,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          3.5,
+          0.51,
+          "c1"
+        ]
+      ]
+    },
+    "SH04": {
+      "start": 9.0,
+      "end": 12.0,
+      "framingScale": "low_angle_profile",
+      "purpose": "inciting_spear_launch",
+      "zoomKeys": [
+        [
+          0.0,
+          1.05,
+          "c1"
+        ],
+        [
+          0.85,
+          1.12,
+          "c1"
+        ],
+        [
+          1.35,
+          1.06,
+          "c1"
+        ],
+        [
+          3.0,
+          1.1,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.42,
+          "c1"
+        ],
+        [
+          0.95,
+          0.4,
+          "c1"
+        ],
+        [
+          1.6,
+          0.54,
+          "c1"
+        ],
+        [
+          3.0,
+          0.58,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          3.0,
+          0.5,
+          "c1"
+        ]
+      ]
+    },
+    "SH05": {
+      "start": 12.0,
+      "end": 15.0,
+      "framingScale": "medium_full_tracking",
+      "purpose": "foot_plant_and_shield_shove",
+      "zoomKeys": [
+        [
+          0.0,
+          1.06,
+          "c1"
+        ],
+        [
+          1.05,
+          1.14,
+          "c1"
+        ],
+        [
+          1.75,
+          1.18,
+          "c1"
+        ],
+        [
+          3.0,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.58,
+          "c1"
+        ],
+        [
+          1.65,
+          0.51,
+          "c1"
+        ],
+        [
+          3.0,
+          0.5,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.54,
+          "c1"
+        ],
+        [
+          3.0,
+          0.53,
+          "c1"
+        ]
+      ],
+      "impactImpulse": {
+        "atLocal": 1.65,
+        "dur": 0.22,
+        "ampPx": 6.0
+      }
+    },
+    "SH06": {
+      "start": 15.0,
+      "end": 18.5,
+      "framingScale": "macro_physics_insert",
+      "purpose": "wooden_tip_deflection",
+      "zoomKeys": [
+        [
+          0.0,
+          1.12,
+          "c1"
+        ],
+        [
+          0.58,
+          1.24,
+          "outCubic"
+        ],
+        [
+          1.4,
+          1.16,
+          "c1"
+        ],
+        [
+          3.5,
+          1.1,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.47,
+          "c1"
+        ],
+        [
+          0.58,
+          0.51,
+          "c1"
+        ],
+        [
+          2.4,
+          0.46,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          0.58,
+          0.5,
+          "c1"
+        ],
+        [
+          2.4,
+          0.56,
+          "c1"
+        ]
+      ],
+      "impactImpulse": {
+        "atLocal": 0.58,
+        "dur": 0.26,
+        "ampPx": 9.5
+      }
+    },
+    "SH07": {
+      "start": 18.5,
+      "end": 23.0,
+      "framingScale": "wide_to_medium_payoff",
+      "purpose": "wall_holds_instructor_evaluates",
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          1.5,
+          1.18,
+          "c1"
+        ],
+        [
+          3.2,
+          1.36,
+          "c1"
+        ],
+        [
+          4.5,
+          1.38,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          1.6,
+          0.36,
+          "c1"
+        ],
+        [
+          3.2,
+          0.29,
+          "c1"
+        ],
+        [
+          4.5,
+          0.29,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          3.2,
+          0.48,
+          "c1"
+        ],
+        [
+          4.5,
+          0.48,
+          "c1"
+        ]
+      ]
+    },
+    "SH08": {
+      "start": 23.0,
+      "end": 26.5,
+      "framingScale": "medium_two_shot",
+      "purpose": "comic_spear_strap_twist",
+      "zoomKeys": [
+        [
+          0.0,
+          1.18,
+          "c1"
+        ],
+        [
+          1.2,
+          1.1,
+          "c1"
+        ],
+        [
+          3.5,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.54,
+          "c1"
+        ],
+        [
+          1.4,
+          0.51,
+          "c1"
+        ],
+        [
+          3.5,
+          0.5,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.51,
+          "c1"
+        ],
+        [
+          3.5,
+          0.52,
+          "c1"
+        ]
+      ]
+    },
+    "SH09": {
+      "start": 26.5,
+      "end": 30.0,
+      "framingScale": "motif_return_close",
+      "purpose": "deadpan_nod_and_closed_wall_loop",
+      "zoomKeys": [
+        [
+          0.0,
+          1.06,
+          "c1"
+        ],
+        [
+          1.8,
+          1.14,
+          "c1"
+        ],
+        [
+          3.5,
+          1.22,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.36,
+          "c1"
+        ],
+        [
+          1.7,
+          0.48,
+          "c1"
+        ],
+        [
+          3.5,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          3.5,
+          0.51,
+          "c1"
+        ]
+      ]
+    }
+  }
+}

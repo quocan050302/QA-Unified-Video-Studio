@@ -146,3 +146,9 @@ export function vignette(g, a = 0.25, color = '#2a1a10') {
   g.save(); const gr = g.createRadialGradient(E.W / 2, E.H / 2, Math.min(E.W, E.H) * 0.35, E.W / 2, E.H / 2, Math.max(E.W, E.H) * 0.75);
   gr.addColorStop(0, alpha(color, 0)); gr.addColorStop(1, alpha(color, a)); g.fillStyle = gr; g.fillRect(0, 0, E.W, E.H); g.restore();
 }
+
+// KH-03.0 opt-in stroke helper: stabilizes high-DPI contour readability while keeping OUT='#392a21' and PAL intact
+export function romanStrokeWidth(actorHeightPx = 360, baseRatio = 0.0112, minPx = 1.5, maxPx = 8.8) {
+  const shortSide = Math.min(E.W || 1920, E.H || 1080);
+  return clamp(actorHeightPx * baseRatio * (shortSide / 1080), minPx, maxPx);
+}

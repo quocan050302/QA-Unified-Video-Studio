@@ -1,0 +1,295 @@
+{
+  "source_baseline_lock": {
+    "status": "PASS",
+    "wide_profile_off_diff_pixels": 0,
+    "close_profile_off_diff_pixels": 0,
+    "production_ref": "origin/Production"
+  },
+  "roman_identity_preserved": {
+    "technical_gate": "PASS",
+    "style_approved": "HUMAN_REVIEW_PENDING",
+    "wide": {
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "roi_box": [
+        680,
+        360,
+        1220,
+        1020
+      ],
+      "silhouette_iou": 1.0,
+      "changed_pixels": 596,
+      "total_pixels": 2073600,
+      "changed_pixel_ratio": 0.000287,
+      "mean_abs_rgb_delta": 0.01482,
+      "max_channel_delta": 137,
+      "anchors": {
+        "ivory_face_before": {
+          "x0": 38,
+          "y0": 121,
+          "x1": 372,
+          "y1": 575,
+          "width": 335,
+          "height": 455,
+          "cx": 298.21,
+          "cy": 332.61,
+          "pixel_count": 12950
+        },
+        "ivory_face_after": {
+          "x0": 38,
+          "y0": 121,
+          "x1": 372,
+          "y1": 575,
+          "width": 335,
+          "height": 455,
+          "cx": 298.07,
+          "cy": 332.76,
+          "pixel_count": 12970
+        },
+        "helmet_before": {
+          "x0": 10,
+          "y0": 182,
+          "x1": 539,
+          "y1": 573,
+          "width": 530,
+          "height": 392,
+          "cx": 242.27,
+          "cy": 256.69,
+          "pixel_count": 7326
+        },
+        "helmet_after": {
+          "x0": 10,
+          "y0": 182,
+          "x1": 539,
+          "y1": 573,
+          "width": 530,
+          "height": 392,
+          "cx": 241.75,
+          "cy": 257.08,
+          "pixel_count": 7177
+        },
+        "red_scutum_tunic_before": {
+          "x0": 0,
+          "y0": 309,
+          "x1": 539,
+          "y1": 563,
+          "width": 540,
+          "height": 255,
+          "cx": 213.9,
+          "cy": 434.5,
+          "pixel_count": 15736
+        },
+        "red_scutum_tunic_after": {
+          "x0": 0,
+          "y0": 309,
+          "x1": 539,
+          "y1": 563,
+          "width": 540,
+          "height": 255,
+          "cx": 213.9,
+          "cy": 434.5,
+          "pixel_count": 15736
+        },
+        "warm_brown_outline_before": {
+          "x0": 130,
+          "y0": 95,
+          "x1": 386,
+          "y1": 599,
+          "width": 257,
+          "height": 505,
+          "cx": 282.35,
+          "cy": 353.71,
+          "pixel_count": 15798
+        },
+        "warm_brown_outline_after": {
+          "x0": 130,
+          "y0": 95,
+          "x1": 386,
+          "y1": 599,
+          "width": 257,
+          "height": 505,
+          "cx": 282.55,
+          "cy": 354.75,
+          "pixel_count": 15646
+        }
+      },
+      "deliberate_polish_explanation": "Opt-in romanMasterPolish adds only a subtle warm-cream specular line along the Montefortino brow guard and a tiny crisp glint on the scutum center steel boss while keeping head radius (19u), ivory face (#f4ede1), warm-brown contour (#392a21), 3 helmet feathers, white glove, red tunic/scutum (#c9473a) and spear geometry 100% locked to Production Squire.",
+      "aesthetic_beauty_gate": "MANUAL_REVIEW_REQUIRED",
+      "style_approved": "HUMAN_REVIEW_PENDING",
+      "errors": []
+    },
+    "close": {
+      "passed": true,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "roi_box": [
+        480,
+        60,
+        1440,
+        1075
+      ],
+      "silhouette_iou": 1.0,
+      "changed_pixels": 2556,
+      "total_pixels": 2073600,
+      "changed_pixel_ratio": 0.001233,
+      "mean_abs_rgb_delta": 0.07394,
+      "max_channel_delta": 137,
+      "anchors": {
+        "ivory_face_before": {
+          "x0": 358,
+          "y0": 144,
+          "x1": 710,
+          "y1": 1014,
+          "width": 353,
+          "height": 871,
+          "cx": 522.2,
+          "cy": 554.22,
+          "pixel_count": 58393
+        },
+        "ivory_face_after": {
+          "x0": 314,
+          "y0": 144,
+          "x1": 710,
+          "y1": 1014,
+          "width": 397,
+          "height": 871,
+          "cx": 522.02,
+          "cy": 554.48,
+          "pixel_count": 58446
+        },
+        "helmet_before": {
+          "x0": 137,
+          "y0": 281,
+          "x1": 637,
+          "y1": 1014,
+          "width": 501,
+          "height": 734,
+          "cx": 423.38,
+          "cy": 407.11,
+          "pixel_count": 32964
+        },
+        "helmet_after": {
+          "x0": 137,
+          "y0": 281,
+          "x1": 637,
+          "y1": 1014,
+          "width": 501,
+          "height": 734,
+          "cx": 422.66,
+          "cy": 407.08,
+          "pixel_count": 32263
+        },
+        "red_scutum_tunic_before": {
+          "x0": 11,
+          "y0": 565,
+          "x1": 885,
+          "y1": 1014,
+          "width": 875,
+          "height": 450,
+          "cx": 270.09,
+          "cy": 806.2,
+          "pixel_count": 58843
+        },
+        "red_scutum_tunic_after": {
+          "x0": 11,
+          "y0": 565,
+          "x1": 885,
+          "y1": 1014,
+          "width": 875,
+          "height": 450,
+          "cx": 270.09,
+          "cy": 806.2,
+          "pixel_count": 58843
+        },
+        "warm_brown_outline_before": {
+          "x0": 144,
+          "y0": 87,
+          "x1": 718,
+          "y1": 1014,
+          "width": 575,
+          "height": 928,
+          "cx": 485.78,
+          "cy": 566.84,
+          "pixel_count": 71615
+        },
+        "warm_brown_outline_after": {
+          "x0": 144,
+          "y0": 87,
+          "x1": 718,
+          "y1": 1014,
+          "width": 575,
+          "height": 928,
+          "cx": 486.26,
+          "cy": 568.25,
+          "pixel_count": 70898
+        }
+      },
+      "deliberate_polish_explanation": "Opt-in romanMasterPolish adds only a subtle warm-cream specular line along the Montefortino brow guard and a tiny crisp glint on the scutum center steel boss while keeping head radius (19u), ivory face (#f4ede1), warm-brown contour (#392a21), 3 helmet feathers, white glove, red tunic/scutum (#c9473a) and spear geometry 100% locked to Production Squire.",
+      "aesthetic_beauty_gate": "MANUAL_REVIEW_REQUIRED",
+      "style_approved": "HUMAN_REVIEW_PENDING",
+      "errors": []
+    }
+  },
+  "artifacts": {
+    "wide_before_production.png": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\wide_before_production.png",
+      "sha256": "d16c9504c96818066d893d5ffe3b80b0ee8b8caf5231194c5db3651ca172ef27",
+      "bytes": 826457
+    },
+    "wide_after_roman_master.png": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\wide_after_roman_master.png",
+      "sha256": "1419357354cb79374cc8e4015168fc14c3a1870557931de9f2543ba3af3cf941",
+      "bytes": 828290
+    },
+    "wide_overlay.png": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\wide_overlay.png",
+      "sha256": "b8cca82e15801e5b16bded362d8a63356989bb107014b53252a17ff0f4567bc4",
+      "bytes": 506726
+    },
+    "wide_diff_heatmap.png": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\wide_diff_heatmap.png",
+      "sha256": "84db9cbe4d73b8b594f766c93af8aa10ca77054aa7f6ebb7b71362460216f425",
+      "bytes": 138836
+    },
+    "close_before_production.png": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\close_before_production.png",
+      "sha256": "021c0d903542697eb94ce96912bfddfa94203a5a857d855ee0e8ebce65a47a98",
+      "bytes": 782750
+    },
+    "close_after_roman_master.png": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\close_after_roman_master.png",
+      "sha256": "ff6d1bab518d2ebfd0ff11bfeb16577b319f38a303c0a86358c65b8ea0a53987",
+      "bytes": 787380
+    },
+    "close_overlay.png": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\close_overlay.png",
+      "sha256": "c802c734717b85ce86e1bb9197667dcf2e02e02b74db8c01d766f09627760923",
+      "bytes": 469911
+    },
+    "close_diff_heatmap.png": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\close_diff_heatmap.png",
+      "sha256": "988815c8d877aa443a2c3650ab3ed1b0b1bc923015e3982e877748acceaa9f6b",
+      "bytes": 133576
+    },
+    "same_pose_ab_contact_sheet.jpg": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\same_pose_ab_contact_sheet.jpg",
+      "sha256": "34017a2f934946283a8a71ba1f844ded4b9d77c9d72ae2085121797cf1990ddf",
+      "bytes": 271547
+    },
+    "original_roman_expression_pose_sheet.png": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\original_roman_expression_pose_sheet.png",
+      "sha256": "e0f86c1bbb249ceb249f76d4de81449f3bb4bf4d267ecd6f33d5da03d3e1e8fc",
+      "bytes": 489932
+    },
+    "original_roman_expression_pose_sheet.jpg": {
+      "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\style_poc\\original_roman_expression_pose_sheet.jpg",
+      "sha256": "2fbce91f7a52979decd1a2807bb3d056b6b99d87fdce2afc72014ba53580b63a",
+      "bytes": 281362
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "title": "KH03_ROMAN_LAST_GAP_ORIGINAL_30S_1080P",
+  "pack": "squire",
+  "style_profile": "roman_squire_master.v1",
+  "render_mode": "canvas2d_only",
+  "aspect": "16:9",
+  "resolution": "1080p",
+  "fps": 24,
+  "lang": "en",
+  "style": "flat",
+  "bars": "none",
+  "captions": false,
+  "fadeIn": 0,
+  "fadeOut": 0,
+  "transition": {
+    "type": "cut",
+    "duration": 0.0
+  },
+  "loudness": -15.0,
+  "music": {
+    "enabled": true,
+    "gainDb": -14.0
+  },
+  "sfx": {
+    "enabled": true,
+    "gainDb": -3.0
+  },
+  "stills": [
+    0.8,
+    3.8,
+    7.2,
+    10.1,
+    13.7,
+    15.65,
+    21.3,
+    24.8,
+    28.8
+  ],
+  "pilot_scope_notice": "KH-03.0 style-locked pilot only. Fictional dramatized Roman training-yard vignette. KH-03.1..KH-03.6 generalized engines are NOT implemented."
+}

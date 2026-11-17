@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "branch": "feat/roman-2d-master",
+  "ancestry_from_production_ok": true,
+  "protected_refs": {
+    "origin/Production": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+    "origin/fix/Image-Shot": "c96c4f366b873aa3e81a299ab70a330b4adae5ee",
+    "origin/feat/modern-2d-cinematic": "688ec5351cf8fbcdb7740420d81e1bbeac4eb727",
+    "matches_prompt_production_sha": true
+  },
+  "hardware": {
+    "disk": {
+      "total_gb": 144.02,
+      "used_gb": 90.55,
+      "free_gb": 53.47
+    },
+    "ram": {
+      "total_gb": 31.75,
+      "available_gb": 9.55
+    },
+    "cpus": 12,
+    "workspace": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio"
+  },
+  "light_worker_cap": 3,
+  "heavy_render_cap": 2,
+  "toolchains": {
+    "node": "v26.13.1",
+    "python": "3.12.10",
+    "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe": "ffprobe version 9.0.2-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+  },
+  "preserved_fixtures": {
+    "projects/squire-mau/config.json": true,
+    "projects/selfimprove-mau/config.json": true,
+    "packs/dem/pack.js": true,
+    "engine/three3d.js": true
+  },
+  "untouched_prior_test_runs_count": 2,
+  "errors": []
+}

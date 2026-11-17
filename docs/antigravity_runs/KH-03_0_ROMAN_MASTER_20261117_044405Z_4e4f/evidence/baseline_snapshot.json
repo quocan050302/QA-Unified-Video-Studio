@@ -1,0 +1,854 @@
+{
+  "schema_version": "kh03_0_baseline_snapshot.v1",
+  "captured_at_utc": "2026-11-17T04:50:51Z",
+  "branch": "feat/roman-2d-master",
+  "head_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "origin_production_sha": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "protected_remote_refs": [
+    "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1\trefs/heads/Production",
+    "688ec5351cf8fbcdb7740420d81e1bbeac4eb727\trefs/heads/feat/modern-2d-cinematic",
+    "c96c4f366b873aa3e81a299ab70a330b4adae5ee\trefs/heads/fix/Image-Shot"
+  ],
+  "user_screenshot_reference_status": "USER_SCREENSHOT_REFERENCE_UNAVAILABLE",
+  "hardware_and_env": {
+    "os": "Windows 11 (win32)",
+    "logical_cpus": 12,
+    "disk_output_drive": {
+      "total_gb": 144.02,
+      "used_gb": 90.06,
+      "free_gb": 53.96
+    },
+    "ram": {
+      "total_gb": 31.75,
+      "available_gb": 9.24
+    },
+    "python_version": "3.12.10",
+    "python_packages": {
+      "pytest": "9.2.0",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "Pillow": "13.0.0"
+    },
+    "node_version": "v26.13.1",
+    "ffmpeg_version": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe_version": "ffprobe version 9.0.2-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+    "npm_package_lock_sha256": "001f87a4a36843a859f82c07a15dbdef4feeb429ee1094353da1cf464edefabc"
+  },
+  "syntax_sweep": {
+    "js_total": 35,
+    "js_passed": 35,
+    "js_failures": [],
+    "py_total": 26,
+    "py_passed": 26,
+    "py_failures": []
+  },
+  "tracked_files_count": 142,
+  "tracked_files": {
+    ".gitignore": {
+      "sha256": "ede593820d622187589b46b8d3fd66b6a7fbaea408103e141b765c29e33fe364",
+      "bytes": 226
+    },
+    "README-UNIFIED.md": {
+      "sha256": "fd36cf76aa08b05495aa6c29a47db0dcb8fec0d0aea92e4468474771a7c370d8",
+      "bytes": 5366
+    },
+    "START-MAC.command": {
+      "sha256": "f14aa1cab27e61b34cb9de8c337218ac9003a1698555af459fbeeb8e150caa1c",
+      "bytes": 285
+    },
+    "START-WINDOWS.bat": {
+      "sha256": "ff6cc3c6d7ca5e4c96e6dd878df81d085a011afbdeb339be6edb5c41f57dc452",
+      "bytes": 136
+    },
+    "app.py": {
+      "sha256": "d1d74b64a79b677ccdf453653e5203f30b0aa302e12686be5c3082cbeae6e59c",
+      "bytes": 47540
+    },
+    "audio/build_audio.py": {
+      "sha256": "69df1c1b15c0466a4094345058959fcd8d150867d5d0880e85eaaf0ef89ed678",
+      "bytes": 687
+    },
+    "audio/music.py": {
+      "sha256": "36650a1bad770d9942f17f8f5e8695a9187c41074cf3e896b42d662e3700f768",
+      "bytes": 5823
+    },
+    "audio/synth.py": {
+      "sha256": "370f0d6a81e5221c774504ad305378b97fc92d51c31aa065170ca35b222ce6e4",
+      "bytes": 11717
+    },
+    "docs/self-improvement/GIAY-PHEP.txt": {
+      "sha256": "94d5281e0824f988871f1af340409d5167d5dd86c938e119e21f30db3bd3c1c4",
+      "bytes": 284
+    },
+    "docs/self-improvement/README.md": {
+      "sha256": "1fc8db6c0f58291262603a526f7124e88138e09e5c6068608ec850bc5ab8ba27",
+      "bytes": 2182
+    },
+    "docs/self-improvement/skills/kich-ban-selfimprove/SKILL.md": {
+      "sha256": "3a00be2599cd44016a86698debed9e5640a59df5b233d07d11f67302625ceed2",
+      "bytes": 9064
+    },
+    "docs/self-improvement/skills/kich-ban-selfimprove/references/cau-truc.md": {
+      "sha256": "b54fd24914ca88b75ce9b8f54ba5d9ac90441627e2837941f514343dee758944",
+      "bytes": 11352
+    },
+    "docs/self-improvement/skills/kich-ban-selfimprove/references/thumbnail.md": {
+      "sha256": "8a6031e92a74fd97079bed79e12a92162455e03292800a1f050628c25ea5f60a",
+      "bytes": 5687
+    },
+    "docs/self-improvement/skills/lam-video-selfimprove/SKILL.md": {
+      "sha256": "f6dc1e442b9b09cb6ce7171addc4b626ca866c5c0e1374fd15062161f84bbd74",
+      "bytes": 10932
+    },
+    "docs/self-improvement/skills/lam-video-selfimprove/references/am-thanh.md": {
+      "sha256": "7adf64012911fe7ff481173c059968a5b9cbc73e5931435f0ab1e666e73fc245",
+      "bytes": 3744
+    },
+    "docs/self-improvement/skills/lam-video-selfimprove/references/cai-dat.md": {
+      "sha256": "207683cbf78070c71c8d96695b60be6f1222f93899a2785883a7717f16799924",
+      "bytes": 4375
+    },
+    "docs/self-improvement/skills/lam-video-selfimprove/references/dung-bang-card.md": {
+      "sha256": "f9ec24f4ea0ee0ffb72c1f52661b1c7b8d4da326bda8047202542c72b62abde1",
+      "bytes": 5825
+    },
+    "docs/self-improvement/skills/lam-video-selfimprove/references/kiem-tra.md": {
+      "sha256": "b907f283287690b608d7c3ae3a3f900aaf41462d47844754a1acb5c9d45be6da",
+      "bytes": 3485
+    },
+    "docs/self-improvement/skills/lam-video-selfimprove/references/mau-canh.md": {
+      "sha256": "2f7d879fddb4ef97be5472852e63ca762afa7949c42e26adb6292cdb3054b73b",
+      "bytes": 11063
+    },
+    "docs/self-improvement/skills/lam-video-selfimprove/references/phong-cach.md": {
+      "sha256": "fbd55b74b346ee36c78173fe922df13b71a5ea190d82587caf71ac43dfd3e696",
+      "bytes": 4166
+    },
+    "docs/squire/GIAY-PHEP.txt": {
+      "sha256": "d69ff04603593b76287ada84ca7ab99114fc5424cc924a804338ca8ed3952f98",
+      "bytes": 302
+    },
+    "docs/squire/README.md": {
+      "sha256": "47b3f733708dba56f786fff54a875f6205739445d8a820c57678a8973da9e56b",
+      "bytes": 3482
+    },
+    "docs/squire/skills/kich-ban-squire/SKILL.md": {
+      "sha256": "0bb06c47c82c7dd74a9e4f5dee4ee81ae18b988f8c1476525283471b5853919b",
+      "bytes": 9573
+    },
+    "docs/squire/skills/kich-ban-squire/references/cau-truc.md": {
+      "sha256": "e47ce8e711ddfb358f9aebdc458e96814d86c6d2af40a89174cb09e4a81dbf8a",
+      "bytes": 7331
+    },
+    "docs/squire/skills/kich-ban-squire/references/tieu-de-thumb.md": {
+      "sha256": "dee2fcec5bd3b90f35cac28539108c1e94c9467a0c93bedb015ba7f0a863e7c8",
+      "bytes": 3220
+    },
+    "docs/squire/skills/lam-video-squire/SKILL.md": {
+      "sha256": "93edf28996d29e5fc3531ca0bd2bc17663fbf54837722fa208e8e3b825cf0dbb",
+      "bytes": 11634
+    },
+    "docs/squire/skills/lam-video-squire/references/am-thanh.md": {
+      "sha256": "1a32e5605aaf194cfe301f78e36a18345e7b0eb2d4b9bcf3d88621f055cabcf2",
+      "bytes": 4184
+    },
+    "docs/squire/skills/lam-video-squire/references/cai-dat.md": {
+      "sha256": "dd1e065b8077578f8e7bd98502ef0c4879748d2908e327e944f14c4e6cea4b25",
+      "bytes": 4337
+    },
+    "docs/squire/skills/lam-video-squire/references/dung-bang-card.md": {
+      "sha256": "c7b03f01679e3add88891d69d8a8a76ac9c2261d3d2689968a6b648cb2fb4bcd",
+      "bytes": 5854
+    },
+    "docs/squire/skills/lam-video-squire/references/kiem-tra.md": {
+      "sha256": "7271cce8987543dfb9911109b1d32328b183592ce47e004c2c8d06260877c301",
+      "bytes": 3915
+    },
+    "docs/squire/skills/lam-video-squire/references/mau-canh.md": {
+      "sha256": "6e673ff080760d34083d96ca65211c4327277f26750fb3dd91317882aadf3b34",
+      "bytes": 15649
+    },
+    "docs/squire/skills/lam-video-squire/references/phong-cach.md": {
+      "sha256": "298a11502b8fb6194d5c81e998e3e96c7019f99df252563451ab79d31a205343",
+      "bytes": 4971
+    },
+    "engine/canonical_hash.js": {
+      "sha256": "ff8c8f99cba694b959eeccd5037e04a210dca21fbcdebc47494c6ade1bba4e50",
+      "bytes": 6946
+    },
+    "engine/core.js": {
+      "sha256": "a224b1dc69809b63e16544236ed2c37ed6c5ce16f9cdf2c55548a04b3ba40a56",
+      "bytes": 13486
+    },
+    "engine/fx.js": {
+      "sha256": "e5dfee4627b1dd7737da8d4a5ae31e9062c3b7687b2862010fa7485a8663e36d",
+      "bytes": 14793
+    },
+    "engine/player.js": {
+      "sha256": "d1608f904aab4904047fc2da07f96755e359bbf35270ca4c69dfe8d93f8410f9",
+      "bytes": 15337
+    },
+    "engine/rig.js": {
+      "sha256": "7436881c9651f5b15a8ec8b88c1d5ea11e12af0e05999a411e6dca23f82f3113",
+      "bytes": 24632
+    },
+    "engine/three3d.js": {
+      "sha256": "09884b6fd1a72d6839450345c86a63540b8f076dd38df48b1b1f2f972a1b42b1",
+      "bytes": 14919
+    },
+    "engine/ui.js": {
+      "sha256": "00143779d64d7754657c9dda250f13d7a0e4f39871ffd2f685f7181f8b1e03fa",
+      "bytes": 12687
+    },
+    "package-lock.json": {
+      "sha256": "001f87a4a36843a859f82c07a15dbdef4feeb429ee1094353da1cf464edefabc",
+      "bytes": 7850
+    },
+    "package.json": {
+      "sha256": "2dae16124faff7a3b47f76b81c5c940411671effbd375e77d7dfea7e64494282",
+      "bytes": 811
+    },
+    "packs/dem/art.js": {
+      "sha256": "6804e643530440bb19f50c10c14d34d1e974128de160f26696afa07b8ed10cec",
+      "bytes": 14443
+    },
+    "packs/dem/audio.py": {
+      "sha256": "e34265da02c9455d923a4089cae328d1f9a42b26d7405db432658bfcca5fe7e4",
+      "bytes": 8335
+    },
+    "packs/dem/bean.js": {
+      "sha256": "3f51eefb68a191bb14dc7e7be175de0841546b94f16d6a7016a52a0fdbb67e4f",
+      "bytes": 25864
+    },
+    "packs/dem/ink.js": {
+      "sha256": "6f669c19d521f7d7bf81e05829e404d7b06007c790295a5ab72d52ea7f03cf52",
+      "bytes": 11614
+    },
+    "packs/dem/pack.js": {
+      "sha256": "fd211c072601829da72da89bfc5ff3048d50e2e81c3a446a5c8e35b59a401199",
+      "bytes": 1698
+    },
+    "packs/dem/phone.js": {
+      "sha256": "4cb614135533ae60e88b0b15cb048edbae9aedb3c83c8a0b9369759786310f66",
+      "bytes": 16473
+    },
+    "packs/dem/sets.js": {
+      "sha256": "24d5a929f8f36c6a812ca14a4a31d836f7553c045096e91cd8794be2b404adf9",
+      "bytes": 25332
+    },
+    "packs/dem/templates.js": {
+      "sha256": "811b7c80ae1fcfeef609b71a76f51e67bc419212da5542a881233064af8728a7",
+      "bytes": 25065
+    },
+    "packs/dem/thumb.js": {
+      "sha256": "0528913a977f6ca463245cb1e3c94ac4ec18fa2ed9fdc21da97e00423d25d601",
+      "bytes": 3903
+    },
+    "packs/doodle/host.js": {
+      "sha256": "7db73cc742ce1ba4b003d0118323d14655b5ce8829bba7640d43e4b96fc9ead5",
+      "bytes": 18444
+    },
+    "packs/doodle/ink.js": {
+      "sha256": "692d1dc35b4a6f5433deaaf9bd9104187621c26eeefc8d882fa257a564fc64f4",
+      "bytes": 14903
+    },
+    "packs/doodle/map.js": {
+      "sha256": "bfa9db8a39e90ca9faf65f239bd7af1608dfc53fbd58a35381aaf9357058c625",
+      "bytes": 8359
+    },
+    "packs/doodle/pack.js": {
+      "sha256": "795fabbfce984dbc92263e8e4ba4c89a03e2d1fa0d5f1285941650fb3a48a38c",
+      "bytes": 3958
+    },
+    "packs/doodle/props.js": {
+      "sha256": "ad64f0c3ba5cc147aa8e02400083f5f9b11b3c03f37a9ab971d8ca9b4ea02acd",
+      "bytes": 23182
+    },
+    "packs/doodle/sketch.js": {
+      "sha256": "ef56c58a86be52633503706e0639542dc91d9b65ed8fbcf9f8569c16d0b1986e",
+      "bytes": 12955
+    },
+    "packs/doodle/templates.js": {
+      "sha256": "45f84cfb580e60c37530c4f43812b04dccc34c2b29fadf53f1c65c863c15c18a",
+      "bytes": 27599
+    },
+    "packs/doodle/world.js": {
+      "sha256": "f28378c8487b51d228de6c07920be23462ff87b4f263534413db3af7d5bb1aea",
+      "bytes": 6783
+    },
+    "packs/squire/army.js": {
+      "sha256": "94a4ad492b2ae4a1b85d46ee2b9e9d901400cded07848b44ee3f03d29d1990fd",
+      "bytes": 13257
+    },
+    "packs/squire/audio.py": {
+      "sha256": "64c82d1a57625b8a101a0f14686e7912136e33fea0b27a30d996dfdf04de1571",
+      "bytes": 14011
+    },
+    "packs/squire/chara.js": {
+      "sha256": "8f1bea5cf62e3a7c3b905cd80395d12a18c32313098027fb4a1e9a8f818e913c",
+      "bytes": 104442
+    },
+    "packs/squire/horse.js": {
+      "sha256": "184e864739ed542ea20d9ed7418c17cae0020d00d29369889e471ce9317bf4ed",
+      "bytes": 11517
+    },
+    "packs/squire/ink.js": {
+      "sha256": "7af6a71ebc237cc23c869846e29077339da02d05761b74e56c9d1f0162236168",
+      "bytes": 10910
+    },
+    "packs/squire/pack.js": {
+      "sha256": "3db52e284cbb84f5069dc66e3191f56270141ca3791dd9f69f8e344df1080b10",
+      "bytes": 8787
+    },
+    "packs/squire/templates.js": {
+      "sha256": "74ecddf87104026421215fdd353cecd64c1b03dc071bc5557fcde10dc76a193d",
+      "bytes": 47889
+    },
+    "packs/squire/world.js": {
+      "sha256": "9806a14ce877629455407a366034167bbc0c2bc40f2f0398eeef0311f8dc220a",
+      "bytes": 29670
+    },
+    "player.html": {
+      "sha256": "7c9b6977d80fc01412fc42f5e08ee89c2097d8f0aaab4b30fba1f0cfebf7cf15",
+      "bytes": 653
+    },
+    "projects/selfimprove-mau/config.json": {
+      "sha256": "31cbc94c65a8c25966a783e2d42fe091c093e8769f6e292205855d1341ebb228",
+      "bytes": 199
+    },
+    "projects/selfimprove-mau/scenes/shots/thumb.js": {
+      "sha256": "03f610a76a404a7fbf7c8141bd593dc6e192da7dbbae9ac13ee6ffcfba477da7",
+      "bytes": 106
+    },
+    "projects/selfimprove-mau/story/shots.json": {
+      "sha256": "72b18b802156f78ffc81135d65d5f567e617055b08b434c305b8ec30bf6a5a78",
+      "bytes": 17344
+    },
+    "projects/squire-mau/config.json": {
+      "sha256": "5b479432b9d536887047a2e4cb1248b6a054ee9a070eae71313337cceb0024eb",
+      "bytes": 394
+    },
+    "projects/squire-mau/scenes/shots/thumb.js": {
+      "sha256": "0af0da2297e2f7eea8117fca31ae8b541cbe4e520d5d578c092534aed64e68b2",
+      "bytes": 566
+    },
+    "projects/squire-mau/story/shots.json": {
+      "sha256": "d1f0d223ffedeae147507bfacd348b6c070ed745c76aca09e93f244a7590b3ab",
+      "bytes": 18900
+    },
+    "projects/squire-mau/timeline/blocks.json": {
+      "sha256": "a8df80c6649da6bb504b7b95094d46f7089c02a8ac3b46dafd446b973f382e4b",
+      "bytes": 3613
+    },
+    "projects/squire-mau/timeline/lines.json": {
+      "sha256": "ea3955bb1c18c28cf4c15d8dcb15a76aec2e1581aeb9586b39cf5fa7b6805815",
+      "bytes": 4060
+    },
+    "projects/squire-mau/timeline/transcript.txt": {
+      "sha256": "5d622f98c61ad14809cf8dbdbefffb9574bb7222acb6e57a18b605fe0fd4906c",
+      "bytes": 1732
+    },
+    "projects/squire-mau/timeline/words.json": {
+      "sha256": "0eef945e4c4aa3709ef5e0178ea3f7604735380f297bf073cea705a9db0318b1",
+      "bytes": 10300
+    },
+    "render.mjs": {
+      "sha256": "fd9f0641827c42c77206d6076b040348cf7df7b1dc6df15ac7395c96dece2525",
+      "bytes": 19802
+    },
+    "scripts/resource_guard.py": {
+      "sha256": "84e1b4e76008fc86f8dc70741d2c3d9ed8a46e7736f93e87628f896f4479dda9",
+      "bytes": 10398
+    },
+    "scripts/run_e2e_regression.py": {
+      "sha256": "42827cd62e303ab9714410353183cec4207afe64a0054b9388ff538527c859f3",
+      "bytes": 197006
+    },
+    "scripts/test_v10_opening.py": {
+      "sha256": "9b6e54551e7b1e0898beb13f66b7583a87d11060ada5cc7e22f5e7a7068a3f32",
+      "bytes": 59766
+    },
+    "scripts/tts_helper.py": {
+      "sha256": "50aca7a95fd782a31820504a18df380b4e95ad7c7086f6869195ce6e2e77a656",
+      "bytes": 2697
+    },
+    "tests/README.md": {
+      "sha256": "9870cc7255a54e5592ee8e7d00a628475329129bbda821b598a8d7485d6aed16",
+      "bytes": 5518
+    },
+    "tests/evidence/latest-report.md": {
+      "sha256": "cfb911b359395864d6dfd0a5105f5374ecd3c59fcd04cd50cc87299a8c22e6ad",
+      "bytes": 7008
+    },
+    "tests/evidence/latest-summary.json": {
+      "sha256": "104b9a0c0bfc36f41a9196e51b733517387021b2641475eff714f82d9f242eca",
+      "bytes": 9054
+    },
+    "tests/evidence/proof_g2_squire.jpg": {
+      "sha256": "779200b873786f5abbf20f6ff476f31fc784041b6f4ae571bbe9688e05ea3bd9",
+      "bytes": 16940
+    },
+    "tests/evidence/proof_g3_shorts.jpg": {
+      "sha256": "d704295d3dca7e407b2f22035ef3ef018f7dae315c8b82b44a9b4cdd3f6f2ea8",
+      "bytes": 21716
+    },
+    "tests/evidence/proof_g4_dem.jpg": {
+      "sha256": "91ec480983c4bda9be82c8a344d75004e7219a49d3b1a643ceaf9aead97f6f61",
+      "bytes": 9824
+    },
+    "tests/evidence/proof_g4b_dem_shorts.jpg": {
+      "sha256": "d75dbee047497427060f27706f7b9fb90be449335d6f4767d488a102827d53ad",
+      "bytes": 8529
+    },
+    "tests/evidence/proof_g5_replay.jpg": {
+      "sha256": "8b6bf86722354aba0d44b3ef4fd6321e48069616f13987f09fc1b6bcbe8dc1f3",
+      "bytes": 17970
+    },
+    "tests/evidence/proof_g5b_medium_continuity.jpg": {
+      "sha256": "94b435f76f500b2f8634a8c178ae5183450c68ef1cf5b25d97658b4e0f9b5f30",
+      "bytes": 15125
+    },
+    "tests/evidence/v10/proof_k3_before_after.jpg": {
+      "sha256": "352d92f18910ec4449acee1bf7d435b6b27605fc0b78cdbee8a7af2d85f0d7f2",
+      "bytes": 67916
+    },
+    "tests/evidence/v10/proof_k5_motion.jpg": {
+      "sha256": "b87645bcd29309712245ef48cfdb668a2b5fb881d4d75da05b6712dc709389d1",
+      "bytes": 46564
+    },
+    "tests/evidence/v10/proof_k6_squire_16x9.jpg": {
+      "sha256": "4431faa89f2be2797fff8205a6619b9b232f7a6cd5bee81f704ad6846cccb9ea",
+      "bytes": 48192
+    },
+    "tests/evidence/v10/proof_k7_squire_9x16.jpg": {
+      "sha256": "3c6bf9acb434e4f54ab152d8c396824a3f07a35ab6e754182657221f68e0b0ab",
+      "bytes": 60986
+    },
+    "tests/evidence/v10/proof_k8_dem_16x9.jpg": {
+      "sha256": "8c1f0e398708537d61e81d8df3c27f6ce971654494c7b5e82019c2452eaeb49b",
+      "bytes": 27301
+    },
+    "tests/evidence/v10/proof_k9_dem_9x16.jpg": {
+      "sha256": "40e582d160996640208e3a5be0061d2d50ee2e989c5f86b56fabf67b3925eed0",
+      "bytes": 48732
+    },
+    "tests/evidence/v10/v10_audio_report.json": {
+      "sha256": "0bbe70ad1fee23b04ca56d2e803ef61841c3149bac0854d7c5594ca9f7d7b073",
+      "bytes": 411
+    },
+    "tests/evidence/v10/v10_before_after_matrix.json": {
+      "sha256": "22ab98aa83eff707d7e6594766295f7bb7e1262684fa7871fc960bc64bcc22a9",
+      "bytes": 1635
+    },
+    "tests/evidence/v10/v10_execution_ledger.json": {
+      "sha256": "2c1c3cd7ec9da06a9f8e4c5b3aaec6e3d5ec795b555cab6312269e3fb9e2ea79",
+      "bytes": 1068
+    },
+    "tests/evidence/v10/v10_review.md": {
+      "sha256": "7016281448d082e9a9ca2207191d8c05e42241197ae98e2e4d5e0ed7aeb8d04a",
+      "bytes": 2666
+    },
+    "tests/evidence/v6/proof_anatomy_torso.jpg": {
+      "sha256": "3dbf2f0e3654e7b2d8f22c2cb2b58a148e0fbae7e355a94d750c86db895dd4ac",
+      "bytes": 30904
+    },
+    "tests/evidence/v6/proof_contact_sheet_v6.jpg": {
+      "sha256": "9639bad5096b8a3c7ecbb86085e322e968ea2f0803fb46343502d4bdb0c09670",
+      "bytes": 115365
+    },
+    "tests/evidence/v6/proof_lab_treadmill.jpg": {
+      "sha256": "1c629300f03e0aa7dbf14540d1600759d68bd6218b284b6fc1b2e72b0042fd92",
+      "bytes": 24720
+    },
+    "tests/evidence/v6/proof_metric_3_8.jpg": {
+      "sha256": "ceb391fc9109929dc666dc9827a20166c90f8aff9b19c2de6a9c0df73acf70f7",
+      "bytes": 26205
+    },
+    "tests/evidence/v6/proof_opening_mud.jpg": {
+      "sha256": "e9e470433a135d88e852627161ab3edb12f8d9fe56aaaf68197203366ef3f0ab",
+      "bytes": 19740
+    },
+    "tests/evidence/v6/proof_recovery_run.jpg": {
+      "sha256": "bc4ea44805fd18b824a6604b1d383bff79efac38c517ec440b2809789b5342bb",
+      "bytes": 19496
+    },
+    "tests/evidence/v6/v6_execution_ledger.json": {
+      "sha256": "65601e1299095ebc0572e156e5ad584154a523ce17da2b1dd7ccd88b19ba93a9",
+      "bytes": 3634
+    },
+    "tests/evidence/v7/proof_contact_sheet_v7.jpg": {
+      "sha256": "9639bad5096b8a3c7ecbb86085e322e968ea2f0803fb46343502d4bdb0c09670",
+      "bytes": 115365
+    },
+    "tests/evidence/v7/proof_lying_safe_frame.jpg": {
+      "sha256": "e9e470433a135d88e852627161ab3edb12f8d9fe56aaaf68197203366ef3f0ab",
+      "bytes": 19740
+    },
+    "tests/evidence/v7/proof_recovery_run_active.jpg": {
+      "sha256": "bc4ea44805fd18b824a6604b1d383bff79efac38c517ec440b2809789b5342bb",
+      "bytes": 19496
+    },
+    "tests/evidence/v7/proof_treadmill_in_place.jpg": {
+      "sha256": "1c629300f03e0aa7dbf14540d1600759d68bd6218b284b6fc1b2e72b0042fd92",
+      "bytes": 24720
+    },
+    "tests/evidence/v7/v7_audio_mix_report.json": {
+      "sha256": "667eee1f37dcbceb5a391b65540c2c4f43beefe9d22bbfde564a55f95711e694",
+      "bytes": 2475
+    },
+    "tests/evidence/v7/v7_execution_ledger.json": {
+      "sha256": "40e589bd3f6d7b2a2985cb638cc951bd3586461f9d2527914bba7647a511e82d",
+      "bytes": 3634
+    },
+    "tests/evidence/v8/proof_contact_sheet_v8.jpg": {
+      "sha256": "0d0eaca0644646594214d8917d77e72b6650a5dc7d24e9ef404e780d69ba36a2",
+      "bytes": 16355
+    },
+    "tests/evidence/v8/proof_lying_safe_frame.jpg": {
+      "sha256": "670dc24eaae72cdf08fa0cfc5e1fbde442cf04161a01fa07cd9a06c84a0ee779",
+      "bytes": 24829
+    },
+    "tests/evidence/v8/proof_recovery_run_active.jpg": {
+      "sha256": "52687866bb57cba93ff81eb5eb7d9f634684acfa26dc0f026c9b90ff63fc1bcd",
+      "bytes": 19288
+    },
+    "tests/evidence/v8/proof_treadmill_in_place.jpg": {
+      "sha256": "bb96daff7b14fbe02990d57078bb5f70341b1f68272239791a4b4e5933a8b643",
+      "bytes": 19629
+    },
+    "tests/evidence/v8/v8_audio_report.json": {
+      "sha256": "014f4fc11a7de6f7265d5ff08310b27add33a88bff7af84307c01b2a724b475a",
+      "bytes": 303
+    },
+    "tests/evidence/v8/v8_execution_ledger.json": {
+      "sha256": "747357c85ed0747975f7ecb35231fcde222f78bc4b7d505a906825cb958a443e",
+      "bytes": 3634
+    },
+    "tests/evidence/v8/v8_review.md": {
+      "sha256": "9d4c33edb7c77332504fcc1a161223d9b5f26ba117ab855292b22c88ec244796",
+      "bytes": 1739
+    },
+    "tests/evidence/v8/v8_visual_hash_golden.json": {
+      "sha256": "16d10d09dc4502d1f5751343ab97ed7781c3275c52fafaa2002d67658dfd6cf2",
+      "bytes": 5679
+    },
+    "tests/evidence/v9/v9_audio_report.json": {
+      "sha256": "531a09d647e2023518896fd0bf13d139806c7680487d78f2e8efb4386f34b639",
+      "bytes": 368
+    },
+    "tests/evidence/v9/v9_execution_ledger.json": {
+      "sha256": "b4c914ec12c9a7ac22b8d6b4af3a4560d22e8d2c6ab0a12b8cd5bda90475be2c",
+      "bytes": 3634
+    },
+    "tests/evidence/v9/v9_review.md": {
+      "sha256": "bd979707bf361741e09fe7d1bedcf92aea4854d429bfffc0953abb008e416363",
+      "bytes": 2047
+    },
+    "tools/assign_visuals.py": {
+      "sha256": "45fc1c1fe212fbdd1f9ca2cb909cb7081423b3b005dd2ee791feabbec7d30dcf",
+      "bytes": 34454
+    },
+    "tools/battle_choreo.py": {
+      "sha256": "a87539d59f7b646ddc898a5662333892d45b9484a2bd2253b648e9e8b05bd7e5",
+      "bytes": 32139
+    },
+    "tools/common.py": {
+      "sha256": "77ac5bf395c0fa0c639ffcfd2c0352ae0cf79a6eef4b66bf4db5bc4a916dee1a",
+      "bytes": 14947
+    },
+    "tools/doctor.py": {
+      "sha256": "f1922da616e08514af20ae292e61c283c82c526854292a985c7c876da4f4f30d",
+      "bytes": 3631
+    },
+    "tools/draft_shots.py": {
+      "sha256": "1fa7f2220604037f98dfab7c9865d37ea08e3e26dfa1d7e6cd8eab0d30c3ea4a",
+      "bytes": 8902
+    },
+    "tools/goi_may.py": {
+      "sha256": "19bb12fdce4df6bbb88a1792310abbc298b6f33ba4cf9bf4c755a37155bcfa1d",
+      "bytes": 9491
+    },
+    "tools/import_anh.py": {
+      "sha256": "dc9f0b1b44d3345d47a147711586cdb70d87280c1248d02ff6e6c3fcb177e629",
+      "bytes": 2138
+    },
+    "tools/ja_hien.py": {
+      "sha256": "289e17eaeef1ce6750b0ec9831e079f0ed037bb911a41b5903384ca92f3e7b3c",
+      "bytes": 8188
+    },
+    "tools/mix.py": {
+      "sha256": "978c307886ffe4ccb2e98b21da9b3c9341b9e0b9270c046007652cea6f59a91e",
+      "bytes": 17192
+    },
+    "tools/new_project.py": {
+      "sha256": "fd404304279dfea4285ec514710fabf3dc1b72479fa403265016b8d9714b5e95",
+      "bytes": 1588
+    },
+    "tools/phim.py": {
+      "sha256": "5c1ab7b612572ca25fc7c22e9306067fd839bac4bd33def5424fe21da29215e9",
+      "bytes": 18609
+    },
+    "tools/plan_audio.py": {
+      "sha256": "ced8d5c6c28ea8c68698dedce71479a2115277c67b4fc9fae2635b1261a0ea83",
+      "bytes": 26505
+    },
+    "tools/plan_hook.py": {
+      "sha256": "ec24ebbd5d2538ef43efbf736246dd7a2473f0c4feff01c4d20d5410354f06c9",
+      "bytes": 42664
+    },
+    "tools/prep_voice.py": {
+      "sha256": "06c8b5b0871b8ee3858d842550f7765d91660c36d986b985d58c061657d692de",
+      "bytes": 12950
+    },
+    "tools/validator.py": {
+      "sha256": "6ec2b8cfff7e5d11d84dd273c6faf1fc7552feb8b329bf7ff77513c6d653e409",
+      "bytes": 10349
+    },
+    "tools/visual_facts.py": {
+      "sha256": "c5da3ccfa67a24f68ee2a35030a8096d24edf7a62f3164ee351acba964387b59",
+      "bytes": 7648
+    },
+    "web/index.html": {
+      "sha256": "3cd63e8f423aa3b8894db939c6fd05b09a9aa9083baab3c86eb96454225fccd2",
+      "bytes": 28446
+    }
+  },
+  "sample_baselines": {
+    "squire-mau": {
+      "canonical_visual_hash": "f57afc66562e3e2b80587942fb8e96040e7be658935951d3d2cbde4ad137b932",
+      "validator": {
+        "exit_code": 0,
+        "report": {
+          "project": "squire-mau-copy",
+          "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy",
+          "status": "PASS",
+          "stage": "preflight",
+          "shots_total": 24,
+          "shots_renderable": 24,
+          "missing_ids": [],
+          "missing_templates": [],
+          "missing_assets": [],
+          "import_errors": [],
+          "runtime_errors": [],
+          "timeline_errors": [],
+          "fatal_errors": [],
+          "warnings": []
+        }
+      },
+      "full_check": {
+        "cmd": [
+          "node",
+          "render.mjs",
+          "--project",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy",
+          "--check",
+          "--check-mode",
+          "full",
+          "--scale",
+          "0.25"
+        ],
+        "exit_code": 0,
+        "duration_sec": 31.59,
+        "stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\nPASS: 0 loi trong 1552 khung kiem tra (24 shots hop le, che do full).",
+        "stderr": ""
+      },
+      "stills_pass1": {
+        "cmd": [
+          "node",
+          "render.mjs",
+          "--project",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy",
+          "--stills",
+          "1.2,4.0,15.0",
+          "--scale",
+          "0.5"
+        ],
+        "exit_code": 0,
+        "duration_sec": 1.728,
+        "stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\stills\\t_1.20.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\stills\\t_4.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\stills\\t_15.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\sheets\\stills_01.jpg",
+        "stderr": ""
+      },
+      "stills_pass2": {
+        "cmd": [
+          "node",
+          "render.mjs",
+          "--project",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy",
+          "--stills",
+          "1.2,4.0,15.0",
+          "--scale",
+          "0.5"
+        ],
+        "exit_code": 0,
+        "duration_sec": 1.837,
+        "stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\stills\\t_1.20.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\stills\\t_4.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\stills\\t_15.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\sheets\\stills_01.jpg",
+        "stderr": ""
+      },
+      "stills_pass1_sha256": {
+        "t_1.20.png": "59e2350a343b054839ee95e7f84f412512189019c9952cfc02f7a4d9142d8bff",
+        "t_15.00.png": "9540210ae688a3c857cc0e0c289fa07a241dac6dd973424987f716d906fa9abd",
+        "t_4.00.png": "854fdc1a1c42252f7f1e83d17a4be07f468aeb2723a5a89a5b2d795164edfb8a"
+      },
+      "stills_pass2_sha256": {
+        "t_1.20.png": "59e2350a343b054839ee95e7f84f412512189019c9952cfc02f7a4d9142d8bff",
+        "t_15.00.png": "9540210ae688a3c857cc0e0c289fa07a241dac6dd973424987f716d906fa9abd",
+        "t_4.00.png": "854fdc1a1c42252f7f1e83d17a4be07f468aeb2723a5a89a5b2d795164edfb8a"
+      },
+      "deterministic_repeat_identical": true,
+      "sheet": {
+        "cmd": [
+          "node",
+          "render.mjs",
+          "--project",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy",
+          "--sheet",
+          "--scale",
+          "0.5"
+        ],
+        "exit_code": 0,
+        "duration_sec": 2.64,
+        "stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\sheets\\sheet_01.jpg\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\squire-mau-copy\\build\\sheets\\sheet_02.jpg",
+        "stderr": ""
+      }
+    },
+    "selfimprove-mau": {
+      "canonical_visual_hash": "47624adbdb523133640160fb9ab3a08763a70ac7e58f0c989ae5ef38b1b8b084",
+      "validator": {
+        "exit_code": 0,
+        "report": {
+          "project": "selfimprove-mau-copy",
+          "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy",
+          "status": "PASS",
+          "stage": "preflight",
+          "shots_total": 30,
+          "shots_renderable": 30,
+          "missing_ids": [],
+          "missing_templates": [],
+          "missing_assets": [],
+          "import_errors": [],
+          "runtime_errors": [],
+          "timeline_errors": [],
+          "fatal_errors": [],
+          "warnings": []
+        }
+      },
+      "full_check": {
+        "cmd": [
+          "node",
+          "render.mjs",
+          "--project",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy",
+          "--check",
+          "--check-mode",
+          "full",
+          "--scale",
+          "0.25"
+        ],
+        "exit_code": 0,
+        "duration_sec": 15.564,
+        "stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\nPASS: 0 loi trong 1968 khung kiem tra (30 shots hop le, che do full).",
+        "stderr": ""
+      },
+      "stills_pass1": {
+        "cmd": [
+          "node",
+          "render.mjs",
+          "--project",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy",
+          "--stills",
+          "1.0,4.0,10.0",
+          "--scale",
+          "0.5"
+        ],
+        "exit_code": 0,
+        "duration_sec": 1.515,
+        "stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\stills\\t_1.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\stills\\t_4.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\stills\\t_10.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\sheets\\stills_01.jpg",
+        "stderr": ""
+      },
+      "stills_pass2": {
+        "cmd": [
+          "node",
+          "render.mjs",
+          "--project",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy",
+          "--stills",
+          "1.0,4.0,10.0",
+          "--scale",
+          "0.5"
+        ],
+        "exit_code": 0,
+        "duration_sec": 1.527,
+        "stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\stills\\t_1.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\stills\\t_4.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\stills\\t_10.00.png\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\sheets\\stills_01.jpg",
+        "stderr": ""
+      },
+      "stills_pass1_sha256": {
+        "t_1.00.png": "81e722f35b6b8fab24b0f8fc87933fc288f2cde7dbb87b2f9bc04eed8069e5a9",
+        "t_10.00.png": "9cb1d7c0aa2eec2085ef7712d3ae898719ef21c1ec82bf94bdba44b43a968ba3",
+        "t_4.00.png": "cf4401a1c41af3be716518ed52984743c39819d3dd08801e20ba34b82ad01927"
+      },
+      "stills_pass2_sha256": {
+        "t_1.00.png": "81e722f35b6b8fab24b0f8fc87933fc288f2cde7dbb87b2f9bc04eed8069e5a9",
+        "t_10.00.png": "9cb1d7c0aa2eec2085ef7712d3ae898719ef21c1ec82bf94bdba44b43a968ba3",
+        "t_4.00.png": "cf4401a1c41af3be716518ed52984743c39819d3dd08801e20ba34b82ad01927"
+      },
+      "deterministic_repeat_identical": true,
+      "sheet": {
+        "cmd": [
+          "node",
+          "render.mjs",
+          "--project",
+          "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy",
+          "--sheet",
+          "--scale",
+          "0.5"
+        ],
+        "exit_code": 0,
+        "duration_sec": 2.842,
+        "stdout": "Trinh ve: msedge (GPU)\n  Card do hoa dang dung: ANGLE (Intel, Intel(R) UHD Graphics 730 (0x00004692) Direct3D11 vs_5_0 ps_5_0, D3D11)\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\sheets\\sheet_01.jpg\n  D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_0_20261117_044405Z_4e4f\\baseline_pre_edit\\selfimprove-mau-copy\\build\\sheets\\sheet_02.jpg",
+        "stderr": ""
+      }
+    }
+  },
+  "reference_only_artifacts": {
+    "docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f/baseline_reference/pre_edit_squire-mau_t_1.20.png": {
+      "sha256": "59e2350a343b054839ee95e7f84f412512189019c9952cfc02f7a4d9142d8bff",
+      "bytes": 563391,
+      "role": "PRE_EDIT_BASELINE_REFERENCE_ONLY_NEVER_USED_AS_VIDEO_FRAME"
+    },
+    "docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f/baseline_reference/pre_edit_squire-mau_t_15.00.png": {
+      "sha256": "9540210ae688a3c857cc0e0c289fa07a241dac6dd973424987f716d906fa9abd",
+      "bytes": 594263,
+      "role": "PRE_EDIT_BASELINE_REFERENCE_ONLY_NEVER_USED_AS_VIDEO_FRAME"
+    },
+    "docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f/baseline_reference/pre_edit_squire-mau_t_4.00.png": {
+      "sha256": "854fdc1a1c42252f7f1e83d17a4be07f468aeb2723a5a89a5b2d795164edfb8a",
+      "bytes": 460619,
+      "role": "PRE_EDIT_BASELINE_REFERENCE_ONLY_NEVER_USED_AS_VIDEO_FRAME"
+    },
+    "docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f/baseline_reference/pre_edit_squire-mau_sheet_01.jpg": {
+      "sha256": "2cb0354255113b4efee88888a60e0b053c95672d52e6851524c26b961b84ade7",
+      "bytes": 411145,
+      "role": "PRE_EDIT_BASELINE_REFERENCE_ONLY_NEVER_USED_AS_VIDEO_FRAME"
+    },
+    "docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f/baseline_reference/pre_edit_selfimprove-mau_t_1.00.png": {
+      "sha256": "81e722f35b6b8fab24b0f8fc87933fc288f2cde7dbb87b2f9bc04eed8069e5a9",
+      "bytes": 168683,
+      "role": "PRE_EDIT_BASELINE_REFERENCE_ONLY_NEVER_USED_AS_VIDEO_FRAME"
+    },
+    "docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f/baseline_reference/pre_edit_selfimprove-mau_t_10.00.png": {
+      "sha256": "9cb1d7c0aa2eec2085ef7712d3ae898719ef21c1ec82bf94bdba44b43a968ba3",
+      "bytes": 127141,
+      "role": "PRE_EDIT_BASELINE_REFERENCE_ONLY_NEVER_USED_AS_VIDEO_FRAME"
+    },
+    "docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f/baseline_reference/pre_edit_selfimprove-mau_t_4.00.png": {
+      "sha256": "cf4401a1c41af3be716518ed52984743c39819d3dd08801e20ba34b82ad01927",
+      "bytes": 174960,
+      "role": "PRE_EDIT_BASELINE_REFERENCE_ONLY_NEVER_USED_AS_VIDEO_FRAME"
+    },
+    "docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f/baseline_reference/pre_edit_selfimprove-mau_sheet_01.jpg": {
+      "sha256": "94a0502507042ffa6ece9870e62972a410eeb3cd3dca99b3cbee6c9494f95fed",
+      "bytes": 267492,
+      "role": "PRE_EDIT_BASELINE_REFERENCE_ONLY_NEVER_USED_AS_VIDEO_FRAME"
+    }
+  }
+}

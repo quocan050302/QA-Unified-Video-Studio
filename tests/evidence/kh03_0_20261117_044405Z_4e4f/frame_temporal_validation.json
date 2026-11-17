@@ -1,0 +1,119 @@
+{
+  "status": "PASS",
+  "passed": true,
+  "decoded_frames": 720,
+  "black_frames_count": 0,
+  "flat_frames_count": 0,
+  "opening_0p4s_mean_mad": 3.3348,
+  "per_shot_metrics": [
+    {
+      "shot_id": "SH01",
+      "frames": [
+        0,
+        59
+      ],
+      "mean_full_frame_mad": 3.9989,
+      "mean_actor_roi_mad": 4.2108,
+      "mean_border_parallax_mad": 2.0667,
+      "max_near_static_streak_frames": 0,
+      "intentional_hold_documented": false
+    },
+    {
+      "shot_id": "SH02",
+      "frames": [
+        60,
+        131
+      ],
+      "mean_full_frame_mad": 1.5344,
+      "mean_actor_roi_mad": 3.0103,
+      "mean_border_parallax_mad": 0.0396,
+      "max_near_static_streak_frames": 0,
+      "intentional_hold_documented": false
+    },
+    {
+      "shot_id": "SH03",
+      "frames": [
+        132,
+        215
+      ],
+      "mean_full_frame_mad": 3.3731,
+      "mean_actor_roi_mad": 5.4763,
+      "mean_border_parallax_mad": 0.0621,
+      "max_near_static_streak_frames": 0,
+      "intentional_hold_documented": false
+    },
+    {
+      "shot_id": "SH04",
+      "frames": [
+        216,
+        287
+      ],
+      "mean_full_frame_mad": 4.4033,
+      "mean_actor_roi_mad": 8.4161,
+      "mean_border_parallax_mad": 0.0934,
+      "max_near_static_streak_frames": 0,
+      "intentional_hold_documented": false
+    },
+    {
+      "shot_id": "SH05",
+      "frames": [
+        288,
+        359
+      ],
+      "mean_full_frame_mad": 3.4869,
+      "mean_actor_roi_mad": 7.2852,
+      "mean_border_parallax_mad": 0.1032,
+      "max_near_static_streak_frames": 0,
+      "intentional_hold_documented": false
+    },
+    {
+      "shot_id": "SH06",
+      "frames": [
+        360,
+        443
+      ],
+      "mean_full_frame_mad": 4.8259,
+      "mean_actor_roi_mad": 5.121,
+      "mean_border_parallax_mad": 4.3587,
+      "max_near_static_streak_frames": 0,
+      "intentional_hold_documented": false
+    },
+    {
+      "shot_id": "SH07",
+      "frames": [
+        444,
+        551
+      ],
+      "mean_full_frame_mad": 4.9674,
+      "mean_actor_roi_mad": 7.7636,
+      "mean_border_parallax_mad": 0.1187,
+      "max_near_static_streak_frames": 0,
+      "intentional_hold_documented": true
+    },
+    {
+      "shot_id": "SH08",
+      "frames": [
+        552,
+        635
+      ],
+      "mean_full_frame_mad": 2.425,
+      "mean_actor_roi_mad": 5.0962,
+      "mean_border_parallax_mad": 0.0569,
+      "max_near_static_streak_frames": 0,
+      "intentional_hold_documented": false
+    },
+    {
+      "shot_id": "SH09",
+      "frames": [
+        636,
+        719
+      ],
+      "mean_full_frame_mad": 8.7163,
+      "mean_actor_roi_mad": 12.5209,
+      "mean_border_parallax_mad": 2.5424,
+      "max_near_static_streak_frames": 0,
+      "intentional_hold_documented": false
+    }
+  ],
+  "errors": []
+}

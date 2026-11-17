@@ -14,7 +14,21 @@ export * from './world.js';
 export * from './horse.js';
 export * from './army.js';
 export * from './templates.js';
+export * from './roman_master/motion.js';
+export * from './roman_master/character_state.js';
+export * from './roman_master/camera.js';
+export * from './roman_master/environment.js';
 export { E } from '/engine/core.js';
+
+async function fetchOptJSON(url, fallback = null) {
+  try {
+    const r = await fetch(url);
+    if (!r.ok) return fallback;
+    return await r.json();
+  } catch {
+    return fallback;
+  }
+}
 
 function css(href) { return new Promise((r) => { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; l.onload = r; l.onerror = r; document.head.appendChild(l); }); }
 export async function init(E) {
@@ -25,6 +39,28 @@ export async function init(E) {
   if (E.cfg.captions === undefined || E.cfg.captions === null) E.cfg.captions = E.vertical;
   if (!E.cfg.captionStyle) E.cfg.captionStyle = 'squire';
   if (E.shots.some((s) => s.tpl === 'map')) await loadWorld(); else await loadWorld().catch(() => {});
+  if (E.cfg.style_profile === 'roman_squire_master.v1') {
+    const proj = new URLSearchParams(location.search).get('proj') || '/proj';
+    const [styleRef, charBible, envBible, propsManifest, ledger, camBeats, storyboard] = await Promise.all([
+      fetchOptJSON(`${proj}/story/roman_master_style_ref.json`, {}),
+      fetchOptJSON(`${proj}/story/character_bible.json`, {}),
+      fetchOptJSON(`${proj}/story/environment_bible.json`, {}),
+      fetchOptJSON(`${proj}/story/props.json`, {}),
+      fetchOptJSON(`${proj}/story/continuity_ledger.json`, {}),
+      fetchOptJSON(`${proj}/story/camera_beats.json`, {}),
+      fetchOptJSON(`${proj}/story/storyboard.json`, {}),
+    ]);
+    E.kh03 = Object.freeze({
+      styleProfile: 'roman_squire_master.v1',
+      styleRef,
+      charBible,
+      envBible,
+      propsManifest,
+      ledger,
+      camBeats,
+      storyboard,
+    });
+  }
 }
 
 // ---------- phu de Short: 1-3 chu IN HOA trang sieu dam, vien den, bong; chu dang doc to hon chut

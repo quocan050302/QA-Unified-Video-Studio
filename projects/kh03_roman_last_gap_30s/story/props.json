@@ -1,0 +1,35 @@
+{
+  "props": [
+    {
+      "prop_id": "rookie_scutum",
+      "owner": "rookie",
+      "type": "scutum",
+      "color": "#c9473a",
+      "rim": "#e7b04a",
+      "charge": "lightning"
+    },
+    {
+      "prop_id": "neighbor_scutum_with_strap",
+      "owner": "neighbor",
+      "type": "scutum",
+      "color": "#c9473a",
+      "rim": "#e7b04a",
+      "charge": "wings",
+      "has_inner_leather_strap": true
+    },
+    {
+      "prop_id": "rookie_spear",
+      "owner": "rookie",
+      "type": "spear",
+      "snags_in_neighbor_strap_at_sec": 13.65
+    },
+    {
+      "prop_id": "wooden_practice_spear_01",
+      "owner": "instructor",
+      "type": "wooden_practice_spear",
+      "blunt_leather_padded_tip": true,
+      "launched_at_sec": 9.96,
+      "deflected_at_sec": 15.58
+    }
+  ]
+}

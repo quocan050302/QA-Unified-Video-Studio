@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "mutants_tested": 5,
+  "all_killed": true,
+  "matrix": [
+    {
+      "mutant_id": "M01_M09_pytest_style_3d_rig_camera_asset_suite",
+      "expected": "KILLED_ALL_MUTANTS_AND_PASSED_FP_GUARDS",
+      "killed": true,
+      "wall_sec": 1.375
+    },
+    {
+      "mutant_id": "M10_truncated_mp4_120_frames",
+      "killed": true
+    },
+    {
+      "mutant_id": "M11_frozen_static_shot_over_2s",
+      "killed": true
+    },
+    {
+      "mutant_id": "M12_silent_voice_wav",
+      "killed": true
+    },
+    {
+      "mutant_id": "M13_resource_breach_owned_pid_cancellation",
+      "killed": true
+    }
+  ],
+  "errors": []
+}

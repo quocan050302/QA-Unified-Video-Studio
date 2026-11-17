@@ -1,0 +1,8 @@
+{
+  "style_id": "roman_squire_master.v1",
+  "style_family": "production_squire_original_roman_2d",
+  "canonical_digest": "1d3209a715bdd38a73f11acf5c5e2cb6974a6a1855d470e590eaa934360e1259",
+  "source_bible_path": "visual_styles/roman_squire_master/v1/style_bible.json",
+  "user_screenshot_status": "USER_SCREENSHOT_REFERENCE_UNAVAILABLE",
+  "forbid_reference_screenshot_in_video_frames": true
+}

@@ -1,0 +1,185 @@
+{
+  "stage_axis_sign": 1,
+  "shots": {
+    "SH01": {
+      "shotId": "SH01",
+      "framingScale": "extreme_detail_insert",
+      "trajectory": "push_in_focus",
+      "stageAxisSign": 1,
+      "motivateGapTransition": false,
+      "motivateSnagTransition": false,
+      "startState": {
+        "gapState": "OPEN_SLIVER",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": false
+      },
+      "endState": {
+        "gapState": "OPEN_SLIVER",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": false
+      }
+    },
+    "SH02": {
+      "shotId": "SH02",
+      "framingScale": "medium_over_shoulder",
+      "trajectory": "subtle_lateral_drift",
+      "stageAxisSign": 1,
+      "motivateGapTransition": false,
+      "motivateSnagTransition": false,
+      "startState": {
+        "gapState": "OPEN_SLIVER",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": false
+      },
+      "endState": {
+        "gapState": "OPEN_SLIVER",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": false
+      }
+    },
+    "SH03": {
+      "shotId": "SH03",
+      "framingScale": "wide_geography",
+      "trajectory": "pan_left_to_right_establish",
+      "stageAxisSign": 1,
+      "motivateGapTransition": false,
+      "motivateSnagTransition": false,
+      "startState": {
+        "gapState": "OPEN_SLIVER",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": false
+      },
+      "endState": {
+        "gapState": "OPEN_SLIVER",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": false
+      }
+    },
+    "SH04": {
+      "shotId": "SH04",
+      "framingScale": "low_angle_profile",
+      "trajectory": "dynamic_follow_launch",
+      "stageAxisSign": 1,
+      "motivateGapTransition": false,
+      "motivateSnagTransition": false,
+      "startState": {
+        "gapState": "OPEN_SLIVER",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": false
+      },
+      "endState": {
+        "gapState": "OPEN_SLIVER",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": false
+      }
+    },
+    "SH05": {
+      "shotId": "SH05",
+      "framingScale": "medium_full_tracking",
+      "trajectory": "lateral_track_into_lock",
+      "stageAxisSign": 1,
+      "motivateGapTransition": true,
+      "motivateSnagTransition": true,
+      "startState": {
+        "gapState": "OPEN_SLIVER",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": false
+      },
+      "endState": {
+        "gapState": "SEALED_TIGHT",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": true
+      }
+    },
+    "SH06": {
+      "shotId": "SH06",
+      "framingScale": "macro_physics_insert",
+      "trajectory": "snap_push_and_recoil",
+      "stageAxisSign": 1,
+      "motivateGapTransition": false,
+      "motivateSnagTransition": false,
+      "startState": {
+        "gapState": "SEALED_TIGHT",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": true
+      },
+      "endState": {
+        "gapState": "SEALED_TIGHT",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": true
+      }
+    },
+    "SH07": {
+      "shotId": "SH07",
+      "framingScale": "wide_to_medium_payoff",
+      "trajectory": "push_in_to_instructor",
+      "stageAxisSign": 1,
+      "motivateGapTransition": false,
+      "motivateSnagTransition": false,
+      "startState": {
+        "gapState": "SEALED_TIGHT",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": true
+      },
+      "endState": {
+        "gapState": "SEALED_TIGHT",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": true
+      }
+    },
+    "SH08": {
+      "shotId": "SH08",
+      "framingScale": "medium_two_shot",
+      "trajectory": "pull_back_comic_reveal",
+      "stageAxisSign": 1,
+      "motivateGapTransition": false,
+      "motivateSnagTransition": false,
+      "startState": {
+        "gapState": "SEALED_TIGHT",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": true
+      },
+      "endState": {
+        "gapState": "SEALED_TIGHT",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": true
+      }
+    },
+    "SH09": {
+      "shotId": "SH09",
+      "framingScale": "motif_return_close",
+      "trajectory": "lateral_glide_to_sealed_seam",
+      "stageAxisSign": 1,
+      "motivateGapTransition": false,
+      "motivateSnagTransition": false,
+      "startState": {
+        "gapState": "SEALED_TIGHT",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": true
+      },
+      "endState": {
+        "gapState": "SEALED_TIGHT",
+        "rookieHelmet": "montefortino_3_feathers",
+        "rookieShield": "red_scutum_gold_rim",
+        "snaggedSpear": true
+      }
+    }
+  }
+}

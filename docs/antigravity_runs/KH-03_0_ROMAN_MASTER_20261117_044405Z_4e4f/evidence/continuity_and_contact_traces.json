@@ -1,0 +1,594 @@
+{
+  "status": "PASS",
+  "passed": true,
+  "cutsValidated": 8,
+  "cutReports": [
+    {
+      "valid": true,
+      "fromShot": "SH01",
+      "toShot": "SH02",
+      "cutType": "motivated_action_cut",
+      "errors": []
+    },
+    {
+      "valid": true,
+      "fromShot": "SH02",
+      "toShot": "SH03",
+      "cutType": "motivated_action_cut",
+      "errors": []
+    },
+    {
+      "valid": true,
+      "fromShot": "SH03",
+      "toShot": "SH04",
+      "cutType": "motivated_action_cut",
+      "errors": []
+    },
+    {
+      "valid": true,
+      "fromShot": "SH04",
+      "toShot": "SH05",
+      "cutType": "motivated_action_cut",
+      "errors": []
+    },
+    {
+      "valid": true,
+      "fromShot": "SH05",
+      "toShot": "SH06",
+      "cutType": "motivated_action_cut",
+      "errors": []
+    },
+    {
+      "valid": true,
+      "fromShot": "SH06",
+      "toShot": "SH07",
+      "cutType": "motivated_action_cut",
+      "errors": []
+    },
+    {
+      "valid": true,
+      "fromShot": "SH07",
+      "toShot": "SH08",
+      "cutType": "motivated_action_cut",
+      "errors": []
+    },
+    {
+      "valid": true,
+      "fromShot": "SH08",
+      "toShot": "SH09",
+      "cutType": "motivated_action_cut",
+      "errors": []
+    }
+  ],
+  "cameraEndpoints": [
+    {
+      "shotId": "SH01",
+      "startCam": {
+        "shotId": "SH01",
+        "globalT": 0,
+        "localT": 0,
+        "z": 1.06,
+        "cx": 960,
+        "cy": 561.6,
+        "dx": 0,
+        "dy": 21.600000000000023,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "extreme_detail_insert",
+        "purpose": "hook_exposed_gap",
+        "stageAxisSign": 1
+      },
+      "endCam": {
+        "shotId": "SH01",
+        "globalT": 2.4583333333333335,
+        "localT": 2.4583333333333335,
+        "z": 1.2198681481481481,
+        "cx": 998.3683555555556,
+        "cy": 529.2266999999999,
+        "dx": 38.36835555555558,
+        "dy": -10.773300000000063,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "extreme_detail_insert",
+        "purpose": "hook_exposed_gap",
+        "stageAxisSign": 1
+      }
+    },
+    {
+      "shotId": "SH02",
+      "startCam": {
+        "shotId": "SH02",
+        "globalT": 2.5,
+        "localT": 0,
+        "z": 1.04,
+        "cx": 1017.6,
+        "cy": 540,
+        "dx": 57.60000000000002,
+        "dy": 0,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "medium_over_shoulder",
+        "purpose": "character_reveal_grip",
+        "stageAxisSign": 1
+      },
+      "endCam": {
+        "shotId": "SH02",
+        "globalT": 5.458333333333333,
+        "localT": 2.958333333333333,
+        "z": 1.129948398919753,
+        "cx": 960.0330246913582,
+        "cy": 518.4123842592593,
+        "dx": 0.03302469135815045,
+        "dy": -21.587615740740716,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "medium_over_shoulder",
+        "purpose": "character_reveal_grip",
+        "stageAxisSign": 1
+      }
+    },
+    {
+      "shotId": "SH03",
+      "startCam": {
+        "shotId": "SH03",
+        "globalT": 5.5,
+        "localT": 0,
+        "z": 1.01,
+        "cx": 883.2,
+        "cy": 540,
+        "dx": -76.79999999999995,
+        "dy": 0,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "wide_geography",
+        "purpose": "establish_castra_and_line",
+        "stageAxisSign": 1
+      },
+      "endCam": {
+        "shotId": "SH03",
+        "globalT": 8.958333333333334,
+        "localT": 3.458333333333334,
+        "z": 1.0799704743008316,
+        "cx": 1017.5433106575964,
+        "cy": 550.795444606414,
+        "dx": 57.54331065759641,
+        "dy": 10.79544460641398,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "wide_geography",
+        "purpose": "establish_castra_and_line",
+        "stageAxisSign": 1
+      }
+    },
+    {
+      "shotId": "SH04",
+      "startCam": {
+        "shotId": "SH04",
+        "globalT": 9,
+        "localT": 0,
+        "z": 1.05,
+        "cx": 806.4,
+        "cy": 561.6,
+        "dx": -153.60000000000002,
+        "dy": 21.600000000000023,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "low_angle_profile",
+        "purpose": "inciting_spear_launch",
+        "stageAxisSign": 1
+      },
+      "endCam": {
+        "shotId": "SH04",
+        "globalT": 11.958333333333334,
+        "localT": 2.958333333333334,
+        "z": 1.0999247654588946,
+        "cx": 1113.39996760609,
+        "cy": 540.0123842592592,
+        "dx": 153.39996760609006,
+        "dy": 0.012384259259192731,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "low_angle_profile",
+        "purpose": "inciting_spear_launch",
+        "stageAxisSign": 1
+      }
+    },
+    {
+      "shotId": "SH05",
+      "startCam": {
+        "shotId": "SH05",
+        "globalT": 12,
+        "localT": 0,
+        "z": 1.06,
+        "cx": 1113.6,
+        "cy": 583.2,
+        "dx": 153.5999999999999,
+        "dy": 43.200000000000045,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "medium_full_tracking",
+        "purpose": "foot_plant_and_shield_shove",
+        "stageAxisSign": 1
+      },
+      "endCam": {
+        "shotId": "SH05",
+        "globalT": 14.958333333333334,
+        "localT": 2.958333333333334,
+        "z": 1.1500977777777777,
+        "cx": 960.0537406786455,
+        "cy": 572.4061921296296,
+        "dx": 0.053740678645453954,
+        "dy": 32.40619212962963,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "medium_full_tracking",
+        "purpose": "foot_plant_and_shield_shove",
+        "stageAxisSign": 1
+      }
+    },
+    {
+      "shotId": "SH06",
+      "startCam": {
+        "shotId": "SH06",
+        "globalT": 15,
+        "localT": 0,
+        "z": 1.12,
+        "cx": 902.4,
+        "cy": 561.6,
+        "dx": -57.60000000000002,
+        "dy": 21.600000000000023,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "macro_physics_insert",
+        "purpose": "wooden_tip_deflection",
+        "stageAxisSign": 1
+      },
+      "endCam": {
+        "shotId": "SH06",
+        "globalT": 18.458333333333332,
+        "localT": 3.458333333333332,
+        "z": 1.1000699243542216,
+        "cx": 883.2,
+        "cy": 604.8000000000001,
+        "dx": -76.79999999999995,
+        "dy": 64.80000000000007,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "macro_physics_insert",
+        "purpose": "wooden_tip_deflection",
+        "stageAxisSign": 1
+      }
+    },
+    {
+      "shotId": "SH07",
+      "startCam": {
+        "shotId": "SH07",
+        "globalT": 18.5,
+        "localT": 0,
+        "z": 1.02,
+        "cx": 960,
+        "cy": 561.6,
+        "dx": 0,
+        "dy": 21.600000000000023,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "wide_to_medium_payoff",
+        "purpose": "wall_holds_instructor_evaluates",
+        "stageAxisSign": 1
+      },
+      "endCam": {
+        "shotId": "SH07",
+        "globalT": 22.958333333333332,
+        "localT": 4.458333333333332,
+        "z": 1.3799396799507746,
+        "cx": 556.8,
+        "cy": 518.4,
+        "dx": -403.20000000000005,
+        "dy": -21.600000000000023,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "wide_to_medium_payoff",
+        "purpose": "wall_holds_instructor_evaluates",
+        "stageAxisSign": 1
+      }
+    },
+    {
+      "shotId": "SH08",
+      "startCam": {
+        "shotId": "SH08",
+        "globalT": 23,
+        "localT": 0,
+        "z": 1.18,
+        "cx": 1036.8000000000002,
+        "cy": 550.8,
+        "dx": 76.80000000000018,
+        "dy": 10.799999999999955,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "medium_two_shot",
+        "purpose": "comic_spear_strap_twist",
+        "stageAxisSign": 1
+      },
+      "endCam": {
+        "shotId": "SH08",
+        "globalT": 26.458333333333332,
+        "localT": 3.458333333333332,
+        "z": 1.0800194534244116,
+        "cx": 960.0223757933509,
+        "cy": 561.595444606414,
+        "dx": 0.02237579335087503,
+        "dy": 21.59544460641405,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "medium_two_shot",
+        "purpose": "comic_spear_strap_twist",
+        "stageAxisSign": 1
+      }
+    },
+    {
+      "shotId": "SH09",
+      "startCam": {
+        "shotId": "SH09",
+        "globalT": 26.5,
+        "localT": 0,
+        "z": 1.06,
+        "cx": 752.0603773584905,
+        "cy": 540,
+        "dx": -207.93962264150946,
+        "dy": 0,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "motif_return_close",
+        "purpose": "deadpan_nod_and_closed_wall_loop",
+        "stageAxisSign": 1
+      },
+      "endCam": {
+        "shotId": "SH09",
+        "globalT": 29.958333333333332,
+        "localT": 3.458333333333332,
+        "z": 1.2198581804886506,
+        "cx": 998.278448407255,
+        "cy": 550.795444606414,
+        "dx": 38.27844840725504,
+        "dy": 10.79544460641398,
+        "rot": 0,
+        "shakeX": 0,
+        "shakeY": 0,
+        "framingScale": "motif_return_close",
+        "purpose": "deadpan_nod_and_closed_wall_loop",
+        "stageAxisSign": 1
+      }
+    }
+  ],
+  "sh05SubframeCount": 289,
+  "maxRearFootSkatePx": 0,
+  "maxPlantedFrontSkatePx": 0,
+  "maxShieldGripOffsetPx": 9.396,
+  "sh05TrajectorySamples": [
+    {
+      "globalT": 12,
+      "rootWorld": [
+        1142.4,
+        1004.4
+      ],
+      "leftFootWorld": [
+        1180.8,
+        1004.4
+      ],
+      "rightFootWorld": [
+        1104,
+        1004.4
+      ],
+      "shieldCenterWorld": [
+        1223.83,
+        765.88
+      ],
+      "rightHandWorld": [
+        1042.18,
+        777.09
+      ]
+    },
+    {
+      "globalT": 12.375,
+      "rootWorld": [
+        1147.73,
+        1009.4
+      ],
+      "leftFootWorld": [
+        1180.8,
+        1004.4
+      ],
+      "rightFootWorld": [
+        1104,
+        1004.4
+      ],
+      "shieldCenterWorld": [
+        1239.74,
+        778.16
+      ],
+      "rightHandWorld": [
+        1050.39,
+        783.17
+      ]
+    },
+    {
+      "globalT": 12.75,
+      "rootWorld": [
+        1127.45,
+        1006.89
+      ],
+      "leftFootWorld": [
+        1180.8,
+        1004.4
+      ],
+      "rightFootWorld": [
+        1037.08,
+        979.22
+      ],
+      "shieldCenterWorld": [
+        1155.52,
+        777.11
+      ],
+      "rightHandWorld": [
+        1036.69,
+        779.95
+      ]
+    },
+    {
+      "globalT": 13.125,
+      "rootWorld": [
+        1091.96,
+        1004.4
+      ],
+      "leftFootWorld": [
+        1154.71,
+        1000.67
+      ],
+      "rightFootWorld": [
+        1029.12,
+        1004.4
+      ],
+      "shieldCenterWorld": [
+        1071.43,
+        774.38
+      ],
+      "rightHandWorld": [
+        1008.42,
+        775.46
+      ]
+    },
+    {
+      "globalT": 13.5,
+      "rootWorld": [
+        1068.09,
+        1004.4
+      ],
+      "leftFootWorld": [
+        1110,
+        1004
+      ],
+      "rightFootWorld": [
+        1029.12,
+        1004.4
+      ],
+      "shieldCenterWorld": [
+        1035.8,
+        773.06
+      ],
+      "rightHandWorld": [
+        989.28,
+        773.06
+      ]
+    },
+    {
+      "globalT": 13.875,
+      "rootWorld": [
+        1071.36,
+        1004.4
+      ],
+      "leftFootWorld": [
+        1109.76,
+        1004.4
+      ],
+      "rightFootWorld": [
+        1029.12,
+        1004.4
+      ],
+      "shieldCenterWorld": [
+        1039.07,
+        769.68
+      ],
+      "rightHandWorld": [
+        993.06,
+        771.16
+      ]
+    },
+    {
+      "globalT": 14.25,
+      "rootWorld": [
+        1071.36,
+        1004.4
+      ],
+      "leftFootWorld": [
+        1109.76,
+        1004.4
+      ],
+      "rightFootWorld": [
+        1029.12,
+        1004.4
+      ],
+      "shieldCenterWorld": [
+        1040.35,
+        765.01
+      ],
+      "rightHandWorld": [
+        993.06,
+        768.82
+      ]
+    },
+    {
+      "globalT": 14.625,
+      "rootWorld": [
+        1071.36,
+        1004.4
+      ],
+      "leftFootWorld": [
+        1109.76,
+        1004.4
+      ],
+      "rightFootWorld": [
+        1029.12,
+        1004.4
+      ],
+      "shieldCenterWorld": [
+        1041.84,
+        760.88
+      ],
+      "rightHandWorld": [
+        993.06,
+        766.76
+      ]
+    },
+    {
+      "globalT": 15,
+      "rootWorld": [
+        1071.36,
+        1004.4
+      ],
+      "leftFootWorld": [
+        1109.76,
+        1004.4
+      ],
+      "rightFootWorld": [
+        1029.12,
+        1004.4
+      ],
+      "shieldCenterWorld": [
+        1042.55,
+        758.9
+      ],
+      "rightHandWorld": [
+        993.06,
+        765.77
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,15 @@
+{
+  "expected_companion_filename": "KH-03-ROMAN-ORIGINAL-STYLE-REFERENCE-ONLY.png",
+  "status": "USER_SCREENSHOT_REFERENCE_UNAVAILABLE",
+  "searched_locations": [
+    "repository_root",
+    "parent_workspace_directory",
+    "prompt_turn_attachments"
+  ],
+  "fallback_primary_style_truth": {
+    "source_branch": "origin/Production",
+    "source_commit": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+    "baseline_renders_dir": "docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f/baseline_reference"
+  },
+  "policy": "Never recreate missing user screenshot via generative AI; never claim pixel comparison against absent external attachment; never embed reference stills into pilot MP4 frames."
+}

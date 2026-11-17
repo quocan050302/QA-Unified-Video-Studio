@@ -1,0 +1,38 @@
+{
+  "schema_version": "kh03.0.sound_design.v1",
+  "voice_provenance": {
+    "engine": "local_os_sapi_speech_synthesizer",
+    "helper": "scripts/tts_helper.py::synthesize_speech",
+    "sample_rate_hz": 48000,
+    "channels": 1,
+    "lines_count": 9,
+    "words_count": 67,
+    "voice_wav_sha256": "4887d3f371c09d4d8ae6b92f9a6cd30ee4d1653e7cfd98ab145bf6719706a3d6",
+    "voice_rms": 0.086518
+  },
+  "music_provenance": {
+    "bed": "roman",
+    "source_file": "audio/music/bed_roman_Am_80bpm.wav",
+    "generator": "packs/squire/audio.py::bed('bed_roman_Am_80bpm')",
+    "license": "100% repository-procedural synthesis (numpy/soundfile)",
+    "ducking_under_narration_db": -16.0
+  },
+  "sfx_provenance": {
+    "generator": "tools/kh03_preview_director.py::_synth_kh03_procedural_sfx",
+    "license": "100% repository-procedural synthesis (seed=2026111703)",
+    "files_sha256": {
+      "kh03_scutum_grip_rattle.wav": "1097306cd7be23d1e0b2e418de92b7de857b1e2e49f20c9ea044b98eddec5bda",
+      "kh03_spear_whoosh_launch.wav": "17e572113b863f1ec2341c7af0e560cb1c5bbb2415ac31991a5ac6f5dd351d93",
+      "kh03_sand_foot_plant.wav": "676bdad0abf07f3e26dcc284a5d8fb21fba79e77814485bc1ab8b937ec029b76",
+      "kh03_shield_wall_lock.wav": "ea05937da729b7154277082aeac609104ffb7cf53984b0708131047fb0b9f512",
+      "kh03_wood_spear_glance.wav": "c9cb18a7051bde24051a6c1df311914801e0a9bb3d53fa0285e0aadb7b2bb422",
+      "kh03_leather_strap_tug.wav": "183554f47232285336a729223b08e4076633385f414e107ff12940685ebe8a86",
+      "kh03_armor_nod_settle.wav": "76da0c39d7a0970e4ea308a08cc676c7bcc3ea9103b8d6f272b8727d9f13a414"
+    }
+  },
+  "target_loudness_lufs_range": [
+    -16.0,
+    -14.0
+  ],
+  "max_true_peak_dbtp": -1.0
+}

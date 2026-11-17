@@ -1,0 +1,100 @@
+{
+  "style_id": "roman_squire_master.v1",
+  "characters": {
+    "rookie": {
+      "style_id": "roman_squire_master.v1",
+      "style_family": "production_squire_original_roman_2d",
+      "role": "rookie",
+      "archetype_id": "rookie_hastatus",
+      "era": "roman_republic_imperial",
+      "wardrobe": "roman_tunic_pectoral",
+      "environment_id": "roman_training_yard",
+      "squire_preset_params": {
+        "base_preset": "hastatus",
+        "helmet": "montefortino",
+        "feathers": 3,
+        "featherColors": [
+          "#f7f3ea",
+          "#392a21",
+          "#f7f3ea"
+        ],
+        "body": "roman",
+        "tunicColor": "#c9473a",
+        "legs": "bare",
+        "shield": {
+          "type": "scutum",
+          "color": "#c9473a",
+          "rim": "#e7b04a",
+          "charge": "lightning",
+          "chargeColor": "#efc23f"
+        },
+        "weapon": "spear"
+      },
+      "variant_digest": "f2fd113bb290e8d8a0677548188f09eef2345f6194ca8b0a088d436fcf37da2e"
+    },
+    "instructor": {
+      "style_id": "roman_squire_master.v1",
+      "style_family": "production_squire_original_roman_2d",
+      "role": "instructor",
+      "archetype_id": "instructor_princeps",
+      "era": "roman_republic_imperial",
+      "wardrobe": "roman_tunic_pectoral",
+      "environment_id": "roman_training_yard",
+      "squire_preset_params": {
+        "base_preset": "princeps",
+        "helmet": "montefortino",
+        "feathers": 3,
+        "featherColors": [
+          "#c9473a",
+          "#392a21",
+          "#c9473a"
+        ],
+        "mustache": "big",
+        "body": "roman",
+        "tunicColor": "#c9473a",
+        "legs": "bare",
+        "shield": {
+          "type": "scutum",
+          "color": "#c9473a",
+          "rim": "#e7b04a",
+          "charge": "wings",
+          "chargeColor": "#efc23f"
+        },
+        "weapon": "pilum"
+      },
+      "variant_digest": "828a3f1fec5b241f715e225bee3ac3a131c6b8e5f32c7fc4b122824b9651cd59"
+    },
+    "neighbor": {
+      "style_id": "roman_squire_master.v1",
+      "style_family": "production_squire_original_roman_2d",
+      "role": "neighbor",
+      "archetype_id": "veteran_neighbor_legionary",
+      "era": "roman_republic_imperial",
+      "wardrobe": "roman_tunic_pectoral",
+      "environment_id": "roman_training_yard",
+      "squire_preset_params": {
+        "base_preset": "hastatus",
+        "helmet": "montefortino",
+        "feathers": 3,
+        "featherColors": [
+          "#f7f3ea",
+          "#c9473a",
+          "#f7f3ea"
+        ],
+        "beard": "stubble",
+        "body": "roman",
+        "tunicColor": "#c9473a",
+        "legs": "bare",
+        "shield": {
+          "type": "scutum",
+          "color": "#c9473a",
+          "rim": "#e7b04a",
+          "charge": "lightning",
+          "chargeColor": "#efc23f"
+        },
+        "weapon": "spear"
+      },
+      "variant_digest": "d0801a9a861a315d290759ce6ef58f22922d85094b6be7050f13a51979288ca2"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "return_code": 0,
+  "wall_sec": 365.531,
+  "exact_counts": {
+    "PASS": 81,
+    "FAIL": 0,
+    "NOT_RUN_MISSING_FIXTURE": 1
+  },
+  "not_run_items": [
+    "Historical 180-Shot Company Replay (Optional)"
+  ],
+  "failed_items": [],
+  "historical_golden_evidence_untouched": true,
+  "errors": []
+}

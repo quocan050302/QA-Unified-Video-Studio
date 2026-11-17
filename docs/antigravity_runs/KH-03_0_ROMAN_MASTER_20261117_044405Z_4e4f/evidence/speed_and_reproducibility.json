@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "frame_order_determinism": {
+    "frames_tested": 18,
+    "orders_tested": [
+      "forward",
+      "reverse",
+      "seeded_random"
+    ],
+    "mismatches": 0,
+    "identical_across_all_orders": true,
+    "wall_sec": 4.078,
+    "forward_frame_sha256": {
+      "0": "a11999dcd289e0739013e0c9bc7984fa41495b6150595bc1404c3bb0f58591a7",
+      "28": "c8234b670ec3c1d8eb2e1bc589f53c1295ba28e3138f64f7338cb8f13d1d80ae",
+      "65": "d37eebb8ef4edfaec30a81596290b73280443ce91e14ea1f5c739e78ccacdf5c",
+      "110": "5631f01b57a054bb21dfa156008c34d5fb1513c63b93463f0d04580403a08c59",
+      "150": "204f6ce201fdd2cf5073f187fb525c2f391c3f73a157e29213a23c7bf1a7a6a1",
+      "200": "13f034998cdb0482e6dec859fe750c14fb0634439615239b0ab6bd64258d585d",
+      "239": "7545f76730a33e8b088d51b46bce2ee54ec8440f4d5390fc7279f0eee77950b6",
+      "275": "b214d1d3b6614e1d71c7bf1180c86829e6fe725b2254099ca387ebeb2b6dbc58",
+      "313": "35031f7bc1c2940ea7ffda27220a64e7ce03204f3463bb5bc4c295c44419452e",
+      "328": "4e35842368fa17b385a8c7a723df494ecff8cb9638d1e47d4e6ebabcb39308dc",
+      "374": "83577101dec7ee3f18077ea8b1bd530041c1a79a7ce6547aae87490519dc4f2d",
+      "410": "a4c8af74d02ab4780027fbbd4263cf63de42c4efc9eab8b853040aa38be7af97",
+      "460": "804daf4874fe8a53780a33b7a3fb2ca2537c7c7983dd61bfa42d0d40c7f26ed9",
+      "512": "3052d6e7c0aa04ac6b8d1e9d68d38ffcdcd5f711a9c3cc92a79e429c0f6e5680",
+      "575": "4b9e2a891fcd9297fe1bd71bd3934b948b3745364f5b839e035403185bd98dc6",
+      "610": "bfb8132fb1ccb49fb84f57f565f0d560d444efc4df3c04bb36785d6b63d89db2",
+      "660": "3d8013583fa8a85fa9661dffaec22ef644aaf97edd607619d975c75c9a84b509",
+      "710": "244663690baf5dbb27c816c1163e4c2babc9f86a6e9b0e34c42c046b979f9d23"
+    },
+    "cross_platform_note": "Same-host, same-GPU (ANGLE D3D11) PNG hashes are 100% invariant across forward/reverse/random frame order; minor sub-pixel anti-aliasing differences are expected across different OS/GPU drivers."
+  },
+  "qa_still_workload_3repeat_benchmark": {
+    "workload_description": "9 pilot stills (3 isolated 3-still slices @ 960x540) rendered across 3 repeats",
+    "serial_wall_sec_repeats": [
+      4.719,
+      4.672,
+      4.656
+    ],
+    "parallel_3worker_wall_sec_repeats": [
+      2.39,
+      2.219,
+      2.219
+    ],
+    "serial_mean_sec": 4.682,
+    "parallel_mean_sec": 2.276,
+    "measured_qa_speedup_ratio": 2.057,
+    "output_digest_parity_all_6_runs": true,
+    "canonical_stills_digest": "96575e8db2662239fc0273129021f04656a40f23c620293948a831dfd1e6a033",
+    "verified_overlapping_worker_pairs": 9
+  },
+  "errors": []
+}

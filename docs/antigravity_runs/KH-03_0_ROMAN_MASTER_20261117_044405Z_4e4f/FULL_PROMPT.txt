@@ -1,0 +1,379 @@
+ANTIGRAVITY — FULL EXECUTION PROMPT
+KH-03.0 / ROMAN MASTER STYLE LOCK + CLEAN PRODUCTION BRANCH + ORIGINAL 30-SECOND 2D PILOT
+Version: KH-03.0.R1 — 2026-11-17
+Repository: https://github.com/quocan050302/QA-Unified-Video-Studio
+Authoritative SOURCE branch: origin/Production
+Verified SOURCE commit at prompt-authoring time: 80559d09d4b7bb72ee4c5acc6cc846e69abd65d1
+TARGET development branch: feat/roman-2d-master (create directly from Production)
+DO NOT USE as base: fix/Image-Shot, feat/modern-2d-cinematic.
+
+========================
+00. MỆNH LỆNH CHUNG / CÁCH LÀM VIỆC
+========================
+Bạn là Antigravity, thực thi trực tiếp trên repository đã có, không chỉ đề xuất giải pháp. Không hỏi lại các thông tin đã xác định trong prompt. Tự kiểm tra thực trạng máy và code trước mọi thay đổi. Giữ an toàn dữ liệu, kiểm thử bất đồng bộ/đa luồng trong giới hạn tài nguyên, deterministic output, báo cáo PASS/FAIL trung thực, commit và push tự động CHỈ nhánh mục tiêu khi điều kiện kỹ thuật đạt. Nếu gặp trở ngại không thể khắc phục, dừng an toàn, giữ nguyên chứng cứ và đánh dấu BLOCKED; không báo thành công giả.
+
+YÊU CẦU ƯU TIÊN #1 (KHÔNG THƯƠNG LƯỢNG): 2D SQUIRE ROMAN NGUYÊN BẢN của Production chính là STYLE MASTER cho video La Mã suốt thời gian dài về sau. Người dùng chọn rõ nhân vật lính La Mã đầu tròn, mặt trắng tối giản, mũ vàng có lông trang trí, áo đỏ, khiên scutum đỏ viền vàng, giáo, nét viền nâu đậm, bối cảnh quân đội dạng 2D phẳng và cel shading như screenshot đã chốt. KHÔNG chuyển sang bộ nhân vật Tavi/Lyra phong cách KH-02.1, KHÔNG tạo một thiết kế La Mã mới xa lạ. “Nâng cấp” trong KH-03.0 nghĩa là LOCK identity & vẽ cùng phong cách, thêm shot dựng công phu, frame animation, khả năng nâng cấp có kiểm soát, KHÔNG thay diện mạo chủ đạo.
+
+YÊU CẦU ƯU TIÊN #2: Phải giao một video pilot 30.000s hoàn toàn mới có thể xem bằng MP4, kịch bản hoàn toàn mới, không reuse ảnh/frame, storyboards, premade video của bất kỳ KH-01/KH-02/FL-01 demo nào. Bằng chứng cần bao gồm MP4 thực, contact sheet các shot, frame/clip proof, SHA256, audio và timeline. Screenshot đã chốt chỉ là SOURCE OF STYLE TRUTH, tuyệt đối không được đưa trực tiếp làm cảnh trong MP4.
+
+YÊU CẦU ƯU TIÊN #3: KH-03.0 là khóa nền tảng phong cách + pilot; KH-03.1..03.6 chưa được tự động coi là xong. Không viết lại toàn bộ renderer, không đưa 3D, không vội xây tổng thể engine motion/camera mới. Kỹ thuật nâng motion và camera đủ cho pilot nhưng phải thiết kế extension opt-in để mở rộng sau.
+
+KHI BẠN ĐỌC PROMPT NÀY: BẮT ĐẦU TRIỂN KHAI, KHÔNG CHỈ LẬP KẾ HOẠCH. Mỗi giai đoạn phải có artefact/evidence và log. Không in tràn chat: báo tóm tắt đường dẫn, kết quả, các vấn đề còn tồn tại.
+
+========================
+01. PHẠM VI GIAI ĐOẠN KH-03.0 — ĐÚNG / SAI
+========================
+IN SCOPE:
+A. Git-isolated branch/worktree từ Production, xác minh ancestry và protected refs.
+B. Baseline nguyên trạng Production: render gốc, pixel hashes, static/dynamic behavior, source preservation, environment.
+C. Roman Master Style Bible v1 định nghĩa bất biến hình học/tỉ lệ/màu/viền/motif, opt-in profile được lưu trong source.
+D. Same-character, same-pose A/B proof để xác minh style LOCK: không so sánh hai nhân vật hoặc hai bối cảnh khác nhau rồi tự nhận nâng cấp.
+E. Một bộ model/expression/motion proof sử dụng chính Squire original actor và đạo cụ; không thay family nhân vật.
+F. Một kịch bản mới 30s Roman, shot variety, chuyển động liên tục có chủ đích, cận/trung/toàn, pan/zoom có chủ đích, tương tác vật lý đáng tin; full render MP4 + audio thật (TTS hợp lệ hoặc voice được cung cấp), music/SFX đồng bộ.
+G. Async regression/backtest, real rendered tests, mutation tests, CPU/RAM/disk guard, reproducibility evidence, no false PASS.
+H. README cho execution run và project, folder riêng cho prompt, function change matrix, manifest, 30s preview, automatic commit/push target branch.
+
+OUT OF SCOPE (MUST LABEL NOT IMPLEMENTED):
+- KH-03.1: Complete multi-role Roman Asset Library generalized to every story.
+- KH-03.2: Generic Natural 2D Motion Engine/compiler for arbitrary scripts.
+- KH-03.3: Generic cross-shot world-state Continuity Engine.
+- KH-03.4: General-purpose Cinematic Camera & Editing Director.
+- KH-03.5: Smart Shot Director for arbitrary niches.
+- KH-03.6: Final production QA/release + merge into Production.
+Pilot-specific camera/motion scaffolding is explicitly ALLOWED and must be labelled PILOT-SCOPED rather than the future generalized engines.
+
+========================
+02. GIT — CHỈ TẠO NHÁNH MỚI TỪ PRODUCTION
+========================
+1. Inspect: git status --porcelain=v1; git remote -v; git branch -a; git fetch origin; git rev-parse origin/Production; git rev-parse origin/fix/Image-Shot; git rev-parse HEAD.
+2. This prompt was prepared using origin/Production SHA 80559d09d4b7bb72ee4c5acc6cc846e69abd65d1. If remote SHA changed, DO NOT silently assume old SHA. Report new SHA, check provenance/diff, and create branch from the current verified origin/Production if it remains the intended Production baseline. Record the exact SHA at runtime.
+3. If local working tree is dirty: DO NOT reset --hard, clean -fd, stash/pop automatically or overwrite user work. Prefer an isolated sibling worktree. E.g.:
+   git worktree add -b feat/roman-2d-master ../QA-Unified-Video-Studio-roman-2d-master origin/Production
+   If target branch is already present: verify its merge-base with origin/Production and whether it is already carrying KH-03 work. Do not delete/rebase/force-push; resume safely on the existing branch only if ancestry and owner changes are valid, otherwise BLOCKED.
+4. In worktree: git branch --show-current == feat/roman-2d-master; git merge-base --is-ancestor origin/Production HEAD == 0. Verify actual parent commit of initial implementation = runtime Production SHA.
+5. Lock protected refs: capture origin/Production and origin/fix/Image-Shot and origin/feat/modern-2d-cinematic SHA preflight; recheck post-push. Do not modify other branches or import any of their code.
+6. NEVER use git push --force, git push --all, git push origin Production, uncontrolled merge/cherry-pick from KH-01/KH-02.
+7. On mandatory QA PASS, commit only intended tracked changes with coherent message: feat(kh03.0): lock original roman squire style and new 2d pilot; push git push -u origin feat/roman-2d-master; verify git ls-remote origin refs/heads/feat/roman-2d-master exactly equals current implementation SHA; additionally post-push attestation can be a second docs-only commit then verify updated SHA again.
+8. If QA FAIL/BLOCKED, do not promote or tag as PASS and do not push an apparently successful implementation. If preserving failed code/evidence by push is operationally required, mark clearly WIP/FAIL and never set release READY; prefer local branch for repair.
+9. Record all changed/untouched source SHA256 and exact files. Never fabricate commands/logs not executed.
+
+========================
+03. STYLE REFERENCE — NGƯỜI DÙNG ĐÃ CHỐT
+========================
+Canonical reference is user-supplied picture of ORIGINAL Squire Roman soldier (one half-body close-up and one wide formation):
+- Head: large round ivory/white face with minimal black eyes/mouth, bold dark-warm-brown contours.
+- Helmet: warm-gold Roman helmet with prominent feather/plume silhouette, side guards; avoid substituting brown hair/headband from KH-02.1.
+- Character: cartoon rounded simplified anatomy, white glove/hand shape, red tunic/armor, simple clean limbs, recognizable expression line language.
+- Shield: tall red scutum with gold trim and center boss, original design proportions.
+- Spear/pilum: long narrow silhouette, continuous hand-to-weapon contact.
+- Scene: warm Roman field palette, many Roman units in distance, clear depth through scale/layering, simple cel-like shapes and subtle softened distant background.
+- No heavy painterly makeover, no glossy 3D, no realistic face textures, no anatomically new character family, no Tavi/Lyra/goat/bell from KH-02.1, no unapproved style substitution.
+
+CRITICAL distinction: the screenshot is a STYLE REFERENCE and can be archived as reference evidence if available; it must NEVER be used as animation frame/texture/background plate in the new 30s preview. ALL video imagery must be code-authored fresh scene/pose/camera state in the ORIGINAL Squire visual language.
+
+If this prompt is supplied via the companion ZIP bundle, an accompanying file named KH-03-ROMAN-ORIGINAL-STYLE-REFERENCE-ONLY.png is included as the ORIGINAL user's selected screenshot: extract it into the isolated reference/audit area, checksum it, and use only for style comparison (NEVER as video source frame).
+
+The screenshot may or may not be attached in the Antigravity workspace. If supplied, locate and checksum it; store a clear reference pointer or authorized copy in visual_styles/roman_squire_master/v1/references/. If not supplied, use exact original Production source and original baseline renders as primary style truth; mark USER_SCREENSHOT_REFERENCE_UNAVAILABLE, do not falsely claim pixel comparison against attachment, do not ask to recreate it from generative AI.
+
+Style acceptance is split:
+- SOURCE_BASELINE_LOCK: automated SHA256, unchanged samples, identical controlled same-pose baseline when profile OFF = MUST PASS.
+- ROMAN_IDENTITY_PRESERVED: compare A/B SAME character, SAME pose, SAME shield/spear/helmet, SAME world, SAME camera. Any deliberate pixel/style delta must be explained; no change to identity silhouette/colors. Human review PENDING, never auto STYLE_APPROVED.
+- EDITORIAL/RETENTION: requires reviewing real MP4, cannot infer audience retention from a technical QA counter.
+
+========================
+04. SOURCE AUDIT — THỰC TẾ ĐÃ XÁC MINH TRONG PRODUCTION
+========================
+Source modules verified at base SHA:
+- packs/squire/chara.js: FACES, face(), head(), hand(), shield(), weapon(), ik2(), walkInfo(), soldier(), bust(), CAST, POSES and original character/helmet logic.
+- packs/squire/ink.js: OUT = '#392a21', PAL, shape(), smoothPath(), blob(), polyS(), line(), tube(), celShade(), hilite(), darker(), lighter(), vignette().
+- packs/squire/world.js: TIMES, cloud(), hillBand(), treeLine(), tree(), flag(), tent(), grassClump(), bg() original environments.
+- packs/squire/templates.js: camera(), person(), drawPeople(), prop(), drawThing(), sceneBody(), overlays(), registerTemplate() for Squire scenes.
+- packs/squire/pack.js: init(E), captions(), titleText(), thumb(), original Squire loading/export.
+- engine/core.js: E, ease, kf(), rng(), noise(), layer(), blurLayer(), registerShot(), registerTemplate(), talkAmount().
+- engine/player.js: boot(), shotAt(), drawShot(), grade(), transition(), captions(); currently contains OPTIONAL kind: '3d' runtime path; preserve that for non-KH03 legacy projects but prohibit it in new pilot.
+- render.mjs: Playwright/Chromium Canvas + FFmpeg renderer, --sheet / --stills / --from / --to / --workers / --check; preserve existing CLI meanings.
+- tools/draft_shots.py: timing/subdivision; tools/assign_visuals.py: detect_theme(), detect_actions_and_context(), plan_visual_intent(), compile_visual_plan(), assign_visuals().
+- tools/prep_voice.py: voice WAV / script alignment; tools/plan_audio.py: classify_narrative_audio_events(), schedule_music_sections(), plan_audio_for_project(); tools/mix.py: original audio mix.
+- tools/validator.py: validate_project().
+- scripts/run_e2e_regression.py: asyncio legacy suites incl. real MP4 Squire/DEM/Shorts, historical synthetic/optional replay, sound regression and test suites G/H/J/K.
+- scripts/resource_guard.py: get_disk_info(), get_ram_info(), check_resources(), ResourceMonitor, kill_process_tree().
+- projects/squire-mau/ and projects/selfimprove-mau/: existing sample fixtures; must stay unchanged.
+- packs/dem/: Self-Improvement pack; must remain functionally and pixelwise unaltered.
+- engine/three3d.js exists for legacy OPTIONAL projects; do not use/modify/delete/import it in KH-03 pilot.
+
+Inspect full files and exact signatures before editing. These paths/symbols are inspection targets, not permission to wholesale rewrite. If line numbers moved, follow symbol definitions rather than brittle offsets.
+
+========================
+05. IMPLEMENTATION PHASE A — PREFLIGHT & BASELINE
+========================
+A1. Create a unique folder, e.g. docs/antigravity_runs/KH-03_0_ROMAN_MASTER_20261117_<UTC>_<nonce>/ with README.md IMMEDIATELY, FULL_PROMPT.txt (verbatim this prompt), BASELINE.md, KEPT_AS_IS.md, FUNCTION_CHANGE_MATRIX.md, TEST_MATRIX.md, RESOURCE_AUDIT.md, RELEASE_VERDICT.md, VISUAL_REVIEW.md, POST_PUSH_ATTESTATION.md, style_poc/, film_preview_packet/, evidence/.
+A2. Create isolated scratch .test-runs/kh03_0_<run_id>/; never delete other .test-runs or previously generated KH01/KH02 files. Do not commit raw intermediate frames or massive caches. Reserve out/ for deliverable MP4 on local machine; Git-track only compressed review screenshots, manifests and receipts within reasonable size.
+A3. Record hardware: CPU/logical cores, RAM total/available, free disk on output drive (not just cwd), ffmpeg/ffprobe installed, Node version, Playwright Chromium reachable, Python dependencies. Baseline exact npm lock hash / Python env. Do not invoke installer blindly if dependencies already present.
+A4. Run original baseline using projects/squire-mau and projects/selfimprove-mau BEFORE edits: validator, stills at specified times from project config, sample sheet, at least one deterministic repeat rendering, baseline SHA256 manifest. If baseline cannot render, report BASELINE_BLOCKED, fix only documented environment issues and rerun; never replace baseline truth with expected guesses.
+A5. Capture source module SHA256 snapshot for engine/core.js, engine/player.js, engine/three3d.js, render.mjs, packs/dem/*, packs/squire/*, audio/*, docs licenses, historical samples. Capture branch references. E2E baseline can run with heavy tests after preflight in bounded runner.
+A6. Document real baseline limitations of Squire 2D rather than describing original as a fully feature-complete cinematic engine.
+A7. Keep original style screenshot reference separate from video source assets. A missing screenshot is a disclosed limitation, NOT a reason to invent other artwork.
+
+========================
+06. IMPLEMENTATION PHASE B — ROMAN MASTER STYLE LOCK V1
+========================
+REQUIRED NEW FILES (names can be adapted only with rationale):
+- visual_styles/roman_squire_master/v1/style_bible.json
+- visual_styles/roman_squire_master/v1/README.md
+- tools/kh03_style_lock.py
+- tools/kh03_reference_audit.py
+- tools/kh03_baseline_comparator.py
+- tests/kh03_roman/test_style_lock.py
+
+PROPOSED FUNCTIONS (must implement equivalents with tests):
+1) tools/kh03_style_lock.py::load_roman_master_style(style_id='roman_squire_master.v1')
+   - Load schema-validated style contract; reject unsupported tags or missing required fields; never fallback silently to modern2d.
+2) ::compute_roman_style_digest(style_dict)
+   - Canonical sorted JSON SHA256 excluding the digest field, deterministic on every OS; mutation detection.
+3) ::validate_roman_style_contract(style_dict, baseline_manifest)
+   - Check preserved source identity anchors: original head/face/helmet, warm-brown OUT, red scutum, spear outline, color palette, initial proportions, protected presets, legacy unaffected. Validate only measurable claims; visual beauty separate.
+4) ::resolve_roman_variant(role, era, wardrobe, environment_id)
+   - For this phase restrict to original Roman Squire world; variations only within locked family. Never switch character renderer/style family.
+5) tools/kh03_reference_audit.py::collect_user_style_reference(ref_paths)
+   - Hash optional user screenshot; label its source; forbid feeding it to video layer. If missing, return honest UNAVAILABLE.
+6) ::assert_no_reused_demo_assets(new_project_root, forbidden_roots)
+   - Assert no file copy/hash reuse from project video/image products or KH-01/KH-02 assets, no references to KH02-bell/Tavi/Lyra/goat/scroll scenes, except code dependencies from Production original Squire primitives.
+7) tools/kh03_baseline_comparator.py::capture_same_pose_roman_reference(...)
+   - Render original actor at identical pose, camera, bg, lighting in immutable base and opt-in pilot path. Outputs ORIGINAL and NEW plus visible overlay/diff; report ROI statistics & immutable parts like helmet/scutum/face anchors. Do not game metrics by overlaying static pixel snapshots over a new shot.
+8) ::compare_roman_identity_geometry(...)
+   - Inspect anchor points, silhouette bounds, helmet crest shape, shield ratio, face and line color; pixel and geometry metrics, thresholds documented and not cherry-picked. If not measurable, label MANUAL_REVIEW_REQUIRED.
+
+Style Bible MUST freeze: geometric proportions, palette, outline stroke width curves and LOD, helmet crest, shield shape/colors, standard spear and hand contact, clothing silhouettes, expression grammar, shadow rule, character identity IDs, editable upgrade slots (line polish, micro expressions, secondary movement, subtle background parallax) and forbidden modifications. Include renderer version, reference hashes and screenshot status. Keep master style independent of Roman story script, so future videos reuse same style id.
+
+DO NOT mix style lock with a style remake: no large-eyed Tavi/Lyra, no “modern expressive 2D” from KH-02, no soft 3D look, no head/hair/helmet swap, no texture bake of user's screenshot. Track opt-in style_profile and ensure profile disabled preserves Production pixels.
+
+Important: a ‘STYLE_BIBLE_PRESENT’ boolean does NOT mean visual style passed. Human review must remain PENDING until user signs off on A/B same-character proofs.
+
+========================
+07. IMPLEMENTATION PHASE C — NON-DESTRUCTIVE 2D CODE HOOKS
+========================
+PREFERRED PATTERN: New optional modules, minimal additive hooks. Where older functions suffice, reuse them, don't clone code needlessly.
+
+C1. packs/squire/chara.js:
+- Inspect actual soldier(), head(), face(), shield(), weapon(), hand(), ik2(), walkInfo(). Keep existing defaults and FACES/CAST/POSES. Add only OPTIONAL roman master parameters or wrappers at the edge (new code located under packs/squire/roman_master/ preferred).
+- New packs/squire/roman_master/character_state.js::romanActorAt(globalT, beat, actorId, worldState) -> deterministic immutable pose data including world origin/foot anchors/hand-target/shield+helmet+expression. Avoid frame-index state mutation. Identity from source original soldier.
+- ::drawRomanMasterActor2D(g, pose, renderOpts) -> call original Squire soldier/head/face/shield/weapon as core renderer, with fine polish available via opt-in, while preserving silhouette.
+- ::validateRomanMasterRigAnchors(pose, propSpec) -> guard shield/spear contact; world-space foot plant logic. No “teleport” allowed across shot joins.
+- Expressions: augment original FACES minimally, don't replace with a new family. Expression changes should reflect story beats and keep eyes/mouth drawn in original language.
+
+C2. packs/squire/ink.js:
+- Keep existing OUT/PAL and primitives. Optional small helper for consistent stroke scaling/shading at high-resolution, only if needed; no palette overwrite. Prove baseline preservation.
+
+C3. packs/squire/world.js:
+- Keep bg() all original variants. Add optional Roman training-yard / hillside gate / wooden training-rack layers using original tree/grassGround/tent/castle/cloud design grammar. Do not import wallpaper from other demos. Use independent parallax plane geometry (world/foreground/midground/background) with the same simplified drawing language; avoid 3D meshes.
+- New packs/squire/roman_master/environment.js::drawRomanTrainingYard2D(g, worldState, cam, opts), ::drawRomanGateAndRamp2D(...), ::drawRomanShieldWall2D(...). Keep landmark coordinates stable across angles.
+
+C4. packs/squire/templates.js:
+- Keep camera(), person(), sceneBody(), drawThing() behavior. Add optional templating only for new KH03 preview; do not change prior Squire scenes or auto-paint legacy backgrounds.
+
+C5. packs/squire/pack.js:
+- Keep init(E), captions(), thumb(), existing API exports. If needed, add optional named imports/exports/manifest loader only when style_profile == roman_squire_master.v1. No implicit upgrade for all pack='squire' projects. Do not touch DEM pack.
+
+C6. engine/player.js:
+- DO NOT change default shot rasterization/transitions or remove optional Three.js feature globally. For NEW KH03 project, set config.render_mode='canvas2d_only' and block any 3D shot kind in that project with a clear FAIL before render. Preserve legacy 3D path for other projects.
+- New project should use pure Canvas2D; verify through runtime import instrumentation that /engine/three3d.js and WebGL/Three URL load count = 0 for KH03, without claiming that all of Production contains no 3D.
+
+C7. render.mjs:
+- Preserve --sheet, --stills, --from, --to, --check, --workers and existing output contract. Prefer no modifications; if necessary add a small preflight render_mode guard isolated to KH03.
+- If existing render.mjs can already make MP4, use it rather than creating a redundant render engine.
+
+C8. Keep outputs invariant under render order. Every visual state must derive from (story, actor IDs, deterministic seed, global time), NOT currentFrame += / Math.random() / mutable previousFrame.
+
+C9. New modern tooling is justified ONLY if clearly necessary and if integration test, size, license and cost are documented. Default: no new animation libraries, no 3D packages, no external paid APIs.
+
+========================
+08. IMPLEMENTATION PHASE D — FRESH 30s ORIGINAL ROMAN VIDEO
+========================
+Project directory (new, never overwrite sample):
+projects/kh03_roman_last_gap_30s/
+- config.json, ARTIFACT_README.md
+- story/shots.json, storyboard.json, script.txt, roman_master_style_ref.json, character_bible.json, environment_bible.json, props.json, continuity_ledger.json, camera_beats.json, sound_design.json
+- timeline/lines.json, words.json, voice.wav (only if generated/imported, keep large audio artifacts out of Git where appropriate)
+- scenes/shots/*.js or new timeline-driven procedural modules, source of every new scene
+- build/ and out/ (actual rendered outputs; local); review packet committed with reasonable file size
+
+STORY — BRAND-NEW FICTIONAL ROMAN TRAINING SHORT (NOT AN UNSOURCED HISTORICAL FACT CLAIM):
+Working title: "THE LAST GAP IN THE SHIELD WALL"
+Logline: On a Roman training ground at dawn, one rookie is late locking his red shield. A training spear exposes a tiny gap; his quick response closes the wall one heartbeat before the wooden projectile taps through. The drill instructor reacts with a deadpan nod. This is an ORIGINAL dramatized practice vignette, not a claim about a specific recorded incident.
+
+Exact 30.00-second narrative architecture / author shot beats (improve pacing while preserving full novelty):
+- 0.00–2.50s, SH01 HOOK: Extreme detail close-up of a red scutum edge shaking; a narrow sliver of sunlight between adjacent shields; wooden training spear tip approaching. Immediate real visual action within first 0.4s. No intro/logo/still title card.
+- 2.50–5.50s, SH02 REVEAL: Medium over-shoulder original-design Roman soldier/rookie, helmet feathers, spear and red scutum. He notices the exposed line; eyes shift, grip tightens. Original Squire face preserved.
+- 5.50–9.00s, SH03 WIDE GEOGRAPHY: Roman training line at warm dawn, camp gate / ramp landmarks established. Several soldiers bracing with red shields. Genuine 2D depth & crowd, not just same static photo pan.
+- 9.00–12.00s, SH04 BEAT: Low-angle profile of instructor launching a harmless wooden training spear; foreground arm enters/exits frame; clear stage axis. Show dramatic tension without gore.
+- 12.00–15.00s, SH05 ACTION: Tracking shot as rookie plants foot, slides shield into wall. Hand/foot shield contact remains locked; action contains anticipation > acceleration > impact > settle.
+- 15.00–18.50s, SH06 INSERT: Tip touches reinforced shield edge and glances away; close-up physics readable at 24fps with smear/in-between/squash timing, not a static still + camera zoom.
+- 18.50–23.00s, SH07 PAYOFF: Wide then medium reaction: the shield line holds, instructor's eyes narrow then nod once. Background troops are not identical synchronized robots.
+- 23.00–26.50s, SH08 TWIST: The rookie exhales—then notices his own spear is caught in the neighboring shield strap. One small awkward comic beat with an actual acting reaction.
+- 26.50–30.00s, SH09 OUTRO/LOOP: Brief side-reaction and view returning to the red shield gap motif, now closed. End on a self-contained payoff while permitting visual loop to hook; no generic subscribe spam.
+
+Timing can be adjusted with documented reasoning, but EXACT 30.000s, no gaps/overlaps, every shot has a story reason. Avoid forced cut every 2s; allow action/motivated reaction to determine pace. At least 7 distinct shot purposes/framing types, no more than two consecutive shots with same framing + same character size + same camera trajectory; no arbitrary zoom loops. Keep geometry coherent across angle cuts; 2D perspective views may change projection but actor IDs, helmet/shield/props/wardrobe and left-to-right stage geography must not mutate.
+
+NARRATION (English, original, adjustable to real spoken timing; do not hardcode timing without audio measurement):
+"One tiny gap could ruin a Roman shield wall. At dawn, a rookie was still adjusting his grip. The instructor spotted it—and sent a wooden practice spear straight at the opening. The rookie planted his foot, shoved his shield into place, and the spear snapped aside. Perfect drill. Almost. His own spear was now tangled in his neighbor's strap. The instructor didn't smile. But he nodded."
+If historically framed, describe it explicitly as a dramatized example; do not attribute invented detail to a real ancient record. Match real audio length naturally; avoid extreme speed/time-stretch. If no compatible TTS or authorized voice exists, report AUDIO_VOICE_BLOCKED rather than calling noise 'real speech'. Use documented local offline speech when available; no online dependencies as a hidden requirement.
+
+VISUAL ASSET RULES:
+- Original Squire Roman soldier from Production is PRIMARY hero. Every major shot must show recognizable same helmet/face/scutum/weapon style. Other characters may be variants within original Squire family, not replacement style family.
+- Newly coded Roman training field, camp gate, shield wall, wooden dummy/spear and background formations. Not a repainted still, not screenshot reuse, not an imported previous KH project.
+- Background troops have seeded phase offsets, distribution, subtle independent activity; no synchronized clones and no identical crowd texture across shots.
+- Hero is allowed to move in X/Y and joints; holds of 6–12 frames for dramatic anticipation are allowed, never require every pixel change on every frame. Purposeful holds are better than artificial jitter.
+- Story-independent data model is preferred over one big hardcoded scene file where possible, but do not overengineer full KH03.2..03.5.
+- Audio: recognizable SFX shield contact, wooden training spear, marching/cloth/sand footsteps, distinct sound perspective, score ducked under narration. Import/preserve original audio infrastructure, use licensed/procedural sources only, report provenance; no copyrighted soundtrack copying.
+- Deliver 1920x1080, 24fps, H.264 MP4 + AAC, exact 720 decoded frames, 30.000s, audible spoken narration if supported, mixed SFX and music, consistent loudness target around -14 to -16 LUFS with reasonable true peak <= -1 dBTP; verified by ffprobe/ffmpeg ebur128 or loudnorm measurements. If audio target unreachable, mark FAIL rather than faking receipt.
+- Deliver additional 9:16 proof contact sheet if lightweight, but a separate Shorts MP4 is optional; main preview 16:9 is mandatory.
+
+========================
+09. PILOT-SCOPED FRAME ANIMATION / CAMERA — NOT STATIC SLIDES
+========================
+New optional modules and proposed functions:
+- packs/squire/roman_master/motion.js::evaluateRomanActorPoseAt(globalT, shot, actor, worldState)
+  Deterministically evaluate anticipation > action > contact > reaction > settle, with keyframe/curve interpolation; preserve source soldier renderer silhouette, helmet and shield attachment; derivative-aware easing C1 where possible. Separate 'actor pose' from 'camera transform'.
+- ::solveRomanShieldGrip(...), ::solveRomanFootPlant(...)
+  Resolve hand-to-scutum anchor, planted footwear during step and reaction; guard screen-space illusion vs world-space truth. Use existing ik2() where adequate.
+- ::evaluateRomanSecondaryMotionAt(...)
+  Tiny helmet-plume lag, tunic follow-through, scutum sway, blink, breathing; seeded and physically motivated, not random noise.
+- packs/squire/roman_master/camera.js::evaluateRomanCameraAt(shotId, globalT, camBeats)
+  Pure 2D deterministic keyframed zoom/pan/track/parallax. Target readable 0.8–1.4ish scaling (not mandatory global clamp; constraints per shot), no world crop/blank edge, no unmotivated snap, C1 curve continuity within shot.
+- ::drawRomanParallaxPlanes(g, cam, layers)
+  Re-render actual code-authored background/character layers per frame, not cropping a single flattened screenshot. Subtle distance-weighted motion.
+- ::validateRomanCameraCut(shotOut, nextShotIn, stateLedger)
+  Enforce action axis/camera purpose and hand/prop continuity; do not wrongly forbid valid cinematic cut jumps or match cuts.
+- tools/kh03_preview_director.py::compile_roman_training_beats(script, style_bible)
+  Generate/validate nine authored beat entries and expose semantic purpose; pilot-scoped, no claim to general auto-direct all story types.
+- ::build_roman_preview_project(...)
+  Write new project's storyboard/characters/props/shot args and production metadata atomically, detect missing assets and refuse placeholders.
+- ::build_roman_audio_timeline(...)
+  Use real measured word timings/audio cues, run sound-design mix; preserve existing tools/prep_voice.py and tools/plan_audio.py behavior.
+- ::render_roman_preview_30s(...)
+  Delegate Chromium/FFmpeg to existing render.mjs pipeline and tools/mix.py as appropriate, verify final MP4, proof screenshots, output hashes.
+
+Performance acceptance: frames must contain meaningful pose/prop action, not only camera movement/animated grain. Within an individual action, verify contact and easing at critical sub-frame samples; render 24fps and audit real adjacent images at full-res ROI plus ground truth pose traces. Preserve intentional 2D animation holds; disallow visually frozen actor for >2s within an action-heavy shot unless storyboard explicitly marks intentional hold with editorial justification and approval.
+
+========================
+10. ASYNC QA, MULTITHREAD, DETERMINISM, DISK/RAM SAFETY
+========================
+Mandatory runner: scripts/run_kh03_0_validation.py (NEW) backed by tests/kh03_roman/* and scripts/resource_guard.py.
+
+Proposed functions:
+- run_preflight_guard(): git/branch ancestry + free disk/RAM/CPU + codecs + test fixture inventory, user data protection.
+- job_capture_baseline(): run and verify legacy Squire and DEM style/render samples without modifying originals.
+- job_style_lock_contract(): style schema/digest/screenshot status + same-pose A/B preservation.
+- job_render_reference_poc(): original Roman turnarounds and expression/pose A/B screenshot proof.
+- job_2d_only_guard(): inject forbidden kind:'3d' in copied KH03 test project; require rejection while validating unrelated legacy 3D runtime remains intact.
+- job_build_fresh_preview(): compile actual new story/fixtures/audio, assert original project uniqueness.
+- job_render_full_30s(): produce complete real MP4; record wall-clock and content hashes.
+- job_frame_temporal_validation(): decode entire 720-frame MP4, inspect black/flat/error frames, joint trajectories, cadence, visual novelty, shot boundary continuity; separate camera-induced pixel activity from actor motion.
+- job_camera_and_contact_qa(): evaluate sampled curves and world-space shoulder/foot/shield/spear bounds at critical times and decoded frames.
+- job_negative_mutations(): actively break style, 3D guard, prop continuity, actor identity, hand contact, footplant, framing, missing scene, bad timestamp, frozen-actor pan, recycled asset reference, missing voice, truncated video; each detector MUST kill the injected error. Add false-positive guards for legitimate pose hold and valid cinematic cut.
+- job_real_backtests(): synthetic 180-shot stress in isolation + at least 20 real rendered shots or 20-shot equivalent 2D multi-scene real MP4 backtest; distinguish SYNTHETIC_PASS vs REAL_RENDERED_PASS. If historical Company 180-shot fixture absent: NOT_RUN_MISSING_FIXTURE, never historical PASS.
+- job_legacy_regression(): run scripts/run_e2e_regression.py in isolated evidence/test-run folders; evaluate all required legacy tests; any optional fixture missing is honestly NOT_RUN; no counting NOT_RUN as PASS.
+- job_speed_and_reproducibility(): 3 independent serial and bounded-parallel repeats for isolated QA workloads; compare frame checksums for semantic equivalence, measure wall-time and actual CPU/RAM peak, report speedup only for tested workload. Also use forward/reverse/random frame order full codec proof for selected frames and output hashes within controlled environment.
+- write_verdict_and_review_packet(): explicit gate status and evidence paths, technical vs human approval separated, save atomic JSON/MD.
+- safe_commit_push_attestation(): only called after mandatory TECH_PASS and cleanliness checks; record branch refs after remote push.
+
+DAG and concurrency requirements:
+1. run_preflight_guard is synchronous and must PASS before jobs start.
+2. Independent lightweight tests (schema, static analysis, canonical hashing, unit/mutation) run concurrently via asyncio + ThreadPoolExecutor (default <= min(3, floor(logicalCPU/2)), override downward based on resources).
+3. Heavy Chromium FFmpeg jobs share asyncio.Semaphore(1) initially; permit 2 ONLY if measured free RAM/disk headroom and baseline memory prove safe. Each job gets isolated workdir and own output paths; never parallel-write same config, renderer state, temp frames or test manifest.
+4. Strict dependency graph: baseline/style contract -> POC -> script/asset build -> rendered preview -> frame/audio/continuity QA -> backtests/legacy -> final verdict -> commit/push. Independent parts may run in parallel only if no shared output/read-after-write hazard.
+5. Use monotonic timestamps, timeout per job, cancellation and cleanup of owned child process trees ONLY; no orphan Chromium/FFmpeg. Process monitor records its owned PIDs, never kill unrelated applications.
+6. Disk headroom: fail preflight if free space < max(8 GiB, forecast frames/temp/video footprint + 2 GiB safety reserve), or RAM after reserve < 1.0 GiB; sample every 1s and stop heavy jobs on breach. Choose thresholds conservatively based on actual machine, do not hardcode unrealistic 50GiB requirement. Do not create unbounded raw 1080p RGB frames on disk; pipe/stream or chunk and reuse scratch safely.
+7. No blanket 'clean_old_runs()' deletion; explicitly exclude all existing KH01/KH02 and historical project folders from cleanup. Delete only scratch created during current run after verifying copies of essential evidence, never source/user assets.
+8. Render determinism: every frame depends on globalT + immutable inputs + seeded randomness; no mutable per-frame actor state, Date.now() for pose, Math.random() inside draw, or race-sensitive file ordering. Pixel hash stability may differ across GPU/OS; perform same-host same-renderer deterministic comparison with environment fingerprint and explain cross-platform limitations.
+9. Do not call rendering a performance speedup unless measured with >= 3 repeats, same pixels/codec and representative load. Report both overhead and 30s render wall time. Distinguish QA speedup from video export speedup.
+10. Concurrency tests must demonstrate real overlapping job intervals and stable output (not merely a counter labelled async).
+
+QA acceptance thresholds (design values; measure actual, document rationale, no synthetic PASS):
+- exactly 30.000s, 720 decoded frames @ 24fps and intended codec/dimensions.
+- 0 missing shot, 0 unhandled scene error, 0 reference to KH01/KH02 preview assets, 0 Three.js/WebGL 3D loads in new project, 0 blank frames (except deliberately authored fade with timing proof), no audio silence falsely labelled narration.
+- at least 1 hero with coherent identity in all appearances, both shield + spear anchored; at least 2 full-body action beats and 2 purposeful close details; no major prop teleport at cuts.
+- source default renderer/packs/samples preserved, or ALL deviations individually justified with tests and user-visible before/after.
+- same-pose original style proof remains original Roman/Squire identity, with exact screenshot status and human review PENDING.
+- script 30s novelty: new character action and beats; no scroll, no bell/goat, no old marketplace reuse of visual plates.
+- tests must detect injected mutants and not raise false positives on valid stylistic holds or match cuts.
+- historical fixture absent -> NOT_RUN, output PATH_MISSING marked, never PASS.
+
+Verdict statuses: PASS, FAIL, NOT_RUN_MISSING_FIXTURE, BLOCKED, HUMAN_REVIEW_PENDING. Overall TECH_PASS_HUMAN_REVIEW_PENDING only when every mandatory real technical gate is PASS. Human STYLE_APPROVED and EDITORIAL_APPROVED MUST stay PENDING until explicit human sign-off; no fabricated retention data.
+
+========================
+11. REGRESSION & BACKTEST — KHÔNG PHÁ SẢN PHẨM CŨ
+========================
+- Run original Squire 16:9 and 9:16 and DEM 16:9 and 9:16 outputs where baseline fixture supports them, including AAC audio and 30s previews if existing tests expect them. Use scripts/run_e2e_regression.py; if hardcoded branch filtering rejects feat/*, apply a narrowly-scoped compatibility fix ONLY with dedicated unit tests. Preserve threshold semantics and expected golden outputs.
+- Compare baseline visual canonical hashes of original Squire sample at 3+ timestamps with unmodified originals; exact same config and host required. For DEM pack, unchanged source and genuine legacy render regression.
+- Do NOT retroactively edit tracked tests/evidence/latest-* or golden fixtures to make current tests green. New results go to tests/evidence/kh03_0_<runid>/, unique names, except clearly necessary intentional updates documented and separately validated.
+- 180 synthetic stress and 20 real rendered verification MUST be separate categories, with project and output artifacts, decoded frames and hashes. Missing historical fixture remains NOT_RUN.
+- Run negative resource breach and file tamper tests only in disposable workspaces, not user's real repo.
+- Keep docs/squire licenses, skill docs, original source sample, packs/dem and Production branch byte-for-byte intact unless evidence-backed code defect mandates a minimal change. Never touch global 3D logic if 2D-only guard can be opt-in.
+
+========================
+12. EVIDENCE / DELIVERABLES — CHECKLIST CỨNG
+========================
+MUST DELIVER and point to EXACT paths:
+[ ] 1) New branch feat/roman-2d-master based directly on origin/Production; SHA attestation.
+[ ] 2) New execution folder docs/antigravity_runs/KH-03_0_ROMAN_MASTER_<runid>/README.md and verbatim FULL_PROMPT.txt.
+[ ] 3) docs/..../BASELINE.md + baseline hash snapshot + source tree manifest.
+[ ] 4) visual_styles/roman_squire_master/v1/style_bible.json, documented immutable style contract/digest.
+[ ] 5) Same ORIGINAL Squire hero A/B in SAME pose/scene/camera at wide and close: before, after, overlay and diff; written reviewer guide. Additional expression sheet of same original soldier, not newly redesigned person.
+[ ] 6) New original 30s project with 9 distinct authored beats, script/storyboard, 2D code, continuity/camera/audio manifest; do not overwrite projects/squire-mau or earlier demos.
+[ ] 7) Full playable H.264 + AAC 1920x1080 24fps 30.000s file at projects/kh03_roman_last_gap_30s/out/KH03_ROMAN_LAST_GAP_ORIGINAL_30S_1080P.mp4 (if filename differs, record exact path); SHA256, bytes, ffprobe, complete decode and loudness evidence.
+[ ] 8) contact_sheet_9shots.jpg, selected original stills per shot, at least 3 multi-frame action strips (pose/contact, shield wall, camera move), thumbnail_1280.jpg; no overlay of user style screenshot into scene.
+[ ] 9) Character identity & prop contact/camera continuity traces, frame temporal liveness metrics and manually reviewable sample frames.
+[ ] 10) Async DAG execution trace, overlap and worker caps; actual resource measurements and protection/cancellation logs; speed benchmark with 3 repeat output digest parity.
+[ ] 11) Legacy full regression and 180 synthetic / 20 real backtests; negative mutation test matrix; number PASS/FAIL/NOT_RUN accurate and unembellished.
+[ ] 12) KEPT_AS_IS.md, FUNCTION_CHANGE_MATRIX.md (every modified function -> old/new role -> tests), TEST_MATRIX.md, RESOURCE_AUDIT.md, VISUAL_REVIEW.md, RELEASE_VERDICT.md, ARTIFACT_README.md and post-push remote SHA attestation.
+[ ] 13) Clean git status of intended tracked changes after commit, correct remote target head, protected refs unchanged.
+
+VIDEO PATH caveat: MP4 may be too large for Git and legitimately local only. DO NOT claim viewer can open it from GitHub if you have not uploaded it. Provide explicit Windows/local absolute path and command to open, optional compressed short preview if safely within repo/artifact limits, plus contact sheet in repo.
+
+========================
+13. FIXED PRESERVATION MATRIX — PHẦN PHẢI GIỮ NGUYÊN
+========================
+MUST KEEP:
+- Production branch and exact original Squire Roman silhouette as the long-term master style; original mũ lông, mặt trắng, khiên đỏ, giáo và nét nâu.
+- Original code defaults: packs/squire/chara.js::soldier(), face(), head(), shield(), weapon(), hand(), ik2(); packs/squire/ink.js::OUT and base PAL; packs/squire/world.js::bg(); templates.js::camera(), sceneBody(), person(), drawThing(); packs/squire/pack.js::init/captions/thumb.
+- Existing engine/core.js APIs and deterministic rng/kf/layer primitives; render.mjs CLI / FFmpeg output; original player transitions except minimal opt-in guard.
+- packs/dem Self-Improvement, packs/doodle, original audio generation/mix and existing tests; original licenses, original sample project data, old generated user outputs.
+- Optional legacy 3D compatibility in engine/three3d.js for other projects BUT KH03 film strictly 2D.
+- Previous Git branches fix/Image-Shot & feat/modern-2d-cinematic and every prior QA run directory; NO merges/cherry-picks from them.
+- Reference image is for style auditing, not frame asset for new video.
+
+OPTIONAL ALLOWED CHANGES (prove every one): new roman_master/ submodules, new opt-in config/style profile, new project data/preview, new QA scripts/tests, explicit minimal Squire export hooks. All anything beyond this needs a clear necessity argument and before/after regression proof.
+
+========================
+14. REALISTIC EDITORIAL BAR — KHÔNG LẠM DỤNG CHỈ SỐ
+========================
+Deliver polished results within source engine constraints. Viewer-retention craft:
+- Hook action before 0.5s, immediate readable conflict, visible consequence by 9–12s, a satisfying payoff and tiny comedic twist by 30s.
+- Mix action scale: extreme detail → medium actor → geography wide → meaningful angle change; edits motivated by motion/visual information, not random constant zoom.
+- Performance: eye-leading actions, anticipation, nonuniform tempo, secondary motion, spatially convincing shield/spear/clothing contact, crowd motion phase variety, held reaction only when motivated.
+- 2D camera: anchored scene space, smooth push-in/out, controlled parallax, proper cut on action, no unnatural background teleport/field-of-view artifact.
+- Narration, sfx and score must serve beats; no overwhelming music or meaningless particle spam.
+- Do NOT assert measurable audience retention uplift or “cinematic 100% approved” from coding. Real audience analytics require platform upload data; visual sign-off requires user watching actual MP4.
+
+========================
+15. STOP / RELEASE RULES
+========================
+Hard stops: wrong source branch; dirty user files risk; original Squire style identity swapped; unauthorized 3D or reused preview frame; missing valid MP4; fake narration; testing absent but claimed PASS; disk/RAM safety breach; required regression FAIL; unverified remote push; protected branch modified.
+
+If any hard stop occurs: report exact status + failing file/line/command evidence + safe retry procedure. Do not skip steps or mark release ready. Keep failed artifacts local for diagnosis and do not delete original data.
+
+When TECH_PASS achieved: auto-commit/push only new target branch, verify refs, report EXACT local MP4 path and GitHub evidence paths, and return status "TECH_PASS_HUMAN_REVIEW_PENDING". Do not merge to Production.
+
+Final response format to user:
+1. SOURCE=origin/Production@<sha>; TARGET=feat/roman-2d-master@<pushed_sha>; protected refs check.
+2. KH-03.0 technical gates: baseline/style lock/2D-only/video/QA with PASS/FAIL/NOT_RUN + evidence URLs.
+3. Original Roman style SAME-POSE A/B screenshot and key differences; STYLE_APPROVED=HUMAN_REVIEW_PENDING.
+4. 30s video name/length/res/fps/frames/audio codec/checksum/absolute openable path; contact sheet and 3 action strips; EDITORIAL_APPROVED=HUMAN_REVIEW_PENDING.
+5. Legacy regression/backtest exact tested counts + synthetic vs real vs missing-fixture distinction; 3-repeat speed measured workload, disk/RAM minima.
+6. Changed files/functions, kept-as-is summary, next steps KH-03.1..03.6 explicitly NOT implemented.
+7. Confirm git push remote SHA or explain why blocked.
+
+REMINDER: KEEP ORIGINAL ROMAN SQUIRE STYLE FROM PRODUCTION, NOT KH-02.1 NEW STYLE. NEW 30S MUST USE FRESH CODIFIED 2D SHOTS AND NEW STORY. DO THE WORK END-TO-END, VERIFY EVERYTHING, AND NEVER FAKE A PASS.
+
+END OF FULL PROMPT — KH-03.0.R1

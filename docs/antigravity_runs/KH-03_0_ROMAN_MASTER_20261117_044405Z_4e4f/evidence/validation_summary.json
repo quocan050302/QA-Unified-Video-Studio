@@ -1,0 +1,207 @@
+{
+  "schema_version": "kh03.0.validation_summary.v1",
+  "generated_at_utc": "2026-11-17T07:02:48Z",
+  "run_id": "20261117_044405Z_4e4f",
+  "branch": "feat/roman-2d-master",
+  "source_branch": "origin/Production",
+  "source_commit": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "overall_verdict": "TECH_PASS_HUMAN_REVIEW_PENDING",
+  "human_editorial_gates": {
+    "STYLE_APPROVED": "HUMAN_REVIEW_PENDING",
+    "EDITORIAL_APPROVED": "HUMAN_REVIEW_PENDING",
+    "RETENTION_ANALYTICS": "NOT_CLAIMED_REQUIRES_REAL_VIEWER_DATA"
+  },
+  "out_of_scope_phases": {
+    "KH-03.1_generalized_roman_asset_library": "NOT_IMPLEMENTED",
+    "KH-03.2_generic_natural_motion_engine": "NOT_IMPLEMENTED",
+    "KH-03.3_generic_continuity_engine": "NOT_IMPLEMENTED",
+    "KH-03.4_general_cinematic_camera_director": "NOT_IMPLEMENTED",
+    "KH-03.5_smart_shot_director_arbitrary_niches": "NOT_IMPLEMENTED",
+    "KH-03.6_final_production_merge": "NOT_IMPLEMENTED"
+  },
+  "mandatory_technical_gates": {
+    "preflight_guard": "PASS",
+    "baseline_preservation": "PASS",
+    "style_lock_contract": "PASS",
+    "same_pose_reference_poc": "PASS",
+    "guard_2d_only": "PASS",
+    "fresh_preview_build": "PASS",
+    "render_full_30s": "PASS",
+    "frame_temporal_validation": "PASS",
+    "camera_and_contact_qa": "PASS",
+    "negative_mutations": "PASS",
+    "real_backtests": "PASS",
+    "legacy_regression": "PASS",
+    "speed_and_reproducibility": "PASS"
+  },
+  "failed_gates": [],
+  "resource_telemetry": {
+    "samples": 419,
+    "min_free_disk_gb": 53.27,
+    "min_avail_ram_gb": 3.19,
+    "breached": false,
+    "breach_message": ""
+  },
+  "dag_execution_trace": [
+    {
+      "job": "style_lock_contract",
+      "kind": "light",
+      "status": "PASS",
+      "t_start_mono": 394608.953,
+      "t_end_mono": 394608.968,
+      "wall_sec": 0.015,
+      "started_at_utc": "2026-11-17T06:55:46Z",
+      "finished_at_utc": "2026-11-17T06:55:46Z"
+    },
+    {
+      "job": "baseline_preservation",
+      "kind": "heavy",
+      "status": "PASS",
+      "t_start_mono": 394608.953,
+      "t_end_mono": 394612.343,
+      "wall_sec": 3.39,
+      "started_at_utc": "2026-11-17T06:55:46Z",
+      "finished_at_utc": "2026-11-17T06:55:50Z"
+    },
+    {
+      "job": "same_pose_reference_poc",
+      "kind": "heavy",
+      "status": "PASS",
+      "t_start_mono": 394608.953,
+      "t_end_mono": 394613.593,
+      "wall_sec": 4.64,
+      "started_at_utc": "2026-11-17T06:55:46Z",
+      "finished_at_utc": "2026-11-17T06:55:51Z"
+    },
+    {
+      "job": "fresh_preview_build",
+      "kind": "light",
+      "status": "PASS",
+      "t_start_mono": 394613.593,
+      "t_end_mono": 394613.75,
+      "wall_sec": 0.157,
+      "started_at_utc": "2026-11-17T06:55:51Z",
+      "finished_at_utc": "2026-11-17T06:55:51Z"
+    },
+    {
+      "job": "guard_2d_only",
+      "kind": "heavy",
+      "status": "PASS",
+      "t_start_mono": 394613.75,
+      "t_end_mono": 394616.421,
+      "wall_sec": 2.671,
+      "started_at_utc": "2026-11-17T06:55:51Z",
+      "finished_at_utc": "2026-11-17T06:55:54Z"
+    },
+    {
+      "job": "render_full_30s",
+      "kind": "heavy",
+      "status": "PASS",
+      "t_start_mono": 394616.421,
+      "t_end_mono": 394616.437,
+      "wall_sec": 0.016,
+      "started_at_utc": "2026-11-17T06:55:54Z",
+      "finished_at_utc": "2026-11-17T06:55:54Z"
+    },
+    {
+      "job": "camera_and_contact_qa",
+      "kind": "light",
+      "status": "PASS",
+      "t_start_mono": 394616.437,
+      "t_end_mono": 394616.531,
+      "wall_sec": 0.094,
+      "started_at_utc": "2026-11-17T06:55:54Z",
+      "finished_at_utc": "2026-11-17T06:55:54Z"
+    },
+    {
+      "job": "frame_temporal_validation",
+      "kind": "light",
+      "status": "PASS",
+      "t_start_mono": 394616.437,
+      "t_end_mono": 394619.375,
+      "wall_sec": 2.938,
+      "started_at_utc": "2026-11-17T06:55:54Z",
+      "finished_at_utc": "2026-11-17T06:55:57Z"
+    },
+    {
+      "job": "negative_mutations",
+      "kind": "light",
+      "status": "PASS",
+      "t_start_mono": 394616.437,
+      "t_end_mono": 394620.328,
+      "wall_sec": 3.891,
+      "started_at_utc": "2026-11-17T06:55:54Z",
+      "finished_at_utc": "2026-11-17T06:55:58Z"
+    },
+    {
+      "job": "real_backtests",
+      "kind": "heavy",
+      "status": "PASS",
+      "t_start_mono": 394620.328,
+      "t_end_mono": 394640.156,
+      "wall_sec": 19.828,
+      "started_at_utc": "2026-11-17T06:55:58Z",
+      "finished_at_utc": "2026-11-17T06:56:18Z"
+    },
+    {
+      "job": "speed_and_reproducibility",
+      "kind": "heavy",
+      "status": "PASS",
+      "t_start_mono": 394640.156,
+      "t_end_mono": 394665.125,
+      "wall_sec": 24.969,
+      "started_at_utc": "2026-11-17T06:56:18Z",
+      "finished_at_utc": "2026-11-17T06:56:43Z"
+    },
+    {
+      "job": "legacy_regression",
+      "kind": "heavy",
+      "status": "PASS",
+      "t_start_mono": 394665.125,
+      "t_end_mono": 395030.718,
+      "wall_sec": 365.593,
+      "started_at_utc": "2026-11-17T06:56:43Z",
+      "finished_at_utc": "2026-11-17T07:02:48Z"
+    }
+  ],
+  "pilot_deliverable": {
+    "local_mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh03_roman_last_gap_30s\\out\\KH03_ROMAN_LAST_GAP_ORIGINAL_30S_1080P.mp4",
+    "mp4_sha256": "114992fc726b7540d4edc2414419ded9f182fb837292878d1d18796ee544056e",
+    "mp4_bytes": 12399535,
+    "video_stream": {
+      "codec_name": "h264",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "decoded_frames": 720,
+      "format_duration_sec": 30.0
+    },
+    "audio_stream": {
+      "codec_name": "aac",
+      "sample_rate": 48000,
+      "channels": 2,
+      "integrated_lufs": -14.9,
+      "true_peak_dbtp": -2.7
+    }
+  },
+  "legacy_and_backtest_counts": {
+    "legacy_e2e": {
+      "PASS": 81,
+      "FAIL": 0,
+      "NOT_RUN_MISSING_FIXTURE": 1
+    },
+    "synthetic_180_shot": "SYNTHETIC_PASS",
+    "real_20_shot_rendered_mp4": "REAL_RENDERED_PASS",
+    "historical_company_180_fixture": "NOT_RUN_MISSING_FIXTURE"
+  },
+  "git_push_check": {
+    "status": "READY_FOR_COMMIT_AND_PUSH",
+    "pushed": false,
+    "branch": "feat/roman-2d-master",
+    "remote_protected_refs_verified": {
+      "refs/heads/Production": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+      "refs/heads/fix/Image-Shot": "c96c4f366b873aa3e81a299ab70a330b4adae5ee",
+      "refs/heads/feat/modern-2d-cinematic": "688ec5351cf8fbcdb7740420d81e1bbeac4eb727"
+    }
+  }
+}

@@ -31,6 +31,10 @@ export const FACES = {
   sleep:     { eyes: 'closed', brows: 'soft', mouth: 'flat' },
   wink:      { eyes: 'wink', brows: 'smug', mouth: 'smile' },
   think:     { eyes: 'side', brows: 'confused', mouth: 'flat' },
+  focused:   { eyes: 'half', brows: 'angry', mouth: 'flat' },
+  awkward:   { eyes: 'side', brows: 'sad', mouth: 'wavy', sweat: true },
+  exhale:    { eyes: 'closed', brows: 'soft', mouth: 'o' },
+  sternNod:  { eyes: 'dot', brows: 'flat', mouth: 'flat' },
 };
 
 function eye(g, x, y, R, kind, lw, look, blinkK, side) {
@@ -288,9 +292,10 @@ function helmetFront(g, cx, cy, R, hl, o) {
       for (const s of [-1, 1]) { g.save(); shape(g, (c) => { c.moveTo(cx + s * R * 0.78, cy - R * 0.15); c.quadraticCurveTo(cx + s * R * 1.12, cy + R * 0.1, cx + s * R * 0.95, cy + R * 0.62); c.quadraticCurveTo(cx + s * R * 0.75, cy + R * 0.55, cx + s * R * 0.62, cy + R * 0.1); c.closePath(); }, { fill: metal, lw }); for (let i = 0; i < 3; i++) circ(g, cx + s * R * (0.84 - i * 0.03), cy + R * (0.0 + i * 0.18), R * 0.055, { fill: lighter(metal, 0.1), lw: lw * 0.55 }); g.restore(); }
       steelDome(g, (c) => { c.moveTo(cx - R * 1.06, cy - R * 0.12); c.bezierCurveTo(cx - R * 1.08, cy - R * 1.32, cx + R * 1.08, cy - R * 1.32, cx + R * 1.06, cy - R * 0.12); c.quadraticCurveTo(cx, cy - R * 0.32, cx - R * 1.06, cy - R * 0.12); c.closePath(); }, M, metal, metalD);
       shape(g, (c) => { c.moveTo(cx - R * 1.12, cy - R * 0.08); c.quadraticCurveTo(cx, cy - R * 0.36, cx + R * 1.12, cy - R * 0.08); c.lineTo(cx + R * 1.12, cy + R * 0.02); c.quadraticCurveTo(cx, cy - R * 0.24, cx - R * 1.12, cy + R * 0.02); c.closePath(); }, { fill: lighter(metal, 0.08), lw: lw * 0.85 });
+      if (o.romanMasterPolish) line(g, [[cx - R * 0.84, cy - R * 0.13], [cx, cy - R * 0.31], [cx + R * 0.62, cy - R * 0.16]], { lw: Math.max(1.0, lw * 0.52), ink: '#fff2c6', a: 0.68 });
       if (!att) { rect(g, cx - R * 0.07, cy - R * 1.32, R * 0.14, R * 0.18, { fill: metal, lw: lw * 0.8, r: 2 }); circ(g, cx, cy - R * 1.36, R * 0.12, { fill: metal, lw: lw * 0.8 }); }
       const fe = o.feathers ?? (att ? 0 : 0);
-      for (let i = 0; i < fe; i++) { const s = i - (fe - 1) / 2, base = [cx + s * R * 0.32, cy - R * 0.98 + Math.abs(s) * R * 0.08]; feather(g, base[0], base[1], R * (1.0 - Math.abs(s) * 0.1), s * 0.35, (o.featherColors || [PAL.white, OUT, PAL.white])[i % 3], lw); }
+      for (let i = 0; i < fe; i++) { const s = i - (fe - 1) / 2, base = [cx + s * R * 0.32, cy - R * 0.98 + Math.abs(s) * R * 0.08]; feather(g, base[0], base[1], R * (1.0 - Math.abs(s) * 0.1), s * 0.35 + (o.featherBend || 0), (o.featherColors || [PAL.white, OUT, PAL.white])[i % 3], lw); }
       if (att || o.crest) { const cc = o.crest && o.crest !== true ? o.crest : PAL.red; shape(g, (c) => { c.moveTo(cx - R * 1.0, cy - R * 0.7); c.bezierCurveTo(cx - R * 0.8, cy - R * 2.0, cx + R * 0.9, cy - R * 2.05, cx + R * 1.25, cy - R * 0.55); c.quadraticCurveTo(cx + R * 0.6, cy - R * 1.25, cx - R * 1.0, cy - R * 0.7); }, { fill: cc, lw, inner: (c) => { c.strokeStyle = alpha(OUT, 0.35); c.lineWidth = lw * 0.4; for (let i = 0; i < 9; i++) { c.beginPath(); c.moveTo(cx - R * 0.8 + i * R * 0.22, cy - R * 1.75); c.lineTo(cx - R * 0.7 + i * R * 0.24, cy - R * 0.9); c.stroke(); } } }); }
       break;
     }
@@ -427,7 +432,10 @@ export function shield(g, x, y, s, o = {}) {
     c.globalAlpha = 0.55; line(c, [[-s * 0.22, -s * 0.3], [-s * 0.26, -s * 0.05]], { lw: lw * 1.2, ink: '#fff' }); c.globalAlpha = 1;
   } });
   if (o.rim !== false && (type === 'scutum' || type === 'round' || o.rimLine)) { g.save(); g.beginPath(); P(g); g.lineWidth = lw * 2.2; g.strokeStyle = rim; g.stroke(); g.lineWidth = lw; g.strokeStyle = OUT; g.stroke(); g.restore(); }
-  if (o.boss || type === 'round' || type === 'scutum') circ(g, 0, 0, s * (type === 'scutum' ? 0.09 : 0.08), { fill: o.bossColor || PAL.steelLight, lw: lw * 0.8 });
+  if (o.boss || type === 'round' || type === 'scutum') {
+    circ(g, 0, 0, s * (type === 'scutum' ? 0.09 : 0.08), { fill: o.bossColor || PAL.steelLight, lw: lw * 0.8 });
+    if (o.romanMasterPolish && type === 'scutum') circ(g, -s * 0.026, -s * 0.026, s * 0.025, { fill: alpha('#ffffff', 0.72), lw: 0 });
+  }
   for (let i = 0; i < (o.arrows || 0); i++) { const ax = (noise(i * 3.1) * 0.4) * s, ay = (noise(i * 7.7) * 0.5) * s; arrowStuck(g, ax, ay, s * 0.45, -0.6 + noise(i) * 0.5, lw); }
   g.restore();
 }
@@ -640,7 +648,11 @@ function legs(g, u, o, lw, t) {
   const W = o._walk;
   const bc = kind === 'plate' ? PAL.steel : o.boots || (kind === 'bare' ? PAL.leather : PAL.brownDark);
   const legsList = []; // {pts, side: 'L'|'R', shoe: 'front'|'side', far}
-  if (W && W.mode === 'side') {
+  if (o.leftFootLocal && o.rightFootLocal) {
+    const hb = (o.hipBobU || 0) * u;
+    legsList.push({ pts: ik2(-6.2 * u, hip + hb, o.leftFootLocal[0], o.leftFootLocal[1] + fy0, L1, L2, o.leftKneeBend ?? 0.3), shoe: o.shoeMode || 'front', far: !!o.leftFar, s: -1 });
+    legsList.push({ pts: ik2(6.2 * u, hip + hb, o.rightFootLocal[0], o.rightFootLocal[1] + fy0, L1, L2, o.rightKneeBend ?? -0.3), shoe: o.shoeMode || 'front', s: 1 });
+  } else if (W && W.mode === 'side') {
     const S = (W.run ? 1.5 : 1) * STEP * u, lift = (W.run ? 9 : 5.5) * u;
     for (const [off, far] of [[0.5, true], [0, false]]) {
       const [fx, fyy] = footSide((W.f + off) % 1, S, lift);
@@ -691,7 +703,7 @@ function torso(g, u, o, lw, t) {
     if (body === 'mail' || o.mail) { c.fillStyle = PAL.mail; c.fillRect(-wB * 2, top, wB * 4, 80 * u); mailPattern(c, -wB * 1.4, top, wB * 2.8, 60 * u, 4.2 * u, lw); }
     if (body === 'plate') { c.fillStyle = alpha(PAL.steelDark, 0.5); c.fillRect(4 * u, top, 30 * u, 60 * u); hiliteC(c, [[-9 * u, top + 6 * u], [-9 * u, top + 22 * u]], u); for (let i = 0; i < 3; i++) line(c, [[-wB * 1.2, hip - 2 * u + i * 4 * u], [wB * 1.2, hip - 2 * u + i * 4 * u]], { lw: lw * 0.6 }); }
     if (body === 'gambeson') { for (let i = -3; i <= 3; i++) line(c, [[i * 4.5 * u, top], [i * 4.8 * u, skirtY + 4 * u]], { lw: lw * 0.4, a: 0.5 }); }
-    if (body === 'roman') { if (!o.mail) { rect(c, -8 * u, top + 6 * u, 16 * u, 14 * u, { fill: PAL.bronze, lw: lw * 0.8, r: 2 * u, inner: (cc) => { circ(cc, -3.5 * u, top + 11 * u, 1.6 * u, { fill: PAL.bronzeDark, lw: 0 }); circ(cc, 3.5 * u, top + 11 * u, 1.6 * u, { fill: PAL.bronzeDark, lw: 0 }); circ(cc, 0, top + 16 * u, 1.6 * u, { fill: PAL.bronzeDark, lw: 0 }); } }); } for (let i = -3; i <= 3; i++) line(c, [[i * 4.2 * u, hip], [i * 4.6 * u, skirtY + 2 * u]], { lw: lw * 0.45, a: 0.45 }); }
+    if (body === 'roman') { if (!o.mail) { rect(c, -8 * u, top + 6 * u, 16 * u, 14 * u, { fill: PAL.bronze, lw: lw * 0.8, r: 2 * u, inner: (cc) => { circ(cc, -3.5 * u, top + 11 * u, 1.6 * u, { fill: PAL.bronzeDark, lw: 0 }); circ(cc, 3.5 * u, top + 11 * u, 1.6 * u, { fill: PAL.bronzeDark, lw: 0 }); circ(cc, 0, top + 16 * u, 1.6 * u, { fill: PAL.bronzeDark, lw: 0 }); } }); } for (let i = -3; i <= 3; i++) line(c, [[i * 4.2 * u, hip], [(i * 4.6 + (o.skirtSway || 0)) * u, skirtY + 2 * u]], { lw: lw * 0.45, a: 0.45 }); }
     if (body === 'samurai') { for (let i = 0; i < 5; i++) { rect(c, -wB * 1.2, top + 8 * u + i * 7 * u, wB * 2.4, 5.5 * u, { fill: i % 2 ? (o.lacing || PAL.red) : base, lw: lw * 0.5, r: 1 }); } }
     if (body === 'uniform') { line(c, [[0, top + 2 * u], [0, skirtY]], { lw: lw * 0.5 }); for (let i = 0; i < 3; i++) circ(c, 1.8 * u, top + 9 * u + i * 8 * u, 1.1 * u, { fill: PAL.gold, lw: 0 }); for (const s of [-1, 1]) rect(c, s * 9 * u - 4 * u, top + 8 * u, 8 * u, 6 * u, { fill: darker(base, 0.06), lw: lw * 0.5, r: 1 }); if (o.camo) { [[-8, 20, 5], [6, 30, 6], [-4, 40, 4], [9, 15, 4]].forEach(([a, b, r], i) => ellipse(c, a * u, top + b * u, r * u, r * 0.7 * u, { fill: [PAL.camo2, PAL.camo3][i % 2], lw: 0, rot: i })); } if (o.medals) for (let i = 0; i < 3; i++) rect(c, -11 * u + i * 3.2 * u, top + 7 * u, 2.6 * u, 3 * u, { fill: [PAL.red, PAL.blue, PAL.gold][i], lw: lw * 0.3, r: 0 }); }
     if (body === 'sailor') { shape(c, (cc) => { cc.moveTo(-wT, top); cc.lineTo(wT, top); cc.lineTo(wT * 0.7, top + 10 * u); cc.lineTo(0, top + 16 * u); cc.lineTo(-wT * 0.7, top + 10 * u); cc.closePath(); }, { fill: PAL.navy, lw: lw * 0.6 }); }
@@ -797,8 +809,9 @@ export function soldier(g, x, y, h, o = {}) {
   torso(g, u, o, lw, t);
   if (side) g.restore();
   // dau
-  const R = 19 * u, hx = (o.lean || 0) * u + (W && W.mode === 'side' ? 1.5 * u : 0), hy = -78 * u;
-  head(g, hx, hy, R, { ...o, lw, t, talk: o.talk });
+  const R = 19 * u, hx = (o.lean || 0) * u + (W && W.mode === 'side' ? 1.5 * u : 0), hy = (-78 + (o.headNodU || 0)) * u;
+  if (o.headRot) { g.save(); g.translate(hx, hy); g.rotate(o.headRot); head(g, 0, 0, R, { ...o, lw, t, talk: o.talk }); g.restore(); }
+  else head(g, hx, hy, R, { ...o, lw, t, talk: o.talk });
   if (o.crownOn) helmetCrownSmall(g, hx, hy, R, lw);
   if (o.glasses) { for (const s of [-1, 1]) circ(g, hx + s * R * 0.33 + (o.look || 0) * R * 0.22, hy + R * 0.02, R * 0.17, { fill: alpha('#fff', 0.25), lw: lw * 0.6 }); line(g, [[hx - R * 0.16, hy], [hx + R * 0.16, hy]], { lw: lw * 0.5 }); }
   // khien o tay trai (truoc than)
@@ -817,7 +830,7 @@ export function soldier(g, x, y, h, o = {}) {
   if (shieldFront) {
     const sz = (sh.s || ({ kite: 52, heater: 40, scutum: 62, round: 42, buckler: 26, pavise: 70, riot: 70 }[sh.type] || 40)) * u;
     const sxp = (sh.x ?? (o.pose === 'guard' ? 2 : ['push', 'lunge', 'brace'].includes(o.pose) ? 10 : -14)) * u, syp = (sh.y ?? -38) * u;
-    shield(g, sxp, syp + br, sz, { ...sh, lw, rot: sh.rot ?? (o.pose === 'guard' ? 0 : -0.06) });
+    shield(g, sxp, syp + br, sz, { ...sh, lw, romanMasterPolish: o.romanMasterPolish, rot: sh.rot ?? (o.pose === 'guard' ? 0 : -0.06) });
   }
   if (sh && sh.back) shield(g, -16 * u, -40 * u, 40 * u, { ...sh, lw, back: true });
   g.restore();

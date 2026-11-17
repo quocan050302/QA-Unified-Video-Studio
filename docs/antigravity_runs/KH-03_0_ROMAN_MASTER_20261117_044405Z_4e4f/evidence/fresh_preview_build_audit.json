@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "validator_status": "PASS",
+  "shots_total": 9,
+  "non_reuse_audit": {
+    "passed": true,
+    "project": "kh03_roman_last_gap_30s",
+    "files_audited": 19,
+    "banned_hashes_checked": 105,
+    "reference_screenshot_status": "USER_SCREENSHOT_REFERENCE_UNAVAILABLE",
+    "errors": []
+  },
+  "voice_Verification": {
+    "sample_rate": 48000,
+    "duration_sec": 30.0,
+    "rms": 0.086518,
+    "lines_count": 9,
+    "words_count": 67
+  },
+  "errors": []
+}

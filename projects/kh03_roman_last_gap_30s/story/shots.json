@@ -1,0 +1,195 @@
+{
+  "schema_version": "kh03.0.shots.v1",
+  "title": "THE LAST GAP IN THE SHIELD WALL",
+  "fictional_dramatization": true,
+  "duration": 30.0,
+  "fps": 24,
+  "total_frames": 720,
+  "style_profile": "roman_squire_master.v1",
+  "render_mode": "canvas2d_only",
+  "music": [
+    {
+      "start": 0.0,
+      "end": 30.0,
+      "bed": "roman",
+      "gainDb": -1.5
+    }
+  ],
+  "shots": [
+    {
+      "id": "SH01",
+      "start": 0.0,
+      "end": 2.5,
+      "line": "One tiny gap could ruin a Roman shield wall.",
+      "purpose": "hook_exposed_shield_gap_and_approaching_wooden_spear",
+      "framing_scale": "extreme_detail_insert",
+      "sfx": [
+        {
+          "name": "sfx/kh03_scutum_grip_rattle.wav",
+          "at": 0.08,
+          "gain": -5.0
+        },
+        {
+          "name": "sfx/kh03_spear_whoosh_launch.wav",
+          "at": 1.38,
+          "gain": -6.5
+        }
+      ]
+    },
+    {
+      "id": "SH02",
+      "start": 2.5,
+      "end": 5.5,
+      "line": "At dawn, a rookie was still adjusting his grip.",
+      "purpose": "reveal_rookie_hastatus_noticing_exposed_line",
+      "framing_scale": "medium_over_shoulder",
+      "sfx": [
+        {
+          "name": "sfx/kh03_scutum_grip_rattle.wav",
+          "at": 0.65,
+          "gain": -6.0
+        },
+        {
+          "name": "sfx/kh03_armor_nod_settle.wav",
+          "at": 1.85,
+          "gain": -8.0
+        }
+      ]
+    },
+    {
+      "id": "SH03",
+      "start": 5.5,
+      "end": 9.0,
+      "line": "The instructor spotted it,",
+      "purpose": "establish_castra_gate_ramp_and_training_shield_line",
+      "framing_scale": "wide_geography",
+      "sfx": [
+        {
+          "name": "sfx/kh03_sand_foot_plant.wav",
+          "at": 0.75,
+          "gain": -7.5
+        },
+        {
+          "name": "sfx/kh03_armor_nod_settle.wav",
+          "at": 2.1,
+          "gain": -8.5
+        }
+      ]
+    },
+    {
+      "id": "SH04",
+      "start": 9.0,
+      "end": 12.0,
+      "line": "and sent a wooden practice spear straight at the opening.",
+      "purpose": "instructor_launches_harmless_wooden_training_spear",
+      "framing_scale": "low_angle_profile",
+      "sfx": [
+        {
+          "name": "sfx/kh03_sand_foot_plant.wav",
+          "at": 0.55,
+          "gain": -6.5
+        },
+        {
+          "name": "sfx/kh03_spear_whoosh_launch.wav",
+          "at": 0.92,
+          "gain": -3.5
+        }
+      ]
+    },
+    {
+      "id": "SH05",
+      "start": 12.0,
+      "end": 15.0,
+      "line": "The rookie planted his foot, shoved his shield into place,",
+      "purpose": "rookie_plants_foot_and_shoves_scutum_into_wall",
+      "framing_scale": "medium_full_tracking",
+      "sfx": [
+        {
+          "name": "sfx/kh03_sand_foot_plant.wav",
+          "at": 1.02,
+          "gain": -4.0
+        },
+        {
+          "name": "sfx/kh03_shield_wall_lock.wav",
+          "at": 1.65,
+          "gain": -3.5
+        }
+      ]
+    },
+    {
+      "id": "SH06",
+      "start": 15.0,
+      "end": 18.5,
+      "line": "and the spear snapped aside.",
+      "purpose": "wooden_practice_tip_strikes_shield_rim_and_glances_away",
+      "framing_scale": "macro_physics_insert",
+      "sfx": [
+        {
+          "name": "sfx/kh03_wood_spear_glance.wav",
+          "at": 0.58,
+          "gain": -2.5
+        },
+        {
+          "name": "sfx/kh03_sand_foot_plant.wav",
+          "at": 2.18,
+          "gain": -7.5
+        }
+      ]
+    },
+    {
+      "id": "SH07",
+      "start": 18.5,
+      "end": 23.0,
+      "line": "Perfect drill. Almost.",
+      "purpose": "shield_line_holds_and_instructor_narrows_eyes_then_nods",
+      "framing_scale": "wide_to_medium_payoff",
+      "sfx": [
+        {
+          "name": "sfx/kh03_armor_nod_settle.wav",
+          "at": 2.82,
+          "gain": -6.5
+        }
+      ]
+    },
+    {
+      "id": "SH08",
+      "start": 23.0,
+      "end": 26.5,
+      "line": "His own spear was now tangled in his neighbor's strap.",
+      "purpose": "rookie_exhales_then_discovers_spear_caught_in_neighbor_strap",
+      "framing_scale": "medium_two_shot",
+      "sfx": [
+        {
+          "name": "sfx/kh03_leather_strap_tug.wav",
+          "at": 1.05,
+          "gain": -4.5
+        },
+        {
+          "name": "sfx/kh03_leather_strap_tug.wav",
+          "at": 2.02,
+          "gain": -5.5
+        }
+      ]
+    },
+    {
+      "id": "SH09",
+      "start": 26.5,
+      "end": 30.0,
+      "line": "The instructor didn't smile. But he nodded.",
+      "purpose": "instructor_deadpan_nod_and_return_to_closed_red_scutum_seam",
+      "framing_scale": "motif_return_close",
+      "sfx": [
+        {
+          "name": "sfx/kh03_armor_nod_settle.wav",
+          "at": 1.08,
+          "gain": -6.0
+        },
+        {
+          "name": "sfx/kh03_shield_wall_lock.wav",
+          "at": 2.35,
+          "gain": -7.0
+        }
+      ]
+    }
+  ]
+}

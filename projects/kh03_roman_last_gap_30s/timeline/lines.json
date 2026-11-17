@@ -1,0 +1,101 @@
+[
+  {
+    "id": "L01",
+    "shot_id": "SH01",
+    "slot": "NARRATOR",
+    "start": 0.1,
+    "end": 2.364,
+    "duration": 2.264,
+    "tempo_rate": 1.149,
+    "rms": 0.12567,
+    "text": "One tiny gap could ruin a Roman shield wall."
+  },
+  {
+    "id": "L02",
+    "shot_id": "SH02",
+    "slot": "NARRATOR",
+    "start": 2.62,
+    "end": 5.352,
+    "duration": 2.732,
+    "tempo_rate": 1.079,
+    "rms": 0.0931,
+    "text": "At dawn, a rookie was still adjusting his grip."
+  },
+  {
+    "id": "L03",
+    "shot_id": "SH03",
+    "slot": "NARRATOR",
+    "start": 5.72,
+    "end": 7.045,
+    "duration": 1.325,
+    "tempo_rate": 1.0,
+    "rms": 0.10881,
+    "text": "The instructor spotted it,"
+  },
+  {
+    "id": "L04",
+    "shot_id": "SH04",
+    "slot": "NARRATOR",
+    "start": 9.08,
+    "end": 11.896,
+    "duration": 2.816,
+    "tempo_rate": 1.0,
+    "rms": 0.10445,
+    "text": "and sent a wooden practice spear straight at the opening."
+  },
+  {
+    "id": "L05",
+    "shot_id": "SH05",
+    "slot": "NARRATOR",
+    "start": 12.08,
+    "end": 14.92,
+    "duration": 2.84,
+    "tempo_rate": 1.22,
+    "rms": 0.08995,
+    "text": "The rookie planted his foot, shoved his shield into place,"
+  },
+  {
+    "id": "L06",
+    "shot_id": "SH06",
+    "slot": "NARRATOR",
+    "start": 15.16,
+    "end": 16.709,
+    "duration": 1.549,
+    "tempo_rate": 1.0,
+    "rms": 0.10034,
+    "text": "and the spear snapped aside."
+  },
+  {
+    "id": "L07",
+    "shot_id": "SH07",
+    "slot": "NARRATOR",
+    "start": 18.8,
+    "end": 21.1,
+    "duration": 2.3,
+    "tempo_rate": 1.0,
+    "rms": 0.08455,
+    "text": "Perfect drill. Almost."
+  },
+  {
+    "id": "L08",
+    "shot_id": "SH08",
+    "slot": "NARRATOR",
+    "start": 23.12,
+    "end": 25.935,
+    "duration": 2.815,
+    "tempo_rate": 1.0,
+    "rms": 0.10881,
+    "text": "His own spear was now tangled in his neighbor's strap."
+  },
+  {
+    "id": "L09",
+    "shot_id": "SH09",
+    "slot": "NARRATOR",
+    "start": 26.64,
+    "end": 29.832,
+    "duration": 3.192,
+    "tempo_rate": 1.0,
+    "rms": 0.0969,
+    "text": "The instructor didn't smile. But he nodded."
+  }
+]

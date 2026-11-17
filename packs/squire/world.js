@@ -4,6 +4,7 @@
 import { E, rng, lerp, clamp, noise, alpha, mix, shade } from './ink.js';
 import { OUT, PAL, shape, rect, ellipse, circ, blob, polyS, line, tube, smoothPath, darker, lighter, haze } from './ink.js';
 import { charge } from './chara.js';
+import { drawRomanDawnSkyAndHills, drawRomanTrainingYard2D, drawRomanGateAndRamp2D, drawRomanShieldWall2D } from './roman_master/environment.js';
 
 const W = () => E.W, H = () => E.H;
 // ---------- bang mau theo gio
@@ -246,6 +247,20 @@ export function bg(g, kind = 'field', o = {}) {
       rect(g, tx - tw * 0.2, ty - H() * 0.06, H() * 0.035, H() * 0.06, { fill: '#72b0c9', lw: 2, r: 2 });
       circ(g, tx + tw * 0.15, ty - H() * 0.035, H() * 0.035, { fill: '#c98a52', lw: 2 });
       haze(g, '#1a1f26', 0.1);
+      break;
+    }
+    case 'roman_training_yard': {
+      drawRomanTrainingYard2D(g, { globalT: t }, null, { ...o, t, seed: s });
+      break;
+    }
+    case 'roman_camp_gate': {
+      drawRomanDawnSkyAndHills(g, { globalT: t }, { ...o, t, seed: s });
+      drawRomanGateAndRamp2D(g, { globalT: t }, null, { ...o, t, seed: s });
+      break;
+    }
+    case 'roman_shield_wall': {
+      drawRomanTrainingYard2D(g, { globalT: t }, null, { ...o, t, seed: s });
+      drawRomanShieldWall2D(g, { globalT: t }, null, { ...o, t, seed: s, drawNeighborShields: true });
       break;
     }
     case 'night': return bg(g, 'field', { ...o, time: 'night' });

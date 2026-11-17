@@ -1,0 +1,29 @@
+{
+  "environment_id": "roman_training_yard",
+  "time_of_day": "dawn",
+  "stage_axis": "instructor_and_castra_gate_left_to_shield_wall_right",
+  "landmarks": {
+    "castra_timber_gate_and_ramp": {
+      "world_x_norm": 0.15,
+      "ground_y_norm": 0.66
+    },
+    "legionary_tents": {
+      "world_x_range_norm": [
+        0.44,
+        0.79
+      ],
+      "ground_y_norm": 0.68
+    },
+    "shield_wall_chalk_line": {
+      "world_x_range_norm": [
+        0.38,
+        0.84
+      ],
+      "ground_y_norm": 0.885
+    },
+    "wooden_practice_spear_rack_and_palus": {
+      "world_x_norm": 0.89,
+      "ground_y_norm": 0.77
+    }
+  }
+}

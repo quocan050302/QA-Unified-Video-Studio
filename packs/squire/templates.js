@@ -7,6 +7,7 @@ import { soldier, bust, shield, weapon, charge, CAST, hand, head, arrowStuck, ST
 import { horse } from './horse.js';
 import { bg, tree, bush, tent, flag, castle, cloud, TIMES } from './world.js';
 import { formation, standard, topGround, topBlock, dustPuff, rain, volley, stuckArrows, dust, javelins, smoke, sparks, arrowFly } from './army.js';
+import { drawWoodenPracticeSpear2D, drawRomanTrainingRack2D } from './roman_master/environment.js';
 import { loadWorld, drawMap, projector, VIEWS } from '../doodle/map.js';
 export { loadWorld };
 
@@ -191,6 +192,14 @@ export function drawThing(g, kind, x, y, s, o = {}) {
       rect(g, s * 0.35, -s * 0.56, s * 0.18, s * 0.12, { fill: '#0a2e22', lw: 0, r: 2 });
       line(g, [[s * 0.37, -s * 0.5], [s * 0.51, -s * 0.5]], { lw: lw2 * 0.6, ink: '#3ddc97' });
       g.restore();
+      break;
+    }
+    case 'wooden_practice_spear': {
+      drawWoodenPracticeSpear2D(g, x, y, s, o.ang ?? Math.PI / 2, { ...o, lw });
+      break;
+    }
+    case 'training_rack': {
+      drawRomanTrainingRack2D(g, x, y + s * 0.35, s, { ...o, lw });
       break;
     }
   }

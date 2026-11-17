@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "comparisons": {
+    "squire-mau": {
+      "canonical_visual_hash": "f57afc66562e3e2b80587942fb8e96040e7be658935951d3d2cbde4ad137b932",
+      "hash_preserved": true,
+      "stills": {
+        "t_1.20.png": {
+          "pre_sha256": "59e2350a343b054839ee95e7f84f412512189019c9952cfc02f7a4d9142d8bff",
+          "post_sha256": "59e2350a343b054839ee95e7f84f412512189019c9952cfc02f7a4d9142d8bff",
+          "exact_match": true
+        },
+        "t_15.00.png": {
+          "pre_sha256": "9540210ae688a3c857cc0e0c289fa07a241dac6dd973424987f716d906fa9abd",
+          "post_sha256": "9540210ae688a3c857cc0e0c289fa07a241dac6dd973424987f716d906fa9abd",
+          "exact_match": true
+        },
+        "t_4.00.png": {
+          "pre_sha256": "854fdc1a1c42252f7f1e83d17a4be07f468aeb2723a5a89a5b2d795164edfb8a",
+          "post_sha256": "854fdc1a1c42252f7f1e83d17a4be07f468aeb2723a5a89a5b2d795164edfb8a",
+          "exact_match": true
+        }
+      },
+      "render_sec": 2.0
+    },
+    "selfimprove-mau": {
+      "canonical_visual_hash": "47624adbdb523133640160fb9ab3a08763a70ac7e58f0c989ae5ef38b1b8b084",
+      "hash_preserved": true,
+      "stills": {
+        "t_1.00.png": {
+          "pre_sha256": "81e722f35b6b8fab24b0f8fc87933fc288f2cde7dbb87b2f9bc04eed8069e5a9",
+          "post_sha256": "81e722f35b6b8fab24b0f8fc87933fc288f2cde7dbb87b2f9bc04eed8069e5a9",
+          "exact_match": true
+        },
+        "t_10.00.png": {
+          "pre_sha256": "9cb1d7c0aa2eec2085ef7712d3ae898719ef21c1ec82bf94bdba44b43a968ba3",
+          "post_sha256": "9cb1d7c0aa2eec2085ef7712d3ae898719ef21c1ec82bf94bdba44b43a968ba3",
+          "exact_match": true
+        },
+        "t_4.00.png": {
+          "pre_sha256": "cf4401a1c41af3be716518ed52984743c39819d3dd08801e20ba34b82ad01927",
+          "post_sha256": "cf4401a1c41af3be716518ed52984743c39819d3dd08801e20ba34b82ad01927",
+          "exact_match": true
+        }
+      },
+      "render_sec": 1.297
+    }
+  },
+  "protected_files_byte_identical": {
+    "engine/core.js": true,
+    "engine/three3d.js": true,
+    "packs/dem/pack.js": true,
+    "packs/dem/templates.js": true,
+    "packs/squire/army.js": true,
+    "packs/squire/horse.js": true,
+    "projects/squire-mau/config.json": true,
+    "projects/squire-mau/story/shots.json": true,
+    "projects/selfimprove-mau/config.json": true,
+    "projects/selfimprove-mau/story/shots.json": true
+  },
+  "errors": []
+}

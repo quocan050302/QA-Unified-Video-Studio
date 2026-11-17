@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "synthetic_180_shot_stress": {
+    "verdict": "SYNTHETIC_PASS",
+    "shots_validated": 180,
+    "duration_sec": 180.0
+  },
+  "real_20_shot_rendered_2d_backtest": {
+    "verdict": "REAL_RENDERED_PASS",
+    "shots_rendered": 20,
+    "decoded_frames": 480,
+    "render_wall_sec": 16.562,
+    "mix_wall_sec": 2.469,
+    "mp4_sha256": "31b7336913f09112ad1cc60da3b29bc83eaa677645ae2885c8f98b539b9792b0",
+    "mp4_bytes": 4042791
+  },
+  "historical_company_180_shot_fixture": {
+    "status": "NOT_RUN_MISSING_FIXTURE",
+    "fixture_state": "PATH_MISSING",
+    "searched": [
+      "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\company-180",
+      "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\tests\\fixtures\\company_180_shots"
+    ]
+  },
+  "errors": []
+}

@@ -1,0 +1,115 @@
+{
+  "status": "PASS",
+  "manifest": {
+    "project": "kh03_roman_last_gap_30s",
+    "output_mp4_local_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh03_roman_last_gap_30s\\out\\KH03_ROMAN_LAST_GAP_ORIGINAL_30S_1080P.mp4",
+    "output_mp4_sha256": "114992fc726b7540d4edc2414419ded9f182fb837292878d1d18796ee544056e",
+    "output_mp4_bytes": 12399535,
+    "render_wall_sec": 38.25,
+    "mix_wall_sec": 3.86,
+    "video_stream": {
+      "codec_name": "h264",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "decoded_frames": 720,
+      "format_duration_sec": 30.0
+    },
+    "audio_stream": {
+      "codec_name": "aac",
+      "sample_rate": 48000,
+      "channels": 2,
+      "integrated_lufs": -14.9,
+      "true_peak_dbtp": -2.7
+    },
+    "non_reuse_audit": {
+      "passed": true,
+      "project": "kh03_roman_last_gap_30s",
+      "files_audited": 19,
+      "banned_hashes_checked": 105,
+      "reference_screenshot_status": "USER_SCREENSHOT_REFERENCE_UNAVAILABLE",
+      "errors": []
+    },
+    "review_packet": {
+      "contact_sheet_9shots": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\contact_sheet_9shots.jpg",
+      "thumbnail_1280": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\thumbnail_1280.jpg",
+      "contact_sheet_9x16_framing_proof": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\contact_sheet_9x16_framing_proof.jpg",
+      "action_strips": [
+        {
+          "name": "action_strip_1_sh05_footplant_and_shield_shove.jpg",
+          "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\action_strip_1_sh05_footplant_and_shield_shove.jpg",
+          "sha256": "53456d88edd0ea66d99dc880bc0fa70bd40134ee97380281b088a4804e7bd8c5"
+        },
+        {
+          "name": "action_strip_2_sh06_wooden_spear_deflection.jpg",
+          "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\action_strip_2_sh06_wooden_spear_deflection.jpg",
+          "sha256": "e3280bc2d263a3cdbc5d113a90f2456ea809be1c97bd7e33129d4ddab43333d4"
+        },
+        {
+          "name": "action_strip_3_sh07_sh08_camera_push_and_strap_twist.jpg",
+          "path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\action_strip_3_sh07_sh08_camera_push_and_strap_twist.jpg",
+          "sha256": "fbbd32e78a417cda3c11fc57e61e0df0ddac7ff21ea3b864991ec9fd04a55b99"
+        }
+      ],
+      "stills": [
+        {
+          "shot_id": "SH01",
+          "t_sec": 1.15,
+          "jpg": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\stills_9shots\\SH01_t01.15s.jpg",
+          "sha256": "56e5241a4c1480c05780646b9aeaf06bf493defaf78c18c64015422f6aad1122"
+        },
+        {
+          "shot_id": "SH02",
+          "t_sec": 3.95,
+          "jpg": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\stills_9shots\\SH02_t03.95s.jpg",
+          "sha256": "10040a102b24a31181dbd3a21fcaa20e14a527b3a78c43e8a6cbf12a192096aa"
+        },
+        {
+          "shot_id": "SH03",
+          "t_sec": 7.35,
+          "jpg": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\stills_9shots\\SH03_t07.35s.jpg",
+          "sha256": "9e7dfd530763792b81589bbcb6752cf65e144642b02e1a408181df8638f98b19"
+        },
+        {
+          "shot_id": "SH04",
+          "t_sec": 9.96,
+          "jpg": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\stills_9shots\\SH04_t09.96s.jpg",
+          "sha256": "01c89847f73bbc3eb62d859f3eecfe50771fb0f801e95265e915ab773f326baf"
+        },
+        {
+          "shot_id": "SH05",
+          "t_sec": 13.68,
+          "jpg": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\stills_9shots\\SH05_t13.68s.jpg",
+          "sha256": "14e9ee9382bfaef215dd9462ef843eea7b7a7946ce647c3eadafb31a3305755e"
+        },
+        {
+          "shot_id": "SH06",
+          "t_sec": 15.62,
+          "jpg": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\stills_9shots\\SH06_t15.62s.jpg",
+          "sha256": "948bb8e99dd13c5257aa53e46351d380bc915d92ed90391ef1b1dbc3a320d1fa"
+        },
+        {
+          "shot_id": "SH07",
+          "t_sec": 21.35,
+          "jpg": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\stills_9shots\\SH07_t21.35s.jpg",
+          "sha256": "d7bd14f53c11f64a8e32fdb2384560de2e13fad65fcc5bd3f62572570ea74116"
+        },
+        {
+          "shot_id": "SH08",
+          "t_sec": 24.85,
+          "jpg": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\stills_9shots\\SH08_t24.85s.jpg",
+          "sha256": "cceb51e713639005fdadebf37856d3710a12a92c09ffa404753c62224a2e7324"
+        },
+        {
+          "shot_id": "SH09",
+          "t_sec": 28.9,
+          "jpg": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_ROMAN_MASTER_20261117_044405Z_4e4f\\film_preview_packet\\stills_9shots\\SH09_t28.90s.jpg",
+          "sha256": "252114c9cb573fa6ddf5c35ddbb0a342bff40853da03982283187bf476de9853"
+        }
+      ]
+    },
+    "editorial_approved": "HUMAN_REVIEW_PENDING",
+    "style_approved": "HUMAN_REVIEW_PENDING"
+  },
+  "errors": []
+}

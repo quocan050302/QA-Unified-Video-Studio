@@ -1,0 +1,342 @@
+{
+  "schema_version": "kh03.0.storyboard.v1",
+  "working_title": "THE LAST GAP IN THE SHIELD WALL",
+  "historical_framing": "Original fictional dramatized Roman training-yard practice vignette; not attributed to a specific recorded ancient incident.",
+  "duration_sec": 30.0,
+  "fps": 24,
+  "total_frames": 720,
+  "beats": [
+    {
+      "id": "SH01",
+      "index": 1,
+      "start": 0.0,
+      "end": 2.5,
+      "duration": 2.5,
+      "frame_start": 0,
+      "frame_end": 59,
+      "beat_role": "HOOK",
+      "purpose": "hook_exposed_shield_gap_and_approaching_wooden_spear",
+      "framing_scale": "extreme_detail_insert",
+      "camera_trajectory": "push_in_focus",
+      "stage_axis_sign": 1,
+      "gap_state_start": "OPEN_SLIVER",
+      "gap_state_end": "OPEN_SLIVER",
+      "snagged_spear_start": false,
+      "snagged_spear_end": false,
+      "primary_actors": [
+        "rookie_hastatus",
+        "veteran_neighbor_legionary"
+      ],
+      "narration": "One tiny gap could ruin a Roman shield wall.",
+      "visual_summary": "Extreme close-up of trembling red gold-rimmed scutum edge beside neighbor's steady scutum; warm dawn sunbeam slices through the narrow gap while a blunt wooden practice spear approaches from left.",
+      "sfx": [
+        {
+          "name": "sfx/kh03_scutum_grip_rattle.wav",
+          "at": 0.08,
+          "gain": -5.0
+        },
+        {
+          "name": "sfx/kh03_spear_whoosh_launch.wav",
+          "at": 1.38,
+          "gain": -6.5
+        }
+      ]
+    },
+    {
+      "id": "SH02",
+      "index": 2,
+      "start": 2.5,
+      "end": 5.5,
+      "duration": 3.0,
+      "frame_start": 60,
+      "frame_end": 131,
+      "beat_role": "REVEAL",
+      "purpose": "reveal_rookie_hastatus_noticing_exposed_line",
+      "framing_scale": "medium_over_shoulder",
+      "camera_trajectory": "subtle_lateral_drift",
+      "stage_axis_sign": 1,
+      "gap_state_start": "OPEN_SLIVER",
+      "gap_state_end": "OPEN_SLIVER",
+      "snagged_spear_start": false,
+      "snagged_spear_end": false,
+      "primary_actors": [
+        "rookie_hastatus",
+        "veteran_neighbor_legionary"
+      ],
+      "narration": "At dawn, a rookie was still adjusting his grip.",
+      "visual_summary": "Medium over-shoulder on original Squire rookie Roman soldier (Montefortino feathers, ivory round face, white glove, red scutum & spear); eyes shift toward the sunlit gap and his grip tightens.",
+      "sfx": [
+        {
+          "name": "sfx/kh03_scutum_grip_rattle.wav",
+          "at": 0.65,
+          "gain": -6.0
+        },
+        {
+          "name": "sfx/kh03_armor_nod_settle.wav",
+          "at": 1.85,
+          "gain": -8.0
+        }
+      ]
+    },
+    {
+      "id": "SH03",
+      "index": 3,
+      "start": 5.5,
+      "end": 9.0,
+      "duration": 3.5,
+      "frame_start": 132,
+      "frame_end": 215,
+      "beat_role": "WIDE_GEOGRAPHY",
+      "purpose": "establish_castra_gate_ramp_and_training_shield_line",
+      "framing_scale": "wide_geography",
+      "camera_trajectory": "pan_left_to_right_establish",
+      "stage_axis_sign": 1,
+      "gap_state_start": "OPEN_SLIVER",
+      "gap_state_end": "OPEN_SLIVER",
+      "snagged_spear_start": false,
+      "snagged_spear_end": false,
+      "primary_actors": [
+        "instructor_princeps",
+        "rookie_hastatus",
+        "veteran_neighbor_legionary"
+      ],
+      "narration": "The instructor spotted it,",
+      "visual_summary": "Wide multi-plane 2D Roman training yard at warm dawn: timber castra gate & ramp on left, legionary tents, cohort bracing red shields with exposed gap on right-center, instructor raising practice spear.",
+      "sfx": [
+        {
+          "name": "sfx/kh03_sand_foot_plant.wav",
+          "at": 0.75,
+          "gain": -7.5
+        },
+        {
+          "name": "sfx/kh03_armor_nod_settle.wav",
+          "at": 2.1,
+          "gain": -8.5
+        }
+      ]
+    },
+    {
+      "id": "SH04",
+      "index": 4,
+      "start": 9.0,
+      "end": 12.0,
+      "duration": 3.0,
+      "frame_start": 216,
+      "frame_end": 287,
+      "beat_role": "INCITING_BEAT",
+      "purpose": "instructor_launches_harmless_wooden_training_spear",
+      "framing_scale": "low_angle_profile",
+      "camera_trajectory": "dynamic_follow_launch",
+      "stage_axis_sign": 1,
+      "gap_state_start": "OPEN_SLIVER",
+      "gap_state_end": "OPEN_SLIVER",
+      "snagged_spear_start": false,
+      "snagged_spear_end": false,
+      "primary_actors": [
+        "instructor_princeps"
+      ],
+      "narration": "and sent a wooden practice spear straight at the opening.",
+      "visual_summary": "Low-angle profile of princeps drill instructor coiling and launching a blunt leather-tipped wooden practice spear strictly left-to-right across frame toward the shield line.",
+      "sfx": [
+        {
+          "name": "sfx/kh03_sand_foot_plant.wav",
+          "at": 0.55,
+          "gain": -6.5
+        },
+        {
+          "name": "sfx/kh03_spear_whoosh_launch.wav",
+          "at": 0.92,
+          "gain": -3.5
+        }
+      ]
+    },
+    {
+      "id": "SH05",
+      "index": 5,
+      "start": 12.0,
+      "end": 15.0,
+      "duration": 3.0,
+      "frame_start": 288,
+      "frame_end": 359,
+      "beat_role": "ACTION",
+      "purpose": "rookie_plants_foot_and_shoves_scutum_into_wall",
+      "framing_scale": "medium_full_tracking",
+      "camera_trajectory": "lateral_track_into_lock",
+      "stage_axis_sign": 1,
+      "gap_state_start": "OPEN_SLIVER",
+      "gap_state_end": "SEALED_TIGHT",
+      "motivate_gap_transition": true,
+      "snagged_spear_start": false,
+      "snagged_spear_end": true,
+      "motivate_snag_transition": true,
+      "primary_actors": [
+        "rookie_hastatus",
+        "veteran_neighbor_legionary"
+      ],
+      "narration": "The rookie planted his foot, shoved his shield into place,",
+      "visual_summary": "Tracking shot as rookie anticipates, plants front sandal into drill sand with dust puff, and shoves his red scutum flush against neighbor's rim—inadvertently hooking his spear into neighbor's strap.",
+      "sfx": [
+        {
+          "name": "sfx/kh03_sand_foot_plant.wav",
+          "at": 1.02,
+          "gain": -4.0
+        },
+        {
+          "name": "sfx/kh03_shield_wall_lock.wav",
+          "at": 1.65,
+          "gain": -3.5
+        }
+      ]
+    },
+    {
+      "id": "SH06",
+      "index": 6,
+      "start": 15.0,
+      "end": 18.5,
+      "duration": 3.5,
+      "frame_start": 360,
+      "frame_end": 443,
+      "beat_role": "IMPACT_INSERT",
+      "purpose": "wooden_practice_tip_strikes_shield_rim_and_glances_away",
+      "framing_scale": "macro_physics_insert",
+      "camera_trajectory": "snap_push_and_recoil",
+      "stage_axis_sign": 1,
+      "gap_state_start": "SEALED_TIGHT",
+      "gap_state_end": "SEALED_TIGHT",
+      "snagged_spear_start": true,
+      "snagged_spear_end": true,
+      "primary_actors": [
+        "rookie_hastatus",
+        "veteran_neighbor_legionary"
+      ],
+      "narration": "and the spear snapped aside.",
+      "visual_summary": "24fps close-up insert: blunt leather-padded wooden spear tip strikes the sealed gold scutum rim with readable pad compression, recoil impulse, and spinning deflection onto the sand.",
+      "sfx": [
+        {
+          "name": "sfx/kh03_wood_spear_glance.wav",
+          "at": 0.58,
+          "gain": -2.5
+        },
+        {
+          "name": "sfx/kh03_sand_foot_plant.wav",
+          "at": 2.18,
+          "gain": -7.5
+        }
+      ]
+    },
+    {
+      "id": "SH07",
+      "index": 7,
+      "start": 18.5,
+      "end": 23.0,
+      "duration": 4.5,
+      "frame_start": 444,
+      "frame_end": 551,
+      "beat_role": "PAYOFF",
+      "purpose": "shield_line_holds_and_instructor_narrows_eyes_then_nods",
+      "framing_scale": "wide_to_medium_payoff",
+      "camera_trajectory": "push_in_to_instructor",
+      "stage_axis_sign": 1,
+      "gap_state_start": "SEALED_TIGHT",
+      "gap_state_end": "SEALED_TIGHT",
+      "snagged_spear_start": true,
+      "snagged_spear_end": true,
+      "intentional_hold": {
+        "enabled": true,
+        "window_local_sec": [
+          2.25,
+          2.58
+        ],
+        "frames": 8,
+        "editorial_justification": "Deadpan 8-frame pause as drill instructor narrows eyes before single nod."
+      },
+      "primary_actors": [
+        "instructor_princeps",
+        "rookie_hastatus",
+        "veteran_neighbor_legionary"
+      ],
+      "narration": "Perfect drill. Almost.",
+      "visual_summary": "Unbroken crimson shield wall holds firm with desynchronized breathing troops; camera pushes in to drill instructor narrowing his eyes in a brief deadpan pause before nodding once.",
+      "sfx": [
+        {
+          "name": "sfx/kh03_armor_nod_settle.wav",
+          "at": 2.82,
+          "gain": -6.5
+        }
+      ]
+    },
+    {
+      "id": "SH08",
+      "index": 8,
+      "start": 23.0,
+      "end": 26.5,
+      "duration": 3.5,
+      "frame_start": 552,
+      "frame_end": 635,
+      "beat_role": "COMIC_TWIST",
+      "purpose": "rookie_exhales_then_discovers_spear_caught_in_neighbor_strap",
+      "framing_scale": "medium_two_shot",
+      "camera_trajectory": "pull_back_comic_reveal",
+      "stage_axis_sign": 1,
+      "gap_state_start": "SEALED_TIGHT",
+      "gap_state_end": "SEALED_TIGHT",
+      "snagged_spear_start": true,
+      "snagged_spear_end": true,
+      "primary_actors": [
+        "rookie_hastatus",
+        "veteran_neighbor_legionary"
+      ],
+      "narration": "His own spear was now tangled in his neighbor's strap.",
+      "visual_summary": "Rookie exhales in relief, then tugs his spear—discovering its tip caught in his neighbor's leather scutum strap; awkward side-eye reaction while veteran neighbor stares deadpan.",
+      "sfx": [
+        {
+          "name": "sfx/kh03_leather_strap_tug.wav",
+          "at": 1.05,
+          "gain": -4.5
+        },
+        {
+          "name": "sfx/kh03_leather_strap_tug.wav",
+          "at": 2.02,
+          "gain": -5.5
+        }
+      ]
+    },
+    {
+      "id": "SH09",
+      "index": 9,
+      "start": 26.5,
+      "end": 30.0,
+      "duration": 3.5,
+      "frame_start": 636,
+      "frame_end": 719,
+      "beat_role": "OUTRO_LOOP",
+      "purpose": "instructor_deadpan_nod_and_return_to_closed_red_scutum_seam",
+      "framing_scale": "motif_return_close",
+      "camera_trajectory": "lateral_glide_to_sealed_seam",
+      "stage_axis_sign": 1,
+      "gap_state_start": "SEALED_TIGHT",
+      "gap_state_end": "SEALED_TIGHT",
+      "snagged_spear_start": true,
+      "snagged_spear_end": true,
+      "primary_actors": [
+        "instructor_princeps",
+        "rookie_hastatus",
+        "veteran_neighbor_legionary"
+      ],
+      "narration": "The instructor didn't smile. But he nodded.",
+      "visual_summary": "Side reaction of unsmiling instructor giving one final crisp nod, gliding back to foreground close-up of the tightly locked red scutum rims in warm dawn light (loop-ready motif payoff).",
+      "sfx": [
+        {
+          "name": "sfx/kh03_armor_nod_settle.wav",
+          "at": 1.08,
+          "gain": -6.0
+        },
+        {
+          "name": "sfx/kh03_shield_wall_lock.wav",
+          "at": 2.35,
+          "gain": -7.0
+        }
+      ]
+    }
+  ]
+}

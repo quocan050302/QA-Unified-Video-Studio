@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "static_validator_rejected_3d": true,
+  "runtime_player_rejected_3d": true,
+  "pilot_network_audit": {
+    "totalRequests": 62,
+    "threeUrlCount": 0,
+    "threeHits": [],
+    "three3dLoaded": false,
+    "renderMode": "canvas2d_only"
+  },
+  "legacy_three3d_preserved_byte_for_byte": true,
+  "errors": []
+}
