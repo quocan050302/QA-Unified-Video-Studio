@@ -1,0 +1,896 @@
+[
+  {
+    "id": "L01_W01",
+    "w": "At",
+    "t": 0.1,
+    "e": 0.219,
+    "line_id": "L01",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH01"
+    ]
+  },
+  {
+    "id": "L01_W02",
+    "w": "Rome's",
+    "t": 0.219,
+    "e": 0.516,
+    "line_id": "L01",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH01"
+    ]
+  },
+  {
+    "id": "L01_W03",
+    "w": "market",
+    "t": 0.516,
+    "e": 0.873,
+    "line_id": "L01",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH01"
+    ]
+  },
+  {
+    "id": "L01_W04",
+    "w": "hill",
+    "t": 0.873,
+    "e": 1.11,
+    "line_id": "L01",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH01"
+    ]
+  },
+  {
+    "id": "L01_W05",
+    "w": "rested",
+    "t": 1.11,
+    "e": 1.467,
+    "line_id": "L01",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH01"
+    ]
+  },
+  {
+    "id": "L01_W06",
+    "w": "a",
+    "t": 1.467,
+    "e": 1.586,
+    "line_id": "L01",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH01"
+    ]
+  },
+  {
+    "id": "L01_W07",
+    "w": "grain",
+    "t": 1.586,
+    "e": 1.883,
+    "line_id": "L01",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH01"
+    ]
+  },
+  {
+    "id": "L01_W08",
+    "w": "cart.",
+    "t": 1.883,
+    "e": 2.299,
+    "line_id": "L01",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH01",
+      "SH02"
+    ]
+  },
+  {
+    "id": "L02_W01",
+    "w": "Downhill,",
+    "t": 2.379,
+    "e": 3.023,
+    "line_id": "L02",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH02"
+    ]
+  },
+  {
+    "id": "L02_W02",
+    "w": "Baker",
+    "t": 3.023,
+    "e": 3.345,
+    "line_id": "L02",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH02"
+    ]
+  },
+  {
+    "id": "L02_W03",
+    "w": "Lucius",
+    "t": 3.345,
+    "e": 3.732,
+    "line_id": "L02",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH02"
+    ]
+  },
+  {
+    "id": "L02_W04",
+    "w": "stood",
+    "t": 3.732,
+    "e": 4.054,
+    "line_id": "L02",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH02"
+    ]
+  },
+  {
+    "id": "L02_W05",
+    "w": "beside",
+    "t": 4.054,
+    "e": 4.441,
+    "line_id": "L02",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH02"
+    ]
+  },
+  {
+    "id": "L02_W06",
+    "w": "his",
+    "t": 4.441,
+    "e": 4.634,
+    "line_id": "L02",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH02"
+    ]
+  },
+  {
+    "id": "L02_W07",
+    "w": "hot",
+    "t": 4.634,
+    "e": 4.827,
+    "line_id": "L02",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH02"
+    ]
+  },
+  {
+    "id": "L02_W08",
+    "w": "oven.",
+    "t": 4.827,
+    "e": 5.278,
+    "line_id": "L02",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH02"
+    ]
+  },
+  {
+    "id": "L03_W01",
+    "w": "A",
+    "t": 5.358,
+    "e": 5.482,
+    "line_id": "L03",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH03"
+    ]
+  },
+  {
+    "id": "L03_W02",
+    "w": "brake",
+    "t": 5.482,
+    "e": 5.794,
+    "line_id": "L03",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH03"
+    ]
+  },
+  {
+    "id": "L03_W03",
+    "w": "peg",
+    "t": 5.794,
+    "e": 5.98,
+    "line_id": "L03",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH03"
+    ]
+  },
+  {
+    "id": "L03_W04",
+    "w": "cracked;",
+    "t": 5.98,
+    "e": 6.54,
+    "line_id": "L03",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH03",
+      "SH04"
+    ]
+  },
+  {
+    "id": "L03_W05",
+    "w": "the",
+    "t": 6.54,
+    "e": 6.727,
+    "line_id": "L03",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH04"
+    ]
+  },
+  {
+    "id": "L03_W06",
+    "w": "cart",
+    "t": 6.727,
+    "e": 6.976,
+    "line_id": "L03",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH04"
+    ]
+  },
+  {
+    "id": "L03_W07",
+    "w": "rolled",
+    "t": 6.976,
+    "e": 7.349,
+    "line_id": "L03",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH04"
+    ]
+  },
+  {
+    "id": "L03_W08",
+    "w": "downhill.",
+    "t": 7.349,
+    "e": 8.034,
+    "line_id": "L03",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH04",
+      "SH05"
+    ]
+  },
+  {
+    "id": "L04_W01",
+    "w": "Market",
+    "t": 8.114,
+    "e": 8.474,
+    "line_id": "L04",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH05"
+    ]
+  },
+  {
+    "id": "L04_W02",
+    "w": "shoppers",
+    "t": 8.474,
+    "e": 8.955,
+    "line_id": "L04",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH05"
+    ]
+  },
+  {
+    "id": "L04_W03",
+    "w": "dodged",
+    "t": 8.955,
+    "e": 9.316,
+    "line_id": "L04",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH05"
+    ]
+  },
+  {
+    "id": "L04_W04",
+    "w": "street",
+    "t": 9.316,
+    "e": 9.676,
+    "line_id": "L04",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH05"
+    ]
+  },
+  {
+    "id": "L04_W05",
+    "w": "obstacles.",
+    "t": 9.676,
+    "e": 10.397,
+    "line_id": "L04",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH05",
+      "SH06"
+    ]
+  },
+  {
+    "id": "L05_W01",
+    "w": "Apprentice",
+    "t": 10.477,
+    "e": 11.092,
+    "line_id": "L05",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH06"
+    ]
+  },
+  {
+    "id": "L05_W02",
+    "w": "Titus",
+    "t": 11.092,
+    "e": 11.4,
+    "line_id": "L05",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH06"
+    ]
+  },
+  {
+    "id": "L05_W03",
+    "w": "sprinted;",
+    "t": 11.4,
+    "e": 12.016,
+    "line_id": "L05",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH06"
+    ]
+  },
+  {
+    "id": "L05_W04",
+    "w": "swiftly",
+    "t": 12.016,
+    "e": 12.446,
+    "line_id": "L05",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH06",
+      "SH07"
+    ]
+  },
+  {
+    "id": "L05_W05",
+    "w": "Titus",
+    "t": 12.446,
+    "e": 12.754,
+    "line_id": "L05",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH07"
+    ]
+  },
+  {
+    "id": "L05_W06",
+    "w": "caught",
+    "t": 12.754,
+    "e": 13.123,
+    "line_id": "L05",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH07"
+    ]
+  },
+  {
+    "id": "L05_W07",
+    "w": "the",
+    "t": 13.123,
+    "e": 13.308,
+    "line_id": "L05",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH07"
+    ]
+  },
+  {
+    "id": "L05_W08",
+    "w": "hemp",
+    "t": 13.308,
+    "e": 13.554,
+    "line_id": "L05",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH07"
+    ]
+  },
+  {
+    "id": "L05_W09",
+    "w": "rope.",
+    "t": 13.554,
+    "e": 13.985,
+    "line_id": "L05",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH07",
+      "SH08"
+    ]
+  },
+  {
+    "id": "L06_W01",
+    "w": "Titus",
+    "t": 14.065,
+    "e": 14.375,
+    "line_id": "L06",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH08"
+    ]
+  },
+  {
+    "id": "L06_W02",
+    "w": "whipped",
+    "t": 14.375,
+    "e": 14.808,
+    "line_id": "L06",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH08"
+    ]
+  },
+  {
+    "id": "L06_W03",
+    "w": "the",
+    "t": 14.808,
+    "e": 14.994,
+    "line_id": "L06",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH08"
+    ]
+  },
+  {
+    "id": "L06_W04",
+    "w": "rope",
+    "t": 14.994,
+    "e": 15.242,
+    "line_id": "L06",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH08"
+    ]
+  },
+  {
+    "id": "L06_W05",
+    "w": "around",
+    "t": 15.242,
+    "e": 15.613,
+    "line_id": "L06",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH08",
+      "SH09"
+    ]
+  },
+  {
+    "id": "L06_W06",
+    "w": "a",
+    "t": 15.613,
+    "e": 15.737,
+    "line_id": "L06",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH09"
+    ]
+  },
+  {
+    "id": "L06_W07",
+    "w": "bollard;",
+    "t": 15.737,
+    "e": 16.295,
+    "line_id": "L06",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH09"
+    ]
+  },
+  {
+    "id": "L06_W08",
+    "w": "Titus",
+    "t": 16.295,
+    "e": 16.605,
+    "line_id": "L06",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH09"
+    ]
+  },
+  {
+    "id": "L06_W09",
+    "w": "braced.",
+    "t": 16.605,
+    "e": 17.162,
+    "line_id": "L06",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH09",
+      "SH10"
+    ]
+  },
+  {
+    "id": "L07_W01",
+    "w": "The",
+    "t": 17.242,
+    "e": 17.44,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH10"
+    ]
+  },
+  {
+    "id": "L07_W02",
+    "w": "cart",
+    "t": 17.44,
+    "e": 17.704,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH10"
+    ]
+  },
+  {
+    "id": "L07_W03",
+    "w": "halted",
+    "t": 17.704,
+    "e": 18.1,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH10"
+    ]
+  },
+  {
+    "id": "L07_W04",
+    "w": "short;",
+    "t": 18.1,
+    "e": 18.562,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH10",
+      "SH11"
+    ]
+  },
+  {
+    "id": "L07_W05",
+    "w": "one",
+    "t": 18.562,
+    "e": 18.76,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH11"
+    ]
+  },
+  {
+    "id": "L07_W06",
+    "w": "loaf",
+    "t": 18.76,
+    "e": 19.024,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH11"
+    ]
+  },
+  {
+    "id": "L07_W07",
+    "w": "bounced",
+    "t": 19.024,
+    "e": 19.486,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH11"
+    ]
+  },
+  {
+    "id": "L07_W08",
+    "w": "off",
+    "t": 19.486,
+    "e": 19.684,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH11"
+    ]
+  },
+  {
+    "id": "L07_W09",
+    "w": "the",
+    "t": 19.684,
+    "e": 19.882,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH11",
+      "SH12"
+    ]
+  },
+  {
+    "id": "L07_W10",
+    "w": "tray.",
+    "t": 19.882,
+    "e": 20.344,
+    "line_id": "L07",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH12"
+    ]
+  },
+  {
+    "id": "L08_W01",
+    "w": "It",
+    "t": 20.424,
+    "e": 20.554,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH12"
+    ]
+  },
+  {
+    "id": "L08_W02",
+    "w": "arced",
+    "t": 20.554,
+    "e": 20.878,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH12"
+    ]
+  },
+  {
+    "id": "L08_W03",
+    "w": "high;",
+    "t": 20.878,
+    "e": 21.268,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH12"
+    ]
+  },
+  {
+    "id": "L08_W04",
+    "w": "it",
+    "t": 21.268,
+    "e": 21.398,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH12",
+      "SH13"
+    ]
+  },
+  {
+    "id": "L08_W05",
+    "w": "landed",
+    "t": 21.398,
+    "e": 21.787,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH13"
+    ]
+  },
+  {
+    "id": "L08_W06",
+    "w": "squarely",
+    "t": 21.787,
+    "e": 22.307,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH13"
+    ]
+  },
+  {
+    "id": "L08_W07",
+    "w": "on",
+    "t": 22.307,
+    "e": 22.437,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH13"
+    ]
+  },
+  {
+    "id": "L08_W08",
+    "w": "Centurion",
+    "t": 22.437,
+    "e": 23.021,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH13"
+    ]
+  },
+  {
+    "id": "L08_W09",
+    "w": "Varro's",
+    "t": 23.021,
+    "e": 23.411,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH13"
+    ]
+  },
+  {
+    "id": "L08_W10",
+    "w": "helmet.",
+    "t": 23.411,
+    "e": 23.995,
+    "line_id": "L08",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH13",
+      "SH14"
+    ]
+  },
+  {
+    "id": "L09_W01",
+    "w": "Nobody",
+    "t": 24.075,
+    "e": 24.487,
+    "line_id": "L09",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH14"
+    ]
+  },
+  {
+    "id": "L09_W02",
+    "w": "dared",
+    "t": 24.487,
+    "e": 24.83,
+    "line_id": "L09",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH14"
+    ]
+  },
+  {
+    "id": "L09_W03",
+    "w": "laugh;",
+    "t": 24.83,
+    "e": 25.311,
+    "line_id": "L09",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH14"
+    ]
+  },
+  {
+    "id": "L09_W04",
+    "w": "Centurion",
+    "t": 25.311,
+    "e": 25.929,
+    "line_id": "L09",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH14",
+      "SH15"
+    ]
+  },
+  {
+    "id": "L09_W05",
+    "w": "Varro",
+    "t": 25.929,
+    "e": 26.273,
+    "line_id": "L09",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH15"
+    ]
+  },
+  {
+    "id": "L09_W06",
+    "w": "kept",
+    "t": 26.273,
+    "e": 26.547,
+    "line_id": "L09",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH15"
+    ]
+  },
+  {
+    "id": "L09_W07",
+    "w": "walking.",
+    "t": 26.547,
+    "e": 27.234,
+    "line_id": "L09",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH15"
+    ]
+  },
+  {
+    "id": "L10_W01",
+    "w": "Behind",
+    "t": 27.314,
+    "e": 27.727,
+    "line_id": "L10",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH15",
+      "SH16"
+    ]
+  },
+  {
+    "id": "L10_W02",
+    "w": "him,",
+    "t": 27.727,
+    "e": 28.071,
+    "line_id": "L10",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH16"
+    ]
+  },
+  {
+    "id": "L10_W03",
+    "w": "the",
+    "t": 28.071,
+    "e": 28.278,
+    "line_id": "L10",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH16"
+    ]
+  },
+  {
+    "id": "L10_W04",
+    "w": "market",
+    "t": 28.278,
+    "e": 28.691,
+    "line_id": "L10",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH16"
+    ]
+  },
+  {
+    "id": "L10_W05",
+    "w": "cheered",
+    "t": 28.691,
+    "e": 29.172,
+    "line_id": "L10",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH16"
+    ]
+  },
+  {
+    "id": "L10_W06",
+    "w": "Titus.",
+    "t": 29.172,
+    "e": 29.723,
+    "line_id": "L10",
+    "timing_precision": "weighted_char_interpolation_within_measured_clip",
+    "shot_ids": [
+      "SH16"
+    ]
+  }
+]

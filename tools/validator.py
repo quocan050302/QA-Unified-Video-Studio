@@ -268,6 +268,56 @@ def validate_project(project_dir: str, stage: str = "preflight") -> dict:
             except Exception as exc:
                 report["fatal_errors"].append(f"Loi doc story/shot_to_line_map.json: {exc}")
 
+    # 6. Opt-in fail-closed validation for KH-03.0.R2 roman_action_director_v2 projects
+    elif cfg.get("editorial_mode") == "roman_action_director_v2":
+        from kh03_action_registry import validate_action_bindings
+        from kh03_script_beat_director import parse_js_renderer_handlers
+
+        req_r2_files = [
+            "story/shot_plan.json",
+            "story/action_graph.json",
+            "story/action_bindings.json",
+            "story/scene_manifest.json",
+            "story/shot_to_line_map.json",
+        ]
+        for rel_f in req_r2_files:
+            if not (P / rel_f).is_file():
+                report["fatal_errors"].append(f"editorial_mode='roman_action_director_v2' thieu {rel_f}")
+
+        if (P / "story" / "shot_plan.json").is_file() and (P / "story" / "scene_manifest.json").is_file():
+            try:
+                sp = read_json(P / "story" / "shot_plan.json")
+                sm_manifest = read_json(P / "story" / "scene_manifest.json")
+                if sp.get("render_mode") != "canvas2d_only":
+                    report["fatal_errors"].append("R2 bat buoc render_mode='canvas2d_only'")
+                sp_shots = sp.get("shots", [])
+                exp_frames = int(sp.get("total_frames", 720))
+                cursor_f = 0
+                for s_item in sp_shots:
+                    fs, fe = int(s_item.get("frame_start", -1)), int(s_item.get("frame_end", -1))
+                    if fs != cursor_f or fe < fs:
+                        report["timeline_errors"].append(
+                            f"shot_plan frame continuity gap/overlap tai {s_item.get('id')}: {fs}..{fe} (cho doi {cursor_f})"
+                        )
+                        break
+                    cursor_f = fe + 1
+                if sp_shots and cursor_f != exp_frames:
+                    report["timeline_errors"].append(
+                        f"shot_plan khong phu du {exp_frames} frames (ket thuc tai {cursor_f})"
+                    )
+                bind_res = validate_action_bindings(
+                    sp,
+                    asset_manifest=sm_manifest,
+                    renderer_registry=parse_js_renderer_handlers() or None,
+                )
+                if not bind_res.get("valid"):
+                    for err in bind_res.get("errors", []):
+                        report["fatal_errors"].append(
+                            f"R2 ActionRegistry fail-closed [{err.get('error_code')}]: {err.get('message', err)}"
+                        )
+            except Exception as exc:
+                report["fatal_errors"].append(f"Loi R2 validator: {exc}")
+
     # Danh gia trang thai chung
     if (report["fatal_errors"] or report["missing_ids"] or report["missing_templates"] or
         report["missing_assets"] or report["timeline_errors"] or report["import_errors"]):

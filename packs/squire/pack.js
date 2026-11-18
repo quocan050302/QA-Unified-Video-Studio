@@ -19,6 +19,10 @@ export * from './roman_master/character_state.js';
 export * from './roman_master/camera.js';
 export * from './roman_master/environment.js';
 export * from './roman_master/editorial_state.js';
+export * from './roman_master/market_props.js';
+export * from './roman_master/market_env.js';
+export * from './roman_master/holdout_envs.js';
+export * from './roman_master/action_registry.js';
 export * from './roman_master/script_shot_renderer.js';
 export { E } from '/engine/core.js';
 
@@ -51,11 +55,11 @@ export async function init(E) {
       fetchOptJSON(`${proj}/story/continuity_ledger.json`, {}),
       fetchOptJSON(`${proj}/story/camera_beats.json`, {}),
       fetchOptJSON(`${proj}/story/storyboard.json`, {}),
-      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/shot_plan.json`, null) : null,
-      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/beats.json`, null) : null,
-      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/shot_to_line_map.json`, null) : null,
-      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/narration_timeline.json`, null) : null,
-      E.cfg.editorial_mode === 'script_beat_director_v1' ? fetchOptJSON(`${proj}/story/pacing_report.json`, null) : null,
+      ['script_beat_director_v1', 'roman_action_director_v2'].includes(E.cfg.editorial_mode) ? fetchOptJSON(`${proj}/story/shot_plan.json`, null) : null,
+      ['script_beat_director_v1', 'roman_action_director_v2'].includes(E.cfg.editorial_mode) ? fetchOptJSON(`${proj}/story/beats.json`, null) : null,
+      ['script_beat_director_v1', 'roman_action_director_v2'].includes(E.cfg.editorial_mode) ? fetchOptJSON(`${proj}/story/shot_to_line_map.json`, null) : null,
+      ['script_beat_director_v1', 'roman_action_director_v2'].includes(E.cfg.editorial_mode) ? fetchOptJSON(`${proj}/story/narration_timeline.json`, null) : null,
+      ['script_beat_director_v1', 'roman_action_director_v2'].includes(E.cfg.editorial_mode) ? fetchOptJSON(`${proj}/story/pacing_report.json`, null) : null,
     ]);
     E.kh03 = Object.freeze({
       styleProfile: 'roman_squire_master.v1',

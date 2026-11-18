@@ -1,0 +1,393 @@
+{
+  "schema_version": "kh03.r1.crosswalk.v1",
+  "lines_to_shots": {
+    "L01": [
+      "SH01"
+    ],
+    "L02": [
+      "SH02"
+    ],
+    "L03": [
+      "SH03",
+      "SH04",
+      "SH05"
+    ],
+    "L04": [
+      "SH05",
+      "SH06"
+    ],
+    "L05": [
+      "SH06",
+      "SH07",
+      "SH08"
+    ],
+    "L06": [
+      "SH08",
+      "SH09",
+      "SH10"
+    ],
+    "L07": [
+      "SH10",
+      "SH11",
+      "SH12"
+    ],
+    "L08": [
+      "SH12",
+      "SH13",
+      "SH14"
+    ],
+    "L09": [
+      "SH14",
+      "SH15"
+    ],
+    "L10": [
+      "SH15",
+      "SH16"
+    ]
+  },
+  "shots_to_lines": {
+    "SH01": [
+      "L01"
+    ],
+    "SH02": [
+      "L02"
+    ],
+    "SH03": [
+      "L03"
+    ],
+    "SH04": [
+      "L03"
+    ],
+    "SH05": [
+      "L03",
+      "L04"
+    ],
+    "SH06": [
+      "L04",
+      "L05"
+    ],
+    "SH07": [
+      "L05"
+    ],
+    "SH08": [
+      "L05",
+      "L06"
+    ],
+    "SH09": [
+      "L06"
+    ],
+    "SH10": [
+      "L06",
+      "L07"
+    ],
+    "SH11": [
+      "L07"
+    ],
+    "SH12": [
+      "L07",
+      "L08"
+    ],
+    "SH13": [
+      "L08"
+    ],
+    "SH14": [
+      "L08",
+      "L09"
+    ],
+    "SH15": [
+      "L09",
+      "L10"
+    ],
+    "SH16": [
+      "L10"
+    ]
+  },
+  "overlap_edges": [
+    {
+      "line_id": "L01",
+      "shot_id": "SH01",
+      "overlap_ms": [
+        100,
+        2292
+      ],
+      "overlap_sec": 2.192
+    },
+    {
+      "line_id": "L02",
+      "shot_id": "SH02",
+      "overlap_ms": [
+        2379,
+        5278
+      ],
+      "overlap_sec": 2.899
+    },
+    {
+      "line_id": "L03",
+      "shot_id": "SH03",
+      "overlap_ms": [
+        5358,
+        6458
+      ],
+      "overlap_sec": 1.1
+    },
+    {
+      "line_id": "L03",
+      "shot_id": "SH04",
+      "overlap_ms": [
+        6458,
+        7875
+      ],
+      "overlap_sec": 1.417
+    },
+    {
+      "line_id": "L03",
+      "shot_id": "SH05",
+      "overlap_ms": [
+        7875,
+        8034
+      ],
+      "overlap_sec": 0.159
+    },
+    {
+      "line_id": "L04",
+      "shot_id": "SH05",
+      "overlap_ms": [
+        8114,
+        10250
+      ],
+      "overlap_sec": 2.136
+    },
+    {
+      "line_id": "L04",
+      "shot_id": "SH06",
+      "overlap_ms": [
+        10250,
+        10397
+      ],
+      "overlap_sec": 0.147
+    },
+    {
+      "line_id": "L05",
+      "shot_id": "SH06",
+      "overlap_ms": [
+        10477,
+        12083
+      ],
+      "overlap_sec": 1.606
+    },
+    {
+      "line_id": "L05",
+      "shot_id": "SH07",
+      "overlap_ms": [
+        12083,
+        13917
+      ],
+      "overlap_sec": 1.834
+    },
+    {
+      "line_id": "L05",
+      "shot_id": "SH08",
+      "overlap_ms": [
+        13917,
+        13985
+      ],
+      "overlap_sec": 0.068
+    },
+    {
+      "line_id": "L06",
+      "shot_id": "SH08",
+      "overlap_ms": [
+        14065,
+        15250
+      ],
+      "overlap_sec": 1.185
+    },
+    {
+      "line_id": "L06",
+      "shot_id": "SH09",
+      "overlap_ms": [
+        15250,
+        16875
+      ],
+      "overlap_sec": 1.625
+    },
+    {
+      "line_id": "L06",
+      "shot_id": "SH10",
+      "overlap_ms": [
+        16875,
+        17162
+      ],
+      "overlap_sec": 0.287
+    },
+    {
+      "line_id": "L07",
+      "shot_id": "SH10",
+      "overlap_ms": [
+        17242,
+        18500
+      ],
+      "overlap_sec": 1.258
+    },
+    {
+      "line_id": "L07",
+      "shot_id": "SH11",
+      "overlap_ms": [
+        18500,
+        19833
+      ],
+      "overlap_sec": 1.333
+    },
+    {
+      "line_id": "L07",
+      "shot_id": "SH12",
+      "overlap_ms": [
+        19833,
+        20344
+      ],
+      "overlap_sec": 0.511
+    },
+    {
+      "line_id": "L08",
+      "shot_id": "SH12",
+      "overlap_ms": [
+        20424,
+        21375
+      ],
+      "overlap_sec": 0.951
+    },
+    {
+      "line_id": "L08",
+      "shot_id": "SH13",
+      "overlap_ms": [
+        21375,
+        23583
+      ],
+      "overlap_sec": 2.208
+    },
+    {
+      "line_id": "L08",
+      "shot_id": "SH14",
+      "overlap_ms": [
+        23583,
+        23995
+      ],
+      "overlap_sec": 0.412
+    },
+    {
+      "line_id": "L09",
+      "shot_id": "SH14",
+      "overlap_ms": [
+        24075,
+        25542
+      ],
+      "overlap_sec": 1.467
+    },
+    {
+      "line_id": "L09",
+      "shot_id": "SH15",
+      "overlap_ms": [
+        25542,
+        27234
+      ],
+      "overlap_sec": 1.692
+    },
+    {
+      "line_id": "L10",
+      "shot_id": "SH15",
+      "overlap_ms": [
+        27314,
+        27500
+      ],
+      "overlap_sec": 0.186
+    },
+    {
+      "line_id": "L10",
+      "shot_id": "SH16",
+      "overlap_ms": [
+        27500,
+        29723
+      ],
+      "overlap_sec": 2.223
+    }
+  ],
+  "summary": {
+    "total_lines": 10,
+    "total_shots": 16,
+    "one_to_many_lines": {
+      "L03": [
+        "SH03",
+        "SH04",
+        "SH05"
+      ],
+      "L04": [
+        "SH05",
+        "SH06"
+      ],
+      "L05": [
+        "SH06",
+        "SH07",
+        "SH08"
+      ],
+      "L06": [
+        "SH08",
+        "SH09",
+        "SH10"
+      ],
+      "L07": [
+        "SH10",
+        "SH11",
+        "SH12"
+      ],
+      "L08": [
+        "SH12",
+        "SH13",
+        "SH14"
+      ],
+      "L09": [
+        "SH14",
+        "SH15"
+      ],
+      "L10": [
+        "SH15",
+        "SH16"
+      ]
+    },
+    "one_to_many_count": 8,
+    "many_to_one_shots": {
+      "SH05": [
+        "L03",
+        "L04"
+      ],
+      "SH06": [
+        "L04",
+        "L05"
+      ],
+      "SH08": [
+        "L05",
+        "L06"
+      ],
+      "SH10": [
+        "L06",
+        "L07"
+      ],
+      "SH12": [
+        "L07",
+        "L08"
+      ],
+      "SH14": [
+        "L08",
+        "L09"
+      ],
+      "SH15": [
+        "L09",
+        "L10"
+      ]
+    },
+    "many_to_one_count": 7,
+    "mid_sentence_cuts_count": 12,
+    "words_total": 80,
+    "words_covered": 80,
+    "word_coverage_ratio": 1.0
+  }
+}

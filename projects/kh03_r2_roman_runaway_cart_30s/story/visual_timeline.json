@@ -1,0 +1,304 @@
+{
+  "schema_version": "kh03.r1.visual_timeline.v1",
+  "editorial_mode": "roman_action_director_v2",
+  "fps": 24,
+  "total_frames": 720,
+  "duration_sec": 30.0,
+  "shots": [
+    {
+      "id": "SH01",
+      "frame_start": 0,
+      "frame_end": 54,
+      "start": 0.0,
+      "end": 2.292,
+      "duration": 2.292,
+      "location_id": "roman_market_hill",
+      "framing_scale": "wide_geography",
+      "purpose": "establish",
+      "line_ids": [
+        "L01"
+      ],
+      "word_range_ms": [
+        0,
+        2292
+      ]
+    },
+    {
+      "id": "SH02",
+      "frame_start": 55,
+      "frame_end": 126,
+      "start": 2.292,
+      "end": 5.292,
+      "duration": 3.0,
+      "location_id": "roman_market_hill",
+      "framing_scale": "payoff_close_reveal",
+      "purpose": "reaction",
+      "line_ids": [
+        "L02"
+      ],
+      "word_range_ms": [
+        2292,
+        5292
+      ]
+    },
+    {
+      "id": "SH03",
+      "frame_start": 127,
+      "frame_end": 154,
+      "start": 5.292,
+      "end": 6.458,
+      "duration": 1.167,
+      "location_id": "roman_market_hill",
+      "framing_scale": "macro_physics_insert",
+      "purpose": "insert",
+      "line_ids": [
+        "L03"
+      ],
+      "word_range_ms": [
+        5292,
+        6458
+      ]
+    },
+    {
+      "id": "SH04",
+      "frame_start": 155,
+      "frame_end": 188,
+      "start": 6.458,
+      "end": 7.875,
+      "duration": 1.417,
+      "location_id": "roman_market_hill",
+      "framing_scale": "low_angle_chase",
+      "purpose": "action",
+      "line_ids": [
+        "L03"
+      ],
+      "word_range_ms": [
+        6458,
+        7875
+      ]
+    },
+    {
+      "id": "SH05",
+      "frame_start": 189,
+      "frame_end": 245,
+      "start": 7.875,
+      "end": 10.25,
+      "duration": 2.375,
+      "location_id": "roman_market_hill",
+      "framing_scale": "low_angle_chase",
+      "purpose": "action",
+      "line_ids": [
+        "L03",
+        "L04"
+      ],
+      "word_range_ms": [
+        7875,
+        10250
+      ]
+    },
+    {
+      "id": "SH06",
+      "frame_start": 246,
+      "frame_end": 289,
+      "start": 10.25,
+      "end": 12.083,
+      "duration": 1.833,
+      "location_id": "roman_market_hill",
+      "framing_scale": "medium_full_tracking",
+      "purpose": "action",
+      "line_ids": [
+        "L04",
+        "L05"
+      ],
+      "word_range_ms": [
+        10250,
+        12083
+      ]
+    },
+    {
+      "id": "SH07",
+      "frame_start": 290,
+      "frame_end": 333,
+      "start": 12.083,
+      "end": 13.917,
+      "duration": 1.833,
+      "location_id": "roman_market_hill",
+      "framing_scale": "macro_physics_insert",
+      "purpose": "action",
+      "line_ids": [
+        "L05"
+      ],
+      "word_range_ms": [
+        12083,
+        13917
+      ]
+    },
+    {
+      "id": "SH08",
+      "frame_start": 334,
+      "frame_end": 365,
+      "start": 13.917,
+      "end": 15.25,
+      "duration": 1.333,
+      "location_id": "roman_market_hill",
+      "framing_scale": "extreme_detail_insert",
+      "purpose": "insert",
+      "line_ids": [
+        "L05",
+        "L06"
+      ],
+      "word_range_ms": [
+        13917,
+        15250
+      ]
+    },
+    {
+      "id": "SH09",
+      "frame_start": 366,
+      "frame_end": 404,
+      "start": 15.25,
+      "end": 16.875,
+      "duration": 1.625,
+      "location_id": "roman_market_hill",
+      "framing_scale": "medium_full_tracking",
+      "purpose": "action",
+      "line_ids": [
+        "L06"
+      ],
+      "word_range_ms": [
+        15250,
+        16875
+      ]
+    },
+    {
+      "id": "SH10",
+      "frame_start": 405,
+      "frame_end": 443,
+      "start": 16.875,
+      "end": 18.5,
+      "duration": 1.625,
+      "location_id": "roman_market_hill",
+      "framing_scale": "extreme_detail_insert",
+      "purpose": "action",
+      "line_ids": [
+        "L06",
+        "L07"
+      ],
+      "word_range_ms": [
+        16875,
+        18500
+      ]
+    },
+    {
+      "id": "SH11",
+      "frame_start": 444,
+      "frame_end": 475,
+      "start": 18.5,
+      "end": 19.833,
+      "duration": 1.333,
+      "location_id": "roman_market_hill",
+      "framing_scale": "macro_physics_insert",
+      "purpose": "insert",
+      "line_ids": [
+        "L07"
+      ],
+      "word_range_ms": [
+        18500,
+        19833
+      ]
+    },
+    {
+      "id": "SH12",
+      "frame_start": 476,
+      "frame_end": 512,
+      "start": 19.833,
+      "end": 21.375,
+      "duration": 1.542,
+      "location_id": "roman_market_hill",
+      "framing_scale": "extreme_detail_insert",
+      "purpose": "insert",
+      "line_ids": [
+        "L07",
+        "L08"
+      ],
+      "word_range_ms": [
+        19833,
+        21375
+      ]
+    },
+    {
+      "id": "SH13",
+      "frame_start": 513,
+      "frame_end": 565,
+      "start": 21.375,
+      "end": 23.583,
+      "duration": 2.208,
+      "location_id": "roman_market_hill",
+      "framing_scale": "payoff_close_reveal",
+      "purpose": "reveal",
+      "line_ids": [
+        "L08"
+      ],
+      "word_range_ms": [
+        21375,
+        23583
+      ]
+    },
+    {
+      "id": "SH14",
+      "frame_start": 566,
+      "frame_end": 612,
+      "start": 23.583,
+      "end": 25.542,
+      "duration": 1.958,
+      "location_id": "roman_market_hill",
+      "framing_scale": "extreme_detail_insert",
+      "purpose": "reveal",
+      "line_ids": [
+        "L08",
+        "L09"
+      ],
+      "word_range_ms": [
+        23583,
+        25542
+      ]
+    },
+    {
+      "id": "SH15",
+      "frame_start": 613,
+      "frame_end": 659,
+      "start": 25.542,
+      "end": 27.5,
+      "duration": 1.958,
+      "location_id": "roman_market_hill",
+      "framing_scale": "payoff_close_reveal",
+      "purpose": "reveal",
+      "line_ids": [
+        "L09",
+        "L10"
+      ],
+      "word_range_ms": [
+        25542,
+        27500
+      ]
+    },
+    {
+      "id": "SH16",
+      "frame_start": 660,
+      "frame_end": 719,
+      "start": 27.5,
+      "end": 30.0,
+      "duration": 2.5,
+      "location_id": "roman_market_hill",
+      "framing_scale": "wide_geography",
+      "purpose": "reaction",
+      "line_ids": [
+        "L10"
+      ],
+      "word_range_ms": [
+        27500,
+        30000
+      ]
+    }
+  ]
+}

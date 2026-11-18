@@ -1,0 +1,37 @@
+{
+  "schema_version": "kh03.r2.scene_manifest.v1",
+  "render_mode": "canvas2d_only",
+  "style_profile": "roman_squire_master.v1",
+  "default_location": "roman_market_hill",
+  "locations": [
+    "roman_market_hill"
+  ],
+  "entities": [
+    {
+      "actor_id": "apprentice_titus",
+      "archetype": "rookie_hastatus"
+    },
+    {
+      "actor_id": "baker_lucius",
+      "archetype": "instructor_princeps"
+    },
+    {
+      "actor_id": "centurion_varro",
+      "archetype": "centurion_crest"
+    },
+    {
+      "actor_id": "market_crowd",
+      "archetype": "rookie_hastatus"
+    }
+  ],
+  "props": [
+    "bakery_oven",
+    "brake_peg",
+    "bread_tray",
+    "ceremonial_helmet",
+    "hemp_rope",
+    "market_cart",
+    "roman_loaf",
+    "stone_bollard"
+  ]
+}

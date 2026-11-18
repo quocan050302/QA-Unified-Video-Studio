@@ -1,0 +1,734 @@
+{
+  "schema_version": "kh03.r1.camera_beats.v1",
+  "aspect": "9:16",
+  "vertical_safe_zone_norm": {
+    "y_min": 0.14,
+    "y_max": 0.72,
+    "caption_band": [
+      0.64,
+      0.71
+    ]
+  },
+  "shots": {
+    "SH01": {
+      "start": 0.0,
+      "end": 2.292,
+      "framingScale": "wide_geography",
+      "purpose": "establish",
+      "trajectory": "pull_out",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.0,
+          "c1"
+        ],
+        [
+          2.292,
+          1.05,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.46,
+          "c1"
+        ],
+        [
+          2.292,
+          0.53,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.44,
+          "c1"
+        ],
+        [
+          2.292,
+          0.46,
+          "c1"
+        ]
+      ]
+    },
+    "SH02": {
+      "start": 2.292,
+      "end": 5.292,
+      "framingScale": "payoff_close_reveal",
+      "purpose": "reaction",
+      "trajectory": "reveal_payoff",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.06,
+          "c1"
+        ],
+        [
+          3.0,
+          1.14,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          3.0,
+          0.5,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.43,
+          "c1"
+        ],
+        [
+          3.0,
+          0.45,
+          "c1"
+        ]
+      ]
+    },
+    "SH03": {
+      "start": 5.292,
+      "end": 6.458,
+      "framingScale": "macro_physics_insert",
+      "purpose": "insert",
+      "trajectory": "prop_insert",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.167,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.167,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.167,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH04": {
+      "start": 6.458,
+      "end": 7.875,
+      "framingScale": "low_angle_chase",
+      "purpose": "action",
+      "trajectory": "parallax_track",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          1.417,
+          1.09,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.417,
+          0.54,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.47000000000000003,
+          "c1"
+        ],
+        [
+          1.417,
+          0.45,
+          "c1"
+        ]
+      ]
+    },
+    "SH05": {
+      "start": 7.875,
+      "end": 10.25,
+      "framingScale": "low_angle_chase",
+      "purpose": "action",
+      "trajectory": "parallax_track",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          2.375,
+          1.09,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          2.375,
+          0.54,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.47000000000000003,
+          "c1"
+        ],
+        [
+          2.375,
+          0.45,
+          "c1"
+        ]
+      ]
+    },
+    "SH06": {
+      "start": 10.25,
+      "end": 12.083,
+      "framingScale": "medium_full_tracking",
+      "purpose": "action",
+      "trajectory": "actor_follow",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          1.833,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          1.833,
+          0.48,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.833,
+          0.44,
+          "c1"
+        ]
+      ]
+    },
+    "SH07": {
+      "start": 12.083,
+      "end": 13.917,
+      "framingScale": "macro_physics_insert",
+      "purpose": "action",
+      "trajectory": "prop_insert",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.833,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.833,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.833,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH08": {
+      "start": 13.917,
+      "end": 15.25,
+      "framingScale": "extreme_detail_insert",
+      "purpose": "insert",
+      "trajectory": "prop_insert",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.333,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.333,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.333,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH09": {
+      "start": 15.25,
+      "end": 16.875,
+      "framingScale": "medium_full_tracking",
+      "purpose": "action",
+      "trajectory": "actor_follow",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.02,
+          "c1"
+        ],
+        [
+          1.625,
+          1.08,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.52,
+          "c1"
+        ],
+        [
+          1.625,
+          0.48,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.625,
+          0.44,
+          "c1"
+        ]
+      ]
+    },
+    "SH10": {
+      "start": 16.875,
+      "end": 18.5,
+      "framingScale": "extreme_detail_insert",
+      "purpose": "action",
+      "trajectory": "impulse_snap_zoom",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.625,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.625,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.625,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH11": {
+      "start": 18.5,
+      "end": 19.833,
+      "framingScale": "macro_physics_insert",
+      "purpose": "insert",
+      "trajectory": "prop_insert",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.333,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.333,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.333,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH12": {
+      "start": 19.833,
+      "end": 21.375,
+      "framingScale": "extreme_detail_insert",
+      "purpose": "insert",
+      "trajectory": "prop_insert",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.542,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.542,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.542,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH13": {
+      "start": 21.375,
+      "end": 23.583,
+      "framingScale": "payoff_close_reveal",
+      "purpose": "reveal",
+      "trajectory": "impulse_snap_zoom",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.06,
+          "c1"
+        ],
+        [
+          2.208,
+          1.14,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          2.208,
+          0.5,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.43,
+          "c1"
+        ],
+        [
+          2.208,
+          0.45,
+          "c1"
+        ]
+      ]
+    },
+    "SH14": {
+      "start": 23.583,
+      "end": 25.542,
+      "framingScale": "extreme_detail_insert",
+      "purpose": "reveal",
+      "trajectory": "reveal_payoff",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.04,
+          "c1"
+        ],
+        [
+          1.958,
+          1.15,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.48,
+          "c1"
+        ],
+        [
+          1.958,
+          0.52,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.45,
+          "c1"
+        ],
+        [
+          1.958,
+          0.435,
+          "c1"
+        ]
+      ]
+    },
+    "SH15": {
+      "start": 25.542,
+      "end": 27.5,
+      "framingScale": "payoff_close_reveal",
+      "purpose": "reveal",
+      "trajectory": "reveal_payoff",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.06,
+          "c1"
+        ],
+        [
+          1.958,
+          1.14,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.5,
+          "c1"
+        ],
+        [
+          1.958,
+          0.5,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.43,
+          "c1"
+        ],
+        [
+          1.958,
+          0.45,
+          "c1"
+        ]
+      ]
+    },
+    "SH16": {
+      "start": 27.5,
+      "end": 30.0,
+      "framingScale": "wide_geography",
+      "purpose": "reaction",
+      "trajectory": "pull_out",
+      "stageAxisSign": 1,
+      "overscanMargin": 0.1,
+      "zoomKeys": [
+        [
+          0.0,
+          1.0,
+          "c1"
+        ],
+        [
+          2.5,
+          1.05,
+          "c1"
+        ]
+      ],
+      "cxKeys": [
+        [
+          0.0,
+          0.46,
+          "c1"
+        ],
+        [
+          2.5,
+          0.53,
+          "c1"
+        ]
+      ],
+      "cyKeys": [
+        [
+          0.0,
+          0.44,
+          "c1"
+        ],
+        [
+          2.5,
+          0.46,
+          "c1"
+        ]
+      ]
+    }
+  }
+}

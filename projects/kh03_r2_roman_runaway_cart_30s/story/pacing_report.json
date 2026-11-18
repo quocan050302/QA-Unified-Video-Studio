@@ -1,0 +1,47 @@
+{
+  "schema_version": "kh03.r2.pacing_proxies.v1",
+  "shots_count": 16,
+  "lines_count": 10,
+  "duration_histogram": {
+    "lt_1p0s": 0,
+    "1p0_to_2p0s": 11,
+    "2p0_to_3p0s": 4,
+    "ge_3p0s": 1
+  },
+  "min_shot_dur_sec": 1.167,
+  "mean_shot_dur_sec": 1.875,
+  "max_shot_dur_sec": 3.0,
+  "first_hook_action_cutoff_sec": 0.45,
+  "meaningful_action_beats": 16,
+  "repeated_scale_3x_runs": 0,
+  "long_low_event_candidates": [],
+  "narration_gaps_gt_0p75s": [],
+  "one_to_many_sentences": 8,
+  "many_to_one_shots": 7,
+  "mid_sentence_cuts_count": 12,
+  "subjective_retention_verified": false,
+  "editorial_approved": "HUMAN_REVIEW_PENDING",
+  "honesty_note": "Technical pacing proxies only; actual audience retention cannot be inferred without real upload analytics.",
+  "editorial_mode": "roman_action_director_v2",
+  "causal_state_transition_shots": 13,
+  "unique_action_ids_used": [
+    "actor.crowd_reaction_cheer",
+    "actor.deadpan_walk_unaffected",
+    "actor.idle_micro_act",
+    "actor.reach_grab_prop",
+    "actor.sprint_chase",
+    "actor.stop_brace",
+    "prop.cart_halt_skid",
+    "prop.cart_roll_slope",
+    "prop.helmet_impact_settle",
+    "prop.peg_crack_snap",
+    "prop.prop_bounce_tray",
+    "prop.prop_parabolic_arc",
+    "prop.rope_taut_post_wrap",
+    "world.market_crowd_pass",
+    "world.market_hill_establish"
+  ],
+  "perceptual_qa_summary": {
+    "status": "PENDING_RENDER_MEASUREMENT"
+  }
+}

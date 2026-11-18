@@ -1,0 +1,21 @@
+{
+  "schema_version": "kh03.r2.sound_design.v1",
+  "voice_provenance": "local_os_sapi_speech_synthesizer",
+  "voice_sha256": "f761498ad1908d8299f82f37bc2973e381b151ee9b429eb0f580286ecc792fd9",
+  "global_tempo_scale": 1.0606,
+  "audio_assets": {
+    "sfx_hashes": {
+      "r2_wood_peg_snap.wav": "52ef474f5a571e52e1ca43b24225fff9941bfad4ec73ca1919aaf57174b86f6d",
+      "r2_cart_cobble_rattle.wav": "d9b826e69da702a72ee8e18fb3f5287ed7eb524c17d29082210ef206a138d926",
+      "r2_rope_taut_creak.wav": "59aac951931ed75116ae89bfe5a3bf94a99638de8901908bb75b846a00f461af",
+      "r2_cart_skid_halt.wav": "0151f8e8c4c3c8a96d5007f6b50f6d57364d81bdecb515ed7d90c5e0c4690c33",
+      "r2_loaf_launch_arc.wav": "33b0757a393fa1d934be25419d5be8f8fe76edd603180ac1ce06f5a49ae177ae",
+      "r2_helmet_loaf_plop.wav": "2a06c1eb92c2c667261d8d8000b3129e94031af41f13018f24eb4534ed8f0bc0",
+      "r2_bronze_clatter.wav": "199897f74d8cd9275bc314e9fe7ca2723c649b44149edfb7d0c3abf87fa7652b",
+      "r2_river_splash.wav": "b7cf4b849899b748dce4e5779e51138025834c8ea6478cdcafc78bfb3a45471b",
+      "r2_market_cheer.wav": "66d9e8fc6968242cfab4476a085a2aa7d44e03036d96c582ed86c3d49a4e47c1"
+    },
+    "music_file": "audio/music/bed_r2_market_comedy.wav",
+    "music_hash": "3960e0f05b0572455b1b19ca5158a0926948850274cb5ab35dde48a0a856bc4b"
+  }
+}

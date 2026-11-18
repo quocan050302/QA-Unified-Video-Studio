@@ -135,10 +135,11 @@ export function evaluateShotCameraAt(shot, camBeats, activeInfo, worldState, W, 
     targetY = lerp(ty0, ty1, sCurve);
   }
 
-  // Brief impact shake ONLY at real mechanical impacts (stumble curb / stomp impact / gate slam)
+  // Brief impact shake ONLY at real mechanical impacts (stumble curb / stomp impact / gate slam / R2 cart halt & loaf impact)
   let shakeX = 0;
   let shakeY = 0;
   const sub = worldState?.activeSubAction || '';
+  const act = worldState?.activeActionId || '';
   if (sub === 'oak_gate_bolt_slams_home_behind_guard' && normT > 0.28 && normT < 0.72) {
     const k = Math.sin(((normT - 0.28) / 0.44) * Math.PI);
     shakeX = Math.sin(localT * 62.0) * W * 0.011 * k;
@@ -147,6 +148,14 @@ export function evaluateShotCameraAt(shot, camBeats, activeInfo, worldState, W, 
     const k = Math.sin(((normT - 0.35) / 0.33) * Math.PI);
     shakeX = Math.sin(localT * 54.0) * W * 0.006 * k;
     shakeY = Math.cos(localT * 43.0) * H * 0.005 * k;
+  } else if ((act === 'prop.cart_halt_skid' || act === 'prop.peg_crack_snap') && normT > 0.40 && normT < 0.76) {
+    const k = Math.sin(((normT - 0.40) / 0.36) * Math.PI);
+    shakeX = Math.sin(localT * 58.0) * W * 0.008 * k;
+    shakeY = Math.cos(localT * 47.0) * H * 0.007 * k;
+  } else if (act === 'prop.helmet_impact_settle' && normT > 0.35 && normT < 0.65) {
+    const k = Math.sin(((normT - 0.35) / 0.30) * Math.PI);
+    shakeX = Math.sin(localT * 48.0) * W * 0.004 * k;
+    shakeY = Math.cos(localT * 56.0) * H * 0.006 * k;
   }
 
   return Object.freeze({
@@ -170,4 +179,66 @@ export function withEditorialCamera(g, cam, drawFn) {
   g.translate(-cx, -cy);
   drawFn();
   g.restore();
+}
+
+// Continuous causal world state evaluator for KH-03.0.R2 generalized 2D action graphs
+export function evaluateWorldStateAtV2(shotPlan, activeInfo, globalT, frameIdx) {
+  const sh = activeInfo?.shot || {};
+  const normT = activeInfo?.normT ?? 0;
+  const totalDur = Math.max(0.1, shotPlan?.duration_sec || 30.0);
+  const gNorm = clamp(globalT / totalDur, 0, 1);
+
+  const actionId = sh.action_id || '';
+  const locationId = sh.location_id || 'roman_market_hill';
+
+  // Continuous cart trajectory / wheel rotation proportional to physical rolling progress across market slope
+  const rollStart = 0.08;
+  const haltAt = 0.72;
+  const cartRunFrac = gNorm <= rollStart
+    ? 0
+    : gNorm >= haltAt
+      ? 1.0
+      : c1Smooth((gNorm - rollStart) / (haltAt - rollStart));
+  const wheelAngleRad = cartRunFrac * Math.PI * 16.0;
+
+  let ropeTautFrac = 0.15;
+  if (actionId === 'prop.rope_taut_post_wrap' || actionId === 'actor.pull_drag_rope_tension') {
+    ropeTautFrac = lerp(0.35, 0.96, c2Smooth(normT));
+  } else if (actionId === 'actor.stop_brace' || actionId === 'prop.cart_halt_skid' || gNorm >= 0.56) {
+    ropeTautFrac = 0.98;
+  }
+
+  let loavesOnTray = 3;
+  if (actionId === 'prop.prop_bounce_tray' || actionId === 'prop.prop_parabolic_arc' || gNorm >= 0.76) {
+    loavesOnTray = 2;
+  }
+
+  const loafOnHelmet = (
+    actionId === 'actor.deadpan_walk_unaffected' ||
+    (actionId === 'prop.helmet_impact_settle' && normT > 0.42) ||
+    gNorm >= 0.88
+  );
+
+  return Object.freeze({
+    globalT,
+    frameIdx,
+    totalFrames: shotPlan?.total_frames || 720,
+    editorialMode: 'roman_action_director_v2',
+    locationId,
+    activeActionId: actionId,
+    activeSubAction: sh.sub_action || actionId,
+    pegSnapped: gNorm > 0.09 || actionId !== 'world.market_hill_establish',
+    cartRunFrac,
+    wheelAngleRad,
+    streetScrollPx: cartRunFrac * 1850,
+    ropeTautFrac,
+    loavesOnTray,
+    loafOnHelmet,
+    gateCloseFrac: actionId === 'prop.door_close_adapter' ? clamp(0.4 + normT * 0.6, 0, 1) : 1.0,
+    boltDropFrac: actionId === 'prop.door_close_adapter' ? clamp((normT - 0.6) / 0.4, 0, 1) : 1.0,
+    scrollMode: actionId === 'prop.scroll_open_adapter' ? 'unrolled_message' : 'rolled_sealed',
+    mudAmount: 0.65,
+    sealCrackFrac: 1.0,
+    stageAxisSign: sh.stage_axis_sign ?? 1,
+  });
 }

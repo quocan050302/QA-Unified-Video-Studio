@@ -1074,3 +1074,690 @@ def validate_shot_plan_contract(
         "editorial_approved": "HUMAN_REVIEW_PENDING",
         "style_approved": "HUMAN_REVIEW_PENDING",
     }
+
+
+# ======================================================================================
+# KH-03.0.R2 GENERALIZED ACTION GRAPH + SEMANTIC BEAT / VISUAL EVENT COMPILER (OPT-IN V2)
+# ======================================================================================
+V2_EDITORIAL_MODE = "roman_action_director_v2"
+
+_ACTOR_CUES: Tuple[Tuple[re.Pattern, str, str], ...] = (
+    (re.compile(r"\b(?:titus|apprentice)\b", re.I), "apprentice_titus", "rookie_hastatus"),
+    (re.compile(r"\b(?:lucius|baker)\b", re.I), "baker_lucius", "instructor_princeps"),
+    (re.compile(r"\b(?:varro|centurion)\b", re.I), "centurion_varro", "centurion_crest"),
+    (re.compile(r"\b(?:marc|signifer)\b", re.I), "signifer_marc", "veteran_neighbor_legionary"),
+    (re.compile(r"\b(?:cassius|senator)\b", re.I), "senator_cassius", "instructor_princeps"),
+    (re.compile(r"\b(?:forum\s+messenger|messenger)\b", re.I), "forum_messenger", "rookie_hastatus"),
+    (re.compile(r"\b(?:marcus|courier)\b", re.I), "courier_marcus", "rookie_hastatus"),
+    (re.compile(r"\b(?:gaius|gate\s+guard|guard)\b", re.I), "gate_guard_gaius", "instructor_princeps"),
+    (re.compile(r"\b(?:crowd|shoppers|bystanders)\b", re.I), "market_crowd", "rookie_hastatus"),
+)
+
+_PROP_CUES: Tuple[Tuple[re.Pattern, str], ...] = (
+    (re.compile(r"\b(?:cart|wheels|axle|wagon)\b", re.I), "market_cart"),
+    (re.compile(r"\b(?:brake\s+peg|wooden\s+peg|peg|pin|chock)\b", re.I), "brake_peg"),
+    (re.compile(r"\b(?:rope|hemp\s+rope|cord)\b", re.I), "hemp_rope"),
+    (re.compile(r"\b(?:bollard|stone\s+post|mooring\s+post|post)\b", re.I), "stone_bollard"),
+    (re.compile(r"\b(?:oven|hearth|bakery|fornax)\b", re.I), "bakery_oven"),
+    (re.compile(r"\b(?:tray|baker'?s\s+tray)\b", re.I), "bread_tray"),
+    (re.compile(r"\b(?:loaf|loaves|bread)\b", re.I), "roman_loaf"),
+    (re.compile(r"\b(?:vexillum|standard|banner|cloth\s+standard)\b", re.I), "cloth_vexillum"),
+    (re.compile(r"\b(?:ceremonial\s+helmet|helmet|crest|plume)\b", re.I), "ceremonial_helmet"),
+    (re.compile(r"\b(?:stone\s+bench|marble\s+bench|bench)\b", re.I), "stone_bench"),
+    (re.compile(r"\b(?:scroll|letter|dispatch|seal)\b", re.I), "sealed_scroll"),
+    (re.compile(r"\b(?:gate|city\s+gate|oak\s+doors|iron\s+bolt)\b", re.I), "city_gate"),
+)
+
+_AFFORDANCE_TO_SCALE = {
+    "prop_insert": "macro_physics_insert",
+    "impulse_snap_zoom": "extreme_detail_insert",
+    "parallax_track": "low_angle_chase",
+    "pull_out": "wide_geography",
+    "push_in": "over_shoulder_medium",
+    "actor_follow": "medium_full_tracking",
+    "motivated_cut": "medium_two_shot",
+    "reveal_payoff": "payoff_close_reveal",
+    "whip_pan_motivated": "low_angle_chase",
+}
+
+_SCALE_FALLBACK_ORDER = (
+    "wide_geography",
+    "macro_physics_insert",
+    "low_angle_chase",
+    "medium_full_tracking",
+    "over_shoulder_medium",
+    "extreme_detail_insert",
+    "payoff_close_reveal",
+    "medium_two_shot",
+)
+
+_FINITE_VERB_HINT = re.compile(
+    r"\b(?:snapped|broke|cracked|rolled|gaining|raced|racing|sprinted|ran|lunged|caught|grabbed|"
+    r"whipped|wrapped|wound|braced|planted|halted|stopped|skidded|jarred|knocked|bounced|flew|"
+    r"sailed|landed|settled|kept\s+walking|walked|strolled|marched|cheered|laughed|gasped|"
+    r"shouted|yelled|pointed|dropped|rolled\s+under|picked\s+up|retrieved|lifted|handed|passed|"
+    r"threw|tossed|hauled|pulled|pushed|stumbled|slipped|drifted|unrolled|slammed)\b",
+    re.I,
+)
+
+
+def parse_js_renderer_handlers() -> set[str]:
+    """Extract registered handler names from packs/squire/roman_master/action_registry.js."""
+    js_path = REPO_ROOT / "packs" / "squire" / "roman_master" / "action_registry.js"
+    if not js_path.is_file():
+        return set()
+    txt = js_path.read_text(encoding="utf-8")
+    return set(re.findall(r"^\s{2}((?:actor|prop|world)_[a-z0-9_]+)\s*\(", txt, flags=re.MULTILINE))
+
+
+def infer_scene_manifest_v2(
+    normalized_lines: List[Dict[str, Any]],
+    custom_manifest: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Infer auditable scene_manifest (entities, props, locations) strictly from script cues unless custom supplied."""
+    if custom_manifest is not None:
+        return copy.deepcopy(custom_manifest)
+
+    full_text = " ".join(ln["text"] for ln in normalized_lines)
+    low = full_text.lower()
+
+    entities: List[Dict[str, Any]] = []
+    seen_actors = set()
+    for pat, aid, arch in _ACTOR_CUES:
+        if pat.search(full_text) and aid not in seen_actors:
+            seen_actors.add(aid)
+            entities.append({"actor_id": aid, "archetype": arch})
+
+    props = []
+    seen_props = set()
+    for pat, pid in _PROP_CUES:
+        if pat.search(full_text) and pid not in seen_props:
+            seen_props.add(pid)
+            props.append(pid)
+
+    locations: List[str] = []
+    if any(k in low for k in ("river", "harbor", "quay", "pier", "wharf", "vexillum", "tiber")):
+        locations.append("roman_river_harbor")
+    if any(k in low for k in ("forum", "courtyard", "senator", "bench", "senate", "column")):
+        locations.append("roman_forum_courtyard")
+    if any(k in low for k in ("market hill", "baker", "oven", "loaf", "loaves", "cart", "bollard", "cobble", "slope")):
+        locations.append("roman_market_hill")
+    if any(k in low for k in ("city gate", "gate threshold", "scroll")):
+        locations.extend(["city_gate_approach", "city_gate_threshold"])
+    if not locations:
+        locations = ["roman_market_hill"]
+
+    # Ensure primary hero entity exists when a script refers purely to objects or single active environment
+    if not entities:
+        if locations[0] == "roman_river_harbor":
+            entities = [{"actor_id": "signifer_marc", "archetype": "veteran_neighbor_legionary"}]
+        elif locations[0] == "roman_forum_courtyard":
+            entities = [{"actor_id": "senator_cassius", "archetype": "instructor_princeps"}]
+        else:
+            entities = [{"actor_id": "apprentice_titus", "archetype": "rookie_hastatus"}]
+
+    return {
+        "schema_version": "kh03.r2.scene_manifest.v1",
+        "render_mode": "canvas2d_only",
+        "style_profile": "roman_squire_master.v1",
+        "default_location": locations[0],
+        "locations": locations,
+        "entities": entities,
+        "props": sorted(set(props)),
+    }
+
+
+def _extract_actors_in_phrase(phrase: str, manifest_entities: List[Dict[str, Any]]) -> List[str]:
+    allowed = {e.get("actor_id") or e.get("id") for e in manifest_entities}
+    matched: List[str] = []
+    for pat, aid, _ in _ACTOR_CUES:
+        if aid in allowed and pat.search(phrase) and aid not in matched:
+            matched.append(aid)
+    return matched
+
+
+def _extract_props_in_phrase(phrase: str, manifest_props: Iterable[str]) -> List[str]:
+    inv = set(manifest_props)
+    found: List[str] = []
+    for pat, pid in _PROP_CUES:
+        if pid in inv and pat.search(phrase) and pid not in found:
+            found.append(pid)
+    return found
+
+
+def split_line_clauses_v2(text: str) -> List[str]:
+    """Split a single sentence into sequential causal action clauses when multiple real verbs exist."""
+    raw_parts = [p.strip() for p in re.split(r"\s*;\s*", text.strip()) if p.strip()]
+    clauses: List[str] = []
+    for part in raw_parts:
+        # Split comma+conjunction ONLY when EVERY resulting clause is complete (>= 4 words + finite verb)
+        cand_parts = [
+            s.strip()
+            for s in re.split(r",\s*(?:and|then|while|until|so)\s+", part, flags=re.I)
+            if s.strip()
+        ]
+        if len(cand_parts) > 1 and all(len(s.split()) >= 4 and _FINITE_VERB_HINT.search(s) for s in cand_parts):
+            clauses.extend(cand_parts)
+        else:
+            clauses.append(part)
+    return [c.strip() for c in clauses if c.strip()]
+
+
+def extract_semantic_beats_v2(
+    normalized_lines: List[Dict[str, Any]],
+    scene_manifest: Dict[str, Any],
+    style_bible: Optional[Dict[str, Any]] = None,
+    *,
+    overrides: Optional[Dict[str, Dict[str, Any]]] = None,
+) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """Convert normalized script lines into strictly validated ActionBindings & causal ActionGraph."""
+    from tools.kh03_action_registry import (
+        REGISTRY_VERSION,
+        action_registry_digest,
+        build_roman_action_registry,
+        resolve_roman_action,
+    )
+
+    sb = style_bible or load_roman_master_style()
+    reg = build_roman_action_registry()
+    entities = list(scene_manifest.get("entities") or [])
+    inv_props = list(scene_manifest.get("props") or [])
+    inv_locs = list(scene_manifest.get("locations") or [])
+    default_loc = str(scene_manifest.get("default_location") or (inv_locs[0] if inv_locs else "roman_market_hill"))
+    ov_map = overrides or {}
+
+    world_state: Dict[str, Any] = {}
+    last_subject: Optional[str] = None
+    bindings: List[Dict[str, Any]] = []
+    graph_nodes: List[Dict[str, Any]] = []
+    graph_edges: List[Dict[str, Any]] = []
+
+    b_idx = 0
+    for ln in normalized_lines:
+        lid = ln["id"]
+        clauses = split_line_clauses_v2(ln["text"])
+        for c_idx, clause in enumerate(clauses):
+            b_idx += 1
+            beat_id = f"B{b_idx:03d}"
+            explicit_actors = _extract_actors_in_phrase(clause, entities)
+            inferred = False
+            primary_actors = list(explicit_actors)
+            # Only inherit single clear preceding subject if sentence lacks multi-actor pronoun ambiguity
+            if not primary_actors and last_subject and len(entities) >= 1:
+                if not (re.search(r"\b(?:he|him|his)\b", clause, re.I) and re.search(r"\b(?:him|another|the other|someone)\b", clause, re.I)):
+                    # Keep multi-candidate third-person ambiguity exposed when >= 3 actors exist unless pronoun is single clear referent
+                    if not (len(entities) >= 3 and re.search(r"\b(?:he|she|they)\b", clause, re.I) and not explicit_actors and c_idx == 0 and "rolled" not in clause.lower() and "flew" not in clause.lower()):
+                        primary_actors = [last_subject]
+                        inferred = True
+            if explicit_actors:
+                last_subject = explicit_actors[0]
+
+            # Infer location preference from clause context when project has multiple locations
+            loc_id = default_loc
+            low_c = clause.lower()
+            if "river" in low_c or "harbor" in low_c or "vexillum" in low_c or "quay" in low_c:
+                loc_id = "roman_river_harbor" if "roman_river_harbor" in inv_locs or not inv_locs else default_loc
+            elif "forum" in low_c or "bench" in low_c or "senator" in low_c:
+                loc_id = "roman_forum_courtyard" if "roman_forum_courtyard" in inv_locs or not inv_locs else default_loc
+            elif any(k in low_c for k in ("market", "oven", "cart", "loaf", "peg", "bollard", "cobble")):
+                loc_id = "roman_market_hill" if "roman_market_hill" in inv_locs or not inv_locs else default_loc
+
+            beat_payload = {
+                "beat_id": beat_id,
+                "line_id": lid,
+                "clause_idx": c_idx,
+                "source_text": clause,
+                "primary_actors": primary_actors,
+                "actors_inferred_by_pronoun": inferred,
+                "props": _extract_props_in_phrase(clause, inv_props),
+                "location_id": loc_id,
+            }
+            manual_ov = ov_map.get(beat_id) or ov_map.get(lid)
+            binding = resolve_roman_action(
+                beat_payload,
+                entities,
+                {
+                    "props": inv_props,
+                    "locations": inv_locs,
+                    "default_location": default_loc,
+                },
+                style_contract={"style_id": sb.get("style_id", "roman_squire_master.v1")},
+                world_state=world_state,
+                registry=reg,
+                manual_override=manual_ov,
+            )
+            world_state = dict(binding.post_states)
+            b_dict = binding.to_dict()
+            b_dict["line_span_total_clauses"] = len(clauses)
+            bindings.append(b_dict)
+
+            node = {
+                "node_id": beat_id,
+                "line_id": lid,
+                "action_id": binding.action_id,
+                "renderer_action_id": binding.renderer_action_id,
+                "domain": binding.domain,
+                "event_class": binding.event_class,
+                "actor_ids": binding.actor_ids,
+                "prop_ids": binding.prop_ids,
+                "location_id": binding.location_id,
+                "pre_states": binding.pre_states,
+                "post_states": binding.post_states,
+            }
+            graph_nodes.append(node)
+            if len(graph_nodes) >= 2:
+                prev_n = graph_nodes[-2]
+                graph_edges.append({
+                    "from": prev_n["node_id"],
+                    "to": beat_id,
+                    "shared_state_keys": sorted(set(prev_n["post_states"].keys()) & set(node["pre_states"].keys())),
+                })
+
+    action_graph = {
+        "schema_version": "kh03.r2.action_graph.v1",
+        "registry_version": REGISTRY_VERSION,
+        "registry_digest": action_registry_digest(reg),
+        "nodes": graph_nodes,
+        "edges": graph_edges,
+        "terminal_world_state": world_state,
+    }
+    return bindings, action_graph
+
+
+def split_beat_into_v2_visual_events(
+    bindings: List[Dict[str, Any]],
+    scene_manifest: Optional[Dict[str, Any]] = None,
+) -> List[Dict[str, Any]]:
+    """Assign framing scales & editorial purposes with automatic contrast and zero fixed shot-count forcing."""
+    events: List[Dict[str, Any]] = []
+    prev_scale_1: Optional[str] = None
+    prev_scale_2: Optional[str] = None
+
+    for idx, bnd in enumerate(bindings):
+        aff = bnd.get("camera_affordance", "actor_follow")
+        cand_scale = _AFFORDANCE_TO_SCALE.get(aff, "medium_full_tracking")
+        # Contrast diversity: vary framing when consecutive cuts risk static feel or 3x identical scale
+        if cand_scale == prev_scale_1 and cand_scale == prev_scale_2:
+            for alt in _SCALE_FALLBACK_ORDER:
+                if alt != prev_scale_1:
+                    cand_scale = alt
+                    break
+        elif cand_scale == prev_scale_1 and bnd.get("event_class") in ("insert", "reveal"):
+            cand_scale = "extreme_detail_insert" if cand_scale != "extreme_detail_insert" else "payoff_close_reveal"
+
+        prev_scale_2 = prev_scale_1
+        prev_scale_1 = cand_scale
+
+        events.append({
+            "event_id": f"EV{idx + 1:03d}",
+            "binding_id": bnd["binding_id"],
+            "line_id": bnd["line_id"],
+            "source_phrase": bnd["source_phrase"],
+            "action_id": bnd["action_id"],
+            "domain": bnd["domain"],
+            "event_class": bnd["event_class"],
+            "renderer_action_id": bnd["renderer_action_id"],
+            "motion_profile_id": bnd["motion_profile_id"],
+            "actor_ids": bnd["actor_ids"],
+            "prop_ids": bnd["prop_ids"],
+            "location_id": bnd["location_id"],
+            "framing_scale": cand_scale,
+            "camera_move": aff,
+            "word_anchors": bnd.get("word_anchors", []),
+            "pre_states": bnd.get("pre_states", {}),
+            "post_states": bnd.get("post_states", {}),
+        })
+    return events
+
+
+def compose_v2_shot_plan(
+    visual_events: List[Dict[str, Any]],
+    lines: List[Dict[str, Any]],
+    words: List[Dict[str, Any]],
+    scene_manifest: Dict[str, Any],
+    *,
+    total_duration_sec: float = 30.0,
+    fps: int = 24,
+    aspect: str = "9:16",
+) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    """Allocate continuous frame intervals aligned to spoken lines & real narrative beat rhythm (no fixed shot count)."""
+    if not visual_events:
+        raise ValueError("compose_v2_shot_plan requires >= 1 verified visual event")
+
+    total_frames = max(24, int(round(float(total_duration_sec) * fps)))
+    dur_sec = round(total_frames / fps, 3)
+
+    line_map = {ln["id"]: ln for ln in lines}
+    events_by_line: Dict[str, List[int]] = {}
+    for idx, ev in enumerate(visual_events):
+        events_by_line.setdefault(ev["line_id"], []).append(idx)
+
+    # Compute desired frame weight per event strictly from its bound line duration & event_class
+    raw_weights: List[float] = []
+    for idx, ev in enumerate(visual_events):
+        ln = line_map.get(ev["line_id"])
+        sibling_count = max(1, len(events_by_line.get(ev["line_id"], [idx])))
+        if ln:
+            base_s = max(0.55, float(ln["end"]) - float(ln["start"])) / sibling_count
+        else:
+            base_s = dur_sec / len(visual_events)
+        if ev["event_class"] == "insert":
+            base_s *= 0.82
+        elif ev["event_class"] == "reveal":
+            base_s *= 1.18
+        raw_weights.append(max(0.45, base_s))
+
+    w_sum = max(1e-6, sum(raw_weights))
+    min_frames_per_shot = max(10, min(14, total_frames // max(1, len(visual_events))))
+    counts = [
+        max(min_frames_per_shot, int(round((w / w_sum) * total_frames)))
+        for w in raw_weights
+    ]
+    # Reconcile exact total_frames budget deterministically
+    delta = total_frames - sum(counts)
+    order = sorted(range(len(counts)), key=lambda i: counts[i], reverse=(delta < 0))
+    cur = 0
+    while delta != 0:
+        i = order[cur % len(order)]
+        if delta > 0:
+            counts[i] += 1
+            delta -= 1
+        elif counts[i] > min_frames_per_shot:
+            counts[i] -= 1
+            delta += 1
+        cur += 1
+        if cur > total_frames * 4:
+            break
+
+    shots: List[Dict[str, Any]] = []
+    f_cursor = 0
+    for idx, (ev, fc) in enumerate(zip(visual_events, counts)):
+        fs = f_cursor
+        fe = fs + fc - 1
+        if idx == len(visual_events) - 1:
+            fe = total_frames - 1
+            fc = fe - fs + 1
+        f_cursor = fe + 1
+
+        start_s = round(fs / fps, 3)
+        end_s = round((fe + 1) / fps, 3)
+        d_s = round(fc / fps, 3)
+        move = ev["camera_move"]
+        cov_lines = [
+            ln["id"] for ln in lines
+            if min(float(ln["end"]), end_s) - max(float(ln["start"]), start_s) > 0.015
+        ] or [ev["line_id"]]
+        shots.append({
+            "id": f"SH{idx + 1:02d}",
+            "order": idx + 1,
+            "start": start_s,
+            "end": end_s,
+            "duration": d_s,
+            "frame_start": fs,
+            "frame_end": fe,
+            "frame_count": fc,
+            "tpl": "script_shot",
+            "kind": "2d",
+            "action_id": ev["action_id"],
+            "renderer_action_id": ev["renderer_action_id"],
+            "sub_action": ev["renderer_action_id"],
+            "motion_profile_id": ev["motion_profile_id"],
+            "location_id": ev["location_id"],
+            "event_kind": ev["event_class"],
+            "purpose": ev["event_class"],
+            "source_line_id": ev["line_id"],
+            "line_ids": cov_lines,
+            "word_range_ms": [int(round(start_s * 1000)), int(round(end_s * 1000))],
+            "source_phrase": ev["source_phrase"],
+            "word_anchors": ev["word_anchors"],
+            "framing_scale": ev["framing_scale"],
+            "actors": list(ev["actor_ids"]),
+            "actor_ids": list(ev["actor_ids"]),
+            "props": list(ev["prop_ids"]),
+            "prop_ids": list(ev["prop_ids"]),
+            "pre_states": ev["pre_states"],
+            "post_states": ev["post_states"],
+            "stage_axis_sign": 1,
+            "camera_intent": {
+                "move": move,
+                "zoom_start": 1.03 if ev["event_class"] != "reveal" else 1.06,
+                "zoom_end": 1.12 if ev["event_class"] in ("insert", "reveal") else 1.08,
+                "target_start": [0.49, 0.45 if aspect == "9:16" else 0.50],
+                "target_end": [0.51, 0.44 if aspect == "9:16" else 0.50],
+            },
+        })
+
+    shot_plan = {
+        "schema_version": "kh03.r2.shot_plan.v1",
+        "editorial_mode": V2_EDITORIAL_MODE,
+        "render_mode": "canvas2d_only",
+        "style_profile": "roman_squire_master.v1",
+        "fps": fps,
+        "aspect": aspect,
+        "duration_sec": dur_sec,
+        "total_frames": total_frames,
+        "shots": shots,
+    }
+    prop_ledger = {
+        "schema_version": "kh03.r2.prop_state_ledger.v1",
+        "events": [
+            {
+                "shot_id": s["id"],
+                "frame_start": s["frame_start"],
+                "frame_end": s["frame_end"],
+                "action_id": s["action_id"],
+                "pre_states": s["pre_states"],
+                "post_states": s["post_states"],
+            }
+            for s in shots
+        ],
+    }
+    return shot_plan, prop_ledger
+
+
+def score_v2_pacing_proxies(
+    shot_plan: Dict[str, Any],
+    lines: List[Dict[str, Any]],
+    words: List[Dict[str, Any]],
+    perceptual_qa: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Compute honest R2 pacing & causal state-delta proxies alongside decoded perceptual QA summary."""
+    shots = shot_plan.get("shots", [])
+    base = score_pacing_proxies(shots, lines, words)
+    state_changes = 0
+    for s in shots:
+        if s.get("post_states") != s.get("pre_states"):
+            state_changes += 1
+    base["schema_version"] = "kh03.r2.pacing_proxies.v1"
+    base["editorial_mode"] = V2_EDITORIAL_MODE
+    base["causal_state_transition_shots"] = state_changes
+    base["unique_action_ids_used"] = sorted({s.get("action_id") for s in shots if s.get("action_id")})
+    base["perceptual_qa_summary"] = perceptual_qa or {"status": "PENDING_RENDER_MEASUREMENT"}
+    return base
+
+
+def validate_v2_shot_plan_contract(
+    shot_plan: Dict[str, Any],
+    scene_manifest: Dict[str, Any],
+    crosswalk: Optional[Dict[str, Any]] = None,
+    camera_beats: Optional[Dict[str, Any]] = None,
+    voice_timeline: Optional[Dict[str, Any]] = None,
+    style_bible: Optional[Dict[str, Any]] = None,
+    config: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Validate full R2 fail-closed editorial, style-lock, asset, JS handler & crosswalk contracts."""
+    from tools.kh03_action_registry import validate_action_bindings
+
+    errors: List[str] = []
+    sb = style_bible or load_roman_master_style()
+    allowed_archetypes = set((sb.get("locked_character_archetypes") or {}).keys())
+
+    if shot_plan.get("editorial_mode") != V2_EDITORIAL_MODE:
+        errors.append(f"Expected editorial_mode='{V2_EDITORIAL_MODE}', got '{shot_plan.get('editorial_mode')}'")
+    if shot_plan.get("render_mode") != "canvas2d_only":
+        errors.append("KH03_2D_ONLY_VIOLATION: shot_plan.render_mode must be canvas2d_only")
+    if shot_plan.get("style_profile") != "roman_squire_master.v1":
+        errors.append("Style profile must be roman_squire_master.v1")
+
+    fps = int(shot_plan.get("fps", 24))
+    total_frames = int(shot_plan.get("total_frames", 720))
+    shots = shot_plan.get("shots", [])
+    if not shots:
+        return {"valid": False, "errors": ["shot_plan has 0 shots"], "editorial_approved": "HUMAN_REVIEW_PENDING", "style_approved": "HUMAN_REVIEW_PENDING"}
+
+    seen_ids = set()
+    cur_f = 0
+    for idx, sh in enumerate(shots):
+        sid = sh.get("id")
+        if not sid or sid in seen_ids:
+            errors.append(f"Invalid or duplicate shot id '{sid}'")
+        seen_ids.add(sid)
+        if sh.get("kind") == "3d" or sh.get("tpl") == "3d":
+            errors.append(f"KH03_2D_ONLY_VIOLATION: Shot '{sid}' declares forbidden 3D mode")
+        fs = int(sh.get("frame_start", -1))
+        fe = int(sh.get("frame_end", -1))
+        fc = fe - fs + 1
+        if fs != cur_f:
+            errors.append(f"Frame gap/overlap before {sid}: expected {cur_f}, got {fs}")
+        if fe < fs:
+            errors.append(f"Invalid inverted frame range on {sid}: {fs}..{fe}")
+        dur = fc / max(1, fps)
+        if dur + 1e-6 < 0.25:
+            errors.append(f"Shot '{sid}' duration {dur:.3f}s < minimum 0.25s")
+        cur_f = fe + 1
+
+        if idx >= 2 and sh.get("framing_scale") == shots[idx - 1].get("framing_scale") == shots[idx - 2].get("framing_scale"):
+            errors.append(f"3 consecutive identical framing scales ending at '{sid}': {sh.get('framing_scale')}")
+
+        if not sh.get("actors"):
+            errors.append(f"Shot '{sid}' missing primary actors")
+        elif config and config.get("actor_archetypes"):
+            amap = config["actor_archetypes"]
+            for aid in sh["actors"]:
+                arch = amap.get(aid, aid)
+                if arch not in allowed_archetypes:
+                    errors.append(f"Actor '{aid}' uses unlocked non-Roman archetype '{arch}'")
+
+    if cur_f != total_frames:
+        errors.append(f"Shot plan covers {cur_f} frames instead of exact target {total_frames}")
+
+    cw = crosswalk
+    if not cw and voice_timeline:
+        cw = build_line_shot_crosswalk(voice_timeline.get("lines", []), shots, voice_timeline.get("words", []))
+    if cw:
+        sm = cw.get("summary", {})
+        if sm.get("word_coverage_ratio", 0.0) < 0.999:
+            errors.append(f"Unlinked/orphaned spoken words detected: coverage={sm.get('word_coverage_ratio')}")
+
+    if camera_beats:
+        cshots = camera_beats.get("shots", {})
+        for sh in shots:
+            if sh["id"] not in cshots:
+                errors.append(f"Missing camera_beats entry for {sh['id']}")
+
+    js_handlers = parse_js_renderer_handlers()
+    binding_check = validate_action_bindings(
+        shot_plan,
+        asset_manifest=scene_manifest,
+        renderer_registry=js_handlers or None,
+    )
+    if not binding_check.get("valid"):
+        for err in binding_check.get("errors", []):
+            errors.append(f"{err.get('error_code')}: {err.get('message')}")
+
+    return {
+        "valid": len(errors) == 0,
+        "editorial_mode": shot_plan.get("editorial_mode"),
+        "shots_count": len(shots),
+        "total_frames_covered": cur_f,
+        "action_registry_digest": binding_check.get("registry_digest"),
+        "errors": errors,
+        "editorial_approved": "HUMAN_REVIEW_PENDING",
+        "style_approved": "HUMAN_REVIEW_PENDING",
+    }
+
+
+def compile_v2_editorial_plan(
+    script_input: str | List[str] | List[Dict[str, Any]],
+    voice_timeline: Optional[Dict[str, Any]] = None,
+    *,
+    total_duration_sec: Optional[float] = None,
+    custom_manifest: Optional[Dict[str, Any]] = None,
+    aspect: str = "9:16",
+    fps: int = 24,
+    overrides: Optional[Dict[str, Dict[str, Any]]] = None,
+) -> Dict[str, Any]:
+    """End-to-end R2 generalized semantic/action/shot compiler (strictly opt-in via roman_action_director_v2)."""
+    norm_lines = normalize_script_lines(script_input)
+    scene_manifest = infer_scene_manifest_v2(norm_lines, custom_manifest=custom_manifest)
+
+    # Use real measured voice timestamps when supplied; otherwise deterministic synthetic prose timing for offline script compilation
+    if voice_timeline and voice_timeline.get("lines"):
+        lines = voice_timeline["lines"]
+        words = voice_timeline.get("words", [])
+        dur = float(total_duration_sec or voice_timeline.get("pcm_duration_sec") or lines[-1]["end"])
+    else:
+        total_w = sum(max(1, len(ln["text"].split())) for ln in norm_lines)
+        dur = float(total_duration_sec or max(5.0, min(30.0, total_w * 0.42)))
+        lines = []
+        words = []
+        t_cur = 0.0
+        for idx, ln in enumerate(norm_lines):
+            ws = [tok for tok in ln["text"].split() if tok.strip()]
+            span = (len(ws) / max(1, total_w)) * dur
+            if idx == len(norm_lines) - 1:
+                span = max(0.4, dur - t_cur)
+            t_end = round(min(dur, t_cur + span), 3)
+            lines.append({"id": ln["id"], "text": ln["text"], "start": round(t_cur, 3), "end": t_end})
+            wt = t_cur
+            step = (t_end - t_cur) / max(1, len(ws))
+            for tok in ws:
+                words.append({"w": tok, "t": round(wt, 3), "e": round(wt + step * 0.92, 3), "line_id": ln["id"]})
+                wt += step
+            t_cur = t_end
+
+    sb = load_roman_master_style()
+    bindings, action_graph = extract_semantic_beats_v2(norm_lines, scene_manifest, style_bible=sb, overrides=overrides)
+    visual_events = split_beat_into_v2_visual_events(bindings, scene_manifest)
+    shot_plan, prop_ledger = compose_v2_shot_plan(
+        visual_events,
+        lines,
+        words,
+        scene_manifest,
+        total_duration_sec=dur,
+        fps=fps,
+        aspect=aspect,
+    )
+    shots = shot_plan["shots"]
+    cam_beats = schedule_editorial_camera(shots, aspect=aspect)
+    crosswalk = build_line_shot_crosswalk(lines, shots, words)
+    # In single-sentence short clips (e.g., 1 line split across 2+ shots) crosswalk won't hit 1-to-many count>=3 lines threshold cleanly
+    pacing_report = score_v2_pacing_proxies(shot_plan, lines, words)
+    validation = validate_v2_shot_plan_contract(
+        shot_plan,
+        scene_manifest,
+        crosswalk=crosswalk,
+        camera_beats=cam_beats,
+        voice_timeline={"lines": lines, "words": words},
+        style_bible=sb,
+    )
+    beats_doc = {
+        "schema_version": "kh03.r2.beats.v1",
+        "editorial_mode": V2_EDITORIAL_MODE,
+        "lines": norm_lines,
+        "bindings_count": len(bindings),
+        "visual_events": visual_events,
+    }
+    return {
+        "scene_manifest": scene_manifest,
+        "beats": beats_doc,
+        "action_bindings": bindings,
+        "action_graph": action_graph,
+        "shot_plan": shot_plan,
+        "prop_state_ledger": prop_ledger,
+        "camera_beats": cam_beats,
+        "shot_to_line_map": crosswalk,
+        "pacing_report": pacing_report,
+        "validation": validation,
+    }
+

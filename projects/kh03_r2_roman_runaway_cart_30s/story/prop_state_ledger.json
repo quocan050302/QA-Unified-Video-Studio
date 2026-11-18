@@ -1,0 +1,425 @@
+{
+  "schema_version": "kh03.r2.prop_state_ledger.v1",
+  "events": [
+    {
+      "shot_id": "SH01",
+      "frame_start": 0,
+      "frame_end": 54,
+      "action_id": "world.market_hill_establish",
+      "pre_states": {},
+      "post_states": {
+        "geography_established": true
+      }
+    },
+    {
+      "shot_id": "SH02",
+      "frame_start": 55,
+      "frame_end": 126,
+      "action_id": "actor.idle_micro_act",
+      "pre_states": {
+        "geography_established": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert"
+      }
+    },
+    {
+      "shot_id": "SH03",
+      "frame_start": 127,
+      "frame_end": 154,
+      "action_id": "prop.peg_crack_snap",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      }
+    },
+    {
+      "shot_id": "SH04",
+      "frame_start": 155,
+      "frame_end": 188,
+      "action_id": "prop.cart_roll_slope",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      }
+    },
+    {
+      "shot_id": "SH05",
+      "frame_start": 189,
+      "frame_end": 245,
+      "action_id": "world.market_crowd_pass",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true
+      }
+    },
+    {
+      "shot_id": "SH06",
+      "frame_start": 246,
+      "frame_end": 289,
+      "action_id": "actor.sprint_chase",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint"
+      }
+    },
+    {
+      "shot_id": "SH07",
+      "frame_start": 290,
+      "frame_end": 333,
+      "action_id": "actor.reach_grab_prop",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true
+      }
+    },
+    {
+      "shot_id": "SH08",
+      "frame_start": 334,
+      "frame_end": 365,
+      "action_id": "prop.rope_taut_post_wrap",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      }
+    },
+    {
+      "shot_id": "SH09",
+      "frame_start": 366,
+      "frame_end": 404,
+      "action_id": "actor.stop_brace",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      }
+    },
+    {
+      "shot_id": "SH10",
+      "frame_start": 405,
+      "frame_end": 443,
+      "action_id": "prop.cart_halt_skid",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true
+      }
+    },
+    {
+      "shot_id": "SH11",
+      "frame_start": 444,
+      "frame_end": 475,
+      "action_id": "prop.prop_bounce_tray",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      }
+    },
+    {
+      "shot_id": "SH12",
+      "frame_start": 476,
+      "frame_end": 512,
+      "action_id": "prop.prop_parabolic_arc",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      }
+    },
+    {
+      "shot_id": "SH13",
+      "frame_start": 513,
+      "frame_end": 565,
+      "action_id": "prop.helmet_impact_settle",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true
+      }
+    },
+    {
+      "shot_id": "SH14",
+      "frame_start": 566,
+      "frame_end": 612,
+      "action_id": "actor.deadpan_walk_unaffected",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      }
+    },
+    {
+      "shot_id": "SH15",
+      "frame_start": 613,
+      "frame_end": 659,
+      "action_id": "actor.deadpan_walk_unaffected",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      }
+    },
+    {
+      "shot_id": "SH16",
+      "frame_start": 660,
+      "frame_end": 719,
+      "action_id": "actor.crowd_reaction_cheer",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady",
+        "crowd_mood": "cheering"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "kh03.r2.continuity_ledger.v1",
+  "editorial_mode": "roman_action_director_v2",
+  "world_invariants": {
+    "geography_established": true,
+    "actor_posture": "braced_load",
+    "peg_snapped": true,
+    "cart_rolling": false,
+    "crowd_active": true,
+    "actor_gait": "sprint",
+    "hand_prop_contact": true,
+    "rope_attached": true,
+    "rope_taut": true,
+    "cart_stopped": true,
+    "jolt_occurred": true,
+    "loaf_airborne": false,
+    "loaf_on_helmet": true,
+    "centurion_composure": "deadpan_steady",
+    "crowd_mood": "cheering"
+  }
+}

@@ -20,9 +20,11 @@ import {
 import {
   resolveShotAtFrame,
   evaluateWorldStateAt,
+  evaluateWorldStateAtV2,
   evaluateShotCameraAt,
   withEditorialCamera,
 } from './editorial_state.js';
+import { renderRomanAction2D } from './action_registry.js';
 
 function drawShoutWaves(g, x, y, s, progress) {
   g.save();
@@ -113,6 +115,34 @@ export function renderScriptShotFrame(g, t, shotOverride = null) {
     : resolveShotAtFrame(shotPlan, frameIdx);
 
   const sh = activeInfo.shot || {};
+  const isR2V2 = (shotPlan.editorial_mode === 'roman_action_director_v2') || (E.cfg?.editorial_mode === 'roman_action_director_v2');
+  if (isR2V2) {
+    const worldStateV2 = evaluateWorldStateAtV2(shotPlan, activeInfo, t, frameIdx);
+    const camV2 = evaluateShotCameraAt(sh, camBeats, activeInfo, worldStateV2, w, h);
+    g.fillStyle = '#2d262b';
+    g.fillRect(0, 0, w, h);
+    try {
+      withEditorialCamera(g, camV2, () => {
+        renderRomanAction2D(g, {
+          t,
+          lt: activeInfo.localT,
+          normT: activeInfo.normT,
+          frameIdx,
+          shot: sh,
+          shotPlan,
+          worldState: worldStateV2,
+          cam: camV2,
+          W: w,
+          H: h,
+        });
+      });
+    } catch (err) {
+      E.lastShotError = err?.message || String(err);
+      throw err;
+    }
+    return;
+  }
+
   const worldState = evaluateWorldStateAt(shotPlan, activeInfo, t, frameIdx);
   const cam = evaluateShotCameraAt(sh, camBeats, activeInfo, worldState, w, h);
   const sub = sh.sub_action || 'courier_sprint_with_satchel';

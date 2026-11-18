@@ -1,0 +1,33 @@
+{
+  "schema_version": "kh03.r2.preflight_baseline.v1",
+  "run_id": "20261117_094557Z_0fd8",
+  "branch": "feat/roman-2d-master",
+  "starting_head": "c0c239e36ed6cb2bf9365d3bd74d6d4bfa5cf0be",
+  "production_head": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+  "protected_remote_refs": {
+    "refs/heads/Production": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+    "refs/heads/fix/Image-Shot": "c96c4f366b873aa3e81a299ab70a330b4adae5ee",
+    "refs/heads/feat/modern-2d-cinematic": "688ec5351cf8fbcdb7740420d81e1bbeac4eb727",
+    "refs/heads/feat/roman-2d-master": "c0c239e36ed6cb2bf9365d3bd74d6d4bfa5cf0be"
+  },
+  "resources": {
+    "disk_free_gb": 52.55,
+    "ram_available_gb": 11.13,
+    "cpus": 12,
+    "cv2_installed": false,
+    "pillow_version": "13.0.0",
+    "numpy_version": "2.5.4",
+    "scipy_version": "1.18.1"
+  },
+  "protected_file_sha256": {
+    "visual_styles/roman_squire_master/v1/style_bible.json": "65cf35ba0c050902df5bf60f0bf08f46a5bd977032b68c61a9a77f57d216186c",
+    "tools/kh03_style_lock.py": "f01f8c5d842bd84fe4bc2a9be0287ed745d4c457ffce860f8e74acfd30097a29",
+    "engine/core.js": "a224b1dc69809b63e16544236ed2c37ed6c5ce16f9cdf2c55548a04b3ba40a56",
+    "engine/player.js": "f7ad898dc78a2f10b3a3b28750db06c78dc5b22ddce43a2a2c4028b6e9ae2261",
+    "engine/three3d.js": "09884b6fd1a72d6839450345c86a63540b8f076dd38df48b1b1f2f972a1b42b1"
+  },
+  "baseline_mp4_sha256": {
+    "kh03_roman_last_gap_30s": "114992fc726b7540d4edc2414419ded9f182fb837292878d1d18796ee544056e",
+    "kh03_r1_roman_gate_message_30s": "1747ec31d948faf005ce3eb06f43fe1d3fd2113edbb32ce0dd8f816e1833f176"
+  }
+}

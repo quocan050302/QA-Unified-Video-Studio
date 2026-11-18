@@ -1,0 +1,27 @@
+{
+  "title": "KH03_R2_ROMAN_RUNAWAY_CART_ORIGINAL_30S_9x16",
+  "pack": "squire",
+  "lang": "en",
+  "aspect": "9:16",
+  "resolution": "1080p",
+  "fps": 24,
+  "style": "flat",
+  "bars": "none",
+  "fadeIn": 0.0,
+  "fadeOut": 0.0,
+  "captions": true,
+  "captionStyle": "squire",
+  "style_profile": "roman_squire_master.v1",
+  "editorial_mode": "roman_action_director_v2",
+  "render_mode": "canvas2d_only",
+  "allow_3d_legacy_fallback": false,
+  "music": {
+    "enabled": true,
+    "file": "audio/music/bed_r2_market_comedy.wav",
+    "gainDb": -14.5
+  },
+  "sfx": {
+    "enabled": true,
+    "gainDb": 0.0
+  }
+}

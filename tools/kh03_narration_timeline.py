@@ -366,9 +366,10 @@ def merge_narration_visual_mapping(
     _atomic_write_json(tl_dir / "lines.json", lines_with_links)
     _atomic_write_json(tl_dir / "words.json", words_with_links)
 
+    ed_mode = shot_plan.get("editorial_mode", "script_beat_director_v1")
     nar_manifest = {
         "schema_version": narration_data["schema_version"],
-        "editorial_mode": "script_beat_director_v1",
+        "editorial_mode": ed_mode,
         "voice_wav_sha256": _sha256_file(voice_wav_path),
         "sample_rate": TARGET_SR,
         "duration_sec": shot_plan.get("duration_sec", 30.0),
@@ -381,7 +382,7 @@ def merge_narration_visual_mapping(
 
     vis_timeline = {
         "schema_version": "kh03.r1.visual_timeline.v1",
-        "editorial_mode": "script_beat_director_v1",
+        "editorial_mode": ed_mode,
         "fps": shot_plan["fps"],
         "total_frames": shot_plan["total_frames"],
         "duration_sec": shot_plan["duration_sec"],

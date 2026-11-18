@@ -1,0 +1,807 @@
+{
+  "schema_version": "kh03.r2.action_graph.v1",
+  "registry_version": "kh03.r2.action_registry.v1",
+  "registry_digest": "bed02363f29648f27f4da7ac312c0f96f6986048f5d4bec4588b988d0b6121c5",
+  "nodes": [
+    {
+      "node_id": "B001",
+      "line_id": "L01",
+      "action_id": "world.market_hill_establish",
+      "renderer_action_id": "world_market_hill_establish",
+      "domain": "WORLD",
+      "event_class": "establish",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "bakery_oven",
+        "market_cart"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {},
+      "post_states": {
+        "geography_established": true
+      }
+    },
+    {
+      "node_id": "B002",
+      "line_id": "L02",
+      "action_id": "actor.idle_micro_act",
+      "renderer_action_id": "actor_idle_micro_act",
+      "domain": "ACTOR",
+      "event_class": "reaction",
+      "actor_ids": [
+        "baker_lucius"
+      ],
+      "prop_ids": [
+        "bakery_oven"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert"
+      }
+    },
+    {
+      "node_id": "B003",
+      "line_id": "L03",
+      "action_id": "prop.peg_crack_snap",
+      "renderer_action_id": "prop_peg_crack_snap",
+      "domain": "PROP",
+      "event_class": "insert",
+      "actor_ids": [
+        "baker_lucius"
+      ],
+      "prop_ids": [
+        "brake_peg",
+        "market_cart"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      }
+    },
+    {
+      "node_id": "B004",
+      "line_id": "L03",
+      "action_id": "prop.cart_roll_slope",
+      "renderer_action_id": "prop_cart_roll_slope",
+      "domain": "PROP",
+      "event_class": "action",
+      "actor_ids": [
+        "baker_lucius"
+      ],
+      "prop_ids": [
+        "market_cart"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      }
+    },
+    {
+      "node_id": "B005",
+      "line_id": "L04",
+      "action_id": "world.market_crowd_pass",
+      "renderer_action_id": "world_market_crowd_pass",
+      "domain": "WORLD",
+      "event_class": "action",
+      "actor_ids": [
+        "market_crowd"
+      ],
+      "prop_ids": [],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true
+      }
+    },
+    {
+      "node_id": "B006",
+      "line_id": "L05",
+      "action_id": "actor.sprint_chase",
+      "renderer_action_id": "actor_sprint_chase",
+      "domain": "ACTOR",
+      "event_class": "action",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint"
+      }
+    },
+    {
+      "node_id": "B007",
+      "line_id": "L05",
+      "action_id": "actor.reach_grab_prop",
+      "renderer_action_id": "actor_reach_grab_prop",
+      "domain": "ACTOR",
+      "event_class": "action",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "hemp_rope"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true
+      }
+    },
+    {
+      "node_id": "B008",
+      "line_id": "L06",
+      "action_id": "prop.rope_taut_post_wrap",
+      "renderer_action_id": "prop_rope_taut_post_wrap",
+      "domain": "PROP",
+      "event_class": "insert",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "hemp_rope",
+        "market_cart",
+        "stone_bollard"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      }
+    },
+    {
+      "node_id": "B009",
+      "line_id": "L06",
+      "action_id": "actor.stop_brace",
+      "renderer_action_id": "actor_stop_brace",
+      "domain": "ACTOR",
+      "event_class": "action",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "hemp_rope",
+        "stone_bollard"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      }
+    },
+    {
+      "node_id": "B010",
+      "line_id": "L07",
+      "action_id": "prop.cart_halt_skid",
+      "renderer_action_id": "prop_cart_halt_skid",
+      "domain": "PROP",
+      "event_class": "action",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "bakery_oven",
+        "hemp_rope",
+        "market_cart",
+        "stone_bollard"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true
+      }
+    },
+    {
+      "node_id": "B011",
+      "line_id": "L07",
+      "action_id": "prop.prop_bounce_tray",
+      "renderer_action_id": "prop_bounce_tray",
+      "domain": "PROP",
+      "event_class": "insert",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "bread_tray",
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      }
+    },
+    {
+      "node_id": "B012",
+      "line_id": "L08",
+      "action_id": "prop.prop_parabolic_arc",
+      "renderer_action_id": "prop_parabolic_arc",
+      "domain": "PROP",
+      "event_class": "insert",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      }
+    },
+    {
+      "node_id": "B013",
+      "line_id": "L08",
+      "action_id": "prop.helmet_impact_settle",
+      "renderer_action_id": "prop_helmet_impact_settle",
+      "domain": "PROP",
+      "event_class": "reveal",
+      "actor_ids": [
+        "centurion_varro"
+      ],
+      "prop_ids": [
+        "ceremonial_helmet",
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true
+      }
+    },
+    {
+      "node_id": "B014",
+      "line_id": "L09",
+      "action_id": "actor.deadpan_walk_unaffected",
+      "renderer_action_id": "actor_deadpan_walk_unaffected",
+      "domain": "ACTOR",
+      "event_class": "reveal",
+      "actor_ids": [
+        "centurion_varro"
+      ],
+      "prop_ids": [
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      }
+    },
+    {
+      "node_id": "B015",
+      "line_id": "L09",
+      "action_id": "actor.deadpan_walk_unaffected",
+      "renderer_action_id": "actor_deadpan_walk_unaffected",
+      "domain": "ACTOR",
+      "event_class": "reveal",
+      "actor_ids": [
+        "centurion_varro"
+      ],
+      "prop_ids": [
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      }
+    },
+    {
+      "node_id": "B016",
+      "line_id": "L10",
+      "action_id": "actor.crowd_reaction_cheer",
+      "renderer_action_id": "actor_crowd_reaction_cheer",
+      "domain": "ACTOR",
+      "event_class": "reaction",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [],
+      "location_id": "roman_market_hill",
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady",
+        "crowd_mood": "cheering"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "B001",
+      "to": "B002",
+      "shared_state_keys": [
+        "geography_established"
+      ]
+    },
+    {
+      "from": "B002",
+      "to": "B003",
+      "shared_state_keys": [
+        "actor_posture",
+        "geography_established"
+      ]
+    },
+    {
+      "from": "B003",
+      "to": "B004",
+      "shared_state_keys": [
+        "actor_posture",
+        "cart_rolling",
+        "geography_established",
+        "peg_snapped"
+      ]
+    },
+    {
+      "from": "B004",
+      "to": "B005",
+      "shared_state_keys": [
+        "actor_posture",
+        "cart_rolling",
+        "geography_established",
+        "peg_snapped"
+      ]
+    },
+    {
+      "from": "B005",
+      "to": "B006",
+      "shared_state_keys": [
+        "actor_posture",
+        "cart_rolling",
+        "crowd_active",
+        "geography_established",
+        "peg_snapped"
+      ]
+    },
+    {
+      "from": "B006",
+      "to": "B007",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "crowd_active",
+        "geography_established",
+        "peg_snapped"
+      ]
+    },
+    {
+      "from": "B007",
+      "to": "B008",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "crowd_active",
+        "geography_established",
+        "hand_prop_contact",
+        "peg_snapped"
+      ]
+    },
+    {
+      "from": "B008",
+      "to": "B009",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "crowd_active",
+        "geography_established",
+        "hand_prop_contact",
+        "peg_snapped",
+        "rope_attached",
+        "rope_taut"
+      ]
+    },
+    {
+      "from": "B009",
+      "to": "B010",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "crowd_active",
+        "geography_established",
+        "hand_prop_contact",
+        "peg_snapped",
+        "rope_attached",
+        "rope_taut"
+      ]
+    },
+    {
+      "from": "B010",
+      "to": "B011",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "cart_stopped",
+        "crowd_active",
+        "geography_established",
+        "hand_prop_contact",
+        "jolt_occurred",
+        "peg_snapped",
+        "rope_attached",
+        "rope_taut"
+      ]
+    },
+    {
+      "from": "B011",
+      "to": "B012",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "cart_stopped",
+        "crowd_active",
+        "geography_established",
+        "hand_prop_contact",
+        "jolt_occurred",
+        "loaf_airborne",
+        "peg_snapped",
+        "rope_attached",
+        "rope_taut"
+      ]
+    },
+    {
+      "from": "B012",
+      "to": "B013",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "cart_stopped",
+        "crowd_active",
+        "geography_established",
+        "hand_prop_contact",
+        "jolt_occurred",
+        "loaf_airborne",
+        "peg_snapped",
+        "rope_attached",
+        "rope_taut"
+      ]
+    },
+    {
+      "from": "B013",
+      "to": "B014",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "cart_stopped",
+        "crowd_active",
+        "geography_established",
+        "hand_prop_contact",
+        "jolt_occurred",
+        "loaf_airborne",
+        "loaf_on_helmet",
+        "peg_snapped",
+        "rope_attached",
+        "rope_taut"
+      ]
+    },
+    {
+      "from": "B014",
+      "to": "B015",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "cart_stopped",
+        "centurion_composure",
+        "crowd_active",
+        "geography_established",
+        "hand_prop_contact",
+        "jolt_occurred",
+        "loaf_airborne",
+        "loaf_on_helmet",
+        "peg_snapped",
+        "rope_attached",
+        "rope_taut"
+      ]
+    },
+    {
+      "from": "B015",
+      "to": "B016",
+      "shared_state_keys": [
+        "actor_gait",
+        "actor_posture",
+        "cart_rolling",
+        "cart_stopped",
+        "centurion_composure",
+        "crowd_active",
+        "geography_established",
+        "hand_prop_contact",
+        "jolt_occurred",
+        "loaf_airborne",
+        "loaf_on_helmet",
+        "peg_snapped",
+        "rope_attached",
+        "rope_taut"
+      ]
+    }
+  ],
+  "terminal_world_state": {
+    "geography_established": true,
+    "actor_posture": "braced_load",
+    "peg_snapped": true,
+    "cart_rolling": false,
+    "crowd_active": true,
+    "actor_gait": "sprint",
+    "hand_prop_contact": true,
+    "rope_attached": true,
+    "rope_taut": true,
+    "cart_stopped": true,
+    "jolt_occurred": true,
+    "loaf_airborne": false,
+    "loaf_on_helmet": true,
+    "centurion_composure": "deadpan_steady",
+    "crowd_mood": "cheering"
+  }
+}

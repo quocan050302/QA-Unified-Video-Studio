@@ -1,0 +1,313 @@
+ANTIGRAVITY — FULL EXECUTION PROMPT
+KH-03.0.R2 — GENERALIZED ACTION & VISUAL DIRECTOR / TRUE PERCEPTUAL SHOT QA / BRAND-LOCKED ROMAN SQUIRE 2D
+TÀI LIỆU TRIỂN KHAI ĐẦY ĐỦ — KHÔNG PHẢI BẢN TÓM TẮT
+Language of deliverable metadata: Vietnamese preferred; project script and narration: English.
+Source verified 2026-11-17: https://github.com/quocan050302/QA-Unified-Video-Studio/tree/feat/roman-2d-master
+VERIFIED STARTING HEAD: c0c239e36ed6cb2bf9365d3bd74d6d4bfa5cf0be
+BASELINE PRODUCTION: 80559d09d4b7bb72ee4c5acc6cc846e69abd65d1
+TARGET BRANCH: feat/roman-2d-master (existing branch; DO NOT create another branch)
+SCOPE: KH-03.0.R2 only. New original 30-second 9:16 MP4 MUST be delivered with hard technical evidence and honest editorial review.
+
+====================================================================
+00. ROLE, NON-NEGOTIABLE INTENT, DEFINITION OF SUCCESS
+====================================================================
+You are Antigravity coding executor / director / animation QA engineer operating against the existing GitHub workspace. Perform the actual code changes, render, test, evidence, git commit and push. Do not simply answer with an implementation plan. No silent assumptions, no false PASS. When a required fixture is unavailable label NOT_RUN / BLOCKED accurately. Work in the current repository and only on feat/roman-2d-master.
+
+The owner has permanently CHOSEN the ORIGINAL Roman Squire 2D design from Production as Roman Master Style: round ivory faces, original heavy dark-brown outline, iconic Roman helmet with feathers, original red/gold scutum, white glove hands, original Squire cartoon proportions and vocabulary. This design is a locked cross-video brand identity. Do NOT replace it with KH-02 modern cartoon, Rigby2D, 3D, pseudo-3D, a new illustrator style, or any generative image that changes the identity. Improve animation/editing, not art style. New footage must be authored and rendered freshly by code (not old PNGs/videos as content). Reference/baseline imagery MAY be used ONLY as comparison, never pasted into new footage.
+
+Main R2 mission:
+ P0: fail-closed semantic action support: unsupported actions get explicit actionable errors, never an unrelated default actor/guard scene.
+ P0: generalize action-beat planning beyond the one gate-and-scroll demo; deliver a finite, auditable set of 2D action capabilities + semantic bindings + typed scene grammar, not magical claims about all possible scripts.
+ P1: eliminate perceived repeated/compositionally stagnant shot patterns using rendered-pixel and stage-space QA, while preserving intentional story continuity; do not confuse higher cut count with better pacing.
+ P1: improve in-shot acting/motion and camera motivation; physically/causally continuous movement across relevant cuts.
+ P0 release: new fully ORIGINAL 30s Roman market short with 9:16 native direction, voice+SFX+music, verified MP4, full evidence and human editorial pending.
+ P0 governance: async dependency-aware concurrent tests, deterministic outputs, real regression and backtests, resource safety, automated explicit commit & push to the SAME branch, git proof; keep all earlier functioning packs.
+
+Do not claim audience retention increase, visual artistry PASS, or full generalization based solely on proxies. Technical PASS and human creative approval are separate.
+
+====================================================================
+01. ACTUAL VERIFIED SOURCE MAP / PROBLEMS TO ELIMINATE
+====================================================================
+As inspected at c0c239e:
+* tools/kh03_script_beat_director.py:
+  - normalize_script_lines (~62), measure_voice_timeline (~124), extract_semantic_beats (~215), split_beat_into_visual_events (~343), compose_shot_plan (~598), build_line_shot_crosswalk (~798), schedule_editorial_camera (~867), score_pacing_proxies (~928), validate_shot_plan_contract (~983).
+  - extract_semantic_beats infers locations with narrow words: winch/cobble/drain/gate/training yard.
+  - split_beat_into_visual_events contains specialized branches for gate closure, stumble + scroll, guard lunge, scroll pin, wax seal, gate slam, etc.; its broad fallback emits acts[0] or 'continuous_action'. This is NOT a verified renderer capability.
+  - anti-repeat checks only 3 consecutive identical framing scales; 'meaningful_action_beats' is effectively len(shots); neither is a perceptual-content quality metric.
+* packs/squire/roman_master/script_shot_renderer.js::renderScriptShotFrame (~95): const sub = sh.sub_action || 'courier_sprint_with_satchel'; specialized if/else per sub_action, final else renders unrelated guard reaction. These two fallbacks must NOT remain reachable in R2 mode for unknown/unsupported actions.
+* packs/squire/roman_master/editorial_state.js::resolveShotAtFrame, evaluateWorldStateAt, evaluateShotCameraAt, withEditorialCamera: R1 tracks specific scroll/gate transitions. Generalize only in the new opt-in mode without breaking R1.
+* tools/kh03_r1_project_builder.py::build_roman_script_driven_project (~286), render_roman_r1_preview (~519): project setup currently carries hard-coded courier_marcus, gate_guard_gaius, watchman_sec and gate SFX; do not pretend arbitrary scripts get proper visual semantics.
+* tools/kh03_narration_timeline.py::synthesize_or_import_narration, pack_narration_into_30s, align_words_and_lines, merge_narration_visual_mapping: independent voice timeline already working. Preserve, extend minimally; current word boundaries are estimated within real measured line clips, NOT phoneme forced-aligned.
+* packs/squire/roman_master/motion.js::evaluateRomanActorPoseAt, solveRomanFootPlant, solveRomanShieldGrip, evaluateRomanSecondaryMotionAt; character_state.js::romanActorAt, drawRomanMasterActor2D, validateRomanMasterRigAnchors; camera.js::evaluateRomanCameraAt, validateRomanCameraCut. Reuse as appropriate, not replace the character identity.
+* tools/validator.py::validate_project; scripts/run_kh03_r1_validation.py::gate_g11_backtest currently renders 20 short MP4s largely from slices of one demo, proving decode but NOT multi-script generalization. Fix coverage definition in R2 suite.
+* tests/kh03_roman/test_script_beat_director.py has a supposedly arbitrary script test still discussing courier, guard, scroll, gate. Add distinctly OUT-OF-DISTRIBUTION Roman scripts.
+* Existing style contract: visual_styles/roman_squire_master/v1/style_bible.json, tools/kh03_style_lock.py::load_roman_master_style, validate_roman_style_contract.
+* Existing pack & renderer: packs/squire/chara.js, ink.js, world.js, templates.js, pack.js, engine/player.js, engine/core.js, render.mjs and tools/mix.py.
+
+This map is an inspection guide: re-open each file, verify actual current signatures and adapt edits to live code; do not rely blindly on approximate line numbers. Record a FUNCTION_CHANGE_MATRIX citing actual functions, files and source lines AFTER changes. Do not leave commented-out / dead unrelated paths in production.
+
+====================================================================
+02. GIT SAFETY, PRE-FLIGHT, BRANCH RULES
+====================================================================
+Commands are illustrative; execute equivalents safely on Windows PowerShell/Git Bash:
+  git fetch origin --prune
+  git branch --show-current
+  git status --porcelain=v1
+  git rev-parse HEAD
+  git rev-parse origin/feat/roman-2d-master
+  git rev-parse origin/Production
+
+Must work on EXACT existing branch feat/roman-2d-master. If not on branch: inspect local modifications; do not discard unstaged work; git switch feat/roman-2d-master only if safe. DO NOT checkout Production for this task. DO NOT create feat/modern-2d-cinematic or any new branch. DO NOT merge or force-push; no reset --hard, no clean -fd. Ensure origin HEAD ancestry. Expected initial HEAD c0c239e...; if newer, inspect diff and rebase plan safely, favor latest branch rather than clobbering another run. Do not overwrite user edits. Report branch conflict rather than manipulating protected refs.
+
+Before changes record remote SHA for Production, fix/Image-Shot, feat/modern-2d-cinematic and target branch; log preflight status, source hashes for protected files, baseline output hashes, node/python/ffmpeg versions, free disk/RAM, CPU count and directories. Keep baseline snapshots at new unique docs/antigravity_runs/KH-03_0_R2_<UTC>_<suffix>/.
+
+Protected invariants:
+- Production remains 80559d09d4b7bb72ee4c5acc6cc846e69abd65d1 unless independently changed by someone else; do not edit it. Never write to other branches.
+- Original Roman Squire silhouette/colors, 2D-only profile `roman_squire_master.v1` and 100% backward compatibility when editorial_mode R2 is not explicitly enabled.
+- Keep existing `projects/kh03_roman_last_gap_30s`, `projects/kh03_r1_roman_gate_message_30s` and all existing video artifacts/evidence as read-only baselines.
+- Legacy Squire and DEM/self-improvement behavior, old thumbnails, native aspect pipeline, audio and manual edits preserved.
+- No hard dependency on Rigby2D, modern2d, Three.js or external paid models. THREE legacy code may remain untouched but R2 runtime must load zero Three/WebGL modules and disallow 3D scenes.
+- Do not secretly delete or overwrite saved screenshots, media, users' custom shots, SFX/music selections or generated historical evidence.
+- No new library unless justified by measured gap, zero-dependency alternative exhausted, reproducibility/security and disk costs evaluated. Prefer existing Pillow/OpenCV only if already installed; if absent implement safe Pillow/numpy baseline.
+
+Required R2 opt-in key proposal: cfg.editorial_mode = 'roman_action_director_v2'. R1 continues working with 'script_beat_director_v1'. Style still roman_squire_master.v1. Explicitly test enabled vs disabled.
+
+====================================================================
+03. BUILD A REAL FINITE ACTION CAPABILITY REGISTRY (P0)
+====================================================================
+Create new Python module tools/kh03_action_registry.py (names may adapt with documentation) with deterministic, versioned, serializable capability manifests:
+  ActionSpec / ActionRequirement / ActionBinding (dataclass or typed dict) including:
+    action_id, domain, supported_verbs, compatible_actor_archetypes, required_props, required_locations, camera_affordances, event_class (action/reaction/insert/establish/reveal), default_min_max_frame_span, allowed_state_deltas, renderer_action_id, motion_profile_id, evidence_source_span, confidence/ambiguity flags, artifact_version.
+  build_roman_action_registry() -> mapping / immutable registry.
+  resolve_roman_action(semantic_beat, entities, world_inventory, style_contract) -> resolved supported ActionBinding OR typed UnsupportedRomanActionError; never generic guard substitute.
+  validate_action_bindings(shot_plan, action_registry, asset_manifest, renderer_registry) -> diagnostics before rendering.
+  action_registry_digest() -> stable SHA256 over canonical JSON, including explicit registry version.
+
+Support a pragmatic MINIMUM family of reusable actions, not scene-specific names:
+  ACTOR: idle with motivated micro-acting, walk/run/chase, stop/brace, reach/grab/release/throw, point/shout/look/reaction, pick-up/drop, pull/drag/rope-tension, push/hold, handoff, stumble/recover.
+  PROP: roll/spin/fall/bounce, pendulum/arc trajectory, impact/collision/recoil, rope taut/slack, cart wheel braking, scroll open (existing R1 via adapter), door open/close (existing R1 via adapter).
+  WORLD: location establishing, crowd glance/reaction, parallax foreground pass, water/market ambient as grounded; light/dust/cloth secondary only if motivated.
+  CAMERA: motivated cut between scale/axis/subject, actor follow, action insert, tracking, parallax, push/pull, whip pan used sparingly, controlled snap-zoom on impulse, safe reveal.
+These are finite capability classes. Each requires evidence of how the Canvas2D renderer supports it. Represent precondition and resulting world state explicitly. A keyword alone must not imply support. Test negation, pronoun/actor ambiguity, object mismatches, physically impossible transitions, unsupported animals/vehicles/locations.
+
+For scripts containing actions not supported by registry, compiler MUST fail with structured details: `UNSUPPORTED_ACTION` (line_id, source_phrase, action_name, missing_actor/prop/location/render_handler, suggested valid actions or action module to implement). Distinguish `AMBIGUOUS_ACTION`, `MISSING_ASSET`, `STATE_CONFLICT`, `NEGATED_ACTION`, `UNSAFE_OVERRIDE`. Do not silently rewrite the story into a different action. Optional author review/manual override must be explicit, logged and validated; don't fabricate certainty. If scripted visual obligation is impossible, mark BLOCKED until implemented or explicitly re-author script with recorded change.
+
+Acceptance: negative mutation unknown phrase 'The horse vaults across the flying aqueduct' fails at compile or pre-render unless matching capability was truly implemented; it must NEVER draw a random guard. Valid `watch/look` must not collapse into 30s near-static idle if script contains additional actions.
+
+====================================================================
+04. GENERALIZED SEMANTIC / EDITORIAL SHOT DIRECTOR (P0)
+====================================================================
+Edit tools/kh03_script_beat_director.py without regressing R1: route new v2 mode via explicit functions, e.g.
+  normalize_script_lines(): preserve stable line IDs, Unicode punctuation, negative verb polarity and canonical text.
+  extract_semantic_beats(): replace scenario-specific priority as default v2 path with typed actor/action/prop/location/entity-state extraction and provenance; preserve old v1 code in opt-in legacy path.
+  split_beat_into_visual_events(): for v2, split only when there are real distinct visual actions, causal state changes, reaction or grounded inserts. No hard-coded 'gate closes' or 'scroll arc' as universal default. Use ActionSpec not keywords alone; require visible payoff/reason for each shot.
+  compose_shot_plan(): integer frame schedule; permit 1:many/many:1; coverage exact [0..719] @24fps for 30s; cuts may happen mid-sentence while voice continues, but no accidental word loss; shot duration content-driven, NEVER force 15 shots or <=3s as an absolute rule. Brief holds allowed with explicit editorial rationale and visible micro-acting.
+  build_line_shot_crosswalk(): link word+line to all overlapping shots; preserve voice timing and deterministic stable IDs even across rebuild.
+  schedule_editorial_camera(): motivated camera plan; no continuous random zoom solely to evade static QA; preserve axis, eyeline, screen direction, safe 9:16 crop, geography, shot size and character scale.
+  score_pacing_proxies(): `meaningful_action_beats` must count validated action-state changes (not len(shots)); quantify visual novelty per temporal windows, genuine action rate, scene-scale diversity, camera motivation, narration silence, repeated compositions. Report proxy only and no fake retention guarantee.
+  validate_shot_plan_contract(): enforce registry+asset coverage, world state, no shot gaps/overlaps, source text crosswalk, opt-in style, profile, camera integrity. Reject all unknown action IDs and unsupported fallback. Ensure 0 alias-to-default action.
+
+Add an ActionGraph / VisualEventGraph schema: unique ids, source_line_ids, word anchors, action actor ids, prop ids, world-space coordinates, pre/post states, estimated start/end, min readable duration and rationale. Deterministic conflict resolution priority: causal dependency > voice sync > motivated composition > optional cut. Do not invent geography, actors or new props without a declared scene manifest. E.g. 'He did NOT run' must never trigger run; 'the guard missed it' must not trigger successful grab.
+
+Data flow explicitly:
+  script -> normalized lines -> measured voice timeline -> grounded semantic/action graph -> registry resolution & constraints -> canonical world-state event log -> visual edit events -> shot plan -> camera/motion bindings -> render registry -> MP4 -> perceptual/e2e QA.
+Any compiler fallback must be an explicit error or a scene action directly justified by source text (not arbitrary substitute).
+
+====================================================================
+05. RENDER DISPATCH MUST FAIL CLOSED / OPT-IN COMPATIBILITY (P0)
+====================================================================
+New module packs/squire/roman_master/action_registry.js: expose `ROMAN_ACTION_RENDERERS`, `validateRomanActionRendererCoverage(actionId)`, `renderRomanAction2D(g, context)` where every registered action has a real Canvas2D handler and declared semantic class. If an implementation needs a new 2D prop (market cart, rope, bollard, bread stall), implement it under packs/squire/roman_master/market_* modules, not as a generic guard animation.
+
+Modify packs/squire/roman_master/script_shot_renderer.js::renderScriptShotFrame to route v2 specifically:
+  - Detect R2 `editorial_mode == 'roman_action_director_v2'` / versioned plan. Dispatch ONLY to matching ActionRegistry handler. No `sh.sub_action || 'courier_sprint_with_satchel'` for v2. NEVER render a generic final else on unsupported v2 action.
+  - Throw typed Error carrying shot id, action_id, script_source_span and action registry version. Error must be captured by render.mjs / Chromium and make --check / full render fail nonzero, with no stale MP4 considered PASS.
+  - Keep original v1 branch behavior and files unchanged when v2 not enabled to preserve older projects. If refactoring the generic last else, ensure old R1 output hash parity if feasible and disclose any intentional change.
+  - Verify a deliberately malicious/misspelled action in shot_plan produces fail-closed error at compile, runtime render and validator. If `render.mjs --check` can pass despite frame exceptions, fix error propagation minimally and add regression.
+
+`packs/squire/roman_master/editorial_state.js::evaluateWorldStateAt`: add optional generic world-state event timeline for v2 with source-authored deterministic events; no reliance on hardcoded scroll_stomp/gate_slam from old story. Evaluate by absolute global frame (pure random access), independent of render order. Camera follows world positions, not only local shot time; preserve props' location/velocity across cuts and effect continuity.
+`packs/squire/roman_master/character_state.js::romanActorAt` + `motion.js::evaluateRomanActorPoseAt`: key motion from global timeline, stable actor identity, planted foot & prop attachment points; action phases anticipation/action/contact/reaction/settle. Avoid reset-to-neutral at every shot. Keep 2D Squire silhouette identity; no forced smoothing that eliminates impact. On paper/cart physics use 2D positions and believable acceleration/impulse under declared units; don't fake random jitter.
+`packs/squire/roman_master/camera.js::evaluateRomanCameraAt`, `validateRomanCameraCut` or v2 camera evaluator: world-space camera targeting, C1/C2 easing as appropriate, safe overscan, planned motivated snap cuts, perceptual verification of actual rendered variety.
+
+IMPORTANT: User wants adjacent shots to depict the SAME characters/world/action consistently while changes of angle and visual content are purposeful. Do NOT misinterpret 'shots should be the same' as identical image copies. Keep continuity, not duplicate compositions.
+
+====================================================================
+06. PERCEPTUAL RENDERED-PIXEL SHOT & MOTION QA (P1)
+====================================================================
+Create tools/kh03_perceptual_qa.py. Suggested exact functions and responsibilities:
+  sample_rendered_frames(mp4, plan, sampling_policy) -> decoded frame samples with frame indices/checksum; include boundary pairs f_end/f_start of EVERY cut, sparse interiors, action/contact frames. Avoid OCR and high-cost repeated decode; reuse single ffmpeg process or cached decoded frames within quota.
+  detect_subject_roi(frame, explicit_actor_bbox_or_masks, subtitle_safe_zone) -> ROI; stage metadata preferred. Exclude captions/UI from novelty scoring (caption changes must not be counted as visual novelty). If explicit actor mask unavailable mark metric UNVERIFIABLE rather than claim precision.
+  compute_visual_signatures(frame, roi, camera, actor_state, prop_state) -> downscaled luma/perceptual hash/edge map + optional SSIM; use available Pillow/numpy (do not add heavy dependency just for number).
+  measure_shot_novelty(samples, plan, world_events) -> repeated composition across non-adjacent shots, duplicate scenic reuse, true actor movement vs pure camera/optical motion; analyze shot windows, not only single still.
+  audit_motion_continuity(frame_pairs, actor_keypoints, world_state, cuts) -> false teleport, actor size/costume drift, foot plant pixel drift when planted, prop discontinuities; separate intended match-on-action from continuity breaks.
+  audit_cinematic_camera(plan, decoded_frames) -> cut reason/visual change, axis violation, zoom-only-static, camera path overscan, subject framing and subtitle safe area.
+  build_perceptual_review_packet(results) -> contact sheets, repetitive shots pairs side-by-side, action strips with frame indices, cut-boundary strips, heatmaps if justified, JSON with confidence/limitations.
+
+Never label a global scene 'bad' just for being the SAME place; narrative geography continuity is essential. Penalize unmotivated same framing/action and repeated stationary protagonist after different script facts. Camera movement alone should NOT automatically mark a shot as meaningful. Distinguish visible movement vs camera movement via explicit actor state & parallax-normalized comparisons, acknowledging confidence where uncertain.
+
+Thresholds: derive/recalibrate from Roman baseline and matched negative mutations. No arbitrary hard-coded certainty (e.g. 0.1 score = viewer retention). Include positive and negative controls: valid reaction hold, match-on-action cut, intentionally same street from new angle should PASS; genuine copy-pasted static shot, frozen actor with roaming camera, duplicated nonadjacent 3s clip, prop teleport and missing subject should FAIL or REVIEW REQUIRED. 3 consecutive framing-scale label check alone is inadequate.
+
+Output: metrics.json with denominators, confidence, pass/fail and explicit cases where mask/ROI detection is unavailable. A fake QA that merely reads animation metadata and reports 0.0 pixel drift is insufficient. Use actual decoded frames and meaningful world-state evidence together.
+
+====================================================================
+07. ROBUST MULTI-SCRIPT GENERALIZATION TEST (P0 / P1)
+====================================================================
+This is a finite Roman action+editorial director, NOT a universal video intelligence engine. Do not certify 'all Roman scripts'. Require three INDEPENDENT source stories with disjoint prominent props/settings/actions, not three paraphrases of the old gate demo. At least:
+  A. NEW PRODUCTION PREVIEW: steep market hill / runaway Roman cart / wooden brake peg / amphora / rope / stone post / bakery and centurion (see §08). This must be the one full 30s 9:16 film.
+  B. RIVER/HARBOR HOLDOUT: a signifer recovering a fallen cloth vexillum from a small river landing; water currents, rope, quay or bridge; separate short 5-8s real render with supported action classes. Historical dramatization, no 3D.
+  C. FORUM/COURTYARD HOLDOUT: a young messenger drops a ceremonial helmet, rolls under bench, an elderly senator catches or retrieves it; different 5-8s real render with genuinely different location/props and actors.
+
+Each must compile and either (i) render correctly with declared registry coverage and semantic positive checks, or (ii) FAIL CLOSED with an explicit UnsupportedActionError, not fake a green PASS. For acceptance of R2 generalized support, *at least 3 scripts* must actually produce meaningful real rendered segments for action families they claim to support. If the river action is unsupported, implement the needed finite registry+renderer support (with time budget/resource check), or record technical gate BLOCKED instead of silently changing story.
+
+Additional adversarial scripts/mutations: 'The senator never grabbed the spear' (no grab); pronoun ambiguity -> AMBIGUOUS_ACTION; unknown animal/vehicle -> UNSUPPORTED_ACTION; action requiring missing asset -> MISSING_ASSET; unsupported 'gate reopens after slammed shut' -> STATE_CONFLICT unless authored reversal; malformed action-id -> render fail; blank action plan -> fail; duplicated shot id; mismatched words, stale generated MP4, deleted SFX, NaN coordinates, 3D mode injection. Be clear about expected rejection vs expected production success.
+
+Synthetic 180-case backtest should vary semantics/entities/props/events/duration rather than only seeds. Real 20 low-res MP4 backtests: across all three story sources, minimum 5 visually distinct action families, multiple independent scenes, not 20 2.5s slices of the same project. Record unique script hashes, action-family coverage, decode frame counts, rendered pixel ROI checks and state continuity checks. If machine budget precludes 20 full independent complete videos, run 20 independently compiled and rendered **short** MP4s, with variation provenance, and report precisely. Historical company fixture if missing: NOT_RUN_MISSING_FIXTURE, not PASS.
+
+====================================================================
+08. FRESH 30s ROMAN VIDEO: ORIGINAL SCRIPT / ART / SOUND (MANDATORY)
+====================================================================
+OUTPUT: `projects/kh03_r2_roman_runaway_cart_30s/` (new independent project; do not overwrite or fork old video assets). Title: THE CART THAT WOULD NOT STOP. New original fictional vignette, not attributed as historical fact.
+
+ENGLISH VOICE-OVER SCRIPT (start from this; adjust only to fit measured speech <=30.000s, log revisions and do NOT change premise):
+  L01: One wooden brake peg snapped—and a Roman market cart began to roll.
+  L02: Downhill, a baker's oven glowed directly in its path.
+  L03: A young apprentice sprinted after it, but the cart kept gaining speed.
+  L04: A rope trailed from the rear axle.
+  L05: He grabbed the rope, looped it around a stone post, and braced.
+  L06: The rope snapped tight. The cart stopped a handspan from the oven.
+  L07: The market cheered.
+  L08: But the sudden jolt knocked a loaf off the baker's tray.
+  L09: It landed squarely on the centurion's helmet.
+  L10: He kept walking. Nobody dared laugh.
+
+If action timing or causal chain conflicts with available renderer, **implement finite needed 2D actions**, don't swap story with gate/scroll/shield footage; report unavoidable changes. Approximately 78-90 English spoken words, measure actual TTS clips and respect voice pace; never extreme atempo. Shorts composition native 9:16, 1080x1920, 24fps, exactly 720 frames and 30 seconds with audio. Deliver readable captions in safe zone, avoid actor/prop occlusion and forbidden screen-edge crops. If lower-resolution draft for QA, final high-res must be freshly rendered after passing draft gates.
+
+Required script-driven dramatic visuals (not a fixed 1:1 shot quota):
+  0.0–0.6: IMMEDIATE visible incident — brake peg cracking and wheel starting to creep, vivid SFX, no generic title/logo.
+  0.6–4.5: new hill market geography: cart movement + bakery danger clearly spatialized, not a stationary exposition image.
+  4.5–9.0: apprentice runs, street obstacles/foreground pass, purposeful medium/tracking/detail angles.
+  9.0–15.0: rear axle rope drags, apprentice anticipates and grabs (hand-on-rope attachment MUST be visible), rope arcs to stone bollard.
+  15.0–21.5: bracing action, rope tension, cart deceleration, wheel lurch and stop just before oven (continuous physics).
+  21.5–26.0: crowd release/reaction, tray shake and loaf bounce with causal motion.
+  26.0–30.0: flying loaf lands on centurion helmet; comedic delayed non-reaction, crisp ending. Loop-ready if natural, not forced.
+This is a planning outline only. Determine final cuts from measured voice + action changes. Do not force extra cuts where they would harm physics or the gag. Use deliberate composition variety: upper slope wide, brake macro, wheel tracking, rope insert, hand contact close, bakery perspective, reaction wide, helmet payoff close. New settings/props designed in original Squire style. Do not reuse old: `projects/kh03_roman_last_gap_30s`, `projects/kh03_r1_roman_gate_message_30s`, contact sheets, stills, video, their authored art or old title sequences as footage. Procedural primitives from shared Squire pack are allowed as reusable rendering CODE, not old still assets. Record asset provenance hashes and fresh creation dates.
+
+Characters: Roman apprentice and centurion must use ORIGINAL Squire face/line/shape vocabulary and stable identities (head ratios, helmet details, tunic palette, body proportions). Extras are style-matched. No modern cartoon style substitution, no 3D. Locations new market slope, bakery oven/tray, stone bollard, surrounding market stands/foreground crowds. Props new cart, brake peg, wheels/axles, rope, amphorae, bread; no reusing the gate demo scroll.
+
+New exact location/prop Canvas2D modules can be authored in packs/squire/roman_master/market_env.js and market_props.js (or logically equivalent). Define typed render actions for cart rolling, brake peg break, grip rope, tension, stop, bread tray shake, loaf arc and helmet reaction, and physically meaningful timestamps via world state. Sound: original and legal/licensed procedural SFX foley (wheel creak/rolling, wood snap, leather/rope taut, footsteps, cart jolt, bread thunk, crowd hush), music energy arcs and narration ducking via EXISTING audio pipeline. No blind non-free asset downloads. Fail if audio missing rather than silently exporting silent film as final.
+
+Metadata + deliverables:
+  story/script.txt; beats.json; action_graph.json; action_bindings.json; shot_plan.json; scene_manifest.json; character_bible.json; prop_state_ledger.json; continuity_ledger.json; narration_timeline.json; shot_to_line_map.json; camera_beats.json; pacing_report.json; perceptual_qa.json; project README; config.json; scene modules; build receipts.
+  MP4: out/KH03_R2_ROMAN_RUNAWAY_CART_ORIGINAL_30S_9x16.mp4 and SHA-256 manifest; genuine playable file accessible in local workspace. Track lightweight evidence in Git; if MP4 is too large for Git, keep ignored but provide exact absolute path, hash, bytes and user access path; do not pretend that a link in README guarantees attachment.
+  Review packet: shot contact sheet, 0.5s cut interval strip, 3 action strips (rope catch, cart stop, loaf helmet), A/B matched script only if comparisons truly share same script/assets/voice, frame timeline chart, pixel novelty comparison, video overview, thumbnail, run timestamps.
+
+====================================================================
+09. CORRECT A/B, AUDIO, TIMING, CAMERA AND RETENTION CLAIMS
+====================================================================
+Do not claim a viewer will retain longer purely due to shorter shot duration. Measure meaningful action events grounded in script, visible prop-state transitions, composition diversity, subject motion, and no unexplained dead time. Report risk not promises. Preserve intentional <0.5s action inserts and 1-2s acting/hold if narratively needed. '15 shots' is one observed R1 point, not an objective. Excessive rapid cuts and constant zoom are failure modes, not optimization.
+
+Voice: tools/kh03_narration_timeline.py already independently builds voice timeline. Preserve measured sentence offsets; estimate words clearly labeled if forced alignment unavailable. Avoid max-stretch beyond 1.15x without editorial explicit approval; if 10 lines won't fit naturally, tighten script while preserving premise rather than speeding to robotic speech. No hard-coded `line_id -> shot_id` coupling. Narration continues across cuts and soundtrack crossfades cleanly; verify real sync and absence of clipped words. Captions match what is actually spoken, UTF-8, safe for YouTube Shorts 9:16.
+
+A/B 'controlled': both edit strategies must render the SAME script, SAME 2D assets, SAME actor animation source and SAME audio; only shot/camera plan differs. If 1:1 treatment cannot represent crucial events due to incompatible shot handler, count as INCOMPARABLE rather than declaring R2 superior from a manipulated control. Compare 3-5 key temporal windows and actual decoded frames; include source/control hashes. Baseline previous video can be shown separately as historical context only.
+
+Camera: push-in/pull-out/whip pan/camera tracking only when motivated; no random zoom to avoid static QA. Follow actor/object trajectories; enforce appropriate screen direction, eye lines, action axis, foreground/background parallax on camera changes, no exposure of blank edges. No forbidden 3D or composited old PNG background.
+
+====================================================================
+10. ASYNC TEST DAG / RESOURCE BUDGET / REAL DETERMINISM
+====================================================================
+Add `scripts/run_kh03_r2_validation.py` with explicit DAG dependencies and bounded concurrency. Prefer asyncio for orchestration and `asyncio.create_subprocess_exec` for external processes, ThreadPoolExecutor for cheap I/O tests, ProcessPoolExecutor ONLY when justified for isolated CPU tasks. DO NOT run huge FFmpeg renders simultaneously. Windows-compatible paths/long paths; orderly process-tree cleanup.
+
+Suggested stages:
+  P0 preflight + git & resource guard (synchronous, fail fast).
+  P1 style contract & R1/v0 legacy baseline hash, 2D only, schema checks (cheap independent parallel).
+  P2 compile semantic graph for main + 2 holdouts, registry capability match, negative mutation and unit tests (cheap parallel).
+  P3 draft low-res real renders for 3 stories, then pixel perceptual QA & continuity gates (max 1-2 render processes; no collision on output dirs).
+  P4 full 30s 1080x1920 export (1 heavy render), audio mix, ffprobe/ffmpeg full decode, hash; run independently safe CPU QA where resources allow.
+  P5 full required legacy regression + backtest 180 synthetic / 20 independent real shorts; isolated temp dirs/ports, bounded queue (do NOT race full export with heavy regression if disk/RAM low).
+  P6 repeat determinism, pixel-negative tests, fair A/B, editorial packet, final verdict, safe git commit/push and remote attestation.
+
+Never claim asynchronous unless actual overlapping nondependent jobs recorded (job ids, start/end UTC monotonic, concurrency max, output paths). Don't use asyncio only as cosmetic syntax while blocking everything with subprocess.run. Ensure dependencies wait for completed inputs and cancellation propagates on failure. Tests must inspect produced artifacts, not merely exit codes. Deny future gates if their prerequisites FAIL; labels SKIPPED_DEPENDENCY, NOT_RUN_MISSING_FIXTURE are not PASS. Use `asyncio.Semaphore`/job queues. Enforce reproducible seeds, sorted iteration, atomic write and tmp -> rename; concurrent workers must not write same path. Source/content digest used to invalidate stale outputs. Reproducibility: 24+ individually selected frames across disparate actions, forward/reverse/shuffled traversal parity, two rebuilds with same config, zero accidental nondeterminism; any intentional nondeterministic asset explicitly excluded from certification and logged. Store frame SHA-256 and compare, not only similar screenshot.
+
+SAFE resource protocol:
+  - Monitor via existing scripts/resource_guard.py::check_resources, ResourceMonitor, kill_process_tree. Check preflight and periodically (<=1 sec while rendering), min available disk >= 6 GiB, RAM available >= 2 GiB unless stronger machine baseline indicates safer threshold; also preflight peak scratch estimation (min(available, target) not arbitrary). On threshold risk STOP QUEUE, terminate owned subprocess tree, retain evidence, do NOT corrupt old artifacts.
+  - At most 1 heavy render process at a time; <=2 concurrent headless render/ffmpeg child processes (or lower according to telemetry); 2-4 lightweight CPU/IO tests if safe; do not multiply per-render workers beyond measured memory allowance. If resource guard kills job, FAIL/BLOCKED and no fake green.
+  - Never delete outside unique run scratch dir `.test-runs/kh03_r2_<run_id>`. Deletions confined to owned temporary dirs and verified containment. No blanket `.test-runs` cleaning, no `git clean`/reset. If low disk, stop safely rather than touching older docs/media.
+  - Benchmark wall-clock complete relevant work on identical content, warm/cold fairness: 1-worker vs 2-worker, 3 repeats each; report median, errors and verified identical SHA; no 2x marketing from irrelevant tiny microbenchmark. Prefer dedup/caching of unchanged speaker clips, contact-sheet thumbnails, frame decode, render cache after integrity checks. If 2w slower, select 1w by data; don't force throughput metric PASS.
+  - Verify disk files remain openable, correct sizes and latest timestamps after all worker joins. No overwriting outputs from stale run. Atomic commits of receipts at end.
+
+Test suites: `pytest tests/kh03_roman/` + new R2 suites, `scripts/run_e2e_regression.py` full required (currently 81/81 from previous reports, NOT guaranteed until rerun), dedicated R1 legacy regression and DEM/Squire baseline. Build explicit G00..GXX gate table with support evidence, new SHA, PASS/FAIL/BLOCKED/NOT_RUN. Never treat missing optional company_180 fixture as PASS. Do not flip style/retention approval to PASS automatically.
+
+====================================================================
+11. ACCEPTANCE GATES — MUST BE TRUTHFUL
+====================================================================
+G00 Branch protection: exact feat/roman-2d-master, Production and other remote refs untouched, origin ancestry, safe clean staged changes.
+G01 Style & 2D: Roman Squire v1 digest+render identity preserved, legacy OFF mode parity, no Three/WebGL in R2 runtime.
+G02 Source-semantic graph: actor/prop/location/action type traceability; negation/pronouns/unknown/contradictory action diagnostics work.
+G03 Capability registry: every emitted action has real renderer+declared assets; unsupported action gives FAIL-CLOSED at compiler, validator, Chromium runtime, and `render.mjs --check`.
+G04 Shot/story plan: exact 720-frame coverage; voice+visual independent, no missing words, valid meaningful cuts, action states not reset between shots.
+G05 New 30s preview: entirely new script/location/characters' variants/props/animation frames and audio; original Squire art identity preserved, no old footage hash reuse.
+G06 Real Motion Physics: cart slows under rope tension, rope attachment remains visible, actor hand on rope, cart does not teleport, loaf collision + arc + helmet impact coherent; actual decoded frame samples + world traces.
+G07 Continuity: cross-shot actor stable, position/prop state persists, no contradictory camera axis; review suspected cuts, not just theoretical IK.
+G08 Perceptual QA: real decoded frame windows, anti-repetition, low-motion detection, no subtitle-only novelty, true vs false positive controls.
+G09 Camera/editing: purposeful 9:16 camera plan, safe overscan, mobile legible titles, no zoom spam, meaningful visual activity, traceable to action goals.
+G10 Audio: voice complete, no accidental truncation, source measured line timing, captions safe, AAC48k stereo, sane loudness target approx -14 to -16 LUFS, no clipping, no silent output.
+G11 Determinism: >=24 representative frame hashes match shuffled/reverse/forward traversal and rebuilds, fixed seed, content-addressed stale detection.
+G12 Negative mutations: >=20 meaningful corrupted inputs including unknown action renderer, missing asset, duplicated shot, fake 3D, leaked old footage, stuck frame, mismatch narration; mutants genuinely fail.
+G13 Synthetic/real cross-script backtests: 180 independently varied synthetic PASS, 20 actual independently compiled short MP4 with >=3 distinct story corpora and >=5 action families, quality/continuity evidence; historical fixture absence is NOT_RUN.
+G14 Legacy regression: existing DEM + Squire + KH03.0 + R1 tests all required PASS, no protected hash diff in disabled mode, no user project overwrite.
+G15 Resource/process safety & concurrency: guard active, peak disk/RAM logged, no process leak, safe temp dirs, measured serial vs parallel with output parity, no promotion based on speed claim.
+G16 Git provenance: scoped commit + push to same branch, remote HEAD same as local after push, zero change in protected remote refs (except concurrently independently changed by others; document diff), report push failures honestly.
+G17 Human creative review: STYLE_APPROVED=HUMAN_REVIEW_PENDING, EDITORIAL_APPROVED=HUMAN_REVIEW_PENDING, RETENTION_VERIFIED=false until user reviews MP4 and real platform analytics exist; these do NOT falsely block technical commit, but block production-release claim.
+
+Any FAIL among required G00..G16 => TECH_FAIL. No technical PASS with G13=NOT_RUN_MISSING_FIXTURE if this represents a required new holdout; optional historical case can remain NOT_RUN without misleading aggregate. Evidence must identify actual source commit and render/QA timing. Do not approve 30s merely because ffprobe reports 720 frames.
+
+====================================================================
+12. REQUIRED DOCUMENTATION, UNIQUE RUN FOLDER, COMPLETE RECEIPTS
+====================================================================
+At run start create `docs/antigravity_runs/KH-03_0_R2_ACTION_DIRECTOR_<UTC>_<suffix>/` containing:
+  README.md (goal, exact start/end commits, commands, limitations, video path)
+  FULL_PROMPT.txt (copy FULL source of this instruction file)
+  BASELINE.md (branch refs, protected hashes, old 9/R1 evidence)
+  FUNCTION_CHANGE_MATRIX.md (old/new exact functions, where called, input/output contracts)
+  KEPT_AS_IS.md (all untouched flows/features; point to code hashes/tests)
+  ACTION_CAPABILITY_MATRIX.md (all supported and rejected action classes with renderer handlers)
+  STORYBOARD_AND_SHOT_REASONS.md (action graph, shot rationales, frame intervals and source script spans)
+  TEST_MATRIX.md (every command, PASS/FAIL, sample size, measured artifact, no false PASS)
+  RESOURCE_AUDIT.md (CPU, RAM/disk telemetry, concurrency, restart safety and speed benchmark)
+  PERCEPTUAL_QA_REVIEW.md (repetition, motion, continuity and false positives; user visually review)
+  FAILURE_LEDGER.md (any unexpected errors, retries, unsupported actions, missing fixtures)
+  RELEASE_VERDICT.md (TECH_PASS/HUMAN_REVIEW_PENDING vs TECH_FAIL)
+  POST_PUSH_ATTESTATION.md (local/remote HEADs/protected refs; only after actually confirmed)
+  evidence/*.json (machine-readable direct results)
+  preview_packet/ (fresh 15ish contact sheet or actual shots, strips, full decode screenshots, matched A/B, hash manifest)
+Write README inside each new project folder too. If any stage fails, preserve logs/evidence, label status and report; do not synthesize a PASS Markdown document. Existing docs untouched.
+
+Do not embed user personal metadata/secrets, auth headers, proxy keys or machine-private files. Generated MP4 may be left out of Git due size, but must be physically produced, verified and its exact accessible path + SHA+bytes reported in README. If large enough to cause disk issue, keep only final MP4 and compressed QA evidence; not many redundant full-res video copies.
+
+====================================================================
+13. SAFE AUTOMATED GIT COMMIT, PUSH, VERIFY (REQUIRED)
+====================================================================
+When all REQUIRED technical gates pass, automatically perform actual commit and push (don't stop after giving commands). `safe_commit_push_attestation` from KH03.0 only pushes — DO NOT assume it commits; implement explicit R2 commit workflow in new script or shell:
+  1. git status --porcelain, git diff --stat and git diff --check; verify only intended files.
+  2. git add <exact approved code, tests, new project manifests, proof docs and lightweight media> (not `git add -A` blindly). Never stage credentials, temp dirs, huge MP4 unless policy allows, unchanged user files.
+  3. git diff --cached --name-only and validate denylist; git commit -m "feat(kh03.r2): generalized roman action director and perceptual shot qa".
+  4. git push origin HEAD:refs/heads/feat/roman-2d-master with no --force; handle non-fast-forward safely, don't overwrite remote.
+  5. `git rev-parse HEAD` equals `git ls-remote origin refs/heads/feat/roman-2d-master` after push; record source sha and commit date; verify protected refs unchanged from preflight or accurately note concurrent external changes.
+  6. If post-push attestation requires a subsequent docs-only commit, commit/push that too and verify final remote HEAD. Don't claim exact equality before comparison.
+  7. Final repo status clean for tracked generated code; ignored local MP4 remains documented. If git permissions/network blocked: PUSH_BLOCKED, not successful push claim.
+Do not merge to Production. Human editorial approval remains pending after technical commit.
+
+====================================================================
+14. FINAL RESPONSE CONTRACT / DO NOT QUIT WITH PLAN ONLY
+====================================================================
+After completing execution output a concise Vietnamese report:
+  Branch + starting and ending local/remote SHA; what changed, exact files/functions.
+  New story title, original script, 30s MP4 absolute path, ffprobe dimensions/fps/duration/frames, bytes, SHA256, how user views it.
+  Side-by-side technical comparison with R1: counts/meaningful action events, perceptual duplicate signal and motion continuity; note metrics proxy, not retention proof.
+  Gate results G00..G17, optional NOT_RUN, logs, documented blockers; real multi-script backtest coverage and 81 required legacy regression rerun.
+  Exact run README location, full prompt location, contact-sheet/review packet and resource speed data.
+  Final git push attestation.
+  Explicit STYLE_APPROVED and EDITORIAL_APPROVED = HUMAN_REVIEW_PENDING unless user signed off. No '100% cinematic' claim without evidence.
+
+Priorities if blocked: (1) preserve correctness and branch safety, (2) implement P0 fail-closed + new action registry, (3) truthful 3-script rendering & QA, (4) fresh 30s MP4, (5) commit/push after gate. Do not quietly downgrade deliverables or switch to an older image slideshow to force technical PASS. Never claim work is complete without the actual MP4 verified and code pushed. Do not ask user to upload old reference images for this run; lock style from verified Production/roman_squire_master source. If any claimed feature cannot be implemented reliably in this run, state BLOCKED explicitly with exact function and missing dependency.
+
+END OF FULL EXECUTION PROMPT — KH-03.0.R2

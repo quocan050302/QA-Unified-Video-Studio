@@ -1,0 +1,315 @@
+{
+  "schema_version": "kh03.r2.perceptual_qa.v1",
+  "status": "PASS",
+  "mp4_path": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh03_r2_roman_runaway_cart_30s\\out\\KH03_R2_ROMAN_RUNAWAY_CART_ORIGINAL_30S_9x16.mp4",
+  "samples_decoded": 112,
+  "novelty": {
+    "schema_version": "kh03.r2.perceptual_qa.v1",
+    "status": "PASS",
+    "shots_analyzed": 16,
+    "duplicate_nonadjacent_pairs": [],
+    "unannotated_low_motion_shots": [],
+    "frozen_actor_zoom_spam_shots": [],
+    "per_shot": [
+      {
+        "shot_id": "SH01",
+        "action_id": "world.market_hill_establish",
+        "location_id": "roman_market_hill",
+        "framing_scale": "wide_geography",
+        "stage_mad_start_to_end": 53.139,
+        "min_interior_step_mad": 3.83,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH02",
+        "action_id": "actor.idle_micro_act",
+        "location_id": "roman_market_hill",
+        "framing_scale": "payoff_close_reveal",
+        "stage_mad_start_to_end": 51.814,
+        "min_interior_step_mad": 1.634,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH03",
+        "action_id": "prop.peg_crack_snap",
+        "location_id": "roman_market_hill",
+        "framing_scale": "macro_physics_insert",
+        "stage_mad_start_to_end": 35.229,
+        "min_interior_step_mad": 3.465,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH04",
+        "action_id": "prop.cart_roll_slope",
+        "location_id": "roman_market_hill",
+        "framing_scale": "low_angle_chase",
+        "stage_mad_start_to_end": 39.354,
+        "min_interior_step_mad": 7.099,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH05",
+        "action_id": "world.market_crowd_pass",
+        "location_id": "roman_market_hill",
+        "framing_scale": "low_angle_chase",
+        "stage_mad_start_to_end": 50.651,
+        "min_interior_step_mad": 10.634,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH06",
+        "action_id": "actor.sprint_chase",
+        "location_id": "roman_market_hill",
+        "framing_scale": "medium_full_tracking",
+        "stage_mad_start_to_end": 41.308,
+        "min_interior_step_mad": 11.572,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH07",
+        "action_id": "actor.reach_grab_prop",
+        "location_id": "roman_market_hill",
+        "framing_scale": "macro_physics_insert",
+        "stage_mad_start_to_end": 38.675,
+        "min_interior_step_mad": 11.115,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH08",
+        "action_id": "prop.rope_taut_post_wrap",
+        "location_id": "roman_market_hill",
+        "framing_scale": "extreme_detail_insert",
+        "stage_mad_start_to_end": 34.415,
+        "min_interior_step_mad": 2.283,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH09",
+        "action_id": "actor.stop_brace",
+        "location_id": "roman_market_hill",
+        "framing_scale": "medium_full_tracking",
+        "stage_mad_start_to_end": 31.492,
+        "min_interior_step_mad": 2.123,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH10",
+        "action_id": "prop.cart_halt_skid",
+        "location_id": "roman_market_hill",
+        "framing_scale": "extreme_detail_insert",
+        "stage_mad_start_to_end": 34.746,
+        "min_interior_step_mad": 1.751,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH11",
+        "action_id": "prop.prop_bounce_tray",
+        "location_id": "roman_market_hill",
+        "framing_scale": "macro_physics_insert",
+        "stage_mad_start_to_end": 34.567,
+        "min_interior_step_mad": 2.202,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH12",
+        "action_id": "prop.prop_parabolic_arc",
+        "location_id": "roman_market_hill",
+        "framing_scale": "extreme_detail_insert",
+        "stage_mad_start_to_end": 33.324,
+        "min_interior_step_mad": 5.684,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH13",
+        "action_id": "prop.helmet_impact_settle",
+        "location_id": "roman_market_hill",
+        "framing_scale": "payoff_close_reveal",
+        "stage_mad_start_to_end": 44.537,
+        "min_interior_step_mad": 3.733,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH14",
+        "action_id": "actor.deadpan_walk_unaffected",
+        "location_id": "roman_market_hill",
+        "framing_scale": "extreme_detail_insert",
+        "stage_mad_start_to_end": 45.455,
+        "min_interior_step_mad": 7.856,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH15",
+        "action_id": "actor.deadpan_walk_unaffected",
+        "location_id": "roman_market_hill",
+        "framing_scale": "payoff_close_reveal",
+        "stage_mad_start_to_end": 51.69,
+        "min_interior_step_mad": 8.588,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      },
+      {
+        "shot_id": "SH16",
+        "action_id": "actor.crowd_reaction_cheer",
+        "location_id": "roman_market_hill",
+        "framing_scale": "wide_geography",
+        "stage_mad_start_to_end": 50.465,
+        "min_interior_step_mad": 7.851,
+        "intentional_hold": false,
+        "actor_prop_disp_u": 0.0
+      }
+    ],
+    "confidence_note": "Subtitle zone y>=0.615*H excluded before stage MAD & 16x16 composition comparison."
+  },
+  "continuity": {
+    "status": "PASS",
+    "cuts_evaluated": 15,
+    "suspicious_cuts": [],
+    "cuts": [
+      {
+        "from": "SH01",
+        "to": "SH02",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 50.987,
+        "status": "OK"
+      },
+      {
+        "from": "SH02",
+        "to": "SH03",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 53.53,
+        "status": "OK"
+      },
+      {
+        "from": "SH03",
+        "to": "SH04",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 41.045,
+        "status": "OK"
+      },
+      {
+        "from": "SH04",
+        "to": "SH05",
+        "same_location": true,
+        "same_scale": true,
+        "cut_mad": 51.122,
+        "status": "OK"
+      },
+      {
+        "from": "SH05",
+        "to": "SH06",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 46.166,
+        "status": "OK"
+      },
+      {
+        "from": "SH06",
+        "to": "SH07",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 37.251,
+        "status": "OK"
+      },
+      {
+        "from": "SH07",
+        "to": "SH08",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 37.695,
+        "status": "OK"
+      },
+      {
+        "from": "SH08",
+        "to": "SH09",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 38.785,
+        "status": "OK"
+      },
+      {
+        "from": "SH09",
+        "to": "SH10",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 30.104,
+        "status": "OK"
+      },
+      {
+        "from": "SH10",
+        "to": "SH11",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 36.679,
+        "status": "OK"
+      },
+      {
+        "from": "SH11",
+        "to": "SH12",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 39.468,
+        "status": "OK"
+      },
+      {
+        "from": "SH12",
+        "to": "SH13",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 44.278,
+        "status": "OK"
+      },
+      {
+        "from": "SH13",
+        "to": "SH14",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 45.508,
+        "status": "OK"
+      },
+      {
+        "from": "SH14",
+        "to": "SH15",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 47.508,
+        "status": "OK"
+      },
+      {
+        "from": "SH15",
+        "to": "SH16",
+        "same_location": true,
+        "same_scale": false,
+        "cut_mad": 57.681,
+        "status": "OK"
+      }
+    ]
+  },
+  "camera": {
+    "status": "PASS",
+    "overscan_border_alerts": [],
+    "axis_violations": [],
+    "safe_subtitle_clearance_frac": 0.615
+  },
+  "cut_boundaries_strip": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh03_r2_roman_runaway_cart_30s\\out\\review_packet\\perceptual_qa\\perceptual_cut_boundaries.jpg",
+  "limitations": [
+    "Caption zone y >= 0.615*H is excluded from visual novelty; text overlay shifts do not inflate scores.",
+    "Perceptual scores validate pixel variety, continuity, and border safety; subjective humor/taste awaits HUMAN_REVIEW_PENDING."
+  ]
+}

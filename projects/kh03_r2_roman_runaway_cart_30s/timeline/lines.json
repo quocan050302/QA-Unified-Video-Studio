@@ -1,0 +1,205 @@
+[
+  {
+    "id": "L01",
+    "slot": "NARRATOR",
+    "start": 0.1,
+    "end": 2.299,
+    "duration": 2.199,
+    "tempo_rate": 1.0606,
+    "rms": 0.125643,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      4800,
+      110337
+    ],
+    "word_count": 8,
+    "text": "At Rome's market hill rested a grain cart.",
+    "shot_ids": [
+      "SH01"
+    ]
+  },
+  {
+    "id": "L02",
+    "slot": "NARRATOR",
+    "start": 2.379,
+    "end": 5.278,
+    "duration": 2.899,
+    "tempo_rate": 1.0606,
+    "rms": 0.098297,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      114192,
+      253357
+    ],
+    "word_count": 8,
+    "text": "Downhill, Baker Lucius stood beside his hot oven.",
+    "shot_ids": [
+      "SH02"
+    ]
+  },
+  {
+    "id": "L03",
+    "slot": "NARRATOR",
+    "start": 5.358,
+    "end": 8.034,
+    "duration": 2.676,
+    "tempo_rate": 1.0606,
+    "rms": 0.103364,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      257184,
+      385617
+    ],
+    "word_count": 8,
+    "text": "A brake peg cracked; the cart rolled downhill.",
+    "shot_ids": [
+      "SH03",
+      "SH04",
+      "SH05"
+    ]
+  },
+  {
+    "id": "L04",
+    "slot": "NARRATOR",
+    "start": 8.114,
+    "end": 10.397,
+    "duration": 2.283,
+    "tempo_rate": 1.0606,
+    "rms": 0.108844,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      389472,
+      499043
+    ],
+    "word_count": 5,
+    "text": "Market shoppers dodged street obstacles.",
+    "shot_ids": [
+      "SH05",
+      "SH06"
+    ]
+  },
+  {
+    "id": "L05",
+    "slot": "NARRATOR",
+    "start": 10.477,
+    "end": 13.985,
+    "duration": 3.508,
+    "tempo_rate": 1.0606,
+    "rms": 0.094967,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      502896,
+      671273
+    ],
+    "word_count": 9,
+    "text": "Apprentice Titus sprinted; swiftly Titus caught the hemp rope.",
+    "shot_ids": [
+      "SH06",
+      "SH07",
+      "SH08"
+    ]
+  },
+  {
+    "id": "L06",
+    "slot": "NARRATOR",
+    "start": 14.065,
+    "end": 17.162,
+    "duration": 3.097,
+    "tempo_rate": 1.0606,
+    "rms": 0.106749,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      675120,
+      823794
+    ],
+    "word_count": 9,
+    "text": "Titus whipped the rope around a bollard; Titus braced.",
+    "shot_ids": [
+      "SH08",
+      "SH09",
+      "SH10"
+    ]
+  },
+  {
+    "id": "L07",
+    "slot": "NARRATOR",
+    "start": 17.242,
+    "end": 20.344,
+    "duration": 3.102,
+    "tempo_rate": 1.0606,
+    "rms": 0.110751,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      827616,
+      976488
+    ],
+    "word_count": 10,
+    "text": "The cart halted short; one loaf bounced off the tray.",
+    "shot_ids": [
+      "SH10",
+      "SH11",
+      "SH12"
+    ]
+  },
+  {
+    "id": "L08",
+    "slot": "NARRATOR",
+    "start": 20.424,
+    "end": 23.995,
+    "duration": 3.571,
+    "tempo_rate": 1.0606,
+    "rms": 0.108282,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      980352,
+      1151784
+    ],
+    "word_count": 10,
+    "text": "It arced high; it landed squarely on Centurion Varro's helmet.",
+    "shot_ids": [
+      "SH12",
+      "SH13",
+      "SH14"
+    ]
+  },
+  {
+    "id": "L09",
+    "slot": "NARRATOR",
+    "start": 24.075,
+    "end": 27.234,
+    "duration": 3.159,
+    "tempo_rate": 1.0606,
+    "rms": 0.107807,
+    "gap_after_sec": 0.08,
+    "pcm_sample_range": [
+      1155600,
+      1307255
+    ],
+    "word_count": 7,
+    "text": "Nobody dared laugh; Centurion Varro kept walking.",
+    "shot_ids": [
+      "SH14",
+      "SH15"
+    ]
+  },
+  {
+    "id": "L10",
+    "slot": "NARRATOR",
+    "start": 27.314,
+    "end": 29.723,
+    "duration": 2.409,
+    "tempo_rate": 1.0606,
+    "rms": 0.102537,
+    "gap_after_sec": 0.0,
+    "pcm_sample_range": [
+      1311072,
+      1426682
+    ],
+    "word_count": 6,
+    "text": "Behind him, the market cheered Titus.",
+    "shot_ids": [
+      "SH15",
+      "SH16"
+    ]
+  }
+]

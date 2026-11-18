@@ -1,0 +1,469 @@
+{
+  "schema_version": "kh03.r2.master_verdict.v1",
+  "run_id": "20261117_094557Z_0fd8",
+  "generated_at_utc": "2026-11-18T01:04:18.155194+00:00",
+  "project_dir": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\projects\\kh03_r2_roman_runaway_cart_30s",
+  "technical_gates_all_pass": true,
+  "master_verdict": "TECH_PASS_HUMAN_REVIEW_PENDING",
+  "style_approved": "HUMAN_REVIEW_PENDING",
+  "editorial_approved": "HUMAN_REVIEW_PENDING",
+  "gates": [
+    {
+      "gate": "G00_BRANCH",
+      "status": "PASS",
+      "branch": "feat/roman-2d-master",
+      "head": "c0c239e36ed6cb2bf9365d3bd74d6d4bfa5cf0be",
+      "baseline_ancestor": true,
+      "production_ancestor": true,
+      "protected_refs_verified": {
+        "refs/heads/Production": "80559d09d4b7bb72ee4c5acc6cc846e69abd65d1",
+        "refs/heads/fix/Image-Shot": "c96c4f366b873aa3e81a299ab70a330b4adae5ee",
+        "refs/heads/feat/modern-2d-cinematic": "688ec5351cf8fbcdb7740420d81e1bbeac4eb727"
+      }
+    },
+    {
+      "gate": "G01_STYLE_AND_BACKWARD_COMPAT",
+      "status": "PASS",
+      "style_digest": "1d3209a715bdd38a73f11acf5c5e2cb6974a6a1855d470e590eaa934360e1259",
+      "protected_diff_bytes": 0,
+      "r0_check_exit": 0,
+      "r1_check_exit": 0,
+      "style_approved": "HUMAN_REVIEW_PENDING"
+    },
+    {
+      "gate": "G02_CAPABILITY_REGISTRY_AND_2D_RUNTIME",
+      "status": "PASS",
+      "registry_version": "kh03.r2.action_registry.v1",
+      "registry_count": 29,
+      "registry_digest": "bed02363f29648f27f4da7ac312c0f96f6986048f5d4bec4588b988d0b6121c5",
+      "missing_js_handlers": [],
+      "threejs_requests": [],
+      "runtime_editorial_mode": "roman_action_director_v2"
+    },
+    {
+      "gate": "G03_ACTION_GRAPH_CAUSALITY",
+      "status": "PASS",
+      "nodes": 16,
+      "edges": 15,
+      "shots_count": 16,
+      "terminal_world_state": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady",
+        "crowd_mood": "cheering"
+      }
+    },
+    {
+      "gate": "G04_NARRATION_EDIT_DECOUPLING",
+      "status": "PASS",
+      "word_coverage_ratio": 1.0,
+      "one_to_many_count": 8,
+      "many_to_one_count": 7,
+      "mid_sentence_cuts_count": 12,
+      "global_tempo_scale": 1.0606
+    },
+    {
+      "gate": "G05_CONTROLLED_AB_COMPARISON",
+      "status": "PASS",
+      "arm_a_forced_1to1": {
+        "shots_count": 10,
+        "max_shot_dur_sec": 3.667,
+        "perceptual_qa_status": "PASS",
+        "low_motion_shots": [],
+        "cut_mad_mean": 37.3
+      },
+      "arm_b_r2_director": {
+        "shots_count": 16,
+        "max_shot_dur_sec": 3.0,
+        "perceptual_qa_status": "PASS",
+        "low_motion_shots": [],
+        "cut_mad_mean": 43.85
+      },
+      "comparison_panel": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_R2_ACTION_DIRECTOR_20261117_094557Z_0fd8\\preview_packet\\ab_comparison_1to1_vs_r2_director.jpg",
+      "honest_note": "Technical editing/perceptual proxy comparison on identical script & Squire assets; viewer retention not measured."
+    },
+    {
+      "gate": "G06_PERCEPTUAL_SHOT_QA",
+      "status": "PASS",
+      "samples_decoded": 112,
+      "novelty_status": "PASS",
+      "continuity_status": "PASS",
+      "camera_status": "PASS"
+    },
+    {
+      "gate": "G07_PERCEPTUAL_NEGATIVE_CONTROLS",
+      "status": "PASS",
+      "pytest_exit": 0
+    },
+    {
+      "gate": "G08_FINAL_MP4_AUDIO_AND_NONREUSE",
+      "status": "PASS",
+      "mp4_sha256": "03282215f1df0430bb7314b29d411ea466180f560a55b11399543559f0077196",
+      "mp4_bytes": 15513050,
+      "decoded_frames": 720,
+      "duration_sec": 30.0,
+      "lufs": -14.0,
+      "true_peak_dbtp": -2.0
+    },
+    {
+      "gate": "G09_DETERMINISM_AND_REBUILD_PARITY",
+      "status": "PASS",
+      "checked": 24,
+      "mismatches": [],
+      "runtimePlanChangedFrame240": true,
+      "two_rebuild_sha_match": true,
+      "rebuild_sha256": "8b6942058199e085f9ffe9a638d1e44aae3989854709ba6d496289a365103b12"
+    },
+    {
+      "gate": "G10_22_NEGATIVE_MUTATIONS",
+      "status": "PASS",
+      "mutants_caught": "22/22",
+      "false_positive_guards": {
+        "contract_valid": true,
+        "validator_pass": true
+      },
+      "mutants": [
+        {
+          "name": "M01_unsupported_horse",
+          "caught": true
+        },
+        {
+          "name": "M02_unsupported_flying_aqueduct",
+          "caught": true
+        },
+        {
+          "name": "M03_unsupported_dragon",
+          "caught": true
+        },
+        {
+          "name": "M04_unsupported_catapult",
+          "caught": true
+        },
+        {
+          "name": "M05_negated_grab",
+          "caught": true
+        },
+        {
+          "name": "M06_negated_sprint",
+          "caught": true
+        },
+        {
+          "name": "M07_ambiguous_pronoun",
+          "caught": true
+        },
+        {
+          "name": "M08_state_conflict_gate_reopen",
+          "caught": true
+        },
+        {
+          "name": "M09_state_conflict_deadpan_no_loaf",
+          "caught": true
+        },
+        {
+          "name": "M10_missing_prop_brake_peg",
+          "caught": true
+        },
+        {
+          "name": "M11_unregistered_action_id",
+          "caught": true
+        },
+        {
+          "name": "M12_missing_js_renderer",
+          "caught": true
+        },
+        {
+          "name": "M13_frame_gap",
+          "caught": true
+        },
+        {
+          "name": "M14_frame_overlap",
+          "caught": true
+        },
+        {
+          "name": "M15_3d_render_mode_forbidden",
+          "caught": true
+        },
+        {
+          "name": "M16_shot_kind_3d_forbidden",
+          "caught": true
+        },
+        {
+          "name": "M17_alien_style_profile",
+          "caught": true
+        },
+        {
+          "name": "M18_3x_repeated_framing_scale",
+          "caught": true
+        },
+        {
+          "name": "M19_uncovered_words",
+          "caught": true
+        },
+        {
+          "name": "M20_missing_camera_beat",
+          "caught": true
+        },
+        {
+          "name": "M21_validator_blocks_unregistered_action",
+          "caught": true
+        },
+        {
+          "name": "M22_chromium_runtime_fails_closed_no_fallback",
+          "caught": true
+        }
+      ]
+    },
+    {
+      "gate": "G11_HOLDOUT_CORPORA_RENDERS",
+      "status": "PASS",
+      "holdouts": {
+        "river_harbor": {
+          "mp4_exists": true,
+          "mp4_bytes": 1953326,
+          "perceptual_qa_status": "PASS",
+          "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_r2_20261117_094557Z_0fd8\\holdouts\\river_harbor\\out\\review_packet\\contact_sheet_all_shots.jpg",
+          "contact_sheet_exists": true
+        },
+        "forum_courtyard": {
+          "mp4_exists": true,
+          "mp4_bytes": 1875668,
+          "perceptual_qa_status": "PASS",
+          "contact_sheet": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\.test-runs\\kh03_r2_20261117_094557Z_0fd8\\holdouts\\forum_courtyard\\out\\review_packet\\contact_sheet_all_shots.jpg",
+          "contact_sheet_exists": true
+        }
+      }
+    },
+    {
+      "gate": "G12_180_SYNTHETIC_SCRIPTS",
+      "status": "PASS",
+      "total": 180,
+      "passed": 180,
+      "sample_failures": [],
+      "company_180_real_videos": "NOT_RUN_MISSING_FIXTURE"
+    },
+    {
+      "gate": "G13_REAL20_MULTI_CORPUS_MP4S",
+      "status": "PASS",
+      "total": 20,
+      "passed": 20,
+      "distinct_corpora": [
+        "forum_courtyard_r2",
+        "market_cart_r2",
+        "river_harbor_r2"
+      ],
+      "distinct_action_families_count": 15,
+      "distinct_actions": [
+        "actor.crowd_reaction_cheer",
+        "actor.handoff_prop",
+        "actor.pickup_prop",
+        "actor.pull_drag_rope_tension",
+        "actor.reach_grab_prop",
+        "actor.release_throw_prop",
+        "prop.cart_halt_skid",
+        "prop.cart_roll_slope",
+        "prop.helmet_impact_settle",
+        "prop.helmet_roll_under_bench",
+        "prop.peg_crack_snap",
+        "prop.vexillum_river_drift",
+        "world.forum_courtyard_establish",
+        "world.market_hill_establish",
+        "world.river_harbor_establish"
+      ],
+      "cases": [
+        {
+          "case": 1,
+          "corpus": "market_cart_r2",
+          "action_id": "world.market_hill_establish",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 2,
+          "corpus": "river_harbor_r2",
+          "action_id": "prop.vexillum_river_drift",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 3,
+          "corpus": "forum_courtyard_r2",
+          "action_id": "actor.pickup_prop",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 4,
+          "corpus": "market_cart_r2",
+          "action_id": "prop.cart_roll_slope",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 5,
+          "corpus": "river_harbor_r2",
+          "action_id": "world.river_harbor_establish",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 6,
+          "corpus": "forum_courtyard_r2",
+          "action_id": "prop.helmet_roll_under_bench",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 7,
+          "corpus": "market_cart_r2",
+          "action_id": "actor.reach_grab_prop",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 8,
+          "corpus": "river_harbor_r2",
+          "action_id": "actor.pull_drag_rope_tension",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 9,
+          "corpus": "forum_courtyard_r2",
+          "action_id": "world.forum_courtyard_establish",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 10,
+          "corpus": "market_cart_r2",
+          "action_id": "prop.cart_halt_skid",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 11,
+          "corpus": "river_harbor_r2",
+          "action_id": "actor.release_throw_prop",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 12,
+          "corpus": "forum_courtyard_r2",
+          "action_id": "actor.handoff_prop",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 13,
+          "corpus": "market_cart_r2",
+          "action_id": "prop.helmet_impact_settle",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 14,
+          "corpus": "river_harbor_r2",
+          "action_id": "prop.vexillum_river_drift",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 15,
+          "corpus": "forum_courtyard_r2",
+          "action_id": "actor.pickup_prop",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 16,
+          "corpus": "market_cart_r2",
+          "action_id": "actor.crowd_reaction_cheer",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 17,
+          "corpus": "river_harbor_r2",
+          "action_id": "world.river_harbor_establish",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 18,
+          "corpus": "forum_courtyard_r2",
+          "action_id": "prop.helmet_roll_under_bench",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 19,
+          "corpus": "market_cart_r2",
+          "action_id": "prop.peg_crack_snap",
+          "decoded_frames": 30,
+          "passed": true
+        },
+        {
+          "case": 20,
+          "corpus": "river_harbor_r2",
+          "action_id": "actor.pull_drag_rope_tension",
+          "decoded_frames": 30,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "gate": "G14_PYTEST_AND_LEGACY_E2E",
+      "status": "PASS",
+      "pytest_returncode": 0,
+      "legacy_e2e_returncode": 0,
+      "legacy_e2e_verdict": "VERDICT: FLOW_READY (81/81 REQUIRED PASS)",
+      "legacy_e2e_min_ram_gb_observed": 3.05,
+      "legacy_e2e_min_disk_gb_observed": 51.43
+    },
+    {
+      "gate": "G15_BENCHMARK_1W_VS_2W_AND_RESOURCES",
+      "status": "PASS",
+      "serial_1w_3x_sec": [
+        5.172,
+        4.828,
+        5.078
+      ],
+      "parallel_2w_3x_sec": [
+        4.187,
+        4.344,
+        4.157
+      ],
+      "median_1w_sec": 5.078,
+      "median_2w_sec": 4.187,
+      "speedup_factor": 1.213,
+      "min_disk_free_gb": 51.42,
+      "min_ram_free_gb": 8.23,
+      "monitor_breached": false
+    },
+    {
+      "gate": "G16_ASYNC_DAG_TELEMETRY",
+      "status": "PASS",
+      "total_jobs_executed": 32,
+      "max_concurrent_jobs_observed": 3,
+      "telemetry_file": "D:\\Project_github\\QA-Unified-Video-Studio\\QA-Unified-Video-Studio\\docs\\antigravity_runs\\KH-03_0_R2_ACTION_DIRECTOR_20261117_094557Z_0fd8\\evidence\\async_dag_telemetry.json"
+    },
+    {
+      "gate": "G17_HUMAN_EDITORIAL_AND_STYLE_SIGN_OFF",
+      "status": "HUMAN_REVIEW_PENDING",
+      "style_approved": "HUMAN_REVIEW_PENDING",
+      "editorial_approved": "HUMAN_REVIEW_PENDING"
+    }
+  ]
+}

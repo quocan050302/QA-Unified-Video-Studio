@@ -1,0 +1,969 @@
+{
+  "schema_version": "kh03.r2.beats.v1",
+  "editorial_mode": "roman_action_director_v2",
+  "lines": [
+    {
+      "id": "L01",
+      "index": 1,
+      "slot": "NARRATOR",
+      "text": "At Rome's market hill rested a grain cart.",
+      "tokens": [
+        "At",
+        "Rome's",
+        "market",
+        "hill",
+        "rested",
+        "a",
+        "grain",
+        "cart."
+      ],
+      "word_count": 8,
+      "time_hint": null,
+      "pause_after_sec": 0.14,
+      "narration_role": null
+    },
+    {
+      "id": "L02",
+      "index": 2,
+      "slot": "NARRATOR",
+      "text": "Downhill, Baker Lucius stood beside his hot oven.",
+      "tokens": [
+        "Downhill,",
+        "Baker",
+        "Lucius",
+        "stood",
+        "beside",
+        "his",
+        "hot",
+        "oven."
+      ],
+      "word_count": 8,
+      "time_hint": null,
+      "pause_after_sec": 0.14,
+      "narration_role": null
+    },
+    {
+      "id": "L03",
+      "index": 3,
+      "slot": "NARRATOR",
+      "text": "A brake peg cracked; the cart rolled downhill.",
+      "tokens": [
+        "A",
+        "brake",
+        "peg",
+        "cracked;",
+        "the",
+        "cart",
+        "rolled",
+        "downhill."
+      ],
+      "word_count": 8,
+      "time_hint": null,
+      "pause_after_sec": 0.12,
+      "narration_role": null
+    },
+    {
+      "id": "L04",
+      "index": 4,
+      "slot": "NARRATOR",
+      "text": "Market shoppers dodged street obstacles.",
+      "tokens": [
+        "Market",
+        "shoppers",
+        "dodged",
+        "street",
+        "obstacles."
+      ],
+      "word_count": 5,
+      "time_hint": null,
+      "pause_after_sec": 0.12,
+      "narration_role": null
+    },
+    {
+      "id": "L05",
+      "index": 5,
+      "slot": "NARRATOR",
+      "text": "Apprentice Titus sprinted; swiftly Titus caught the hemp rope.",
+      "tokens": [
+        "Apprentice",
+        "Titus",
+        "sprinted;",
+        "swiftly",
+        "Titus",
+        "caught",
+        "the",
+        "hemp",
+        "rope."
+      ],
+      "word_count": 9,
+      "time_hint": null,
+      "pause_after_sec": 0.12,
+      "narration_role": null
+    },
+    {
+      "id": "L06",
+      "index": 6,
+      "slot": "NARRATOR",
+      "text": "Titus whipped the rope around a bollard; Titus braced.",
+      "tokens": [
+        "Titus",
+        "whipped",
+        "the",
+        "rope",
+        "around",
+        "a",
+        "bollard;",
+        "Titus",
+        "braced."
+      ],
+      "word_count": 9,
+      "time_hint": null,
+      "pause_after_sec": 0.14,
+      "narration_role": null
+    },
+    {
+      "id": "L07",
+      "index": 7,
+      "slot": "NARRATOR",
+      "text": "The cart halted short; one loaf bounced off the tray.",
+      "tokens": [
+        "The",
+        "cart",
+        "halted",
+        "short;",
+        "one",
+        "loaf",
+        "bounced",
+        "off",
+        "the",
+        "tray."
+      ],
+      "word_count": 10,
+      "time_hint": null,
+      "pause_after_sec": 0.12,
+      "narration_role": null
+    },
+    {
+      "id": "L08",
+      "index": 8,
+      "slot": "NARRATOR",
+      "text": "It arced high; it landed squarely on Centurion Varro's helmet.",
+      "tokens": [
+        "It",
+        "arced",
+        "high;",
+        "it",
+        "landed",
+        "squarely",
+        "on",
+        "Centurion",
+        "Varro's",
+        "helmet."
+      ],
+      "word_count": 10,
+      "time_hint": null,
+      "pause_after_sec": 0.22,
+      "narration_role": null
+    },
+    {
+      "id": "L09",
+      "index": 9,
+      "slot": "NARRATOR",
+      "text": "Nobody dared laugh; Centurion Varro kept walking.",
+      "tokens": [
+        "Nobody",
+        "dared",
+        "laugh;",
+        "Centurion",
+        "Varro",
+        "kept",
+        "walking."
+      ],
+      "word_count": 7,
+      "time_hint": null,
+      "pause_after_sec": 0.22,
+      "narration_role": null
+    },
+    {
+      "id": "L10",
+      "index": 10,
+      "slot": "NARRATOR",
+      "text": "Behind him, the market cheered Titus.",
+      "tokens": [
+        "Behind",
+        "him,",
+        "the",
+        "market",
+        "cheered",
+        "Titus."
+      ],
+      "word_count": 6,
+      "time_hint": null,
+      "pause_after_sec": 0.15,
+      "narration_role": null
+    }
+  ],
+  "bindings_count": 16,
+  "visual_events": [
+    {
+      "event_id": "EV001",
+      "binding_id": "B001",
+      "line_id": "L01",
+      "source_phrase": "At Rome's market hill rested a grain cart.",
+      "action_id": "world.market_hill_establish",
+      "domain": "WORLD",
+      "event_class": "establish",
+      "renderer_action_id": "world_market_hill_establish",
+      "motion_profile_id": "slope_cart_and_glow_establish",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "bakery_oven",
+        "market_cart"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "wide_geography",
+      "camera_move": "pull_out",
+      "word_anchors": [
+        "At",
+        "Rome's",
+        "market",
+        "hill",
+        "rested",
+        "a",
+        "grain",
+        "cart."
+      ],
+      "pre_states": {},
+      "post_states": {
+        "geography_established": true
+      }
+    },
+    {
+      "event_id": "EV002",
+      "binding_id": "B002",
+      "line_id": "L02",
+      "source_phrase": "Downhill, Baker Lucius stood beside his hot oven.",
+      "action_id": "actor.idle_micro_act",
+      "domain": "ACTOR",
+      "event_class": "reaction",
+      "renderer_action_id": "actor_idle_micro_act",
+      "motion_profile_id": "micro_breathe_blink",
+      "actor_ids": [
+        "baker_lucius"
+      ],
+      "prop_ids": [
+        "bakery_oven"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "payoff_close_reveal",
+      "camera_move": "reveal_payoff",
+      "word_anchors": [
+        "Downhill,",
+        "Baker",
+        "Lucius",
+        "stood",
+        "beside",
+        "his",
+        "hot",
+        "oven."
+      ],
+      "pre_states": {
+        "geography_established": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert"
+      }
+    },
+    {
+      "event_id": "EV003",
+      "binding_id": "B003",
+      "line_id": "L03",
+      "source_phrase": "A brake peg cracked",
+      "action_id": "prop.peg_crack_snap",
+      "domain": "PROP",
+      "event_class": "insert",
+      "renderer_action_id": "prop_peg_crack_snap",
+      "motion_profile_id": "brittle_fracture_creep",
+      "actor_ids": [
+        "baker_lucius"
+      ],
+      "prop_ids": [
+        "brake_peg",
+        "market_cart"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "macro_physics_insert",
+      "camera_move": "prop_insert",
+      "word_anchors": [
+        "A",
+        "brake",
+        "peg",
+        "cracked"
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      }
+    },
+    {
+      "event_id": "EV004",
+      "binding_id": "B004",
+      "line_id": "L03",
+      "source_phrase": "the cart rolled downhill.",
+      "action_id": "prop.cart_roll_slope",
+      "domain": "PROP",
+      "event_class": "action",
+      "renderer_action_id": "prop_cart_roll_slope",
+      "motion_profile_id": "slope_accel_wheel_spin",
+      "actor_ids": [
+        "baker_lucius"
+      ],
+      "prop_ids": [
+        "market_cart"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "low_angle_chase",
+      "camera_move": "parallax_track",
+      "word_anchors": [
+        "the",
+        "cart",
+        "rolled",
+        "downhill."
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      }
+    },
+    {
+      "event_id": "EV005",
+      "binding_id": "B005",
+      "line_id": "L04",
+      "source_phrase": "Market shoppers dodged street obstacles.",
+      "action_id": "world.market_crowd_pass",
+      "domain": "WORLD",
+      "event_class": "action",
+      "renderer_action_id": "world_market_crowd_pass",
+      "motion_profile_id": "foreground_parallax_pass",
+      "actor_ids": [
+        "market_crowd"
+      ],
+      "prop_ids": [],
+      "location_id": "roman_market_hill",
+      "framing_scale": "low_angle_chase",
+      "camera_move": "parallax_track",
+      "word_anchors": [
+        "Market",
+        "shoppers",
+        "dodged",
+        "street",
+        "obstacles."
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true
+      }
+    },
+    {
+      "event_id": "EV006",
+      "binding_id": "B006",
+      "line_id": "L05",
+      "source_phrase": "Apprentice Titus sprinted",
+      "action_id": "actor.sprint_chase",
+      "domain": "ACTOR",
+      "event_class": "action",
+      "renderer_action_id": "actor_sprint_chase",
+      "motion_profile_id": "biped_sprint_lean",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [],
+      "location_id": "roman_market_hill",
+      "framing_scale": "medium_full_tracking",
+      "camera_move": "actor_follow",
+      "word_anchors": [
+        "Apprentice",
+        "Titus",
+        "sprinted"
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint"
+      }
+    },
+    {
+      "event_id": "EV007",
+      "binding_id": "B007",
+      "line_id": "L05",
+      "source_phrase": "swiftly Titus caught the hemp rope.",
+      "action_id": "actor.reach_grab_prop",
+      "domain": "ACTOR",
+      "event_class": "action",
+      "renderer_action_id": "actor_reach_grab_prop",
+      "motion_profile_id": "ik_reach_hand_lock",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "hemp_rope"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "macro_physics_insert",
+      "camera_move": "prop_insert",
+      "word_anchors": [
+        "swiftly",
+        "Titus",
+        "caught",
+        "the",
+        "hemp",
+        "rope."
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true
+      }
+    },
+    {
+      "event_id": "EV008",
+      "binding_id": "B008",
+      "line_id": "L06",
+      "source_phrase": "Titus whipped the rope around a bollard",
+      "action_id": "prop.rope_taut_post_wrap",
+      "domain": "PROP",
+      "event_class": "insert",
+      "renderer_action_id": "prop_rope_taut_post_wrap",
+      "motion_profile_id": "catenary_to_chord_tension",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "hemp_rope",
+        "market_cart",
+        "stone_bollard"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "extreme_detail_insert",
+      "camera_move": "prop_insert",
+      "word_anchors": [
+        "Titus",
+        "whipped",
+        "the",
+        "rope",
+        "around",
+        "a",
+        "bollard"
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      }
+    },
+    {
+      "event_id": "EV009",
+      "binding_id": "B009",
+      "line_id": "L06",
+      "source_phrase": "Titus braced.",
+      "action_id": "actor.stop_brace",
+      "domain": "ACTOR",
+      "event_class": "action",
+      "renderer_action_id": "actor_stop_brace",
+      "motion_profile_id": "rear_heel_brace_ik",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "hemp_rope",
+        "stone_bollard"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "medium_full_tracking",
+      "camera_move": "actor_follow",
+      "word_anchors": [
+        "Titus",
+        "braced."
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "idle_alert",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      }
+    },
+    {
+      "event_id": "EV010",
+      "binding_id": "B010",
+      "line_id": "L07",
+      "source_phrase": "The cart halted short",
+      "action_id": "prop.cart_halt_skid",
+      "domain": "PROP",
+      "event_class": "action",
+      "renderer_action_id": "prop_cart_halt_skid",
+      "motion_profile_id": "recoil_wheel_skid_halt",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "bakery_oven",
+        "hemp_rope",
+        "market_cart",
+        "stone_bollard"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "extreme_detail_insert",
+      "camera_move": "impulse_snap_zoom",
+      "word_anchors": [
+        "The",
+        "cart",
+        "halted",
+        "short"
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": true,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true
+      }
+    },
+    {
+      "event_id": "EV011",
+      "binding_id": "B011",
+      "line_id": "L07",
+      "source_phrase": "one loaf bounced off the tray.",
+      "action_id": "prop.prop_bounce_tray",
+      "domain": "PROP",
+      "event_class": "insert",
+      "renderer_action_id": "prop_bounce_tray",
+      "motion_profile_id": "tray_impulse_launch",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "bread_tray",
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "macro_physics_insert",
+      "camera_move": "prop_insert",
+      "word_anchors": [
+        "one",
+        "loaf",
+        "bounced",
+        "off",
+        "the",
+        "tray."
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      }
+    },
+    {
+      "event_id": "EV012",
+      "binding_id": "B012",
+      "line_id": "L08",
+      "source_phrase": "It arced high",
+      "action_id": "prop.prop_parabolic_arc",
+      "domain": "PROP",
+      "event_class": "insert",
+      "renderer_action_id": "prop_parabolic_arc",
+      "motion_profile_id": "ballistic_parabolic_arc",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "extreme_detail_insert",
+      "camera_move": "prop_insert",
+      "word_anchors": [
+        "It",
+        "arced",
+        "high"
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      }
+    },
+    {
+      "event_id": "EV013",
+      "binding_id": "B013",
+      "line_id": "L08",
+      "source_phrase": "it landed squarely on Centurion Varro's helmet.",
+      "action_id": "prop.helmet_impact_settle",
+      "domain": "PROP",
+      "event_class": "reveal",
+      "renderer_action_id": "prop_helmet_impact_settle",
+      "motion_profile_id": "soft_crust_helmet_squish",
+      "actor_ids": [
+        "centurion_varro"
+      ],
+      "prop_ids": [
+        "ceremonial_helmet",
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "payoff_close_reveal",
+      "camera_move": "impulse_snap_zoom",
+      "word_anchors": [
+        "it",
+        "landed",
+        "squarely",
+        "on",
+        "Centurion",
+        "Varro's",
+        "helmet."
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true
+      }
+    },
+    {
+      "event_id": "EV014",
+      "binding_id": "B014",
+      "line_id": "L09",
+      "source_phrase": "Nobody dared laugh",
+      "action_id": "actor.deadpan_walk_unaffected",
+      "domain": "ACTOR",
+      "event_class": "reveal",
+      "renderer_action_id": "actor_deadpan_walk_unaffected",
+      "motion_profile_id": "deadpan_centurion_stride",
+      "actor_ids": [
+        "centurion_varro"
+      ],
+      "prop_ids": [
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "extreme_detail_insert",
+      "camera_move": "reveal_payoff",
+      "word_anchors": [
+        "Nobody",
+        "dared",
+        "laugh"
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      }
+    },
+    {
+      "event_id": "EV015",
+      "binding_id": "B015",
+      "line_id": "L09",
+      "source_phrase": "Centurion Varro kept walking.",
+      "action_id": "actor.deadpan_walk_unaffected",
+      "domain": "ACTOR",
+      "event_class": "reveal",
+      "renderer_action_id": "actor_deadpan_walk_unaffected",
+      "motion_profile_id": "deadpan_centurion_stride",
+      "actor_ids": [
+        "centurion_varro"
+      ],
+      "prop_ids": [
+        "roman_loaf"
+      ],
+      "location_id": "roman_market_hill",
+      "framing_scale": "payoff_close_reveal",
+      "camera_move": "reveal_payoff",
+      "word_anchors": [
+        "Centurion",
+        "Varro",
+        "kept",
+        "walking."
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      }
+    },
+    {
+      "event_id": "EV016",
+      "binding_id": "B016",
+      "line_id": "L10",
+      "source_phrase": "Behind him, the market cheered Titus.",
+      "action_id": "actor.crowd_reaction_cheer",
+      "domain": "ACTOR",
+      "event_class": "reaction",
+      "renderer_action_id": "actor_crowd_reaction_cheer",
+      "motion_profile_id": "multi_citizen_cheer_jump",
+      "actor_ids": [
+        "apprentice_titus"
+      ],
+      "prop_ids": [],
+      "location_id": "roman_market_hill",
+      "framing_scale": "wide_geography",
+      "camera_move": "pull_out",
+      "word_anchors": [
+        "Behind",
+        "him,",
+        "the",
+        "market",
+        "cheered",
+        "Titus."
+      ],
+      "pre_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady"
+      },
+      "post_states": {
+        "geography_established": true,
+        "actor_posture": "braced_load",
+        "peg_snapped": true,
+        "cart_rolling": false,
+        "crowd_active": true,
+        "actor_gait": "sprint",
+        "hand_prop_contact": true,
+        "rope_attached": true,
+        "rope_taut": true,
+        "cart_stopped": true,
+        "jolt_occurred": true,
+        "loaf_airborne": false,
+        "loaf_on_helmet": true,
+        "centurion_composure": "deadpan_steady",
+        "crowd_mood": "cheering"
+      }
+    }
+  ]
+}

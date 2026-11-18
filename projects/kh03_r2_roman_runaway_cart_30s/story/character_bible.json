@@ -1,0 +1,21 @@
+{
+  "style_profile": "roman_squire_master.v1",
+  "cast": [
+    {
+      "actor_id": "apprentice_titus",
+      "archetype": "rookie_hastatus"
+    },
+    {
+      "actor_id": "baker_lucius",
+      "archetype": "instructor_princeps"
+    },
+    {
+      "actor_id": "centurion_varro",
+      "archetype": "centurion_crest"
+    },
+    {
+      "actor_id": "market_crowd",
+      "archetype": "rookie_hastatus"
+    }
+  ]
+}
